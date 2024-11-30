@@ -81,7 +81,6 @@ pki:
 		defer func(conn net.Conn) {
 			err := conn.Close()
 			if err != nil {
-
 			}
 		}(conn)
 

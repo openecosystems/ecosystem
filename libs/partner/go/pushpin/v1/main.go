@@ -4,12 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net"
+	"sync"
+
 	nebulaConfig "github.com/slackhq/nebula/config"
 	"github.com/slackhq/nebula/service"
 	"gopkg.in/yaml.v2"
 	"libs/public/go/sdk/v2alpha"
-	"net"
-	"sync"
 )
 
 type Binding struct {
@@ -27,7 +28,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	// Verify any requirements
 
 	return nil
@@ -38,7 +38,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-
 				Bound = &Binding{}
 
 				bindings.Registered[b.Name()] = Bound
@@ -58,12 +57,10 @@ func (b *Binding) GetBinding() interface{} {
 }
 
 func (b *Binding) Close() error {
-
 	return nil
 }
 
 func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
-
 	if IsBound {
 
 		configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)

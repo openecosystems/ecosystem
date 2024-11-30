@@ -40,14 +40,14 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go fmt -n ./...",
+        "command": "gofumpt -l .",
         "cwd": "libs/public/go/sdk/gen/cryptography/v2alpha"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w ."],
         "parallel": false,
         "cwd": "libs/public/go/sdk/gen/cryptography/v2alpha"
       }

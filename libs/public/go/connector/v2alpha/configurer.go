@@ -2,12 +2,11 @@ package connectorv2alphalib
 
 import (
 	"fmt"
+
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-var (
-	ResolvedConfiguration *Configuration
-)
+var ResolvedConfiguration *Configuration
 
 type Configuration struct {
 	sdkv2alphalib.App
@@ -56,7 +55,6 @@ func (c *Configuration) ValidateConfiguration() error {
 }
 
 func (c *Configuration) GetDefaultConfiguration() interface{} {
-
 	return Configuration{
 		App: sdkv2alphalib.App{
 			Name:            "server",

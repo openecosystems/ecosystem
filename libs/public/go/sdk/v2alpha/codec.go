@@ -11,14 +11,12 @@ type Codec interface {
 }
 
 type ConsentBasedDecryption struct {
-
 	// type url
 	// bytes
 	// encrypted fields
 }
 
-type ConsentBasedDecryptionCodec struct {
-}
+type ConsentBasedDecryptionCodec struct{}
 
 func (cbdc *ConsentBasedDecryptionCodec) Name() string {
 	return "consent-based-decryption"

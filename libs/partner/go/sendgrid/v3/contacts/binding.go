@@ -3,12 +3,13 @@ package sendgridcontactsv3
 import (
 	"context"
 	"fmt"
-	"github.com/apex/log"
-	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"
-	"libs/public/go/sdk/v2alpha"
 	"net/http"
 	"os"
 	"sync"
+
+	"github.com/apex/log"
+	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"
+	"libs/public/go/sdk/v2alpha"
 )
 
 type Binding struct {
@@ -35,7 +36,6 @@ func (b *Binding) Bind(_ context.Context, _ *sdkv2alphalib.Configuration, bindin
 		var once sync.Once
 		once.Do(
 			func() {
-
 				hc := http.Client{}
 
 				auth, err := securityprovider.NewSecurityProviderBearerToken(SendGridAPIKey)

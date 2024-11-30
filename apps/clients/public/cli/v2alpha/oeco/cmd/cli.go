@@ -4,6 +4,10 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	"libs/public/go/cli/v2alpha"
+	"libs/public/go/cli/v2alpha/gen/platform/cmd"
+	"libs/public/go/sdk/v2alpha"
 	"os"
 
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
@@ -17,10 +21,6 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
 	"apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
 	"apps/clients/public/cli/v2alpha/oeco/internal/cryptography/v2alpha"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/cli/v2alpha"
-	"libs/public/go/cli/v2alpha/gen/platform/cmd"
-	"libs/public/go/sdk/v2alpha"
 )
 
 const (
@@ -73,7 +73,6 @@ var RootCmd = &cobra.Command{
 }
 
 func Execute(cli *cliv2alphalib.CLI) {
-
 	defer cli.GracefulShutdown()
 
 	err := validate()
@@ -115,7 +114,6 @@ func Execute(cli *cliv2alphalib.CLI) {
 }
 
 func AddCommands(settings *specv2pb.SpecSettings) {
-
 	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
 
 	if settings != nil && settings.Systems2 != nil {
@@ -142,11 +140,9 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 	RootCmd.AddCommand(cryptographyv2alphapbint.SystemCmd)
 	RootCmd.AddCommand(configurationv2alphapbint.SystemCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)
-
 }
 
 func init() {
-
 	log.SetHandler(cli.Default)
 
 	RootCmd.PersistentFlags().StringVar(&context2, "context", "", "context to use for this call")
@@ -161,14 +157,11 @@ func init() {
 	// see https://github.com/charmbracelet/lipgloss/issues/73
 	lipgloss.SetHasDarkBackground(termenv.HasDarkBackground())
 	markdown.InitializeMarkdownStyle(termenv.HasDarkBackground())
-
 }
 
 func bestVersion() string {
-
 	if compileTimeVersion != "" {
 		return compileTimeVersion
 	}
 	return DefaultVersion
-
 }

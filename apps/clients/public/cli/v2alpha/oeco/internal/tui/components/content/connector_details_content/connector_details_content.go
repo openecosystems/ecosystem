@@ -27,7 +27,6 @@ type Model struct {
 }
 
 func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
-
 	m := Model{
 		form: form,
 	}
@@ -45,11 +44,9 @@ func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
 	}
 
 	return m
-
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd

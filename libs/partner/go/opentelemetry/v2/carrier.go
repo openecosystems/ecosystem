@@ -1,8 +1,9 @@
 package opentelemetryv2
 
 import (
-	"google.golang.org/grpc/metadata"
 	"sync"
+
+	"google.golang.org/grpc/metadata"
 )
 
 // Carrier TextMapCarrier provides a testing storage medium to for a

@@ -39,7 +39,6 @@ func (k KeyMap) ShortHelp() []key.Binding {
 }
 
 func (k KeyMap) FullHelp() [][]key.Binding {
-
 	var sectionKeys []key.Binding
 	if k.sectionType == config.ConnectorSection {
 		sectionKeys = ConnectorFullHelp()

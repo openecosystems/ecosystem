@@ -42,13 +42,11 @@ type Commits struct {
 	Nodes []struct {
 		Commit struct {
 			Deployments struct {
-				Nodes []struct {
-				}
+				Nodes []struct{}
 			}
 			StatusCheckRollup struct {
 				Contexts struct {
-					Nodes []struct {
-					}
+					Nodes []struct{}
 				}
 			}
 		}
@@ -195,7 +193,6 @@ func FetchPullRequests(query string, limit int, pageInfo *PageInfo) (PullRequest
 }
 
 func FetchPullRequest(prUrl string) (PullRequestData, error) {
-
 	return PullRequestData{
 		Number:           0,
 		Title:            "Hello",

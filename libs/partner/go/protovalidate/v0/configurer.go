@@ -4,12 +4,9 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-var (
-	ResolvedConfiguration *Configuration
-)
+var ResolvedConfiguration *Configuration
 
-type Configuration struct {
-}
+type Configuration struct{}
 
 func (b *Binding) ResolveConfiguration() {
 	var c Configuration

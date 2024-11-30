@@ -21,7 +21,6 @@ type EmptyModel struct {
 }
 
 func NewEmptyModel(ctx *context.ProgramContext) contract.Page {
-
 	m := &EmptyModel{}
 
 	m.BaseModel = NewBaseModel[EmptyModelConfig](
@@ -33,17 +32,15 @@ func NewEmptyModel(ctx *context.ProgramContext) contract.Page {
 			},
 			CurrentMainContent: content.NewEmptyModel(ctx),
 			CurrentSidebar:     sidebar.NewEmptyModel(ctx),
-			//Keys:               nil,
-			//KeyBindings:        nil,
+			// Keys:               nil,
+			// KeyBindings:        nil,
 		},
 	)
 
 	return m
-
 }
 
 func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
-
 	var (
 		cmd            tea.Cmd
 		cmds           []tea.Cmd
@@ -58,13 +55,12 @@ func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
 		m.Ctx.Error = nil
 		_ = message
 		switch {
-
 		}
 	}
 
 	m.UpdateProgramContext(m.Ctx)
-	//m.CurrentSidebar, sidebarCmd = m.CurrentSidebar.Update(msg)
-	//m.CurrentMainContent, mainContentCmd = m.CurrentMainContent.Update(msg)
+	// m.CurrentSidebar, sidebarCmd = m.CurrentSidebar.Update(msg)
+	// m.CurrentMainContent, mainContentCmd = m.CurrentMainContent.Update(msg)
 
 	cmds = append(
 		cmds,

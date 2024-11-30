@@ -1,8 +1,11 @@
 package cryptographyv2alphasrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"fmt"
+
+	"connectrpc.com/connect"
+
 	"go.opentelemetry.io/otel/trace"
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
@@ -11,14 +14,11 @@ import (
 	zaploggerv1 "libs/partner/go/zap/v1"
 	_ "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-
-	"context"
 )
 
 type EncryptionServiceHandler struct{}
 
 func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.EncryptRequest]) (*connect.Response[cryptographyv2alphapb.EncryptResponse], error) {
-
 	tracer := *opentelemetryv2.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 	_ = *tinkv2.Bound
@@ -40,7 +40,7 @@ func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Req
 
 func (s *EncryptionServiceHandler) Decrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.DecryptRequest]) (*connect.Response[cryptographyv2alphapb.DecryptResponse], error) {
 	tracer := *opentelemetryv2.Bound.Tracer
-	//log := *zaploggerv1.Bound.Logger
+	// log := *zaploggerv1.Bound.Logger
 
 	fmt.Println(req)
 

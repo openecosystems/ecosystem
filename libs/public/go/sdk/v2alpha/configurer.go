@@ -1,8 +1,6 @@
 package sdkv2alphalib
 
-var (
-	ResolvedConfiguration *Configuration
-)
+var ResolvedConfiguration *Configuration
 
 type Configurable interface {
 	ResolveConfiguration()

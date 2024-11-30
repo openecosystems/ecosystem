@@ -38,7 +38,6 @@ type NewBaseOptions[Cfg any] struct {
 }
 
 func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[Cfg]) BaseModel[Cfg] {
-
 	m := BaseModel[Cfg]{
 		Default:            options.Default,
 		PageConfig:         options.PageConfig,
@@ -63,10 +62,7 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 }
 
 func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
-
-	var (
-		cmds []tea.Cmd
-	)
+	var cmds []tea.Cmd
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
@@ -155,7 +151,6 @@ func (m BaseModel[Cfg]) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	m.SyncDimensions(m.Ctx)
 	m.CurrentMainContent.OnWindowSizeChanged(m.Ctx)
 	m.CurrentSidebar.OnWindowSizeChanged(m.Ctx)
-
 }
 
 func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
@@ -170,7 +165,6 @@ func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.Pro
 }
 
 func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *context.ProgramContext {
-
 	if ctx == nil {
 		return m.Ctx
 	}
@@ -188,11 +182,9 @@ func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *
 	m.Ctx = m.CurrentMainContent.SyncDimensions(m.Ctx)
 
 	return m.Ctx
-
 }
 
 func (m BaseModel[Cfg]) SyncSidebarDimensions(ctx *context.ProgramContext) *context.ProgramContext {
-
 	if ctx == nil {
 		return m.Ctx
 	}

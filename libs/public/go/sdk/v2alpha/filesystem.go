@@ -2,17 +2,18 @@ package sdkv2alphalib
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+
 	"github.com/apex/log"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/afero"
-	"os"
-	"path/filepath"
 )
 
 type FileSystem struct {
 	UnderlyingFileSystem afero.Fs
 	HomeDirectory        string
-	//DefaultConfigFile    string
+	// DefaultConfigFile    string
 	LogDirectory           string
 	TmpDirectory           string
 	ContextDirectory       string
@@ -52,13 +53,12 @@ var (
 )
 
 func NewFileSystem() *FileSystem {
-
 	fs := afero.NewOsFs()
 
 	filesystem := &FileSystem{
 		UnderlyingFileSystem: fs,
 		HomeDirectory:        HomeDirectory,
-		//DefaultConfigFile:    ConfigFile,
+		// DefaultConfigFile:    ConfigFile,
 		LogDirectory:           LogDirectory,
 		TmpDirectory:           TmpDirectory,
 		ContextDirectory:       ContextDirectory,
@@ -107,35 +107,31 @@ func NewFileSystem() *FileSystem {
 	Filesystem = filesystem
 
 	return filesystem
-
 }
 
 func getUserHomeDirectory() string {
-
 	home, err := homedir.Dir()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
-		//Panic here... should not happen
+		// Panic here... should not happen
 	}
 
 	return home
 }
 
 func getHomeDirectory() string {
-
 	home, err := homedir.Dir()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
-		//Panic here... should not happen
+		// Panic here... should not happen
 	}
 
 	return filepath.Join(home, HomeDirectoryName)
 }
 
 func (filesystem *FileSystem) CreateDirectory(directory string) error {
-
 	fs := filesystem.UnderlyingFileSystem
 
 	exists, err := afero.Exists(fs, directory)
@@ -144,7 +140,7 @@ func (filesystem *FileSystem) CreateDirectory(directory string) error {
 	}
 
 	if !exists {
-		err := fs.MkdirAll(directory, 0755)
+		err := fs.MkdirAll(directory, 0o755)
 		if err != nil {
 			return err
 		}
@@ -154,7 +150,6 @@ func (filesystem *FileSystem) CreateDirectory(directory string) error {
 }
 
 func (filesystem *FileSystem) CreateFile(file string) error {
-
 	fs := filesystem.UnderlyingFileSystem
 	exists, err := afero.Exists(fs, file)
 	if err != nil {
@@ -172,19 +167,16 @@ func (filesystem *FileSystem) CreateFile(file string) error {
 }
 
 func (filesystem *FileSystem) Exists(file string) (bool, error) {
-
 	fs := filesystem.UnderlyingFileSystem
 	return afero.Exists(fs, file)
 }
 
 func (filesystem *FileSystem) DirExists(directory string) (bool, error) {
-
 	fs := filesystem.UnderlyingFileSystem
 	return afero.DirExists(fs, directory)
 }
 
 func (filesystem *FileSystem) WriteFile(file string, data []byte, perm os.FileMode) error {
-
 	fs := filesystem.UnderlyingFileSystem
 
 	err := filesystem.CreateFile(file)
@@ -201,7 +193,6 @@ func (filesystem *FileSystem) WriteFile(file string, data []byte, perm os.FileMo
 }
 
 func (filesystem *FileSystem) ReadFile(file string) ([]byte, error) {
-
 	fs := filesystem.UnderlyingFileSystem
 	bytes, err := afero.ReadFile(fs, file)
 	if err != nil {
@@ -212,7 +203,6 @@ func (filesystem *FileSystem) ReadFile(file string) ([]byte, error) {
 }
 
 func (filesystem *FileSystem) DeleteFile(file string) error {
-
 	fs := filesystem.UnderlyingFileSystem
 	exists, err := afero.Exists(fs, file)
 	if err != nil {
@@ -230,7 +220,6 @@ func (filesystem *FileSystem) DeleteFile(file string) error {
 }
 
 func (filesystem *FileSystem) CopyFile(file string, destination string) error {
-
 	fs := filesystem.UnderlyingFileSystem
 	exists, err := afero.Exists(fs, file)
 	if err != nil {
@@ -253,7 +242,6 @@ func (filesystem *FileSystem) CopyFile(file string, destination string) error {
 }
 
 func (filesystem *FileSystem) ReadDir(dir string) ([]os.FileInfo, error) {
-
 	fs := filesystem.UnderlyingFileSystem
 
 	fileInfos, err := afero.ReadDir(fs, dir)
@@ -265,7 +253,6 @@ func (filesystem *FileSystem) ReadDir(dir string) ([]os.FileInfo, error) {
 }
 
 func (filesystem *FileSystem) DeleteDirectory(directory string) error {
-
 	fs := filesystem.UnderlyingFileSystem
 
 	log.Debug(directory)

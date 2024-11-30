@@ -4,16 +4,17 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/segmentio/ksuid"
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sync"
+
+	"github.com/segmentio/ksuid"
+	"google.golang.org/protobuf/types/known/timestamppb"
+	"libs/protobuf/go/protobuf/gen/platform/type/v2"
+	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	"libs/public/go/sdk/v2alpha"
 )
 
 type Binding struct {
@@ -31,7 +32,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	return nil
 }
 
@@ -40,7 +40,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-
 				binaryData, err := embeddedFiles.ReadFile(binaryPath)
 				if err != nil {
 					log.Fatalf("Failed to read embedded binary: %v", err)
@@ -62,7 +61,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 				nebulaCertBinaryPath := nebulaCertBinary.Name()
 
 				// Make the temp file executable
-				if err := os.Chmod(nebulaCertBinary.Name(), 0755); err != nil {
+				if err := os.Chmod(nebulaCertBinary.Name(), 0o755); err != nil {
 					log.Fatalf("Failed to make temp file executable: %v", err)
 				}
 
@@ -90,14 +89,12 @@ func (b *Binding) Close() error {
 	defer func(name string) {
 		err := os.Remove(name)
 		if err != nil {
-
 		}
 	}(b.NebulaCertBinaryFile.Name()) // Clean up after execution
 	return nil
 }
 
 func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2alphapb.CreateCertificateAuthorityRequest) (*cryptographyv2alphapb.CertificateAuthority, error) {
-
 	nca := b.NebulaCertBinaryPath
 
 	// TODO: This should be done in the initial validate
@@ -130,7 +127,6 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 	defer func(path string) {
 		err := os.RemoveAll(path)
 		if err != nil {
-
 		}
 	}(tempDir)
 
@@ -189,11 +185,9 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 		CaKey:     kfile,
 		CaQrCode:  qfile,
 	}, nil
-
 }
 
 func getFile(name string, extensionWithPeriod string, path string, time *timestamppb.Timestamp) (*typev2pb.File, error) {
-
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to read file: "+path), err)

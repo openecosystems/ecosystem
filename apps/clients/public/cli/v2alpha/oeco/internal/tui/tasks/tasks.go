@@ -1,13 +1,15 @@
 package tasks
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"fmt"
-	"github.com/charmbracelet/bubbles/spinner"
-	"github.com/charmbracelet/lipgloss"
 	"sort"
 	"strings"
+
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbles/spinner"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {

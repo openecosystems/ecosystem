@@ -13,7 +13,6 @@ type Model struct {
 }
 
 func NewModel(ctx *context.ProgramContext) Model {
-
 	m := Model{}
 	m.BaseModel = sidebar.NewBaseModel(
 		ctx,
@@ -24,11 +23,9 @@ func NewModel(ctx *context.ProgramContext) Model {
 	)
 
 	return m
-
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd

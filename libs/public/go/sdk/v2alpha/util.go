@@ -13,12 +13,12 @@ import (
 
 func GetDataFromSpec[D protoreflect.ProtoMessage](ctx context.Context, s *specproto.Spec, data D) error {
 	if s == nil {
-		//return errors.NewSpecError(ctx, errors.SpecInternalError(), "Cannot create object from nil spec")
+		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "Cannot create object from nil spec")
 		return ErrServerInternal
 	}
 
 	if s.Data == nil {
-		//return errors.NewSpecError(ctx, errors.SpecPreconditionFailedError(), "Data object is not provided on the spec")
+		// return errors.NewSpecError(ctx, errors.SpecPreconditionFailedError(), "Data object is not provided on the spec")
 		return ErrServerPreconditionFailed
 	}
 
@@ -30,7 +30,7 @@ func GetDataFromSpec[D protoreflect.ProtoMessage](ctx context.Context, s *specpr
 		RecursionLimit: 0,
 	})
 	if err != nil {
-		//return errors.NewSpecError(ctx, errors.SpecInternalError(), "failed to unmarshal data: "+err.Error())
+		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "failed to unmarshal data: "+err.Error())
 		return ErrServerInternal
 	}
 	return nil

@@ -1,6 +1,8 @@
 package connector
 
 import (
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -13,7 +15,6 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/logs_page"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/requests_page"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type Model struct {
@@ -23,7 +24,6 @@ type Model struct {
 }
 
 func NewModel(settings *specv2pb.SpecSettings) Model {
-
 	m := Model{
 		keys:  keys.Keys,
 		tasks: map[string]context.Task{},
@@ -66,7 +66,6 @@ func (m Model) Init() tea.Cmd {
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-
 	var (
 		cmd       tea.Cmd
 		tabsCmd   tea.Cmd
@@ -83,7 +82,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		switch {
 		case key.Matches(message, keys.Keys.Up):
-
 		}
 	}
 
@@ -114,12 +112,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-
 	return m.ViewBase(m.CurrentPage.View())
 
-	//s := m.ViewDebug()
-	//s.WriteString(m.CurrentPage.View())
-	//return s.String()
+	// s := m.ViewDebug()
+	// s.WriteString(m.CurrentPage.View())
+	// return s.String()
 }
 
 func (m Model) GetPages() []contract.Page {

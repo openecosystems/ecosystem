@@ -3,10 +3,11 @@ package configurationv2alphalib
 import (
 	"context"
 	"fmt"
+	"sync"
+
 	"github.com/nats-io/nats.go/jetstream"
 	"libs/partner/go/nats/v2"
 	"libs/public/go/sdk/v2alpha"
-	"sync"
 )
 
 type Binding struct {
@@ -26,7 +27,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	if natsnodev2.Bound == nil {
 		fmt.Println("Please bind the Nats Node module to use this binding")
 		panic("")
@@ -40,7 +40,6 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 		var once sync.Once
 		once.Do(
 			func() {
-
 				bn := sdkv2alphalib.ResolvedConfiguration.App.EnvironmentName + "-configuration"
 
 				js := *natsnodev2.Bound.JetStream

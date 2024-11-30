@@ -49,7 +49,5 @@ type SpecEvent struct {
 }
 
 func GetListenerGroup(source Type, sink Type) string {
-
 	return "listener-" + source.TypeName() + "+" + sink.TypeName()
-
 }

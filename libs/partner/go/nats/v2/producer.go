@@ -1,27 +1,28 @@
 package natsnodev2
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"errors"
 	"fmt"
+	"time"
+
+	"connectrpc.com/connect"
+
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/partner/go/zap/v1"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"libs/public/go/sdk/v2alpha"
-	"time"
 )
 
 func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {
-
 	if command == nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecCommand object is required"))
 	}
 
 	log := *zaploggerv1.Bound.Logger
-	//acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
+	// acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 
 	s.SpecEvent = command.CommandName
 	s.SpecType = command.EntityTypeName
@@ -33,7 +34,7 @@ func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, co
 	//	return nil, err
 	//}
 
-	//configuration.DataCatalog.Configuration.ConfigurationV2Alpha
+	// configuration.DataCatalog.Configuration.ConfigurationV2Alpha
 
 	data, err := anypb.New(command.Request)
 	if err != nil {
@@ -58,17 +59,14 @@ func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, co
 		Subject: subject,
 		Data:    specBytes,
 	}, 4*time.Second)
-
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	return reply, err
-
 }
 
 func (b *Binding) MultiplexEventSync(ctx context.Context, s *specv2pb.Spec, event *SpecEvent) (*nats.Msg, error) {
-
 	if event == nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecEvent object is required"))
 	}
@@ -103,11 +101,9 @@ func (b *Binding) MultiplexEventSync(ctx context.Context, s *specv2pb.Spec, even
 		Subject: subject,
 		Data:    specBytes,
 	}, 4*time.Second)
-
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	return reply, err
-
 }

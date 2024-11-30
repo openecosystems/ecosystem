@@ -9,9 +9,7 @@ import (
 	"libs/public/go/sdk/v2alpha"
 )
 
-var (
-	ResolvedConfiguration *sdkv2alphalib.Configuration
-)
+var ResolvedConfiguration *sdkv2alphalib.Configuration
 
 type Infrastructure struct {
 	Config   *sdkv2alphalib.Configuration
@@ -20,25 +18,22 @@ type Infrastructure struct {
 }
 
 func NewInfrastructure(bounds []sdkv2alphalib.Binding) *Infrastructure {
-
 	ctx := context.Background()
 
-	//cfg := sdkv2alphalib.ResolveConfiguration()
-	//ResolvedConfiguration = cfg
+	// cfg := sdkv2alphalib.ResolveConfiguration()
+	// ResolvedConfiguration = cfg
 
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	return &Infrastructure{
-		//Config:   cfg,
+		// Config:   cfg,
 		Bindings: bindings,
 		Bounds:   bounds,
 	}
 }
 
 func (infrastructure *Infrastructure) Run(runFunc pulumi.RunFunc, opts ...pulumi.RunOption) {
-
 	pulumi.Run(runFunc, opts...)
-
 }
 
 func ShortenString(s string, limit int) string {
@@ -50,5 +45,4 @@ func ShortenString(s string, limit int) string {
 		return s[:limit]
 	}
 	return s[:limit+1]
-
 }

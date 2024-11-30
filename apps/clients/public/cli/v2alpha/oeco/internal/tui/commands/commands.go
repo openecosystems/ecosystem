@@ -3,10 +3,11 @@ package commands
 import (
 	"bytes"
 	"fmt"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/log"
 	"maps"
 	"text/template"
+
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/log"
 
 	"apps/clients/public/cli/v2alpha/oeco/internal/data"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"

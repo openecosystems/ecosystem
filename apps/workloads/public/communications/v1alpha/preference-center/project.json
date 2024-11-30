@@ -90,7 +90,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w ."],
         "parallel": false,
         "cwd": "apps/workloads/public/communications/v1alpha/preference-center"
       }

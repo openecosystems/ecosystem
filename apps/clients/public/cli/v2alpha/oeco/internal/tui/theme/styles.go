@@ -77,7 +77,7 @@ func InitStyles(theme Theme) Styles {
 	s.Tabs.Logo = lipgloss.NewStyle().
 		Faint(false).
 		Bold(true).
-		//Background(lipgloss.Color("#323DD6")).
+		// Background(lipgloss.Color("#323DD6")).
 		Background(theme.PrimaryColor).
 		Padding(0, 1)
 	s.Tabs.Tab = lipgloss.NewStyle().

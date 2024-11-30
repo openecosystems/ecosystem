@@ -38,7 +38,7 @@ var (
 				Prefix: " ",
 				Suffix: " ",
 				Color:  stringPtr("228"),
-				//BackgroundColor: stringPtr("63"),
+				// BackgroundColor: stringPtr("63"),
 				Bold: boolPtr(true),
 			},
 		},

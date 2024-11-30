@@ -18,8 +18,7 @@ type ContextAware interface {
 	UpdateProgramContext(ctx *context.ProgramContext)
 }
 
-type Configurable interface {
-}
+type Configurable interface{}
 
 type Responsive interface {
 	SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext

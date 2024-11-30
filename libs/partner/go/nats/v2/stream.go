@@ -34,7 +34,6 @@ func NewInboundStream() *InboundStream {
 }
 
 func (s *InboundStream) EventPlaneStreamType() typev2pb.Stream {
-
 	return typev2pb.Stream_STREAM_INBOUND
 }
 

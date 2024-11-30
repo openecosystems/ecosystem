@@ -48,7 +48,6 @@ var DefaultTheme = &Theme{
 }
 
 func ParseTheme(cfg *config.Config) Theme {
-
 	_shimHex := func(hex config.HexColor, fallback lipgloss.AdaptiveColor) lipgloss.AdaptiveColor {
 		if hex == "" {
 			return fallback

@@ -25,7 +25,6 @@ type Model struct {
 }
 
 func NewModel(ctx *context.ProgramContext) Model {
-
 	c := ModelConfig{}
 
 	f := connector_form.NewModel(ctx)
@@ -46,21 +45,19 @@ func NewModel(ctx *context.ProgramContext) Model {
 	)
 
 	return p
-
 }
 
 func (m Model) GetPageSettings() contract.PageSettings {
 	return contract.PageSettings{
 		Title:     "Connector Details",
 		IsDefault: true,
-		//KeyBindings:   GetKeyBindings(),
+		// KeyBindings:   GetKeyBindings(),
 		ContentHeight: 0,
 		Type:          config.ConnectorDetailsPage,
 	}
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd
@@ -85,17 +82,16 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-
 	return m.ViewBase(lipgloss.JoinHorizontal(
 		lipgloss.Top,
 		m.mainContent.View(),
 		m.sidebar.View(),
 	))
 
-	//s := m.ViewDebug()
-	//s.WriteString(m.mainContent.View())
-	//s.WriteString("\n")
-	//s.WriteString(m.sidebar.View())
-	//s.WriteString("\n")
-	//return s.String()
+	// s := m.ViewDebug()
+	// s.WriteString(m.mainContent.View())
+	// s.WriteString("\n")
+	// s.WriteString(m.sidebar.View())
+	// s.WriteString("\n")
+	// return s.String()
 }

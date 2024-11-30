@@ -50,7 +50,7 @@ type Confirm struct {
 func NewConfirm() *Confirm {
 	return &Confirm{
 		accessor: &huh.EmbeddedAccessor[bool]{},
-		//id:          nextID(),
+		// id:          nextID(),
 		title:       Eval[string]{cache: make(map[uint64]string)},
 		description: Eval[string]{cache: make(map[uint64]string)},
 		affirmative: "Yes",

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -11,7 +10,6 @@ import (
 )
 
 func main() {
-
 	bounds := []sdkv2alphalib.Binding{
 		&zaploggerv1.Binding{},
 		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{}},
@@ -46,5 +44,4 @@ func main() {
 	//
 	////subscribe.RegisterSubscriptionGroups()
 	//server.ListenAndServe()
-
 }

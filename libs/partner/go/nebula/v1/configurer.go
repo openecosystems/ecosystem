@@ -2,12 +2,11 @@ package nebulav1
 
 import (
 	"fmt"
+
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-var (
-	ResolvedConfiguration *Configuration
-)
+var ResolvedConfiguration *Configuration
 
 type Pki struct {
 	Ca   string `json:"ca,omitempty" yaml:"ca,omitempty"`
@@ -111,12 +110,11 @@ func (b *Binding) ResolveConfiguration() {
 }
 
 func (b *Binding) ValidateConfiguration() error {
-
 	var errs []error
 	if b.configuration == nil || b.configuration.Nebula.Pki.Ca == "" {
 		errs = append(errs, fmt.Errorf("Nebula.Pki.Ca is required"))
 	}
-	//Host: nil,
+	// Host: nil,
 	//  Pki: Pki{
 	//    Ca:   "",
 	//    Cert: "",
@@ -124,17 +122,14 @@ func (b *Binding) ValidateConfiguration() error {
 	//  },
 
 	if b.configuration.Nebula.Lighthouse.AmLighthouse == true {
-
-		//hosts:
+		// hosts:
 		//  - '192.168.100.1'
-
 	}
 
 	return nil
 }
 
 func (b *Binding) GetDefaultConfiguration() interface{} {
-
 	return &Configuration{
 		Nebula: Nebula{
 			Lighthouse: Lighthouse{
@@ -153,7 +148,7 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 			},
 			Firewall: Firewall{
 				Outbound: nil,
-				Inbound:  nil, //TODO: Handle this with proper rule
+				Inbound:  nil, // TODO: Handle this with proper rule
 			},
 		},
 	}

@@ -1,12 +1,14 @@
 package sdkv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	"context"
+	"strconv"
+
+	"connectrpc.com/connect"
+
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"strconv"
 )
 
 type SpecInterceptor struct {
@@ -14,7 +16,6 @@ type SpecInterceptor struct {
 }
 
 func DecorateContext(ctx context.Context, req connect.AnyRequest) context.Context {
-
 	factory := NewFactory(req)
 	s := factory.Spec
 
@@ -24,7 +25,6 @@ func DecorateContext(ctx context.Context, req connect.AnyRequest) context.Contex
 }
 
 func DecorateRequest(_ context.Context, req connect.AnyRequest, settings *specv2pb.SpecSettings, overrides *RuntimeConfigurationOverrides) {
-
 	req.Header().Set(SentAtKey, timestamppb.Now().String())
 	req.Header().Set(RequestIdKey, "")
 	req.Header().Set(DeviceIdKey, "mac")

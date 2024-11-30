@@ -5,11 +5,12 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 const (
@@ -30,7 +31,6 @@ type DependencyRegistryProvider interface {
 }
 
 func NewDynamicDependencyProvider(s *specv2pb.SpecSystem) *Dependency {
-
 	dependency := Dependency{}
 	if s.Registry == nil {
 		dependency = Dependency{
@@ -66,7 +66,6 @@ func newGitHubDependencyProvider(settings *specv2pb.SpecSystem) *GitHubDependenc
 func (provider *GitHubDependencyProvider) Name() string { return GithubRegistryName }
 
 func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
-
 	baseDest, dest := generatePath(provider.settings.Name, provider)
 	err := provider.fileSystem.UnderlyingFileSystem.MkdirAll(baseDest, os.ModePerm)
 	if err != nil {
@@ -95,7 +94,6 @@ func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-
 		}
 	}(resp.Body)
 
@@ -131,7 +129,6 @@ func newPathDependencyProvider(settings *specv2pb.SpecSystem) *PathDependencyPro
 func (provider *PathDependencyProvider) Name() string { return PathRegistryName }
 
 func (provider *PathDependencyProvider) GetDependency() (*Dependency, error) {
-
 	src := provider.settings.Registry.Path
 	baseDest, dest := generatePath(provider.settings.Name, provider)
 	err := provider.fileSystem.UnderlyingFileSystem.MkdirAll(baseDest, os.ModePerm)
@@ -172,7 +169,6 @@ func (provider *PathDependencyProvider) GetDependency() (*Dependency, error) {
 // generateIdentifier creates a unique identifier based on the given input.
 // The identifier is an SHA-256 hash truncated to 16 characters.
 func generatePath(system string, provider DependencyRegistryProvider) (string, string) {
-
 	// Generate SHA-256 hash of the input and encode the hash to a hex string and truncate to 16 characters
 	_url := provider.Name()
 	u := strings.Split(_url, "/")

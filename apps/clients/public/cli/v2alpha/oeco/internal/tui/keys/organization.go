@@ -17,14 +17,12 @@ func (k OrganizationKeyMap) Name() KeyBindingType {
 	return Organization
 }
 
-var (
-	OrganizationKeys = OrganizationKeyMap{
-		Create: key.NewBinding(
-			key.WithKeys("c"),
-			key.WithHelp("c", "call"),
-		),
-	}
-)
+var OrganizationKeys = OrganizationKeyMap{
+	Create: key.NewBinding(
+		key.WithKeys("c"),
+		key.WithHelp("c", "call"),
+	),
+}
 
 func OrganizationFullHelp() []key.Binding {
 	return []key.Binding{

@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	bounds := []sdkv2alphalib.Binding{
 		&zaploggerv1.Binding{},
 		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
@@ -22,5 +21,4 @@ func main() {
 
 	connector := connectorv2alphalib.NewConnector(context.Background(), bounds)
 	connector.ListenAndProcess()
-
 }

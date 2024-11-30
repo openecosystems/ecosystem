@@ -18,18 +18,16 @@ func (k ApiExplorerKeyMap) Name() KeyBindingType {
 	return Api
 }
 
-var (
-	ApiKeys = ApiExplorerKeyMap{
-		Call: key.NewBinding(
-			key.WithKeys("c"),
-			key.WithHelp("c", "call"),
-		),
-		Synthetic: key.NewBinding(
-			key.WithKeys("f"),
-			key.WithHelp("f", "synthetic"),
-		),
-	}
-)
+var ApiKeys = ApiExplorerKeyMap{
+	Call: key.NewBinding(
+		key.WithKeys("c"),
+		key.WithHelp("c", "call"),
+	),
+	Synthetic: key.NewBinding(
+		key.WithKeys("f"),
+		key.WithHelp("f", "synthetic"),
+	),
+}
 
 func ApiFullHelp() []key.Binding {
 	return []key.Binding{

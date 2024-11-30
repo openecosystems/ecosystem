@@ -1,12 +1,14 @@
 package sdkv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	"fmt"
-	"google.golang.org/protobuf/types/known/fieldmaskpb"
 	"strconv"
 	"strings"
 	"time"
+
+	"connectrpc.com/connect"
+
+	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
@@ -107,7 +109,6 @@ type Factory struct {
 }
 
 func NewFactory(req connect.AnyRequest) Factory {
-
 	h := req.Header()
 	headers := make(map[string]string, len(h))
 	for k, v := range h {
@@ -276,9 +277,9 @@ func NewFactory(req connect.AnyRequest) Factory {
 
 	// Supporting
 	// ===============================
-	//contentType := headers["content-type"]
-	//acceptEncoding := headers["accept-encoding"]
-	//grpcAcceptEncoding := headers["grpc-accept-encoding"]
+	// contentType := headers["content-type"]
+	// acceptEncoding := headers["accept-encoding"]
+	// grpcAcceptEncoding := headers["grpc-accept-encoding"]
 
 	s := specv2pb.Spec{
 		SpecVersion: specVersion,

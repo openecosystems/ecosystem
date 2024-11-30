@@ -3,11 +3,12 @@ package tinkv2
 import (
 	"context"
 	"fmt"
+	"sync"
+
 	"github.com/tink-crypto/tink-go-gcpkms/v2/integration/gcpkms"
 	"github.com/tink-crypto/tink-go/v2/core/registry"
 	"github.com/tink-crypto/tink-go/v2/tink"
 	"libs/public/go/sdk/v2alpha"
-	"sync"
 )
 
 type Binding struct {
@@ -27,7 +28,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	// Verify any log requirements
 
 	return nil
@@ -38,7 +38,6 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 		var once sync.Once
 		once.Do(
 			func() {
-
 				keyURI := "gcp-kms://projects/*/locations/*/keyRings/*/cryptoKeys/*"
 
 				// Get a KEK (key encryption key) AEAD.

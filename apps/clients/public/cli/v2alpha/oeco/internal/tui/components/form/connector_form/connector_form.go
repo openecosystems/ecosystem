@@ -160,8 +160,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	}
 
 	if m.form.State == huh.StateCompleted {
-
-		//cmds = append(cmds, tea.Quit)
+		// cmds = append(cmds, tea.Quit)
 	}
 
 	return m, tea.Batch(cmds...)
@@ -267,7 +266,7 @@ func (m Model) appBoundaryView(text string) string {
 		m.width,
 		lipgloss.Left,
 		m.styles.HeaderText.Render(text),
-		//lipgloss.WithWhitespaceForeground(indigo),
+		// lipgloss.WithWhitespaceForeground(indigo),
 	)
 }
 

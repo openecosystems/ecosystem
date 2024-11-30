@@ -45,14 +45,14 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go fmt -n ./...",
+        "command": "gofumpt -l .",
         "cwd": "libs/private/go/model"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w ."],
         "parallel": false,
         "cwd": "libs/private/go/model"
       }

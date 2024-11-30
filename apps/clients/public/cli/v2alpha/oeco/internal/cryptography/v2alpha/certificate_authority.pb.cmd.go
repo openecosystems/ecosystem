@@ -1,8 +1,9 @@
 package cryptographyv2alphapbint
 
 import (
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var CertificateAuthorityServiceServiceCmd = &cobra.Command{
@@ -18,7 +19,5 @@ var CertificateAuthorityServiceServiceCmd = &cobra.Command{
 }
 
 func init() {
-
 	CertificateAuthorityServiceServiceCmd.AddCommand(CreateCertificateAuthorityV2AlphaCmd)
-
 }

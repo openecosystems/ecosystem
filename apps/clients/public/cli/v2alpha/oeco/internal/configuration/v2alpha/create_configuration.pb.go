@@ -1,12 +1,10 @@
 package configurationv2alphapbint
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 	"libs/public/go/sdk/gen/configuration/v2alpha"
 	cryptographyv2alphapbsdk "libs/public/go/sdk/gen/cryptography/v2alpha"
@@ -14,9 +12,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/spf13/cobra"
+	"connectrpc.com/connect"
 
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	"github.com/apex/log"
+	"github.com/golang/protobuf/jsonpb"
+
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -31,7 +32,6 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 	Long: `
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		log.Debug("Calling createConfiguration configuration")
 
 		_request, err := cmd.Flags().GetString("request")

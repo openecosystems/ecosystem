@@ -2,6 +2,7 @@ package sections
 
 import (
 	"fmt"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"strconv"
 	"strings"
 
@@ -19,7 +20,6 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type BaseModel struct {
@@ -44,7 +44,6 @@ type NewBaseOptions struct {
 }
 
 func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel {
-
 	var p []contract.Page
 	if options.Pages != nil {
 		p = options.Pages
@@ -74,7 +73,6 @@ type initialize struct {
 }
 
 func (m BaseModel) init() tea.Msg {
-
 	cfg, err := config.ParseConfig()
 	if err != nil {
 		utils.ShowError(err)
@@ -90,7 +88,6 @@ func (m BaseModel) InitBase() tea.Cmd {
 }
 
 func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
-
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
@@ -148,7 +145,6 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 }
 
 func (m BaseModel) ViewBase(content string) string {
-
 	s := strings.Builder{}
 	s.WriteString(m.Tabs.View())
 	s.WriteString("\n")
@@ -283,7 +279,6 @@ func (m BaseModel) GetNextPageId() int {
 }
 
 func (m BaseModel) GetDefaultPageId() int {
-
 	for i, page := range m.Pages {
 		if page.GetPageSettings().IsDefault {
 			return i
@@ -291,5 +286,4 @@ func (m BaseModel) GetDefaultPageId() int {
 	}
 
 	return 0
-
 }

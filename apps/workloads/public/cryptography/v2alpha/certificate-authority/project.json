@@ -78,14 +78,14 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go fmt -n ./...",
+        "command": "gofumpt -l .",
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w ."],
         "parallel": false,
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority"
       }

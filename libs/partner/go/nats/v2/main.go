@@ -4,14 +4,15 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	natsd "github.com/nats-io/nats-server/v2/server"
-	"github.com/nats-io/nats.go"
-	"github.com/nats-io/nats.go/jetstream"
-	"libs/public/go/sdk/v2alpha"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	natsd "github.com/nats-io/nats-server/v2/server"
+	"github.com/nats-io/nats.go"
+	"github.com/nats-io/nats.go/jetstream"
+	"libs/public/go/sdk/v2alpha"
 )
 
 type Binding struct {
@@ -41,13 +42,11 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 }
 
 func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
-
 	if Bound == nil {
 
 		var once sync.Once
 		once.Do(
 			func() {
-
 				switch ResolvedConfiguration.Natsd.Enabled {
 				case true:
 					options := ResolvedConfiguration.Natsd.Options
@@ -63,7 +62,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 
 					// Start NATS server
 					go func() {
-
 						if err := natsd.Run(server); err != nil {
 							fmt.Println("Error running embedded NATS server: " + err.Error())
 							panic(err)
@@ -154,7 +152,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 						bindings.RegisteredListenableChannels[name] = listener
 					}
 				}
-
 			})
 	} else {
 		bindings.Registered[b.Name()] = Bound
@@ -169,7 +166,6 @@ func (b *Binding) GetBinding() interface{} {
 }
 
 func (b *Binding) Close() error {
-
 	fmt.Println("Shutting down Nats Node connection for: ")
 
 	for _, listener := range b.Listeners {

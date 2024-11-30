@@ -14,7 +14,6 @@ type OSInformation struct {
 }
 
 func GetOSInformation() *OSInformation {
-
 	platform, family, pver, err := host.PlatformInformation()
 	if err != nil {
 		return nil

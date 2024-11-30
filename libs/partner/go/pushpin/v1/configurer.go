@@ -2,9 +2,7 @@ package pushpinv1
 
 import sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
-var (
-	ResolvedConfiguration *Configuration
-)
+var ResolvedConfiguration *Configuration
 
 type Pki struct {
 	Ca   string `json:"ca,omitempty" yaml:"ca,omitempty"`

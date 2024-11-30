@@ -12,7 +12,6 @@ type EmptyModel struct {
 }
 
 func NewEmptyModel(ctx *context.ProgramContext) contract.MainContent {
-
 	m := &EmptyModel{}
 	m.BaseModel = NewBaseModel(
 		ctx,
@@ -20,11 +19,9 @@ func NewEmptyModel(ctx *context.ProgramContext) contract.MainContent {
 	)
 
 	return m
-
 }
 
 func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
-
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
