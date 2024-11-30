@@ -26,8 +26,8 @@ type RequestValidation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ValidateOnly bool `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
-	Signature *ValidationSignature `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
+	ValidateOnly bool                 `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
+	Signature    *ValidationSignature `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *RequestValidation) Reset() {
@@ -79,8 +79,8 @@ type ResponseValidation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ValidateOnly bool `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
-	Signature *ValidationSignature `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
+	ValidateOnly bool                 `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
+	Signature    *ValidationSignature `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *ResponseValidation) Reset() {

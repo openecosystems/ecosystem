@@ -5,7 +5,6 @@ go 1.23
 require (
 	connectrpc.com/connect v1.17.0
 	connectrpc.com/otelconnect v0.7.1
-	connectrpc.com/vanguard v0.3.0
 )
 
 require (
@@ -19,8 +18,5 @@ require (
 	go.opentelemetry.io/otel/sdk/metric v1.30.0 // indirect
 	go.opentelemetry.io/otel/trace v1.31.0 // indirect
 	golang.org/x/net v0.29.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240903143218-8af14fe29dc1 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
-	google.golang.org/grpc v1.66.1 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 )

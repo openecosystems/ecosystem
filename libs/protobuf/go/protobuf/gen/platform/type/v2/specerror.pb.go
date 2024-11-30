@@ -27,7 +27,7 @@ type SpecErrorDetail struct {
 	unknownFields protoimpl.UnknownFields
 
 	CorrelationId string `protobuf:"bytes,1,opt,name=correlation_id,json=correlationId,proto3" json:"correlation_id,omitempty"`
-	UserMessage string `protobuf:"bytes,2,opt,name=user_message,json=userMessage,proto3" json:"user_message,omitempty"`
+	UserMessage   string `protobuf:"bytes,2,opt,name=user_message,json=userMessage,proto3" json:"user_message,omitempty"`
 }
 
 func (x *SpecErrorDetail) Reset() {
