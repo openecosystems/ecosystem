@@ -1,0 +1,572 @@
+syntax = "proto3";
+
+package platform.configuration.v2alpha;
+
+import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/configuration/v2alpha/spec_configuration.proto";
+import "platform/ontology/v2alpha/spec_data_catalog.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+import "buf/validate/validate.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: false};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "configuration";
+  entity_plural: "configurations";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/configuration/v2alpha;configurationv2alphapb";
+
+service ConfigurationService {
+  //
+  rpc CreateConfiguration(CreateConfigurationRequest) returns (CreateConfigurationResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PRIVATE;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.permission) = {
+      permission: "create",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_CREATE
+    };
+    option (google.api.http) = {
+      post: "/v2/configurations"
+      body: "*"
+    };
+  }
+
+  //
+  rpc ListConfigurations(ListConfigurationsRequest) returns (ListConfigurationsResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.permission) = {
+      permission: "list",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_LIST
+    };
+    option (google.api.http) = {
+      get: "/v2/configurations"
+    };
+  }
+
+  //
+  // Get workspace location
+  rpc GetConfiguration(GetConfigurationRequest) returns (GetConfigurationResponse) {
+    option (platform.options.v2.permission) = {
+      permission: "get",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = {
+      get: "/v2/configurations/{id}"
+    };
+  }
+
+  //
+  rpc UpdateConfiguration(UpdateConfigurationRequest) returns (UpdateConfigurationResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.permission) = {
+      permission: "update",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = {
+      put: "/v2/configurations/{config.id}"
+      body: "*"
+    };
+  }
+
+  //
+  rpc LoadConfiguration(LoadConfigurationRequest) returns (LoadConfigurationResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.permission) = {
+      permission: "spec.configuration.load",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = {
+      put: "/v2/configurations/load/{config.id}"
+      body: "*"
+    };
+  }
+
+  //
+  rpc DeleteConfiguration(DeleteConfigurationRequest) returns (DeleteConfigurationResponse) {
+    option (platform.options.v2.permission) = {
+      permission: "delete",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PRIVATE;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_DELETE
+    };
+    option (google.api.http) = {
+      delete: "/v2/configurations/{id}"
+    };
+  }
+
+  //
+  rpc PublishConfiguration(PublishConfigurationRequest) returns (PublishConfigurationResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PRIVATE;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.permission) = {
+      permission: "spec.configuration.publish",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = {
+      post: "/v2/configurations/publish/{id}"
+    };
+  }
+
+  //
+  rpc ArchiveConfiguration(ArchiveConfigurationRequest) returns (ArchiveConfigurationResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PRIVATE;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.permission) = {
+      permission: "spec.configuration.archive",
+      roles: [
+        AUTH_ROLE_PLATFORM_ADMIN
+      ]
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = {
+      post: "/v2/configurations/archive/{id}"
+    };
+  }
+}
+
+//Supported configuration type
+enum ConfigurationType {
+  CONFIGURATION_TYPE_UNSPECIFIED = 0;
+  CONFIGURATION_TYPE_ORGANIZATION = 1;
+  CONFIGURATION_TYPE_WORKSPACE = 2;
+  CONFIGURATION_TYPE_CONFIGURATION_GROUP = 3;
+}
+
+//The current status of a configuration
+enum ConfigurationStatus {
+  CONFIGURATION_STATUS_UNSPECIFIED = 0;
+  CONFIGURATION_STATUS_CREATING = 1;
+  CONFIGURATION_STATUS_ACTIVE = 2;
+  CONFIGURATION_STATUS_INACTIVE = 3;
+  CONFIGURATION_STATUS_UPDATING = 4;
+  CONFIGURATION_STATUS_DELETING = 5;
+  CONFIGURATION_STATUS_ERROR = 6;
+}
+
+//The current billing status of a configuration
+enum ConfigurationBillingStatus {
+  CONFIGURATION_BILLING_STATUS_UNSPECIFIED = 0;
+  CONFIGURATION_BILLING_STATUS_ACTIVE = 1;
+  CONFIGURATION_BILLING_STATUS_INACTIVE = 2;
+  CONFIGURATION_BILLING_STATUS_WARNING = 3;
+  CONFIGURATION_BILLING_STATUS_ERROR = 4;
+}
+
+enum ConfigurationCommands {
+  option (platform.options.v2.spec) = {
+    type: SPEC_ENUM_TYPE_COMMANDS
+  };
+
+  CONFIGURATION_COMMANDS_UNSPECIFIED = 0;
+  CONFIGURATION_COMMANDS_CREATE = 1;
+  CONFIGURATION_COMMANDS_UPDATE = 2;
+  CONFIGURATION_COMMANDS_DELETE = 3;
+}
+
+enum ConfigurationEvents {
+  option (platform.options.v2.spec) = {
+    type: SPEC_ENUM_TYPE_EVENTS
+  };
+
+  CONFIGURATION_EVENTS_UNSPECIFIED = 0;
+  CONFIGURATION_EVENTS_CREATED = 1 [(platform.options.v2.event) = {
+    versionable: true
+  }];
+  CONFIGURATION_EVENTS_UPDATED = 2 [(platform.options.v2.event) = {
+    versionable: true
+  }];
+  CONFIGURATION_EVENTS_DELETED = 3;
+}
+
+//Supported fields to create a configuration
+message CreateConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //What type of configuration is this?
+  ConfigurationType type = 2;
+
+  // ID of a parent configuration, required if ConfigurationType is a
+  // workspace or config group
+  string parent_id = 3;
+}
+
+//
+message CreateConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+}
+
+//
+message GetConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //
+  string id = 2;
+}
+
+//
+message GetConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+}
+
+//
+message ListConfigurationsRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //How many records would you like returned within one page?
+  int32 page_size = 2 [(buf.validate.field).int32 = {
+    gt: 1,
+    lte: 25
+  }];
+
+  //Page token provided in the response
+  string page_token = 3;
+}
+
+//
+message ListConfigurationsResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //Total count of configurations
+  int32 total_size = 2;
+
+  //Token to retrieve the next page
+  string next_page_token = 3;
+
+  //List of configurations
+  repeated Configuration configurations = 4;
+}
+
+//
+message ConfigurationsFilter {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //
+  string filter = 1;
+}
+
+//
+message UpdateConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //
+  Configuration config = 2;
+}
+
+//
+message UpdateConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+}
+
+//
+message LoadConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //
+  Configuration config = 2;
+}
+
+//
+message LoadConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+}
+
+//
+message DeleteConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //
+  string id = 2;
+}
+
+//
+message DeleteConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+}
+
+//
+message PublishConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //
+  Configuration config = 2;
+
+  string id = 3;
+}
+
+//
+message PublishConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+
+}
+
+//
+message ArchiveConfigurationRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The request context
+  spec.v2.SpecRequestContext spec_context = 1;
+
+  //
+  Configuration config = 2;
+
+  string id = 3;
+}
+
+//
+message ArchiveConfigurationResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Configuration configuration = 2;
+}
+
+//
+message Configuration {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //
+  string id = 1 [(platform.options.v2.entity_field) = {
+    key: true
+  }];
+
+  //
+  string organization_slug = 2 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_IMMUTABLE
+  }];
+
+  //
+  string workspace_slug = 3 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_IMMUTABLE
+  }];
+
+  //
+  google.protobuf.Timestamp created_at = 4 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_OUTPUT_ONLY
+  }];
+
+  //
+  google.protobuf.Timestamp updated_at = 5 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_OUTPUT_ONLY
+  }];
+
+  //
+  string source_id = 6 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_IMMUTABLE
+  }];
+
+  //
+  ConfigurationType type = 7 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_IMMUTABLE
+  }];
+
+  //
+  ConfigurationStatus status = 8 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_OUTPUT_ONLY
+  }];
+
+  //
+  string status_details = 9 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_OUTPUT_ONLY
+  }];
+
+  //
+  string parent_id = 10 [(platform.options.v2.entity_field) = {
+    behavior: FIELD_BEHAVIOR_IMMUTABLE
+  }];
+
+  //
+  platform.ontology.v2alpha.SpecDataCatalog data_catalog = 13;
+
+  //
+  string clinical_catalog = 14;
+
+  //
+  SpecPlatformConfiguration platform_configuration = 15;
+
+  map <string, google.protobuf.Any> platform_configurations = 16;
+  map <string, google.protobuf.Any> solution_configurations = 17;
+  map <string, google.protobuf.Any> connector_configurations = 18;
+
+}
+
+

@@ -1,0 +1,26 @@
+version: v2
+modules:
+  # 10000
+  - path: poc
+    name: buf.build/jeannotcompany/poc
+  # 20000
+  - path: public
+    name: buf.build/jeannotcompany/public
+  # 30000
+#  - path: partner
+#    name: buf.build/jeannotcompany/partner
+  # 40000
+  - path: private
+    name: buf.build/jeannotcompany/private
+  # 50000
+  - path: protobuf
+    name: buf.build/jeannotcompany/protobuf
+lint:
+  use:
+    - DEFAULT
+breaking:
+  use:
+    - FILE
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/bufbuild/protovalidate

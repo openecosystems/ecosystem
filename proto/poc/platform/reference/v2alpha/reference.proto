@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package platform.reference.v2alpha;
+
+import "platform/options/v2/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/spec/v2/spec.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_RUST, LANGUAGE_TYPE_GOLANG, LANGUAGE_TYPE_TYPESCRIPT]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_POC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "reference";
+  entity_plural: "references";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+};
+
+option go_package = "libs/poc/go/protobuf/gen/platform/reference/v2alpha;referencev2alphapb";
+
+message ReferenceConfiguration {
+
+}
+
+service ReferenceService {
+  rpc Unary(UnaryRequest) returns (UnaryResponse) {}
+  rpc ServerStreaming(ServerStreamingRequest) returns (stream ServerStreamingResponse) {}
+}
+
+message UnaryRequest {
+  ClientMessage message = 1;
+}
+
+message UnaryResponse {
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+  ServerMessage message = 2;
+}
+
+message ServerStreamingRequest {
+  ClientMessage message = 1;
+}
+
+message ServerStreamingResponse {
+  ServerMessage message = 1;
+}
+
+message ServerMessage {
+  string user = 1;
+  string text = 2;
+}
+
+message ClientMessage {
+  string user = 1;
+  string text = 2;
+}
+
+message Reference {
+
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  // Timestamp indicating when this message was created.
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp indicating when this message was last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+}

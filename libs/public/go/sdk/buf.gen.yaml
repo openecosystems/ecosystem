@@ -1,0 +1,11 @@
+version: v2
+inputs:
+  - directory: ../../../../proto/public
+plugins:
+  - local: protoc-gen-platform
+    out: ./gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=sdk
+      - prefix=public

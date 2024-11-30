@@ -1,0 +1,37 @@
+{{ $p := package . }}{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}
+func {{ .Name }}(ctx context.Context, req *{{ getImportName .Input .File }}{{ .Input.Name }}) (*{{ getImportName .Output .File }}{{ .Output.Name }}, error) {
+
+     	if {{ $s.Name.LowerCamelCase }}ClientInstance == nil {
+	        return nil, errors.New("{{ $s.Name.LowerCamelCase }}Client not configured")
+	}
+
+	lightstep := launcher.ConfigureOpentelemetry(
+		launcher.WithServiceName("{{ .Name }}-client"),
+	)
+	defer lightstep.Shutdown()
+
+	tracer := otel.Tracer("frontsight")
+
+	ctx, parentSpan := tracer.Start(ctx, "{{ .Name }}-client",
+		trace.WithSpanKind(trace.SpanKindServer),
+		trace.WithAttributes(attribute.String("rpc.system", "grpc")),
+		trace.WithAttributes(attribute.String("net.transport", "IP.TCP")),
+	)
+	defer parentSpan.End()
+
+	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	headers := map[string]string{
+		"sent-at":      time.Now().String(),
+		"spec-type":    "{{ $e.Name.LowerSnakeCase }}",
+		"os-name":      runtime.GOOS,
+		"x-b3-traceid": parentSpan.SpanContext().TraceID().String(),
+		"x-b3-spanid":  parentSpan.SpanContext().SpanID().String(),
+	}
+
+	md := metadata.New(headers)
+	ctx = metadata.NewOutgoingContext(ctx, md)
+
+	return {{ $s.Name.LowerCamelCase }}ClientInstance.Client.{{ .Name }}(ctx, req)
+}

@@ -1,0 +1,4 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}func (s *{{ $s.Name }}Handler) {{ .Name }}({{ package .File }}.{{ $s.Name }}_{{ .Name }}Server) error {
+
+return nil
+}

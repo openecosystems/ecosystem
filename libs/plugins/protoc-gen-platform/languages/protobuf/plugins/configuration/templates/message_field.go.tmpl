@@ -1,0 +1,2 @@
+{{ $configurationName := configurationName . }}
+    {{ .Package.ProtoName }}.{{ $configurationName.UpperCamelCase }} {{ $configurationName.LowerSnakeCase }}_{{ getPackageVersion . }} = {{ fieldPosition }};

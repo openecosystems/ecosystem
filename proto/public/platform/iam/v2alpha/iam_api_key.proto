@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package platform.iam.v2alpha;
+
+import "google/protobuf/timestamp.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/iam/v2alpha;iamv2alphapb";
+
+message IamApiKeyConfiguration {
+
+}
+
+// IAM API Key Service interface
+service IamApiKeyService {
+  // Method to create API Key
+  rpc CreateApiKey(CreateApiKeyRequest) returns (CreateApiKeyResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+
+  }
+  // Method to logout
+  rpc DeleteApiKey(DeleteApiKeyRequest) returns (DeleteApiKeyResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_DELETE};
+
+  }
+}
+
+// IAM API Key Events
+enum IamApiKeyEvents {
+  IAM_API_KEY_EVENTS_UNSPECIFIED = 0; // Unknown or unspecified event.
+  IAM_API_KEY_EVENTS_API_KEY_CREATED = 1; // API Key created.
+  IAM_API_KEY_EVENTS_API_KEY_DELETED = 2; // API Key deleted.
+}
+
+// Request for CreateApiKey
+message CreateApiKeyRequest {
+
+  // Email address of user
+  string email = 2;
+
+  // Password of user
+  string password = 3;
+}
+
+// Method for DeleteApiKey
+message DeleteApiKeyRequest {
+
+  // Email address of user.
+  string email = 2;
+}
+
+// Response to CreateApiKey
+message CreateApiKeyResponse {
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // Authentication data
+  IamApiKey iam_api_key = 2;
+}
+
+// Response to DeleteApiKey
+message DeleteApiKeyResponse {
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // DeleteApiKey authentication data
+  IamApiKey iam_api_key = 2;
+}
+
+// Authentication data for IAM
+message IamApiKey {
+
+  // Identifier for authentication
+  string id = 1;
+
+  // Timestamp when created
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  // API Key.
+  string key = 4;
+
+  // Time API Key expires.
+  int32 expires_in = 5;
+}

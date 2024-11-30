@@ -1,0 +1,3 @@
+name: workloads-private-edge-v2alpha-edge-router
+description: Edge Router
+runtime: go

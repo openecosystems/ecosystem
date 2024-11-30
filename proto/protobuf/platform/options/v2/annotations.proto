@@ -1,0 +1,526 @@
+syntax = "proto3";
+
+package platform.options.v2;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/options/v2;optionv2pb";
+
+extend google.protobuf.FileOptions {
+  NetworkOptions network_file = 40000;
+  ApiOptions api_file = 50000;
+  EntityOptions entity = 50001;
+  LanguageOptions language = 50002;
+  GraphqlOptions graphql = 50003;
+  ConfigurationOptions configuration = 50004;
+  bool has_multiple_implementations = 50005;
+}
+
+extend google.protobuf.ServiceOptions {
+  ApiOptions api_service = 50010;
+  SpecServiceOptions service = 50011;
+  ProxyOptions proxy = 50012;
+  ConnectorOptions connector = 50013;
+}
+
+extend google.protobuf.MethodOptions {
+  ApiOptions api_method = 50020;
+  CQRSOptions cqrs = 50021;
+  PermissionOptions permission = 50022;
+  RateLimitOptions rate = 50023;
+}
+
+extend google.protobuf.MessageOptions {
+  ApiOptions api_message = 50030;
+  GraphOptions graph = 50031;
+  RoutineOptions routine = 50032;
+}
+
+extend google.protobuf.FieldOptions {
+  ApiOptions api_field = 50040;
+  EntityFieldOptions entity_field = 50041;
+  ConfigurationFieldOptions configuration_field = 50042;
+  SyntheticOptions synthetic = 50043;
+}
+
+extend google.protobuf.EnumOptions {
+  SpecOptions spec = 50050;
+}
+
+extend google.protobuf.EnumValueOptions {
+  BillingOptions billing = 50060;
+  EventScopeOptions event_scope = 50061;
+  AuthRoleOptions auth_role = 50062;
+  EventOptions event = 50063;
+}
+
+//===========================================
+// google.protobuf.FileOptions
+//===========================================
+message NetworkOptions {
+  NetworkType type = 1;
+}
+
+enum NetworkType {
+  NETWORK_TYPE_UNSPECIFIED = 0;
+  NETWORK_TYPE_UNDERLAY = 1; // Loopbacks, UNIX Sockets, direct-point-to-point fabric
+  NETWORK_TYPE_INTERNET = 2; // HTTPS public internet, externally managed proxies or VPNs
+  NETWORK_TYPE_OVERLAY = 3; // Mesh Overlay network, internally managed proxy and/or VPN
+}
+
+message ApiOptions {
+  ApiType type = 1;
+  ApiLifecycle cycle = 2;
+  ApiInterfaceType interface = 3;
+}
+
+enum ApiType {
+  API_TYPE_UNSPECIFIED = 0;
+  API_TYPE_PRIVATE = 1;
+  API_TYPE_PARTNER = 2;
+  API_TYPE_PUBLIC = 3;
+  API_TYPE_POC = 4;
+}
+
+enum ApiInterfaceType {
+  API_INTERFACE_TYPE_UNSPECIFIED = 0;
+  API_INTERFACE_TYPE_META = 1;
+  API_INTERFACE_TYPE_OPERATIONAL = 2;
+  API_INTERFACE_TYPE_CONTRIBUTION = 3;
+  API_INTERFACE_TYPE_ANALYTICAL = 4;
+  API_INTERFACE_TYPE_OBSERVABLE = 5;
+  API_INTERFACE_TYPE_DISCOVERABLE = 6;
+}
+
+enum ApiLifecycle {
+  API_LIFECYCLE_UNSPECIFIED = 0;
+  API_LIFECYCLE_ALPHA = 1;
+  API_LIFECYCLE_BETA = 2;
+  API_LIFECYCLE_LIMITED_AVAILABILITY = 3;
+  API_LIFECYCLE_GENERAL_AVAILABILITY = 4;
+  API_LIFECYCLE_DEPRECATED = 5;
+  API_LIFECYCLE_RETIRED = 6;
+}
+
+message EntityOptions {
+  string entity = 1;
+  string entity_plural = 2;
+  EntityType type = 3;
+  string namespace = 4;
+  EntityConsistency consistency = 5;
+  EntityHierarchy hierarchy = 6;
+  bool versionable = 7;
+}
+
+enum EntityType {
+  ENTITY_TYPE_UNSPECIFIED = 0;
+  ENTITY_TYPE_AEROSPIKE = 1;
+  ENTITY_TYPE_DGRAPH = 2;
+  ENTITY_TYPE_MONGODB = 3;
+  ENTITY_TYPE_BIGQUERY = 4;
+  ENTITY_TYPE_REDIS = 5;
+  ENTITY_TYPE_ROCKSDB = 6;
+  ENTITY_TYPE_COUCHBASE = 7;
+}
+
+enum EntityConsistency {
+  ENTITY_CONSISTENCY_UNSPECIFIED = 0;
+  ENTITY_CONSISTENCY_STRONG = 1;
+  ENTITY_CONSISTENCY_EVENTUAL = 2;
+}
+
+enum EntityHierarchy {
+  ENTITY_HIERARCHY_UNSPECIFIED = 0;
+  ENTITY_HIERARCHY_PLATFORM = 1;
+  ENTITY_HIERARCHY_ORGANIZATION = 2;
+  ENTITY_HIERARCHY_WORKSPACE = 3;
+}
+
+message LanguageOptions {
+  repeated LanguageType languages = 1;
+}
+
+enum LanguageType {
+  LANGUAGE_TYPE_UNSPECIFIED = 0;
+  LANGUAGE_TYPE_CPLUSPLUS = 1;
+  LANGUAGE_TYPE_RUST = 2;
+  LANGUAGE_TYPE_GOLANG = 3;
+  LANGUAGE_TYPE_JAVA = 4;
+  LANGUAGE_TYPE_PYTHON = 5;
+  LANGUAGE_TYPE_TYPESCRIPT = 6;
+  LANGUAGE_TYPE_CSHARP = 7;
+  LANGUAGE_TYPE_SWIFT = 8;
+  LANGUAGE_TYPE_ANDROID = 9;
+  LANGUAGE_TYPE_GRAPHQL = 10;
+  LANGUAGE_TYPE_LUA = 11;
+}
+
+message GraphqlOptions {
+  bool enabled = 1;
+}
+
+//===========================================
+// google.protobuf.ServiceOptions
+//===========================================
+
+enum ConnectorType {
+  CONNECTOR_TYPE_UNSPECIFIED = 0;
+  CONNECTOR_TYPE_REFERENCE = 1;
+}
+
+message SpecServiceOptions {
+  int32 grpc_port = 1;
+  int32 http_port = 2;
+}
+
+message RateLimitFilter {
+  bool enabled = 1;
+  string metric = 2;
+}
+
+message AuthorizationFilter {
+  bool enabled = 1;
+}
+
+message ConsentFilter {
+  bool enabled = 1;
+}
+
+message ProxyOptions {
+  AuthorizationFilter authorization = 1;
+  ConsentFilter consent = 2;
+  RateLimitFilter rate_limit = 3;
+}
+
+message ConnectorOptions {
+  ConnectorType type = 1;
+}
+
+//===========================================
+// google.protobuf.MethodOptions
+//===========================================
+
+enum AuthRoleType {
+  AUTH_ROLE_TYPE_UNSPECIFIED = 0;
+  AUTH_ROLE_TYPE_PLATFORM = 1;
+  AUTH_ROLE_TYPE_ORGANIZATION = 2;
+  AUTH_ROLE_TYPE_WORKSPACE = 3;
+  AUTH_ROLE_TYPE_CONNECTED_TEST = 4;
+}
+
+enum CQRSType {
+  CQRS_TYPE_UNSPECIFIED = 0;
+  CQRS_TYPE_NONE = 1;
+  CQRS_TYPE_MUTATION_CREATE = 2;
+  CQRS_TYPE_MUTATION_UPDATE = 3;
+  CQRS_TYPE_MUTATION_DELETE = 4;
+  CQRS_TYPE_MUTATION_CLIENT_STREAM = 5;
+  CQRS_TYPE_MUTATION_SERVER_STREAM = 6;
+  CQRS_TYPE_MUTATION_BIDI_STREAM = 7;
+  CQRS_TYPE_QUERY_LIST = 8;
+  CQRS_TYPE_QUERY_STREAM = 9;
+  CQRS_TYPE_QUERY_GET = 10;
+  CQRS_TYPE_QUERY_EVENT_STREAM = 11;
+  CQRS_TYPE_QUERY_CLIENT_STREAM = 12;
+  CQRS_TYPE_QUERY_SERVER_STREAM = 13;
+  CQRS_TYPE_QUERY_BIDI_STREAM = 14;
+  CQRS_TYPE_QUERY_EXISTS = 15;
+}
+
+enum AuthRole {
+  AUTH_ROLE_UNSPECIFIED = 0;
+
+  AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+  AUTH_ROLE_PLATFORM_CLINICAL_ADMIN = 101 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+  AUTH_ROLE_PLATFORM_BILLING_ADMIN = 102 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+  AUTH_ROLE_PLATFORM_ADMIN = 103 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+  AUTH_ROLE_PLATFORM_MANAGER = 104 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+  AUTH_ROLE_PLATFORM_USER = 105 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+  AUTH_ROLE_PLATFORM_VIEWER = 106 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_PLATFORM
+  }];
+
+  AUTH_ROLE_ORGANIZATION_SUPER_ADMIN = 200 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+  AUTH_ROLE_ORGANIZATION_CLINICAL_ADMIN = 201 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+  AUTH_ROLE_ORGANIZATION_BILLING_ADMIN = 202 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+  AUTH_ROLE_ORGANIZATION_ADMIN = 203 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+  AUTH_ROLE_ORGANIZATION_MANAGER = 204 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+  AUTH_ROLE_ORGANIZATION_USER = 205 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+  AUTH_ROLE_ORGANIZATION_VIEWER = 206 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_ORGANIZATION
+  }];
+
+  AUTH_ROLE_WORKSPACE_SUPER_ADMIN = 300 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+  AUTH_ROLE_WORKSPACE_CLINICAL_ADMIN = 301 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+  AUTH_ROLE_WORKSPACE_BILLING_ADMIN = 302 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+  AUTH_ROLE_WORKSPACE_ADMIN = 303 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+  AUTH_ROLE_WORKSPACE_MANAGER = 304 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+  AUTH_ROLE_WORKSPACE_USER = 305 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+  AUTH_ROLE_WORKSPACE_VIEWER = 306 [(auth_role) = {
+    role_type: AUTH_ROLE_TYPE_WORKSPACE
+  }];
+
+  AUTH_ROLE_CONNECTED_TEST_PATIENT = 15;
+  AUTH_ROLE_CONNECTED_TEST_PROVIDER = 16;
+
+  // Such as power of attorney
+  AUTH_ROLE_CONNECTED_TEST_PROXY = 17;
+  AUTH_ROLE_CONNECTED_TEST_VIEWER = 18;
+}
+
+message CQRSOptions {
+  CQRSType type = 1;
+}
+
+message RateLimitOptions {
+  bool limit = 1;
+}
+
+message PermissionOptions {
+  string permission = 1;
+  repeated AuthRole roles = 2;
+}
+
+//===========================================
+// google.protobuf.MessageOptions
+//===========================================
+
+enum GraphType {
+  GRAPH_TYPE_UNSPECIFIED = 0;
+  GRAPH_TYPE_INPUT = 1;
+  GRAPH_TYPE_OUTPUT = 2;
+}
+
+message GraphOptions {
+  GraphType type = 1;
+}
+
+//===========================================
+// google.protobuf.FieldOptions
+//===========================================
+
+message EntityFieldOptions {
+  bool key = 1;
+  repeated FieldBehavior behavior = 2;
+  bool version_key = 3;
+}
+
+// An indicator of the behavior of a given field (for example, that a field
+// is required in requests, or given as output but ignored as input).
+// This **does not** change the behavior in protocol buffers itself; it only
+// denotes the behavior and may affect how API tooling handles the field.
+enum FieldBehavior {
+  // Conventional default for enums. Do not use this.
+  FIELD_BEHAVIOR_UNSPECIFIED = 0;
+
+  // Specifically denotes a field as optional.
+  // While all fields in protocol buffers are optional, this may be specified
+  // for emphasis if appropriate.
+  FIELD_BEHAVIOR_OPTIONAL = 1;
+
+  // Denotes a field as required.
+  // This indicates that the field **must** be provided as part of the request,
+  // and failure to do so will cause an error (usually `INVALID_ARGUMENT`).
+  FIELD_BEHAVIOR_REQUIRED = 2;
+
+  // Denotes a field as output only.
+  // This indicates that the field is provided in responses, but including the
+  // field in a request does nothing (the server *must* ignore it and
+  // *must not* throw an error as a result of the field's presence).
+  FIELD_BEHAVIOR_OUTPUT_ONLY = 3;
+
+  // Denotes a field as input only.
+  // This indicates that the field is provided in requests, and the
+  // corresponding field is not included in output.
+  FIELD_BEHAVIOR_INPUT_ONLY = 4;
+
+  // Denotes a field as immutable.
+  // This indicates that the field may be set once in a request to create a
+  // resource, but may not be changed thereafter.
+  FIELD_BEHAVIOR_IMMUTABLE = 5;
+
+  // Denotes that a (repeated) field is an unordered list.
+  // This indicates that the service may provide the elements of the list
+  // in any arbitrary  order, rather than the order the user originally
+  // provided. Additionally, the list's order may or may not be stable.
+  FIELD_BEHAVIOR_UNORDERED_LIST = 6;
+
+  // Denotes that this field returns a non-empty default value if not set.
+  // This indicates that if the user provides the empty value in a request,
+  // a non-empty value will be returned. The user will not be aware of what
+  // non-empty value to expect.
+  FIELD_BEHAVIOR_NON_EMPTY_DEFAULT = 7;
+}
+
+message SpecConfiguration {
+  // Value types that can be used as label values.
+  enum SpecConfigurationType {
+    SPEC_CONFIGURATION_TYPE_UNSPECIFIED = 0;
+
+    // A variable-length string. This is the default.
+    SPEC_CONFIGURATION_TYPE_STRING = 1;
+
+    // Boolean; true or false.
+    SPEC_CONFIGURATION_TYPE_BOOL = 2;
+
+    SPEC_CONFIGURATION_TYPE_INT = 3;
+
+    SPEC_CONFIGURATION_TYPE_LIST = 4;
+
+    SPEC_CONFIGURATION_TYPE_MAP = 5;
+  }
+
+  // The label key.
+  string key = 1;
+
+  // The type of data that can be assigned to the label.
+  SpecConfigurationType type = 2;
+
+  // A human-readable description for the label.
+  string description = 3;
+
+  // Is this configuration overridable?
+  bool overrideable = 4;
+
+  // Allow for safe deprecation of configurations
+  bool enabled = 5;
+}
+
+message ConfigurationOptions {
+  bool enabled = 1;
+  int32 field_number = 2;
+}
+
+message ConfigurationFieldOptions {
+  SpecConfiguration configuration = 1;
+}
+
+message SyntheticOptions {
+  string dictionary_key = 1;
+  SyntheticType type = 2;
+}
+
+enum SyntheticType {
+  SYNTHETIC_TYPE_UNSPECIFIED = 0;
+  // faker.fakeValuesService().resolve("company.name", this, faker);
+  SYNTHETIC_TYPE_DIRECT_FROM_DICTIONARY = 1;
+  //List<List<String>> buzzwordLists = (List<List<String>>) faker.fakeValuesService().fetchObject("company.buzzwords");
+  //List<String> buzzwords = new ArrayList<String>();
+  //for (List<String> buzzwordList : buzzwordLists) {
+  //    buzzwords.addAll(buzzwordList);
+  //}
+  //return buzzwords.get(faker.random().nextInt(buzzwords.size()));
+  SYNTHETIC_TYPE_SELECT_RANDOM_FROM_LIST = 2;
+
+  //List<List<String>> catchPhraseLists = (List<List<String>>) faker.fakeValuesService().fetchObject("company.buzzwords");
+  //return joinSampleOfEachList(catchPhraseLists, " ");
+  SYNTHETIC_TYPE_LIST_FROM_LIST = 3;
+
+  //int number = faker.random().nextInt(13) + 1;
+  //return "https://pigment.github.io/fake-logos/logos/medium/color/" + number + ".png";
+  SYNTHETIC_TYPE_GENERATED_LOGO = 6;
+}
+
+//Supported workspace type
+enum ClassificationType {
+  CLASSIFICATION_TYPE_UNSPECIFIED = 0;
+  CLASSIFICATION_TYPE_DERIVATIVE_DATA = 1;
+  CLASSIFICATION_TYPE_DE_IDENTIFIED = 2;
+  CLASSIFICATION_TYPE_PUBLIC = 3;
+  CLASSIFICATION_TYPE_INTERNAL_USE = 4;
+  CLASSIFICATION_TYPE_CONFIDENTIAL = 5;
+  CLASSIFICATION_TYPE_RESTRICTED = 6;
+  CLASSIFICATION_TYPE_HIGHLY_RESTRICTED = 7;
+}
+
+// Data Classification
+message Classification {
+  // Classification Type
+  ClassificationType type = 1;
+}
+
+//===========================================
+// google.protobuf.EnumOptions
+//===========================================
+
+enum SpecEnumType {
+  SPEC_ENUM_TYPE_UNSPECIFIED = 0;
+  SPEC_ENUM_TYPE_NONE = 1;
+  SPEC_ENUM_TYPE_TOPICS = 2;
+  SPEC_ENUM_TYPE_COMMANDS = 3;
+  SPEC_ENUM_TYPE_EVENTS = 4;
+  SPEC_ENUM_TYPE_ROUTINE_LISTENERS = 5;
+}
+
+message SpecOptions {
+  SpecEnumType type = 1;
+}
+
+//===========================================
+// google.protobuf.EnumValueOptions
+//===========================================
+
+message BillingOptions {
+  bool billable = 1;
+  bool partner_billable = 2;
+  bool metered = 3;
+}
+
+enum EventScope {
+  EVENT_SCOPE_UNSPECIFIED = 0;
+  EVENT_SCOPE_USER = 1;
+  EVENT_SCOPE_WORKSPACE = 2;
+  EVENT_SCOPE_ORGANIZATION = 3;
+}
+
+message EventScopeOptions {
+  repeated EventScope scopes = 1;
+}
+
+message EventOptions {
+  bool versionable = 1;
+}
+
+message AuthRoleOptions {
+  AuthRoleType role_type = 1;
+}
+
+message RoutineOptions {
+	string listener = 1;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "cryptography-v2alpha-encryption",
+  "version": "0.32.0-acc5694",
+  "description": "Encryption service",
+  "private": true,
+  "license": "UNLICENSED"
+}

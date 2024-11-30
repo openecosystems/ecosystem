@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+message GitRepository {
+
+  string url = 1;
+
+  string tag = 2;
+
+  string rev = 3;
+
+  string branch  = 4;
+
+  string path = 5;
+
+}

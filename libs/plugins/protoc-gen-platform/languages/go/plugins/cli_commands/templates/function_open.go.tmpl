@@ -1,0 +1,23 @@
+
+var CommandRegistry *Commands = new(Commands)
+
+type Commands struct {
+  systemsByName    map[FullCommandName]*cobra.Command
+}
+
+type FullCommandName struct {
+  Name string
+  Version string
+}
+
+func (s FullCommandName) IsValid() bool {
+  if s.Name == "" || s.Version == "" {
+    return false
+  }
+  return true
+}
+
+// TODO: Parse multiple ServiceCommands
+func (c *Commands) RegisterCommands() map[FullCommandName]*cobra.Command {
+	commands := make(map[FullCommandName]*cobra.Command)
+{{- $clearLines := . -}}

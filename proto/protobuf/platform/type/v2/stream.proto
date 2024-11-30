@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+// Supported event plane stream types
+enum Stream {
+  STREAM_UNSPECIFIED = 0; // Unspecified or unknown event type
+  STREAM_INTERNAL = 1; // Internal event plane stream
+  STREAM_INBOUND = 2; // Inbound event plane stream
+  STREAM_OUTBOUND = 3; // Outbound event plane stream
+  STREAM_PARTNER_INBOUND = 4; // Inbound partner event plane stream
+  STREAM_PARTNER_OUTBOUND = 5; // Outbound partner event plane stream
+}

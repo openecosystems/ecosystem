@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - "OE-1/**"
+  pull_request:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      #      - uses: actions/checkout@v4
+      #        with:
+      #          fetch-depth: 0
+      #      - uses: pnpm/action-setup@v3
+      #        with:
+      #          version: 8
+      #      - name: Restore cached npm dependencies
+      #        uses: actions/cache/restore@v4
+      #        with:
+      #          path: |
+      #            node_modules
+      #            ~/.cache/Cypress # needed for the Cypress binary
+      #          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      #      - run: pnpm install --frozen-lockfile
+      #      - name: Cache npm dependencies
+      #        uses: actions/cache/save@v4
+      #        with:
+      #          path: |
+      #            node_modules
+      #            ~/.cache/Cypress # needed for the Cypress binary
+      #          key: npm-dependencies-${{ hashFiles('pnpm-lock.yaml') }}
+      #      #- run: pnpm nx build platform
+      #      - run: pnpm nx affected -t lint build
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+      #- run: npm ci
+      - uses: nrwl/nx-set-shas@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress # needed for the Cypress binary
+          key: npm-dependencies-${{ hashFiles('package-lock.json') }}
+      - run: npm install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress # needed for the Cypress binary
+          key: npm-dependencies-${{ hashFiles('package-lock.json') }}
+      #- run: pnpm nx build platform
+      #- run: npx nx-cloud record -- nx format:check
+      #- run: npx nx affected -t lint build
+      - run: npx nx affected -t build

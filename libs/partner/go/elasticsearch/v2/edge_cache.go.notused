@@ -1,0 +1,55 @@
+package v2
+
+import (
+	"context"
+	"fmt"
+	"sync"
+
+	"libs/private/go/server/v2alpha"
+)
+
+type EdgeCacheBinding struct {
+}
+
+var (
+	edgeCacheInstance    *EdgeCacheBinding
+	EdgeCacheBindingName = "EDGE_CACHE_BINDING"
+)
+
+func (b *EdgeCacheBinding) Name() string {
+	return EdgeCacheBindingName
+}
+
+func (b *EdgeCacheBinding) Validate(_ context.Context, _ *sdkv2alphalib.Configuration, _ *Bindings) error {
+
+	return nil
+}
+
+func (b *EdgeCacheBinding) Bind(_ context.Context, config *sdkv2alphalib.Configuration, bindings *Bindings) *Bindings {
+
+	if edgeCacheInstance == nil {
+		var once sync.Once
+		once.Do(
+			func() {
+
+				edgeCacheInstance = &EdgeCacheBinding{}
+				bindings.EdgeCache = edgeCacheInstance
+			})
+	} else {
+		bindings.EdgeCache = edgeCacheInstance
+		fmt.Println("EdgeCache already bound")
+	}
+
+	return bindings
+}
+
+func (b *EdgeCacheBinding) GetBinding() interface{} {
+	return edgeCacheInstance
+}
+
+func (b *EdgeCacheBinding) Close() error {
+
+	fmt.Println("Shutting down edgeCache")
+	return nil
+
+}

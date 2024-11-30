@@ -1,0 +1,9 @@
+{{ $apiType := getApiOptionsTypeName . }}
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/configuration/v2alpha;configurationv2alphapb";

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+message File {
+  string name = 1;             // File name (e.g., "image.png")
+  bytes content = 2;           // Binary content of the file
+  int64 size = 3;              // Size of the file in bytes
+  string type = 4;             // MIME type (e.g., "image/png")
+  int64 creation_time = 5;     // Creation timestamp (Unix epoch format)
+  int64 modification_time = 6; // Last modification timestamp (Unix epoch format)
+}

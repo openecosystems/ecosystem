@@ -1,0 +1,101 @@
+{
+  "name": "apps-workloads-private-edge-v2alpha-edge-router",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/workloads/private/edge/v2alpha/edge-router",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/workloads/private/edge/v2alpha/edge-router"
+      ],
+      "options": {
+        "commands": [
+          "fastly compute build",
+          "mkdir -p  ../../../../../../dist/apps/workloads/private/edge/v2alpha/edge-router",
+          "cp package.json ../../../../../../dist/apps/workloads/private/edge/v2alpha/edge-router/.",
+          "cp .npmignore ../../../../../../dist/apps/workloads/private/edge/v2alpha/edge-router/.",
+          "cp -R bin/ ../../../../../../dist/apps/workloads/private/edge/v2alpha/edge-router/bin",
+          "cp -R pkg/ ../../../../../../dist/apps/workloads/private/edge/v2alpha/edge-router/pkg"
+        ],
+        "parallel": false,
+        "cwd": "apps/workloads/private/edge/v2alpha/edge-router"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cargo clean",
+        "cwd": "apps/workloads/private/edge/v2alpha/edge-router"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "fastly compute serve",
+        "cwd": "apps/workloads/private/edge/v2alpha/edge-router"
+      }
+    },
+    "local-container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "context": "apps/workloads/private/edge/v2alpha/edge-router",
+        "platforms": ["linux/amd64"],
+        "tags": ["workloads/private/edge/v2alpha/edge-router"]
+      },
+      "dependsOn": ["build"]
+    },
+    "publish": {
+      "executor": "@platform/nx-node:publish",
+      "options": {
+        "packageManager": "yarn",
+        "registries": ["https://npm.pkg.github.com"],
+        "cwd": "dist/apps/workloads/private/edge/v2alpha/edge-router"
+      },
+      "dependsOn": ["build"]
+    },
+    "eslint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/workloads/private/edge/v2alpha/edge-router/**/*.yaml"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cargo clippy",
+        "cwd": "apps/workloads/private/edge/v2alpha/edge-router"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cargo clippy",
+          "echo 'add cargo clippy --fix to acutally fix issues. However, this is to destructive and should be done manually'"
+        ],
+        "parallel": false,
+        "cwd": "apps/workloads/private/edge/v2alpha/edge-router"
+      }
+    },
+    "version": {
+      "outputs": ["{options.packageJson}"],
+      "executor": "@platform/nx-version:bump",
+      "options": {
+        "packageJson": "apps/workloads/private/edge/v2alpha/edge-router/package.json"
+      }
+    },
+    "local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose --profile system-edge-v2alpha-edge-router up -d",
+        "cwd": "."
+      },
+      "dependsOn": ["local-container"]
+    }
+  },
+  "tags": ["workloads", "public", "edge", "v2alpha", "rust"]
+}

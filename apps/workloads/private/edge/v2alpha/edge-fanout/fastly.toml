@@ -1,0 +1,13 @@
+# This file describes a Fastly Compute package. To learn more visit:
+# https://www.fastly.com/documentation/reference/compute/fastly-toml
+
+authors = ["dimy@jeannotcompany.com"]
+cloned_from = "https://github.com/fastly/compute-starter-kit-rust-fanout"
+description = ""
+language = "rust"
+manifest_version = 2
+name = "edge-fanout"
+service_id = ""
+
+[scripts]
+  build = "cargo build --bin fastly-compute-project --release --target wasm32-wasi --color always"

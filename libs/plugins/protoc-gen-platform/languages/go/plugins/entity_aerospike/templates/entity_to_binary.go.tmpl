@@ -1,0 +1,67 @@
+{{ $entityNameFromField := entityNameFromField . }}
+{{- if .Type.IsEnum -}}
+// IsEnum
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}.String() != "" {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+
+{{- else if isMap . -}}
+// IsMap
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+
+{{- else if .Type.IsRepeated -}}
+// IsRepeated
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+
+{{- else if isTimestamp . -}}
+// IsTimestamp
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}.AsTime().Unix()}
+
+{{- else if isDuration . -}}
+// IsDuration
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}.AsDuration()}
+
+{{- else if isString . -}}
+// IsString
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != "" {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+
+{{- else if or (isInteger32 .) (isUnsignedInteger32 .) (isInteger64 .) (isUnsignedInteger64 .) -}}
+// IsInteger
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != 0 {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+
+{{- else if or (isFloat32 .) (isFloat64 .) -}}
+// IsFloat
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != 0.0 {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+
+{{- else if isBoolean . -}}
+// IsBoolean
+bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}
+
+{{- else if isStructPB . -}}
+// IsStructPB
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {
+    mapValue := entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}.AsMap()
+    bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = aerospike.NewJsonValue(mapValue)
+}
+
+{{- else if isStruct . -}}
+// IsStruct
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {
+    if jsonStr, err := json.Marshal(*entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}); err != nil {
+        return bins, err
+    } else {
+        bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = jsonStr
+    }
+}
+
+{{- else if isByte . -}}
+// IsByte
+//if(this.{{ .Message.Name.LowerCamelCase }}.get{{ .Name.UpperCamelCase }}() != ByteString.EMPTY) { bins.add(new Bin({{ .Name.ScreamingSnakeCase }}_BIN, this.{{ .Message.Name.LowerCamelCase }}.get{{ .Name.UpperCamelCase }}().toByteArray())); }
+if len(entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}) != 0 {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = aerospike.NewBytesValue(entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }})}
+
+{{- else if .Type.IsEmbed -}}
+// IsEmbed
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != nil {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}.String()}
+
+{{- else -}}
+// ELSE
+if entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }} != "" {bins[{{ $entityNameFromField.UpperCamelCase }}{{ .Name.UpperCamelCase }}Bin] = entity.{{ .Message.Name }}.{{ .Name.UpperCamelCase }}}
+{{- end -}}

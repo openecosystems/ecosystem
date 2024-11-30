@@ -1,0 +1,109 @@
+package main
+
+import (
+	"strings"
+	"unicode"
+
+	gnosticGrpc "github.com/googleapis/gnostic-grpc/generator"
+	surface "github.com/googleapis/gnostic/surface"
+)
+
+type GoLanguageModel struct{}
+
+func NewGoLanguageModel() *GoLanguageModel {
+	return &GoLanguageModel{}
+}
+
+// Prepare sets language-specific properties for all types and methods.
+func (language *GoLanguageModel) Prepare(model *surface.Model, inputDocumentType string) {
+	for _, t := range model.Types {
+		// determine the type used for Go language implementation of the type
+		t.TypeName = strings.Title(filteredTypeName(t.Name))
+
+		for _, f := range t.Fields {
+			f.FieldName = goFieldName(f.Name, f.Type)
+			f.ParameterName = goParameterName(f.Name, f.Type)
+			switch f.Type {
+			case "boolean":
+				f.NativeType = "bool"
+			case "number":
+				f.NativeType = "int"
+			case "integer":
+				switch f.Format {
+				case "int32":
+					f.NativeType = "int32"
+				case "int64":
+					f.NativeType = "int64"
+				default:
+					f.NativeType = "int64"
+				}
+			case "object":
+				f.NativeType = "interface{}"
+			case "string":
+				f.NativeType = "string"
+			default:
+				f.NativeType = strings.Title(filteredTypeName(f.Type))
+			}
+		}
+	}
+
+	for _, m := range model.Methods {
+		m.HandlerName = "Handle" + m.Name
+		m.ProcessorName = m.Name
+		m.ClientName = m.Name
+		m.ResponsesTypeName = strings.Title(filteredTypeName(m.ResponsesTypeName))
+	}
+	gnosticGrpc.AdjustSurfaceModel(model, inputDocumentType)
+}
+
+func goParameterName(originalName string, t string) string {
+	name := gnosticGrpc.CleanName(originalName)
+	if name == "" {
+		name = gnosticGrpc.CleanName(t)
+	}
+	// lowercase first letter
+	a := []rune(name)
+	a[0] = unicode.ToLower(a[0])
+	name = string(a)
+	// avoid reserved words
+	if name == "type" {
+		return "myType"
+	}
+	return name
+}
+
+func goFieldName(name string, t string) string {
+	name = gnosticGrpc.CleanName(name)
+	if name == "" {
+		name = gnosticGrpc.CleanName(t)
+	}
+	return snakeToUpperCamel(name)
+}
+
+func snakeToUpperCamel(snakeCase string) (camelCase string) {
+	isToUpper := false
+	for _, runeValue := range snakeCase {
+		if isToUpper {
+			camelCase += strings.ToUpper(string(runeValue))
+			isToUpper = false
+		} else {
+			if runeValue == '_' {
+				isToUpper = true
+			} else {
+				camelCase += string(runeValue)
+			}
+		}
+	}
+	camelCase = strings.Title(camelCase)
+	return
+}
+
+func filteredTypeName(typeName string) (name string) {
+	// first take the last path segment
+	parts := strings.Split(typeName, "/")
+	name = parts[len(parts)-1]
+	// then take the last part of a dotted name
+	parts = strings.Split(name, ".")
+	name = parts[len(parts)-1]
+	return name
+}

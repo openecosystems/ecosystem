@@ -1,0 +1,7 @@
+{
+  "name": "@platform/nx-version",
+  "version": "0.2.0-f10ee61",
+  "main": "src/index.js",
+  "generators": "./generators.json",
+  "executors": "./executors.json"
+}

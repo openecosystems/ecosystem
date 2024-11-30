@@ -1,0 +1,2 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := entity .File }}Validate{{ .Name }}Invariants(*{{ getSpecTypePackage .File }}Spec, *{{ .Input.Name }}) (*{{ $e.Name }}SpecEntity, error)
+{{ .Name }}Handler(*{{ getSpecTypePackage .File }}Spec, *{{ .Input.Name }}, {{ $s.Name }}_{{ .Name }}Server) error

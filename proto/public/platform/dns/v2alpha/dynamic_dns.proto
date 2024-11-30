@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package platform.dns.v2alpha;
+
+import "platform/options/v2/annotations.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_OVERLAY;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: false};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_DISCOVERABLE;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/dns/v2alpha;dnsv2alphapb";
+
+message DynamicDnsConfiguration {
+
+  string dynamic_config = 1;
+
+}

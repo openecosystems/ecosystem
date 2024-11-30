@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package platform.event.v2alpha;
+
+import "platform/options/v2/annotations.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_OVERLAY;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: false};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PRIVATE;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+
+option go_package = "libs/private/go/protobuf/gen/platform/event/v2alpha;eventv2alphapb";
+
+message EventMultiplexerConfiguration {
+
+}

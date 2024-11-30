@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+message Header {
+  string key = 1;
+  repeated string values = 2;
+}

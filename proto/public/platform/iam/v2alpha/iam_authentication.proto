@@ -1,0 +1,115 @@
+/*
+   IAM System
+
+   The IAM module provides APIs to create and manage users and their roles. User accounts can be for individual users as well as system accounts. The module also provides APIs to define permissions for roles.
+*/
+syntax = "proto3";
+
+package platform.iam.v2alpha;
+
+import "google/protobuf/timestamp.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/iam/v2alpha;iamv2alphapb";
+
+message IamAuthenticationConfiguration {
+
+}
+
+// IAM Authentication Service interface
+service IamAuthenticationService {
+  // Method to login
+  rpc Login(LoginRequest) returns (LoginResponse) {
+
+  }
+  // Method to logout
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {
+
+  }
+}
+
+// IAM Authentication Events
+enum IamAuthenticationEvents {
+  IAM_AUTHENTICATION_EVENTS_UNSPECIFIED = 0; // Unknown or unspecified event.
+  IAM_AUTHENTICATION_EVENTS_USER_LOGGED_IN = 1; // User logged in.
+  IAM_AUTHENTICATION_EVENTS_USER_LOGGED_OUT = 2; // User logged out.
+}
+
+// Request for Login
+message LoginRequest {
+
+  // Email address of user
+  string email = 2;
+
+  // Password of user
+  string password = 3;
+}
+
+// Method for Logout
+message LogoutRequest {
+
+  // Email address of user.
+  string email = 2;
+}
+
+// Response to Login
+message LoginResponse {
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // Authentication data
+  IamAuthentication iam_authentication = 2;
+}
+
+// Response to Logout
+message LogoutResponse {
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // Logout authentication data
+  IamAuthentication iam_authentication = 2;
+}
+
+// Authentication data for IAM
+message IamAuthentication {
+
+  // Identifier for authentication
+  string id = 1;
+
+  // Timestamp when created
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  // Email address of user.
+  string email = 4;
+
+  // Display name of user
+  string display_name = 5;
+
+  // Indicator if user is registered
+  bool registered = 6;
+
+  // ID token for user.
+  string id_token = 7;
+
+  // Refresh token for user.
+  string refresh_token = 8;
+
+  // Time id token expires.
+  int32 expires_in = 9;
+}

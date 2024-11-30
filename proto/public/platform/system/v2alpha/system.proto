@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package platform.system.v2alpha;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "system";
+  entity_plural: "systems";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/system/v2alpha;systemv2alphapb";
+
+message PublicSystems {
+  bool communication = 1;
+  bool configuration = 2;
+  bool event = 3;
+  bool iam = 4;
+  bool ontology = 5;
+}
+
+message PrivateSystems {
+  bool audit = 1;
+  bool edge = 2;
+  bool encryption = 3;
+  bool event = 4;
+}
+
+message PocSystems {
+  bool reference = 1;
+}
+
+message SystemConfiguration {
+
+  PublicSystems public_systems = 1;
+  PrivateSystems private_systems = 2;
+  PocSystems poc_systems = 3;
+
+}
+
+// Event Subscription Service Interface
+service SystemService {
+
+  // Method to Subscribe to events based on scopes
+  rpc Enable(EnableRequest) returns (stream EnableResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+    option (google.api.http) = {
+      post: "/v2alpha/system/enable"
+      body: "*"
+    };
+  }
+
+  // Method to Unsubscribe to an event scope
+  rpc Disable(DisableRequest) returns (DisableResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_DELETE};
+    option (google.api.http) = {
+      post: "/v2alpha/system/disable"
+      body: "*"
+    };
+  }
+}
+
+enum SystemCommands {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  SYSTEM_COMMANDS_UNSPECIFIED = 0;
+  SYSTEM_COMMANDS_ENABLE = 1;
+  SYSTEM_COMMANDS_DISABLE = 2;
+}
+
+enum SystemEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  SYSTEM_EVENTS_UNSPECIFIED = 0;
+
+  SYSTEM_EVENTS_ENABLED = 1;
+
+  SYSTEM_EVENTS_DISABLED = 2;
+}
+
+message EnableRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+
+}
+
+message EnableResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  System system = 2;
+}
+
+message DisableRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+
+}
+
+message DisableResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  System system = 2;
+}
+
+message System {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  google.protobuf.Timestamp enabled_at = 2;
+
+  // Timestamp indicating when this message was created.
+  google.protobuf.Timestamp created_at = 3;
+
+  // Timestamp indicating when this message was last updated.
+  google.protobuf.Timestamp updated_at = 4;
+
+}

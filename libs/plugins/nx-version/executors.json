@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "executors": {
+    "bump": {
+      "implementation": "./src/executors/bump/executor",
+      "schema": "./src/executors/bump/schema.json",
+      "description": "bump the version in package.json"
+    }
+  }
+}

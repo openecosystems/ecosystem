@@ -1,0 +1,109 @@
+app:
+  name: event-v2alpha-event-multiplexer
+  environmentName: local
+grpc:
+  port: '6577'
+http:
+  port: '6477'
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+  encoderConfig:
+    timeKey: 'time'
+    levelKey: 'level'
+    nameKey: 'name'
+    callerKey: 'caller'
+    functionKey: ''
+    messageKey: 'message'
+    stacktraceKey: 'stacktrace'
+    encodeLevel: 'capitalColor'
+    encodeTime: 'iso8601'
+    encodeDuration: 'string'
+    encodeCaller: ''
+  outputPaths: ['stdout']
+  errorOutputPaths: ['stderr']
+opentelemetry:
+  traceProviderEnabled: true
+natsd:
+  enabled: true
+  options:
+    serverName: "platform-leaf-node-local"
+    host: "localhost"
+    port: 4222
+    dontListen: false
+    debug: true
+    maxConn: -1
+    maxSubs: -1
+    leafNode:
+      remotes:
+        - urls:
+            scheme: "tls"
+            host:   "connect.ngs.global"
+          credentials: "/Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds"
+          tLSConfig:
+            insecureSkipVerify: true
+
+
+    jetStream: true
+    #jetStreamDomain: "local"
+    jetStreamMaxMemory: -1
+    jetStreamMaxStore: -1
+    storeDir: "./nats-jetstream-data"
+    #TLS: false
+    #TLSVerify: false
+    disableJetStreamBanner: true
+
+eventStreamRegistry:
+  streams:
+    - name: "audit"
+      subjects:
+        - "audit.>"
+      maxMsgs: -1
+      maxBytes: -1
+      maxAge: 9151516080000000000 #290 years is the max Nats supports
+      storage: 0
+      retention: 0
+      maxMsgSize: -1
+      discard: 0
+      replicas: 1
+      maxMsgsPerSubject: -1
+      duplicates: "2m0s"
+      allowRollup: false
+      denyPurge: true
+      denyDelete: true
+      noAck: false
+    - name: "preferenceCenter"
+      subjects:
+        - "preferenceCenter.>"
+      maxMsgs: -1
+      maxBytes: -1
+      maxAge: 9151516080000000000 #290 years is the max Nats supports
+      storage: 0
+      retention: 0
+      maxMsgSize: -1
+      discard: 0
+      replicas: 1
+      maxMsgsPerSubject: -1
+      duplicates: "2m0s"
+      allowRollup: false
+      denyPurge: true
+      denyDelete: true
+      noAck: false
+    - name: "configuration"
+      subjects:
+        - "configuration.>"
+      maxMsgs: -1
+      maxBytes: -1
+      maxAge: 9151516080000000000 #290 years is the max Nats supports
+      storage: 0
+      retention: 0
+      maxMsgSize: -1
+      discard: 0
+      replicas: 1
+      maxMsgsPerSubject: -1
+      duplicates: "2m0s"
+      allowRollup: false
+      denyPurge: true
+      denyDelete: true
+      noAck: false

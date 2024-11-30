@@ -1,0 +1,115 @@
+{
+  "name": "apps-workloads-public-cryptography-v2alpha-encryption",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/workloads/public/cryptography/v2alpha/encryption",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/workloads/public/cryptography/v2alpha/encryption/app"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "command": "go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/encryption/app",
+        "cwd": "apps/workloads/public/cryptography/v2alpha/encryption"
+      },
+      "configurations": {
+        "production": {
+          "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/encryption/app"
+        }
+      },
+      "dependsOn": ["pre-build"]
+    },
+    "pre-build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/workloads/public/cryptography/v2alpha/encryption/spec.yaml",
+        "{workspaceRoot}/dist/apps/workloads/public/cryptography/v2alpha/encryption/package.json"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/encryption",
+          "cp spec.yaml ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/encryption",
+          "cp package.json ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/encryption"
+        ],
+        "parallel": false,
+        "cwd": "apps/workloads/public/cryptography/v2alpha/encryption"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "apps/workloads/public/cryptography/v2alpha/encryption"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "apps/workloads/public/cryptography/v2alpha/encryption"
+      }
+    },
+    "serve": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "cmd": "go",
+        "cwd": "apps/workloads/public/cryptography/v2alpha/encryption",
+        "main": "main.go"
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "context": "dist/apps/workloads/public/cryptography/v2alpha/encryption",
+        "platforms": ["linux/amd64"],
+        "tags": ["workloads/public/cryptography/v2alpha/encryption"]
+      }
+    },
+    "publish": {
+      "executor": "@platform/nx-container:push",
+      "options": {
+        "image": "workloads/public/cryptography/v2alpha/encryption",
+        "version": {
+          "path": "apps/workloads/public/cryptography/v2alpha/encryption/package.json",
+          "key": "version"
+        },
+        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+      }
+    },
+    "eslint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/workloads/public/cryptography/v2alpha/encryption/**/*.yaml"
+        ]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "go fmt ./..."],
+        "parallel": false,
+        "cwd": "apps/workloads/public/cryptography/v2alpha/encryption"
+      }
+    },
+    "version": {
+      "outputs": ["{options.packageJson}"],
+      "executor": "@platform/nx-version:bump",
+      "options": {
+        "packageJson": "apps/workloads/public/cryptography/v2alpha/encryption/package.json"
+      }
+    },
+    "local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose --profile system-cryptography-v2alpha-encryption up -d",
+        "cwd": "."
+      },
+      "dependsOn": ["container"]
+    }
+  },
+  "tags": ["workloads", "public", "cryptography", "v2alpha", "golang"]
+}

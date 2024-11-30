@@ -1,0 +1,21 @@
+{
+  "name": "libs-private-go-sdk",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/private/go/sdk",
+  "implicitDependencies": ["proto", "libs-plugins-protoc-gen-platform"],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "buf generate",
+        "cwd": "libs/private/go/sdk"
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "visibility:private",
+    "language:golang"
+  ]
+}

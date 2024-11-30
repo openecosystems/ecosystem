@@ -1,0 +1,46 @@
+{
+  "name": "libs-plugins-protoc-gen-platform",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/plugins/protoc-gen-platform",
+  "implicitDependencies": ["proto"],
+  "targets": {
+    "test": {
+      "executor": "@nx-go/nx-go:test"
+    },
+    "eslint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/plugins/protoc-gen-platform/**/*.yaml"]
+      }
+    },
+    "build": {
+      "executor": "@nx-go/nx-go:build",
+      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+      "options": {
+        "outputPath": "dist/bin/libs/plugins/protoc-gen-platform/protoc-gen-platform",
+        "main": "libs/plugins/protoc-gen-platform/main.go"
+      },
+      "dependsOn": ["pre-build"]
+    },
+    "pre-build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform/package.json"
+      ],
+      "options": {
+        "command": "mkdir -p ../../../dist/bin/libs/plugins/protoc-gen-platform && cp package.json ../../../dist/bin/libs/plugins/protoc-gen-platform",
+        "cwd": "libs/plugins/protoc-gen-platform"
+      }
+    },
+    "version": {
+      "outputs": ["{options.packageJson}"],
+      "executor": "@platform/nx-version:bump",
+      "options": {
+        "packageJson": "libs/plugins/protoc-gen-platform/package.json"
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,7 @@
+{
+  "name": "event-v2alpha-event-multiplexer",
+  "version": "0.32.0-acc5694",
+  "description": "Event Multiplexer service",
+  "private": true,
+  "license": "UNLICENSED"
+}

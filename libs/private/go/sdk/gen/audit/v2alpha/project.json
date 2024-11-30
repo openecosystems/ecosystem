@@ -1,0 +1,71 @@
+
+{
+  "name": "libs-private-go-sdk-audit-v2alpha",
+  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/private/go/sdk/gen/audit/v2alpha",
+  "implicitDependencies": [
+    "proto"
+  ],
+  "targets": {
+
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build ./...",
+        "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
+      }
+    },
+    "eslint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/private/go/sdk/gen/audit/v2alpha/**/*.yaml"]
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go fmt -n ./...",
+        "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "go fmt ./..."],
+        "parallel": false,
+        "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
+      }
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../../.goreleaser.sdk.yaml > ./dist/.goreleaser.yaml",
+          "goreleaser release --config ./dist/.goreleaser.yaml --snapshot --clean",
+          "rm -rf ../../../../../../../dist/libs/private/go/sdk/gen/audit/v2alpha/release",
+          "mkdir -p ../../../../../../../dist/libs/private/go/sdk/gen/audit/v2alpha/release",
+          "mv dist ../../../../../../../dist/libs/private/go/sdk/gen/audit/v2alpha/release"
+        ],
+        "parallel": false,
+        "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
+      }
+    }
+  },
+  "tags": []
+}

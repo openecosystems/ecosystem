@@ -1,0 +1,2 @@
+{{ $e := entity . }}{{ $s := service . }}{{ $goPackage := goPackage .File }}{{ $version := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
+  {{ if $s -}}{{- if $e }}{{ $e.Name.LowerSnakeCase }} "libs/{{ $apiType }}/go/model/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"{{ end }}{{- end }}

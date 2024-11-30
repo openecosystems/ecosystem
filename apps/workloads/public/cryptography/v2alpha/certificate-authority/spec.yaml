@@ -1,0 +1,30 @@
+app:
+  name: 'certificate-authority-v2alpha'
+  version: 'v2'
+  environmentName: 'local-1'
+  environmentType: 'local'
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+  encoderConfig:
+    timeKey: 'time'
+    levelKey: 'level'
+    nameKey: 'name'
+    callerKey: 'caller'
+    functionKey: ''
+    messageKey: 'message'
+    stacktraceKey: 'stacktrace'
+    encodeLevel: 'capitalColor'
+    encodeTime: 'iso8601'
+    encodeDuration: 'string'
+    encodeCaller: ''
+  outputPaths: ['stdout']
+  errorOutputPaths: ['stderr']
+opentelemetry:
+  traceProviderEnabled: true
+nats:
+  options:
+    servers:
+      - nats://127.0.0.1:4222
+

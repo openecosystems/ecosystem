@@ -1,0 +1,37 @@
+{
+  "name": "libs-private-go-configuration-v2alpha",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/private/go/configuration/v2alpha",
+  "implicitDependencies": ["proto", "libs-plugins-protoc-gen-platform"],
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/private/go/configuration/v2alpha"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go fmt -n ./...",
+        "cwd": "libs/private/go/configuration/v2alpha"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "go fmt ./..."],
+        "parallel": false,
+        "cwd": "libs/private/go/configuration/v2alpha"
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "visibility:private",
+    "exposure:internal",
+    "language:golang"
+  ]
+}

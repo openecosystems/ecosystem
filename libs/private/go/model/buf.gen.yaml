@@ -1,0 +1,26 @@
+version: v2
+inputs:
+  - directory: ../../../../proto/private
+plugins:
+  - local: protoc-gen-platform
+    out: ./gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=entity-unspecified
+      - prefix=private
+  - local: protoc-gen-platform
+    out: ./gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=spec
+      - prefix=private
+  - local: protoc-gen-platform
+    out: ./gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=spec-entities
+      - prefix=private
+    strategy: all

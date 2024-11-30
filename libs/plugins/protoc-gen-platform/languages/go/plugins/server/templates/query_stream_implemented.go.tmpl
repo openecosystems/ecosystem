@@ -1,0 +1,33 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}func (s *{{ $s.Name }}) {{ .Name }}(req *{{ .Input.Name }}, stream {{ $s.Name }}_{{ .Name }}Server) error {
+
+tracer := *opentelemetryv2.Bound.Tracer
+
+// Executes top level validation, no business domain validation
+validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+v := *protovalidatev0.Bound.Validator
+if err := v.Validate(req.Msg); err != nil {
+return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+}
+validationSpan.End()
+
+// Executes domain level validation, handle invariants (Things that must be true for this to be successful)
+invariantCtx, invariantValidationSpan := tracer.Start(validationCtx, "invariant-validation", trace.WithSpanKind(trace.SpanKindInternal))
+entity, err := s.QueryHandler.Validate{{ .Name }}Invariants(ctx, req)
+if err != nil {
+return err
+}
+
+{{ if hasField .Output "spec_context" }}
+if spec.Context.Validation.ValidateOnly == true {
+  return nil
+}
+{{end}}
+invariantValidationSpan.End()
+
+// Domain Handler
+handlerCtx, handlerSpan := tracer.Start(invariantCtx, "domain-handler", trace.WithSpanKind(trace.SpanKindInternal))
+e := s.QueryHandler.{{ .Name }}Handler(req, entity, stream)
+handlerSpan.End()
+
+return e
+}

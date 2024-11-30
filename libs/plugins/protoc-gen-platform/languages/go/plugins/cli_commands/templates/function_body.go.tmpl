@@ -1,0 +1,4 @@
+{{- $e := entity . }}{{- $s := service . -}}{{ $version := getPackageVersionName .File }}{{ $versionLower := getPackageVersion .File }}{{ $system := domainSystemName2 .File }}
+{{- if $s }}
+  commands[FullCommandName{Name: "{{ $system.LowerSnakeCase }}", Version: "{{ $versionLower }}"}] = {{ $system.LowerCamelCase }}{{ $versionLower }}pbcmd.SystemCmd
+{{- end -}}

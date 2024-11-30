@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package platform.cryptography.v2alpha;
+
+import "platform/options/v2/annotations.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG, LANGUAGE_TYPE_CPLUSPLUS]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: false};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/cryptography/v2alpha;cryptographyv2alphapb";
+
+message EncryptionConfiguration {
+
+}
+
+service EncryptionService {
+	rpc Encrypt(EncryptRequest) returns (EncryptResponse) {}
+	rpc Decrypt(DecryptRequest) returns (DecryptResponse) {}
+}
+
+message EncryptionContext {
+// TODO: Revisit these types.
+	string user = 1;
+	string entity = 2;
+	string principal = 3;
+	string intent = 4;
+}
+
+message CipherText {
+	bytes cipher_text = 1;
+	EncryptionContext encryption_context = 2;
+}
+
+message EncryptRequest {
+	bytes plain_text = 1;
+	bytes associated_data = 2;
+}
+
+message EncryptResponse {
+	oneof result {
+		CipherText cipher_text = 1;
+		string err = 2;
+	}
+}
+
+message DecryptRequest {
+	CipherText cipher_text = 1;
+	bytes associated_data = 2;
+}
+
+message DecryptResponse {
+	oneof result {
+		bytes plain_text = 1;
+		string err = 2;
+	}
+}
+

@@ -1,0 +1,136 @@
+package v2
+
+import (
+	"context"
+	firebase "firebase.google.com/go"
+	"fmt"
+	"sync"
+
+	"firebase.google.com/go/auth"
+	"google.golang.org/api/option"
+
+	"libs/private/go/server/v2alpha"
+	common "libs/private/go/server/v2alpha"
+)
+
+type IdentityConfiguration struct {
+	GoogleIdentityCredentialsJson string `yaml:"googleIdentityCredentialsJson,omitempty"`
+}
+
+type IdentityBinding struct {
+	App           *firebase.App
+	Client        *auth.Client
+	TenantManager *auth.TenantManager
+}
+
+var (
+	identityInstance    *IdentityBinding
+	IdentityBindingName = "IDENTITY_BINDING"
+)
+
+func (b *IdentityBinding) Name() string {
+	return IdentityBindingName
+}
+
+func (b *IdentityBinding) Validate(_ context.Context, c *sdkv2alphalib.Configuration, _ *Bindings) error {
+	var idConfig IdentityConfiguration
+	common.Resolve(&idConfig)
+
+	return nil
+}
+
+func (b *IdentityBinding) Bind(ctx context.Context, config *sdkv2alphalib.Configuration, bindings *Bindings) *Bindings {
+
+	var once sync.Once
+	if identityInstance == nil {
+
+		once.Do(
+			func() {
+				app, err := b.configureIdentityTransport(ctx, config)
+				if err != nil {
+					fmt.Println("Could not configure Identity app transport")
+					fmt.Println(err)
+					panic(err)
+				}
+				b.App = app
+
+				client, err := b.configureClientTransport(ctx, config)
+				if err != nil {
+					fmt.Println("Could not configure Identity client transport")
+					fmt.Println(err)
+					panic(err)
+				}
+				b.Client = client
+
+				tenantManager, err := b.configureTenantManagerTransport(ctx, config)
+				if err != nil {
+					fmt.Println("Could not configure Identity client transport")
+					fmt.Println(err)
+					panic(err)
+				}
+				b.TenantManager = tenantManager
+
+				identityInstance = &IdentityBinding{
+					App:           app,
+					Client:        client,
+					TenantManager: tenantManager,
+				}
+
+				bindings.Identity = identityInstance
+			})
+	} else {
+		bindings.Identity = identityInstance
+		fmt.Println("Identity already bound")
+	}
+
+	return bindings
+}
+
+func (b *IdentityBinding) GetBinding() interface{} {
+	return identityInstance
+}
+
+func (b *IdentityBinding) Close() error {
+
+	fmt.Println("Shutting down identity")
+
+	return nil
+}
+
+func (b *IdentityBinding) configureIdentityTransport(ctx context.Context, c *sdkv2alphalib.Configuration) (*firebase.App, error) {
+
+	appConfig := firebase.Config{}
+
+	var idConfig IdentityConfiguration
+	common.Resolve(&idConfig)
+
+	opts := make([]option.ClientOption, 0)
+	if idConfig.GoogleIdentityCredentialsJson != "" {
+		opts = append(opts, option.WithCredentialsJSON([]byte(idConfig.GoogleIdentityCredentialsJson)))
+	}
+
+	app, err := firebase.NewApp(ctx, &appConfig, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return app, nil
+}
+
+func (b *IdentityBinding) configureClientTransport(ctx context.Context, config *sdkv2alphalib.Configuration) (*auth.Client, error) {
+
+	// Get an auth client from the firebase.App
+	client, err := b.App.Auth(ctx)
+	if err != nil {
+		fmt.Println("error getting Auth client: " + err.Error())
+	}
+
+	return client, nil
+}
+
+func (b *IdentityBinding) configureTenantManagerTransport(ctx context.Context, config *sdkv2alphalib.Configuration) (*auth.TenantManager, error) {
+
+	manager := b.Client.TenantManager
+
+	return manager, nil
+}

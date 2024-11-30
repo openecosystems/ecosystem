@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+
+enum Protocol {
+  PROTOCOL_UNSPECIFIED = 0;
+  PROTOCOL_GRPC = 1;
+  PROTOCOL_REST = 2;
+  PROTOCOL_GRAPHQL = 3;
+  PROTOCOL_CONNECT = 4;
+  PROTOCOL_GRPC_WEB = 5;
+  PROTOCOL_WEB_RTC = 6;
+}

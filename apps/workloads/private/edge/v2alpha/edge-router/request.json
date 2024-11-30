@@ -1,0 +1,10 @@
+{
+  "spec_context": {
+    "organization_slug": "organization-test",
+    "workspace_slug": "workspace-test"
+  },
+  "name": "test",
+  "slug": "success",
+  "short_description": "test short description",
+  "description": "test description"
+}

@@ -1,0 +1,9 @@
+networks:
+  spec:
+    driver: bridge
+x-env: &env
+  ENV_NAME: dev-1
+  ENV_TYPE: development
+  VERSION_NUMBER: 0
+
+

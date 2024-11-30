@@ -1,0 +1,111 @@
+package v2
+
+import (
+	"context"
+	"fmt"
+	aerospike "github.com/aerospike/aerospike-client-go/v6"
+	aerospiketypes "github.com/aerospike/aerospike-client-go/v6/types"
+	"sync"
+
+	"libs/private/go/server/v2alpha"
+)
+
+type EdgedbBinding struct {
+	Client                       *aerospike.Client
+	StoreForeverWritePolicy      *aerospike.WritePolicy
+	StoreForeverBatchWritePolicy *aerospike.BatchWritePolicy
+	DefaultReadPolicy            *aerospike.BasePolicy
+	DefaultDeletePolicy          *aerospike.WritePolicy
+	DefaultBatchDeletePolicy     *aerospike.BatchDeletePolicy
+	DefaultQueryPolicy           *aerospike.QueryPolicy
+}
+
+var (
+	edgedbInstance    *EdgedbBinding
+	EdgedbBindingName = "EDGEDB_BINDING"
+)
+
+func (b *EdgedbBinding) Name() string {
+	return EdgedbBindingName
+}
+
+func (b *EdgedbBinding) Validate(_ context.Context, _ *sdkv2alphalib.Configuration, _ *Bindings) error {
+
+	return nil
+}
+
+func (b *EdgedbBinding) Bind(_ context.Context, config *sdkv2alphalib.Configuration, bindings *Bindings) *Bindings {
+
+	if edgedbInstance == nil {
+		var once sync.Once
+		once.Do(
+			func() {
+				client, err := aerospike.NewClient(config.Edgedb.Hostname, config.Edgedb.Port)
+				if err != nil {
+					fmt.Println("Could not connect to Aerospike...")
+					fmt.Println(err)
+					panic(err)
+				}
+
+				//TODO: Set timeouts on each policy
+				wp := aerospike.NewWritePolicy(0, aerospike.TTLDontExpire)
+				bwp := aerospike.NewBatchWritePolicy()
+				p := aerospike.NewPolicy()
+				dp := aerospike.NewWritePolicy(0, aerospike.TTLDontExpire)
+				bdp := aerospike.NewBatchDeletePolicy()
+				qp := aerospike.NewQueryPolicy()
+
+				edgedbInstance = &EdgedbBinding{
+					Client:                       client,
+					StoreForeverWritePolicy:      wp,
+					StoreForeverBatchWritePolicy: bwp,
+					DefaultReadPolicy:            p,
+					DefaultDeletePolicy:          dp,
+					DefaultBatchDeletePolicy:     bdp,
+					DefaultQueryPolicy:           qp,
+				}
+				bindings.Edgedb = edgedbInstance
+
+			})
+	} else {
+		bindings.Edgedb = edgedbInstance
+		fmt.Println("Edgedb already bound")
+	}
+
+	return bindings
+}
+
+func (b *EdgedbBinding) GetBinding() interface{} {
+	return edgedbInstance
+}
+
+func (b *EdgedbBinding) Close() error {
+
+	fmt.Println("Shutting down edgedb")
+	//go b.Client.Close()
+	return nil
+
+}
+
+func (b *EdgedbBinding) CreateIndex(namespace, typeName, binName string, aerospikeType aerospike.IndexType) {
+	//indexName string, binName string, namespace string, typeName string, aerospikeType aerospike.IndexType) {
+	edgedb := b.Client
+	indexTask, err := edgedb.CreateIndex(
+		b.StoreForeverWritePolicy,
+		namespace,
+		typeName,
+		namespace+":"+typeName+":"+binName,
+		binName,
+		aerospikeType,
+	)
+	if err != nil && !err.Matches(aerospiketypes.INDEX_FOUND) {
+		panic("failed to start index creation task: " + err.Error())
+	}
+
+	if indexTask != nil {
+		err = <-indexTask.OnComplete()
+		if err != nil {
+			panic("failed to create index: " + err.Error())
+		}
+	}
+}

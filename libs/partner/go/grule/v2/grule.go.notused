@@ -1,0 +1,70 @@
+package v2
+
+import (
+	"context"
+	"fmt"
+
+	"sync"
+
+	"github.com/hyperjumptech/grule-rule-engine/ast"
+	"github.com/hyperjumptech/grule-rule-engine/engine"
+	"libs/private/go/server/v2alpha"
+)
+
+type GruleBinding struct {
+	DataContext *ast.IDataContext
+	Engine      *engine.GruleEngine
+}
+
+var (
+	gruleInstance    *GruleBinding
+	GruleBindingName = "GRULE_BINDING"
+)
+
+// store in utils
+type HttpUtils struct{}
+
+func (h *HttpUtils) SendMessage(msg any) {
+	fmt.Println("---- sending message -----")
+}
+
+func (b *GruleBinding) Name() string {
+	return GruleBindingName
+}
+
+func (g *GruleBinding) Validate(_ context.Context, c *sdkv2alphalib.Configuration, _ *Bindings) error {
+	return nil
+}
+
+func (g *GruleBinding) Bind(ctx context.Context, c *sdkv2alphalib.Configuration, bindings *Bindings) *Bindings {
+	if gruleInstance == nil {
+		var once sync.Once
+		once.Do(
+			func() {
+				rulesEngineDataCtx := ast.NewDataContext()
+				err := rulesEngineDataCtx.Add("HttpUtils", &HttpUtils{})
+				if err != nil {
+					panic(err)
+				}
+				gruleInstance = &GruleBinding{
+					DataContext: &rulesEngineDataCtx,
+					Engine:      engine.NewGruleEngine(),
+				}
+				bindings.Grule = gruleInstance
+			})
+	} else {
+		bindings.Grule = gruleInstance
+		fmt.Println("Grule already bound")
+	}
+
+	return bindings
+}
+
+func (b *GruleBinding) GetBinding() interface{} {
+	return gruleInstance
+}
+
+func (g *GruleBinding) Close() error {
+	fmt.Println("Unloading knowlegebase and cleaning up data context")
+	return nil
+}

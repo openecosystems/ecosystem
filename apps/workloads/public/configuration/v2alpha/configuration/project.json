@@ -1,0 +1,105 @@
+{
+  "name": "apps-workloads-public-configuration-v2alpha-configuration",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/workloads/public/configuration/v2alpha/configuration",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/workloads/public/configuration/v2alpha/configuration"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "command": "go build -o ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/app && cp package.json ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/.",
+        "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
+      },
+      "configurations": {
+        "production": {
+          "command": "GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/app && cp package.json ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/."
+        }
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
+      }
+    },
+    "serve": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "cmd": "go",
+        "cwd": "apps/workloads/public/configuration/v2alpha/configuration",
+        "main": "*.go"
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "context": "dist/apps/workloads/public/configuration/v2alpha/configuration",
+        "platforms": ["linux/amd64"],
+        "tags": ["workloads/public/configuration/v2alpha/configuration"]
+      }
+    },
+    "publish": {
+      "executor": "@ecosystem/nx-container:push",
+      "options": {
+        "image": "workloads/public/configuration/v2alpha/configuration",
+        "version": {
+          "path": "apps/workloads/public/configuration/v2alpha/configuration/package.json",
+          "key": "version"
+        },
+        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+      }
+    },
+    "eslint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/workloads/public/configuration/v2alpha/configuration/**/*.yaml"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go fmt -n ./...",
+        "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "go fmt ./..."],
+        "parallel": false,
+        "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
+      }
+    },
+    "version": {
+      "outputs": ["{options.packageJson}"],
+      "executor": "@ecosystem/nx-version:bump",
+      "options": {
+        "packageJson": "apps/workloads/public/configuration/v2alpha/configuration/package.json"
+      }
+    },
+    "local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose --profile system-configuration-v2alpha-configuration up -d",
+        "cwd": "."
+      },
+      "dependsOn": ["container"]
+    }
+  },
+  "tags": ["workloads", "public", "configuration", "v2alpha", "golang"]
+}

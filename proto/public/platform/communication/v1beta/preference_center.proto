@@ -1,0 +1,303 @@
+syntax = "proto3";
+
+package platform.communication.v1beta;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+import "buf/validate/validate.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "preference_center";
+  entity_plural: "preference_centers";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/communication/v1beta;communicationv1betapb";
+
+message PreferenceCenterConfiguration {
+
+
+
+}
+
+// Preference Center Service interface
+service PreferenceCenterService {
+
+  // CreateOrUpdatePreference to our communications
+  rpc CreateOrUpdatePreference(CreateOrUpdatePreferenceRequest) returns (CreateOrUpdatePreferenceResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+    option (google.api.http) = {
+      post: "/v1beta/communication/preference-center"
+      body: "*"
+    };
+  }
+
+  // DeletePreference from our communications
+  rpc DeletePreference(DeletePreferenceRequest) returns (DeletePreferenceResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_DELETE};
+    option (google.api.http) = {
+      delete: "/v1beta/communication/preference-center/{email}"
+    };
+  }
+
+  // Get Communication Preferences
+  rpc GetPreference(GetPreferenceRequest) returns (GetPreferenceResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_QUERY_GET};
+    option (google.api.http) = {
+      get: "/v1beta/communication/preference-center/{id}"
+    };
+  }
+
+  // Get Preference Options
+  rpc GetPreferenceOptions(GetPreferenceOptionsRequest) returns (GetPreferenceOptionsResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_QUERY_GET};
+    option (google.api.http) = {
+      get: "/v1beta/communication/preference-center/options"
+    };
+  }
+}
+
+// Commands used with the Preference Center Service
+enum PreferenceCenterCommands {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  PREFERENCE_CENTER_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
+  PREFERENCE_CENTER_COMMANDS_SUBSCRIBE = 1;
+  PREFERENCE_CENTER_COMMANDS_UPDATE_SUBSCRIPTION = 2;
+  PREFERENCE_CENTER_COMMANDS_UNSUBSCRIBE = 3;
+}
+
+// Preference Center Events
+enum PreferenceCenterEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  PREFERENCE_CENTER_EVENTS_UNSPECIFIED = 0; // Unknown or unspecified event.
+  PREFERENCE_CENTER_EVENTS_SUBSCRIBED = 1 [(platform.options.v2.billing) = {
+    billable: true,
+    partner_billable: true,
+    metered: true
+  }]; // CreateOrUpdatePreferenced.
+  PREFERENCE_CENTER_EVENTS_UPDATED = 2 [(platform.options.v2.billing) = {
+    billable: true,
+    partner_billable: true,
+    metered: true
+  }]; // Updated
+  PREFERENCE_CENTER_EVENTS_UNSUBSCRIBED = 3 [(platform.options.v2.billing) = {
+    billable: true,
+    partner_billable: true,
+    metered: true
+  }]; // DeletePreferenced
+}
+
+// Request for CreateOrUpdatePreference
+message CreateOrUpdatePreferenceRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  string anonymous_id = 1 [
+    (buf.validate.field).string.max_len = 256
+  ];
+
+  string email = 2 [
+    (buf.validate.field).string.email = true,
+    (buf.validate.field).string.max_len = 256
+  ];
+
+  string external_id = 3;
+
+  string phone_number = 4 [
+    (buf.validate.field).string.max_len = 10
+  ];
+
+  string first_name = 5 [
+    (buf.validate.field).string.max_len = 256
+  ];
+
+  string last_name = 6 [
+    (buf.validate.field).string.max_len = 256
+  ];
+
+  string postal_code = 7 [
+    (buf.validate.field).string.max_len = 10
+  ];
+
+  string city = 8 [
+    (buf.validate.field).string.max_len = 64
+  ];
+
+  string state_province_region = 9 [
+    (buf.validate.field).string.max_len = 128
+  ];
+
+  string country = 10 [
+    (buf.validate.field).string.max_len = 128
+  ];
+
+  repeated string list_ids = 11;
+
+  repeated string segment_ids = 12;
+
+  //repeated CustomFields        *map[string]interface{}
+
+}
+
+// Response to CreateOrUpdatePreference
+message CreateOrUpdatePreferenceResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // Preference Center data
+  PreferenceCenter preference_center = 2;
+}
+
+// Method for DeletePreference
+message DeletePreferenceRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  string anonymous_id = 1 [
+    (buf.validate.field).string.max_len = 256
+  ];
+
+  string email = 2 [
+    (buf.validate.field).string.max_len = 256
+  ];
+
+  string external_id = 3;
+
+  string phone_number = 4 [
+    (buf.validate.field).string.max_len = 32
+  ];
+}
+
+// Response to DeletePreference
+message DeletePreferenceResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // DeletePreference email marketing data
+  PreferenceCenter preference_center = 2;
+}
+
+// Request for CreateOrUpdatePreference
+message GetPreferenceRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  string id = 1 [
+    (buf.validate.field).string.min_len = 3,
+    (buf.validate.field).string.max_len = 256
+  ];
+
+}
+
+// Response to CreateOrUpdatePreference
+message GetPreferenceResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // Preference Center data
+  PreferenceCenter preference_center = 2;
+}
+
+// Request for Get Preference Options
+message GetPreferenceOptionsRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+//  [(buf.validate.field).cel = {
+//    id: "preference.test",
+//    message: "test must be positive and include a valid currency symbol ($ or £)",
+//    expression: "(this.startsWith('$') || this.startsWith('£')) && double(this.substring(1)) > 0"
+//  }];
+
+  //google.protobuf.Timestamp purchase_date = 2;
+
+  //google.protobuf.Timestamp delivery_date = 3;
+
+//  option (buf.validate.message).cel = {
+//    id: "transaction.delivery_date",
+//    message: "delivery date must be after purchase date",
+//    expression: "this.delivery_date > this.purchase_date"
+//  };
+
+}
+
+// Response to Get Preference Options
+message GetPreferenceOptionsResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  repeated EmailSubscription industries = 2;
+
+  repeated EmailSubscription capabilities = 3;
+}
+
+enum EmailSubscriptionType {
+  EMAIL_SUBSCRIPTION_TYPE_UNSPECIFIED = 0; // Unknown or unspecified event.
+  EMAIL_SUBSCRIPTION_TYPE_INDUSTRY = 1;
+  EMAIL_SUBSCRIPTION_TYPE_CAPABILITY = 2;
+}
+
+message EmailSubscription {
+
+  EmailSubscriptionType type = 1;
+  string id = 2;
+  string name = 3;
+}
+
+// Authentication data for IAM
+message PreferenceCenter {
+
+  // Identifier
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  // Timestamp when created
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  string anonymous_id = 4;
+
+  string email = 5;
+
+  string external_id = 6;
+
+  string phone_number = 7;
+
+  string first_name = 8;
+
+  string last_name = 9;
+
+  string postal_code = 10;
+
+  string city = 11;
+
+  string state_province_region = 12;
+
+  string country = 13;
+
+  repeated string list_ids = 14;
+
+  repeated string segment_ids = 15;
+
+  repeated EmailSubscription email_subscription = 16;
+}

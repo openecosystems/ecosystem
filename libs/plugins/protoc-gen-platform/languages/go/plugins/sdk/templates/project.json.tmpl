@@ -1,0 +1,71 @@
+{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $e := entity .File }}{{ $entityName := entityName $e }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
+{
+  "name": "libs-{{ $apiType }}-go-sdk-{{ $system.LowerCamelCase }}-{{ $version }}",
+  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}",
+  "implicitDependencies": [
+    "proto"
+  ],
+  "targets": {
+
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build ./...",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "eslint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}/**/*.yaml"]
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go fmt -n ./...",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "go fmt ./..."],
+        "parallel": false,
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../../.goreleaser.sdk.yaml > ./dist/.goreleaser.yaml",
+          "goreleaser release --config ./dist/.goreleaser.yaml --snapshot --clean",
+          "rm -rf ../../../../../../../dist/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}/release",
+          "mkdir -p ../../../../../../../dist/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}/release",
+          "mv dist ../../../../../../../dist/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}/release"
+        ],
+        "parallel": false,
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    }
+  },
+  "tags": []
+}

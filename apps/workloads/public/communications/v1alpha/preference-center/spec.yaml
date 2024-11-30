@@ -1,0 +1,33 @@
+app:
+  name: communication-v1alpha-preference-center
+  environmentName: 'local-1'
+  environmentType: 'local'
+grpc:
+  port: '6578'
+http:
+  port: '6478'
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+  encoderConfig:
+    timeKey: 'time'
+    levelKey: 'level'
+    nameKey: 'name'
+    callerKey: 'caller'
+    functionKey: ''
+    messageKey: 'message'
+    stacktraceKey: 'stacktrace'
+    encodeLevel: 'capitalColor'
+    encodeTime: 'iso8601'
+    encodeDuration: 'string'
+    encodeCaller: ''
+  outputPaths: ['stdout']
+  errorOutputPaths: ['stderr']
+opentelemetry:
+  traceProviderEnabled: true
+nats:
+  options:
+    servers:
+      - nats://127.0.0.1:4222
+

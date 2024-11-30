@@ -1,0 +1,10 @@
+{
+  "name": "infrastructure-apps-workloads-private-event-v2alpha-event-multiplexer",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer",
+  "targets": {
+
+  },
+  "tags": ["workloads", "private", "event", "v2alpha", "golang"]
+}

@@ -1,0 +1,51 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}func (s *{{ $s.Name }}) {{ .Name }}(ctx context.Context, req *connect.Request[{{ .Input.Name }}]) (*connect.Response[{{ .Output.Name }}], error) {
+
+tracer := *opentelemetryv2.Bound.Tracer
+
+// Executes top level validation, no business domain validation
+validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+v := *protovalidatev0.Bound.Validator
+if err := v.Validate(req.Msg); err != nil {
+  return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+}
+validationSpan.End()
+
+// Spec Propogation
+specCtx, specSpan := tracer.Start(validationCtx, "spec-propogation", trace.WithSpanKind(trace.SpanKindInternal))
+spec, ok := ctx.Value("spec").(specv2pb.Spec)
+if !ok {
+  return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+}
+specSpan.End()
+
+// Executes domain level validation, handle invariants (Things that must be true for this to be successful)
+invariantCtx, invariantValidationSpan := tracer.Start(specCtx, "invariant-validation", trace.WithSpanKind(trace.SpanKindInternal))
+entity, err := s.MutationHandler.Validate{{ .Name }}Invariants(ctx, &spec, req.Msg)
+if err != nil {
+  return nil, err
+}
+
+{{ if hasField .Output "spec_context" }}
+if spec.Context.Validation.ValidateOnly == true {
+  return connect.NewResponse(&{{ .Output.Name }}{
+    SpecContext: &specv2pb.SpecResponseContext{
+      ResponseValidation: &typev2pb.ResponseValidation{
+        ValidateOnly: true,
+      },
+      OrganizationSlug: spec.Context.OrganizationSlug,
+      WorkspaceSlug:    spec.Context.WorkspaceSlug,
+      WorkspaceJan:     spec.Context.WorkspaceJan,
+    },
+  }), nil
+}
+{{end}}
+invariantValidationSpan.End()
+
+// Domain Handler
+handlerCtx, handlerSpan := tracer.Start(invariantCtx, "domain-handler", trace.WithSpanKind(trace.SpanKindInternal))
+r, err := s.MutationHandler.{{ .Name }}Handler(handlerCtx, &spec, req.Msg, entity)
+handlerSpan.End()
+
+return connect.NewResponse(r), err
+
+}

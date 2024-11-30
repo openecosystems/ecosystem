@@ -1,0 +1,20 @@
+
+  c.systemsByName = commands
+	return commands
+}
+
+func (c *Commands) GetCommandByFullCommandName(name FullCommandName) (*cobra.Command, error) {
+
+  if !name.IsValid() {
+    return nil, fmt.Errorf("invalid system name or version number in your configuration file: %s", name)
+  }
+
+  command, ok := c.systemsByName[name]
+  if !ok {
+    return nil, fmt.Errorf("Cannot find the system or version number identified in your configuration file: %s", name)
+  }
+
+  return command, nil
+
+  return c.systemsByName[name], nil
+}

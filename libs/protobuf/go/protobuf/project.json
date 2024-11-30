@@ -1,0 +1,73 @@
+{
+  "name": "libs-protobuf-go-protobuf",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/protobuf/go/protobuf",
+  "implicitDependencies": ["proto", "libs-plugins-protoc-gen-platform"],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "buf generate",
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "GOOS=linux GOARCH=amd64 go build -o ../../../../dist/libs/protobuf/go/protobuf/lib",
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go clean", "rm -rf platform"],
+        "parallel": false,
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    },
+    "build-info": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "",
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    },
+    "eslint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/protobuf/go/protobuf/**/*.yaml"]
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go fmt -n ./...",
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "go fmt ./..."],
+        "parallel": false,
+        "cwd": "libs/protobuf/go/protobuf"
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "visibility:public",
+    "exposure:internal",
+    "language:golang"
+  ]
+}

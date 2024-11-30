@@ -1,0 +1,82 @@
+go 1.23
+
+use (
+	// Clients
+	// ===================================
+	./apps/clients/public/cli/v2alpha/oeco
+	./apps/clients/poc/quality/v2alpha/ping
+	./apps/workloads/poc/wasm/v2alpha/wasm
+
+	// Services
+	// ===================================
+	./apps/workloads/public/communications/v1alpha/preference-center
+	./apps/workloads/public/configuration/v2alpha/configuration
+	./apps/workloads/public/cryptography/v2alpha/certificate-authority
+	./apps/workloads/public/mesh/v2alpha/lighthouse
+	./apps/workloads/private/event/v2alpha/event-multiplexer
+	./apps/workloads/public/cryptography/v2alpha/encryption
+	./apps/workloads/poc/i18n/v1alpha
+
+	// Infrastructure
+	// ===================================
+	./infrastructure/apps/workloads/private/edge/v2alpha/edge-router
+	./infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer
+	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
+
+	// Partner libraries
+	// ===================================
+	./libs/partner/go/sendgrid/v3
+	./libs/partner/go/tink/v2
+	./libs/partner/go/zap/v1
+	./libs/partner/go/nats/v2
+	./libs/partner/go/nebula/v1
+	./libs/partner/go/opentelemetry/v2
+	./libs/partner/go/protovalidate/v0
+	./libs/partner/go/pushpin/v1
+
+	// Plugin libraries
+	// ===================================
+	./libs/plugins/gnostic-gen-platform
+	./libs/plugins/protoc-gen-platform
+
+	// Proof of Concept libraries
+	// ===================================
+	./libs/poc/go/protobuf
+	./libs/poc/go/model
+	./libs/poc/go/generated-wsdl
+
+	// Private libraries
+	// ===================================
+	./libs/private/go/server/v2alpha
+	./libs/private/go/configuration/v2alpha
+	./libs/private/go/infrastructure/v2alpha
+	./libs/private/go/ontology/v2alpha
+	./libs/private/go/protobuf
+	./libs/private/go/model
+
+	// Protobuf libraries
+	// ===================================
+	./libs/protobuf/go/protobuf
+
+	// Public libraries
+	// ===================================
+	./libs/public/go/client/v2alpha
+	./libs/public/go/cli/v2alpha
+	./libs/public/go/server/v2alpha
+	./libs/public/go/connector/v2alpha
+	./libs/public/go/protobuf
+	./libs/public/go/model
+
+	// SDKs
+	// ===================================
+	./libs/public/go/sdk/gen/communication/v1alpha
+	./libs/public/go/sdk/gen/communication/v1beta
+	./libs/public/go/sdk/gen/configuration/v2alpha
+	./libs/public/go/sdk/gen/cryptography/v2alpha
+	./libs/public/go/sdk/gen/event/v2alpha
+	./libs/public/go/sdk/gen/system/v2alpha
+	./libs/private/go/sdk/gen/audit/v2alpha
+	./libs/poc/go/sdk/gen/reference/v2alpha
+	./libs/public/go/sdk/v2alpha
+
+)

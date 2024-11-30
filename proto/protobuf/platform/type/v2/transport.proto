@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+// Change this to only be TCP, UDP, QUIC. Remove others
+enum Transport {
+  TRANSPORT_UNSPECIFIED = 0;
+  TRANSPORT_GRPC = 1;
+  TRANSPORT_REST = 2;
+  TRANSPORT_GRAPHQL = 3;
+
+  TRANSPORT_TCP = 4;
+  TRANSPORT_UDP = 5;
+  TRANSPORT_QUIC = 6;
+
+}

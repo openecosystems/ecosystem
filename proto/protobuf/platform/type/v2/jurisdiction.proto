@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+// Jurisdiction
+enum Jurisdiction {
+  JURISDICTION_UNSPECIFIED = 0;
+  JURISDICTION_NA_US_1 = 1;
+  JURISDICTION_GOV_US_1 = 2;
+  JURISDICTION_EU_DE_1 = 3;
+  JURISDICTION_GOV_EU_1 = 4;
+  JURISDICTION_AS_CN_1 = 5;
+  JURISDICTION_SA_BR_1 = 6;
+
+  //  AF	Africa
+  //  NA	North America
+  //  OC	Oceania
+  //  AN	Antarctica
+  //  AS	Asia
+  //  EU	Europe
+  //  SA	South America
+
+}

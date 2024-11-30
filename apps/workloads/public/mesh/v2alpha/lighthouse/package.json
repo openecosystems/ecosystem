@@ -1,0 +1,7 @@
+{
+  "name": "workloads-public-mesh-v2alpha-lighthouse",
+  "version": "0.32.0-acc5694",
+  "description": "Cryptographic Mesh Lighthouse",
+  "private": true,
+  "license": "UNLICENSED"
+}

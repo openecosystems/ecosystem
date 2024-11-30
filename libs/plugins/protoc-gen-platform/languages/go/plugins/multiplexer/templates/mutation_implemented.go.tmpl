@@ -1,0 +1,58 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ package .File }}.{{ .Input.Name }}]) (*connect.Response[{{ package .File }}.{{ .Output.Name }}], error) {
+
+tracer := *opentelemetryv2.Bound.Tracer
+log := *zaploggerv1.Bound.Logger
+
+// Executes top level validation, no business domain validation
+validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+v := *protovalidatev0.Bound.Validator
+if err := v.Validate(req.Msg); err != nil {
+return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+}
+validationSpan.End()
+
+// Spec Propagation
+specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
+spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+if !ok {
+return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+}
+specSpan.End()
+
+// Validate field mask
+if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
+  spec.SpecData.FieldMask.Normalize()
+  if !spec.SpecData.FieldMask.IsValid(&{{ package .File }}.{{ .Output.Name }}{}) {
+  log.Error("Invalid field mask")
+  return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
+  }
+}
+
+// Distributed Domain Handler
+handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+
+entity := {{ package .File }}model.{{ $entityName.UpperCamelCase }}SpecEntity{}
+reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+Request:        req.Msg,
+Stream:         natsnodev2.NewInboundStream(),
+CommandName:   "",
+CommandTopic:   {{ package .File }}model.CommandData{{ $entityName.UpperCamelCase }}Topic,
+EntityTypeName: entity.TypeName(),
+})
+if err2 != nil {
+log.Error(err2.Error())
+return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+}
+
+var dd {{ package .File }}.{{ .Output.Name }}
+err3 := proto.Unmarshal(reply.Data, &dd)
+if err3 != nil {
+log.Error(err3.Error())
+return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+}
+
+handlerSpan.End()
+
+return connect.NewResponse(&dd), nil
+
+}

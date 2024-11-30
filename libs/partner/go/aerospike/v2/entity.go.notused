@@ -1,0 +1,20 @@
+package aerospikeentityv2alphalib
+
+import (
+  "context"
+  "github.com/aerospike/aerospike-client-go/v6"
+)
+
+const (
+  SpecContextBin string = "sctx"
+)
+
+type Entity interface {
+  ToKey(context.Context) (*aerospike.Key, error)
+
+  ToBins(context.Context) (aerospike.BinMap, error)
+
+  FromBins(b *aerospike.BinMap) (*interface{}, error)
+
+  FromEvent(p *string) (*interface{}, error)
+}

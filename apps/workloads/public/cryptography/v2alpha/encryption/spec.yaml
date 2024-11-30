@@ -1,0 +1,12 @@
+app:
+  name: cryptography-v2alpha-encryption
+  environmentName: 'local-1'
+  environmentType: 'local'
+http:
+  port: '6487'
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+opentelemetry:
+  traceProviderEnabled: true

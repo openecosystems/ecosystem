@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package platform.event.v2alpha;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+import "buf/validate/validate.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "event_subscription";
+  entity_plural: "event_subscriptions";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/event/v2alpha;eventv2alphapb";
+
+message EventSubscriptionConfiguration {
+
+  string config_one = 1;
+  bool config_two = 2;
+  int64 config_three = 3;
+}
+
+// Event Subscription Service Interface
+service EventSubscriptionService {
+  option (platform.options.v2.service) = {
+    grpc_port: 6675,
+    http_port: 51675
+  };
+
+  // Method to Subscribe to events based on scopes
+  rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_SERVER_STREAM};
+    option (google.api.http) = {
+      post: "/v2/event/subscribe"
+      body: "*"
+    };
+  }
+
+  // Method to Unsubscribe to an event scope
+  rpc UnSubscribe(UnSubscribeRequest) returns (UnSubscribeResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_DELETE};
+    option (google.api.http) = {
+      post: "/v2/event/unsubscribe"
+      body: "*"
+    };
+  }
+
+  // Is Subscribed
+
+  // Get Subscription
+}
+
+// Supported event type for subscription.
+enum SubscriptionType {
+  SUBSCRIPTION_TYPE_UNSPECIFIED = 0; // Unspecified or unknown subscription type.
+  SUBSCRIPTION_TYPE_ORGANIZATION = 1; // Subscription for an organization.
+  SUBSCRIPTION_TYPE_WORKSPACE = 2; // Subscription for a workspace
+  SUBSCRIPTION_TYPE_USER = 3; // Subscription for a user.
+}
+
+// The current status of a event
+enum EventSubscriptionStatus {
+  EVENT_SUBSCRIPTION_STATUS_UNSPECIFIED = 0; // Unspecified or unknown status.
+  EVENT_SUBSCRIPTION_STATUS_SUBSCRIBING = 1; // Subscription is being subscribed.
+  EVENT_SUBSCRIPTION_STATUS_LISTENING = 2; // Subscription is listening for events.
+  EVENT_SUBSCRIPTION_STATUS_UN_SUBSCRIBING = 3; // Subscription is being un-subscribed.
+  EVENT_SUBSCRIPTION_STATUS_ERROR = 4; // Error in event subscription.
+}
+
+// Event Subscription Commands
+enum EventSubscriptionCommands {
+  // Base class is
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  EVENT_SUBSCRIPTION_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
+  EVENT_SUBSCRIPTION_COMMANDS_SUBSCRIBE = 1; // Subscribe Command
+  EVENT_SUBSCRIPTION_COMMANDS_UN_SUBSCRIBE = 2; // Un-subscribe command.
+}
+
+// Event subscription events
+enum EventSubscriptionEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  // Unspecified or unknown event subscription event.
+  EVENT_SUBSCRIPTION_EVENTS_UNSPECIFIED = 0;
+
+  // Event Subscription complete.
+  EVENT_SUBSCRIPTION_EVENTS_SUBSCRIBED = 1 [(platform.options.v2.billing) = {
+    billable: true,
+    metered: true
+  }];
+
+  // Event un-subscription complete.
+  EVENT_SUBSCRIPTION_EVENTS_UN_SUBSCRIBED = 2;
+}
+
+// Request for Subscribe
+message SubscribeRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  // Must be either Organization, Workspace, or User Subscription type. Cannot be Unspecified.
+  SubscriptionType type = 2 [(buf.validate.field).enum.defined_only = true];
+}
+
+// Response to Subscribe
+message SubscribeResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // The event subscription.
+  EventSubscription event_subscription = 2;
+}
+
+// Request for a UnSubscribe
+message UnSubscribeRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+
+}
+
+// Response for a UnSubscribe.
+message UnSubscribeResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  // The un-subscribed event subscription.
+  EventSubscription event_subscription = 2;
+}
+
+// The event subscription data.
+message EventSubscription {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // Identifier for this event subscription.
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  // Timestamp indicating when this event subscription was created.
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp indicating when this event subscription was last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  // Status of this event subscription
+  EventSubscriptionStatus status = 5;
+
+  // Details of the current status.
+  string status_details = 6;
+
+  // Type of event
+  SubscriptionType type = 7;
+
+  // Data for the event subscription.
+  platform.spec.v2.SpecPublic data = 8;
+}

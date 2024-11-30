@@ -1,0 +1,5 @@
+version: v2
+inputs:
+  - directory: ../../proto/public
+plugins:
+

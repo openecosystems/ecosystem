@@ -1,0 +1,2 @@
+{{- $e := entity . -}}{{- $s := service . -}}{{ $entityName := entityName $e }}{{ $entityKeyName := entityKeyName $e }}
+	&{{ $e.Name.LowerSnakeCase }}.{{ $entityName.UpperCamelCase }}SpecEntity{},

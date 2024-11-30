@@ -1,0 +1,7 @@
+[build]
+target-dir = "../../../../../../dist/apps/workloads/internal/edge/v2alpha/edge-router"
+target = "wasm32-wasi"
+
+[registries.buf]
+index = "sparse+https://buf.build/gen/cargo/"
+credential-provider = "cargo:token"

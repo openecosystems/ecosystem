@@ -1,0 +1,6 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := entity .File }}func (*Unimplemented{{ $s.Name }}QueryHandler) Validate{{ .Name }}Invariants(spec *{{ getSpecTypePackage .File }}Spec, req *{{ .Input.Name }}) (*{{ $e.Name }}SpecEntity, error) {
+return &{{ $e.Name }}SpecEntity{}, nil
+}
+func (*Unimplemented{{ $s.Name }}QueryHandler) {{ .Name }}Handler(spec *{{ getSpecTypePackage .File }}Spec, req *{{ .Input.Name }}, entity *{{ $e.Name }}SpecEntity, stream {{ $s.Name }}_{{ .Name }}Server) error {
+return nil
+}

@@ -1,0 +1,15 @@
+app:
+  name: 'configuration-v2alpha'
+  version: 'v2.0.0'
+  environmentName: 'local-1'
+  environmentType: 'local'
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+opentelemetry:
+  traceProviderEnabled: true
+nats:
+  options:
+    servers:
+      - nats://127.0.0.1:4222
