@@ -44,9 +44,9 @@ message Cli {
 
 message Communication {
 
-    PreferenceCenterV1Beta preference_center_v1beta = 2;
+    PreferenceCenterV1Alpha preference_center_v1alpha = 2;
 
-    PreferenceCenterV1Alpha preference_center_v1alpha = 3;
+    PreferenceCenterV1Beta preference_center_v1beta = 3;
 }
 
 message Configuration {
@@ -98,6 +98,27 @@ message System {
 }
 
 message Type {
+}
+
+
+message PreferenceCenterV1Beta {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType created_at = 2;
+  platform.options.v2.ClassificationType updated_at = 3;
+  platform.options.v2.ClassificationType anonymous_id = 4;
+  platform.options.v2.ClassificationType email = 5;
+  platform.options.v2.ClassificationType external_id = 6;
+  platform.options.v2.ClassificationType phone_number = 7;
+  platform.options.v2.ClassificationType first_name = 8;
+  platform.options.v2.ClassificationType last_name = 9;
+  platform.options.v2.ClassificationType postal_code = 10;
+  platform.options.v2.ClassificationType city = 11;
+  platform.options.v2.ClassificationType state_province_region = 12;
+  platform.options.v2.ClassificationType country = 13;
+  platform.options.v2.ClassificationType list_ids = 14;
+  platform.options.v2.ClassificationType segment_ids = 15;
+  platform.options.v2.ClassificationType email_subscription = 16;
+
 }
 
 
@@ -202,26 +223,5 @@ message SystemV2Alpha {
   platform.options.v2.ClassificationType enabled_at = 2;
   platform.options.v2.ClassificationType created_at = 3;
   platform.options.v2.ClassificationType updated_at = 4;
-
-}
-
-
-message PreferenceCenterV1Beta {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType anonymous_id = 4;
-  platform.options.v2.ClassificationType email = 5;
-  platform.options.v2.ClassificationType external_id = 6;
-  platform.options.v2.ClassificationType phone_number = 7;
-  platform.options.v2.ClassificationType first_name = 8;
-  platform.options.v2.ClassificationType last_name = 9;
-  platform.options.v2.ClassificationType postal_code = 10;
-  platform.options.v2.ClassificationType city = 11;
-  platform.options.v2.ClassificationType state_province_region = 12;
-  platform.options.v2.ClassificationType country = 13;
-  platform.options.v2.ClassificationType list_ids = 14;
-  platform.options.v2.ClassificationType segment_ids = 15;
-  platform.options.v2.ClassificationType email_subscription = 16;
 
 }

@@ -2,10 +2,9 @@
 // source: Generated from all proto files
 
 package specentities
+import (
 
-import
-	reference "libs/poc/go/model/gen/platform/reference/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+  reference "libs/poc/go/model/gen/platform/reference/v2alpha"
   "libs/public/go/sdk/v2alpha"
 )
 

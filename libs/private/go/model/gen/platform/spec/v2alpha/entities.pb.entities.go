@@ -2,10 +2,9 @@
 // source: Generated from all proto files
 
 package specentities
+import (
 
-import
-	audit "libs/private/go/model/gen/platform/audit/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+  audit "libs/private/go/model/gen/platform/audit/v2alpha"
   "libs/public/go/sdk/v2alpha"
 )
 
