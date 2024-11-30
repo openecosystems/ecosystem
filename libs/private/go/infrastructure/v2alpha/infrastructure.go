@@ -2,9 +2,11 @@ package infrastructurev2alphalib
 
 import (
 	"context"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"libs/public/go/sdk/v2alpha"
 	"unicode/utf8"
+
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+
+	"libs/public/go/sdk/v2alpha"
 )
 
 var (
@@ -21,13 +23,13 @@ func NewInfrastructure(bounds []sdkv2alphalib.Binding) *Infrastructure {
 
 	ctx := context.Background()
 
-	cfg := sdkv2alphalib.ResolveConfiguration()
-	ResolvedConfiguration = cfg
+	//cfg := sdkv2alphalib.ResolveConfiguration()
+	//ResolvedConfiguration = cfg
 
-	bindings := sdkv2alphalib.RegisterBindings(ctx, cfg, bounds)
+	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	return &Infrastructure{
-		Config:   cfg,
+		//Config:   cfg,
 		Bindings: bindings,
 		Bounds:   bounds,
 	}

@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+
 	"github.com/nats-io/nats.go/jetstream"
+
 	"libs/partner/go/nats/v2"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	"libs/partner/go/zap/v1"
@@ -38,8 +40,8 @@ func (l *CreateCertificateAuthorityListener) GetConfiguration() *natsnodev2.List
 
 }
 
-func (l *CreateCertificateAuthorityListener) Listen(ctx context.Context, config *sdkv2alphalib.Configuration, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, config, l)
+func (l *CreateCertificateAuthorityListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
 func (l *CreateCertificateAuthorityListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {

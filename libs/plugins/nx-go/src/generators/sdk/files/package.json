@@ -1,0 +1,7 @@
+{
+  "name": "libs-public-go-sdk-<%= system %>-<%= version %>-<%= system %>-sdk",
+  "version": "0.22.0-2c5994",
+  "description": "<%= system %>",
+  "private": true,
+  "license": "UNLICENSED"
+}

@@ -111,9 +111,7 @@
     }
   },
   "defaultProject": "proto",
-  "plugins": [
-    "@platform/nx-go"
-  ],
+  "plugins": ["@platform/nx-go", "@nx-go/nx-go"],
   "pluginsConfig": {
     "@platform/nx-go": {
       "analyzeSourceFiles": false
@@ -122,9 +120,8 @@
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [
-      "{workspaceRoot}/go.mod",
       "{workspaceRoot}/babel.config.json",
-      "{workspaceRoot}/go.mod"
+      "{workspaceRoot}/go.work"
     ],
     "production": [
       "default",

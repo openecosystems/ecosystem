@@ -1,0 +1,7 @@
+{
+  "name": "@platform/nx-go",
+  "version": "0.3.0-f83d0a5",
+  "main": "src/index.js",
+  "generators": "./generators.json",
+  "executors": "./executors.json"
+}

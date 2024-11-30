@@ -3,17 +3,18 @@
 
 package specentities
 
-import (
+import
 	configuration "libs/public/go/model/gen/platform/configuration/v2alpha"
-
+  configuration "libs/public/go/model/gen/platform/configuration/v2alpha"
 	certificate "libs/public/go/model/gen/platform/cryptography/v2alpha"
-
+  certificate "libs/public/go/model/gen/platform/cryptography/v2alpha"
 	certificate_authority "libs/public/go/model/gen/platform/cryptography/v2alpha"
-
+  certificate_authority "libs/public/go/model/gen/platform/cryptography/v2alpha"
 	event_subscription "libs/public/go/model/gen/platform/event/v2alpha"
-
+  event_subscription "libs/public/go/model/gen/platform/event/v2alpha"
 	system "libs/public/go/model/gen/platform/system/v2alpha"
 	"libs/public/go/sdk/v2alpha"
+  "libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{

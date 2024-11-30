@@ -1,0 +1,41 @@
+{
+  "name": "libs-plugins-nx-devkit",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/plugins/nx-devkit/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/plugins/nx-devkit",
+        "tsConfig": "libs/plugins/nx-devkit/tsconfig.lib.json",
+        "packageJson": "libs/plugins/nx-devkit/package.json",
+        "main": "libs/plugins/nx-devkit/src/index.ts",
+        "assets": ["libs/plugins/nx-devkit/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/plugins/nx-devkit/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/plugins/nx-devkit"],
+      "options": {
+        "jestConfig": "libs/plugins/nx-devkit/jest.config.ts"
+      }
+    },
+    "version": {
+      "outputs": ["{options.packageJson}"],
+      "executor": "@platform/nx-version:bump",
+      "options": {
+        "packageJson": "libs/plugins/nx-devkit/package.json"
+      }
+    }
+  },
+  "tags": []
+}

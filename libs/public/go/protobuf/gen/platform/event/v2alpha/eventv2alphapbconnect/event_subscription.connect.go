@@ -52,7 +52,7 @@ var (
 // platform.event.v2alpha.EventSubscriptionService service.
 type EventSubscriptionServiceClient interface {
 	// Method to Subscribe to events based on scopes
-	Subscribe(context.Context, *connect.Request[v2alpha.SubscribeRequest]) (*connect.ServerStreamForClient[v2alpha.SubscribeResponse], error)
+	Subscribe(context.Context, *connect.Request[v2alpha.SubscribeRequest]) (*connect.Response[v2alpha.SubscribeResponse], error)
 	// Method to Unsubscribe to an event scope
 	UnSubscribe(context.Context, *connect.Request[v2alpha.UnSubscribeRequest]) (*connect.Response[v2alpha.UnSubscribeResponse], error)
 }
@@ -90,8 +90,8 @@ type eventSubscriptionServiceClient struct {
 }
 
 // Subscribe calls platform.event.v2alpha.EventSubscriptionService.Subscribe.
-func (c *eventSubscriptionServiceClient) Subscribe(ctx context.Context, req *connect.Request[v2alpha.SubscribeRequest]) (*connect.ServerStreamForClient[v2alpha.SubscribeResponse], error) {
-	return c.subscribe.CallServerStream(ctx, req)
+func (c *eventSubscriptionServiceClient) Subscribe(ctx context.Context, req *connect.Request[v2alpha.SubscribeRequest]) (*connect.Response[v2alpha.SubscribeResponse], error) {
+	return c.subscribe.CallUnary(ctx, req)
 }
 
 // UnSubscribe calls platform.event.v2alpha.EventSubscriptionService.UnSubscribe.
@@ -103,7 +103,7 @@ func (c *eventSubscriptionServiceClient) UnSubscribe(ctx context.Context, req *c
 // platform.event.v2alpha.EventSubscriptionService service.
 type EventSubscriptionServiceHandler interface {
 	// Method to Subscribe to events based on scopes
-	Subscribe(context.Context, *connect.Request[v2alpha.SubscribeRequest], *connect.ServerStream[v2alpha.SubscribeResponse]) error
+	Subscribe(context.Context, *connect.Request[v2alpha.SubscribeRequest]) (*connect.Response[v2alpha.SubscribeResponse], error)
 	// Method to Unsubscribe to an event scope
 	UnSubscribe(context.Context, *connect.Request[v2alpha.UnSubscribeRequest]) (*connect.Response[v2alpha.UnSubscribeResponse], error)
 }
@@ -114,7 +114,7 @@ type EventSubscriptionServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewEventSubscriptionServiceHandler(svc EventSubscriptionServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
-	eventSubscriptionServiceSubscribeHandler := connect.NewServerStreamHandler(
+	eventSubscriptionServiceSubscribeHandler := connect.NewUnaryHandler(
 		EventSubscriptionServiceSubscribeProcedure,
 		svc.Subscribe,
 		connect.WithSchema(eventSubscriptionServiceSubscribeMethodDescriptor),
@@ -141,8 +141,8 @@ func NewEventSubscriptionServiceHandler(svc EventSubscriptionServiceHandler, opt
 // UnimplementedEventSubscriptionServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedEventSubscriptionServiceHandler struct{}
 
-func (UnimplementedEventSubscriptionServiceHandler) Subscribe(context.Context, *connect.Request[v2alpha.SubscribeRequest], *connect.ServerStream[v2alpha.SubscribeResponse]) error {
-	return connect.NewError(connect.CodeUnimplemented, errors.New("platform.event.v2alpha.EventSubscriptionService.Subscribe is not implemented"))
+func (UnimplementedEventSubscriptionServiceHandler) Subscribe(context.Context, *connect.Request[v2alpha.SubscribeRequest]) (*connect.Response[v2alpha.SubscribeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.event.v2alpha.EventSubscriptionService.Subscribe is not implemented"))
 }
 
 func (UnimplementedEventSubscriptionServiceHandler) UnSubscribe(context.Context, *connect.Request[v2alpha.UnSubscribeRequest]) (*connect.Response[v2alpha.UnSubscribeResponse], error) {

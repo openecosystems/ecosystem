@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "SDK",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "visibility": {
+      "type": "string",
+      "description": "A visibility where the project is placed",
+      "alias": "v"
+    },
+    "system": {
+      "type": "string",
+      "description": "A system where the project is placed",
+      "alias": "s"
+    },
+    "version": {
+      "type": "string",
+      "description": "A version where the project is placed",
+      "alias": "V"
+    },
+    "description": {
+      "type": "string",
+      "description": "A description where the project is placed",
+      "alias": "d"
+    }
+  },
+  "required": ["visibility", "system", "version"]
+}

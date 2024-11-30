@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -16,7 +18,7 @@ func main() {
 		&configurationv2alphalib.Binding{},
 	}
 
-	connector := connectorv2alphalib.NewConnectorA(bounds)
+	connector := connectorv2alphalib.NewConnector(context.Background(), bounds)
 	connector.ListenAndProcess()
 
 	//_ = []sdkv2alphalib.Binding{

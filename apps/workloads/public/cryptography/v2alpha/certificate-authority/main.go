@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/nebula/v1/ca"
 	"libs/partner/go/zap/v1"
@@ -20,7 +22,7 @@ func main() {
 		&nebulav1ca.Binding{},
 	}
 
-	connector := connectorv2alphalib.NewConnectorA(bounds)
+	connector := connectorv2alphalib.NewConnector(context.Background(), bounds)
 	connector.ListenAndProcess()
 
 }

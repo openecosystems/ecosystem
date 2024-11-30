@@ -73,8 +73,27 @@ var PCI = &ontologyv2alphapb.SpecDataCatalog{
 			ConnectorConfigurations: 0,
 		},
 	},
-	Edge:       &ontologyv2alphapb.Edge{},
-	Encryption: &ontologyv2alphapb.Encryption{},
+	Cryptography: &ontologyv2alphapb.Cryptography{
+		CertificateV2Alpha: &ontologyv2alphapb.CertificateV2Alpha{
+			Id:        0,
+			CreatedAt: 0,
+			UpdatedAt: 0,
+			Name:      0,
+			Duration:  0,
+		},
+		CertificateAuthorityV2Alpha: &ontologyv2alphapb.CertificateAuthorityV2Alpha{
+			Id:        0,
+			CreatedAt: 0,
+			UpdatedAt: 0,
+			Name:      0,
+			Curve:     0,
+			Duration:  0,
+			CaCert:    0,
+			CaKey:     0,
+			CaQrCode:  0,
+		},
+	},
+	Edge: &ontologyv2alphapb.Edge{},
 	Event: &ontologyv2alphapb.Event{
 		EventSubscriptionV2Alpha: &ontologyv2alphapb.EventSubscriptionV2Alpha{
 			Id:            0,

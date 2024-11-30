@@ -3,9 +3,10 @@
 
 package specentities
 
-import (
+import
 	preference_center "libs/public/go/model/gen/platform/communication/v1beta"
 	"libs/public/go/sdk/v2alpha"
+  "libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{
