@@ -1,87 +1,20 @@
 name: build
-on:
-  workflow_call:
-    inputs:
-      go_version:
-        required: false
-        type: string
-      go-version:
-        required: false
-        type: string
-        default: stable
-      go-version-file:
-        required: false
-        type: string
-      working-directory:
-        required: false
-        type: string
-    secrets:
-      gh_pat:
-        required: false
+
+on: [push, pull_request]
+
 jobs:
-  govulncheck:
-    runs-on: ubuntu-latest
-    env:
-      GH_PAT: ${{ secrets.gh_pat }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-          cache: true
-          check-latest: true
-      - run: |
-          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
-        if: env.GH_PAT != null
-      - run: go install golang.org/x/vuln/cmd/govulncheck@latest
-      - run: govulncheck ./...
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
-    runs-on: ${{ matrix.os }}
-    env:
-      GO111MODULE: "on"
-      GH_PAT: ${{ secrets.gh_pat }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - run: |
-          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
-        if: env.GH_PAT != null
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ inputs.go_version || inputs.go-version }}
-          go-version-file: ${{ inputs.go-version-file }}
-          cache: true
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - uses: nrwl/nx-set-shas@v4
-      - run: pnpm exec nx affected -t lint test build e2e-ci
-  dependabot:
-    needs: [ build, govulncheck ]
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      contents: write
-    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}}
-    steps:
-      - id: metadata
-        uses: dependabot/fetch-metadata@dbb049abf0d677abbd7f7eee0375145b417fdd34 # v2.2.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - run: |
-          gh pr review --approve "$PR_URL"
-          gh pr merge --squash "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        go_version: ["1.19", stable]
+    uses: ./.github/workflows/_build.yml@main
+    with:
+      go_version: ${{ matrix.go_version }}
+
+  snapshot:
+    uses: ./.github/workflows/_snapshot.yml@main
+    secrets:
+      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
+
+  coverage:
+    uses: ./.github/workflows/_coverage.yml@main
