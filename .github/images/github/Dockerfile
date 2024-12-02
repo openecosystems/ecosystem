@@ -27,6 +27,7 @@ RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway
 RUN go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
 RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
 RUN go install mvdan.cc/gofumpt@v0.7.0
+RUN go install golang.org/x/vuln/cmd/govulncheck@latest
 
 # Buf Installs
 FROM --platform=linux/amd64 bufbuild/buf:1.13.1 AS buf

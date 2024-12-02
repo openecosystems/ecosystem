@@ -22,7 +22,7 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
-  govulncheck:
+  vulnerability:
     runs-on: ubuntu-latest
     env:
       GH_PAT: ${{ secrets.gh_pat }}
@@ -37,7 +37,7 @@ jobs:
           git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
         if: env.GH_PAT != null
       - run: go install golang.org/x/vuln/cmd/govulncheck@latest
-      - run: govulncheck ./...
+      - run: pnpm exec nx affected -t vulnerability
   build:
     strategy:
       matrix:
