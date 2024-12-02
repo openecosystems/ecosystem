@@ -39,13 +39,13 @@ jobs:
           go-version: stable
           cache: true
           check-latest: true
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: 'pnpm'
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
       - run: go install golang.org/x/vuln/cmd/govulncheck@latest
