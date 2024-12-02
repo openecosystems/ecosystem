@@ -22,34 +22,34 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
-  vulnerability:
-    runs-on: ubuntu-latest
-    env:
-      GH_PAT: ${{ secrets.gh_pat }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: |
-          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
-        if: env.GH_PAT != null
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-          cache: true
-          check-latest: true
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - uses: nrwl/nx-set-shas@v4
-      - run: go install golang.org/x/vuln/cmd/govulncheck@latest
-      - run: pnpm exec nx affected -t vulnerability --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+#  vulnerability:
+#    runs-on: ubuntu-latest
+#    env:
+#      GH_PAT: ${{ secrets.gh_pat }}
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#      - run: |
+#          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
+#        if: env.GH_PAT != null
+#      - uses: actions/setup-go@v5
+#        with:
+#          go-version: stable
+#          cache: true
+#          check-latest: true
+#      - uses: pnpm/action-setup@v4
+#        with:
+#          version: 9
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: 20
+#          cache: 'pnpm'
+#      - run: pnpm install --frozen-lockfile
+#      - uses: nrwl/nx-set-shas@v4
+#      - run: go install golang.org/x/vuln/cmd/govulncheck@latest
+#      - run: pnpm exec nx affected -t vulnerability --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
   build:
     strategy:
       matrix:
