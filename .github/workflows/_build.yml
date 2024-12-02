@@ -72,7 +72,7 @@ jobs:
       #- run: pnpm exec nx affected -t lint test build e2e-ci
       - run: pnpm exec nx affected -t lint build
   dependabot:
-    needs: [ build, govulncheck ]
+    needs: [ build, vulnerability ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
