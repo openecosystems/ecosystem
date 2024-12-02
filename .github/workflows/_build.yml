@@ -73,19 +73,20 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ inputs.go_version || inputs.go-version }}
-          go-version-file: ${{ inputs.go-version-file }}
-          cache: 'true'
+#      - name: Install Go
+#        uses: actions/setup-go@v5
+#        with:
+#          go-version: ${{ inputs.go_version || inputs.go-version }}
+#          go-version-file: ${{ inputs.go-version-file }}
+#          cache: 'true'
       - name: Install node dependencies
         run: pnpm install --frozen-lockfile
       - name: Set Shas
         uses: nrwl/nx-set-shas@v4
       #- run: pnpm exec nx affected -t lint test build e2e-ci
       - name: Run NX
-        run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        #run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: pnpm exec nx affected -t build
   dependabot:
     #needs: [ build, vulnerability ]
     needs: [ build ]
