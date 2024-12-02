@@ -84,7 +84,8 @@ jobs:
       #- run: pnpm exec nx affected -t lint test build e2e-ci
       - run: pnpm exec nx affected -t lint build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
   dependabot:
-    needs: [ build, vulnerability ]
+    #needs: [ build, vulnerability ]
+    needs: [ build ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
