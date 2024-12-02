@@ -74,7 +74,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
       #- run: pnpm exec nx affected -t lint test build e2e-ci
-      - run: pnpm exec nx affected -t lint build
+      - run: pnpm exec nx affected -t lint build --base=${{ github.ref_name }}
   dependabot:
     needs: [ build, vulnerability ]
     runs-on: ubuntu-latest
