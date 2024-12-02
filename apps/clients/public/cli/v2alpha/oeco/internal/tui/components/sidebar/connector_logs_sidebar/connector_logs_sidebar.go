@@ -1,10 +1,10 @@
 package connector_logs_sidebar
 
 import (
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbletea"
 )
 
 type Model struct {

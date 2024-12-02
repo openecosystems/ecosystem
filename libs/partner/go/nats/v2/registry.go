@@ -6,8 +6,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/nats-io/nats.go/jetstream"
 	"libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	"github.com/nats-io/nats.go/jetstream"
 )
 
 func RegisterEventStreams() {
@@ -20,7 +23,6 @@ func RegisterEventStreams() {
 
 	conf := ResolvedConfiguration
 	for _, cfg := range conf.EventStreamRegistry.Streams {
-
 		name := cfg.Name
 		subjects := cfg.Subjects
 
@@ -43,7 +45,6 @@ func RegisterEventStreams() {
 				panic(err)
 			}
 		}
-
 	}
 }
 

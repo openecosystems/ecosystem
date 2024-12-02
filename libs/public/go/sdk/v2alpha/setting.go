@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -19,7 +20,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 var (
@@ -164,7 +164,6 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 
 	// Set Flag Overrides
 	if platformContext != "" {
-
 		fmt.Println("Overriding context to: " + platformContext)
 
 		exists, err := fs.Exists(filepath.Join(ContextDirectory, platformContext))
@@ -177,9 +176,7 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 			// Use config file from the flag
 			configurer.SetConfigFile(platformContext)
 		}
-
 	} else {
-
 		file, err := fs.ReadFile(DefaultContextFile)
 		if err != nil {
 			return nil, nil, errors.New("could not read config file: " + err.Error())
@@ -195,7 +192,6 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 		configurer.SetConfigName(ctx)
 		configurer.SetConfigType(ConfigurationExtension)
 		configurer.AddConfigPath(contextDir)
-
 	}
 
 	// Set Environment Variable Overrides

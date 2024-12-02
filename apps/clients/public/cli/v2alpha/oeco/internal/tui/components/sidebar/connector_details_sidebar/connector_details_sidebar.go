@@ -1,12 +1,12 @@
 package connector_details_sidebar
 
 import (
-	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbles/viewport"
+	"github.com/charmbracelet/bubbletea"
 )
 
 type Model struct {

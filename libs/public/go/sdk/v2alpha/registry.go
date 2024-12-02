@@ -2,6 +2,8 @@ package sdkv2alphalib
 
 import (
 	"fmt"
+	"libs/protobuf/go/protobuf/gen/platform/options/v2"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"os"
 	"strings"
 	"sync"
@@ -11,8 +13,6 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/descriptorpb"
-	"libs/protobuf/go/protobuf/gen/platform/options/v2"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 var (
@@ -78,7 +78,6 @@ func (s *Systems) GetSystemByName(systemName string) (*System, error) {
 
 func (s *Systems) processSystems() error {
 	for _, ss := range s.settings.Systems2 {
-
 		// Validate system
 
 		//if prev := s.systemsByName[FullSystemName(ss.Name)]; len(prev) > 0 {
@@ -102,7 +101,6 @@ func (s *Systems) processSystems() error {
 		system.Dependency = dependency
 
 		s.systemsByName[FullSystemName(system.Name)] = system
-
 	}
 
 	return nil

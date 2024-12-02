@@ -7,8 +7,9 @@ import (
 
 	"connectrpc.com/connect"
 
-	"github.com/slackhq/nebula/service"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
+	"github.com/slackhq/nebula/service"
 )
 
 var ResolvedClientConfiguration *specv2pb.SpecClientSettings

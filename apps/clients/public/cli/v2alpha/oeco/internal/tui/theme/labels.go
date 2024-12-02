@@ -1,9 +1,9 @@
 package theme
 
 import (
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/data"
+
+	"github.com/charmbracelet/lipgloss"
 )
 
 func RenderLabels(sidebarWidth int, labels []data.Label, pillStyle lipgloss.Style) string {

@@ -9,12 +9,16 @@ import (
 	"sync"
 	"time"
 
+	"libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
-	"libs/public/go/sdk/v2alpha"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Registry           map[string]nats.StreamConfig
 	SpecEventListeners []SpecEventListener
@@ -43,7 +47,6 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 
 func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
-
 		var once sync.Once
 		once.Do(
 			func() {
@@ -127,7 +130,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					bindings.Registered[b.Name()] = Bound
 
 					for _, listener := range b.SpecEventListeners {
-
 						configuration := listener.GetConfiguration()
 						if configuration == nil {
 							fmt.Println("Please configure the Listener")
@@ -169,7 +171,6 @@ func (b *Binding) Close() error {
 	fmt.Println("Shutting down Nats Node connection for: ")
 
 	for _, listener := range b.Listeners {
-
 		err := listener.Drain()
 		if err != nil {
 			fmt.Println(err)
@@ -179,7 +180,6 @@ func (b *Binding) Close() error {
 		if err != nil {
 			fmt.Println(err)
 		}
-
 	}
 
 	return nil

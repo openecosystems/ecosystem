@@ -1,14 +1,14 @@
 package connector_details_content
 
 import (
-	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/glamour"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbles/viewport"
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/glamour"
 )
 
 var introduction = `

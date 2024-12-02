@@ -6,14 +6,19 @@ import (
 	"fmt"
 	"time"
 
+	"libs/partner/go/zap/v1"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	"libs/public/go/sdk/v2alpha"
+
 	"connectrpc.com/connect"
+
+	zaploggerv1 "libs/partner/go/zap/v1"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
-	"libs/partner/go/zap/v1"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/sdk/v2alpha"
 )
 
 func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {

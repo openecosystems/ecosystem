@@ -2,7 +2,7 @@ package ontologydefaultsv2alphalib
 
 import (
 	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	"libs/public/go/protobuf/gen/platform/ontology/v2alpha"
+	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 )
 
 var PCI = &ontologyv2alphapb.SpecDataCatalog{

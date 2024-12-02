@@ -1,9 +1,9 @@
 package theme
 
 import (
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+
+	"github.com/charmbracelet/lipgloss"
 )
 
 var (

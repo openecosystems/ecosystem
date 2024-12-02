@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 type ContextKeyMap struct {

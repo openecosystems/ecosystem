@@ -97,6 +97,8 @@ func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
 		}
 	}(resp.Body)
 
+	defer resp.Body.Close()
+
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("github dependency read error: ", err)

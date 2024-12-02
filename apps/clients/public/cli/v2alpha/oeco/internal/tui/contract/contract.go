@@ -3,6 +3,7 @@ package contract
 import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
 	"github.com/charmbracelet/bubbles/key"
 )
 

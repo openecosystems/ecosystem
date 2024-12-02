@@ -3,15 +3,15 @@ package footer
 import (
 	"strings"
 
-	"github.com/charmbracelet/bubbles/help"
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+
+	"github.com/charmbracelet/bubbles/help"
+	"github.com/charmbracelet/bubbles/key"
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {

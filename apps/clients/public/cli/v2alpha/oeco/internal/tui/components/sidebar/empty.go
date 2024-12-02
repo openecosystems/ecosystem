@@ -1,10 +1,10 @@
 package sidebar
 
 import (
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+
+	"github.com/charmbracelet/bubbletea"
 )
 
 type EmptyModel struct {

@@ -4,23 +4,23 @@ import (
 	"context"
 	_ "embed"
 	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/cli/v2alpha"
-	"libs/public/go/cli/v2alpha/gen/platform/cmd"
-	"libs/public/go/sdk/v2alpha"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
+	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 
+	"apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
+	"apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
+	"apps/clients/public/cli/v2alpha/oeco/internal/cryptography/v2alpha"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/termenv"
 
 	"github.com/apex/log"
 	"github.com/apex/log/handlers/cli"
 	"github.com/spf13/cobra"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
-	"apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
-	"apps/clients/public/cli/v2alpha/oeco/internal/cryptography/v2alpha"
 )
 
 const (

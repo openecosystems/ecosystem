@@ -2,17 +2,17 @@ package connectorv2alphatui
 
 import (
 	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	slog "log"
 	"os"
 	"strconv"
 	"time"
 
-	"github.com/charmbracelet/bubbletea"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
+
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
 )
 
 var Cmd = &cobra.Command{

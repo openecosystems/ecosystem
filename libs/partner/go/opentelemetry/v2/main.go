@@ -22,6 +22,7 @@ import (
 	"libs/public/go/sdk/v2alpha"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Propagator     *propagation.TextMapPropagator
 	TraceProvider  *trace.TracerProvider

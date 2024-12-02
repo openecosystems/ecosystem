@@ -4,10 +4,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -15,6 +11,10 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+
+	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type BaseModel[Cfg any] struct {
@@ -85,7 +85,6 @@ func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 		case key.Matches(message, keys.Keys.Help):
 
 		case key.Matches(message, keys.Keys.Quit):
-
 		}
 	}
 

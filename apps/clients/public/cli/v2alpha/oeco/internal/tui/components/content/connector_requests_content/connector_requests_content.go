@@ -1,10 +1,10 @@
 package connector_requests_content
 
 import (
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbletea"
 )
 
 type Model struct {

@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
 	"google.golang.org/protobuf/types/dynamicpb"
 
 	"google.golang.org/protobuf/types/known/anypb"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type (
@@ -48,7 +49,6 @@ const (
 
 func (c DynamicCommand) CommandName() string {
 	switch c {
-
 	case DynamicCommandsUnspecified:
 		return "DynamicCommandsUnspecified"
 	case DynamicCommandsCreate:
@@ -64,7 +64,6 @@ func (c DynamicCommand) CommandName() string {
 
 func (e DynamicEvent) EventName() string {
 	switch e {
-
 	case DynamicEventsUnspecified:
 		return "DynamicEventsUnspecified"
 	case DynamicEventsCreated:
@@ -80,7 +79,6 @@ func (e DynamicEvent) EventName() string {
 
 func (c DynamicCommand) CommandTopic() string {
 	switch c {
-
 	case DynamicCommandsUnspecified:
 		return CommandDataDynamicTopic
 	case DynamicCommandsCreate:
@@ -96,7 +94,6 @@ func (c DynamicCommand) CommandTopic() string {
 
 func (e DynamicEvent) EventTopic() string {
 	switch e {
-
 	case DynamicEventsUnspecified:
 		return EventDataDynamicTopic
 	case DynamicEventsCreated:
@@ -120,7 +117,6 @@ func (e DynamicEvent) EventTopicWildcard() string {
 
 func GetDynamicCommand(command string) DynamicCommand {
 	switch command {
-
 	case "DynamicCommandsUnspecified":
 		return DynamicCommandsUnspecified
 	case "DynamicCommandsCreate":
@@ -136,7 +132,6 @@ func GetDynamicCommand(command string) DynamicCommand {
 
 func GetDynamicEvent(event string) DynamicEvent {
 	switch event {
-
 	case "DynamicEventsUnspecified":
 		return DynamicEventsUnspecified
 	case "DynamicEventsCreated":

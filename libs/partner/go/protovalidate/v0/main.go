@@ -9,6 +9,7 @@ import (
 	"libs/public/go/sdk/v2alpha"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Validator *protovalidate.Validator
 

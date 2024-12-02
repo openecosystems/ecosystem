@@ -1,11 +1,13 @@
 package zaploggerv1
 
 import (
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
+// ResolvedConfiguration holds the configuration for this binding
 var ResolvedConfiguration *Configuration
 
 type Configuration struct {

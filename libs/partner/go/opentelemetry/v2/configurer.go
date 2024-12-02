@@ -6,6 +6,7 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
+// ResolvedConfiguration holds the configuration for this binding
 var ResolvedConfiguration *Configuration
 
 type Configuration struct {

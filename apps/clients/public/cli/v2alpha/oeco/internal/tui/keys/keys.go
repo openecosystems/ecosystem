@@ -1,10 +1,10 @@
 package keys
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 type KeyMap struct {

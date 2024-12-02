@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	"libs/public/go/sdk/gen/cryptography/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	cryptographyv2alphapbsdk "libs/public/go/sdk/gen/cryptography/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 	"strings"
 

@@ -2,6 +2,8 @@ package sdkv2alphalib
 
 import (
 	"fmt"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 	"strconv"
 	"strings"
 	"time"
@@ -13,8 +15,6 @@ import (
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 const (

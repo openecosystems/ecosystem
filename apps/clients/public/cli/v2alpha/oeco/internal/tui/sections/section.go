@@ -6,11 +6,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/spinner"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -20,6 +15,11 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+
+	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbles/spinner"
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type BaseModel struct {
@@ -121,7 +121,6 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 				return m, cmd
 			}
 			cmd = tea.Quit
-
 		}
 	case tea.WindowSizeMsg:
 		m.OnWindowSizeChanged(message)

@@ -2,17 +2,16 @@ package sdkv2alphalib
 
 import (
 	"context"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"strconv"
 
 	"connectrpc.com/connect"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type SpecInterceptor struct {
-	spec specproto.Spec // The Platform Spec
+	spec specv2pb.Spec // The Platform Spec
 }
 
 func DecorateContext(ctx context.Context, req connect.AnyRequest) context.Context {

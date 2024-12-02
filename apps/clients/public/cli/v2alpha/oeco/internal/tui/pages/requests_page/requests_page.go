@@ -3,14 +3,14 @@ package requests_page
 import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_requests_content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_requests_sidebar"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type ModelConfig struct{}

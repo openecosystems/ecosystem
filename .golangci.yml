@@ -1,0 +1,58 @@
+run:
+  dir: .
+  tests: false
+  allow-parallel-runners: true
+
+issues:
+  include:
+    - EXC0001
+    - EXC0005
+    - EXC0011
+    - EXC0012
+    - EXC0013
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck
+  exclude-dirs:
+    - "vendor"
+    - "node_modules"
+    - "dist"
+    - "tmp"
+    - ".nx"
+    - ".config"
+    - ".github"
+    - ".spec"
+    - ".vscode"
+
+  #max-issues-per-linter: 0
+  #max-same-issues: 0
+
+linters:
+  disable:
+    - staticcheck
+    - unused
+    - gosimple
+    - unconvert
+    - govet
+    - errcheck
+    - nilerr
+  enable:
+    #- bodyclose
+    - gofumpt
+    - goimports
+    #- gosec
+    #- nilerr
+    #- revive TODO: Add comments to all fields and methods or unexport them
+    - rowserrcheck
+    - sqlclosecheck
+    - tparallel
+    #- unconvert
+    #- unparam
+    - whitespace
+#    - govet
+#    - errcheck
+#    - staticcheck
+#    - unused
+#    - gosimple
+#    - gocyclo

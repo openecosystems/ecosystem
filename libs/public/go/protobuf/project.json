@@ -45,14 +45,15 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "gofumpt -l .",
+        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "parallel": false,
         "cwd": "libs/public/go/protobuf"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w ."],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
         "parallel": false,
         "cwd": "libs/public/go/protobuf"
       }

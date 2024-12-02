@@ -3,10 +3,6 @@ package connector
 import (
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
@@ -15,6 +11,10 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/logs_page"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/requests_page"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
+
+	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {

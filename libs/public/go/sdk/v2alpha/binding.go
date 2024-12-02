@@ -61,7 +61,6 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 		}
 
 		bindingsInstance = b.Bind(ctx, bindingsInstance)
-
 	}
 
 	Bounds = bindingsInstance

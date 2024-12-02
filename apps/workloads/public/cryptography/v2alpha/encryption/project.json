@@ -90,7 +90,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w ."],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
         "parallel": false,
         "cwd": "apps/workloads/public/cryptography/v2alpha/encryption"
       }

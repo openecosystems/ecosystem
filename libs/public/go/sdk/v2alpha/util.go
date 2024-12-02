@@ -5,10 +5,11 @@ import (
 	"errors"
 	"reflect"
 
+	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/known/anypb"
-	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 func GetDataFromSpec[D protoreflect.ProtoMessage](ctx context.Context, s *specproto.Spec, data D) error {

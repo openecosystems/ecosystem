@@ -1,9 +1,6 @@
 package logs_page
 
 import (
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_logs_content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_logs_sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -11,6 +8,9 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type ModelConfig struct{}

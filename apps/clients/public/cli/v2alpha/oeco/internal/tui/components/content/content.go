@@ -4,12 +4,12 @@ import (
 	"strconv"
 	"strings"
 
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
 	"github.com/charmbracelet/lipgloss"
 
 	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 type BaseModel struct {

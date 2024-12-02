@@ -1,8 +1,9 @@
 package sdkv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+
+	"connectrpc.com/connect"
 )
 
 var (

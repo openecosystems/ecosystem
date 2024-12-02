@@ -10,10 +10,11 @@ import (
 
 	"connectrpc.com/connect"
 
+	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/dynamicpb"
 	"google.golang.org/protobuf/types/known/emptypb"
-	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 )
 
 const (
@@ -61,7 +62,6 @@ func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) htt
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if method, ok := mpb[r.URL.Path]; ok {
-
 			// i := dynamicpb.NewMessage(method.Input).Type()
 			// o := dynamicpb.NewMessage(method.Output).Type()
 			g := func(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
