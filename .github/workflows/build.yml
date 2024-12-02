@@ -1,17 +1,17 @@
 name: build
 
-on: [push, pull_request]
-permissions:
-  contents: write
-  pull-requests: write
-jobs:
-  build:
-    strategy:
-      matrix:
-        go_version: ["1.19", stable]
-    uses: ./.github/workflows/_build.yml
-    with:
-      go_version: ${{ matrix.go_version }}
+#on: [push, pull_request]
+#permissions:
+#  contents: write
+#  pull-requests: write
+#jobs:
+#  build:
+#    strategy:
+#      matrix:
+#        go_version: ["1.19", stable]
+#    uses: ./.github/workflows/_build.yml
+#    with:
+#      go_version: ${{ matrix.go_version }}
 #
 #  snapshot:
 #    uses: ./.github/workflows/_snapshot.yml
