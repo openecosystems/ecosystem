@@ -1,6 +1,9 @@
 name: build
 on:
   workflow_call:
+    permissions:
+      contents: write
+      pull-requests: write
     inputs:
       go_version:
         required: false
