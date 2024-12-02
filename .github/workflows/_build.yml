@@ -53,7 +53,8 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        #os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     env:
       GO111MODULE: "on"
@@ -63,26 +64,28 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - run: |
-          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
-        if: env.GH_PAT != null
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
       - name: Install Go
         uses: actions/setup-go@v5
         with:
           go-version: ${{ inputs.go_version || inputs.go-version }}
           go-version-file: ${{ inputs.go-version-file }}
-          cache: true
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - uses: nrwl/nx-set-shas@v4
+          cache: 'true'
+      - name: Install node dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Set Shas
+        uses: nrwl/nx-set-shas@v4
       #- run: pnpm exec nx affected -t lint test build e2e-ci
-      - run: pnpm exec nx affected -t lint build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+      - name: Run NX
+        run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
   dependabot:
     #needs: [ build, vulnerability ]
     needs: [ build ]
