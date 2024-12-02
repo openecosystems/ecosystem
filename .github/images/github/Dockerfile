@@ -11,6 +11,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install hugo
 RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
 RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
 RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install golangci-lint
+RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install pnpm
 
 # Python Installs
 RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install poetry flake8
