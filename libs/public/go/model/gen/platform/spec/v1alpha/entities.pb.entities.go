@@ -2,10 +2,10 @@
 // source: Generated from all proto files
 
 package specentities
-
 import (
-	preference_center "libs/public/go/model/gen/platform/communication/v1alpha"
-	"libs/public/go/sdk/v2alpha"
+
+  preference_center "libs/public/go/model/gen/platform/communication/v1alpha"
+  "libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{
