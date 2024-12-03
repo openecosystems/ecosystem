@@ -1,7 +1,7 @@
 
 {
   "name": "libs-private-go-sdk-audit-v2alpha",
-  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/private/go/sdk/gen/audit/v2alpha",
   "implicitDependencies": [
