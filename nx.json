@@ -172,28 +172,26 @@
     "groups": {
       "sdks": {
         "projectsRelationship": "fixed",
-        "projects": ["libs-public-go-sdk-communication-v1beta"],
+        "projects": ["tag:type:sdk"],
         "version": {
-          "conventionalCommits": true,
-          "preVersionCommand": "npm run build"
+          "conventionalCommits": true
         },
         "changelog": true,
         "releaseTagPattern": "sdk@{version}"
       },
-      "frontend": {
+      "clis": {
         "projectsRelationship": "independent",
         "projects": ["tag:type:cli"],
         "version": {
           "conventionalCommits": true
         },
-        "changelog": {
-          "file": "CHANGELOG.frontend.md"
-        },
-        "releaseTagPattern": "frontend-{projectName}@{version}"
+        "changelog": true,
+        "releaseTagPattern": "cli-{projectName}@{version}"
       }
     },
     "changelog": {
-      "workspaceChangelog": true,
+      "workspaceChangelog": false,
+      "projectChangelogs": true,
       "automaticFromRef": true
     }
   },

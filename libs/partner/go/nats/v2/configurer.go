@@ -10,8 +10,6 @@ import (
 
 	"dario.cat/mergo"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
@@ -33,11 +31,13 @@ type Nats struct {
 	Options nats.Options
 }
 
+// Natsd represents the configuration for an embedded NATS server.
 type Natsd struct {
 	Enabled bool
 	Options natsd.Options
 }
 
+// EventStreamRegistry holds the configuration details for a set of event streams.
 type EventStreamRegistry struct {
 	Streams []jetstream.StreamConfig
 }

@@ -55,8 +55,11 @@
   },
   "tags": [
     "type:lib",
-    "visibility:public",
-    "exposure:internal",
-    "language:golang"
+    "cycle:private",
+    "language:golang",
+    "type:server",
+    "type:sdk",
+    "version:v2alpha",
+    "exposure:internal"
   ]
 }
