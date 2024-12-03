@@ -94,6 +94,7 @@
     "type:client",
     "cycle:public",
     "type:cli",
+    "system:cli",
     "version:v2alpha",
     "exposure:internal",
     "language:golang"

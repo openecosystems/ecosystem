@@ -97,5 +97,13 @@
       "dependsOn": ["local-container"]
     }
   },
-  "tags": ["workloads", "public", "edge", "v2alpha", "rust"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:edge",
+    "version:v2alpha",
+    "exposure:internal",
+    "language:rust"
+  ]
 }

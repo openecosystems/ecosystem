@@ -40,5 +40,13 @@
       }
     }
   },
-  "tags": ["workloads", "public", "dns", "v2alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:dns",
+    "version:v2alpha",
+    "exposure:external",
+    "language:golang"
+  ]
 }

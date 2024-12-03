@@ -111,5 +111,13 @@
       "dependsOn": ["container"]
     }
   },
-  "tags": ["workloads", "public", "cryptography", "v2alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:cryptography",
+    "version:v2alpha",
+    "exposure:external",
+    "language:golang"
+  ]
 }

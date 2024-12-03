@@ -109,5 +109,13 @@
       "dependsOn": ["container"]
     }
   },
-  "tags": ["workloads", "public", "mesh", "v2alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:mesh",
+    "version:v2alpha",
+    "exposure:external",
+    "language:golang"
+  ]
 }

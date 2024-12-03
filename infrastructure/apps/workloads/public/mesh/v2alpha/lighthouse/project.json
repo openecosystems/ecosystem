@@ -6,5 +6,12 @@
   "targets": {
 
   },
-  "tags": ["infrastructure", "public", "mesh", "v2alpha", "golang"]
+  "tags": [
+    "type:infrastructure",
+    "cycle:public",
+    "language:golang",
+    "system:mesh",
+    "version:v2alpha",
+    "exposure:internal"
+  ]
 }

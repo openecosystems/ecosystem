@@ -111,5 +111,13 @@
       "dependsOn": ["container"]
     }
   },
-  "tags": ["workloads", "public", "communications", "v1alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:communication",
+    "version:v1alpha",
+    "exposure:external",
+    "language:golang"
+  ]
 }

@@ -68,5 +68,13 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    "type:lib",
+    "cycle:public",
+    "language:golang",
+    "type:sdk",
+    "system:cryptography",
+    "version:v2alpha",
+    "exposure:external"
+  ]
 }
