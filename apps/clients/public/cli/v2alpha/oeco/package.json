@@ -3,5 +3,5 @@
   "version": "0.38.0-acc5694",
   "description": "Open Ecosystem CLI",
   "private": true,
-  "license": "UNLICENSED"
+  "license": "Apache-2.0"
 }

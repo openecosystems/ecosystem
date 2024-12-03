@@ -89,5 +89,13 @@
       }
     }
   },
-  "tags": ["clients", "public", "cli", "v2alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:client",
+    "cycle:public",
+    "type:cli",
+    "version:v2alpha",
+    "exposure:internal",
+    "language:golang"
+  ]
 }

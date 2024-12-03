@@ -3,5 +3,5 @@
   "version": "0.22.0-2c5994",
   "description": "<%= system %>",
   "private": true,
-  "license": "UNLICENSED"
+  "license": "Apache-2.0"
 }

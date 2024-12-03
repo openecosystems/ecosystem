@@ -77,6 +77,8 @@ Connector Type
 - Elation
 - CommonWell
 - Care Quality
+- CoreCard
+- Cencora Financial Services
 
 Data Classification
 - HIPPA

@@ -2,5 +2,5 @@
   "name": "@jeannotcompany/workloads-internal-edge-v2alpha-edge-router",
   "version": "0.1.0-560938c",
   "description": "Edge Router",
-  "license": "UNLICENSED"
+  "license": "Apache-2.0"
 }
