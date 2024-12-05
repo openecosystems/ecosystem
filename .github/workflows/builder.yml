@@ -3,13 +3,9 @@ on:
   push:
     paths:
       - .github/images/**
-permissions:
-  packages: write
-  contents: read
-  attestations: write
-  id-token: write
 jobs:
   builder:
+    environment: operations
     strategy:
       matrix:
         os: [ ubuntu-latest ]
@@ -17,6 +13,11 @@ jobs:
     env:
       GO111MODULE: "on"
       GH_PAT: ${{ secrets.gh_pat }}
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
