@@ -3,6 +3,11 @@ on:
   push:
     paths:
       - .github/images/**
+permissions:
+  packages: write
+  contents: read
+  attestations: write
+  id-token: write
 jobs:
   builder:
     strategy:
@@ -26,9 +31,48 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+
       - name: Install node dependencies
         run: pnpm install --frozen-lockfile
+
       - name: Set Shas
         uses: nrwl/nx-set-shas@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            openecosystems/ecosystem
+            ghcr.io/${{ github.repository }}
+
+      - name: Build and push Docker images
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
       - name: Run NX
         run: pnpm exec nx run images-github-v2alpha:container:production --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
