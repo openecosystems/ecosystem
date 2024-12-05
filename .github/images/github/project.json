@@ -36,7 +36,17 @@
       "options": {
         "engine": "docker",
         "context": "dist/github/images/github",
-        "platforms": ["linux/amd64"]
+        "platforms": ["linux/amd64"],
+        "metadata": {
+          "tags": [
+            "org.opencontainers.image.title=images-github-v2alpha",
+            "org.opencontainers.image.description=images-github-v2alpha",
+            "org.opencontainers.image.url=https://github.com/openecosystems/ecosystem",
+            "org.opencontainers.image.source=https://github.com/openecosystems/ecosystem",
+            "org.opencontainers.image.version={{version}}",
+            "org.opencontainers.image.licenses=Apache-2.0"
+          ]
+        }
       },
       "configurations": {
         "local": {
