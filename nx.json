@@ -187,6 +187,15 @@
         },
         "changelog": true,
         "releaseTagPattern": "cli-{projectName}@{version}"
+      },
+      "cicd": {
+        "projectsRelationship": "independent",
+        "projects": ["tag:type:cicd"],
+        "version": {
+          "conventionalCommits": true
+        },
+        "changelog": true,
+        "releaseTagPattern": "cicd-{projectName}@{version}"
       }
     },
     "changelog": {

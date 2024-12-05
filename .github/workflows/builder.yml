@@ -1,0 +1,34 @@
+name: builder
+on:
+  push:
+    paths:
+      - .github/images/**
+jobs:
+  builder:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    env:
+      GO111MODULE: "on"
+      GH_PAT: ${{ secrets.gh_pat }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install node dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Set Shas
+        uses: nrwl/nx-set-shas@v4
+      - name: Run NX
+        run: pnpm exec nx run images-github-v2alpha:container:production --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}

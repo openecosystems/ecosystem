@@ -1,0 +1,73 @@
+{
+  "name": "images-github-v2alpha",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": ".github/images/github",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/github/images/github"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p ../../../dist/github/images/github",
+          "cp Dockerfile ../../../dist/github/images/github",
+          "cp *.json ../../../dist/github/images/github",
+          "cp ../../../.config/goreleaser/goreleaser-cicd-image.yml ../../../dist/github/images/github/goreleaser.yml"
+        ],
+        "parallel": false,
+        "cwd": ".github/images/github"
+      }
+    },
+    "container-old": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "push": true,
+        "context": ".github/images/github",
+        "platforms": ["linux/amd64"],
+        "tags": ["github/images/github"]
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "docker",
+        "context": "dist/github/images/github",
+        "platforms": ["linux/amd64"]
+      },
+      "configurations": {
+        "local": {
+          "tags": ["github-cicd:latest"],
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/openecosystems/cicd:latest"
+          ],
+          "push": true
+        }
+      }
+    },
+    "publish": {
+      "executor": "@platform/nx-container:push",
+      "options": {
+        "image": "github/images/github",
+        "version": {
+          "path": ".github/images/github/package.json",
+          "key": "version"
+        },
+        "registries": ["openecosystems.registry.cpln.io", "ghcr.io/openecosystems"]
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:private",
+    "type:cicd",
+    "version:v2alpha",
+    "exposure:internal"
+  ]
+}

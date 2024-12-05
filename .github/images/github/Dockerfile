@@ -1,5 +1,7 @@
+# TODO: PUll this into a separate script so local engineers can reuse it
+
 # Brew Installs
-FROM --platform=linux/amd64 cimg/go:1.20.11-node as brew-installs
+FROM --platform=linux/amd64 cimg/go:1.23.3-node as brew-installs
 RUN sudo apt-get update && sudo apt-get install build-essential procps curl file git && \
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
     echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/circleci/.profile
@@ -17,7 +19,7 @@ RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install pnpm
 RUN eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install poetry flake8
 
 # Go Installs
-FROM --platform=linux/amd64 cimg/go:1.20.11 AS go-installs
+FROM --platform=linux/amd64 cimg/go:1.23.3 AS go-installs
 RUN go install github.com/envoyproxy/protoc-gen-validate@v0.9.0
 RUN go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
@@ -26,14 +28,14 @@ RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
 RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.14.0
 RUN go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
 RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
-RUN go install mvdan.cc/gofumpt@v0.7.0
+RUN go install mvdan.cc/gofumpt@latest
 RUN go install golang.org/x/vuln/cmd/govulncheck@latest
 
 # Buf Installs
-FROM --platform=linux/amd64 bufbuild/buf:1.13.1 AS buf
+FROM --platform=linux/amd64 bufbuild/buf:1.47.2 AS buf
 
 # NX Environment
-FROM --platform=linux/amd64 cimg/go:1.20.11-node
+FROM --platform=linux/amd64 cimg/go:1.23.3-node
 WORKDIR /home/circleci
 
 # Bashrc
@@ -50,7 +52,7 @@ RUN WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)
 RUN sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref && \
     echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
 
-# apt java, dotnet
+# Apt Java, Dotnet
 RUN sudo apt-get update && sudo apt-get install -y openjdk-17-jdk aspnetcore-runtime-6.0 dotnet-sdk-7.0
 RUN curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
 RUN chmod +x go/bin/protoc-gen-grpc-java
