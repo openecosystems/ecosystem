@@ -27,6 +27,7 @@
     "@nx-go/nx-go": "^3.3.0",
     "@nx-tools/core": "^6.1.1",
     "@nx-tools/nx-container": "^6.1.1",
+    "@nx-tools/container-metadata": "^6.1.1",
     "@nx/eslint": "20.1.4",
     "@nx/eslint-plugin": "20.1.4",
     "@nx/jest": "20.1.4",
