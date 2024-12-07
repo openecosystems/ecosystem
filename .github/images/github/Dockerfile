@@ -1,5 +1,7 @@
 # TODO: PUll this into a separate script so local engineers can reuse it
 
+LABEL org.opencontainers.image.source = https://github.com/openecosystems/ecosystem
+
 # Brew Installs
 FROM --platform=linux/amd64 cimg/go:1.23.3-node as brew-installs
 RUN sudo apt-get update && sudo apt-get install build-essential procps curl file git && \
@@ -72,5 +74,6 @@ RUN echo 'export PATH=/home/circleci/.cargo/bin:$PATH' >> ~/.bashrc
 RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
 RUN /home/circleci/.cargo/bin/rustup toolchain add stable
 RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+
 
 #

@@ -20,15 +20,6 @@
         "cwd": ".github/images/github"
       }
     },
-    "container-old": {
-      "executor": "@nx-tools/nx-container:build",
-      "options": {
-        "push": true,
-        "context": ".github/images/github",
-        "platforms": ["linux/amd64"],
-        "tags": ["github/images/github"]
-      }
-    },
     "container": {
       "executor": "@nx-tools/nx-container:build",
       "dependsOn": ["build"],
@@ -36,40 +27,20 @@
       "options": {
         "engine": "docker",
         "context": "dist/github/images/github",
-        "platforms": ["linux/amd64"],
-        "metadata": {
-          "tags": [
-            "org.opencontainers.image.title=images-github-v2alpha",
-            "org.opencontainers.image.description=images-github-v2alpha",
-            "org.opencontainers.image.url=https://github.com/openecosystems/ecosystem",
-            "org.opencontainers.image.source=https://github.com/openecosystems/ecosystem",
-            "org.opencontainers.image.version={{version}}",
-            "org.opencontainers.image.licenses=Apache-2.0"
-          ]
-        }
+        "platforms": ["linux/amd64"]
       },
       "configurations": {
         "local": {
-          "tags": ["github-cicd:latest"],
+          "tags": ["openecosystems/ecosystem-builder:latest"],
           "push": false
         },
         "production": {
           "tags": [
-            "ghcr.io/openecosystems/cicd:latest"
+            "ghcr.io/openecosystems/ecosystem-builder:latest",
+            "openecosystems/ecosystem-builder:latest"
           ],
           "push": true
         }
-      }
-    },
-    "publish": {
-      "executor": "@platform/nx-container:push",
-      "options": {
-        "image": "github/images/github",
-        "version": {
-          "path": ".github/images/github/package.json",
-          "key": "version"
-        },
-        "registries": ["openecosystems.registry.cpln.io", "ghcr.io/openecosystems"]
       }
     }
   },
