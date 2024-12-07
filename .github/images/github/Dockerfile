@@ -1,7 +1,5 @@
 # TODO: PUll this into a separate script so local engineers can reuse it
 
-LABEL org.opencontainers.image.source = https://github.com/openecosystems/ecosystem
-
 # Brew Installs
 FROM --platform=linux/amd64 cimg/go:1.23.3-node as brew-installs
 RUN sudo apt-get update && sudo apt-get install build-essential procps curl file git && \
@@ -38,6 +36,7 @@ FROM --platform=linux/amd64 bufbuild/buf:1.47.2 AS buf
 
 # NX Environment
 FROM --platform=linux/amd64 cimg/go:1.23.3-node
+LABEL org.opencontainers.image.source = https://github.com/openecosystems/ecosystem
 WORKDIR /home/circleci
 
 # Bashrc
