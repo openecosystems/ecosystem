@@ -12,7 +12,7 @@
       "options": {
         "commands": [
           "mkdir -p ../../../dist/github/images/github",
-          "cp Dockerfile ../../../dist/github/images/github",
+          "cp *.Dockerfile ../../../dist/github/images/github",
           "cp *.json ../../../dist/github/images/github",
           "cp ../../../.config/goreleaser/goreleaser-cicd-image.yml ../../../dist/github/images/github/goreleaser.yml"
         ],
@@ -21,13 +21,16 @@
       }
     },
     "container": {
+      "dependsOn": ["build", "container-v2alpha"]
+    },
+    "container-v2alpha": {
       "executor": "@nx-tools/nx-container:build",
-      "dependsOn": ["build"],
       "defaultConfiguration": "local",
       "options": {
-        "engine": "docker",
+        "engine": "podman",
         "context": "dist/github/images/github",
-        "platforms": ["linux/amd64"]
+        "file": "dist/github/images/github/v2alpha.Dockerfile",
+        "platforms": ["linux/amd64", "linux/arm64"]
       },
       "configurations": {
         "local": {
