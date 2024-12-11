@@ -6,6 +6,12 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "target": "generate",
+          "projects": ["libs-partner-go-nebula-v1"]
+        }
+      ],
       "outputs": [
         "{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"
       ],
@@ -76,13 +82,12 @@
     },
     "distribute": {
       "executor": "nx:run-commands",
+      "dependsOn": ["build"],
       "options": {
         "commands": [
-          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../.goreleaser.cli.yaml > ./dist/.goreleaser.yaml",
+          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../.config/goreleaser/goreleaser.cli.yaml > ./dist/.goreleaser.yaml",
           "goreleaser release --config ./dist/.goreleaser.yaml --snapshot --clean",
-          "rm -rf ../../../../../../dist/apps/clients/public/cli/v2alpha/oeco/release",
-          "mkdir -p ../../../../../../dist/apps/clients/public/cli/v2alpha/oeco/release",
-          "mv dist ../../../../../../dist/apps/clients/public/cli/v2alpha/oeco/release"
+          "mv dist/** ../../../../../../dist/apps/clients/public/cli/v2alpha/oeco/"
         ],
         "parallel": false,
         "cwd": "apps/clients/public/cli/v2alpha/oeco"
