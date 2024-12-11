@@ -3,12 +3,12 @@ package serverv2alphalib
 import (
 	"errors"
 	"fmt"
+
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-var (
-	ResolvedConfiguration *Configuration
-)
+// ResolvedConfiguration holds the configuration for this binding
+var ResolvedConfiguration *Configuration
 
 type Grpc struct {
 	Port string `yaml:"port,omitempty"`
@@ -67,7 +67,6 @@ func (c *Configuration) ValidateConfiguration() error {
 }
 
 func (c *Configuration) GetDefaultConfiguration() interface{} {
-
 	return Configuration{
 		App: sdkv2alphalib.App{
 			Name:            "server",

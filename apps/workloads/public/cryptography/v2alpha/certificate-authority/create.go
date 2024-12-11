@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
-	"github.com/nats-io/nats.go/jetstream"
 	"libs/partner/go/nats/v2"
-	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	"libs/partner/go/zap/v1"
+
+	"github.com/nats-io/nats.go/jetstream"
+
+	nebulav1ca "libs/partner/go/nebula/v1/ca"
+
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	cryptographyv2alphapbmodel "libs/public/go/model/gen/platform/cryptography/v2alpha"
@@ -16,7 +19,6 @@ import (
 type CreateCertificateAuthorityListener struct{}
 
 func (l *CreateCertificateAuthorityListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
-
 	entity := &cryptographyv2alphapbmodel.CertificateAuthoritySpecEntity{}
 	streamType := natsnodev2.InboundStream{}
 	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
@@ -35,15 +37,13 @@ func (l *CreateCertificateAuthorityListener) GetConfiguration() *natsnodev2.List
 			Metadata:      nil,
 		},
 	}
-
 }
 
-func (l *CreateCertificateAuthorityListener) Listen(ctx context.Context, config *sdkv2alphalib.Configuration, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, config, l)
+func (l *CreateCertificateAuthorityListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
 func (l *CreateCertificateAuthorityListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
-
 	log := *zaploggerv1.Bound.Logger
 	nca := *nebulav1ca.Bound
 

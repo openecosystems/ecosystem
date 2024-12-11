@@ -1,7 +1,7 @@
 
 {
   "name": "libs-private-go-sdk-audit-v2alpha",
-  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/private/go/sdk/gen/audit/v2alpha",
   "implicitDependencies": [
@@ -40,14 +40,15 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go fmt -n ./...",
+        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "parallel": false,
         "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
         "parallel": false,
         "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
       }
@@ -67,5 +68,13 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    "type:lib",
+    "cycle:private",
+    "language:golang",
+    "type:sdk",
+    "system:audit",
+    "version:v2alpha",
+    "exposure:external"
+  ]
 }

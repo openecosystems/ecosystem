@@ -3,11 +3,13 @@ package protovalidatev0
 import (
 	"context"
 	"fmt"
+	"sync"
+
 	"github.com/bufbuild/protovalidate-go"
 	"libs/public/go/sdk/v2alpha"
-	"sync"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Validator *protovalidate.Validator
 
@@ -24,7 +26,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	// Verify any requirements
 
 	return nil
@@ -35,7 +36,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-
 				v, err := protovalidate.New()
 				if err != nil {
 					fmt.Println("failed to initialize validator:", err)

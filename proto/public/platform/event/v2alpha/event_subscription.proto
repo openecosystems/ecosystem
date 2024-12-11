@@ -42,8 +42,8 @@ service EventSubscriptionService {
   };
 
   // Method to Subscribe to events based on scopes
-  rpc Subscribe(SubscribeRequest) returns (stream SubscribeResponse) {
-    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_SERVER_STREAM};
+  rpc Subscribe(SubscribeRequest) returns (SubscribeResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
     option (google.api.http) = {
       post: "/v2/event/subscribe"
       body: "*"

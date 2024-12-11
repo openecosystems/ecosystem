@@ -1,0 +1,151 @@
+name: goreleaser
+
+on:
+  workflow_call:
+    inputs:
+      go_version:
+        required: false
+        type: string
+        default: stable
+      upload_artifact:
+        required: false
+        type: boolean
+        default: true
+      lfs:
+        required: false
+        type: boolean
+        default: false
+        description: Whether to download Git-LFS files
+    secrets:
+      docker_username:
+        required: true
+      docker_token:
+        required: true
+      gh_pat:
+        required: true
+      goreleaser_key:
+        required: true
+      aur_key:
+        required: false
+      fury_token:
+        required: false
+      nfpm_gpg_key:
+        required: false
+      nfpm_passphrase:
+        required: false
+      snapcraft_token:
+        required: false
+      twitter_consumer_key:
+        required: false
+      twitter_consumer_secret:
+        required: false
+      twitter_access_token:
+        required: false
+      twitter_access_token_secret:
+        required: false
+      mastodon_client_id:
+        required: false
+      mastodon_client_secret:
+        required: false
+      mastodon_access_token:
+        required: false
+      discord_webhook_id:
+        required: false
+      discord_webhook_token:
+        required: false
+      macos_sign_p12:
+        required: false
+      macos_sign_password:
+        required: false
+      macos_notary_key:
+        required: false
+      macos_notary_key_id:
+        required: false
+      macos_notary_issuer_id:
+        required: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+    env:
+      DOCKER_CLI_EXPERIMENTAL: enabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: ${{ inputs.lfs }}
+      - run: |
+          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ inputs.go_version }}
+          cache: true
+          check-latest: true
+      - uses: sigstore/cosign-installer@v3.7.0
+      - uses: cachix/install-nix-action@v30
+        with:
+          github_access_token: ${{ secrets.gh_pat }}
+      - uses: anchore/sbom-action/download-syft@v0.17.8
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        name: ghcr.io login
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/login-action@v3
+        name: docker.io login
+        with:
+          username: ${{ secrets.docker_username }}
+          password: ${{ secrets.docker_token }}
+      - run: |
+          echo "$NFPM_GPG_KEY" > ${{ runner.temp }}/gpg.key
+        env:
+          NFPM_GPG_KEY: ${{ secrets.nfpm_gpg_key }}
+      - name: setup-snapcraft
+        run: |
+          sudo apt-get update
+          sudo apt-get -yq --no-install-suggests --no-install-recommends install snapcraft
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: latest
+          distribution: goreleaser-pro
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.gh_pat }}
+          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
+          AUR_KEY: ${{ secrets.aur_key }}
+          FURY_TOKEN: ${{ secrets.fury_token }}
+          GPG_KEY_PATH: ${{ runner.temp }}/gpg.key
+          NFPM_DEFAULT_PASSPHRASE: ${{ secrets.nfpm_passphrase }}
+          TWITTER_CONSUMER_KEY: ${{ secrets.twitter_consumer_key }}
+          TWITTER_CONSUMER_SECRET: ${{ secrets.twitter_consumer_secret }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.twitter_access_token }}
+          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.twitter_access_token_secret }}
+          MASTODON_CLIENT_ID: ${{ secrets.mastodon_client_id }}
+          MASTODON_CLIENT_SECRET: ${{ secrets.mastodon_client_secret }}
+          MASTODON_ACCESS_TOKEN: ${{ secrets.mastodon_access_token }}
+          DISCORD_WEBHOOK_ID: ${{ secrets.discord_webhook_id }}
+          DISCORD_WEBHOOK_TOKEN: ${{ secrets.discord_webhook_token }}
+          MACOS_SIGN_P12: ${{ secrets.macos_sign_p12 }}
+          MACOS_SIGN_PASSWORD: ${{ secrets.macos_sign_password }}
+          MACOS_NOTARY_ISSUER_ID: ${{ secrets.macos_notary_issuer_id }}
+          MACOS_NOTARY_KEY_ID: ${{ secrets.macos_notary_key_id }}
+          MACOS_NOTARY_KEY: ${{ secrets.macos_notary_key }}
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ inputs.upload_artifact == true && always() }}
+        with:
+          retention-days: 30
+          name: dist
+          path: |
+            dist
+
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json

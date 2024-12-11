@@ -4,17 +4,19 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net"
+	"net/http"
+	"sync"
+
 	nebulaConfig "github.com/slackhq/nebula/config"
 	"github.com/slackhq/nebula/service"
 	"gopkg.in/yaml.v2"
 	nebulav1 "libs/partner/go/pushpin/v1"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"libs/public/go/sdk/v2alpha"
-	"net"
-	"net/http"
-	"sync"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	MeshSocket *service.Service
 
@@ -32,7 +34,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	return nil
 }
 
@@ -41,7 +42,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-
 				Bound = &Binding{}
 
 				bindings.Registered[b.Name()] = Bound
@@ -61,12 +61,10 @@ func (b *Binding) GetBinding() interface{} {
 }
 
 func (b *Binding) Close() error {
-
 	return nil
 }
 
 func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
-
 	if IsBound {
 
 		configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)
@@ -100,11 +98,9 @@ func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 }
 
 func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *http.Client {
-
 	httpClient := http.DefaultClient
 
 	go func() {
-
 		// TODO: Check the service in the Global Settings to see if this call is a Mesh or Internet based call
 		if config != nil && config.Platform != nil && config.Platform.Pki != nil {
 
@@ -167,9 +163,9 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 				fmt.Printf("Error creating service: %v\n", err)
 				fmt.Printf(err.Error())
 			}
-			//defer svc.Close()
+			// defer svc.Close()
 
-			//config.MeshSocket = svc
+			// config.MeshSocket = svc
 
 			httpClient = &http.Client{
 				Transport: &http.Transport{
@@ -179,14 +175,12 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 				},
 			}
 		}
-
 	}()
 
 	return httpClient
 }
 
 func (b *Binding) ConfigureMeshSocket() {
-
 	go func() {
 		if nebulav1.IsBound {
 
@@ -211,5 +205,4 @@ func (b *Binding) ConfigureMeshSocket() {
 
 		}
 	}()
-
 }

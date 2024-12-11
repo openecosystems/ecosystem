@@ -58,7 +58,7 @@ func (m *GoSdkModule) Execute(targets map[string]pgs.File, _ map[string]pgs.Pack
 
 	// Idempotent looping, use keys for range NOT targets
 	keys := make([]string, 0)
-	for k, _ := range targets {
+	for k := range targets {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
@@ -67,6 +67,7 @@ func (m *GoSdkModule) Execute(targets map[string]pgs.File, _ map[string]pgs.Pack
 		t := targets[k]
 		m.GenerateClientFile(t)
 		m.GenerateProjectJsonFile(t)
+		m.GeneratePackageJsonFile(t)
 		m.GenerateGoModFile(t)
 		m.GenerateGoReleaserFile(t)
 	}
@@ -138,6 +139,40 @@ func (m GoSdkModule) GenerateProjectJsonFile(file pgs.File) {
 	}
 
 	projectJsonFileName := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/project.json").String()
+	m.OverwriteGeneratorTemplateFile(projectJsonFileName, m.Tpl, file)
+}
+
+func (m GoSdkModule) GeneratePackageJsonFile(file pgs.File) {
+	templateName := "package.json.tmpl"
+	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
+	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
+
+	tpl := l.Template()
+	tpl.Funcs(map[string]interface{}{
+		"getGithubRepositoryConstant": fns.GetGithubRepositoryConstant,
+		"service":                     fns.Service,
+		"getRoutineMessage":           fns.GetRoutineMessage,
+		"getRoutineMessageFieldName":  fns.GetRoutineMessageFieldName,
+		"parentService":               fns.ParentService,
+		"queries":                     fns.QueryMethods,
+		"mutations":                   fns.MutationMethods,
+		"getRoutines":                 fns.GetRoutines,
+		"getImportPackages":           fns.GetGoImportPackagesServer,
+		"goPackageOverwrite":          fns.GoPackageOverwrite,
+		"goPackageRemote":             fns.GetRemoteProtoGoPathFromFile,
+		"getPackageVersion":           fns.GetPackageVersion,
+		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
+		"domainSystemName2":           fns.DomainSystemName2,
+	})
+	template.Must(tpl.ParseFS(templates, "templates/*"))
+	m.Tpl = tpl
+
+	msg := fns.Entity(file)
+	if msg == nil {
+		return
+	}
+
+	projectJsonFileName := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/package.json").String()
 	m.OverwriteGeneratorTemplateFile(projectJsonFileName, m.Tpl, file)
 }
 

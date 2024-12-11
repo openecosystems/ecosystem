@@ -6,5 +6,12 @@
   "targets": {
 
   },
-  "tags": ["workloads", "private", "event", "v2alpha", "golang"]
+  "tags": [
+    "type:infrastructure",
+    "cycle:private",
+    "language:golang",
+    "system:event",
+    "version:v2alpha",
+    "exposure:internal"
+  ]
 }

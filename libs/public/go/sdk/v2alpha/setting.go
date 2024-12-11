@@ -1,23 +1,25 @@
 package sdkv2alphalib
 
 import (
-	"dario.cat/mergo"
 	"encoding"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/fsnotify/fsnotify"
-	"github.com/go-playground/validator/v10"
-	"github.com/iancoleman/strcase"
-	"github.com/joho/godotenv"
-	"github.com/mitchellh/mapstructure"
-	"github.com/spf13/viper"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"sync"
+
+	"dario.cat/mergo"
+
+	"github.com/fsnotify/fsnotify"
+	"github.com/go-playground/validator/v10"
+	"github.com/iancoleman/strcase"
+	"github.com/joho/godotenv"
+	"github.com/mitchellh/mapstructure"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -38,7 +40,6 @@ type DotConfigSettingsProvider struct {
 }
 
 func NewDotConfigSettingsProvider() (*DotConfigSettingsProvider, error) {
-
 	_, configurer, err := getFileSystemAndConfigurer("")
 	if err != nil {
 		return nil, err
@@ -70,12 +71,11 @@ type SpecYamlSettingsProvider struct {
 }
 
 func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
-
 	viperOnce.Do(
 		func() {
 			err := godotenv.Load()
 			if err != nil {
-				//fmt.Println(err.Error())
+				// fmt.Println(err.Error())
 			}
 
 			viperInstance = viper.New()
@@ -84,7 +84,7 @@ func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
 			viperInstance.AddConfigPath("/etc/spec")
 			viperInstance.AddConfigPath("$HOME/.spec")
 			viperInstance.AddConfigPath(".")
-			//viperInstance.AutomaticEnv()
+			// viperInstance.AutomaticEnv()
 		},
 	)
 
@@ -121,7 +121,6 @@ type CLISettingsProvider struct {
 }
 
 func NewCLISettingsProvider(flags *RuntimeConfigurationOverrides) (*CLISettingsProvider, error) {
-
 	platformContext := ""
 	if flags != nil && flags.Context != nil {
 		platformContext = *flags.Context
@@ -157,7 +156,6 @@ func (p *CLISettingsProvider) WatchSettings() error {
 }
 
 func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Viper, error) {
-
 	fs := NewFileSystem()
 	ufs := fs.UnderlyingFileSystem
 	contextDir := fs.ContextDirectory
@@ -166,7 +164,6 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 
 	// Set Flag Overrides
 	if platformContext != "" {
-
 		fmt.Println("Overriding context to: " + platformContext)
 
 		exists, err := fs.Exists(filepath.Join(ContextDirectory, platformContext))
@@ -179,9 +176,7 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 			// Use config file from the flag
 			configurer.SetConfigFile(platformContext)
 		}
-
 	} else {
-
 		file, err := fs.ReadFile(DefaultContextFile)
 		if err != nil {
 			return nil, nil, errors.New("could not read config file: " + err.Error())
@@ -197,7 +192,6 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 		configurer.SetConfigName(ctx)
 		configurer.SetConfigType(ConfigurationExtension)
 		configurer.AddConfigPath(contextDir)
-
 	}
 
 	// Set Environment Variable Overrides
@@ -215,13 +209,10 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 }
 
 func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error {
-
-	//If dynamic settings enabled, turn on filesystem notification
+	// If dynamic settings enabled, turn on filesystem notification
 	if settings.Platform != nil && !settings.Platform.DynamicConfigReload {
-
-		//fmt.Println("Dynamic reload is disabled in your settings. Please enable if you want to Watch Settings: settings.platform.DynamicConfigReload")
+		// fmt.Println("Dynamic reload is disabled in your settings. Please enable if you want to Watch Settings: settings.platform.DynamicConfigReload")
 		return nil
-
 	}
 
 	watcher, err := fsnotify.NewWatcher()
@@ -231,7 +222,6 @@ func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error
 	defer func(watcher *fsnotify.Watcher) {
 		err := watcher.Close()
 		if err != nil {
-
 		}
 	}(watcher)
 
@@ -293,7 +283,7 @@ func setEnv(envPrefix, yaml string) {
 }
 
 func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix string) {
-	//https://github.com/spf13/viper/issues/188#issuecomment-399884438
+	// https://github.com/spf13/viper/issues/188#issuecomment-399884438
 	ifv := reflect.ValueOf(iface)
 	ift := reflect.TypeOf(iface)
 	for i := 0; i < ift.NumField(); i++ {
@@ -367,7 +357,8 @@ func StringExpandEnv() mapstructure.DecodeHookFuncKind {
 	return func(
 		f reflect.Kind,
 		t reflect.Kind,
-		data interface{}) (interface{}, error) {
+		data interface{},
+	) (interface{}, error) {
 		if f != reflect.String || t != reflect.String {
 			return data, nil
 		}
@@ -385,7 +376,7 @@ func Resolve(dst, src interface{}) {
 		}
 	}
 
-	//ImportEnvironmentVariables(config, "", "")
+	// ImportEnvironmentVariables(config, "", "")
 
 	err = viperInstance.Unmarshal(dst, viper.DecodeHook(
 		mapstructure.ComposeDecodeHookFunc(

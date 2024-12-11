@@ -7,8 +7,7 @@ import (
 
 var MimeTypeRegistry = new(mimeTypeRegistry)
 
-type mimeTypeRegistry struct {
-}
+type mimeTypeRegistry struct{}
 
 var mimeTypes = map[string]string{
 	".crt": "application/x-x509-ca-cert",

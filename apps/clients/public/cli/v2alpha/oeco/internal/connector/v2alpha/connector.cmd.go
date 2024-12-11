@@ -2,27 +2,25 @@ package connectorv2alphatui
 
 import (
 	"fmt"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	slog "log"
 	"os"
 	"strconv"
 	"time"
 
-	"github.com/charmbracelet/bubbletea"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
+
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
-var (
-	Cmd = &cobra.Command{
-		Use:     "connector",
-		Short:   "Connector Interactions",
-		Version: "",
-		Args:    cobra.MaximumNArgs(1),
-	}
-)
+var Cmd = &cobra.Command{
+	Use:     "connector",
+	Short:   "Connector Interactions",
+	Version: "",
+	Args:    cobra.MaximumNArgs(1),
+}
 
 func createModel(cmd *cobra.Command, settings *specv2pb.SpecSettings) (connector.Model, *os.File) {
 	var loggerFile *os.File
@@ -32,7 +30,7 @@ func createModel(cmd *cobra.Command, settings *specv2pb.SpecSettings) (connector
 
 	if debug {
 		var fileErr error
-		newConfigFile, fileErr := os.OpenFile("debug.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		newConfigFile, fileErr := os.OpenFile("debug.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666)
 		if fileErr == nil {
 			log.SetOutput(newConfigFile)
 			log.SetTimeFormat(time.Kitchen)
@@ -52,9 +50,7 @@ func createModel(cmd *cobra.Command, settings *specv2pb.SpecSettings) (connector
 }
 
 func init() {
-
 	Cmd.Run = func(cmd *cobra.Command, args []string) {
-
 		settings := cmd.Root().Context().Value("settings").(*specv2pb.SpecSettings)
 
 		model, logger := createModel(cmd, settings)
@@ -73,7 +69,7 @@ func init() {
 			model,
 			tea.WithAltScreen(),
 			tea.WithReportFocus(),
-			//tea.WithMouseCellMotion(),
+			// tea.WithMouseCellMotion(),
 		)
 
 		if _, err := p.Run(); err != nil {

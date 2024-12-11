@@ -1,10 +1,10 @@
 package theme
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/log"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 type Theme struct {
@@ -48,7 +48,6 @@ var DefaultTheme = &Theme{
 }
 
 func ParseTheme(cfg *config.Config) Theme {
-
 	_shimHex := func(hex config.HexColor, fallback lipgloss.AdaptiveColor) lipgloss.AdaptiveColor {
 		if hex == "" {
 			return fallback

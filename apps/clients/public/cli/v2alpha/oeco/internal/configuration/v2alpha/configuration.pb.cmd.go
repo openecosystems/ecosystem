@@ -1,9 +1,10 @@
 package configurationv2alphapbint
 
 import (
-	"github.com/spf13/cobra"
 	configurationv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/configuration/v2alpha"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var ConfigurationServiceServiceCmd = &cobra.Command{
@@ -19,7 +20,6 @@ var ConfigurationServiceServiceCmd = &cobra.Command{
 }
 
 func init() {
-
 	ConfigurationServiceServiceCmd.AddCommand(CreateConfigurationV2AlphaCmd)
 
 	ConfigurationServiceServiceCmd.AddCommand(configurationv2alphapbcmd.ListConfigurationsV2AlphaCmd)
@@ -35,5 +35,4 @@ func init() {
 	ConfigurationServiceServiceCmd.AddCommand(configurationv2alphapbcmd.PublishConfigurationV2AlphaCmd)
 
 	ConfigurationServiceServiceCmd.AddCommand(configurationv2alphapbcmd.ArchiveConfigurationV2AlphaCmd)
-
 }

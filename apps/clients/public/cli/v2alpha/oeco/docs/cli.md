@@ -39,6 +39,9 @@ oeco ecosystem
 ## oeco context
 Manage your distributed account. Manage your certificates using a secure enclave, your policies, configurations.
 
+oeco context report
+- Provide a full list of operating system, software installed etc.
+
 ## oeco organization
 In the future, you will be able to create your own organization and a private ecosystem with only members of your choosing.
 
@@ -77,6 +80,8 @@ Connector Type
 - Elation
 - CommonWell
 - Care Quality
+- CoreCard
+- Cencora Financial Services
 
 Data Classification
 - HIPPA

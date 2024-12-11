@@ -3,12 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
-
-	"connectrpc.com/connect"
-	"connectrpc.com/otelconnect"
-	"connectrpc.com/vanguard"
-
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/opentelemetry/v2"
 	"libs/partner/go/protovalidate/v0"
@@ -19,13 +13,18 @@ import (
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 	"libs/public/go/sdk/v2alpha"
 	"libs/public/go/server/v2alpha"
+	"os"
+
+	"connectrpc.com/connect"
+	"connectrpc.com/otelconnect"
+	"connectrpc.com/vanguard"
+
 	communicationv1alphapbsrv "libs/public/go/server/v2alpha/gen/platform/communication/v1alpha"
 	configurationv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
 	cryptographyv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/cryptography/v2alpha"
 )
 
 func main() {
-
 	bounds := []sdkv2alphalib.Binding{
 		&protovalidatev0.Binding{},
 		&opentelemetryv2.Binding{},
@@ -72,5 +71,4 @@ func main() {
 	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, services)
 
 	multiplexedServer.ListenAndServe()
-
 }

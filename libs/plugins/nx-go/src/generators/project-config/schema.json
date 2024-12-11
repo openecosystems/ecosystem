@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "ProjectConfig",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Project Name?"
+    },
+    "create": {
+      "type": "boolean",
+      "description": "Create a new project",
+      "default": false
+    },
+    "keepTags": {
+      "type": "boolean",
+      "description": "Overwrite tags",
+      "default": false
+    }
+  },
+  "required": ["project"]
+}

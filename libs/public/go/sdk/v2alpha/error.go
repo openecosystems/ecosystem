@@ -2,13 +2,16 @@ package sdkv2alphalib
 
 import (
 	"bytes"
-	"connectrpc.com/connect"
 	"errors"
 	"fmt"
+	"reflect"
+
+	"connectrpc.com/connect"
+
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
-	"reflect"
 )
 
 type (
@@ -55,7 +58,6 @@ func (e *SpecApiError) Is(err error) bool {
 }
 
 func NewConnectError(code connect.Code, detail *typev2pb.SpecErrorDetail, message string) *connect.Error {
-
 	ee := connect.NewError(code, errors.New(message))
 
 	d, err := connect.NewErrorDetail(detail)
@@ -66,7 +68,6 @@ func NewConnectError(code connect.Code, detail *typev2pb.SpecErrorDetail, messag
 	ee.AddDetail(d)
 
 	return ee
-
 }
 
 func (se *Error) SpecApiError() *SpecApiError {
@@ -74,7 +75,6 @@ func (se *Error) SpecApiError() *SpecApiError {
 }
 
 func (se *Error) WithErrorDetail(detail *typev2pb.SpecErrorDetail) *Error {
-
 	b, err1 := proto.Marshal(detail)
 	if err1 != nil {
 		fmt.Println("server: Error marshalling SpecErrorDetail while adding to SpecError")
@@ -95,7 +95,6 @@ func (se *Error) WithErrorDetail(detail *typev2pb.SpecErrorDetail) *Error {
 	se.SpecApiErr.AddDetail(d)
 
 	return se
-
 }
 
 func (se *Error) WithInternalErrorDetail(errs ...error) *Error {
@@ -105,7 +104,6 @@ func (se *Error) WithInternalErrorDetail(errs ...error) *Error {
 }
 
 func (se *Error) Error() string {
-
 	var buffer bytes.Buffer
 
 	if se.internalApiErr != nil && len(se.internalApiErr) > 0 {

@@ -1,8 +1,10 @@
 package connectorv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	"fmt"
+
+	"connectrpc.com/connect"
+
 	"google.golang.org/protobuf/reflect/protoreflect"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
@@ -54,7 +56,6 @@ func descKind(desc protoreflect.Descriptor) string {
 }
 
 func newConnectorOptions(options []ConnectorOption) (*connectorOptions, *connect.Error) {
-
 	config := connectorOptions{
 		protocols: nil,
 	}
@@ -71,7 +72,6 @@ func newConnectorOptions(options []ConnectorOption) (*connectorOptions, *connect
 }
 
 func (c *connectorOptions) validate() *connect.Error {
-
 	return nil
 }
 

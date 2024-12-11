@@ -2,16 +2,19 @@ package sdkv2alphalib
 
 import (
 	"encoding/json"
-	"google.golang.org/protobuf/types/dynamicpb"
-
 	"errors"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
+	"google.golang.org/protobuf/types/dynamicpb"
+
 	"google.golang.org/protobuf/types/known/anypb"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
-type DynamicCommand int
-type DynamicEvent int
+type (
+	DynamicCommand int
+	DynamicEvent   int
+)
 
 const (
 	DynamicTypeName                         string = "dynamic"
@@ -45,9 +48,7 @@ const (
 )
 
 func (c DynamicCommand) CommandName() string {
-
 	switch c {
-
 	case DynamicCommandsUnspecified:
 		return "DynamicCommandsUnspecified"
 	case DynamicCommandsCreate:
@@ -59,13 +60,10 @@ func (c DynamicCommand) CommandName() string {
 	default:
 		return "UnrecognizedDynamicCommand"
 	}
-
 }
 
 func (e DynamicEvent) EventName() string {
-
 	switch e {
-
 	case DynamicEventsUnspecified:
 		return "DynamicEventsUnspecified"
 	case DynamicEventsCreated:
@@ -77,13 +75,10 @@ func (e DynamicEvent) EventName() string {
 	default:
 		return "UnrecognizedDynamicEvent"
 	}
-
 }
 
 func (c DynamicCommand) CommandTopic() string {
-
 	switch c {
-
 	case DynamicCommandsUnspecified:
 		return CommandDataDynamicTopic
 	case DynamicCommandsCreate:
@@ -95,13 +90,10 @@ func (c DynamicCommand) CommandTopic() string {
 	default:
 		return UnrecognizedDynamicTopic
 	}
-
 }
 
 func (e DynamicEvent) EventTopic() string {
-
 	switch e {
-
 	case DynamicEventsUnspecified:
 		return EventDataDynamicTopic
 	case DynamicEventsCreated:
@@ -113,7 +105,6 @@ func (e DynamicEvent) EventTopic() string {
 	default:
 		return UnrecognizedDynamicTopic
 	}
-
 }
 
 func (c DynamicCommand) CommandTopicWildcard() string {
@@ -125,9 +116,7 @@ func (e DynamicEvent) EventTopicWildcard() string {
 }
 
 func GetDynamicCommand(command string) DynamicCommand {
-
 	switch command {
-
 	case "DynamicCommandsUnspecified":
 		return DynamicCommandsUnspecified
 	case "DynamicCommandsCreate":
@@ -142,9 +131,7 @@ func GetDynamicCommand(command string) DynamicCommand {
 }
 
 func GetDynamicEvent(event string) DynamicEvent {
-
 	switch event {
-
 	case "DynamicEventsUnspecified":
 		return DynamicEventsUnspecified
 	case "DynamicEventsCreated":
@@ -158,23 +145,17 @@ func GetDynamicEvent(event string) DynamicEvent {
 	}
 }
 
-type DynamicSpecEntity struct {
-}
+type DynamicSpecEntity struct{}
 
 func NewDynamicSpecEntity(_ *specv2pb.SpecContext) (*DynamicSpecEntity, error) {
-
 	return &DynamicSpecEntity{}, nil
-
 }
 
 func (entity *DynamicSpecEntity) ToProto() (*dynamicpb.Message, error) {
-
 	return &dynamicpb.Message{}, nil
-
 }
 
 func (entity *DynamicSpecEntity) ToEvent() (*string, error) {
-
 	bytes, err := json.Marshal(entity)
 	if err != nil {
 		return nil, err
@@ -183,11 +164,9 @@ func (entity *DynamicSpecEntity) ToEvent() (*string, error) {
 	event := string(bytes)
 
 	return &event, nil
-
 }
 
 func (entity *DynamicSpecEntity) FromEvent(event *string) (*DynamicSpecEntity, error) {
-
 	bytes := []byte(*event)
 	err := json.Unmarshal(bytes, entity)
 	if err != nil {
@@ -195,22 +174,18 @@ func (entity *DynamicSpecEntity) FromEvent(event *string) (*DynamicSpecEntity, e
 	}
 
 	return entity, nil
-
 }
 
 func (entity *DynamicSpecEntity) MarshalEntity() (*anypb.Any, error) {
-
 	d, err := anypb.New(dynamicpb.NewMessage(nil))
 	if err != nil {
 		return nil, ErrServerInternal.WithInternalErrorDetail(errors.New("failed to marshall entity"), err)
 	}
 
 	return d, nil
-
 }
 
 func (entity *DynamicSpecEntity) MarshalProto() (*anypb.Any, error) {
-
 	proto, err := entity.ToProto()
 	if err != nil {
 		return nil, ErrServerInternal.WithInternalErrorDetail(errors.New("failed to convert entity to proto"), err)
@@ -222,7 +197,6 @@ func (entity *DynamicSpecEntity) MarshalProto() (*anypb.Any, error) {
 	}
 
 	return d, nil
-
 }
 
 func (entity *DynamicSpecEntity) TypeName() string {

@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/nats-io/nats.go/jetstream"
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -12,12 +11,13 @@ import (
 	"libs/public/go/model/gen/platform/configuration/v2alpha"
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
+
+	"github.com/nats-io/nats.go/jetstream"
 )
 
 type GetConfigurationListener struct{}
 
 func (l *GetConfigurationListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
-
 	entity := &configurationv2alphapbmodel.ConfigurationSpecEntity{}
 	streamType := natsnodev2.InboundStream{}
 	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.EventTopic())
@@ -40,7 +40,6 @@ func (l *GetConfigurationListener) GetConfiguration() *natsnodev2.ListenerConfig
 			Metadata:      nil,
 		},
 	}
-
 }
 
 func (l *GetConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
@@ -48,7 +47,6 @@ func (l *GetConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alpha
 }
 
 func (l *GetConfigurationListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
-
 	log := *zaploggerv1.Bound.Logger
 	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 

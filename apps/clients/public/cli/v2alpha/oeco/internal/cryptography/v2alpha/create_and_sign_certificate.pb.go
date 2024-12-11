@@ -1,20 +1,21 @@
 package cryptographyv2alphapbint
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
-	"libs/public/go/sdk/gen/cryptography/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	cryptographyv2alphapbsdk "libs/public/go/sdk/gen/cryptography/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 	"strings"
 
-	"github.com/spf13/cobra"
+	"connectrpc.com/connect"
 
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	"github.com/apex/log"
+	"github.com/golang/protobuf/jsonpb"
+
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -29,7 +30,6 @@ var CreateAndSignCertificateV2AlphaCmd = &cobra.Command{
 	Long: ` Method to CreateAndSignCertificate to events based on scopes
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		log.Debug("Calling createAndSignCertificate certificate")
 
 		_request, err := cmd.Flags().GetString("request")

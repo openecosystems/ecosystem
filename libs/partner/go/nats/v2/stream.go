@@ -1,8 +1,9 @@
 package natsnodev2
 
 import (
-	"github.com/nats-io/nats.go"
 	"libs/protobuf/go/protobuf/gen/platform/type/v2"
+
+	"github.com/nats-io/nats.go"
 )
 
 type Stream interface {
@@ -34,7 +35,6 @@ func NewInboundStream() *InboundStream {
 }
 
 func (s *InboundStream) EventPlaneStreamType() typev2pb.Stream {
-
 	return typev2pb.Stream_STREAM_INBOUND
 }
 

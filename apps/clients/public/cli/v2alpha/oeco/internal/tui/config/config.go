@@ -1,11 +1,10 @@
 package config
 
 import (
+	"libs/public/go/sdk/v2alpha"
 	"path/filepath"
 
 	"github.com/go-playground/validator/v10"
-
-	"libs/public/go/sdk/v2alpha"
 )
 
 const (

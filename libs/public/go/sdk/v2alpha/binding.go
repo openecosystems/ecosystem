@@ -30,14 +30,11 @@ type Listenable interface {
 	Listen(ctx context.Context, listenerErr chan SpecListenableErr)
 }
 
-var (
-	Bounds *Bindings
-)
+var Bounds *Bindings
 
 func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
-
-	var b = make(map[string]Binding)
-	var c = make(map[string]Listenable)
+	b := make(map[string]Binding)
+	c := make(map[string]Listenable)
 	bindingsInstance := &Bindings{
 		Registered:                   b,
 		RegisteredListenableChannels: c,
@@ -64,17 +61,14 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 		}
 
 		bindingsInstance = b.Bind(ctx, bindingsInstance)
-
 	}
 
 	Bounds = bindingsInstance
 
 	return bindingsInstance
-
 }
 
 func ShutdownBindings(bindings *Bindings) {
-
 	if bindings.Registered != nil {
 		for _, b := range bindings.Registered {
 			if err := b.Close(); err != nil {
@@ -82,5 +76,4 @@ func ShutdownBindings(bindings *Bindings) {
 			}
 		}
 	}
-
 }

@@ -3,6 +3,7 @@ package contract
 import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
 	"github.com/charmbracelet/bubbles/key"
 )
 
@@ -18,8 +19,7 @@ type ContextAware interface {
 	UpdateProgramContext(ctx *context.ProgramContext)
 }
 
-type Configurable interface {
-}
+type Configurable interface{}
 
 type Responsive interface {
 	SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext

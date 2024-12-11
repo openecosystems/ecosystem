@@ -1,8 +1,7 @@
 package sdkv2alphalib
 
-var (
-	ResolvedConfiguration *Configuration
-)
+// ResolvedConfiguration holds the configuration for this binding
+var ResolvedConfiguration *Configuration
 
 type Configurable interface {
 	ResolveConfiguration()

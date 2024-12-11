@@ -1,15 +1,18 @@
 package natsnodev2
 
 import (
-	"dario.cat/mergo"
 	"errors"
 	"fmt"
+	"strconv"
+	"time"
+
+	"libs/public/go/sdk/v2alpha"
+
+	"dario.cat/mergo"
+
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
-	"libs/public/go/sdk/v2alpha"
-	"strconv"
-	"time"
 )
 
 const (
@@ -28,11 +31,13 @@ type Nats struct {
 	Options nats.Options
 }
 
+// Natsd represents the configuration for an embedded NATS server.
 type Natsd struct {
 	Enabled bool
 	Options natsd.Options
 }
 
+// EventStreamRegistry holds the configuration details for a set of event streams.
 type EventStreamRegistry struct {
 	Streams []jetstream.StreamConfig
 }
@@ -56,11 +61,11 @@ func (b *Binding) ResolveConfiguration() {
 		MaxMsgs:           -1,
 		MaxBytes:          -1,
 		Discard:           0,
-		MaxAge:            9151516080000000000, //290 years is the max Nats supports,
+		MaxAge:            9151516080000000000, // 290 years is the max Nats supports,
 		MaxMsgsPerSubject: -1,
 		MaxMsgSize:        -1,
 		Storage:           0,
-		Replicas:          1, //TODO: Review this default
+		Replicas:          1, // TODO: Review this default
 		NoAck:             false,
 		Duplicates:        60 * time.Second, //"2m0s"
 		DenyDelete:        true,
@@ -85,11 +90,9 @@ func (b *Binding) ResolveConfiguration() {
 	c.EventStreamRegistry = EventStreamRegistry{mergedJsc}
 	b.configuration.EventStreamRegistry = EventStreamRegistry{mergedJsc}
 	ResolvedConfiguration.EventStreamRegistry = EventStreamRegistry{mergedJsc}
-
 }
 
 func (b *Binding) ValidateConfiguration() error {
-
 	if !ResolvedConfiguration.Natsd.Enabled {
 		return nil
 	}
@@ -128,7 +131,6 @@ natsd:
 }
 
 func (b *Binding) GetDefaultConfiguration() interface{} {
-
 	cfg := sdkv2alphalib.ResolvedConfiguration
 
 	return Configuration{
@@ -173,7 +175,7 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 			},
 		},
 		EventStreamRegistry: EventStreamRegistry{
-			//Streams: mergedJsc,
+			// Streams: mergedJsc,
 		},
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -9,14 +10,13 @@ import (
 )
 
 func main() {
-
 	bounds := []sdkv2alphalib.Binding{
 		&zaploggerv1.Binding{},
 		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{}},
 		&configurationv2alphalib.Binding{},
 	}
 
-	connector := connectorv2alphalib.NewConnectorA(bounds)
+	connector := connectorv2alphalib.NewConnector(context.Background(), bounds)
 	connector.ListenAndProcess()
 
 	//_ = []sdkv2alphalib.Binding{
@@ -44,5 +44,4 @@ func main() {
 	//
 	////subscribe.RegisterSubscriptionGroups()
 	//server.ListenAndServe()
-
 }

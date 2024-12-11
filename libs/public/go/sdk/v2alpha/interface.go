@@ -6,7 +6,7 @@ import (
 )
 
 type Entity interface {
-	//ToProto() (*interface{}, error)
+	// ToProto() (*interface{}, error)
 
 	ToEvent() (*string, error)
 
@@ -27,15 +27,13 @@ type Entity interface {
 	SystemName() string
 }
 
-type Server interface {
-}
+type Server interface{}
 
 type Connector interface {
 	MethodsByPath() map[string]*Method
 }
 
-type Service interface {
-}
+type Service interface{}
 
 type Method interface {
 	ProcedureName() string
@@ -44,5 +42,4 @@ type Method interface {
 	Schema() protoreflect.MethodDescriptor
 }
 
-type Client interface {
-}
+type Client interface{}

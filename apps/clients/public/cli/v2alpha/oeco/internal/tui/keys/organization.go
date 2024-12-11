@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 type OrganizationKeyMap struct {
@@ -17,14 +17,12 @@ func (k OrganizationKeyMap) Name() KeyBindingType {
 	return Organization
 }
 
-var (
-	OrganizationKeys = OrganizationKeyMap{
-		Create: key.NewBinding(
-			key.WithKeys("c"),
-			key.WithHelp("c", "call"),
-		),
-	}
-)
+var OrganizationKeys = OrganizationKeyMap{
+	Create: key.NewBinding(
+		key.WithKeys("c"),
+		key.WithHelp("c", "call"),
+	),
+}
 
 func OrganizationFullHelp() []key.Binding {
 	return []key.Binding{

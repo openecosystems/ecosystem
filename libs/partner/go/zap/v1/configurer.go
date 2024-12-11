@@ -1,14 +1,14 @@
 package zaploggerv1
 
 import (
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-var (
-	ResolvedConfiguration *Configuration
-)
+// ResolvedConfiguration holds the configuration for this binding
+var ResolvedConfiguration *Configuration
 
 type Configuration struct {
 	Zap zap.Config `yaml:"zap,omitempty"`
@@ -27,7 +27,6 @@ func (b *Binding) ValidateConfiguration() error {
 }
 
 func (b *Binding) GetDefaultConfiguration() interface{} {
-
 	level, _ := zap.ParseAtomicLevel("info")
 
 	return Configuration{

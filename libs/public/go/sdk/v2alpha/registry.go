@@ -2,16 +2,17 @@ package sdkv2alphalib
 
 import (
 	"fmt"
-	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/reflect/protodesc"
-	"google.golang.org/protobuf/reflect/protoreflect"
-	"google.golang.org/protobuf/reflect/protoregistry"
-	"google.golang.org/protobuf/types/descriptorpb"
 	"libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"os"
 	"strings"
 	"sync"
+
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protodesc"
+	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/reflect/protoregistry"
+	"google.golang.org/protobuf/types/descriptorpb"
 )
 
 var (
@@ -44,7 +45,6 @@ func (s FullSystemName) IsValid() bool {
 }
 
 func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
-
 	if s == GlobalSystems {
 		globalMutex.Lock()
 		defer globalMutex.Unlock()
@@ -69,7 +69,6 @@ func (s *Systems) GetSystems() map[FullSystemName]*System {
 }
 
 func (s *Systems) GetSystemByName(systemName string) (*System, error) {
-
 	if system, ok := s.systemsByName[FullSystemName(systemName)]; ok {
 		return system, nil
 	}
@@ -78,9 +77,7 @@ func (s *Systems) GetSystemByName(systemName string) (*System, error) {
 }
 
 func (s *Systems) processSystems() error {
-
 	for _, ss := range s.settings.Systems2 {
-
 		// Validate system
 
 		//if prev := s.systemsByName[FullSystemName(ss.Name)]; len(prev) > 0 {
@@ -104,16 +101,13 @@ func (s *Systems) processSystems() error {
 		system.Dependency = dependency
 
 		s.systemsByName[FullSystemName(system.Name)] = system
-
 	}
 
 	return nil
-
 }
 
 // loadSystemDescriptors loads protobuf descriptors from a FileDescriptorSet and registers them
 func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*System, error) {
-
 	if err := os.Setenv("GOLANG_PROTOBUF_REGISTRATION_CONFLICT", "ignore"); err != nil {
 		fmt.Println("Error setting environment variable:", err)
 		return nil, fmt.Errorf("error setting environment variable: %v", err)
@@ -131,7 +125,6 @@ func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*
 
 	var connectors []*Connector
 	files.RangeFiles(func(fd protoreflect.FileDescriptor) bool {
-
 		if !strings.HasPrefix(fd.Path(), "platform/") {
 			return true
 		}
@@ -141,7 +134,7 @@ func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*
 			return true
 		}
 
-		//fmt.Println("Registered file descriptor:", fd.Path())
+		// fmt.Println("Registered file descriptor:", fd.Path())
 
 		options := fd.Options().(*descriptorpb.FileOptions)
 		if !proto.HasExtension(options, optionv2pb.E_Entity) {
@@ -157,7 +150,7 @@ func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*
 
 		sds := fd.Services()
 		for i := 0; i < sds.Len(); i++ {
-			//connectors = append(connectors, connectorv2alphalib.NewConnectorWithSchema(sds.Get(i)))
+			// connectors = append(connectors, connectorv2alphalib.NewConnectorWithSchema(sds.Get(i)))
 		}
 
 		return true

@@ -1,12 +1,13 @@
 package utils
 
 import (
-	"github.com/charmbracelet/lipgloss"
-	"github.com/charmbracelet/log"
 	"math"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/log"
 )
 
 const (

@@ -1,7 +1,7 @@
 {{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $e := entity .File }}{{ $entityName := entityName $e }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
 {
   "name": "libs-{{ $apiType }}-go-sdk-{{ $system.LowerCamelCase }}-{{ $version }}",
-  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}",
   "implicitDependencies": [
@@ -40,14 +40,15 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go fmt -n ./...",
+        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "parallel": false,
         "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
         "parallel": false,
         "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
@@ -67,5 +68,13 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    "type:lib",
+    "cycle:{{ $apiType }}",
+    "language:golang",
+    "type:sdk",
+    "system:{{ $system.LowerCamelCase }}",
+    "version:{{ $version }}",
+    "exposure:external"
+  ]
 }

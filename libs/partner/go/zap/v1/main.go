@@ -3,11 +3,13 @@ package zaploggerv1
 import (
 	"context"
 	"fmt"
-	"go.uber.org/zap"
 	"libs/public/go/sdk/v2alpha"
 	"sync"
+
+	"go.uber.org/zap"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Logger        *zap.Logger
 	SugaredLogger *zap.SugaredLogger
@@ -25,7 +27,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	// Verify any log requirements
 	return nil
 }
@@ -35,7 +36,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-
 				var err error
 				b.Logger, err = ResolvedConfiguration.Zap.Build()
 				if err != nil {
@@ -45,7 +45,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 				defer func(Logger *zap.Logger) {
 					err := Logger.Sync()
 					if err != nil {
-
+						fmt.Println(fmt.Errorf("could not sync zap logger: %v", err))
 					}
 				}(b.Logger)
 

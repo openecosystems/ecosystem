@@ -27,9 +27,63 @@ import (
 // EventSubscriptionServiceHandler is the domain level implementation of the server API for mutations of the EventSubscriptionService service
 type EventSubscriptionServiceHandler struct{}
 
-func (s *EventSubscriptionServiceHandler) Subscribe(req *eventv2alphapb.SubscribeRequest, stream eventv2alphapb.EventSubscriptionService_SubscribeServer) error {
+func (s *EventSubscriptionServiceHandler) Subscribe(ctx context.Context, req *connect.Request[eventv2alphapb.SubscribeRequest]) (*connect.Response[eventv2alphapb.SubscribeResponse], error) {
 
-	return nil
+	tracer := *opentelemetryv2.Bound.Tracer
+	log := *zaploggerv1.Bound.Logger
+
+	// Executes top level validation, no business domain validation
+	validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	v := *protovalidatev0.Bound.Validator
+	if err := v.Validate(req.Msg); err != nil {
+		return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+	}
+	validationSpan.End()
+
+	// Spec Propagation
+	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
+	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	if !ok {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
+	specSpan.End()
+
+	// Validate field mask
+	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
+		spec.SpecData.FieldMask.Normalize()
+		if !spec.SpecData.FieldMask.IsValid(&eventv2alphapb.SubscribeResponse{}) {
+			log.Error("Invalid field mask")
+			return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
+		}
+	}
+
+	// Distributed Domain Handler
+	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+
+	entity := eventv2alphapbmodel.EventSubscriptionSpecEntity{}
+	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+		Request:        req.Msg,
+		Stream:         natsnodev2.NewInboundStream(),
+		CommandName:    "",
+		CommandTopic:   eventv2alphapbmodel.CommandDataEventSubscriptionTopic,
+		EntityTypeName: entity.TypeName(),
+	})
+	if err2 != nil {
+		log.Error(err2.Error())
+		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	var dd eventv2alphapb.SubscribeResponse
+	err3 := proto.Unmarshal(reply.Data, &dd)
+	if err3 != nil {
+		log.Error(err3.Error())
+		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	handlerSpan.End()
+
+	return connect.NewResponse(&dd), nil
+
 }
 
 func (s *EventSubscriptionServiceHandler) UnSubscribe(ctx context.Context, req *connect.Request[eventv2alphapb.UnSubscribeRequest]) (*connect.Response[eventv2alphapb.UnSubscribeResponse], error) {

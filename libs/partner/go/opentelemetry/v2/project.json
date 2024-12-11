@@ -15,14 +15,15 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go fmt -n ./...",
+        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "parallel": false,
         "cwd": "libs/partner/go/opentelemetry/v2"
       }
     },
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "go fmt ./..."],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
         "parallel": false,
         "cwd": "libs/partner/go/opentelemetry/v2"
       }

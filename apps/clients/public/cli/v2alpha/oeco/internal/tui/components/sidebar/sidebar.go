@@ -2,14 +2,15 @@ package sidebar
 
 import (
 	"fmt"
-	"github.com/charmbracelet/lipgloss"
 	"strconv"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/lipgloss"
+
+	"github.com/charmbracelet/bubbles/viewport"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 type BaseModel struct {
@@ -32,10 +33,7 @@ func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel
 }
 
 func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
-
-	var (
-		cmds []tea.Cmd
-	)
+	var cmds []tea.Cmd
 
 	m.UpdateProgramContext(m.Ctx)
 	m.SyncDimensions(m.Ctx)
@@ -51,7 +49,6 @@ func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 }
 
 func (m BaseModel) View() string {
-
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.Sidebar.Root.
 		Height(height).
@@ -66,9 +63,9 @@ func (m BaseModel) View() string {
 			Render(fmt.Sprintf("%d%%", int(m.Viewport.ScrollPercent()*100))),
 	))
 
-	//return m.Viewport.View()
-	//s := m.ViewDebug()
-	//return s.String()
+	// return m.Viewport.View()
+	// s := m.ViewDebug()
+	// return s.String()
 }
 
 func (m BaseModel) ViewDebug() *strings.Builder {

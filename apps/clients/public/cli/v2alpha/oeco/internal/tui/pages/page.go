@@ -4,10 +4,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -15,6 +11,10 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+
+	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type BaseModel[Cfg any] struct {
@@ -38,7 +38,6 @@ type NewBaseOptions[Cfg any] struct {
 }
 
 func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[Cfg]) BaseModel[Cfg] {
-
 	m := BaseModel[Cfg]{
 		Default:            options.Default,
 		PageConfig:         options.PageConfig,
@@ -63,10 +62,7 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 }
 
 func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
-
-	var (
-		cmds []tea.Cmd
-	)
+	var cmds []tea.Cmd
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
@@ -89,7 +85,6 @@ func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 		case key.Matches(message, keys.Keys.Help):
 
 		case key.Matches(message, keys.Keys.Quit):
-
 		}
 	}
 
@@ -155,7 +150,6 @@ func (m BaseModel[Cfg]) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	m.SyncDimensions(m.Ctx)
 	m.CurrentMainContent.OnWindowSizeChanged(m.Ctx)
 	m.CurrentSidebar.OnWindowSizeChanged(m.Ctx)
-
 }
 
 func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
@@ -170,7 +164,6 @@ func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.Pro
 }
 
 func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *context.ProgramContext {
-
 	if ctx == nil {
 		return m.Ctx
 	}
@@ -188,11 +181,9 @@ func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *
 	m.Ctx = m.CurrentMainContent.SyncDimensions(m.Ctx)
 
 	return m.Ctx
-
 }
 
 func (m BaseModel[Cfg]) SyncSidebarDimensions(ctx *context.ProgramContext) *context.ProgramContext {
-
 	if ctx == nil {
 		return m.Ctx
 	}

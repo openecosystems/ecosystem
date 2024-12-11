@@ -4,14 +4,21 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
+	"libs/partner/go/zap/v1"
+	"libs/public/go/sdk/v2alpha"
+
+	zaploggerv1 "libs/partner/go/zap/v1"
+	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"github.com/mennanov/fmutils"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 	protopb "google.golang.org/protobuf/proto"
-	"libs/partner/go/zap/v1"
+
 	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/sdk/v2alpha"
 )
 
 type SpecEventListener interface {
@@ -43,7 +50,6 @@ type ListenerErr struct {
 }
 
 func ListenForMultiplexedSpecEventsSync(_ context.Context, listener SpecEventListener) {
-
 	configuration := listener.GetConfiguration()
 
 	if configuration == nil || configuration.Subject == "" || configuration.Queue == "" {
@@ -60,11 +66,9 @@ func ListenForMultiplexedSpecEventsSync(_ context.Context, listener SpecEventLis
 		fmt.Println("Found error in queue subscribing to nats subject: " + err.Error())
 		panic("Cannot start queue subscriber")
 	}
-
 }
 
 func RespondToSyncCommand(_ context.Context, request *ListenerMessage, m protopb.Message) {
-
 	log := *zaploggerv1.Bound.Logger
 	js := *Bound.JetStream
 	nm := *request.NatsMessage
@@ -98,11 +102,9 @@ func RespondToSyncCommand(_ context.Context, request *ListenerMessage, m protopb
 		log.Error("Error acknowledging message", zap.Error(err4))
 		return
 	}
-
 }
 
 func ContinuouslyListenForEvents(ctx context.Context, rootConfig *sdkv2alphalib.Configuration, listener SpecEventListener, listenerErr chan sdkv2alphalib.SpecListenableErr) {
-
 	configuration := listener.GetConfiguration()
 
 	if configuration == nil || configuration.StreamType == nil || configuration.Entity == nil {
@@ -135,14 +137,11 @@ func ContinuouslyListenForEvents(ctx context.Context, rootConfig *sdkv2alphalib.
 			messageCtx, message, err := convertToListenerMessage(configuration, &msg)
 
 			listener.Process(messageCtx, &message)
-
 		}()
 	}
-
 }
 
 func convertToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg) (context.Context, ListenerMessage, error) {
-
 	ctx := context.Background()
 
 	s := &specproto.Spec{}
@@ -152,7 +151,7 @@ func convertToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg)
 		fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec")))
 	}
 
-	//ctx = interceptor.DecorateContextWithSpec(ctx, *s)
+	// ctx = interceptor.DecorateContextWithSpec(ctx, *s)
 
 	return ctx, ListenerMessage{
 		Spec:                  s,
@@ -160,11 +159,9 @@ func convertToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg)
 		Message:               &m,
 		ListenerConfiguration: config,
 	}, nil
-
 }
 
 func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) (context.Context, ListenerMessage, error) {
-
 	ctx := context.Background()
 
 	s := &specproto.Spec{}
@@ -174,7 +171,7 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 		fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec")))
 	}
 
-	//ctx = interceptor.DecorateContextWithSpec(ctx, *s)
+	// ctx = interceptor.DecorateContextWithSpec(ctx, *s)
 
 	return ctx, ListenerMessage{
 		Spec:                  s,
@@ -182,5 +179,4 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 		NatsMessage:           &m,
 		ListenerConfiguration: config,
 	}, nil
-
 }

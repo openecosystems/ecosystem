@@ -1,14 +1,15 @@
 package content
 
 import (
-	"github.com/charmbracelet/lipgloss"
 	"strconv"
 	"strings"
 
-	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/lipgloss"
+
+	"github.com/charmbracelet/bubbles/viewport"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 type BaseModel struct {
@@ -21,7 +22,6 @@ type NewBaseOptions struct {
 }
 
 func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel {
-
 	return BaseModel{
 		Viewport: options.Viewport,
 		Ctx:      ctx,
@@ -29,7 +29,6 @@ func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel
 }
 
 func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
-
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
@@ -47,11 +46,9 @@ func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 	m.Viewport.Height = m.Ctx.PageContentHeight
 
 	return m, tea.Batch(cmds...)
-
 }
 
 func (m BaseModel) View() string {
-
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.MainContent.ContainerStyle.
 		Height(height).
@@ -64,10 +61,10 @@ func (m BaseModel) View() string {
 		m.Viewport.View(),
 	))
 
-	//return m.Viewport.View()
-	//s := m.ViewDebug()
-	//return s.String()
-	//return m.Viewport.View()
+	// return m.Viewport.View()
+	// s := m.ViewDebug()
+	// return s.String()
+	// return m.Viewport.View()
 }
 
 func (m BaseModel) ViewDebug() *strings.Builder {

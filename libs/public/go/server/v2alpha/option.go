@@ -1,9 +1,10 @@
 package serverv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	"net/http"
 	"net/url"
+
+	"connectrpc.com/connect"
 )
 
 // A ServerOption configures a [Server].
@@ -22,11 +23,10 @@ type serverOptions struct {
 	URL        *url.URL
 	MeshVPN    bool
 	HttpServer *http.ServeMux
-	//UnderlyingHandlerOptions []connect.HandlerOption
+	// UnderlyingHandlerOptions []connect.HandlerOption
 }
 
 func newServerOptions(rawURL string, options []ServerOption) (*serverOptions, *connect.Error) {
-
 	uri, err := url.ParseRequestURI(rawURL)
 	if err != nil {
 		return nil, &connect.Error{}

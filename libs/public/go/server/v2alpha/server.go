@@ -1,19 +1,21 @@
 package serverv2alphalib
 
 import (
-	"connectrpc.com/vanguard"
 	"context"
 	"errors"
 	"fmt"
-	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
-	"libs/public/go/sdk/v2alpha"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"strconv"
 	"syscall"
+
+	"connectrpc.com/vanguard"
+
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
+	"libs/public/go/sdk/v2alpha"
 )
 
 var quit = make(chan os.Signal, 1)
@@ -32,7 +34,6 @@ type Server struct {
 }
 
 func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
-
 	c := Configuration{}
 	c.ResolveConfiguration()
 	err := c.ValidateConfiguration()
@@ -44,10 +45,10 @@ func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string,
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	httpServer := &http2.Server{
-		//MaxConcurrentStreams:         0,
-		//PermitProhibitedCipherSuites: false,
-		//MaxUploadBufferPerConnection: 0,
-		//MaxUploadBufferPerStream:     0,
+		// MaxConcurrentStreams:         0,
+		// PermitProhibitedCipherSuites: false,
+		// MaxUploadBufferPerConnection: 0,
+		// MaxUploadBufferPerStream:     0,
 	}
 
 	options, err := newServerOptions(path, opts)
@@ -74,7 +75,6 @@ func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string,
 }
 
 func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, services []*vanguard.Service, opts ...ServerOption) *Server {
-
 	c := Configuration{}
 	c.ResolveConfiguration()
 	err := c.ValidateConfiguration()
@@ -110,7 +110,6 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, s
 }
 
 func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
-
 	c := Configuration{}
 	c.ResolveConfiguration()
 	err := c.ValidateConfiguration()
@@ -122,10 +121,10 @@ func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path stri
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	httpServer := &http2.Server{
-		//MaxConcurrentStreams:         0,
-		//PermitProhibitedCipherSuites: false,
-		//MaxUploadBufferPerConnection: 0,
-		//MaxUploadBufferPerStream:     0,
+		// MaxConcurrentStreams:         0,
+		// PermitProhibitedCipherSuites: false,
+		// MaxUploadBufferPerConnection: 0,
+		// MaxUploadBufferPerStream:     0,
 	}
 
 	options, err := newServerOptions(path, opts)
@@ -154,7 +153,6 @@ func (server *Server) ListenAndServe() {
 }
 
 func (server *Server) ListenAndServeWithCtx(_ context.Context) {
-
 	httpServerErr := server.ListenAndServeMultiplexedHttp()
 
 	var specListenableErr chan sdkv2alphalib.SpecListenableErr
@@ -175,7 +173,6 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 	case err := <-specListenableErr:
 		if err.Error != nil {
 			fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err.Error).Error())
-
 		}
 	case err := <-httpServerErr:
 		fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err).Error())
@@ -200,7 +197,6 @@ func (server *Server) ListenAndServeMultiplexedHttp() (httpServerErr chan error)
 }
 
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-
 	httpPort, _ := strconv.Atoi(ResolvedConfiguration.Http.Port)
 	mux := http.NewServeMux()
 	if server.HttpServerHandler != nil {
@@ -236,7 +232,6 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 }
 
 func (server *Server) ListenAndServeSpecListenable() chan sdkv2alphalib.SpecListenableErr {
-
 	listeners := server.Bindings.RegisteredListenableChannels
 	listenerErr := make(chan sdkv2alphalib.SpecListenableErr, len(listeners))
 
@@ -249,7 +244,6 @@ func (server *Server) ListenAndServeSpecListenable() chan sdkv2alphalib.SpecList
 
 	}
 	return listenerErr
-
 }
 
 //&http.Client{

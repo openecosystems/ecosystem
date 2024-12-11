@@ -1,14 +1,14 @@
 package connector_details_content
 
 import (
-	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/glamour"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbles/viewport"
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/glamour"
 )
 
 var introduction = `
@@ -27,7 +27,6 @@ type Model struct {
 }
 
 func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
-
 	m := Model{
 		form: form,
 	}
@@ -45,11 +44,9 @@ func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
 	}
 
 	return m
-
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd

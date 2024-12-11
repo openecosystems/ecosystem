@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/nats-io/nats.go/jetstream"
-	"google.golang.org/protobuf/types/known/timestamppb"
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -16,13 +14,15 @@ import (
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
+	"github.com/nats-io/nats.go/jetstream"
+	"google.golang.org/protobuf/types/known/timestamppb"
+
 	"google.golang.org/protobuf/proto"
 )
 
 type CreateConfigurationListener struct{}
 
 func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
-
 	entity := &configurationv2alphapbmodel.ConfigurationSpecEntity{}
 	streamType := natsnodev2.InboundStream{}
 	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
@@ -41,7 +41,6 @@ func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerCon
 			Metadata:      nil,
 		},
 	}
-
 }
 
 func (l *CreateConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
@@ -49,7 +48,6 @@ func (l *CreateConfigurationListener) Listen(ctx context.Context, _ chan sdkv2al
 }
 
 func (l *CreateConfigurationListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
-
 	log := *zaploggerv1.Bound.Logger
 	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 

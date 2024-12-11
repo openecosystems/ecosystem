@@ -3,13 +3,14 @@ package commands
 import (
 	"bytes"
 	"fmt"
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/log"
 	"maps"
 	"text/template"
 
 	"apps/clients/public/cli/v2alpha/oeco/internal/data"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/log"
 )
 
 type IssueCommandTemplateInput struct {

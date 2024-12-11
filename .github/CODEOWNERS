@@ -1,0 +1,30 @@
+* @dimyjeannot
+
+/apps/ @dimyjeannot
+/apps/clients/poc/ @dimyjeannot
+/apps/clients/private/ @dimyjeannot
+/apps/clients/public/ @dimyjeannot
+/apps/web/ @dimyjeannot
+/apps/workloads/poc/ @dimyjeannot
+/apps/workloads/private/ @dimyjeannot
+/apps/workloads/public/ @dimyjeannot
+
+/governance @dimyjeannot
+
+/infrastructure/apps/ @dimyjeannot
+/infrastructure/libs/ @dimyjeannot
+
+/libs/ @dimyjeannot
+/libs/partner/ @dimyjeannot
+/libs/plugins/ @dimyjeannot
+/libs/poc/ @dimyjeannot
+/libs/private/ @dimyjeannot
+/libs/protobuf/ @dimyjeannot
+/libs/public/ @dimyjeannot
+
+/proto/ @dimyjeannot
+/proto/partner/ @dimyjeannot
+/proto/poc/ @dimyjeannot
+/proto/private/ @dimyjeannot
+/proto/protobuf/ @dimyjeannot
+/proto/public/ @dimyjeannot

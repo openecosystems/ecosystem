@@ -4,14 +4,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/apex/log"
-	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"
-	"libs/public/go/sdk/v2alpha"
 	"net/http"
 	"os"
 	"sync"
+
+	"github.com/apex/log"
+	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"
+	"libs/public/go/sdk/v2alpha"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Client *ClientWithResponses
 }
@@ -28,13 +30,11 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, c *sdkv2alphalib.Configuration, _ *sdkv2alphalib.Bindings) error {
-
 	if SendGridAPIKey == "" {
 		return errors.New("SENDGRID_API_KEY environment variable is required")
 	}
 
 	return nil
-
 }
 
 func (b *Binding) Bind(ctx context.Context, c *sdkv2alphalib.Configuration, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
@@ -42,7 +42,6 @@ func (b *Binding) Bind(ctx context.Context, c *sdkv2alphalib.Configuration, bind
 		var once sync.Once
 		once.Do(
 			func() {
-
 				hc := http.Client{}
 
 				auth, err := securityprovider.NewSecurityProviderBearerToken(SendGridAPIKey)

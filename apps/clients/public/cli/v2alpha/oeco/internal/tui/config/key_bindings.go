@@ -94,14 +94,13 @@ func (kbs *KeyBindings) IsUserDefinedKeyBinding(msg tea.KeyMsg, section SectionT
 }
 
 func (kbs *KeyBindings) ExecuteKeyBinding(key string) tea.Cmd {
-
 	for _, kb := range kbs.Universal {
 		if kb.Key != key {
 			continue
 		}
 
 		log.Debug("executing keybind", "key", kb.Key, "command", kb.Command)
-		//return m.runCustomUniversalCommand(kb.Command)
+		// return m.runCustomUniversalCommand(kb.Command)
 	}
 
 	return nil

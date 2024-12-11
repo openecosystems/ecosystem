@@ -8,33 +8,56 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"],
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ],
       "cache": true
     },
     "generate": {
       "cache": true
     },
     "pack": {
-      "dependsOn": ["build", "^pack"]
+      "dependsOn": [
+        "build",
+        "^pack"
+      ]
     },
     "container": {
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json"
+      ],
       "cache": true
     },
     "eslint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json"
+      ],
       "cache": true
     },
     "e2e": {
-      "inputs": ["default", "^production"],
+      "inputs": [
+        "default",
+        "^production"
+      ],
       "cache": true
     },
     "build-storybook": {
@@ -54,7 +77,11 @@
     },
     "@nx/jest:jest": {
       "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "options": {
         "passWithNoTests": true
       },
@@ -112,7 +139,8 @@
   },
   "defaultProject": "proto",
   "plugins": [
-    "@platform/nx-go"
+    "@platform/nx-go",
+    "@nx-go/nx-go"
   ],
   "pluginsConfig": {
     "@platform/nx-go": {
@@ -120,11 +148,13 @@
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "sharedGlobals": [
-      "{workspaceRoot}/go.mod",
       "{workspaceRoot}/babel.config.json",
-      "{workspaceRoot}/go.mod"
+      "{workspaceRoot}/go.work"
     ],
     "production": [
       "default",
@@ -137,6 +167,42 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/tsconfig.storybook.json"
     ]
+  },
+  "release": {
+    "groups": {
+      "sdks": {
+        "projectsRelationship": "fixed",
+        "projects": ["tag:type:sdk"],
+        "version": {
+          "conventionalCommits": true
+        },
+        "changelog": true,
+        "releaseTagPattern": "sdk@{version}"
+      },
+      "clis": {
+        "projectsRelationship": "independent",
+        "projects": ["tag:type:cli"],
+        "version": {
+          "conventionalCommits": true
+        },
+        "changelog": true,
+        "releaseTagPattern": "cli-{projectName}@{version}"
+      },
+      "cicd": {
+        "projectsRelationship": "independent",
+        "projects": ["tag:type:cicd"],
+        "version": {
+          "conventionalCommits": true
+        },
+        "changelog": true,
+        "releaseTagPattern": "cicd-{projectName}@{version}"
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": false,
+      "projectChangelogs": true,
+      "automaticFromRef": true
+    }
   },
   "nxCloudAccessToken": "ODZhYjY0ZjgtM2M1Yi00NTU2LTgyZjEtYzg1M2M2MTUxNzg0fHJlYWQtd3JpdGU="
 }

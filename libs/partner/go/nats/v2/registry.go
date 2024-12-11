@@ -4,13 +4,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/nats-io/nats.go/jetstream"
-	"libs/public/go/sdk/v2alpha"
 	"time"
+
+	"libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	"github.com/nats-io/nats.go/jetstream"
 )
 
 func RegisterEventStreams() {
-
 	rootConfig := sdkv2alphalib.ResolvedConfiguration
 
 	var scopes [3]string
@@ -20,7 +23,6 @@ func RegisterEventStreams() {
 
 	conf := ResolvedConfiguration
 	for _, cfg := range conf.EventStreamRegistry.Streams {
-
 		name := cfg.Name
 		subjects := cfg.Subjects
 
@@ -43,12 +45,10 @@ func RegisterEventStreams() {
 				panic(err)
 			}
 		}
-
 	}
 }
 
 func createOrUpdateStream(cfg jetstream.StreamConfig) error {
-
 	// Check if stream exists
 	js := *Bound.JetStream
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
@@ -79,7 +79,6 @@ func createOrUpdateStream(cfg jetstream.StreamConfig) error {
 	}
 
 	return nil
-
 }
 
 func GetStreamName(env string, scope string, entityName string) string {

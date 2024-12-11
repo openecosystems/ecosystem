@@ -1,9 +1,16 @@
 package connectorv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"strings"
+	"syscall"
+
+	"connectrpc.com/connect"
+
 	"github.com/slackhq/nebula/service"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
@@ -11,11 +18,6 @@ import (
 	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
-	"net/http"
-	"os"
-	"os/signal"
-	"strings"
-	"syscall"
 )
 
 var quit = make(chan os.Signal, 1)
@@ -45,7 +47,6 @@ type Connector struct {
 }
 
 func NewConnector(ctx context.Context, bounds []sdkv2alphalib.Binding, opts ...ConnectorOption) *Connector {
-
 	c := Configuration{}
 	c.ResolveConfiguration()
 	err := c.ValidateConfiguration()
@@ -70,12 +71,11 @@ func NewConnector(ctx context.Context, bounds []sdkv2alphalib.Binding, opts ...C
 }
 
 func NewDynamicConnectorWithSchema(ctx context.Context, service protoreflect.ServiceDescriptor, bounds []sdkv2alphalib.Binding, opts ...ConnectorOption) *Connector {
-
 	procedureName := "/" + string(service.FullName()) + "/"
 	methods := make([]*Method, 0, service.Methods().Len())
 	for j := 0; j < service.Methods().Len(); j++ {
 		method := service.Methods().Get(j)
-		//fmt.Printf("  Method Name: %s\n", method.Name())
+		// fmt.Printf("  Method Name: %s\n", method.Name())
 
 		methodProcedureName := procedureName + string(method.Name())
 		methods = append(methods, &Method{
@@ -115,7 +115,7 @@ func NewDynamicConnectorWithSchema(ctx context.Context, service protoreflect.Ser
 	}
 
 	// TODO create a WithConnectOption option to allow to pass data directly to connect
-	//connector.Handler = NewDynamicConnectorHandler(connector)
+	// connector.Handler = NewDynamicConnectorHandler(connector)
 
 	return connector
 }
@@ -138,13 +138,12 @@ func NewDynamicConnector(ctx context.Context, servicePath string, bounds []sdkv2
 // func (ImplementedDynamicServiceHandler) DynamicUnary(context.Context, *connect.Request[dynamicpb.Message]) (*connect.Response[dynamicpb.Message], error) {
 
 func (connector *Connector) DynamicUnary(_ context.Context, req *connect.Request[v2alpha.CreateConfigurationRequest]) (*connect.Response[v2alpha.CreateConfigurationResponse], error) {
-
-	//fmt.Println(req.HTTPMethod())
-	//fmt.Println(req.Spec().Schema)
-	//fmt.Println(req.Spec().StreamType)
+	// fmt.Println(req.HTTPMethod())
+	// fmt.Println(req.Spec().Schema)
+	// fmt.Println(req.Spec().StreamType)
 	fmt.Println(req.Spec().Procedure)
-	//fmt.Println(req.Spec().IdempotencyLevel)
-	//fmt.Println(req.Spec().IsClient)
+	// fmt.Println(req.Spec().IdempotencyLevel)
+	// fmt.Println(req.Spec().IsClient)
 
 	fmt.Println(req.Msg)
 
@@ -216,7 +215,6 @@ func (connector *Connector) DynamicUnary(_ context.Context, req *connect.Request
 	//handlerSpan.End()
 	//
 	//return connect.NewResponse(&dd), nil
-
 }
 
 func (connector *Connector) ListenAndProcess() {
@@ -224,13 +222,12 @@ func (connector *Connector) ListenAndProcess() {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	//connector.ConfigureMeshSocket()
+	// connector.ConfigureMeshSocket()
 
 	connector.ListenAndProcessWithCtx(ctx)
 }
 
 func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
-
 	var specListenableErr chan sdkv2alphalib.SpecListenableErr
 	if connector.Bindings.RegisteredListenableChannels != nil {
 		go func() {
@@ -263,7 +260,6 @@ func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
 }
 
 func (connector *Connector) ListenAndProcessSpecListenable() chan sdkv2alphalib.SpecListenableErr {
-
 	listeners := connector.Bindings.RegisteredListenableChannels
 	listenerErr := make(chan sdkv2alphalib.SpecListenableErr, len(listeners))
 
@@ -276,5 +272,4 @@ func (connector *Connector) ListenAndProcessSpecListenable() chan sdkv2alphalib.
 
 	}
 	return listenerErr
-
 }

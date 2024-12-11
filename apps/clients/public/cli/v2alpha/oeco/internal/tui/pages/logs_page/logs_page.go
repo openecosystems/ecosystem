@@ -1,9 +1,6 @@
 package logs_page
 
 import (
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_logs_content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_logs_sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -11,6 +8,9 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+
+	"github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type ModelConfig struct{}
@@ -23,7 +23,6 @@ type Model struct {
 }
 
 func NewModel(ctx *context.ProgramContext) Model {
-
 	c := ModelConfig{}
 
 	p := Model{
@@ -42,21 +41,19 @@ func NewModel(ctx *context.ProgramContext) Model {
 	)
 
 	return p
-
 }
 
 func (m Model) GetPageSettings() contract.PageSettings {
 	return contract.PageSettings{
 		Title:     "Connector Logs",
 		IsDefault: false,
-		//KeyBindings:   GetKeyBindings(),
+		// KeyBindings:   GetKeyBindings(),
 		ContentHeight: 0,
 		Type:          config.ConnectorLogsPage,
 	}
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd
@@ -81,11 +78,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-
 	return m.ViewBase(lipgloss.JoinHorizontal(
 		lipgloss.Top,
 		m.mainContent.View(),
 		m.sidebar.View(),
 	))
-
 }

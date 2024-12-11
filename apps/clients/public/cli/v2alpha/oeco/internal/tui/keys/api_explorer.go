@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 type ApiExplorerKeyMap struct {
@@ -18,18 +18,16 @@ func (k ApiExplorerKeyMap) Name() KeyBindingType {
 	return Api
 }
 
-var (
-	ApiKeys = ApiExplorerKeyMap{
-		Call: key.NewBinding(
-			key.WithKeys("c"),
-			key.WithHelp("c", "call"),
-		),
-		Synthetic: key.NewBinding(
-			key.WithKeys("f"),
-			key.WithHelp("f", "synthetic"),
-		),
-	}
-)
+var ApiKeys = ApiExplorerKeyMap{
+	Call: key.NewBinding(
+		key.WithKeys("c"),
+		key.WithHelp("c", "call"),
+	),
+	Synthetic: key.NewBinding(
+		key.WithKeys("f"),
+		key.WithHelp("f", "synthetic"),
+	),
+}
 
 func ApiFullHelp() []key.Binding {
 	return []key.Binding{

@@ -1,0 +1,67 @@
+{
+  "name": "libs-plugins-nx-go",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/plugins/nx-go/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/plugins/nx-go",
+        "main": "libs/plugins/nx-go/src/index.ts",
+        "tsConfig": "libs/plugins/nx-go/tsconfig.lib.json",
+        "assets": [
+          "libs/plugins/nx-go/*.md",
+          {
+            "input": "./libs/plugins/nx-go/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/plugins/nx-go/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/plugins/nx-go",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/plugins/nx-go",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/plugins/nx-go/**/*.ts",
+          "libs/plugins/nx-go/generators.json",
+          "libs/plugins/nx-go/executors.json",
+          "libs/plugins/nx-go/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/plugins/nx-go"],
+      "options": {
+        "jestConfig": "libs/plugins/nx-go/jest.config.ts"
+      }
+    },
+    "version": {
+      "outputs": ["{options.packageJson}"],
+      "executor": "@oeco/nx-version:bump",
+      "options": {
+        "packageJson": "libs/plugins/nx-go/package.json"
+      }
+    }
+  },
+  "tags": []
+}

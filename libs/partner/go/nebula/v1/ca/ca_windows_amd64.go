@@ -4,7 +4,7 @@ package nebulav1ca
 
 import "embed"
 
-//go:embed bin/nebula-windows-amd64/nebula-cert
+//go:embed bin/nebula-windows-amd64/nebula-cert.exe
 var embeddedFiles embed.FS
 
-var binaryPath = "bin/nebula-windows-amd64/nebula-cert"
+var binaryPath = "bin/nebula-windows-amd64/nebula-cert.exe"

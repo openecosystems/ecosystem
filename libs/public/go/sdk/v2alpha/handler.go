@@ -1,17 +1,20 @@
 package sdkv2alphalib
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"errors"
 	"fmt"
-	"google.golang.org/protobuf/reflect/protoreflect"
-	"google.golang.org/protobuf/types/dynamicpb"
-	"google.golang.org/protobuf/types/known/emptypb"
-	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"net/http"
 	"reflect"
 	"strings"
+
+	"connectrpc.com/connect"
+
+	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+
+	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/types/dynamicpb"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 const (
@@ -53,19 +56,15 @@ type DynamicConnectorHandler interface {
 }
 
 func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) http.Handler {
-
 	_c := *c
 	_c.MethodsByPath()
 	mpb := _c.MethodsByPath()
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 		if method, ok := mpb[r.URL.Path]; ok {
-
-			//i := dynamicpb.NewMessage(method.Input).Type()
-			//o := dynamicpb.NewMessage(method.Output).Type()
+			// i := dynamicpb.NewMessage(method.Input).Type()
+			// o := dynamicpb.NewMessage(method.Output).Type()
 			g := func(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
-
 				//example := v2alpha.CreateConfigurationResponse{
 				//	SpecContext: &specv2pb.SpecResponseContext{
 				//		ResponseValidation: &typev2pb.ResponseValidation{
@@ -99,19 +98,19 @@ func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) htt
 				//	fmt.Println("Failed to convert struct to dynamic message: ", err)
 				//}
 
-				//val := reflect.ValueOf(example)
-				//typ := val.Type()
+				// val := reflect.ValueOf(example)
+				// typ := val.Type()
 
 				return nil, errors.New("error message from test")
 
-				//return connect.NewResponse[bytes.Buffer](bytes.NewBuffer(marshal)), nil
+				// return connect.NewResponse[bytes.Buffer](bytes.NewBuffer(marshal)), nil
 			}
 
 			_method := *method
 
 			connectorDynamicHandler := connect.NewUnaryHandler(
 				r.URL.Path,
-				g, //c.DynamicUnary,
+				g, // c.DynamicUnary,
 				connect.WithSchema(_method.Schema()),
 				connect.WithHandlerOptions(opts...),
 			)
@@ -119,7 +118,6 @@ func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) htt
 		} else {
 			http.NotFound(w, r)
 		}
-
 	})
 }
 

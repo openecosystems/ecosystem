@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "plugins-nx-go",
+  "version": "0.0.1",
+  "generators": {
+    "sdk": {
+      "factory": "./src/generators/sdk/generator",
+      "schema": "./src/generators/sdk/schema.json",
+      "description": "sdk generator"
+    },
+    "project-config": {
+      "factory": "./src/generators/project-config/generator",
+      "schema": "./src/generators/project-config/schema.json",
+      "description": "project-config generator"
+    }
+  }
+}

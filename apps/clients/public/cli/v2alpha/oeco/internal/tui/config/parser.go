@@ -1,14 +1,13 @@
 package config
 
 import (
+	"libs/public/go/sdk/v2alpha"
 	"os"
 	"reflect"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/yaml.v2"
-
-	"libs/public/go/sdk/v2alpha"
 )
 
 type Parser struct {

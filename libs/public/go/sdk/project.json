@@ -12,10 +12,5 @@
         "cwd": "libs/public/go/sdk"
       }
     }
-  },
-  "tags": [
-    "type:lib",
-    "visibility:public",
-    "language:golang"
-  ]
+  }
 }

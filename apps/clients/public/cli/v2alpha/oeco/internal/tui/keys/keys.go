@@ -1,10 +1,10 @@
 package keys
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 type KeyMap struct {
@@ -39,7 +39,6 @@ func (k KeyMap) ShortHelp() []key.Binding {
 }
 
 func (k KeyMap) FullHelp() [][]key.Binding {
-
 	var sectionKeys []key.Binding
 	if k.sectionType == config.ConnectorSection {
 		sectionKeys = ConnectorFullHelp()

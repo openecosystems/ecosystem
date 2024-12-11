@@ -4,12 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
+
 	"github.com/nats-io/nats.go/jetstream"
 	protopb "google.golang.org/protobuf/proto"
 	"libs/public/go/connector/v2alpha"
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
-	"strings"
 )
 
 const configPrefix = ".cfg."
@@ -20,7 +21,6 @@ type AdaptiveConfigurationControl struct {
 }
 
 func NewAdaptiveConfigurationControl(configStore *jetstream.KeyValue) *AdaptiveConfigurationControl {
-
 	return &AdaptiveConfigurationControl{
 		ConfigStore: configStore,
 		FileSystem:  sdkv2alphalib.NewFileSystem(),
@@ -28,7 +28,6 @@ func NewAdaptiveConfigurationControl(configStore *jetstream.KeyValue) *AdaptiveC
 }
 
 func (acc AdaptiveConfigurationControl) SavePlatformConfiguration(ctx context.Context, orgOrWorkspaceOrConfigGroupId string, bytes []byte) error {
-
 	cs := *acc.ConfigStore
 
 	key, err := acc.getKey(orgOrWorkspaceOrConfigGroupId)
@@ -44,11 +43,9 @@ func (acc AdaptiveConfigurationControl) SavePlatformConfiguration(ctx context.Co
 	}
 
 	return nil
-
 }
 
 func (acc AdaptiveConfigurationControl) GetPlatformConfiguration(ctx context.Context, orgOrWorkspaceOrConfigGroupId string) (*configurationv2alphapb.Configuration, error) {
-
 	var errs []string
 
 	if orgOrWorkspaceOrConfigGroupId == "" {
@@ -81,11 +78,9 @@ func (acc AdaptiveConfigurationControl) GetPlatformConfiguration(ctx context.Con
 	}
 
 	return &c, nil
-
 }
 
 func (acc AdaptiveConfigurationControl) getKey(orgOrWorkspaceOrConfigGroupId string) (string, error) {
-
 	rootConfig := connectorv2alphalib.ResolvedConfiguration
 
 	// local-1.cfg.organization123.platform.configuration.v2alpha.Configuration

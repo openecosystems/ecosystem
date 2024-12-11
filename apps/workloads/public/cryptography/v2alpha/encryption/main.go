@@ -1,8 +1,6 @@
 package main
 
 import (
-	"connectrpc.com/connect"
-	"connectrpc.com/otelconnect"
 	"context"
 	"fmt"
 	"libs/partner/go/opentelemetry/v2"
@@ -13,10 +11,12 @@ import (
 	"libs/public/go/server/v2alpha"
 	"libs/public/go/server/v2alpha/platform/cryptography/v2alpha"
 	"os"
+
+	"connectrpc.com/connect"
+	"connectrpc.com/otelconnect"
 )
 
 func main() {
-
 	bounds := []sdkv2alphalib.Binding{
 		&opentelemetryv2.Binding{},
 		&zaploggerv1.Binding{},
@@ -40,5 +40,4 @@ func main() {
 	server := serverv2alphalib.NewRawServer(context.Background(), bounds, path, &handler)
 
 	server.ListenAndServe()
-
 }

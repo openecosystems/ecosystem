@@ -2,6 +2,7 @@ package cliv2alphalib
 
 import (
 	"context"
+
 	"libs/public/go/sdk/v2alpha"
 )
 
@@ -11,7 +12,6 @@ type CLI struct {
 }
 
 func NewCLI(bounds []sdkv2alphalib.Binding) *CLI {
-
 	ctx := context.Background()
 
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
@@ -25,7 +25,6 @@ func NewCLI(bounds []sdkv2alphalib.Binding) *CLI {
 }
 
 func (cli *CLI) GracefulShutdown() {
-
 	_, cancel := context.WithTimeout(context.Background(), 30)
 	defer cancel()
 

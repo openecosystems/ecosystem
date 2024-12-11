@@ -1,17 +1,18 @@
 package v2alpha
 
 import (
-	"connectrpc.com/connect"
 	"context"
-	"github.com/slackhq/nebula/service"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"net/http"
 	"net/url"
+
+	"connectrpc.com/connect"
+
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
+	"github.com/slackhq/nebula/service"
 )
 
-var (
-	ResolvedClientConfiguration *specv2pb.SpecClientSettings
-)
+var ResolvedClientConfiguration *specv2pb.SpecClientSettings
 
 type ClientConfiguration struct {
 	SpecClientSettings specv2pb.SpecClientSettings `json:"spec_client_settings" yaml:"spec_client_settings"`
@@ -27,7 +28,6 @@ type SpecClient[Req, Res any] struct {
 }
 
 func NewSpecClient[Req, Res any](url string, options ...SpecClientOption) *SpecClient[Req, Res] {
-
 	client := &SpecClient[Req, Res]{}
 	config, err := newSpecClientConfig(url, options)
 	if err != nil {
@@ -68,12 +68,11 @@ type specClientConfig struct {
 	MeshSocket              *service.Service
 	HttpClient              *http.Client
 	UnderlyingClientOptions []connect.ClientOption
-	//Flags                   *RuntimeConfigurationOverrides
-	//Filesystem              *io.FileSystem
+	// Flags                   *RuntimeConfigurationOverrides
+	// Filesystem              *io.FileSystem
 }
 
 func newSpecClientConfig(rawURL string, options []SpecClientOption) (*specClientConfig, *connect.Error) {
-
 	uri, err := url.ParseRequestURI(rawURL)
 	if err != nil {
 		return nil, &connect.Error{}
@@ -91,14 +90,13 @@ func newSpecClientConfig(rawURL string, options []SpecClientOption) (*specClient
 		return nil, err
 	}
 
-	//cfg := ResolveConfiguration(config.Flags, config.Filesystem)
-	//ResolvedConfiguration = cfg
+	// cfg := ResolveConfiguration(config.Flags, config.Filesystem)
+	// ResolvedConfiguration = cfg
 
 	return &config, nil
 }
 
 func (c *specClientConfig) validate() *connect.Error {
-
 	return nil
 }
 

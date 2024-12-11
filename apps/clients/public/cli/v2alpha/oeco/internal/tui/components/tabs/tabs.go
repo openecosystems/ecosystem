@@ -3,11 +3,11 @@ package tabs
 import (
 	"strings"
 
-	"github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {
@@ -17,7 +17,6 @@ type Model struct {
 }
 
 func NewModel(ctx *context.ProgramContext, pages []contract.Page) Model {
-
 	pageId := 0
 	for i, page := range pages {
 		if page.GetPageSettings().Type == ctx.Page {
@@ -38,7 +37,6 @@ func (m Model) Update(_ tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-
 	var tabs []string
 	tabs = append(tabs, m.ctx.Styles.Tabs.Logo.Render(""))
 	for i, page := range m.pages {

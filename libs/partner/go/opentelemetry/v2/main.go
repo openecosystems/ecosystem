@@ -4,6 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"sync"
+	"time"
+
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
@@ -17,10 +20,9 @@ import (
 	"go.opentelemetry.io/otel/sdk/trace"
 	tracer "go.opentelemetry.io/otel/trace"
 	"libs/public/go/sdk/v2alpha"
-	"sync"
-	"time"
 )
 
+// Binding struct that holds binding specific fields
 type Binding struct {
 	Propagator     *propagation.TextMapPropagator
 	TraceProvider  *trace.TracerProvider
@@ -43,7 +45,6 @@ func (b *Binding) Name() string {
 }
 
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-
 	// Verify any requirements
 
 	return nil
@@ -54,7 +55,6 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 		var once sync.Once
 		once.Do(
 			func() {
-
 				Bound = &Binding{}
 
 				// Set up propagator
@@ -113,7 +113,6 @@ func (b *Binding) GetBinding() interface{} {
 }
 
 func (b *Binding) Close() error {
-
 	var err error
 
 	if ResolvedConfiguration.Opentelemetry.TraceProviderEnabled {
@@ -151,7 +150,6 @@ func newPropagator() propagation.TextMapPropagator {
 }
 
 func newTraceProvider(ctx context.Context) (*trace.TracerProvider, error) {
-
 	traceExporter, err := otlptracegrpc.New(ctx, otlptracegrpc.WithInsecure())
 	if err != nil {
 		return nil, err
@@ -164,7 +162,6 @@ func newTraceProvider(ctx context.Context) (*trace.TracerProvider, error) {
 }
 
 func newMeterProvider(ctx context.Context) (*metric.MeterProvider, error) {
-
 	metricExporter, err := otlpmetricgrpc.New(ctx, otlpmetricgrpc.WithInsecure())
 	if err != nil {
 		return nil, err
@@ -177,7 +174,6 @@ func newMeterProvider(ctx context.Context) (*metric.MeterProvider, error) {
 }
 
 func newLoggerProvider(ctx context.Context) (*log.LoggerProvider, error) {
-
 	logExporter, err := otlploggrpc.New(ctx, otlploggrpc.WithInsecure())
 	if err != nil {
 		return nil, err

@@ -1,13 +1,13 @@
 package context
 
 import (
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"time"
-
-	"github.com/charmbracelet/bubbletea"
 
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 type State = int

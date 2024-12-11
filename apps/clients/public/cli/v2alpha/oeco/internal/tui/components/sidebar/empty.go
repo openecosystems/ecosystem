@@ -1,10 +1,10 @@
 package sidebar
 
 import (
-	"github.com/charmbracelet/bubbletea"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+
+	"github.com/charmbracelet/bubbletea"
 )
 
 type EmptyModel struct {
@@ -12,7 +12,6 @@ type EmptyModel struct {
 }
 
 func NewEmptyModel(ctx *context.ProgramContext) contract.Sidebar {
-
 	m := &EmptyModel{}
 	m.BaseModel = NewBaseModel(
 		ctx,
@@ -20,11 +19,9 @@ func NewEmptyModel(ctx *context.ProgramContext) contract.Sidebar {
 	)
 
 	return m
-
 }
 
 func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
-
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd

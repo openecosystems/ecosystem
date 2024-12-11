@@ -1,8 +1,9 @@
 package configurationv2alphapbint
 
 import (
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var SystemCmd = &cobra.Command{

@@ -1,0 +1,58 @@
+{
+  "name": "images-github-v2alpha",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": ".github/images/github",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/github/images/github"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p ../../../dist/github/images/github",
+          "cp *.Dockerfile ../../../dist/github/images/github",
+          "cp *.json ../../../dist/github/images/github"
+        ],
+        "parallel": false,
+        "cwd": ".github/images/github"
+      }
+    },
+    "container": {
+      "dependsOn": ["build", "container-v2alpha"]
+    },
+    "container-v2alpha": {
+      "executor": "@nx-tools/nx-container:build",
+      "defaultConfiguration": "local",
+      "options": {
+        "engine": "podman",
+        "context": "dist/github/images/github",
+        "file": "dist/github/images/github/v2alpha.Dockerfile",
+        "platforms": ["linux/amd64", "linux/arm64"]
+      },
+      "configurations": {
+        "local": {
+          "tags": ["openecosystems/ecosystem-builder:latest"],
+          "push": false
+        },
+        "production": {
+          "tags": [
+            "ghcr.io/openecosystems/ecosystem-builder:latest",
+            "ghcr.io/openecosystems/ecosystem-builder:v2alpha",
+            "openecosystems/ecosystem-builder:latest",
+            "openecosystems/ecosystem-builder:v2alpha"
+          ],
+          "push": true
+        }
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:private",
+    "type:cicd",
+    "version:v2alpha",
+    "exposure:internal"
+  ]
+}
