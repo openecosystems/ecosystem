@@ -1,7 +1,6 @@
-
 {
   "name": "images-github-v2alpha",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Build server",
   "license": "Apache-2.0"
 }
