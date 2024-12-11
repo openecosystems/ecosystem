@@ -13,8 +13,7 @@
         "commands": [
           "mkdir -p ../../../dist/github/images/github",
           "cp *.Dockerfile ../../../dist/github/images/github",
-          "cp *.json ../../../dist/github/images/github",
-          "cp ../../../.config/goreleaser/goreleaser-cicd-image.yml ../../../dist/github/images/github/goreleaser.yml"
+          "cp *.json ../../../dist/github/images/github"
         ],
         "parallel": false,
         "cwd": ".github/images/github"
@@ -40,7 +39,9 @@
         "production": {
           "tags": [
             "ghcr.io/openecosystems/ecosystem-builder:latest",
-            "openecosystems/ecosystem-builder:latest"
+            "ghcr.io/openecosystems/ecosystem-builder:v2alpha",
+            "openecosystems/ecosystem-builder:latest",
+            "openecosystems/ecosystem-builder:v2alpha"
           ],
           "push": true
         }
