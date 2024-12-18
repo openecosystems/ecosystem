@@ -173,28 +173,58 @@
       "sdks": {
         "projectsRelationship": "fixed",
         "projects": ["tag:type:sdk"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
         "version": {
           "conventionalCommits": true
         },
-        "changelog": true,
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
         "releaseTagPattern": "sdk@{version}"
       },
       "clis": {
         "projectsRelationship": "independent",
         "projects": ["tag:type:cli"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
         "version": {
           "conventionalCommits": true
         },
-        "changelog": true,
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
         "releaseTagPattern": "cli-{projectName}@{version}"
       },
       "cicd": {
         "projectsRelationship": "independent",
         "projects": ["tag:type:cicd"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
         "version": {
           "conventionalCommits": true
         },
-        "changelog": true,
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
         "releaseTagPattern": "cicd-{projectName}@{version}"
       }
     },
