@@ -10,7 +10,7 @@ jobs:
       matrix:
         #go_version: ["1.19", stable]
         go_version: [stable]
-    uses: ./.github/workflows/base/_build.yml
+    uses: ./.github/workflows/_build.yml
     with:
       go_version: ${{ matrix.go_version }}
 
