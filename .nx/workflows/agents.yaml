@@ -23,12 +23,19 @@ launch-templates:
       - name: Install Browsers (if needed)
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-browsers/main.yaml'
 
+      - name: Debug
+        script: |
+          echo $HOME
+
       - name: OECO Run a custom script
         script: |
           sudo apt-get -y install build-essential procps file unzip && \
-          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-#          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
-#          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
+          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+          touch ~/.profile && \
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc && \
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc && \
+          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
       - name: Brew Dependencies
         script: |
@@ -45,4 +52,13 @@ launch-templates:
 
       - name: Go Dependencies
         script: |
-          go version
+          go install github.com/envoyproxy/protoc-gen-validate@v0.9.0 && \
+          go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1 && \
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1 && \
+          go install github.com/gogo/protobuf/protoc-gen-gogo@v1.3.2 && \
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0 && \
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.14.0 && \
+          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8 && \
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0 && \
+          go install mvdan.cc/gofumpt@latest && \
+          go install golang.org/x/vuln/cmd/govulncheck@latest
