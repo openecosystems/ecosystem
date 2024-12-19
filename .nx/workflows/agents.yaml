@@ -34,7 +34,7 @@ launch-templates:
 
       - name: Brew Dependencies
         script: |
-          sudo apt-get -y install build-essential procps file unzip
+          sudo apt-get -y install build-essential procps file unzip lsb-release
           NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
           test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -69,7 +69,7 @@ launch-templates:
 
       - name: Dotnet Dependencies
         script: |
-          sudo apt-get update && sudo apt-get install -y aspnetcore-runtime-6.0 dotnet-sdk-7.0
+          sudo apt-get install -y aspnetcore-runtime-6.0 dotnet-sdk-7.0
           WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb"
           wget "$WGET_DOTNET" -O packages-microsoft-prod.deb
           sudo dpkg -i packages-microsoft-prod.deb
