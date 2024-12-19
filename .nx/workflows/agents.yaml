@@ -45,7 +45,9 @@ launch-templates:
 
       - name: Cat Bashrc
         script: |
-          cat ~/.profile
+          whereis buf
+          whereis fastly
+          ls -l /home/linuxbrew/.linuxbrew/bin
 
       - name: Go Dependencies
         script: |
