@@ -26,5 +26,6 @@ launch-templates:
       - name: OECO Run a custom script
         script: |
           NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
+          brew install buf
+#          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
+#          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
