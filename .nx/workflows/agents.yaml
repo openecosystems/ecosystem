@@ -1,11 +1,4 @@
 launch-templates:
-  template-one:
-    init-steps:
-      - name: 'Print Env'
-        env:
-          MY_STEP_ENV: 'step-env-var'
-        script: |
-          echo $MY_STEP_ENV # prints "step-env-var"
   oeco-linux-medium-js:
     resource-class: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node20.11-v10'
@@ -29,3 +22,8 @@ launch-templates:
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
       - name: Install Browsers (if needed)
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-browsers/main.yaml'
+
+      - name: OECO Run a custom script
+        script: |
+          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
