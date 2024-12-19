@@ -55,6 +55,7 @@ launch-templates:
           whereis fastly
           echo $PATH
           ls -l /home/linuxbrew/.linuxbrew/bin
+          ls -l /home
 
       - name: Go Dependencies
         script: |
