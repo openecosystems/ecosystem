@@ -25,10 +25,12 @@ launch-templates:
 
       - name: OECO Run a custom script
         script: |
+          sudo apt-get install build-essential procps curl file unzip && \
           NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 #          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
 #          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
 
       - name: OECO Install Buf
         script: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install pnpm
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install pnpm && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
