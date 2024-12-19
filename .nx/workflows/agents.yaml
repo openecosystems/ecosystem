@@ -37,13 +37,17 @@ launch-templates:
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc
           echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.bashrc
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.profile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.profile
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bash_profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bash_profile
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.bash_profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.zprofile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.zprofile
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.zprofile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
           source ~/.bashrc
-          source ~/.profile
+          source ~/.bash_profile
+          source ~/.zprofile
 
       - name: Debug
         script: |
@@ -69,7 +73,7 @@ launch-templates:
         script: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
           echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.bashrc
-          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.profile
+          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.bash_profile
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
           /home/workflows/.cargo/bin/rustup toolchain add stable
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable

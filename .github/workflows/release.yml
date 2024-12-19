@@ -3,9 +3,11 @@
 name: release
 
 on:
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
     branches:
-      - OECO-7
+      - main
+
 concurrency:
   group: release
   cancel-in-progress: true
