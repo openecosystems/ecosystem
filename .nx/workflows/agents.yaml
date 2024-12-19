@@ -5,12 +5,14 @@ launch-templates:
     init-steps:
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
+
       - name: OECO Restore Node Modules Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
           key: 'package-lock.json|yarn.lock|pnpm-lock.yaml'
           paths: 'node_modules'
           base-branch: 'main'
+
       - name: Restore Browser Binary Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
@@ -18,47 +20,72 @@ launch-templates:
           paths: |
             '../.cache/Cypress'
           base-branch: 'main'
+
       - name: Install Node Modules
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
+
       - name: Install Browsers (if needed)
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-browsers/main.yaml'
 
       - name: Debug
         script: |
           echo $HOME
-
-      - name: OECO Run a custom script
-        script: |
-          sudo apt-get -y install build-essential procps file unzip && \
-          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-          touch ~/.profile && \
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc && \
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc && \
-          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
+          ls -l $HOME
 
       - name: Brew Dependencies
         script: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protobuf@3 && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protoc-gen-grpc-web && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swift-protobuf && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install grpc-swift && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install hugo && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install golangci-lint && \
+          sudo apt-get -y install build-essential procps file unzip
+          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+          test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protobuf@3
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protoc-gen-grpc-web
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swift-protobuf
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install grpc-swift
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install hugo
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install golangci-lint
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install poetry flake8
+          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
       - name: Go Dependencies
         script: |
-          go install github.com/envoyproxy/protoc-gen-validate@v0.9.0 && \
-          go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1 && \
-          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1 && \
-          go install github.com/gogo/protobuf/protoc-gen-gogo@v1.3.2 && \
-          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0 && \
-          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.14.0 && \
-          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8 && \
-          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0 && \
-          go install mvdan.cc/gofumpt@latest && \
+          go install github.com/envoyproxy/protoc-gen-validate@v0.9.0
+          go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
+          go install github.com/gogo/protobuf/protoc-gen-gogo@v1.3.2
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.14.0
+          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
+          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
+          go install mvdan.cc/gofumpt@latest
           go install golang.org/x/vuln/cmd/govulncheck@latest
+
+      - name: Rust Dependencies
+        script: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.bashrc
+          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+          /home/workflows/.cargo/bin/rustup toolchain add stable
+          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+
+      - name: Dotnet Dependencies
+        script: |
+          sudo apt-get install -y aspnetcore-runtime-6.0 dotnet-sdk-7.0
+          WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb"
+          wget "$WGET_DOTNET" -O packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref
+          echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
+
+      - name: Java Dependencies
+        script: |
+          sudo apt-get install -y openjdk-17-jdk
+          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
+          chmod +x go/bin/protoc-gen-grpc-java
