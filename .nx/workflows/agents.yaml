@@ -77,3 +77,4 @@ launch-templates:
 #          sudo apt-get install -y openjdk-17-jdk
 #          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
 #          chmod +x go/bin/protoc-gen-grpc-java
+
