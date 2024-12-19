@@ -41,16 +41,8 @@ launch-templates:
           echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protobuf@3
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protoc-gen-grpc-web
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swift-protobuf
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install grpc-swift
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install hugo
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install golangci-lint
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install poetry flake8
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
       - name: Go Dependencies
