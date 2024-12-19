@@ -98,4 +98,4 @@ jobs:
 
       - name: Run NX
         id: nx
-        run: pnpm exec nx release --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: pnpm exec nx release
