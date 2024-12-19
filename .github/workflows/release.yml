@@ -5,7 +5,7 @@ name: release
 on:
   push:
     branches:
-      - OECO-6
+      - OECO-7
 concurrency:
   group: release
   cancel-in-progress: true
