@@ -66,6 +66,8 @@ launch-templates:
         script: |
           sudo apt-get install -y aspnetcore-runtime-6.0 dotnet-sdk-7.0
           WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb"
+          echo $WGET_DOTNET
+          echo "======================="
           wget "$WGET_DOTNET" -O packages-microsoft-prod.deb
           sudo dpkg -i packages-microsoft-prod.deb
           rm packages-microsoft-prod.deb
