@@ -5,6 +5,53 @@ on:
       go_version:
         required: false
         type: string
+    secrets:
+      docker_username:
+        required: true
+      docker_token:
+        required: true
+      gh_pat:
+        required: true
+      goreleaser_key:
+        required: false
+      aur_key:
+        required: false
+      fury_token:
+        required: false
+      nfpm_gpg_key:
+        required: false
+      nfpm_passphrase:
+        required: false
+      snapcraft_token:
+        required: false
+      twitter_consumer_key:
+        required: false
+      twitter_consumer_secret:
+        required: false
+      twitter_access_token:
+        required: false
+      twitter_access_token_secret:
+        required: false
+      mastodon_client_id:
+        required: false
+      mastodon_client_secret:
+        required: false
+      mastodon_access_token:
+        required: false
+      discord_webhook_id:
+        required: false
+      discord_webhook_token:
+        required: false
+      macos_sign_p12:
+        required: false
+      macos_sign_password:
+        required: false
+      macos_notary_key:
+        required: false
+      macos_notary_key_id:
+        required: false
+      macos_notary_issuer_id:
+        required: false
 jobs:
   release:
     environment: operations
