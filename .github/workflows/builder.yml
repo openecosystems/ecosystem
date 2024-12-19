@@ -39,7 +39,7 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - run: pnpm nx-cloud start-ci-run --distribute-on="6 linux-medium-js"
+      - run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci"
 
       - name: Install node dependencies
         id: dependencies
