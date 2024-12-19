@@ -39,6 +39,8 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
+      - run: pnpm nx-cloud start-ci-run --distribute-on="6 linux-medium-js"
+
       - name: Install node dependencies
         id: dependencies
         run: pnpm install --frozen-lockfile
