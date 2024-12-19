@@ -68,22 +68,24 @@ jobs:
         with:
           fetch-depth: 0
 
-#      - name: Setup pnpm
-#        uses: pnpm/action-setup@v4
-#        with:
-#          version: 9
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
-#      - name: Setup node
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 20
-#          cache: 'pnpm'
-#      - name: Install Go
-#        uses: actions/setup-go@v5
-#        with:
-#          go-version: ${{ inputs.go_version || inputs.go-version }}
-#          go-version-file: ${{ inputs.go-version-file }}
-#          cache: 'true'
+      - run: pnpm nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci"
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ inputs.go_version || inputs.go-version }}
+          go-version-file: ${{ inputs.go-version-file }}
+          cache: 'true'
 
       - name: Install node dependencies
         run: pnpm install --frozen-lockfile
