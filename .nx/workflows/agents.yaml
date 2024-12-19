@@ -51,6 +51,8 @@ launch-templates:
 
       - name: Debug
         script: |
+          echo $0
+          echo $SHELL
           whereis buf
           whereis fastly
           echo $PATH
