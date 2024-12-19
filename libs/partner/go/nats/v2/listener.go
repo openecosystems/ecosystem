@@ -8,10 +8,6 @@ import (
 	"libs/partner/go/zap/v1"
 	"libs/public/go/sdk/v2alpha"
 
-	zaploggerv1 "libs/partner/go/zap/v1"
-	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	"github.com/mennanov/fmutils"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"

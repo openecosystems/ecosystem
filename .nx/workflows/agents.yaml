@@ -45,7 +45,7 @@ launch-templates:
 
       - name: Cat Bashrc
         script: |
-          cat ~/.bashrc
+          cat ~/.profile
 
       - name: Go Dependencies
         script: |
@@ -64,6 +64,7 @@ launch-templates:
         script: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
           echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.bashrc
+          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.profile
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
           /home/workflows/.cargo/bin/rustup toolchain add stable
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable

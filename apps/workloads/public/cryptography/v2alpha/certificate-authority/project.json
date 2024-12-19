@@ -19,7 +19,13 @@
           "command": "GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/app && cp package.json ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/."
         }
       },
-      "dependsOn": ["pre-build"]
+      "dependsOn": [
+        "pre-build",
+        {
+          "target": "generate",
+          "projects": ["libs-partner-go-nebula-v1"]
+        }
+      ]
     },
     "test": {
       "executor": "nx:run-commands",
