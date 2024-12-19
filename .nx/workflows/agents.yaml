@@ -30,7 +30,19 @@ launch-templates:
 #          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile && \
 #          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf
 
-      - name: OECO Install Buf
+      - name: Brew Dependencies
         script: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install pnpm && \
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protobuf@3 && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install protoc-gen-grpc-web && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install swift-protobuf && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install grpc-swift && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install hugo && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install fastly/tap/fastly && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install golangci-lint && \
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install poetry flake8
+
+      - name: Go Dependencies
+        script: |
+          go version
