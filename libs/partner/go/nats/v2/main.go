@@ -11,8 +11,6 @@ import (
 
 	"libs/public/go/sdk/v2alpha"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"

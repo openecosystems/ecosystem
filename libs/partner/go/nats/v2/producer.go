@@ -12,10 +12,6 @@ import (
 
 	"connectrpc.com/connect"
 
-	zaploggerv1 "libs/partner/go/zap/v1"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
