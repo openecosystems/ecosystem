@@ -36,7 +36,7 @@ FROM --platform=linux/amd64 bufbuild/buf:1.47.2 AS buf
 
 # NX Environment
 FROM --platform=linux/amd64 cimg/go:1.23.3-node
-LABEL org.opencontainers.image.source = https://github.com/openecosystems/ecosystem
+LABEL org.opencontainers.image.source=https://github.com/openecosystems/ecosystem
 WORKDIR /home/circleci
 
 # Bashrc
