@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - OECO-6
-
 concurrency:
   group: release
   cancel-in-progress: true
@@ -14,6 +13,11 @@ concurrency:
 jobs:
   release:
     uses: ./.github/workflows/_release.yml
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
     secrets:
       docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
       docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
