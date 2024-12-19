@@ -73,19 +73,19 @@ jobs:
         with:
           version: 9
 
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci"
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" #--stop-agents-after="e2e-ci"
 
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: 'pnpm'
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ inputs.go_version || inputs.go-version }}
-          go-version-file: ${{ inputs.go-version-file }}
-          cache: 'true'
+#      - name: Install Go
+#        uses: actions/setup-go@v5
+#        with:
+#          go-version: ${{ inputs.go_version || inputs.go-version }}
+#          go-version-file: ${{ inputs.go-version-file }}
+#          cache: 'true'
 
       - name: Install node dependencies
         run: pnpm install --frozen-lockfile
