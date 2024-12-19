@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   distribute:
-    uses: ./.github/workflows/base/_distribute.yml
+    uses: ./.github/workflows/_distribute.yml
     secrets:
       docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
       docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
