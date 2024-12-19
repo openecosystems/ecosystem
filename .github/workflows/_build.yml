@@ -57,8 +57,8 @@ jobs:
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     container:
-      image: ghcr.io/openecosystems/ecosystem-builder:latest  # Your custom Docker image
-      options: --entrypoint /bin/bash
+      image: ghcr.io/openecosystems/ecosystem-builder:latest
+      #options: --entrypoint /bin/bash
     env:
       GO111MODULE: "on"
       GH_PAT: ${{ secrets.gh_pat }}
