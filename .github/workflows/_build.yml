@@ -57,7 +57,7 @@ jobs:
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     container:
-      image: ghcr.io/openecosystems/ecosystem-builder:latest
+      image: 'ghcr.io/openecosystems/ecosystem-builder:latest'
       #options: --entrypoint /bin/bash
     env:
       GO111MODULE: "on"
