@@ -33,26 +33,25 @@ launch-templates:
           NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
           test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.bashrc
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bash_profile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bash_profile
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.bash_profile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.zprofile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.zprofile
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> ~/.zprofile
+          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> $HOME/.bashrc
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.bashrc
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.bashrc
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.bashrc
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.bash_profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.bash_profile
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.bash_profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.zprofile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.zprofile
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.zprofile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          source ~/.bashrc
-          source ~/.bash_profile
-          source ~/.zprofile
+          . $HOME/.bashrc
+          . $HOME/.bash_profile
+          . $HOME/.zprofile
+          echo $PATH
 
       - name: Debug
         script: |
-          echo $0
-          echo $SHELL
           whereis buf
           whereis fastly
           echo $PATH
