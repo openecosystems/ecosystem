@@ -32,6 +32,13 @@ launch-templates:
           sudo apt-get -y install build-essential gcc procps file unzip lsb-release
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+      - name: Restore Brew Dependencies Cache
+        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
+        inputs:
+          key: '.nx/workflows/agents.yaml'
+          paths: '.cache'
+          base-branch: 'main'
+
       - name: Brew Dependencies
         script: |
           echo >> /home/workflows/.profile
@@ -50,7 +57,8 @@ launch-templates:
 
       - name: Debug
         script: |
-          ls -l /home/workflows
+          ls -la /home/workflows
+          ls -la /home/workflows/workspace
           whereis buf
           whereis fastly
           . /home/workflows/.profile
