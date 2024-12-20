@@ -27,12 +27,13 @@ launch-templates:
 #      - name: Install Browsers (if needed)
 #        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-browsers/main.yaml'
 
-      - name: Brew Dependencies
+      - name: Brew
         script: |
           sudo apt-get -y install build-essential procps file unzip lsb-release
           NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-          test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+      - name: Brew Dependencies
+        script: |
           echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> $HOME/.bashrc
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.bashrc
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.bashrc
@@ -43,12 +44,12 @@ launch-templates:
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.zprofile
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.zprofile
           echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.zprofile
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
-          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
           . $HOME/.bashrc
           . $HOME/.bash_profile
           . $HOME/.zprofile
           echo $PATH
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
+          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
       - name: Debug
         script: |
@@ -56,7 +57,6 @@ launch-templates:
           whereis fastly
           echo $PATH
           ls -l /home/linuxbrew/.linuxbrew/bin
-          ls -l /home
 
       - name: Go Dependencies
         script: |
