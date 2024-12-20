@@ -9,7 +9,7 @@ launch-templates:
           whereis sed
           whereis uname
           whereis dirname
-          cat ./node_modules/.bin/nx-cloud
+          cat ./workspace/node_modules/.bin/nx-cloud
 
 
       - name: Checkout
