@@ -36,6 +36,9 @@ launch-templates:
       - name: Brew Dependencies
         script: |
           echo $PATH
+          echo >> /home/workflows/.profile
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.bashrc
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.bashrc
           echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.bashrc
