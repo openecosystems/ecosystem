@@ -43,6 +43,7 @@ launch-templates:
         script: |
           echo >> /home/workflows/.profile
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.bashrc
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> /home/workflows/.profile
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> /home/workflows/.profile
