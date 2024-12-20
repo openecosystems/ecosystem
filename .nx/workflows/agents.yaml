@@ -29,6 +29,7 @@ launch-templates:
 
       - name: Brew
         script: |
+          echo $PATH
           sudo apt-get -y install build-essential gcc procps file unzip lsb-release
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
