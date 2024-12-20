@@ -52,13 +52,14 @@ launch-templates:
           . $HOME/.bashrc
           . $HOME/.bash_profile
           . $HOME/.zprofile
-          echo $PATH
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          echo $PATH
 
       - name: Debug
         script: |
+          . $HOME/.bashrc
+          . $HOME/.bash_profile
+          . $HOME/.zprofile
           whereis buf
           whereis fastly
           ls -l /home/linuxbrew/.linuxbrew/bin
