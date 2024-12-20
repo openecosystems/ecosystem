@@ -6,6 +6,9 @@ launch-templates:
       - name: Debug
         script: |
           echo $PATH
+          whereis sed
+          whereis uname
+          whereis dirname
 
 
       - name: Checkout
@@ -62,6 +65,9 @@ launch-templates:
       - name: Debug
         script: |
           echo $PATH
+          whereis sed
+          whereis uname
+          whereis dirname
 
       - name: Go Dependencies
         script: |
