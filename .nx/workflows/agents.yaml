@@ -3,6 +3,11 @@ launch-templates:
     resource-class: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node20.11-v10'
     init-steps:
+      - name: Debug
+        script: |
+          ls -la /home/workflows
+          ls -la ~/
+
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
 
