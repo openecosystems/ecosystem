@@ -31,42 +31,31 @@ launch-templates:
         script: |
           sudo apt-get -y install build-essential procps file unzip lsb-release
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          echo $PATH
 
       - name: Brew Dependencies
         script: |
-          echo $PATH
           echo >> /home/workflows/.profile
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.bashrc
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.bashrc
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.bashrc
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.bash_profile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.bash_profile
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.bash_profile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.zprofile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.zprofile
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.zprofile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> /home/workflows/.profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> /home/workflows/.profile
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> /home/workflows/.profile
           export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib"
           export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include"
-          echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> ~/.profile
+          echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> /home/workflows/.profile
           export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig"
-          . $HOME/.bashrc
-          . $HOME/.bash_profile
-          . $HOME/.zprofile
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" && brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
-          echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> $HOME/.bashrc
+          . /home/workflows/.profile
+          brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
+          echo $PATH
 
       - name: Debug
         script: |
-          . $HOME/.bashrc
-          . $HOME/.bash_profile
-          . $HOME/.zprofile
           whereis buf
           whereis fastly
-          ls -l /home/linuxbrew/.linuxbrew/bin
+          . /home/workflows/.profile
+          whereis buf
+          whereis fastly
           echo $PATH
 
       - name: Go Dependencies
@@ -85,12 +74,11 @@ launch-templates:
       - name: Rust Dependencies
         script: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
-          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.bashrc
-          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> ~/.bash_profile
+          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> /home/workflows/.profile
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
           /home/workflows/.cargo/bin/rustup toolchain add stable
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
-          . "$HOME/.cargo/env"
+          . "/home/workflows/.cargo/env"
 
 #      - name: Dotnet Dependencies
 #        script: |
