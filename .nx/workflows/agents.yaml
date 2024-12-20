@@ -39,15 +39,15 @@ launch-templates:
           paths: '.cache'
           base-branch: 'main'
 
+#  echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
+#  echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
+#  echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
       - name: Brew Dependencies
         script: |
           echo >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
           echo "PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:/home/workflows/workspace/node_modules/.bin:$PATH" >> $NX_CLOUD_ENV
-          echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
-          echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
-          echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
           brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
