@@ -30,7 +30,7 @@ launch-templates:
       - name: Brew
         script: |
           sudo apt-get -y install build-essential procps file unzip lsb-release
-          NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       - name: Brew Dependencies
         script: |
@@ -44,6 +44,10 @@ launch-templates:
           echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $HOME/.zprofile
           echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $HOME/.zprofile
           echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $HOME/.zprofile
+          export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib"
+          export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include"
+          echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> ~/.profile
+          export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig"
           . $HOME/.bashrc
           . $HOME/.bash_profile
           . $HOME/.zprofile
