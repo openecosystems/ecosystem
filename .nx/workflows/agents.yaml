@@ -50,6 +50,7 @@ launch-templates:
 
       - name: Debug
         script: |
+          ls -l /home/workflows
           whereis buf
           whereis fastly
           . /home/workflows/.profile
