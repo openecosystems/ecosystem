@@ -40,21 +40,20 @@ launch-templates:
           base-branch: 'main'
 
       #echo >> /home/workflows/.bash_profile
+      #echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $NX_CLOUD_ENV
+      #. /home/workflows/.bash_profile
       - name: Brew Dependencies
         script: |
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.bash_profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $NX_CLOUD_ENV
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $NX_CLOUD_ENV
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> $NX_CLOUD_ENV
-          export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib"
-          export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include"
-          echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> $NX_CLOUD_ENV
-          export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig"
+          echo 'PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> $NX_CLOUD_ENV
+          echo 'PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> $NX_CLOUD_ENV
+          echo 'PATH=/home/workflows/node_modules/.bin:$PATH' >> $NX_CLOUD_ENV
+          echo 'PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> $NX_CLOUD_ENV
+          echo 'LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib"' >> $NX_CLOUD_ENV
+          echo 'CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include"' >> $NX_CLOUD_ENV
+          echo 'PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig"' >> $NX_CLOUD_ENV
           brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          . /home/workflows/.bash_profile
-
       - name: Debug
         script: |
           echo $PATH
@@ -82,7 +81,7 @@ launch-templates:
       - name: Rust Dependencies
         script: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
-          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> $NX_CLOUD_ENV
+          echo 'PATH=/home/workflows/.cargo/bin:$PATH' >> $NX_CLOUD_ENV
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
           /home/workflows/.cargo/bin/rustup toolchain add stable
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
