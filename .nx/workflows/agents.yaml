@@ -58,7 +58,8 @@ launch-templates:
       - name: Debug
         script: |
           ls -la /home/workflows
-          ls -la /home/workflows/workspace
+          cat /home/workflows/.bashrc
+          cat /home/workflows/.profile
           whereis buf
           whereis fastly
           . /home/workflows/.profile
