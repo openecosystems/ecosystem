@@ -9,8 +9,6 @@ launch-templates:
           whereis sed
           whereis uname
           whereis dirname
-          cat ./workspace/node_modules/.bin/nx-cloud
-
 
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
@@ -69,6 +67,9 @@ launch-templates:
           whereis sed
           whereis uname
           whereis dirname
+          cat ./workspace/node_modules/.bin/nx-cloud
+
+
 
       - name: Go Dependencies
         script: |
