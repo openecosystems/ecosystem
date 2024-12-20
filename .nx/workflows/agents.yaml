@@ -54,7 +54,7 @@ launch-templates:
           echo >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
-          echo "PATH=/home/workflows/.nvm/versions/node/v20.11.1/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/workflows/.npm-global/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/workflows/workspace/node_modules/.bin:$PATH" >> $NX_CLOUD_ENV
+          echo "PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/workflows/workspace/node_modules/.bin:$PATH" >> $NX_CLOUD_ENV
           brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
