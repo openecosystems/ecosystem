@@ -3,6 +3,11 @@ launch-templates:
     resource-class: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node20.11-v10'
     init-steps:
+      - name: Debug
+        script: |
+          echo $PATH
+
+
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
 
@@ -52,10 +57,6 @@ launch-templates:
           echo "PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/workflows/workspace/node_modules/.bin:$PATH" >> $NX_CLOUD_ENV
           brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-
-      - name: Debug
-        script: |
-          echo $PATH
 
       - name: Go Dependencies
         script: |
