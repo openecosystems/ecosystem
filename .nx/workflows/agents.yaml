@@ -3,11 +3,6 @@ launch-templates:
     resource-class: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node20.11-v10'
     init-steps:
-      - name: Debug
-        script: |
-          ls -la /home/workflows
-          ls -la ~/
-
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
 
@@ -46,36 +41,33 @@ launch-templates:
 
       - name: Brew Dependencies
         script: |
-          echo >> /home/workflows/.profile
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
+          echo >> /home/workflows/.bashrc
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.bashrc
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> /home/workflows/.profile
-          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> /home/workflows/.profile
-          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> /home/workflows/.profile
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> /home/workflows/.bashrc
+          echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> /home/workflows/.bashrc
+          echo 'export PATH=/home/workflows/node_modules/.bin:$PATH' >> /home/workflows/.bashrc
           export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib"
           export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include"
-          echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> /home/workflows/.profile
+          echo 'export PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin:$PATH"' >> /home/workflows/.bashrc
           export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig"
           brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          . /home/workflows/.profile
+          . /home/workflows/.bashrc
 
       - name: Debug
         script: |
-          ls -la /home/workflows
           cat /home/workflows/.bashrc
-          cat /home/workflows/.profile
           whereis buf
           whereis fastly
-          . /home/workflows/.profile
+          . /home/workflows/.bashrc
           whereis buf
           whereis fastly
           echo $PATH
 
       - name: Go Dependencies
         script: |
-          . /home/workflows/.profile
+          . /home/workflows/.bashrc
           go install github.com/envoyproxy/protoc-gen-validate@v0.9.0
           go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1
           go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
@@ -90,11 +82,11 @@ launch-templates:
       - name: Rust Dependencies
         script: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
-          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> /home/workflows/.profile
+          echo 'export PATH=/home/workflows/.cargo/bin:$PATH' >> /home/workflows/.bashrc
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
           /home/workflows/.cargo/bin/rustup toolchain add stable
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
-          . /home/workflows/.profile
+          . /home/workflows/.bashrc
           . "/home/workflows/.cargo/env"
 
 #      - name: Dotnet Dependencies
