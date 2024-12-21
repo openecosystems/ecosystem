@@ -38,7 +38,6 @@ launch-templates:
 
       - name: Brew
         script: |
-          echo $PATH
           sudo apt-get -y install build-essential gcc procps file unzip lsb-release
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -63,7 +62,7 @@ launch-templates:
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
           brew install buf fastly/tap/fastly protobuf@3
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-#          echo "PATH=$PATH" >> $NX_CLOUD_ENV
+          echo "PATH=$PATH" >> $NX_CLOUD_ENV
 
       - name: Debug
         script: |
