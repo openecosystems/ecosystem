@@ -10,7 +10,7 @@ launch-templates:
           whereis uname
           whereis dirname
           echo "HELLO"
-          echo $NX_CLOUD_ENV
+          cat $(echo $NX_CLOUD_ENV)
 
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
