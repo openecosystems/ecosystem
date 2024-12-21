@@ -63,7 +63,7 @@ launch-templates:
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
           brew install buf fastly/tap/fastly protobuf@3
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          echo "PATH=$PATH" >> $NX_CLOUD_ENV
+#          echo "PATH=$PATH" >> $NX_CLOUD_ENV
 
       - name: Debug
         script: |
@@ -77,16 +77,16 @@ launch-templates:
 
 #      - name: Go Dependencies
 #        script: |
-#          go install github.com/envoyproxy/protoc-gen-validate@v0.9.0
-#          go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1
 #          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
-#          go install github.com/gogo/protobuf/protoc-gen-gogo@v1.3.2
 #          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
-#          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.14.0
-#          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
-#          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
 #          go install mvdan.cc/gofumpt@latest
 #          go install golang.org/x/vuln/cmd/govulncheck@latest
+#          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@v2.14.0
+#          go install github.com/gogo/protobuf/protoc-gen-gogo@v1.3.2
+#          go install github.com/lyft/protoc-gen-star/protoc-gen-debug@v0.6.1
+#          go install github.com/envoyproxy/protoc-gen-validate@v0.9.0
+#          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
+#          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
 #
 #      - name: Rust Dependencies
 #        script: |
