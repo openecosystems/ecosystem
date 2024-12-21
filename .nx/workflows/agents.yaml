@@ -9,6 +9,7 @@ launch-templates:
           whereis sed
           whereis uname
           whereis dirname
+          echo "HELLO"
           cat $NX_CLOUD_ENV
 
       - name: Checkout
@@ -68,7 +69,6 @@ launch-templates:
           whereis sed
           whereis uname
           whereis dirname
-          cat ./workspace/node_modules/.bin/nx-cloud
 
 
 
