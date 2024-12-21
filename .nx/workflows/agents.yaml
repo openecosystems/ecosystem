@@ -55,18 +55,19 @@ launch-templates:
       #/home/linuxbrew/.linuxbrew/opt/protobuf@3/bin
       #echo "PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/workflows/workspace/node_modules/.bin:$PATH" >> $NX_CLOUD_ENV
       #echo "PATH=/home/workflows/workspace/node_modules/.bin:$PATH" >> $NX_CLOUD_ENV
+      #brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
       - name: Brew Dependencies
         script: |
           echo >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
-          brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
+          brew install buf fastly/tap/fastly
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          echo "PATH2=$HOME/my-folder:$PATH" >> $NX_CLOUD_ENV
+          echo "PATH=$PATH" >> $NX_CLOUD_ENV
 
       - name: Debug
         script: |
-          echo $PATH2
+          echo $PATH
           cat $(echo $NX_CLOUD_ENV)
           whereis sed
           whereis uname
