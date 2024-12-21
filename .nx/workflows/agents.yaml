@@ -10,7 +10,7 @@ launch-templates:
           whereis uname
           whereis dirname
           echo "HELLO"
-          cat $(echo $NX_CLOUD_ENV)
+
 
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
@@ -62,10 +62,12 @@ launch-templates:
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/workflows/.profile
           brew install buf fastly/tap/fastly protobuf@3 protoc-gen-grpc-web swift-protobuf grpc-swift hugo golangci-lint poetry flake8
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
+          echo "PATH2=$HOME/my-folder:$PATH" >> $NX_CLOUD_ENV
 
       - name: Debug
         script: |
-          echo $PATH
+          echo $PATH2
+          cat $(echo $NX_CLOUD_ENV)
           whereis sed
           whereis uname
           whereis dirname
