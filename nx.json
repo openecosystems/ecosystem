@@ -139,13 +139,10 @@
   },
   "defaultProject": "proto",
   "plugins": [
-    "@platform/nx-go",
     "@nx-go/nx-go"
   ],
   "pluginsConfig": {
-    "@platform/nx-go": {
-      "analyzeSourceFiles": false
-    }
+
   },
   "namedInputs": {
     "default": [

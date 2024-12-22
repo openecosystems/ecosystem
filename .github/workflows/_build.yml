@@ -53,12 +53,8 @@ jobs:
   build:
     strategy:
       matrix:
-        #os: [ ubuntu-latest, macos-latest, windows-latest ]
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
-#    container:
-#      image: 'ghcr.io/openecosystems/ecosystem-builder:latest'
-#      options: --entrypoint /bin/bash
     env:
       GO111MODULE: "on"
       GH_PAT: ${{ secrets.gh_pat }}
@@ -80,12 +76,6 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-#      - name: Install Go
-#        uses: actions/setup-go@v5
-#        with:
-#          go-version: ${{ inputs.go_version || inputs.go-version }}
-#          go-version-file: ${{ inputs.go-version-file }}
-#          cache: 'true'
 
       - name: Install node dependencies
         run: pnpm install --frozen-lockfile
@@ -95,7 +85,6 @@ jobs:
 
       - name: Run NX
         #- run: pnpm exec nx affected -t lint test build e2e-ci
-        #run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
   dependabot:
     #needs: [ build, vulnerability ]
