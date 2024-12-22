@@ -96,6 +96,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: openecosystems/ecosystem
+          directory: ./coverage/
 
   dependabot:
     #needs: [ build, vulnerability ]
