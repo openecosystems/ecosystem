@@ -29,7 +29,7 @@
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "mkdir -p ../../../../../../coverage && go test -v ./... -cover -race -coverprofile=../../../../../../coverage/coverage.txt",
+        "command": "mkdir -p ../../../../../../coverage/apps/clients/public/cli/v2alpha && go test -v ./... -cover -race -coverprofile=../../../../../../coverage/apps/clients/public/cli/v2alpha/coverage.txt",
         "cwd": "apps/clients/public/cli/v2alpha/oeco"
       }
     },

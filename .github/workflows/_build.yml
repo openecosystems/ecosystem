@@ -90,13 +90,16 @@ jobs:
       - name: Run Test Example
         run: pnpm exec nx run apps-clients-public-cli-v2alpha-oeco:test
 
+      - name: Merge coverage reports
+        run: |
+          find ./coverage -name "coverage.txt" -exec cat {} + > ./coverage/coverage.txt
 
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: openecosystems/ecosystem
-          directory: ./coverage/
+          files: "./coverage/coverage.txt"
 
   dependabot:
     #needs: [ build, vulnerability ]
