@@ -83,15 +83,16 @@ jobs:
       - name: Set Shas
         uses: nrwl/nx-set-shas@v4
 
-      - name: Run NX
-        #- run: pnpm exec nx affected -t lint test build e2e-ci
-        run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+#      - name: Run NX
+#        run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
       - name: Run Test Example
         run: pnpm exec nx run apps-clients-public-cli-v2alpha-oeco:test
 
       - name: Merge coverage reports
         run: |
+          ls -la
+          mkdir -p ./coverage
           find ./coverage -name "coverage.txt" -exec cat {} + > ./coverage/coverage.txt
 
       - name: Upload results to Codecov
