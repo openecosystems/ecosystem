@@ -86,6 +86,13 @@ jobs:
       - name: Run NX
         #- run: pnpm exec nx affected -t lint test build e2e-ci
         run: pnpm exec nx affected -t build --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: openecosystems/ecosystem
+
   dependabot:
     #needs: [ build, vulnerability ]
     needs: [ build ]
