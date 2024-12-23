@@ -7,16 +7,16 @@ require (
 	dario.cat/mergo v1.0.1
 	github.com/apex/log v1.9.0
 	github.com/fsnotify/fsnotify v1.8.0
-	github.com/go-playground/validator/v10 v10.22.1
+	github.com/go-playground/validator/v10 v10.23.0
 	github.com/iancoleman/strcase v0.3.0
 	github.com/joho/godotenv v1.5.1
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/segmentio/ksuid v1.0.4
-	github.com/shirou/gopsutil/v4 v4.24.10
+	github.com/shirou/gopsutil/v4 v4.24.11
 	github.com/spf13/afero v1.11.0
 	github.com/spf13/viper v1.19.0
-	google.golang.org/protobuf v1.35.1
+	google.golang.org/protobuf v1.36.1
 )
 
 require (

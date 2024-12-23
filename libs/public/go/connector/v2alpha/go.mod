@@ -4,8 +4,8 @@ go 1.23
 
 require (
 	connectrpc.com/connect v1.17.0
-	github.com/slackhq/nebula v1.9.4
-	google.golang.org/protobuf v1.35.1
+	github.com/slackhq/nebula v1.9.5
+	google.golang.org/protobuf v1.36.1
 )
 
 require (

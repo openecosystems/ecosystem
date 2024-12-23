@@ -6,7 +6,7 @@ toolchain go1.23.0
 
 require (
 	connectrpc.com/connect v1.17.0
-	github.com/slackhq/nebula v1.9.4
+	github.com/slackhq/nebula v1.9.5
 	gopkg.in/yaml.v2 v2.4.0
 )
 

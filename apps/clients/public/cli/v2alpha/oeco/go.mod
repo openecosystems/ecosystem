@@ -11,13 +11,13 @@ require (
 	github.com/charmbracelet/huh v0.6.0
 	github.com/charmbracelet/lipgloss v0.13.0
 	github.com/charmbracelet/log v0.3.1
-	github.com/go-playground/validator/v10 v10.22.1
+	github.com/go-playground/validator/v10 v10.23.0
 	github.com/golang/protobuf v1.5.3
 	github.com/google/gopacket v1.1.19
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/muesli/termenv v0.15.3-0.20240618155329-98d742f6907a
 	github.com/spf13/cobra v1.8.0
-	google.golang.org/protobuf v1.35.1
+	google.golang.org/protobuf v1.36.1
 	gopkg.in/yaml.v2 v2.2.8
 )
 
