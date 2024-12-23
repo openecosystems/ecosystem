@@ -12,7 +12,19 @@ concurrency:
   group: tag
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
+  build:
+    strategy:
+      matrix:
+        #go_version: ["1.19", stable]
+        go_version: [ stable ]
+    uses: ./.github/workflows/_build.yml
+    with:
+      go_version: ${{ matrix.go_version }}
   tag:
     uses: ./.github/workflows/_tag.yml
     permissions:
