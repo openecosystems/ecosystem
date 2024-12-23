@@ -178,25 +178,6 @@
           }
         },
         "releaseTagPattern": "{projectName}/{version}"
-      },
-      "cicd": {
-        "projectsRelationship": "independent",
-        "projects": ["tag:type:cicd"],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
       }
     },
     "changelog": {
