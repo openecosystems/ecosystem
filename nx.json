@@ -158,7 +158,7 @@
             "createRelease": "github"
           }
         },
-        "releaseTagPattern": "sdk@{version}"
+        "releaseTagPattern": "{projectName}/{version}"
       },
       "clis": {
         "projectsRelationship": "independent",
@@ -177,7 +177,7 @@
             "createRelease": "github"
           }
         },
-        "releaseTagPattern": "cli-{projectName}@{version}"
+        "releaseTagPattern": "{projectName}/{version}"
       },
       "cicd": {
         "projectsRelationship": "independent",
@@ -196,7 +196,7 @@
             "createRelease": "github"
           }
         },
-        "releaseTagPattern": "cicd-{projectName}@{version}"
+        "releaseTagPattern": "{projectName}/{version}"
       }
     },
     "changelog": {
