@@ -5,7 +5,7 @@ name: distribute
 on:
   push:
     tags:
-      - v*.*.*
+      - '*/*.*.*'
 
 concurrency:
   group: distribute
