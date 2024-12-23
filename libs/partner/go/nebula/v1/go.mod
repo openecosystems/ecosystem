@@ -7,7 +7,7 @@ toolchain go1.23.0
 require (
 	connectrpc.com/connect v1.17.0
 	github.com/segmentio/ksuid v1.0.4
-	github.com/slackhq/nebula v1.9.4
+	github.com/slackhq/nebula v1.9.5
 	google.golang.org/protobuf v1.35.2
 	gopkg.in/yaml.v2 v2.4.0
 )

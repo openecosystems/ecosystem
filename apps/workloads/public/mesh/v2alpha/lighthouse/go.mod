@@ -2,7 +2,7 @@ module apps/workloads/public/mesh/v2alpha/lighthouse
 
 go 1.23
 
-require github.com/slackhq/nebula v1.9.4
+require github.com/slackhq/nebula v1.9.5
 
 require (
 	dario.cat/mergo v1.0.0 // indirect

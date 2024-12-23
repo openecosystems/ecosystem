@@ -1,7 +1,0 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetInfo xmlns="http://www.mnb.hu/webservices/">
-      <Id>HELLO WORLD</Id>
-    </GetInfo>
-  </soap:Body>
-</soap:Envelope>

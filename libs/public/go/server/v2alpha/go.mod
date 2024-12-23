@@ -5,8 +5,8 @@ go 1.23
 require (
 	connectrpc.com/connect v1.16.2
 	connectrpc.com/vanguard v0.3.0
-	go.opentelemetry.io/otel/trace v1.32.0
-	golang.org/x/net v0.31.0
+	go.opentelemetry.io/otel/trace v1.33.0
+	golang.org/x/net v0.33.0
 	google.golang.org/protobuf v1.33.0
 )
 
