@@ -1,4 +1,4 @@
-name: release
+name: tag
 on:
   workflow_call:
     inputs:
@@ -53,7 +53,7 @@ on:
       macos_notary_issuer_id:
         required: false
 jobs:
-  release:
+  tag:
     environment: operations
     strategy:
       matrix:

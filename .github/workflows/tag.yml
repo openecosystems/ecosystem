@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: release
+name: tag
 
 on:
   pull_request:
@@ -9,12 +9,12 @@ on:
       - main
 
 concurrency:
-  group: release
+  group: tag
   cancel-in-progress: true
 
 jobs:
-  release:
-    uses: ./.github/workflows/_release.yml
+  tag:
+    uses: ./.github/workflows/_tag.yml
     permissions:
       packages: write
       contents: read

@@ -13,11 +13,3 @@ jobs:
     uses: ./.github/workflows/_build.yml
     with:
       go_version: ${{ matrix.go_version }}
-
-#  snapshot:
-#    uses: ./.github/workflows/_snapshot.yml
-#    secrets:
-#      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
-#
-#  coverage:
-#    uses: ./.github/workflows/_coverage.yml

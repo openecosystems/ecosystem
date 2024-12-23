@@ -44,7 +44,7 @@ launch-templates:
           echo >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
-          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint
+          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser-pro
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
           echo "PATH=$PATH" >> $NX_CLOUD_ENV
           echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
