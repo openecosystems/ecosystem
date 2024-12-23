@@ -42,7 +42,7 @@ jobs:
 #      - uses: pnpm/action-setup@v4
 #        with:
 #          version: 9
-#      - uses: actions/setup-node@v3
+#      - uses: actions/setup-node@v4
 #        with:
 #          node-version: 20
 #          cache: 'pnpm'
@@ -72,7 +72,7 @@ jobs:
       - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" #--stop-agents-after="build"
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
