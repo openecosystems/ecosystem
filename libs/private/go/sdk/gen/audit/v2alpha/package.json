@@ -1,6 +1,6 @@
 {
   "name": "sdk-audit-v2alpha",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Audit SDK version v2alpha",
   "license": "Apache-2.0"
 }
