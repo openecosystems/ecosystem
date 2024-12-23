@@ -43,7 +43,6 @@ use (
 	// ===================================
 	./libs/poc/go/protobuf
 	./libs/poc/go/model
-	./libs/poc/go/generated-wsdl
 
 	// Private libraries
 	// ===================================
