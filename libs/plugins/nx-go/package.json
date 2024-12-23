@@ -1,7 +1,11 @@
 {
-  "name": "@platform/nx-go",
-  "version": "0.3.0-f83d0a5",
-  "main": "src/index.js",
-  "generators": "./generators.json",
-  "executors": "./executors.json"
+  "name": "@openecosystems/nx-go",
+  "version": "0.0.1",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
+  "private": true
 }

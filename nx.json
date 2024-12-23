@@ -4,60 +4,37 @@
     "defaultBase": "main"
   },
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "pnpm"
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ],
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
       "cache": true
     },
     "generate": {
       "cache": true
     },
     "pack": {
-      "dependsOn": [
-        "build",
-        "^pack"
-      ]
+      "dependsOn": ["build", "^pack"]
     },
     "container": {
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "test": {
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js"
-      ],
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "cache": true
     },
     "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json"
-      ],
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
       "cache": true
     },
     "eslint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json"
-      ],
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
       "cache": true
     },
     "e2e": {
-      "inputs": [
-        "default",
-        "^production"
-      ],
+      "inputs": ["default", "^production"],
       "cache": true
     },
     "build-storybook": {
@@ -77,11 +54,7 @@
     },
     "@nx/jest:jest": {
       "cache": true,
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js"
-      ],
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "options": {
         "passWithNoTests": true
       },
@@ -91,6 +64,11 @@
           "codeCoverage": true
         }
       }
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "generators": {
@@ -139,19 +117,12 @@
   },
   "defaultProject": "proto",
   "plugins": [
-    "@platform/nx-go",
-    "@nx-go/nx-go"
+    "@nx-go/nx-go",
+    "@openecosystems/nx-go"
   ],
-  "pluginsConfig": {
-    "@platform/nx-go": {
-      "analyzeSourceFiles": false
-    }
-  },
+  "pluginsConfig": {},
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": [
       "{workspaceRoot}/babel.config.json",
       "{workspaceRoot}/go.work"
@@ -173,29 +144,59 @@
       "sdks": {
         "projectsRelationship": "fixed",
         "projects": ["tag:type:sdk"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
         "version": {
           "conventionalCommits": true
         },
-        "changelog": true,
-        "releaseTagPattern": "sdk@{version}"
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
+        "releaseTagPattern": "{projectName}/{version}"
       },
       "clis": {
         "projectsRelationship": "independent",
         "projects": ["tag:type:cli"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
         "version": {
           "conventionalCommits": true
         },
-        "changelog": true,
-        "releaseTagPattern": "cli-{projectName}@{version}"
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
+        "releaseTagPattern": "{projectName}/{version}"
       },
       "cicd": {
         "projectsRelationship": "independent",
         "projects": ["tag:type:cicd"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
         "version": {
           "conventionalCommits": true
         },
-        "changelog": true,
-        "releaseTagPattern": "cicd-{projectName}@{version}"
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
+        "releaseTagPattern": "{projectName}/{version}"
       }
     },
     "changelog": {

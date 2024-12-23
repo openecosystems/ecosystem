@@ -1,6 +1,11 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
 permissions:
   contents: write
   pull-requests: write
@@ -10,14 +15,6 @@ jobs:
       matrix:
         #go_version: ["1.19", stable]
         go_version: [stable]
-    uses: ./.github/workflows/base/_build.yml
+    uses: ./.github/workflows/_build.yml
     with:
       go_version: ${{ matrix.go_version }}
-
-#  snapshot:
-#    uses: ./.github/workflows/_snapshot.yml
-#    secrets:
-#      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
-#
-#  coverage:
-#    uses: ./.github/workflows/_coverage.yml

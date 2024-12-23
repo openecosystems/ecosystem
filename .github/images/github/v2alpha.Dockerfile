@@ -1,4 +1,4 @@
-# TODO: PUll this into a separate script so local engineers can reuse it
+# Retired: No Longer used. Please see .nx/workflows/agents.yaml instead
 
 # Brew Installs
 FROM --platform=linux/amd64 cimg/go:1.23.3-node as brew-installs
@@ -36,7 +36,7 @@ FROM --platform=linux/amd64 bufbuild/buf:1.47.2 AS buf
 
 # NX Environment
 FROM --platform=linux/amd64 cimg/go:1.23.3-node
-LABEL org.opencontainers.image.source = https://github.com/openecosystems/ecosystem
+LABEL org.opencontainers.image.source=https://github.com/openecosystems/ecosystem
 WORKDIR /home/circleci
 
 # Bashrc
@@ -73,6 +73,5 @@ RUN echo 'export PATH=/home/circleci/.cargo/bin:$PATH' >> ~/.bashrc
 RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
 RUN /home/circleci/.cargo/bin/rustup toolchain add stable
 RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
-
 
 #

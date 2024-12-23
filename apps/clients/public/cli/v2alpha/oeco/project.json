@@ -29,7 +29,7 @@
     "test": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "go test -v ./... -cover -race",
+        "command": "mkdir -p ../../../../../../coverage/apps/clients/public/cli/v2alpha && go test -v ./... -cover -race -coverprofile=../../../../../../coverage/apps/clients/public/cli/v2alpha/coverage.txt",
         "cwd": "apps/clients/public/cli/v2alpha/oeco"
       }
     },
@@ -85,12 +85,50 @@
       "dependsOn": ["build"],
       "options": {
         "commands": [
-          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../.config/goreleaser/goreleaser.cli.yaml > ./dist/.goreleaser.yaml",
-          "goreleaser release --config ./dist/.goreleaser.yaml --snapshot --clean",
-          "mv dist/** ../../../../../../dist/apps/clients/public/cli/v2alpha/oeco/"
+          "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
+          "cp apps/clients/public/cli/v2alpha/oeco/README.md dist/apps/clients/public/cli/v2alpha/oeco/README.md",
+          "rm -rf dist/apps/clients/public/cli/v2alpha/oeco/completions",
+          "mkdir -p dist/apps/clients/public/cli/v2alpha/oeco/completions",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'bash' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.bash",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'zsh' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.zsh",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'fish' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.fish",
+          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --clean"
         ],
-        "parallel": false,
-        "cwd": "apps/clients/public/cli/v2alpha/oeco"
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
+          "cp apps/clients/public/cli/v2alpha/oeco/README.md dist/apps/clients/public/cli/v2alpha/oeco/README.md",
+          "rm -rf dist/apps/clients/public/cli/v2alpha/oeco/completions",
+          "mkdir -p dist/apps/clients/public/cli/v2alpha/oeco/completions",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'bash' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.bash",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'zsh' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.zsh",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'fish' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.fish",
+          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
+          "cp apps/clients/public/cli/v2alpha/oeco/README.md dist/apps/clients/public/cli/v2alpha/oeco/README.md",
+          "rm -rf dist/apps/clients/public/cli/v2alpha/oeco/completions",
+          "mkdir -p dist/apps/clients/public/cli/v2alpha/oeco/completions",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'bash' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.bash",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'zsh' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.zsh",
+          "go run apps/clients/public/cli/v2alpha/oeco completion 'fish' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.fish",
+          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --nightly --clean"
+        ],
+        "parallel": false
       }
     }
   },

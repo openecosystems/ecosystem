@@ -15,10 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@platform/nx-container": ["libs/plugins/nx-container/src/index.ts"],
-      "@platform/nx-devkit": ["libs/plugins/nx-devkit/src/index.ts"],
-      "@platform/nx-go": ["libs/plugins/nx-go/src/index.ts"],
-      "@platform/nx-version": ["libs/plugins/nx-version/src/index.ts"]
+      "@openecosystems/nx-go": ["libs/plugins/nx-go/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

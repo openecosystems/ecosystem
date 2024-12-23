@@ -8,8 +8,6 @@ import (
 
 	"libs/public/go/sdk/v2alpha"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	"github.com/nats-io/nats.go/jetstream"
 )
 
