@@ -13,23 +13,8 @@ variables:
   docker_io_registry_owner: openecosystems
   ghcr_io_registry_owner: openecosystems
   aur_project_name: ""
-
-includes:
-  - from_file:
-      path: ../notarize/notarize.yaml
-
-project_name: ${GR_PROJECT_NAME}
-before:
-  hooks:
-    - go mod tidy
-    - rm -rf completions
-    - mkdir completions
-    - sh -c 'go run {{ with .Var.main }}{{ . }}{{ else }}.{{ end }} completion "bash" >./completions/{{ .ProjectName }}.bash'
-    - sh -c 'go run {{ with .Var.main }}{{ . }}{{ else }}.{{ end }} completion "zsh" >./completions/{{ .ProjectName }}.zsh'
-    - sh -c 'go run {{ with .Var.main }}{{ . }}{{ else }}.{{ end }} completion "fish" >./completions/{{ .ProjectName }}.fish'
-
-gomod:
-  proxy: true
+  path_to_repo_root: ""
+  path_to_project: ""
 
 builds:
   - env:
@@ -64,7 +49,7 @@ archives:
     wrap_in_directory: true
     files:
       - README*
-      - LICENSE*
+      - "{{ .Var.path_to_repo_root }}LICENSE*"
       - completions/*
 
 brews:

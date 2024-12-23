@@ -1,4 +1,4 @@
-# TODO: PUll this into a separate script so local engineers can reuse it
+# Retired: No Longer used. Please see .nx/workflows/agents.yaml instead
 
 # Brew Installs
 FROM --platform=linux/amd64 cimg/go:1.23.3-node as brew-installs
