@@ -11,7 +11,6 @@ goreleaser --snapshot --skip-publish --rm-dist
 # Publish
 goreleaser release --skip-publish
 
-
 # Manually publish release until automated
 
 - Commit all changes in the repository, make sure nothing is "dirty"
