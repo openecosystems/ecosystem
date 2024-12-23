@@ -98,6 +98,10 @@ jobs:
         id: shas
         uses: nrwl/nx-set-shas@v4
 
-      - name: Run NX
+      - name: Run NX Tag
         id: nx
-        run: pnpm exec nx release
+        run: pnpm exec nx release version
+
+      - name: Run NX Changelog
+        id: nx
+        run: pnpm exec nx release changelog
