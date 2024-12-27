@@ -76,7 +76,7 @@ jobs:
           fetch-depth: 0
 
       - name: Github Config
-        id: dependencies
+        id: github-config
         run: |
           git config --global user.email "cicd@openecosystems.com"
           git config --global user.name "Open Ecosystems CICD Bot"
