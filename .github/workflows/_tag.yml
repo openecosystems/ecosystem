@@ -75,6 +75,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Github Config
+        id: github-config
+        run: |
+          git config --global user.email "cicd@openecosystems.com"
+          git config --global user.name "Open Ecosystems CICD Bot"
+
       - name: Setup pnpm
         id: pnpm
         uses: pnpm/action-setup@v4
@@ -99,9 +105,5 @@ jobs:
         uses: nrwl/nx-set-shas@v4
 
       - name: Run NX Tag
-        id: nx
-        run: pnpm exec nx release version
-
-      - name: Run NX Changelog
-        id: nx
-        run: pnpm exec nx release changelog
+        id: nx-tag
+        run: pnpm exec nx release --skip-publish
