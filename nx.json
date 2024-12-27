@@ -142,7 +142,7 @@
   "release": {
     "groups": {
       "sdks": {
-        "projectsRelationship": "fixed",
+        "projectsRelationship": "independent",
         "projects": ["tag:type:sdk"],
         "git": {
           "commit": true,
