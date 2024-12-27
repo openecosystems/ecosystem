@@ -99,7 +99,7 @@ jobs:
         run:  pnpm exec nx affected -t distribute --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
+          GORELEASER_KEY: ${{ inputs.goreleaser_key }}
 
       - name: Merge coverage reports
         run: |
