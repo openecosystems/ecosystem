@@ -84,7 +84,8 @@ jobs:
         uses: nrwl/nx-set-shas@v4
 
       - name: Run NX
-        run: pnpm exec nx affected -t build testA --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        #run: pnpm exec nx affected -t build testA --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: pnpm exec nx affected -t distribute --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
 
       - name: Merge coverage reports
         run: |
