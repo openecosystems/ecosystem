@@ -86,7 +86,7 @@ jobs:
       - name: Run NX
         #run: pnpm exec nx affected -t build testA --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         #run: pnpm exec nx affected -t distribute --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
-        run: pnpm exec nx run apps-clients-public-cli-v2alpha-oeco:distribute
+        run: pnpm exec nx run apps-clients-public-cli-v2alpha-oeco:vulnerability apps-clients-public-cli-v2alpha-oeco:distribute
 
       - name: Merge coverage reports
         run: |
