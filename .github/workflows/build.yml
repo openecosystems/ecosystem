@@ -25,4 +25,3 @@ jobs:
       gh_pat: ${{ secrets.GITHUB_TOKEN }}s
     with:
       go_version: ${{ matrix.go_version }}
-      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
