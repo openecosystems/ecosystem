@@ -55,6 +55,7 @@
     },
     "distribute": {
       "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1alpha"],
       "options": {
         "commands": [
           "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../../.goreleaser.sdk.yaml > ./dist/.goreleaser.yaml",

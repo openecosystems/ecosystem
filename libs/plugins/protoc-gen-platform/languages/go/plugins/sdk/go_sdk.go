@@ -6,10 +6,11 @@ import (
 	"strings"
 	"text/template"
 
-	pgs "github.com/lyft/protoc-gen-star/v2"
-	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
 	_go "libs/plugins/protoc-gen-platform/languages/go"
 	"libs/plugins/protoc-gen-platform/shared"
+
+	pgs "github.com/lyft/protoc-gen-star/v2"
+	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
 )
 
 var (
@@ -211,7 +212,7 @@ func (m GoSdkModule) GenerateGoModFile(file pgs.File) {
 }
 
 func (m GoSdkModule) GenerateGoReleaserFile(file pgs.File) {
-	templateName := "goreleaser.env.tmpl"
+	templateName := "goreleaser.yaml.tmpl"
 	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
 	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
 
@@ -240,6 +241,6 @@ func (m GoSdkModule) GenerateGoReleaserFile(file pgs.File) {
 		return
 	}
 
-	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/.goreleaser.env").String()
+	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/.goreleaser.yaml").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
 }
