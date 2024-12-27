@@ -75,6 +75,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Github Config
+        id: dependencies
+        run: |
+          git config --global user.email "cicd@openecosystems.com"
+          git config --global user.name "Open Ecosystems CICD Bot"
+
       - name: Setup pnpm
         id: pnpm
         uses: pnpm/action-setup@v4
