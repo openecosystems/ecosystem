@@ -55,16 +55,56 @@
     },
     "distribute": {
       "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/poc/go/sdk/gen/reference/v2alpha"],
       "options": {
         "commands": [
-          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../../.goreleaser.sdk.yaml > ./dist/.goreleaser.yaml",
-          "goreleaser release --config ./dist/.goreleaser.yaml --snapshot --clean",
-          "rm -rf ../../../../../../../dist/libs/poc/go/sdk/gen/reference/v2alpha/release",
-          "mkdir -p ../../../../../../../dist/libs/poc/go/sdk/gen/reference/v2alpha/release",
-          "mv dist ../../../../../../../dist/libs/poc/go/sdk/gen/reference/v2alpha/release"
+          "cp LICENSE.md dist/libs/poc/go/sdk/gen/reference/v2alpha/LICENSE.md",
+          "cp libs/poc/go/sdk/gen/reference/v2alpha/README.md dist/libs/poc/go/sdk/gen/reference/v2alpha/README.md",
+          "rm -rf dist/libs/poc/go/sdk/gen/reference/v2alpha/completions",
+          "mkdir -p dist/libs/poc/go/sdk/gen/reference/v2alpha/completions",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'bash' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.bash",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'zsh' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.zsh",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'fish' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.fish",
+          "goreleaser release --config libs/poc/go/sdk/gen/reference/v2alpha/.goreleaser.yaml --clean"
         ],
-        "parallel": false,
-        "cwd": "libs/poc/go/sdk/gen/reference/v2alpha"
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/poc/go/sdk/gen/reference/v2alpha"],
+      "options": {
+        "commands": [
+          "cp LICENSE.md dist/libs/poc/go/sdk/gen/reference/v2alpha/LICENSE.md",
+          "cp libs/poc/go/sdk/gen/reference/v2alpha/README.md dist/libs/poc/go/sdk/gen/reference/v2alpha/README.md",
+          "rm -rf dist/libs/poc/go/sdk/gen/reference/v2alpha/completions",
+          "mkdir -p dist/libs/poc/go/sdk/gen/reference/v2alpha/completions",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'bash' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.bash",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'zsh' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.zsh",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'fish' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.fish",
+          "goreleaser release --config libs/poc/go/sdk/gen/reference/v2alpha/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/poc/go/sdk/gen/reference/v2alpha"],
+      "options": {
+        "commands": [
+          "cp LICENSE.md dist/libs/poc/go/sdk/gen/reference/v2alpha/LICENSE.md",
+          "cp libs/poc/go/sdk/gen/reference/v2alpha/README.md dist/libs/poc/go/sdk/gen/reference/v2alpha/README.md",
+          "rm -rf dist/libs/poc/go/sdk/gen/reference/v2alpha/completions",
+          "mkdir -p dist/libs/poc/go/sdk/gen/reference/v2alpha/completions",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'bash' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.bash",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'zsh' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.zsh",
+          "go run libs/poc/go/sdk/gen/reference/v2alpha completion 'fish' >dist/libs/poc/go/sdk/gen/reference/v2alpha/completions/oeco.fish",
+          "goreleaser release --config libs/poc/go/sdk/gen/reference/v2alpha/.goreleaser.yaml --nightly --clean"
+        ],
+        "parallel": false
       }
     }
   },

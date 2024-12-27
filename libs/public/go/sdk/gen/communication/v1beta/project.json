@@ -55,16 +55,56 @@
     },
     "distribute": {
       "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1beta"],
       "options": {
         "commands": [
-          "mkdir -p ./dist && export $(grep -v '^#' .goreleaser.env | xargs) && envsubst < ../../../../../../../.goreleaser.sdk.yaml > ./dist/.goreleaser.yaml",
-          "goreleaser release --config ./dist/.goreleaser.yaml --snapshot --clean",
-          "rm -rf ../../../../../../../dist/libs/public/go/sdk/gen/communication/v1beta/release",
-          "mkdir -p ../../../../../../../dist/libs/public/go/sdk/gen/communication/v1beta/release",
-          "mv dist ../../../../../../../dist/libs/public/go/sdk/gen/communication/v1beta/release"
+          "cp LICENSE.md dist/libs/public/go/sdk/gen/communication/v1beta/LICENSE.md",
+          "cp libs/public/go/sdk/gen/communication/v1beta/README.md dist/libs/public/go/sdk/gen/communication/v1beta/README.md",
+          "rm -rf dist/libs/public/go/sdk/gen/communication/v1beta/completions",
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1beta/completions",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'bash' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.bash",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'zsh' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.zsh",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'fish' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.fish",
+          "goreleaser release --config libs/public/go/sdk/gen/communication/v1beta/.goreleaser.yaml --clean"
         ],
-        "parallel": false,
-        "cwd": "libs/public/go/sdk/gen/communication/v1beta"
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1beta"],
+      "options": {
+        "commands": [
+          "cp LICENSE.md dist/libs/public/go/sdk/gen/communication/v1beta/LICENSE.md",
+          "cp libs/public/go/sdk/gen/communication/v1beta/README.md dist/libs/public/go/sdk/gen/communication/v1beta/README.md",
+          "rm -rf dist/libs/public/go/sdk/gen/communication/v1beta/completions",
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1beta/completions",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'bash' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.bash",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'zsh' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.zsh",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'fish' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.fish",
+          "goreleaser release --config libs/public/go/sdk/gen/communication/v1beta/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1beta"],
+      "options": {
+        "commands": [
+          "cp LICENSE.md dist/libs/public/go/sdk/gen/communication/v1beta/LICENSE.md",
+          "cp libs/public/go/sdk/gen/communication/v1beta/README.md dist/libs/public/go/sdk/gen/communication/v1beta/README.md",
+          "rm -rf dist/libs/public/go/sdk/gen/communication/v1beta/completions",
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1beta/completions",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'bash' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.bash",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'zsh' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.zsh",
+          "go run libs/public/go/sdk/gen/communication/v1beta completion 'fish' >dist/libs/public/go/sdk/gen/communication/v1beta/completions/oeco.fish",
+          "goreleaser release --config libs/public/go/sdk/gen/communication/v1beta/.goreleaser.yaml --nightly --clean"
+        ],
+        "parallel": false
       }
     }
   },
