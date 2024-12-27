@@ -2,6 +2,8 @@ launch-templates:
   oeco-linux-medium-js:
     resource-class: 'docker_linux_amd64/medium'
     image: 'ubuntu22.04-node20.11-v10'
+    env:
+      GORELEASER_KEY: '${env:GORELEASER_KEY}'
     init-steps:
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
