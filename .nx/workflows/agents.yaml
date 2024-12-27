@@ -57,6 +57,7 @@ launch-templates:
           cat $(echo $NX_CLOUD_ENV)
           goreleaser --version
           buf --version
+          env
 
       - name: Go Dependencies
         script: |
