@@ -90,3 +90,7 @@ launch-templates:
 #          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
 #          chmod +x go/bin/protoc-gen-grpc-java
 
+      - name: Git Config
+        script: |
+          git config --global user.email "cicd@openecosystems.com"
+          git config --global user.name "Open Ecosystems CICD Bot"
