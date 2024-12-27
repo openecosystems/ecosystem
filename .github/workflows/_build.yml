@@ -69,7 +69,7 @@ jobs:
         with:
           version: 9
 
-      #- run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" #--stop-agents-after="build"
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" #--stop-agents-after="build"
 
       - name: Setup node
         uses: actions/setup-node@v3
