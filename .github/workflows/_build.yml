@@ -15,6 +15,9 @@ on:
       working-directory:
         required: false
         type: string
+      goreleaser_key:
+        required: true
+        type: string
     secrets:
       gh_pat:
         required: false
@@ -77,7 +80,7 @@ jobs:
       - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="distribute"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
+          GORELEASER_KEY: ${{ inputs.goreleaser_key }}
 
       - name: Setup node
         uses: actions/setup-node@v3
