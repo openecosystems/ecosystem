@@ -20,6 +20,8 @@ on:
         required: false
       goreleaser_key:
         required: true
+      codecov_token:
+        required: true
 permissions:
   contents: write
   pull-requests: write
@@ -98,7 +100,7 @@ jobs:
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.codecov_token }}
           slug: openecosystems/ecosystem
           files: "./coverage/coverage.txt"
 
