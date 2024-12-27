@@ -83,6 +83,7 @@
     "distribute": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"],
       "options": {
         "commands": [
           "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
@@ -100,6 +101,7 @@
     "snapshot": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"],
       "options": {
         "commands": [
           "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
@@ -117,6 +119,7 @@
     "nightly": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"],
       "options": {
         "commands": [
           "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
