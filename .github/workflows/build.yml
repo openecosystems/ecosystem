@@ -22,6 +22,6 @@ jobs:
     secrets:
       goreleaser_key: ${{ secrets.GORELEASER_KEY }}
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
-      gh_pat: ${{ secrets.GITHUB_TOKEN }}s
+      gh_pat: ${{ secrets.GITHUB_TOKEN }}
     with:
       go_version: ${{ matrix.go_version }}
