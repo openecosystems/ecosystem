@@ -81,7 +81,10 @@ jobs:
         with:
           version: 9
 
-      - run: NX_CLOUD_DISTRIBUTED_EXECUTION=false pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="e2e-ci"
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="distribute" --with-env-vars="GORELEASER_KEY,GITHUB_TOKEN"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
 
       - name: Setup node
         id: node
