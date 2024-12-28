@@ -74,16 +74,16 @@ jobs:
         id: nx-tag
         run: pnpm exec nx release --skip-publish
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.gh_pat }}
-          branch: ${{ github.head_ref }}
+#      - name: Push changes
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.gh_pat }}
+#          branch: ${{ github.head_ref }}
 
-#      - name: Push Changes and Tags
-#        run: |
-#          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
-#          git config user.name "Open Ecosystems CICD Bot"
-#          git config user.email "openecosystems@users.noreply.github.com"
-#          git push origin HEAD:${{ github.head_ref }}
-#          git push origin HEAD:${{ github.head_ref }} --tags
+      - name: Push Changes and Tags
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
+          git config user.name "Open Ecosystems CICD Bot"
+          git config user.email "openecosystems@users.noreply.github.com"
+          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref }} --tags
