@@ -15,5 +15,5 @@ monorepo:
 includes:
   - from_file:
       path: ./.config/goreleaser/goreleaser.cli.yaml
-  - from_file:
-      path: ./.config/goreleaser/notarize.yaml
+#  - from_file:
+#      path: ./.config/goreleaser/notarize.yaml
