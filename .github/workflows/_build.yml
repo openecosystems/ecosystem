@@ -15,9 +15,16 @@ on:
       working-directory:
         required: false
         type: string
+      goreleaser_key:
+        required: false
+        type: string
     secrets:
       gh_pat:
         required: false
+      goreleaser_key:
+        required: true
+      codecov_token:
+        required: true
 permissions:
   contents: write
   pull-requests: write
@@ -58,6 +65,8 @@ jobs:
     env:
       GO111MODULE: "on"
       GH_PAT: ${{ secrets.gh_pat }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GORELEASER_KEY: ${{ secrets.goreleaser_key }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -69,7 +78,10 @@ jobs:
         with:
           version: 9
 
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" #--stop-agents-after="build"
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="distribute" --with-env-vars="GORELEASER_KEY,GITHUB_TOKEN"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -85,6 +97,10 @@ jobs:
 
       - name: Run NX
         run: pnpm exec nx affected -t build testA --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        #run: pnpm exec nx affected -t distribute --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
 
       - name: Merge coverage reports
         run: |
@@ -94,7 +110,7 @@ jobs:
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.codecov_token }}
           slug: openecosystems/ecosystem
           files: "./coverage/coverage.txt"
 

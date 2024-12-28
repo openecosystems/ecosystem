@@ -83,6 +83,7 @@
     "distribute": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"],
       "options": {
         "commands": [
           "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
@@ -92,7 +93,7 @@
           "go run apps/clients/public/cli/v2alpha/oeco completion 'bash' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.bash",
           "go run apps/clients/public/cli/v2alpha/oeco completion 'zsh' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.zsh",
           "go run apps/clients/public/cli/v2alpha/oeco completion 'fish' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.fish",
-          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --clean"
+          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --clean --verbose"
         ],
         "parallel": false
       }
@@ -100,6 +101,7 @@
     "snapshot": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"],
       "options": {
         "commands": [
           "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",
@@ -117,6 +119,7 @@
     "nightly": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"],
       "options": {
         "commands": [
           "cp LICENSE.md dist/apps/clients/public/cli/v2alpha/oeco/LICENSE.md",

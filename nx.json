@@ -37,6 +37,18 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
+    "vulnerability": {
+      "cache": true
+    },
+    "distribute": {
+      "cache": true
+    },
+    "snapshot": {
+      "cache": true
+    },
+    "nightly": {
+      "cache": true
+    },
     "build-storybook": {
       "inputs": [
         "default",

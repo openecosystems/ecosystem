@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: oeco
+project_name: apps-clients-public-cli-v2alpha-oeco
 
 variables:
   path_to_repo_root: "../../../../../../"
@@ -9,11 +9,11 @@ variables:
 dist: ./dist/apps/clients/public/cli/v2alpha/oeco
 
 monorepo:
-  tag_prefix: oeco/
+  tag_prefix: apps-clients-public-cli-v2alpha-oeco/
   dir: apps/clients/public/cli/v2alpha/oeco
 
 includes:
   - from_file:
       path: ./.config/goreleaser/goreleaser.cli.yaml
-  - from_file:
-      path: ./.config/goreleaser/notarize.yaml
+#  - from_file:
+#      path: ./.config/goreleaser/notarize.yaml
