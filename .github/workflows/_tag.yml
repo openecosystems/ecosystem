@@ -107,3 +107,10 @@ jobs:
       - name: Run NX Tag
         id: nx-tag
         run: pnpm exec nx release --skip-publish
+
+      - name: Push Changes and Tags
+        run: |
+          git config user.name "Open Ecosystems CICD Bot"
+          git config user.email "cicd@openecosystems.com"
+          git push
+          git push --tags
