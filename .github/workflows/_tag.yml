@@ -14,44 +14,6 @@ on:
         required: true
       goreleaser_key:
         required: false
-      aur_key:
-        required: false
-      fury_token:
-        required: false
-      nfpm_gpg_key:
-        required: false
-      nfpm_passphrase:
-        required: false
-      snapcraft_token:
-        required: false
-      twitter_consumer_key:
-        required: false
-      twitter_consumer_secret:
-        required: false
-      twitter_access_token:
-        required: false
-      twitter_access_token_secret:
-        required: false
-      mastodon_client_id:
-        required: false
-      mastodon_client_secret:
-        required: false
-      mastodon_access_token:
-        required: false
-      discord_webhook_id:
-        required: false
-      discord_webhook_token:
-        required: false
-      macos_sign_p12:
-        required: false
-      macos_sign_password:
-        required: false
-      macos_notary_key:
-        required: false
-      macos_notary_key_id:
-        required: false
-      macos_notary_issuer_id:
-        required: false
 jobs:
   tag:
     environment: operations
@@ -111,10 +73,10 @@ jobs:
         id: nx-tag
         run: pnpm exec nx release --skip-publish
 
-      - name: Push Changes and Tags
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
-          git config user.name "Open Ecosystems CICD Bot"
-          git config user.email "openecosystems@users.noreply.github.com"
-          git push origin HEAD:${{ github.ref }}
-          git push origin HEAD:${{ github.ref }} --tags
+#      - name: Push Changes and Tags
+#        run: |
+#          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
+#          git config user.name "Open Ecosystems CICD Bot"
+#          git config user.email "openecosystems@users.noreply.github.com"
+#          git push origin HEAD:${{ github.ref }}
+#          git push origin HEAD:${{ github.ref }} --tags
