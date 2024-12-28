@@ -9,7 +9,7 @@ variables:
 dist: ./dist/apps/clients/public/cli/v2alpha/oeco
 
 monorepo:
-  tag_prefix: oeco/
+  tag_prefix: apps-clients-public-cli-v2alpha-oeco/
   dir: apps/clients/public/cli/v2alpha/oeco
 
 includes:
