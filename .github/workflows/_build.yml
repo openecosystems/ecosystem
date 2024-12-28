@@ -1,4 +1,4 @@
-name: build
+name: _build
 on:
   workflow_call:
     inputs:
