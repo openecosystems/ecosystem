@@ -85,5 +85,5 @@ jobs:
 #          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
 #          git config user.name "Open Ecosystems CICD Bot"
 #          git config user.email "openecosystems@users.noreply.github.com"
-#          git push origin HEAD:${{ github.ref }}
-#          git push origin HEAD:${{ github.ref }} --tags
+#          git push origin HEAD:${{ github.head_ref }}
+#          git push origin HEAD:${{ github.head_ref }} --tags

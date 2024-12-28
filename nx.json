@@ -163,10 +163,7 @@
           "commitMessage": "chore: updated version [no ci]"
         },
         "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
+          "conventionalCommits": true
         },
         "changelog": {
           "projectChangelogs": {
@@ -186,10 +183,7 @@
           "commitMessage": "chore: updated version [no ci]"
         },
         "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
+          "conventionalCommits": true
         },
         "changelog": {
           "projectChangelogs": {
