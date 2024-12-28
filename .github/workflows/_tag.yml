@@ -78,7 +78,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.gh_pat }}
-          branch: ${{ github.ref }}
+          branch: ${{ github.head_ref }}
 
 #      - name: Push Changes and Tags
 #        run: |
