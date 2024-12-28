@@ -1,3 +1,28 @@
+## 0.1.1 (2024-12-28)
+
+### 🩹 Fixes
+
+- stabilizing ([154a00a](https://github.com/openecosystems/ecosystem/commit/154a00a))
+- stabilizing ([bb7fdbf](https://github.com/openecosystems/ecosystem/commit/bb7fdbf))
+- stabilizing ([49ae473](https://github.com/openecosystems/ecosystem/commit/49ae473))
+- stabilizing ([7bc34a6](https://github.com/openecosystems/ecosystem/commit/7bc34a6))
+- stabilizing ([6d6d904](https://github.com/openecosystems/ecosystem/commit/6d6d904))
+- stabilizing ([86a41b4](https://github.com/openecosystems/ecosystem/commit/86a41b4))
+- stabilizing ([904b3c8](https://github.com/openecosystems/ecosystem/commit/904b3c8))
+- stabilizing ([6c1336e](https://github.com/openecosystems/ecosystem/commit/6c1336e))
+- stabilizing ([cf9de6c](https://github.com/openecosystems/ecosystem/commit/cf9de6c))
+- stabilizing ([a2d04a3](https://github.com/openecosystems/ecosystem/commit/a2d04a3))
+- stabilizing ([5f65e48](https://github.com/openecosystems/ecosystem/commit/5f65e48))
+- stabilizing ([9e3f78b](https://github.com/openecosystems/ecosystem/commit/9e3f78b))
+- stabilizing ([8d1d6da](https://github.com/openecosystems/ecosystem/commit/8d1d6da))
+- stabilizing ([d165d69](https://github.com/openecosystems/ecosystem/commit/d165d69))
+- stabilizing ([469e899](https://github.com/openecosystems/ecosystem/commit/469e899))
+- stabilizing ([0568e0c](https://github.com/openecosystems/ecosystem/commit/0568e0c))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.4.0 (2024-12-27)
 
 ### 🚀 Features
