@@ -1,6 +1,6 @@
 {
   "name": "sdk-cli-v2alpha",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "CLI SDK version v2alpha",
   "license": "Apache-2.0"
 }
