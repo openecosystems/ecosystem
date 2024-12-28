@@ -65,6 +65,7 @@ jobs:
     env:
       GO111MODULE: "on"
       GH_PAT: ${{ secrets.gh_pat }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GORELEASER_KEY: ${{ secrets.goreleaser_key }}
     steps:
       - name: Checkout code
@@ -77,11 +78,10 @@ jobs:
         with:
           version: 9
 
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="distribute" --with-env-vars="GORELEASER_KEY,GORELEASER2"
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --stop-agents-after="distribute" --with-env-vars="GORELEASER_KEY,GITHUB_TOKEN"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GORELEASER_KEY: ${{ secrets.goreleaser_key }}
-          GORELEASER2: '232323232'
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -100,8 +100,7 @@ jobs:
         run: pnpm exec nx affected -t distribute --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GORELEASER3: '232323232'
-          #GORELEASER_KEY: ${{ secrets.goreleaser_key }}
+          GORELEASER_KEY: ${{ secrets.goreleaser_key }}
 
       - name: Merge coverage reports
         run: |
