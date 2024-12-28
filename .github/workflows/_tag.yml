@@ -87,7 +87,9 @@ jobs:
         with:
           version: 9
 
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" #--stop-agents-after="e2e-ci"
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --with-env-vars="BRANCH" #--stop-agents-after="e2e-ci"
+        env:
+          BRANCH: ${{ github.ref }}
 
       - name: Setup node
         id: node
@@ -111,6 +113,6 @@ jobs:
       - name: Push Changes and Tags
         run: |
           git config user.name "Open Ecosystems CICD Bot"
-          git config user.email "cicd@openecosystems.com"
-          git push
-          git push --tags
+          git config user.email "openecosystems@users.noreply.github.com"
+          git push origin HEAD:${{ github.ref }}
+          git push origin HEAD:${{ github.ref }} --tags
