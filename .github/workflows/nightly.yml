@@ -1,20 +1,26 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: snapshot
+name: nightly
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+  push:
     branches:
-      - main-disabled
+      - main
+#on:
+#  pull_request:
+#    types: [opened, reopened, synchronize]
+#    branches:
+#      - main
+#  schedule:
+#    - cron:  '0 0 * * 2-6'
 
 #concurrency:
-#  group: snapshot
+#  group: nightly
 #  cancel-in-progress: true
 
 jobs:
-  snapshot:
-    uses: ./.github/workflows/_snapshot.yml
+  nightly:
+    uses: ./.github/workflows/_nightly.yml
     permissions:
       packages: write
       contents: read
