@@ -88,9 +88,9 @@ jobs:
         with:
           version: 9
 
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --with-env-vars="BRANCH" #--stop-agents-after="e2e-ci"
-        env:
-          BRANCH: ${{ github.ref }}
+#      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --with-env-vars="BRANCH" #--stop-agents-after="e2e-ci"
+#        env:
+#          BRANCH: ${{ github.ref }}
 
       - name: Setup node
         id: node
