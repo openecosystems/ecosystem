@@ -33,9 +33,10 @@ jobs:
     uses: ./.github/workflows/_tag.yml
     permissions:
       packages: write
-      contents: read
+      contents: write
       attestations: write
       id-token: write
+      pull-requests: write
     secrets:
       docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
       docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
