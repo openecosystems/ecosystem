@@ -57,7 +57,7 @@ launch-templates:
         script: |
           echo $PATH
           cat $(echo $NX_CLOUD_ENV)
-          git --version
+          env
 
       - name: Go Dependencies
         script: |
