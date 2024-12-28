@@ -74,6 +74,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Github Config
         id: github-config
@@ -112,6 +113,7 @@ jobs:
 
       - name: Push Changes and Tags
         run: |
+          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystems
           git config user.name "Open Ecosystems CICD Bot"
           git config user.email "openecosystems@users.noreply.github.com"
           git push origin HEAD:${{ github.ref }}
