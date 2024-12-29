@@ -1,7 +1,6 @@
-
 {
   "name": "sdk-reference-v2alpha",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Reference SDK version v2alpha",
   "license": "Apache-2.0"
 }
