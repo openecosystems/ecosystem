@@ -97,3 +97,7 @@ launch-templates:
         script: |
           git config --global user.email "cicd@openecosystems.com"
           git config --global user.name "Open Ecosystems CICD Bot"
+          git status
+          git tag
+          git fetch --tags --unshallow
+          git tag
