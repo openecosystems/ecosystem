@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/public/go/sdk/gen/communication/v1alpha
 
 monorepo:
-  tag_prefix: communication/
+  tag_prefix: "communication/"
   dir: libs/public/go/sdk/gen/communication/v1alpha
 
 includes:

@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/public/go/sdk/gen/event/v2alpha
 
 monorepo:
-  tag_prefix: event/
+  tag_prefix: "event/"
   dir: libs/public/go/sdk/gen/event/v2alpha
 
 includes:

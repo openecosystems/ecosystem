@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/public/go/sdk/gen/system/v2alpha
 
 monorepo:
-  tag_prefix: system/
+  tag_prefix: "system/"
   dir: libs/public/go/sdk/gen/system/v2alpha
 
 includes:

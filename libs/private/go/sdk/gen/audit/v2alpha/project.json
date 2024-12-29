@@ -59,6 +59,7 @@
       "outputs": ["{workspaceRoot}/dist/libs/private/go/sdk/gen/audit/v2alpha"],
       "options": {
         "commands": [
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1alpha",
           "cp LICENSE.md dist/libs/private/go/sdk/gen/audit/v2alpha/LICENSE.md",
           "cp libs/private/go/sdk/gen/audit/v2alpha/README.md dist/libs/private/go/sdk/gen/audit/v2alpha/README.md",
           "rm -rf dist/libs/private/go/sdk/gen/audit/v2alpha/completions",
@@ -77,6 +78,7 @@
       "outputs": ["{workspaceRoot}/dist/libs/private/go/sdk/gen/audit/v2alpha"],
       "options": {
         "commands": [
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1alpha",
           "cp LICENSE.md dist/libs/private/go/sdk/gen/audit/v2alpha/LICENSE.md",
           "cp libs/private/go/sdk/gen/audit/v2alpha/README.md dist/libs/private/go/sdk/gen/audit/v2alpha/README.md",
           "rm -rf dist/libs/private/go/sdk/gen/audit/v2alpha/completions",
@@ -95,6 +97,7 @@
       "outputs": ["{workspaceRoot}/dist/libs/private/go/sdk/gen/audit/v2alpha"],
       "options": {
         "commands": [
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1alpha",
           "cp LICENSE.md dist/libs/private/go/sdk/gen/audit/v2alpha/LICENSE.md",
           "cp libs/private/go/sdk/gen/audit/v2alpha/README.md dist/libs/private/go/sdk/gen/audit/v2alpha/README.md",
           "rm -rf dist/libs/private/go/sdk/gen/audit/v2alpha/completions",
