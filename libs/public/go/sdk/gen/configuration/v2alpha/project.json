@@ -90,7 +90,7 @@
           "mkdir -p dist/libs/public/go/sdk/gen/configuration/v2alpha",
           "cp LICENSE.md dist/libs/public/go/sdk/gen/configuration/v2alpha/LICENSE.md",
           "cp libs/public/go/sdk/gen/configuration/v2alpha/README.md dist/libs/public/go/sdk/gen/configuration/v2alpha/README.md",
-          "goreleaser release --config libs/public/go/sdk/gen/configuration/v2alpha/.goreleaser.yaml --nightly --clean"
+          "goreleaser release --config libs/public/go/sdk/gen/configuration/v2alpha/.goreleaser.yaml --nightly --clean --verbose"
         ],
         "parallel": false
       }
