@@ -7,6 +7,7 @@ project_name: libs-poc-go-sdk-reference-v2alpha
 variables:
   path_to_repo_root: "../../../../../../"
   path_to_project: "libs/poc/go/sdk/gen/reference/v2alpha"
+  nightly_tag_name: "libs-poc-go-sdk-reference-v2alpha"
 
 dist: ./dist/libs/poc/go/sdk/gen/reference/v2alpha
 

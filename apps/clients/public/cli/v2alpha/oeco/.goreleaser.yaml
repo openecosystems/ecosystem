@@ -5,6 +5,7 @@ project_name: apps-clients-public-cli-v2alpha-oeco
 variables:
   path_to_repo_root: "../../../../../../"
   path_to_project: "apps/clients/public/cli/v2alpha/oeco"
+  nightly_tag_name: "apps-clients-public-cli-v2alpha-oeco"
 
 dist: ./dist/apps/clients/public/cli/v2alpha/oeco
 

@@ -15,6 +15,7 @@ variables:
   aur_project_name: ""
   path_to_repo_root: ""
   path_to_project: ""
+  nightly_tag_name: ""
 
 builds:
   - env:
@@ -80,6 +81,6 @@ changelog:
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
-  tag_name: devel
+  tag_name: "{{ .Var.nightly_tag_name }}/devel"
   publish_release: true
   keep_single_release: true

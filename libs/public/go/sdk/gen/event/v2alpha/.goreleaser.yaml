@@ -7,6 +7,7 @@ project_name: libs-public-go-sdk-event-v2alpha
 variables:
   path_to_repo_root: "../../../../../../"
   path_to_project: "libs/public/go/sdk/gen/event/v2alpha"
+  nightly_tag_name: "libs-public-go-sdk-event-v2alpha"
 
 dist: ./dist/libs/public/go/sdk/gen/event/v2alpha
 
