@@ -159,8 +159,6 @@
         "git": {
           "commit": true,
           "tag": true,
-          "tagMessage": "SDK",
-          "tagArgs": "-m 'sdk message'",
           "commitMessage": "chore: updated version [no ci]"
         },
         "version": {
@@ -180,8 +178,6 @@
         "git": {
           "commit": true,
           "tag": true,
-          "tagMessage": "CLI",
-          "tagArgs": "-m 'cli message'",
           "commitMessage": "chore: updated version [no ci]"
         },
         "version": {
