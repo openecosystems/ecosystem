@@ -4,7 +4,6 @@ go build -o oeco
 go build -o $GOPATH/bin/oeco
 GOOS=windows go build -o oeco.exe
 
-
 # Publish Dry Run
 goreleaser --snapshot --skip-publish --rm-dist
 
