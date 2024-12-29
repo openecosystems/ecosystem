@@ -59,7 +59,7 @@
       "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1beta"],
       "options": {
         "commands": [
-          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1alpha",
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1beta",
           "cp LICENSE.md dist/libs/public/go/sdk/gen/communication/v1beta/LICENSE.md",
           "cp libs/public/go/sdk/gen/communication/v1beta/README.md dist/libs/public/go/sdk/gen/communication/v1beta/README.md",
           "rm -rf dist/libs/public/go/sdk/gen/communication/v1beta/completions",
@@ -78,7 +78,7 @@
       "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1beta"],
       "options": {
         "commands": [
-          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1alpha",
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1beta",
           "cp LICENSE.md dist/libs/public/go/sdk/gen/communication/v1beta/LICENSE.md",
           "cp libs/public/go/sdk/gen/communication/v1beta/README.md dist/libs/public/go/sdk/gen/communication/v1beta/README.md",
           "rm -rf dist/libs/public/go/sdk/gen/communication/v1beta/completions",
@@ -97,7 +97,7 @@
       "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/communication/v1beta"],
       "options": {
         "commands": [
-          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1alpha",
+          "mkdir -p dist/libs/public/go/sdk/gen/communication/v1beta",
           "cp LICENSE.md dist/libs/public/go/sdk/gen/communication/v1beta/LICENSE.md",
           "cp libs/public/go/sdk/gen/communication/v1beta/README.md dist/libs/public/go/sdk/gen/communication/v1beta/README.md",
           "rm -rf dist/libs/public/go/sdk/gen/communication/v1beta/completions",
