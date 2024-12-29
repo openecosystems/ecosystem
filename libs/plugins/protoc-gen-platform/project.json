@@ -34,11 +34,37 @@
         "cwd": "libs/plugins/protoc-gen-platform"
       }
     },
-    "version": {
-      "outputs": ["{options.packageJson}"],
-      "executor": "@platform/nx-version:bump",
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
       "options": {
-        "packageJson": "libs/plugins/protoc-gen-platform/package.json"
+        "commands": [
+          "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --clean --verbose"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+      "options": {
+        "commands": [
+          "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+      "options": {
+        "commands": [
+          "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --nightly --clean --verbose"
+        ],
+        "parallel": false
       }
     }
   },

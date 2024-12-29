@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
+
+version: 2
+variables:
+  main: ""
+  binary_name: ""
+  description: ""
+  maintainer: ""
+  homepage: "https://www.openecosystems.com"
+  brew_commit_author_name: ""
+  brew_commit_author_email: ""
+  brew_owner: openecosystems
+  docker_io_registry_owner: openecosystems
+  ghcr_io_registry_owner: openecosystems
+  aur_project_name: ""
+  path_to_repo_root: ""
+  path_to_project: ""
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    no_main_check: true
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - "7"
+    ignore:
+      - goos: windows
+        goarch: arm64
+      - goos: windows
+        goarm: "7"
+
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+    wrap_in_directory: true
+    files:
+      - README*
+      - "{{ .Var.path_to_repo_root }}LICENSE*"
+      - completions/*
+
+brews:
+  - repository:
+      owner: "{{ .Var.brew_owner }}"
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    commit_author:
+      name: "{{ .Var.brew_commit_author_name }}"
+      email: "{{ .Var.brew_commit_author_email }}"
+    homepage: "{{ .Var.homepage }}"
+    description: "{{ .Var.description }}"
+#    dependencies:
+#      - name: ffmpeg
+#      - name: ttyd
+    install: |-
+      bin.install "{{ with .Var.binary_name }}{{ . }}{{ else }}{{ .ProjectName }}{{ end }}"
+      bash_completion.install "completions/{{ .ProjectName }}.bash" => "{{ .ProjectName }}"
+      zsh_completion.install "completions/{{ .ProjectName }}.zsh" => "_{{ .ProjectName }}"
+      fish_completion.install "completions/{{ .ProjectName }}.fish"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+nightly:
+  version_template: "{{ incpatch .Version }}-devel"
+  tag_name: devel
+  publish_release: true
+  keep_single_release: true

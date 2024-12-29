@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
+version: 2
+project_name: apps-clients-public-cli-v2alpha-oeco
+
+variables:
+  path_to_repo_root: "../../../"
+  path_to_project: "libs/plugins/protoc-gen-platform"
+
+dist: ./dist/libs/plugins/protoc-gen-platform
+
+monorepo:
+  tag_prefix: "protoc-gen-platform/"
+  dir: libs/plugins/protoc-gen-platform
+
+includes:
+  - from_file:
+      path: ./.config/goreleaser/goreleaser.plugin.yaml
+#  - from_file:
+#      path: ./.config/goreleaser/notarize.yaml
