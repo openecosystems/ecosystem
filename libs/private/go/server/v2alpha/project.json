@@ -5,7 +5,7 @@
   "sourceRoot": "libs/private/go/server/v2alpha",
   "implicitDependencies": [
     "proto",
-    "libs-plugins-protoc-gen-platform"
+    "protoc-gen-platform"
   ],
   "targets": {
     "build": {

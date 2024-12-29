@@ -2,7 +2,7 @@
 # source: platform/reference/v2alpha/reference.proto
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: reference
+project_name: libs-poc-go-sdk-reference-v2alpha
 
 variables:
   path_to_repo_root: "../../../../../../"
@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/poc/go/sdk/gen/reference/v2alpha
 
 monorepo:
-  tag_prefix: "reference/"
+  tag_prefix: "libs-poc-go-sdk-reference-v2alpha/"
   dir: libs/poc/go/sdk/gen/reference/v2alpha
 
 includes:

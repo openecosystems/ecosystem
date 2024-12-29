@@ -1,5 +1,5 @@
 {
-  "name": "libs-plugins-protoc-gen-platform",
+  "name": "protoc-gen-platform",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/plugins/protoc-gen-platform",
@@ -68,5 +68,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    "type:plugin",
+    "cycle:public",
+    "language:golang"
+  ]
 }

@@ -2,7 +2,7 @@
 # source: platform/cryptography/v2alpha/certificate_authority.proto
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: cryptography
+project_name: libs-public-go-sdk-cryptography-v2alpha
 
 variables:
   path_to_repo_root: "../../../../../../"
@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/public/go/sdk/gen/cryptography/v2alpha
 
 monorepo:
-  tag_prefix: "cryptography/"
+  tag_prefix: "libs-public-go-sdk-cryptography-v2alpha/"
   dir: libs/public/go/sdk/gen/cryptography/v2alpha
 
 includes:

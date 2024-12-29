@@ -190,6 +190,25 @@
           }
         },
         "releaseTagPattern": "{projectName}/{version}"
+      },
+      "plugins": {
+        "projectsRelationship": "independent",
+        "projects": ["tag:type:plugin"],
+        "git": {
+          "commit": true,
+          "tag": true,
+          "commitMessage": "chore: updated version [no ci]"
+        },
+        "version": {
+          "conventionalCommits": true
+        },
+        "changelog": {
+          "projectChangelogs": {
+            "file": true,
+            "createRelease": "github"
+          }
+        },
+        "releaseTagPattern": "{projectName}/{version}"
       }
     },
     "changelog": {
