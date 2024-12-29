@@ -129,7 +129,7 @@
           "go run apps/clients/public/cli/v2alpha/oeco completion 'bash' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.bash",
           "go run apps/clients/public/cli/v2alpha/oeco completion 'zsh' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.zsh",
           "go run apps/clients/public/cli/v2alpha/oeco completion 'fish' >dist/apps/clients/public/cli/v2alpha/oeco/completions/oeco.fish",
-          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --nightly --clean"
+          "goreleaser release --config apps/clients/public/cli/v2alpha/oeco/.goreleaser.yaml --nightly --clean --verbose"
         ],
         "parallel": false
       }
