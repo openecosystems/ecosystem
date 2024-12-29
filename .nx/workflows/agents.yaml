@@ -99,5 +99,5 @@ launch-templates:
           git config --global user.name "Open Ecosystems CICD Bot"
           git status
           git tag
-          git fetch --tags --unshallow
+          git fetch --tags
           git tag
