@@ -1,21 +1,26 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: distribute
+name: nightly
 
 on:
   push:
     branches:
-      - main-disabled
-    tags:
-      - '*/*.*.*'
+      - main
+#on:
+#  pull_request:
+#    types: [opened, reopened, synchronize]
+#    branches:
+#      - main
+#  schedule:
+#    - cron:  '0 0 * * 2-6'
 
-concurrency:
-  group: distribute
-  cancel-in-progress: true
+#concurrency:
+#  group: nightly
+#  cancel-in-progress: true
 
 jobs:
-  distribute:
-    uses: ./.github/workflows/_distribute.yml
+  nightly:
+    uses: ./.github/workflows/_nightly.yml
     permissions:
       packages: write
       contents: read

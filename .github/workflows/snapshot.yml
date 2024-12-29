@@ -1,21 +1,20 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: distribute
+name: snapshot
 
 on:
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
     branches:
       - main-disabled
-    tags:
-      - '*/*.*.*'
 
-concurrency:
-  group: distribute
-  cancel-in-progress: true
+#concurrency:
+#  group: snapshot
+#  cancel-in-progress: true
 
 jobs:
-  distribute:
-    uses: ./.github/workflows/_distribute.yml
+  snapshot:
+    uses: ./.github/workflows/_snapshot.yml
     permissions:
       packages: write
       contents: read
