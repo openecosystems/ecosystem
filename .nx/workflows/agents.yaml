@@ -34,7 +34,7 @@ launch-templates:
 
       - name: Brew
         script: |
-          sudo apt-get -y install build-essential gcc procps file unzip lsb-release
+          sudo apt-get -y install build-essential gcc procps file unzip lsb-release podman
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       - name: Restore Brew Dependencies Cache
@@ -56,11 +56,10 @@ launch-templates:
           echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
           echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
 
-      - name: Debug
-        script: |
-          echo $PATH
-          cat $(echo $NX_CLOUD_ENV)
-          dockerd
+#      - name: Debug
+#        script: |
+#          echo $PATH
+#          cat $(echo $NX_CLOUD_ENV)
 
       - name: Go Dependencies
         script: |
