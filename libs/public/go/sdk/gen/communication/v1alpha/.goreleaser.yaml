@@ -7,7 +7,7 @@ project_name: libs-public-go-sdk-communication-v1alpha
 variables:
   path_to_repo_root: "../../../../../../"
   path_to_project: "libs/public/go/sdk/gen/communication/v1alpha"
-  nightly_tag_name: "libs-public-go-sdk-communication-v1alpha"
+  nightly_tag_name: libs-public-go-sdk-communication-v1alpha
 
 dist: ./dist/libs/public/go/sdk/gen/communication/v1alpha
 

@@ -5,7 +5,7 @@ project_name: protoc-gen-platform
 variables:
   path_to_repo_root: "../../../"
   path_to_project: "libs/plugins/protoc-gen-platform"
-  nightly_tag_name: "protoc-gen-platform"
+  nightly_tag_name: protoc-gen-platform
 
 dist: ./dist/libs/plugins/protoc-gen-platform
 
