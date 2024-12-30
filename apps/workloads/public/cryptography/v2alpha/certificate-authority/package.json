@@ -1,6 +1,6 @@
 {
   "name": "workloads-public-cryptography-v2alpha-certificate-authority",
-  "version": "0.38.0-acc5694",
+  "version": "0.38.0",
   "description": "Certificate Authority",
   "private": true,
   "license": "Apache-2.0"

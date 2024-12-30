@@ -109,7 +109,48 @@
         "cwd": "."
       },
       "dependsOn": ["container"]
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --nightly --clean"
+        ],
+        "parallel": false
+      }
     }
   },
-  "tags": ["workloads", "private", "event", "v2alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:private",
+    "system:event",
+    "version:v2alpha",
+    "exposure:external",
+    "language:golang"
+  ]
 }

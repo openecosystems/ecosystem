@@ -53,25 +53,6 @@ archives:
       - "{{ .Var.path_to_repo_root }}LICENSE*"
       - completions/*
 
-brews:
-  - repository:
-      owner: "{{ .Var.brew_owner }}"
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-    commit_author:
-      name: "{{ .Var.brew_commit_author_name }}"
-      email: "{{ .Var.brew_commit_author_email }}"
-    homepage: "{{ .Var.homepage }}"
-    description: "{{ .Var.description }}"
-#    dependencies:
-#      - name: ffmpeg
-#      - name: ttyd
-    install: |-
-      bin.install "{{ with .Var.binary_name }}{{ . }}{{ else }}{{ .ProjectName }}{{ end }}"
-      bash_completion.install "completions/{{ .ProjectName }}.bash" => "{{ .ProjectName }}"
-      zsh_completion.install "completions/{{ .ProjectName }}.zsh" => "_{{ .ProjectName }}"
-      fish_completion.install "completions/{{ .ProjectName }}.fish"
-
 changelog:
   sort: asc
   filters:

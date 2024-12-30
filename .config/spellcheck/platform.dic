@@ -1,3 +1,4 @@
+dockerize
 govulncheck
 golangci
 goreleaser
