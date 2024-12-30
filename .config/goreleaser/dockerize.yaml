@@ -3,7 +3,7 @@ version: 2
 dockers:
 
   - #
-    id: myimg
+    id: ecosystem
     goos: linux
     goarch: amd64
     goarm: "6"
@@ -20,11 +20,10 @@ dockers:
       - app
 
     image_templates:
-      - "openecosystems/myimage:latest"
-      - "myuser/myimage:{{ .Tag }}"
-      - "myuser/myimage:{{ .Tag }}-{{ .Env.FOOBAR }}"
-      - "myuser/myimage:v{{ .Major }}"
-      - "gcr.io/openecosystems/myimage:latest"
+      - "openecosystems/ecosystem:latest"
+      - "openecosystems/ecosystem:{{ .Tag }}"
+      - "openecosystems/ecosystem:v{{ .Major }}"
+      - "gcr.io/openecosystems/ecosystem:latest"
 
     # Skips the docker build.
     # Could be useful if you want to skip building the windows docker image on
@@ -40,7 +39,7 @@ dockers:
     #
     # Default: 'Dockerfile'.
     # Templates: allowed.
-    dockerfile: "{{ .Env.DOCKERFILE }}"
+    dockerfile: "Dockerfile"
 
     # Use this instead of `dockerfile` if the contents of your Dockerfile are
     # supposed to go through the template engine as well.
@@ -60,7 +59,6 @@ dockers:
       - "--label=org.opencontainers.image.title={{.ProjectName}}"
       - "--label=org.opencontainers.image.revision={{.FullCommit}}"
       - "--label=org.opencontainers.image.version={{.Version}}"
-      - "--build-arg=FOO={{.Env.Bar}}"
       - "--platform=linux/arm64"
 
     # Extra flags to be passed down to the push command.
