@@ -60,6 +60,7 @@ launch-templates:
         script: |
           echo $PATH
           cat $(echo $NX_CLOUD_ENV)
+          docker info
 
       - name: Go Dependencies
         script: |
