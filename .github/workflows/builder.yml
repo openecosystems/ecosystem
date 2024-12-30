@@ -2,7 +2,7 @@ name: builder
 on:
   push:
     paths:
-      - .retired-github/images/**
+      - .github/images/**
 jobs:
   builder:
     environment: operations
