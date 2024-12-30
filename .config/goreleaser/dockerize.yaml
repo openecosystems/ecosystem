@@ -27,7 +27,7 @@ dockers:
 
     # Skips the docker build.
     # Could be useful if you want to skip building the windows docker image on
-    # linux, for example.
+    # linux, for example
     #
     # This option is only available on GoReleaser Pro.
     # Templates: allowed.
