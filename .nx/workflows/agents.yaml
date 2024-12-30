@@ -60,9 +60,7 @@ launch-templates:
         script: |
           echo $PATH
           cat $(echo $NX_CLOUD_ENV)
-          systemctl status docker
-          systemctl start docker
-          docker info
+          dockerd
 
       - name: Go Dependencies
         script: |
