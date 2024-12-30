@@ -141,7 +141,7 @@
       "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
       "options": {
         "commands": [
-          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --nightly --clean"
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --nightly --clean --verbose"
         ],
         "parallel": false
       }
