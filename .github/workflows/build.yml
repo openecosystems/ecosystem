@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - main
+      - OECO-*
 
   pull_request:
     types: [opened, reopened, synchronize]
