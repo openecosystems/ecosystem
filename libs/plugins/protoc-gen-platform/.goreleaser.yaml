@@ -5,7 +5,6 @@ project_name: protoc-gen-platform
 variables:
   path_to_repo_root: "../../../"
   path_to_project: "libs/plugins/protoc-gen-platform"
-  nightly_tag_name: protoc-gen-platform
 
 dist: ./dist/libs/plugins/protoc-gen-platform
 
@@ -18,3 +17,9 @@ includes:
       path: ./.config/goreleaser/goreleaser.plugin.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/notarize.yaml
+
+nightly:
+  version_template: "{{ incpatch .Version }}-devel"
+  tag_name: "protoc-gen-platform/devel"
+  publish_release: true
+  keep_single_release: true

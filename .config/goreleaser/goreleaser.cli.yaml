@@ -78,9 +78,3 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
-
-nightly:
-  version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "{{ .Var.nightly_tag_name }}/devel"
-  publish_release: true
-  keep_single_release: true

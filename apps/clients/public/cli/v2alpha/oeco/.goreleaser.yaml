@@ -5,7 +5,6 @@ project_name: apps-clients-public-cli-v2alpha-oeco
 variables:
   path_to_repo_root: "../../../../../../"
   path_to_project: "apps/clients/public/cli/v2alpha/oeco"
-  nightly_tag_name: apps-clients-public-cli-v2alpha-oeco
 
 dist: ./dist/apps/clients/public/cli/v2alpha/oeco
 
@@ -18,3 +17,9 @@ includes:
       path: ./.config/goreleaser/goreleaser.cli.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/notarize.yaml
+
+nightly:
+  version_template: "{{ incpatch .Version }}-devel"
+  tag_name: "oeco/devel"
+  publish_release: true
+  keep_single_release: true
