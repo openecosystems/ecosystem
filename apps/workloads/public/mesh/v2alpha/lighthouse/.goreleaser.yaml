@@ -1,17 +1,17 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: apps-workloads-private-event-v2alpha-event-multiplexer
+project_name: apps-workloads-public-mesh-v2alpha-lighthouse
 
 variables:
   path_to_repo_root: "../../../../../../"
-  path_to_project: "apps/workloads/private/event/v2alpha/event-multiplexer"
-  project_name: "event-multiplexer"
+  path_to_project: "apps/workloads/public/mesh/v2alpha/lighthouse"
+  project_name: "lighthouse"
 
-dist: ./dist/apps/workloads/private/event/v2alpha/event-multiplexer/release
+dist: ./dist/apps/workloads/public/mesh/v2alpha/lighthouse/release
 
 monorepo:
-  tag_prefix: "apps-workloads-private-event-v2alpha-event-multiplexer/"
-  dir: apps/workloads/private/event/v2alpha/event-multiplexer
+  tag_prefix: "apps-workloads-public-mesh-v2alpha-lighthouse/"
+  dir: apps/workloads/public/mesh/v2alpha/lighthouse
 
 includes:
   - from_file:
@@ -23,6 +23,6 @@ includes:
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "apps-workloads-private-event-v2alpha-event-multiplexer/devel"
+  tag_name: "apps-workloads-public-mesh-v2alpha-lighthouse/devel"
   publish_release: true
   keep_single_release: true

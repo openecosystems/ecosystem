@@ -1,6 +1,11 @@
-# Allow port 6477 and 4222 on this server as it actually listens on ports
+# 
 
-# Install Nebula client using TUN device
+Copy over
+- ca.crt
+- server.crt
+- server.key
 
-# Allow Fastly to connect via mTLS
 
+mv ca.crt /etc/nebula/ca.crt
+mv server.crt /etc/nebula/host.crt
+mv server.key /etc/nebula/host.key

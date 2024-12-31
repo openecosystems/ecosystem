@@ -5,7 +5,7 @@ const CloudInitStartupScript = `
 write_files:
   - path: /etc/motd
     content: |
-      Welcome to your Pulumi-managed EC2 instance!
+      Welcome to your the Event Multiplexer
 
 # Install and start an Apache server
 #packages:

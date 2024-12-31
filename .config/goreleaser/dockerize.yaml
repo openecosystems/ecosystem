@@ -1,67 +1,84 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-dockers:
+variables:
+  project_name: ""
+kos:
+  - repositories:
+      - ghcr.io/openecosystems/{{ .Var.project_name }}
+      #- openecosystems/{{ .Var.project_name }}
+    tags:
+      - "{{.Version}}"
+      - "{{.Tag}}"
+      - latest
+      - "{{if not .Prerelease}}stable{{end}}"
+    bare: true
+    preserve_import_paths: false
+    platforms:
+      - linux/amd64
+      - linux/arm64
+      - darwin/amd64
+      - darwin/arm64
+      - windows/amd64
+      - windows/arm64
 
-  - #
-    id: ecosystem
-    goos: linux
-    goarch: amd64
-    goarm: "6"
-    goamd64: "v2"
 
-    # IDs to filter the binaries/packages.
-    #
-    # Make sure to only include the IDs of binaries you want to `COPY` in your
-    # Dockerfile.
-    #
-    # If you include IDs that don't exist or are not available for the current
-    # architecture being built, the build of the image will be skipped.
-    ids:
-      - app
-
-    image_templates:
-      - "openecosystems/ecosystem:latest"
-      - "openecosystems/ecosystem:{{ .Tag }}"
-      - "openecosystems/ecosystem:v{{ .Major }}"
-      - "gcr.io/openecosystems/ecosystem:latest"
-
-    # Skips the docker build.
-    # Could be useful if you want to skip building the windows docker image on
-    # linux, for example
-    #
-    # This option is only available on GoReleaser Pro.
-    # Templates: allowed.
-    skip_build: false
-
-    skip_push: false
-
-    # Path to the Dockerfile (from the project root).
-    #
-    # Default: 'Dockerfile'.
-    # Templates: allowed.
-    dockerfile: "Dockerfile"
-
-    # Use this instead of `dockerfile` if the contents of your Dockerfile are
-    # supposed to go through the template engine as well.
-    #
-    # `dockerfile` is ignored when this is set.
-    #
-    # This feature is only available in GoReleaser Pro.
-    # Templates: allowed.
-    #templated_dockerfile: "{{.Env.DOCKERFILE }}"
-
-    # Valid options are: docker, buildx, podman.
-    use: docker
-
-    build_flag_templates:
-      - "--pull"
-      - "--label=org.opencontainers.image.created={{.Date}}"
-      - "--label=org.opencontainers.image.title={{.ProjectName}}"
-      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-      - "--label=org.opencontainers.image.version={{.Version}}"
-      - "--platform=linux/arm64"
-
-    # Extra flags to be passed down to the push command.
-    push_flags:
-      - --tls-verify=false
-
+#dockers:
+#  - image_templates: [ "openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64" ]
+#    dockerfile: Dockerfile
+#    use: podman
+#    build_flag_templates:
+#      - --platform=linux/amd64
+#      - --label=org.opencontainers.image.title={{ .ProjectName }}
+#      - --label=org.opencontainers.image.description={{ .ProjectName }}
+#      - --label=org.opencontainers.image.url=https://github.com/openecosystems/{{ .ProjectName }}
+#      - --label=org.opencontainers.image.source=https://github.com/openecosystems/{{ .ProjectName }}
+#      - --label=org.opencontainers.image.version={{ .Version }}
+#      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
+#      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+#      - --label=org.opencontainers.image.licenses=Apache-2.0
+#    extra_files:
+#      - spec.yaml
+#      - package.json
+#  - image_templates: ["ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64"]
+#    dockerfile: Dockerfile
+#    use: podman
+#    build_flag_templates:
+#      - --platform=linux/amd64
+#      - --label=org.opencontainers.image.title={{ .ProjectName }}
+#      - --label=org.opencontainers.image.description={{ .ProjectName }}
+#      - --label=org.opencontainers.image.url=https://github.com/openecosystems/{{ .ProjectName }}
+#      - --label=org.opencontainers.image.source=https://github.com/openecosystems/{{ .ProjectName }}
+#      - --label=org.opencontainers.image.version={{ .Version }}
+#      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
+#      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+#      - --label=org.opencontainers.image.licenses=Apache-2.0
+#    extra_files:
+#      - spec.yaml
+#      - package.json
+#  - image_templates: ["ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8"]
+#    goarch: arm64
+#    dockerfile: Dockerfile
+#    use: podman
+#    build_flag_templates:
+#      - --platform=linux/arm64/v8
+#      - --label=org.opencontainers.image.title={{ .ProjectName }}
+#      - --label=org.opencontainers.image.description={{ .ProjectName }}
+#      - --label=org.opencontainers.image.url=https://github.com/openecosystems/{{ .ProjectName }}
+#      - --label=org.opencontainers.image.source=https://github.com/openecosystems/{{ .ProjectName }}
+#      - --label=org.opencontainers.image.version={{ .Version }}
+#      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
+#      - --label=org.opencontainers.image.revision={{ .FullCommit }}
+#      - --label=org.opencontainers.image.licenses=Apache-2.0
+#    extra_files:
+#      - spec.yaml
+#      - package.json
+#docker_manifests:
+#  - name_template: ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}
+#    image_templates:
+#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64
+#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8
+#  - name_template: ghcr.io/openecosystems/{{ .ProjectName }}:latest
+#    image_templates:
+#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64
+#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8
+#

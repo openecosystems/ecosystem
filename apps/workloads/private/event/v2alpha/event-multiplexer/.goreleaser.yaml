@@ -5,6 +5,7 @@ project_name: apps-workloads-private-event-v2alpha-event-multiplexer
 variables:
   path_to_repo_root: "../../../../../../"
   path_to_project: "apps/workloads/private/event/v2alpha/event-multiplexer"
+  project_name: "event-multiplexer"
 
 dist: ./dist/apps/workloads/private/event/v2alpha/event-multiplexer/release
 
@@ -17,92 +18,11 @@ includes:
       path: ./.config/goreleaser/goreleaser.workload.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/notarize.yaml
-#  - from_file:
-#      path: ./.config/goreleaser/dockerize.yaml
+  - from_file:
+      path: ./.config/goreleaser/dockerize.yaml
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
   tag_name: "apps-workloads-private-event-v2alpha-event-multiplexer/devel"
   publish_release: true
   keep_single_release: true
-
-kos:
-  - repositories:
-      - ghcr.io/openecosystems/event-multiplexer
-      #- openecosystems/event-multiplexer
-    tags:
-      - "{{.Version}}"
-      - "{{.Tag}}"
-      - latest
-      - "{{if not .Prerelease}}stable{{end}}"
-    bare: true
-    preserve_import_paths: false
-    platforms:
-      - linux/amd64
-      - linux/arm64
-      - darwin/amd64
-      - darwin/arm64
-      - windows/amd64
-      - windows/arm64
-
-
-#dockers:
-#  - image_templates: [ "openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64" ]
-#    dockerfile: Dockerfile
-#    use: podman
-#    build_flag_templates:
-#      - --platform=linux/amd64
-#      - --label=org.opencontainers.image.title={{ .ProjectName }}
-#      - --label=org.opencontainers.image.description={{ .ProjectName }}
-#      - --label=org.opencontainers.image.url=https://github.com/openecosystems/{{ .ProjectName }}
-#      - --label=org.opencontainers.image.source=https://github.com/openecosystems/{{ .ProjectName }}
-#      - --label=org.opencontainers.image.version={{ .Version }}
-#      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
-#      - --label=org.opencontainers.image.revision={{ .FullCommit }}
-#      - --label=org.opencontainers.image.licenses=Apache-2.0
-#    extra_files:
-#      - spec.yaml
-#      - package.json
-#  - image_templates: ["ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64"]
-#    dockerfile: Dockerfile
-#    use: podman
-#    build_flag_templates:
-#      - --platform=linux/amd64
-#      - --label=org.opencontainers.image.title={{ .ProjectName }}
-#      - --label=org.opencontainers.image.description={{ .ProjectName }}
-#      - --label=org.opencontainers.image.url=https://github.com/openecosystems/{{ .ProjectName }}
-#      - --label=org.opencontainers.image.source=https://github.com/openecosystems/{{ .ProjectName }}
-#      - --label=org.opencontainers.image.version={{ .Version }}
-#      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
-#      - --label=org.opencontainers.image.revision={{ .FullCommit }}
-#      - --label=org.opencontainers.image.licenses=Apache-2.0
-#    extra_files:
-#      - spec.yaml
-#      - package.json
-#  - image_templates: ["ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8"]
-#    goarch: arm64
-#    dockerfile: Dockerfile
-#    use: podman
-#    build_flag_templates:
-#      - --platform=linux/arm64/v8
-#      - --label=org.opencontainers.image.title={{ .ProjectName }}
-#      - --label=org.opencontainers.image.description={{ .ProjectName }}
-#      - --label=org.opencontainers.image.url=https://github.com/openecosystems/{{ .ProjectName }}
-#      - --label=org.opencontainers.image.source=https://github.com/openecosystems/{{ .ProjectName }}
-#      - --label=org.opencontainers.image.version={{ .Version }}
-#      - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
-#      - --label=org.opencontainers.image.revision={{ .FullCommit }}
-#      - --label=org.opencontainers.image.licenses=Apache-2.0
-#    extra_files:
-#      - spec.yaml
-#      - package.json
-#docker_manifests:
-#  - name_template: ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}
-#    image_templates:
-#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64
-#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8
-#  - name_template: ghcr.io/openecosystems/{{ .ProjectName }}:latest
-#    image_templates:
-#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64
-#      - ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8
-#
