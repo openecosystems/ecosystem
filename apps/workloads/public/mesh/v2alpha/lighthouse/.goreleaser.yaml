@@ -27,6 +27,7 @@ nightly:
   publish_release: true
   keep_single_release: true
 
+
 kos:
   - repositories:
       - ghcr.io/openecosystems/lighthouse
