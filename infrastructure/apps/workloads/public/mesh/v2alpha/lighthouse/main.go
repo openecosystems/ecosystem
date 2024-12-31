@@ -2,13 +2,14 @@ package main
 
 import (
 	"encoding/base64"
+	"libs/private/go/infrastructure/v2alpha"
+	"libs/public/go/sdk/v2alpha"
+
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-	"libs/private/go/infrastructure/v2alpha"
 )
 
 func main() {
-
 	bounds := []sdkv2alphalib.Binding{}
 
 	infrastructure := infrastructurev2alphalib.NewInfrastructure(bounds)
@@ -17,7 +18,6 @@ func main() {
 	name := infrastructurev2alphalib.ShortenString(config.App.EnvironmentName+"-"+config.App.Name, 63)
 
 	infrastructure.Run(func(ctx *pulumi.Context) error {
-
 		// Install Tun device
 		// Route all traffic through Tun device
 		// Start services
@@ -46,7 +46,7 @@ func main() {
 			Hostname:          pulumi.String(name),
 			Label:             pulumi.String(name),
 			OsId:              pulumi.Int(2136),                //"Debian 12 x64 (bookworm)"
-			Plan:              pulumi.String("vhp-1c-1gb-amd"), //AMD High Performance
+			Plan:              pulumi.String("vhp-1c-1gb-amd"), // AMD High Performance
 			Region:            pulumi.String("atl"),
 			ScriptId:          script.ID(),
 			Tags: pulumi.StringArray{
