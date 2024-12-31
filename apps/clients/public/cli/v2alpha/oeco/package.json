@@ -1,6 +1,6 @@
 {
   "name": "cli-v2alpha-oeco",
-  "version": "0.38.0-acc5694.5",
+  "version": "0.38.0",
   "description": "Open Ecosystem CLI",
   "private": true,
   "license": "Apache-2.0"

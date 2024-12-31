@@ -1,9 +1,19 @@
 version: 2
-
-project_name: ${GR_PROJECT_NAME}
-before:
-  hooks:
-    - go mod tidy
+variables:
+  main: ""
+  binary_name: ""
+  description: ""
+  maintainer: ""
+  homepage: "https://www.openecosystems.com"
+  brew_commit_author_name: ""
+  brew_commit_author_email: ""
+  brew_owner: openecosystems
+  docker_io_registry_owner: openecosystems
+  ghcr_io_registry_owner: openecosystems
+  aur_project_name: ""
+  path_to_repo_root: ""
+  path_to_project: ""
+  nightly_tag_name: ""
 
 builds:
   - env:
@@ -38,6 +48,6 @@ changelog:
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
-  tag_name: devel
+  tag_name: "{{ .Var.nightly_tag_name }}/devel"
   publish_release: true
   keep_single_release: true

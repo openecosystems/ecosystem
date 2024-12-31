@@ -2,7 +2,7 @@
 # source: platform/audit/v2alpha/audit.proto
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: audit
+project_name: libs-private-go-sdk-audit-v2alpha
 
 variables:
   path_to_repo_root: "../../../../../../"
@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/private/go/sdk/gen/audit/v2alpha
 
 monorepo:
-  tag_prefix: audit/
+  tag_prefix: "libs-private-go-sdk-audit-v2alpha/"
   dir: libs/private/go/sdk/gen/audit/v2alpha
 
 includes:
@@ -19,3 +19,9 @@ includes:
       path: ./.config/goreleaser/goreleaser.sdk.yaml
   - from_file:
       path: ./.config/goreleaser/notarize.yaml
+
+nightly:
+  version_template: "{{ incpatch .Version }}-devel"
+  tag_name: "libs-private-go-sdk-audit-v2alpha/devel"
+  publish_release: true
+  keep_single_release: true

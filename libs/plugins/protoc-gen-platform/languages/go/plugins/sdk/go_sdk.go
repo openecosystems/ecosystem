@@ -71,6 +71,7 @@ func (m *GoSdkModule) Execute(targets map[string]pgs.File, _ map[string]pgs.Pack
 		m.GeneratePackageJsonFile(t)
 		m.GenerateGoModFile(t)
 		m.GenerateGoReleaserFile(t)
+		m.GenerateReadmeFile(t)
 	}
 
 	return m.Artifacts()
@@ -242,5 +243,39 @@ func (m GoSdkModule) GenerateGoReleaserFile(file pgs.File) {
 	}
 
 	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/.goreleaser.yaml").String()
+	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
+}
+
+func (m GoSdkModule) GenerateReadmeFile(file pgs.File) {
+	templateName := "readme.md.tmpl"
+	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
+	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
+
+	tpl := l.Template()
+	tpl.Funcs(map[string]interface{}{
+		"getGithubRepositoryConstant": fns.GetGithubRepositoryConstant,
+		"service":                     fns.Service,
+		"getRoutineMessage":           fns.GetRoutineMessage,
+		"getRoutineMessageFieldName":  fns.GetRoutineMessageFieldName,
+		"parentService":               fns.ParentService,
+		"queries":                     fns.QueryMethods,
+		"mutations":                   fns.MutationMethods,
+		"getRoutines":                 fns.GetRoutines,
+		"getImportPackages":           fns.GetGoImportPackagesServer,
+		"goPackageOverwrite":          fns.GoPackageOverwrite,
+		"goPackageRemote":             fns.GetRemoteProtoGoPathFromFile,
+		"getPackageVersion":           fns.GetPackageVersion,
+		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
+		"domainSystemName2":           fns.DomainSystemName2,
+	})
+	template.Must(tpl.ParseFS(templates, "templates/*"))
+	m.Tpl = tpl
+
+	msg := fns.Entity(file)
+	if msg == nil {
+		return
+	}
+
+	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/README.md").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
 }

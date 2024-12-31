@@ -9,7 +9,7 @@ variables:
 dist: ./dist/apps/clients/public/cli/v2alpha/oeco
 
 monorepo:
-  tag_prefix: apps-clients-public-cli-v2alpha-oeco/
+  tag_prefix: "apps-clients-public-cli-v2alpha-oeco/"
   dir: apps/clients/public/cli/v2alpha/oeco
 
 includes:
@@ -17,3 +17,9 @@ includes:
       path: ./.config/goreleaser/goreleaser.cli.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/notarize.yaml
+
+nightly:
+  version_template: "{{ incpatch .Version }}-devel"
+  tag_name: "oeco/devel"
+  publish_release: true
+  keep_single_release: true

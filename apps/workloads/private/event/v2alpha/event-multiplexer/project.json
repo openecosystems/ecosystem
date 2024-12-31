@@ -31,7 +31,10 @@
         "commands": [
           "mkdir -p ../../../../../../dist/apps/workloads/private/event/v2alpha/event-multiplexer",
           "cp spec.yaml ../../../../../../dist/apps/workloads/private/event/v2alpha/event-multiplexer",
-          "cp package.json ../../../../../../dist/apps/workloads/private/event/v2alpha/event-multiplexer"
+          "cp package.json ../../../../../../dist/apps/workloads/private/event/v2alpha/event-multiplexer",
+          "cp .goreleaser.yaml ../../../../../../dist/apps/workloads/private/event/v2alpha/event-multiplexer",
+          "cp Dockerfile ../../../../../../dist/apps/workloads/private/event/v2alpha/event-multiplexer"
+
         ],
         "parallel": false,
         "cwd": "apps/workloads/private/event/v2alpha/event-multiplexer"
@@ -109,7 +112,48 @@
         "cwd": "."
       },
       "dependsOn": ["container"]
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/private/event/v2alpha/event-multiplexer"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/private/event/v2alpha/event-multiplexer/.goreleaser.yaml --nightly --clean --verbose"
+        ],
+        "parallel": false
+      }
     }
   },
-  "tags": ["workloads", "private", "event", "v2alpha", "golang"]
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:private",
+    "system:event",
+    "version:v2alpha",
+    "exposure:external",
+    "language:golang"
+  ]
 }

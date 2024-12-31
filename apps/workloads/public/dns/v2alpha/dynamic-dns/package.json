@@ -1,6 +1,6 @@
 {
   "name": "workloads-public-dns-v2alpha-dynamic-dns",
-  "version": "0.38.0-acc5694",
+  "version": "0.38.0",
   "description": "Dynamic DNS",
   "private": true,
   "license": "Apache-2.0"

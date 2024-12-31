@@ -1,3 +1,18 @@
+## 0.6.0 (2024-12-29)
+
+### 🚀 Features
+
+- additional capabilities ([#1](https://github.com/openecosystems/ecosystem/pull/1))
+- initial commit made open source ([f53e868](https://github.com/openecosystems/ecosystem/commit/f53e868))
+
+### 🩹 Fixes
+
+- stabilizing ([68f575b](https://github.com/openecosystems/ecosystem/commit/68f575b))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.5.1 (2024-12-28)
 
 ### 🩹 Fixes

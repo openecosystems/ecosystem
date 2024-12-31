@@ -79,7 +79,6 @@ Connector Type
 - Health Gorilla
 - Elation
 - CommonWell
-- Care Quality
 - CoreCard
 - Cencora Financial Services
 

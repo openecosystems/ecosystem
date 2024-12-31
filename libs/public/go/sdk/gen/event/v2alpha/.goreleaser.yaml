@@ -2,7 +2,7 @@
 # source: platform/event/v2alpha/event_subscription.proto
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: event
+project_name: libs-public-go-sdk-event-v2alpha
 
 variables:
   path_to_repo_root: "../../../../../../"
@@ -11,7 +11,7 @@ variables:
 dist: ./dist/libs/public/go/sdk/gen/event/v2alpha
 
 monorepo:
-  tag_prefix: event/
+  tag_prefix: "libs-public-go-sdk-event-v2alpha/"
   dir: libs/public/go/sdk/gen/event/v2alpha
 
 includes:
@@ -19,3 +19,9 @@ includes:
       path: ./.config/goreleaser/goreleaser.sdk.yaml
   - from_file:
       path: ./.config/goreleaser/notarize.yaml
+
+nightly:
+  version_template: "{{ incpatch .Version }}-devel"
+  tag_name: "libs-public-go-sdk-event-v2alpha/devel"
+  publish_release: true
+  keep_single_release: true

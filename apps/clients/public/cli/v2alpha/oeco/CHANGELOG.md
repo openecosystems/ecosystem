@@ -1,3 +1,19 @@
+## 0.38.0-acc5694.6 (2024-12-29)
+
+### 🚀 Features
+
+- additional capabilities ([#1](https://github.com/openecosystems/ecosystem/pull/1))
+- initial commit made open source ([f53e868](https://github.com/openecosystems/ecosystem/commit/f53e868))
+
+### 🩹 Fixes
+
+- stabilizing ([a137d81](https://github.com/openecosystems/ecosystem/commit/a137d81))
+- stabilizing ([cfc0cdf](https://github.com/openecosystems/ecosystem/commit/cfc0cdf))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.38.0-acc5694.5 (2024-12-28)
 
 ### 🩹 Fixes

@@ -3,7 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/poc/go/sdk",
-  "implicitDependencies": ["proto", "libs-plugins-protoc-gen-platform"],
+  "implicitDependencies": ["proto", "protoc-gen-platform"],
   "targets": {
     "generate": {
       "executor": "nx:run-commands",

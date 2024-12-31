@@ -5,6 +5,8 @@ launch-templates:
     env:
       GORELEASER_KEY: ${GORELEASER_KEY}
       GIT_CHECKOUT_DEPTH: 0
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_ACTOR: ${GITHUB_ACTOR}
     init-steps:
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
@@ -47,17 +49,17 @@ launch-templates:
           echo >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
-          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro
+          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
           echo "PATH=$PATH" >> $NX_CLOUD_ENV
           echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
           echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
           echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
 
-      - name: Debug
-        script: |
-          echo $PATH
-          cat $(echo $NX_CLOUD_ENV)
+#      - name: Debug
+#        script: |
+#          echo $PATH
+#          cat $(echo $NX_CLOUD_ENV)
 
       - name: Go Dependencies
         script: |
@@ -101,3 +103,7 @@ launch-templates:
           git tag
           git fetch --tags
           git tag
+
+      - name: Docker Repositories
+        script: |
+          echo "${GITHUB_TOKEN}" | docker login ghcr.io -u ${GITHUB_ACTOR} --password-stdin
