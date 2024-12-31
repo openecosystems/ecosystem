@@ -18,11 +18,30 @@ includes:
       path: ./.config/goreleaser/goreleaser.workload.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/notarize.yaml
-  - from_file:
-      path: ./.config/goreleaser/dockerize.yaml
+#  - from_file:
+#      path: ./.config/goreleaser/dockerize.yaml
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
   tag_name: "apps-workloads-private-event-v2alpha-event-multiplexer/devel"
   publish_release: true
   keep_single_release: true
+
+kos:
+  - repositories:
+      - ghcr.io/openecosystems/event-multiplexer
+      #- openecosystems/event-multiplexer
+    tags:
+      - "{{.Version}}"
+      - "{{.Tag}}"
+      - latest
+      - "{{if not .Prerelease}}stable{{end}}"
+    bare: true
+    preserve_import_paths: false
+    platforms:
+      - linux/amd64
+      - linux/arm64
+      - darwin/amd64
+      - darwin/arm64
+      - windows/amd64
+      - windows/arm64
