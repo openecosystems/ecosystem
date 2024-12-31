@@ -2,7 +2,7 @@ name: builder
 on:
   push:
     paths:
-      - .github/images/**
+      - .disabled-github/images/**
 jobs:
   builder:
     environment: operations
