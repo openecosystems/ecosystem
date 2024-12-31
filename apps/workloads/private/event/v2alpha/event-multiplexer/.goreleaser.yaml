@@ -29,7 +29,7 @@ nightly:
 kos:
   - repositories:
       - ghcr.io/openecosystems/event-multiplexer
-      - openecosystems/event-multiplexer
+      #- openecosystems/event-multiplexer
     tags:
       - "{{.Version}}"
       - "{{.Tag}}"
