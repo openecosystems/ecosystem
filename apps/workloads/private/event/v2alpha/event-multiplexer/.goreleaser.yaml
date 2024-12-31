@@ -28,9 +28,8 @@ nightly:
 
 kos:
   - repositories:
-      - "ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64"
-      - "ghcr.io/openecosystems/{{ .ProjectName }}:{{ .Version }}-arm64v8"
-      - "openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64"
+      - ghcr.io/openecosystems/event-multiplexer
+      - openecosystems/event-multiplexer
     tags:
       - "{{.Version}}"
       - "{{.Tag}}"
