@@ -10,9 +10,9 @@ on:
 #  schedule:
 #    - cron:  '0 0 * * 2-6' # At 12:00 AM, Tuesday through Saturday
 
-concurrency:
-  group: nightly
-  cancel-in-progress: true
+#concurrency:
+#  group: nightly
+#  cancel-in-progress: true
 
 jobs:
   nightly:
