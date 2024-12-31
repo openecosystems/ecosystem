@@ -28,18 +28,24 @@ nightly:
 
 kos:
   - repositories:
-      - ghcr.io/openecosystems/ecosystem/event-multiplexer
-      #- openecosystems/ecosystem/event-multiplexer
+      - ghcr.io/openecosystems/event-multiplexer
+      #- openecosystems/event-multiplexer
     tags:
       - "{{.Version}}"
       - "{{.Tag}}"
       - latest
       - "{{if not .Prerelease}}stable{{end}}"
     bare: true
+    labels:
+      org.opencontainers.image.source: https://github.com/openecosystems/ecosystem
     preserve_import_paths: false
     platforms:
       - linux/amd64
       - linux/arm64
+      - darwin/amd64
+      - darwin/arm64
+      - windows/amd64
+      - windows/arm64
 
 
 #dockers:
