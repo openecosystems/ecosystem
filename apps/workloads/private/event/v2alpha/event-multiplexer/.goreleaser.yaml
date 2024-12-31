@@ -36,8 +36,6 @@ kos:
       - latest
       - "{{if not .Prerelease}}stable{{end}}"
     bare: true
-    labels:
-      org.opencontainers.image.source: https://github.com/openecosystems/ecosystem
     preserve_import_paths: false
     platforms:
       - linux/amd64
