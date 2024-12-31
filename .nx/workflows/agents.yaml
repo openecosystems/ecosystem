@@ -34,8 +34,7 @@ launch-templates:
 
       - name: Brew
         script: |
-          sudo apt-get update
-          sudo apt-get -y install build-essential gcc procps file unzip lsb-release podman
+          sudo apt-get -y install build-essential gcc procps file unzip lsb-release
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       - name: Restore Brew Dependencies Cache
@@ -50,19 +49,17 @@ launch-templates:
           echo >> /home/workflows/.profile
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
-          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro qemu
+          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
           echo "PATH=$PATH" >> $NX_CLOUD_ENV
           echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
           echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
           echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
 
-      - name: Debug
-        script: |
-          echo $PATH
-          cat $(echo $NX_CLOUD_ENV)
-          podman machine init
-          podman machine start
+#      - name: Debug
+#        script: |
+#          echo $PATH
+#          cat $(echo $NX_CLOUD_ENV)
 
       - name: Go Dependencies
         script: |
