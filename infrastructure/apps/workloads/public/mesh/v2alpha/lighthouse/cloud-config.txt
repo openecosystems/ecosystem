@@ -1,0 +1,107 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+users:
+  - default
+  - name: notroot
+    groups:
+      - sudo
+    sudo:
+      - ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+	lock_passwd: true
+    ssh_authorized_keys:
+      - %s
+
+write_files:
+  - path: /etc/motd
+    content: |
+      Welcome to your Lighthouse!
+  - path: /etc/nebula/ca.crt
+    content: |
+      %s
+  - path: /etc/nebula/host.crt
+    content: |
+      %s
+  - path: /etc/nebula/host.key
+    content: |
+      %s
+
+runcmd:
+  - curl -L https://github.com/openecosystems/ecosystem/releases/download/apps-workloads-public-mesh-v2alpha-lighthouse%2Fdevel/apps-workloads-public-mesh-v2alpha-lighthouse_%s_Linux_x86_64.tar.gz | tar zx --strip-components=1 --directory /opt
+  - chmod +x /opt/app
+
+
+#cloud-config
+package_update: true
+package_upgrade: true
+users:
+  - default
+  - name: notroot
+    groups:
+      - sudo
+    sudo:
+      - ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVJUmm/xu38+qrMM3aMEWYI3oNNKVTn0+vF656S5RbTzlf4ZCBKqtX4qb1hDqsmgbYxZ0m8cRM0IrOnpQ6gAbQs7ddsDtSnzTekx9uvX/9z8hBklKRr93pLgT+yp5z2sQaHQ97TVfZjyeC+2utSnpWd12zHhIGd1R8QaROkjY9ho6CHnW1SEdSuY7Wh+Ye6Ho5fMtf3zBpjg3jFnWxagEBrj6tJber8EFh9Ge+dVXQAwkjql8yOpKrumq0NlJXZo5zs4ulkkh7ibT0Z4dQDea5ZTe7Sq6CM3YdsVgBrgVY4N+QRWZEfaSIU/GHht3q4sx+ZBPK5ObAqjXiIooT3X8j dimy@jeannotfamily.com
+write_files:
+  - path: /etc/motd
+    content: |
+      Welcome to your Lighthouse!
+  - content: |
+      [Unit]
+      Description=Lighthouse Service
+      ConditionPathExists=/opt/app
+      After=network.target
+      [Service]
+      Type=simple
+      User=notroot
+      Group=notroot
+      LimitNOFILE=1024
+      Restart=on-failure
+      RestartSec=10
+      startLimitIntervalSec=60
+      WorkingDirectory=/opt
+      ExecStart=/opt/app
+      # make sure log directory exists and owned by syslog
+      PermissionsStartOnly=true
+      ExecStartPre=/bin/mkdir -p /var/log/app
+      ExecStartPre=/bin/chown syslog:adm /var/log/app
+      ExecStartPre=/bin/chmod 755 /var/log/app
+      SyslogIdentifier=app
+      [Install]
+      WantedBy=multi-user.target
+    path: /lib/systemd/system/lighthouse.service
+    permissions: '0755'
+    defer: true
+  - path: /etc/nebula/ca.crt
+    content: |
+        -----BEGIN NEBULA CERTIFICATE-----
+        CkYKFE9wZW4gRWNvc3lzdGVtcywgSW5jKJXh5bsGMJXI6soGOiBPBg+axf0/kr+2
+        JFR5zoIprGzUMux1e4Xn8r2LNXtb4UABEkB3XmbVDDYyBQJP9yDz23O7tGCBpmQg
+        +SjO6MZf61dHcywoKHcsoI7hJGAH45pxMLSjdqrgizpUBa/fQ8eJhY0E
+        -----END NEBULA CERTIFICATE-----
+  - path: /etc/nebula/host.crt
+    content: |
+        -----BEGIN NEBULA CERTIFICATE-----
+        Cn0KH2xvY2FsLTEtbWVzaC12MmFscGhhLWxpZ2h0aG91c2USCoHIoYUMgP7//w8o
+        yuHluwYwlMjqygY6IFje4h+K3O69JE0f7uVNlM+08XwKFMYqDiZ8QHLrW3M3SiBt
+        2p/vFggWouJBA7f+BaoZGCNpuwpzek4eVuLSEeR/whJApDqwoYs43/iuIQbjEKGh
+        rqZXM99yFdD9twC4Y10PTuON6liEUlmBIXYqmW5nnuQvYpinosBpwaQR1Tdaa7tx
+        Aw==
+        -----END NEBULA CERTIFICATE-----
+  - path: /etc/nebula/host.key
+    content: |
+        -----BEGIN NEBULA X25519 PRIVATE KEY-----
+        fUpncxjrNYaBDR/lhDOUtbMqw4qIW1zbBwKGaB764yo=
+        -----END NEBULA X25519 PRIVATE KEY-----
+runcmd:
+  - sed -i '/PermitRootLogin/d' /etc/ssh/sshd_config
+  - echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+  - systemctl restart sshd
+  - curl -L https://github.com/openecosystems/ecosystem/releases/download/apps-workloads-public-mesh-v2alpha-lighthouse/devel/apps-workloads-public-mesh-v2alpha-lighthouse_0.33.1-devel_Linux_x86_64.tar.gz | tar zx --strip-components=1 --directory /opt
+  - chmod +x /opt/app
+  - systemctl enable lighthouse.service
+  - systemctl start lighthouse.service

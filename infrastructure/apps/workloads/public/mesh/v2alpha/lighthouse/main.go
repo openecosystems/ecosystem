@@ -2,11 +2,13 @@ package main
 
 import (
 	"encoding/base64"
+	"fmt"
 	"libs/private/go/infrastructure/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
 )
 
 func main() {
@@ -14,21 +16,29 @@ func main() {
 
 	infrastructure := infrastructurev2alphalib.NewInfrastructure(bounds)
 
-	config := infrastructure.Config
-	name := infrastructurev2alphalib.ShortenString(config.App.EnvironmentName+"-"+config.App.Name, 63)
+	cnf := infrastructure.Config
+	name := infrastructurev2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
 
 	infrastructure.Run(func(ctx *pulumi.Context) error {
 		// Install Tun device
 		// Route all traffic through Tun device
-		// Start services
 		// Open firewall to listen on 4242 (Must be open to the edge Router)
 		// Add support for mTLS with connection to Edge Router
-		// Create Server instance
+
+		cfg := config.New(ctx, "")
+		version := cfg.Require("version")
+		publicKey := cfg.Require("publicKey")
+		caCrt := cfg.Require("caCrt")
+		hostCrt := cfg.Require("hostCrt")
+		hostKey := cfg.Require("hostKey")
+
+		fmt.Println(cloudinit(publicKey, caCrt, hostCrt, hostKey, version))
 
 		script, err := vultr.NewStartupScript(ctx, name, &vultr.StartupScriptArgs{
 			Name:   pulumi.String(name + "-startup-script"),
-			Script: pulumi.String(base64.StdEncoding.EncodeToString([]byte(CloudInitStartupScript))),
-			Type:   pulumi.String("boot"),
+			Script: pulumi.String(base64.StdEncoding.EncodeToString([]byte(cloudinit(publicKey, caCrt, hostCrt, hostKey, version)))),
+			// Script: pulumi.String(base64.StdEncoding.EncodeToString(cloudConfig)),
+			Type: pulumi.String("boot"),
 		})
 		if err != nil {
 			return err
@@ -40,6 +50,20 @@ func main() {
 		if err != nil {
 			return err
 		}
+
+		_, err = vultr.NewFirewallRule(ctx, "22/tcp", &vultr.FirewallRuleArgs{
+			FirewallGroupId: firewallGroup.ID(),
+			Protocol:        pulumi.String("tcp"),
+			IpType:          pulumi.String("v4"),
+			Subnet:          pulumi.String("0.0.0.0"),
+			SubnetSize:      pulumi.Int(0),
+			Port:            pulumi.String("22"),
+			Notes:           pulumi.String("22/tcp/v4"),
+		})
+		if err != nil {
+			return err
+		}
+
 		_, err = vultr.NewFirewallRule(ctx, "4242/udp", &vultr.FirewallRuleArgs{
 			FirewallGroupId: firewallGroup.ID(),
 			Protocol:        pulumi.String("udp"),
@@ -47,7 +71,7 @@ func main() {
 			Subnet:          pulumi.String("0.0.0.0"),
 			SubnetSize:      pulumi.Int(0),
 			Port:            pulumi.String("4242"),
-			Notes:           pulumi.String("4222/udp/v4"),
+			Notes:           pulumi.String("4242/udp/v4"),
 		})
 		if err != nil {
 			return err
@@ -71,7 +95,7 @@ func main() {
 			BackupsSchedule: &vultr.InstanceBackupsScheduleArgs{
 				Type: pulumi.String("daily"),
 			},
-			DdosProtection:    pulumi.Bool(true),
+			DdosProtection:    pulumi.Bool(false),
 			DisablePublicIpv4: pulumi.Bool(false),
 			EnableIpv6:        pulumi.Bool(false),
 			FirewallGroupId:   firewallGroup.ID(),

@@ -1,3 +1,3 @@
-name: workloads-private-event-v2alpha-event-multiplexer
-description: An event multiplexer
+name: workloads-public-mesh-v2alpha-lighthouse
+description: A lighthouse
 runtime: go

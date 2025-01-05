@@ -9,10 +9,8 @@ import (
 	"libs/public/go/sdk/v2alpha"
 )
 
-var ResolvedConfiguration *sdkv2alphalib.Configuration
-
 type Infrastructure struct {
-	Config   *sdkv2alphalib.Configuration
+	Config   *Configuration
 	Bindings *sdkv2alphalib.Bindings
 	Bounds   []sdkv2alphalib.Binding
 }
@@ -20,13 +18,15 @@ type Infrastructure struct {
 func NewInfrastructure(bounds []sdkv2alphalib.Binding) *Infrastructure {
 	ctx := context.Background()
 
-	// cfg := sdkv2alphalib.ResolveConfiguration()
-	// ResolvedConfiguration = cfg
+	c := Configuration{}
+	c.ResolveConfiguration()
+	cfg := ResolvedConfiguration
+	ResolvedConfiguration = cfg
 
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	return &Infrastructure{
-		// Config:   cfg,
+		Config:   cfg,
 		Bindings: bindings,
 		Bounds:   bounds,
 	}

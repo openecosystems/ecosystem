@@ -73,7 +73,7 @@ sequenceDiagram
 
 ```
 
-## Traffic Flow Across Mesh
+## Traffic Flow Across Meshes
 Once client connection to mesh is established, all traffic no longer goes through edge-router (Ideally it does, revisit this)
 
 Now, .mesh urls are now available. For example: system.api.organization.mesh/v2alpha/connector
