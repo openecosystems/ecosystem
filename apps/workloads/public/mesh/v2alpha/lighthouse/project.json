@@ -107,6 +107,39 @@
         "cwd": "."
       },
       "dependsOn": ["container"]
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --nightly --clean --verbose"
+        ],
+        "parallel": false
+      }
     }
   },
   "tags": [

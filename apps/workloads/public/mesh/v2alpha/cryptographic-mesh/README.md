@@ -41,6 +41,7 @@ ssh-add ~/.ssh/id_ed25519
 
 # Enable CAP_NET for TUN device
 setcap cap_net_admin=+pe /nebula
+setcap cap_net_admin=+pe /lighthouse
 
 
 ## Disable IpV6

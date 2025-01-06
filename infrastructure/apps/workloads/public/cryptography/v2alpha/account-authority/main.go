@@ -35,8 +35,8 @@ func main() {
 			return err
 		}
 
-		firewallGroup, err := vultr.NewFirewallGroup(ctx, "LighthouseInbound", &vultr.FirewallGroupArgs{
-			Description: pulumi.String("Lighthouse Firewall Group"),
+		firewallGroup, err := vultr.NewFirewallGroup(ctx, "AccountAuthorityInbound", &vultr.FirewallGroupArgs{
+			Description: pulumi.String("Account Authority Firewall Group"),
 		})
 		if err != nil {
 			return err
@@ -50,19 +50,6 @@ func main() {
 			SubnetSize:      pulumi.Int(0),
 			Port:            pulumi.String("22"),
 			Notes:           pulumi.String("22/tcp/v4"),
-		})
-		if err != nil {
-			return err
-		}
-
-		_, err = vultr.NewFirewallRule(ctx, "4242/udp", &vultr.FirewallRuleArgs{
-			FirewallGroupId: firewallGroup.ID(),
-			Protocol:        pulumi.String("udp"),
-			IpType:          pulumi.String("v4"),
-			Subnet:          pulumi.String("0.0.0.0"),
-			SubnetSize:      pulumi.Int(0),
-			Port:            pulumi.String("4242"),
-			Notes:           pulumi.String("4242/udp/v4"),
 		})
 		if err != nil {
 			return err
@@ -92,13 +79,12 @@ func main() {
 			FirewallGroupId:   firewallGroup.ID(),
 			Hostname:          pulumi.String(name),
 			Label:             pulumi.String(name),
-			OsId:              pulumi.Int(2136),                                      // "Debian 12 x64 (bookworm)"
-			ReservedIpId:      pulumi.String("50e066c5-d640-4f7d-92da-6426c5b340cb"), // Lighthouse IP address 45.63.49.173
-			Plan:              pulumi.String("vhp-1c-1gb-amd"),                       // AMD High Performance
+			OsId:              pulumi.Int(2136),                // "Debian 12 x64 (bookworm)"
+			Plan:              pulumi.String("vhp-1c-1gb-amd"), // AMD High Performance
 			Region:            pulumi.String("lax"),
 			ScriptId:          script.ID(),
 			Tags: pulumi.StringArray{
-				pulumi.String("system:mesh"),
+				pulumi.String("system:cryptography"),
 				pulumi.String("language:golang"),
 				pulumi.String("cycle:public"),
 				pulumi.String("version:v2alpha"),
