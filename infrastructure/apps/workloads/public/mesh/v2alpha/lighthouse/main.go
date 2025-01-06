@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/base64"
-	"fmt"
 	"libs/private/go/infrastructure/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 
@@ -20,11 +19,6 @@ func main() {
 	name := infrastructurev2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
 
 	infrastructure.Run(func(ctx *pulumi.Context) error {
-		// Install Tun device
-		// Route all traffic through Tun device
-		// Open firewall to listen on 4242 (Must be open to the edge Router)
-		// Add support for mTLS with connection to Edge Router
-
 		cfg := config.New(ctx, "")
 		version := cfg.Require("version")
 		publicKey := cfg.Require("publicKey")
@@ -32,13 +26,10 @@ func main() {
 		hostCrt := cfg.Require("hostCrt")
 		hostKey := cfg.Require("hostKey")
 
-		fmt.Println(cloudinit(publicKey, caCrt, hostCrt, hostKey, version))
-
 		script, err := vultr.NewStartupScript(ctx, name, &vultr.StartupScriptArgs{
 			Name:   pulumi.String(name + "-startup-script"),
 			Script: pulumi.String(base64.StdEncoding.EncodeToString([]byte(cloudinit(publicKey, caCrt, hostCrt, hostKey, version)))),
-			// Script: pulumi.String(base64.StdEncoding.EncodeToString(cloudConfig)),
-			Type: pulumi.String("boot"),
+			Type:   pulumi.String("boot"),
 		})
 		if err != nil {
 			return err
@@ -101,9 +92,10 @@ func main() {
 			FirewallGroupId:   firewallGroup.ID(),
 			Hostname:          pulumi.String(name),
 			Label:             pulumi.String(name),
-			OsId:              pulumi.Int(2136),                //"Debian 12 x64 (bookworm)"
-			Plan:              pulumi.String("vhp-1c-1gb-amd"), // AMD High Performance
-			Region:            pulumi.String("atl"),
+			OsId:              pulumi.Int(2136),                                      // "Debian 12 x64 (bookworm)"
+			ReservedIpId:      pulumi.String("50e066c5-d640-4f7d-92da-6426c5b340cb"), // Lighthouse IP address 45.63.49.173
+			Plan:              pulumi.String("vhp-1c-1gb-amd"),                       // AMD High Performance
+			Region:            pulumi.String("lax"),
 			ScriptId:          script.ID(),
 			Tags: pulumi.StringArray{
 				pulumi.String("system:mesh"),

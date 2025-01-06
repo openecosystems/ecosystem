@@ -2,31 +2,28 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	infrastructurev2alphalib "libs/private/go/infrastructure/v2alpha"
 )
 
 func cloudinit(key, caCrt, hostCrt, hostKey, version string) string {
-	_caCrt := writeIndentedMultilineText(caCrt)
-	_hostCrt := writeIndentedMultilineText(hostCrt)
-	_hostKey := writeIndentedMultilineText(hostKey)
+	_caCrt := infrastructurev2alphalib.WriteIndentedMultilineText(caCrt)
+	_hostCrt := infrastructurev2alphalib.WriteIndentedMultilineText(hostCrt)
+	_hostKey := infrastructurev2alphalib.WriteIndentedMultilineText(hostKey)
 
 	return fmt.Sprintf(
-		`
-#cloud-config
-#package_update: true
-#package_upgrade: true
+		`#cloud-config
+package_update: true
+package_upgrade: true
 users:
   - default
   - name: notroot
-    groups:
-      - sudo
+    groups: sudo
     sudo:
       - ALL=(ALL) NOPASSWD:ALL
     shell: /bin/bash
-	lock_passwd: true
+    lock_passwd: true
     ssh_authorized_keys:
       - %s
-
 write_files:
   - path: /etc/motd
     content: |
@@ -72,29 +69,19 @@ write_files:
     content: |
 %s
 
+packages:
+  - polkitd
+
 runcmd:
   - sed -i '/PermitRootLogin/d' /etc/ssh/sshd_config
   - echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+  - echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
+  - echo "ChallengeResponseAuthentication no" >> /etc/ssh/sshd_config
   - systemctl restart sshd
   - curl -L https://github.com/openecosystems/ecosystem/releases/download/apps-workloads-public-mesh-v2alpha-lighthouse/devel/apps-workloads-public-mesh-v2alpha-lighthouse_%s_Linux_x86_64.tar.gz | tar zx --strip-components=1 --directory /opt
   - chmod +x /opt/app
-  - systemctl enable lighthouse.service
-  - systemctl start lighthouse.service
+  - sudo systemctl enable lighthouse.service
+  - sudo systemctl start lighthouse.service
 
 `, key, _caCrt, _hostCrt, _hostKey, version)
-}
-
-func writeIndentedMultilineText(text string) string {
-	indent := "        "
-	lines := strings.Split(text, "\n")
-
-	var builder strings.Builder
-
-	for _, line := range lines {
-		_, err := builder.WriteString(indent + line + "\n")
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	return builder.String()
 }
