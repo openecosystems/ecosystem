@@ -1,0 +1,3 @@
+name: workloads-public-cryptography-v2alpha-account-authority
+description: An Account Authority
+runtime: go
