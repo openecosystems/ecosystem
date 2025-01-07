@@ -3,6 +3,7 @@
 - Install Nebula client using TUN device
 - Route all traffic through TUN device except for what is on port 6477
 - Bind port 4222 to TUN device
+- Bind port 7999 to TUN device
 - Bind port 6477 to eth0 device
 
 run as nonroot

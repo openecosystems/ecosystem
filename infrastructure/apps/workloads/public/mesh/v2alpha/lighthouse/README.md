@@ -34,3 +34,20 @@ cat local-1-mesh-v2alpha-lighthouse.crt | pulumi config set hostCrt
 cat local-1-mesh-v2alpha-lighthouse.key | pulumi config set hostKey
 
 ./nebula-cert sign -name "configuration-v2alpha-configuration" -ip "192.168.100.9/24" -groups "connectors"
+
+
+
+# Enable CAP_NET for TUN device
+setcap cap_net_admin=+pe /opt/nebula
+
+
+## Disable IpV6
+vim /etc/sysctl.d/70-disable-ipv6.conf
+
+net.ipv6.conf.all.disable_ipv6 = 1
+
+sysctl -p -f /etc/sysctl.d/70-disable-ipv6.conf
+
+
+# Allow UDP on firewall
+ufw allow 4242/udp

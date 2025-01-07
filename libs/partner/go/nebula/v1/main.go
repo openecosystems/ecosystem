@@ -8,12 +8,13 @@ import (
 	"net/http"
 	"sync"
 
-	nebulaConfig "github.com/slackhq/nebula/config"
-	"github.com/slackhq/nebula/service"
-	"gopkg.in/yaml.v2"
 	nebulav1 "libs/partner/go/pushpin/v1"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"libs/public/go/sdk/v2alpha"
+
+	nebulaConfig "github.com/slackhq/nebula/config"
+	"github.com/slackhq/nebula/service"
+	"gopkg.in/yaml.v2"
 )
 
 // Binding struct that holds binding specific fields
