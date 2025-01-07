@@ -1,0 +1,67 @@
+name: cd-dev-1
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'infrastructure/env/dev-1.properties'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'infrastructure/env/dev-1.properties'
+
+env:
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+jobs:
+  pulumi:
+    name: Pulumi
+    runs-on: ubuntu-latest
+    steps:
+      # Turnstyle is used to prevent multiple push jobs from running at the same time.
+      - name: Turnstyle
+        if: ${{ github.event_name == 'push' }}
+        uses: softprops/turnstyle@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v2
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14.x
+
+      - run: go mod download
+        working-directory: ${{ env.PULUMI_WORKING_DIRECTORY }}
+
+      - name: PR previews
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: pulumi/actions@v3
+        with:
+          command: preview
+          stack-name: ${{ env.PULUMI_STACK_NAME }}
+          work-dir: ${{ env.PULUMI_WORKING_DIRECTORY }}
+
+      - name: Apply infrastructure update
+        if: ${{ github.event_name == 'push' }}
+        uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: ${{ env.PULUMI_STACK_NAME }}
+          work-dir: ${{ env.PULUMI_WORKING_DIRECTORY }}
+
+
+      # If you'd like to run your Pulumi application outside of the official GitHub Action
+
+      #- name: Install Pulumi CLI
+      #  uses: pulumi/setup-pulumi@v2
+
+      #- name: PR previews
+      #  run: pulumi preview -s $PULUMI_STACK_NAME --cwd $PULUMI_WORKING_DIRECTORY
+      #  if: ${{ github.event_name == 'pull_request' }}
+
+      #- name: Apply infrastructure update
+      #  run: pulumi update --yes -s $PULUMI_STACK_NAME --cwd $PULUMI_WORKING_DIRECTORY
+      #  if: ${{ github.event_name == 'push' }}
