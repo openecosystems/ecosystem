@@ -5,8 +5,9 @@ import (
 
 	"connectrpc.com/connect"
 
+	"libs/protobuf/go/protobuf/gen/platform/type/v2"
+
 	"google.golang.org/protobuf/reflect/protoreflect"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 // A ConnectorOption configures a [Connector].

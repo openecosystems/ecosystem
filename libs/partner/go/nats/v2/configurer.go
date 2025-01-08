@@ -28,6 +28,7 @@ var (
 )
 
 type Nats struct {
+	Mesh    bool
 	Options nats.Options
 }
 

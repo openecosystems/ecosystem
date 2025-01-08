@@ -168,8 +168,8 @@ runcmd:
   - sudo systemctl enable app.service
   - sudo systemctl start app.service
   - ufw allow 6477/tcp
-  - ufw allow from 192.168.0.0/16 to any port 4222
-  - ufw allow from 192.168.0.0/16 to any port 7999
+  - ufw allow proto tcp from 192.168.100.0/24 to 192.168.100.5 port 4222
+  - ufw allow proto tcp from 192.168.100.0/24 to 192.168.100.5 port 7999
 
 `, key, _caCrt, _hostCrt, _hostKey, version)
 }

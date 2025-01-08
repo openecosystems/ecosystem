@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"sync"
 
-	nebulav1 "libs/partner/go/pushpin/v1"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"libs/public/go/sdk/v2alpha"
 
@@ -43,10 +42,17 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-				Bound = &Binding{}
+				IsBound = true
+				// Review this
+				socket, err := b.ConfigureMeshSocket()
+				if err != nil {
+					return
+				}
+				Bound = &Binding{
+					MeshSocket: socket,
+				}
 
 				bindings.Registered[b.Name()] = Bound
-				IsBound = true
 			})
 	} else {
 		bindings.Registered[b.Name()] = Bound
@@ -65,6 +71,7 @@ func (b *Binding) Close() error {
 	return nil
 }
 
+// GetSocket gets a direct socket for servers that need to host TCP level traffic on the mesh
 func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 	if IsBound {
 
@@ -98,6 +105,7 @@ func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 	return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("the Nebula binding is not properly configured or not set"))
 }
 
+// GetMeshHttpClient gets an HTTP Client that is mesh-accessible
 func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *http.Client {
 	httpClient := http.DefaultClient
 
@@ -181,29 +189,30 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 	return httpClient
 }
 
-func (b *Binding) ConfigureMeshSocket() {
-	go func() {
-		if nebulav1.IsBound {
+func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
+	// go func() {
+	// if IsBound {
+	configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)
+	if err != nil {
+		fmt.Printf("Error resolving Nebula configuration: %v\n", err)
+		fmt.Printf(err.Error())
+	}
 
-			configBytes, err := yaml.Marshal(nebulav1.ResolvedConfiguration.Nebula)
-			if err != nil {
-				fmt.Printf("Error resolving Nebula configuration: %v\n", err)
-				fmt.Printf(err.Error())
-			}
+	var cfg nebulaConfig.C
+	if err = cfg.LoadString(string(configBytes)); err != nil {
+		fmt.Println("ERROR loading config:", err)
+		return nil, errors.New("the Nebula binding configuration could not be loaded")
+	}
 
-			var cfg nebulaConfig.C
-			if err = cfg.LoadString(string(configBytes)); err != nil {
-				fmt.Println("ERROR loading config:", err)
-			}
+	svc, err := service.New(&cfg)
+	if err != nil {
+		fmt.Printf("Error creating service: %v\n", err)
+		fmt.Printf(err.Error())
+		return nil, errors.New("the Nebula binding is not properly configured or not set")
+	}
 
-			svc, err := service.New(&cfg)
-			if err != nil {
-				fmt.Printf("Error creating service: %v\n", err)
-				fmt.Printf(err.Error())
-			}
+	return svc, nil
 
-			b.MeshSocket = svc
-
-		}
-	}()
+	//}
+	//}()
 }
