@@ -58,6 +58,6 @@ nebula:
         proto: any
         host: any
   pki:
-    ca: ../../../../../../tmp/ca.crt
-    cert: ../../../../../../tmp/local-1-cryptography-v2alpha-certificate-authority.crt
-    key: ../../../../../../tmp/local-1-cryptography-v2alpha-certificate-authority.key
+    ca: ${HOME}/.config/oeco/credentials/ca.crt
+    cert: ${HOME}/.config/oeco/credentials/local-1-cryptography-v2alpha-certificate-authority.crt
+    key: ${HOME}/.config/oeco/credentials/local-1-cryptography-v2alpha-certificate-authority.key

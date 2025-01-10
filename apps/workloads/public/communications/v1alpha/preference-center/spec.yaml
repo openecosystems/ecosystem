@@ -27,7 +27,41 @@ zap:
 opentelemetry:
   traceProviderEnabled: true
 nats:
+  mesh: true
   options:
     servers:
-      - nats://127.0.0.1:4222
+      - nats://192.168.100.5:4222
+nebula:
+  tun:
+    user: true
+  punchy:
+    punch: true
+    respond: true
+    delay: 1s
+    respond_delay: 5s
+  static_host_map:
+    - '192.168.100.1'
+  host:
+    - '192.168.100.1': ['45.63.49.173:4242']
+  lighthouse:
+    am_lighthouse: false
+    interval: 60
+    hosts:
+      - '192.168.100.1'
+  firewall:
+    outbound:
+      - port: any
+        proto: any
+        host: any
+    inbound:
+      - port: any
+        proto: icmp
+        host: any
+      - port: any
+        proto: any
+        host: any
+  pki:
+    ca: ${HOME}/.config/oeco/credentials/ca.crt
+    cert: ${HOME}/.config/oeco/credentials/local-1-cryptography-v2alpha-certificate-authority.crt
+    key: ${HOME}/.config/oeco/credentials/local-1-cryptography-v2alpha-certificate-authority.key
 
