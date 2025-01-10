@@ -11,13 +11,14 @@ import (
 
 	"connectrpc.com/connect"
 
-	"github.com/slackhq/nebula/service"
-	"google.golang.org/protobuf/reflect/protoreflect"
-	"google.golang.org/protobuf/reflect/protoregistry"
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
+
+	"github.com/slackhq/nebula/service"
+	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/reflect/protoregistry"
 )
 
 var quit = make(chan os.Signal, 1)
@@ -57,8 +58,8 @@ func NewConnector(ctx context.Context, bounds []sdkv2alphalib.Binding, opts ...C
 
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
-	options, err := newConnectorOptions(opts)
-	if err != nil {
+	options, err2 := newConnectorOptions(opts)
+	if err2 != nil {
 		fmt.Println("new connector options error: ")
 		fmt.Println(err)
 	}

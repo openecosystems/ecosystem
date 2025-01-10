@@ -131,7 +131,7 @@ func (b *Binding) ValidateConfiguration() error {
 }
 
 func (b *Binding) GetDefaultConfiguration() interface{} {
-	return &Configuration{
+	return Configuration{
 		Nebula: Nebula{
 			Lighthouse: Lighthouse{
 				AmLighthouse: false,

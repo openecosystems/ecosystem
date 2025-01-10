@@ -14,7 +14,7 @@ natsd:
   enabled: true
   options:
     serverName: "platform-leaf-node-local"
-    host: "localhost"
+    host: "0.0.0.0"
     port: 4222
     debug: true
     leafNode:
@@ -54,7 +54,7 @@ nebula:
   static_host_map:
     - '192.168.100.1'
   host:
-    - '192.168.100.1': ['144.202.30.222:4242']
+    - '192.168.100.1': ['45.63.49.173:4242']
   lighthouse:
     am_lighthouse: false
     interval: 60
@@ -73,6 +73,9 @@ nebula:
         proto: any
         host: any
   pki:
-    ca: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/ca.crt
-    cert: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/hosts/configuration-v2alpha-configuration.crt
-    key: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/hosts/configuration-v2alpha-configuration.key
+    ca: ../../../../../tmp/ca.crt
+    cert: ../../../../../tmp/local-1-event-v2alpha-event-multiplexer.crt
+    key: ../../../../../tmp/local-1-event-v2alpha-event-multiplexer.key
+#    ca: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/ca.crt
+#    cert: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/hosts/configuration-v2alpha-configuration.crt
+#    key: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/hosts/configuration-v2alpha-configuration.key

@@ -5,12 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"sync"
+
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"dario.cat/mergo"
 
@@ -185,7 +186,21 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 		ctx := strings.TrimSpace(string(file))
 
 		if ctx == "" {
-			return nil, nil, errors.New("no context found")
+			err := fs.WriteFile(DefaultContextFile, []byte(DefaultContextFileName), os.ModePerm)
+			if err != nil {
+				return nil, nil, errors.New("internal error: Cannot create default context")
+			}
+
+			fixthis := `
+name: default
+platform:
+    dynamicconfigreload: false
+`
+
+			err = fs.WriteFile(DefaultContextFile+".yaml", []byte(fixthis), os.ModePerm)
+			if err != nil {
+				return nil, nil, errors.New("internal error: Cannot create default context")
+			}
 		}
 
 		configurer.SetFs(ufs)

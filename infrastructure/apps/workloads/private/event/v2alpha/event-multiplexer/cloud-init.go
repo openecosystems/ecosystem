@@ -28,6 +28,12 @@ write_files:
   - path: /etc/motd
     content: |
       Welcome to the Event Multiplexer!
+  - path: /etc/sysctl.d/99-disable-ipv6.conf
+    content: |
+      # Disable IPv6 on all interfaces
+      net.ipv6.conf.all.disable_ipv6 = 1
+      net.ipv6.conf.default.disable_ipv6 = 1
+      net.ipv6.conf.lo.disable_ipv6 = 1
   - content: |
       [Unit]
       Description=Event Multiplexer
@@ -151,14 +157,19 @@ packages:
 
 runcmd:
   - sed -i '/PermitRootLogin/d' /etc/ssh/sshd_config
-  - echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+  - echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
   - echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
   - echo "ChallengeResponseAuthentication no" >> /etc/ssh/sshd_config
   - systemctl restart sshd
+  - sysctl --system
   - curl -L https://github.com/openecosystems/ecosystem/releases/download/apps-workloads-private-event-v2alpha-event-multiplexer/devel/apps-workloads-private-event-v2alpha-event-multiplexer_%s_Linux_x86_64.tar.gz | tar zx --strip-components=1 --directory /opt
   - chmod +x /opt/app
+  - setcap cap_net_admin=+pe /opt/app
   - sudo systemctl enable app.service
   - sudo systemctl start app.service
+  - ufw allow 6477/tcp
+  - ufw allow proto tcp from 192.168.100.0/24 to 192.168.100.5 port 4222
+  - ufw allow proto tcp from 192.168.100.0/24 to 192.168.100.5 port 7999
 
 `, key, _caCrt, _hostCrt, _hostKey, version)
 }

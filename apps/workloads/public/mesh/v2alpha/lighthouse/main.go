@@ -19,11 +19,13 @@ func main() {
 func run() error {
 	configStr := `
 tun:
-  user: true
-  disabled: true
-
-static_host_map:
-  '192.168.100.1': ['localhost:4242']
+  disabled: false
+  dev: nebula1
+  drop_local_broadcast: false
+  drop_multicast: false
+  tx_queue: 500
+  mtu: 1300
+  routes:
 
 listen:
   host: 0.0.0.0
@@ -31,12 +33,10 @@ listen:
 
 lighthouse:
   am_lighthouse: true
-  interval: 60
-  hosts:
-    - '192.168.100.1'
 
 punchy:
   punch: true
+  respond: true
 
 firewall:
   outbound:

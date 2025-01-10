@@ -20,7 +20,7 @@ grpcurl -plaintext localhost:6568 list platform.configuration.v2alpha.Configurat
 # Create
 grpcurl \
 --plaintext -v \
--d '{"spec_context": {"organization_slug" : "test-organization", "workspace_slug": "test-workspace"},"name": "test", "slug": "test", "short_description": "test short description", "description": "test description"}' \
+-d '{"parent_id": "123"}' \
 -rpc-header ctx-organization-slug:test-organization \
 -rpc-header ctx-workspace-slug:test-workspace \
 -rpc-header ctx-locale:en_US \
