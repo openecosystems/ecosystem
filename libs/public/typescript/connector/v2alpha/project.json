@@ -1,0 +1,27 @@
+{
+  "name": "v2alpha",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/public/typescript/connector/v2alpha/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/public/typescript/connector/v2alpha",
+        "tsConfig": "libs/public/typescript/connector/v2alpha/tsconfig.lib.json",
+        "packageJson": "libs/public/typescript/connector/v2alpha/package.json",
+        "main": "libs/public/typescript/connector/v2alpha/src/index.ts",
+        "assets": ["libs/public/typescript/connector/v2alpha/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/public/typescript/connector/v2alpha/jest.config.ts"
+      }
+    }
+  }
+}

@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@openecosystems/connector": [
+        "libs/public/typescript/connector/v2alpha/src/index.ts"
+      ],
       "@openecosystems/nx-go": ["libs/plugins/nx-go/src/index.ts"]
     }
   },

@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@nats-io/nats-core':
+    specifier: 3.0.0-48
+    version: 3.0.0-48
+  '@nats-io/transport-node':
+    specifier: 3.0.0-33
+    version: 3.0.0-33
   '@nx/devkit':
     specifier: 20.1.4
     version: 20.1.4(nx@20.1.4)
@@ -73,6 +79,9 @@ devDependencies:
   '@nx/js':
     specifier: 20.1.4
     version: 20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(nx@20.1.4)(typescript@5.5.4)
+  '@nx/node':
+    specifier: 20.1.4
+    version: 20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(eslint@8.57.1)(nx@20.1.4)(ts-node@10.9.1)(typescript@5.5.4)
   '@nx/plugin':
     specifier: 20.1.4
     version: 20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(eslint@8.57.1)(nx@20.1.4)(ts-node@10.9.1)(typescript@5.5.4)
@@ -182,7 +191,7 @@ devDependencies:
     specifier: 29.7.0
     version: 29.7.0
   jest-environment-node:
-    specifier: ^29.4.1
+    specifier: ^29.7.0
     version: 29.7.0
   less:
     specifier: ^3.9.0
@@ -196,6 +205,9 @@ devDependencies:
   os-browserify:
     specifier: ^0.3.0
     version: 0.3.0
+  plugin@latest:
+    specifier: link:@nx/eslint/plugin@latest
+    version: link:@nx/eslint/plugin@latest
   prettier:
     specifier: ^2.6.2
     version: 2.8.8
@@ -1803,6 +1815,7 @@ packages:
 
   /@emnapi/wasi-threads@1.0.1:
     resolution: {integrity: sha512-iIBu7mwkq4UQGeMEM8bLwNK962nXdhodeScX4slfQnRhEMMzvYivHhutCIk8uojvmASXXPC2WNEjwxFWk72Oqw==}
+    requiresBuild: true
     dependencies:
       tslib: 2.8.1
 
@@ -2566,6 +2579,34 @@ packages:
       '@tybys/wasm-util': 0.9.0
     optional: true
 
+  /@nats-io/nats-core@3.0.0-48:
+    resolution: {integrity: sha512-IGT2vGgDxPAXrGQqzpD27EYMoIUjU+Y3AOgecLIIouews0qv9Wh2vJ10QmRSdElVaDL6VZTY+pyU3BJUFhD4kQ==}
+    dependencies:
+      '@nats-io/nkeys': 2.0.0-3
+      '@nats-io/nuid': 2.0.1-2
+    dev: false
+
+  /@nats-io/nkeys@2.0.0-3:
+    resolution: {integrity: sha512-ars24TseiM1v5JTdSl9lgFV5ayoq1nqYD5apDn3LoWZM5BFGve11cam2N6F/VVOENCZzuAkLtw/uTN5HDutkmA==}
+    engines: {node: '>=16.0.0'}
+    dependencies:
+      tweetnacl: 1.0.3
+    dev: false
+
+  /@nats-io/nuid@2.0.1-2:
+    resolution: {integrity: sha512-oXJiWXH87FjcPAXVVkoY+o7z9YFuOvsVlUlvB4h/QsoC1hp63lB18YOMHmKxVNO7BzvwzJh3SKLlIlsQrEwaxg==}
+    engines: {node: '>= 18.x'}
+    dev: false
+
+  /@nats-io/transport-node@3.0.0-33:
+    resolution: {integrity: sha512-eq3X6Z1pcdIWUZ57jKZay1J+RTQmvaNts2+GywPZVDX6uE/c8CQkdlqY+0SCUfbtiPjEt4TDtFs00IBvV84Q8w==}
+    engines: {node: '>= 18.0.0'}
+    dependencies:
+      '@nats-io/nats-core': 3.0.0-48
+      '@nats-io/nkeys': 2.0.0-3
+      '@nats-io/nuid': 2.0.1-2
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2876,6 +2917,32 @@ packages:
       - nx
       - supports-color
       - typescript
+    dev: true
+
+  /@nx/node@20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(eslint@8.57.1)(nx@20.1.4)(ts-node@10.9.1)(typescript@5.5.4):
+    resolution: {integrity: sha512-xsjClR4LoVWkjs5YhNPHTdDHgZC4t9R/HsKd1+KrGg+K9UunbjTZ0bxYqrt5np7ORsRv2+teeJvPOyu0mngp2A==}
+    dependencies:
+      '@nx/devkit': 20.1.4(nx@20.1.4)
+      '@nx/eslint': 20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(eslint@8.57.1)(nx@20.1.4)
+      '@nx/jest': 20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(nx@20.1.4)(ts-node@10.9.1)(typescript@5.5.4)
+      '@nx/js': 20.1.4(@swc-node/register@1.10.9)(@swc/core@1.10.1)(@types/node@18.16.20)(nx@20.1.4)(typescript@5.5.4)
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@babel/traverse'
+      - '@swc-node/register'
+      - '@swc/core'
+      - '@swc/wasm'
+      - '@types/node'
+      - '@zkochan/js-yaml'
+      - babel-plugin-macros
+      - debug
+      - eslint
+      - node-notifier
+      - nx
+      - supports-color
+      - ts-node
+      - typescript
+      - verdaccio
     dev: true
 
   /@nx/nx-darwin-arm64@20.1.4:
@@ -12563,6 +12630,10 @@ packages:
   /tweetnacl@0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
     dev: true
+
+  /tweetnacl@1.0.3:
+    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
+    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
