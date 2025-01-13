@@ -77,7 +77,6 @@
     "less-loader": "^10.0.1",
     "nx": "20.1.4",
     "os-browserify": "^0.3.0",
-    "plugin@latest": "link:@nx/eslint/plugin@latest",
     "prettier": "^2.6.2",
     "process": "^0.11.10",
     "react-refresh": "^0.10.0",
