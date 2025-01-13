@@ -221,7 +221,11 @@
       },
       "workloads-public": {
         "projectsRelationship": "independent",
-        "projects": ["tag:type:workload", "!tag:cycle:private", "!tag:cycle:poc"],
+        "projects": [
+          "tag:type:workload",
+          "!tag:cycle:private",
+          "!tag:cycle:poc"
+        ],
         "git": {
           "commit": true,
           "tag": true,
@@ -243,7 +247,11 @@
       },
       "workloads-private": {
         "projectsRelationship": "independent",
-        "projects": ["tag:type:workload", "!tag:cycle:public", "!tag:cycle:poc"],
+        "projects": [
+          "tag:type:workload",
+          "!tag:cycle:public",
+          "!tag:cycle:poc"
+        ],
         "git": {
           "commit": true,
           "tag": true,
@@ -265,7 +273,11 @@
       },
       "workloads-poc": {
         "projectsRelationship": "independent",
-        "projects": ["tag:type:workload", "!tag:cycle:public", "!tag:cycle:private"],
+        "projects": [
+          "tag:type:workload",
+          "!tag:cycle:public",
+          "!tag:cycle:private"
+        ],
         "git": {
           "commit": false,
           "tag": false,
