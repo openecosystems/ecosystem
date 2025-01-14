@@ -1,0 +1,19 @@
+{
+  "name": "libs-public-typescript-protobuf-v2alpha",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/public/typescript/protobuf",
+  "implicitDependencies": [
+    "proto"
+  ],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "buf generate",
+        "cwd": "libs/public/typescript/protobuf"
+      }
+    }
+  },
+  "tags": []
+}
