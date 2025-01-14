@@ -1,0 +1,33 @@
+{
+  "name": "libs-partner-typescript-nats-v2",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/partner/typescript/nats/v2/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/partner/typescript/nats/v2",
+        "tsConfig": "libs/partner/typescript/nats/v2/tsconfig.lib.json",
+        "packageJson": "libs/partner/typescript/nats/v2/package.json",
+        "main": "libs/partner/typescript/nats/v2/src/index.ts",
+        "assets": ["libs/partner/typescript/nats/v2/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

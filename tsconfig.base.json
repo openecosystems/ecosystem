@@ -10,12 +10,20 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@openecosystems/nx-go": ["libs/plugins/nx-go/src/index.ts"]
+      "@openecosystems/connectorv2alpha": [
+        "libs/public/typescript/connector/v2alpha/src/index.ts"
+      ],
+      "@openecosystems/natsv2": [
+        "libs/partner/typescript/nats/v2/src/index.ts"
+      ],
+      "@openecosystems/sdkv2alpha": [
+        "libs/public/typescript/sdk/v2alpha/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
