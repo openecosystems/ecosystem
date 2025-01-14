@@ -74,9 +74,9 @@ launch-templates:
         script: |
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
           echo "PATH=/home/workflows/.cargo/bin:$PATH" >> $NX_CLOUD_ENV
-          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+          /home/workflows/.cargo/bin/rustup target add wasm32-wasip1 --toolchain stable
           /home/workflows/.cargo/bin/rustup toolchain add stable
-          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+          /home/workflows/.cargo/bin/rustup target add wasm32-wasip1 --toolchain stable
           . "/home/workflows/.cargo/env"
 
 #      - name: Dotnet Dependencies
