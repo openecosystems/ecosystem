@@ -36,6 +36,7 @@ yarn-error.log
 testem.log
 /typings
 .helix
+bin/
 
 # System Files
 .DS_Store

@@ -1,5 +1,5 @@
 {
-  "name": "@openecosystems/connectorv2alpha",
+  "name": "@openecosystems/sdkv2alpha",
   "version": "0.0.1",
   "files": [
     "dist",

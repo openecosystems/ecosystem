@@ -1,7 +1,7 @@
 {
-  "name": "libs-public-typescript-connector-v2alpha",
+  "name": "libs-public-typescript-sdk-v2alpha",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/public/typescript/connector/v2alpha/src",
+  "sourceRoot": "libs/public/typescript/sdk/v2alpha/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -17,11 +17,11 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/public/typescript/connector/v2alpha",
-        "tsConfig": "libs/public/typescript/connector/v2alpha/tsconfig.lib.json",
-        "packageJson": "libs/public/typescript/connector/v2alpha/package.json",
-        "main": "libs/public/typescript/connector/v2alpha/src/index.ts",
-        "assets": ["libs/public/typescript/connector/v2alpha/*.md"]
+        "outputPath": "dist/libs/public/typescript/sdk/v2alpha",
+        "tsConfig": "libs/public/typescript/sdk/v2alpha/tsconfig.lib.json",
+        "packageJson": "libs/public/typescript/sdk/v2alpha/package.json",
+        "main": "libs/public/typescript/sdk/v2alpha/src/index.ts",
+        "assets": ["libs/public/typescript/sdk/v2alpha/*.md"]
       }
     },
     "nx-release-publish": {

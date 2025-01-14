@@ -1,0 +1,361 @@
+syntax = "proto3";
+
+package decision;
+
+import "google/api/annotations.proto";
+
+import "google/protobuf/descriptor.proto";
+
+import "google/protobuf/empty.proto";
+
+option go_package = ".;decision";
+
+message Consent {
+}
+
+message DecisionRequest {
+  repeated Placement placements = 1;
+
+  User user = 2;
+
+  repeated string keywords = 3;
+
+  string url = 4;
+
+  string referrer = 5;
+
+  string ip = 6;
+
+  repeated int64 blocked_creatives = 7;
+
+  bool is_mobile = 8;
+
+  bool include_pricing_data = 9;
+
+  bool notrack = 10;
+
+  bool enable_bot_filtering = 11;
+
+  bool enable_user_dbip = 12;
+
+  Consent consent = 13;
+
+  string device_id = 14;
+
+  bool parallel = 15;
+
+  float intended_latitude = 16;
+
+  float intended_longitude = 17;
+
+  float radius = 18;
+
+  bool include_matched_points = 19;
+}
+
+message Properties {
+}
+
+message Overrides {
+}
+
+message ContentKeys {
+  map<string, string> additional_properties = 1;
+}
+
+message AdQuery {
+}
+
+message Placement {
+  string div_name = 1;
+
+  int32 network_id = 2;
+
+  int32 site_id = 3;
+
+  repeated int64 ad_types = 4;
+
+  repeated int64 zone_ids = 5;
+
+  int32 campaign_id = 6;
+
+  int32 flight_id = 7;
+
+  int32 ad_id = 8;
+
+  string click_url = 9;
+
+  Properties properties = 10;
+
+  repeated int64 event_ids = 11;
+
+  Overrides overrides = 12;
+
+  ContentKeys content_keys = 13;
+
+  int32 count = 14;
+
+  bool proportionality = 15;
+
+  string ecpm_partition = 16;
+
+  repeated string ecpm_partitions = 17;
+
+  int32 event_multiplier = 18;
+
+  bool skip_selection = 19;
+
+  AdQuery ad_query = 20;
+
+  float floor_price = 21;
+
+  float floor_cpc = 22;
+
+  SkipFilters skip_filters = 23;
+}
+
+message User {
+  string key = 1;
+}
+
+message Decision {
+  int64 ad_id = 1;
+
+  int64 advertiser_id = 2;
+
+  int64 creative_id = 3;
+
+  int64 flight_id = 4;
+
+  int64 campaign_id = 5;
+
+  int64 priority_id = 6;
+
+  string click_url = 7;
+
+  repeated Content contents = 8;
+
+  string impression_url = 9;
+
+  repeated Event events = 10;
+
+  repeated MatchedPoint matched_points = 11;
+
+  PricingData pricing = 12;
+}
+
+message Event {
+  int32 id = 1;
+
+  string url = 2;
+}
+
+message Data {
+}
+
+message Content {
+  string type = 1;
+
+  string template = 2;
+
+  string custom_template = 3;
+
+  Data data = 4;
+
+  string body = 5;
+}
+
+message PricingData {
+  float price = 1;
+
+  float clear_price = 2;
+
+  float revenue = 3;
+
+  int64 rate_type = 4;
+
+  float e_cpm = 5;
+}
+
+message Decisions {
+}
+
+message Explain {
+}
+
+message DecisionResponse {
+  User user = 1;
+
+  Decisions decisions = 2;
+
+  Explain explain = 3;
+}
+
+message ConsentRequest {
+  string user_key = 1;
+
+  Consent consent = 2;
+}
+
+message MatchedPoint {
+  string lat = 1;
+
+  string lon = 2;
+}
+
+message GeoDistanceSkipFilter {
+  bool value = 1;
+}
+
+message GeoLocationSkipFilter {
+  bool value = 1;
+}
+
+message SkipFilters {
+  GeoDistanceSkipFilter distance = 1;
+
+  bool facet = 2;
+
+  GeoDistanceSkipFilter geodistance = 3;
+
+  GeoLocationSkipFilter geolocation = 4;
+
+  bool keyword = 5;
+
+  GeoLocationSkipFilter location = 6;
+
+  bool placement_limit = 7;
+
+  bool site_zone = 8;
+}
+
+//GetDecisionsParameters holds parameters to GetDecisions
+message GetDecisionsRequest {
+  DecisionRequest decision_request = 1;
+}
+
+message AddCustomPropertiesRequestBody {
+}
+
+//AddCustomPropertiesParameters holds parameters to AddCustomProperties
+message AddCustomPropertiesRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+
+  AddCustomPropertiesRequestBody add_custom_properties_request_body = 3;
+}
+
+//AddInterestsParameters holds parameters to AddInterests
+message AddInterestsRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+
+  string interest = 3;
+}
+
+//AddRetargetingSegmentParameters holds parameters to AddRetargetingSegment
+message AddRetargetingSegmentRequest {
+  int32 network_id = 1;
+
+  int32 advertiser_id = 2;
+
+  int32 retargeting_segment_id = 3;
+
+  string user_key = 4;
+}
+
+//OptOutParameters holds parameters to OptOut
+message OptOutRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+}
+
+//ReadParameters holds parameters to Read
+message ReadRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+}
+
+message ReadOK {
+}
+
+//IpOverrideParameters holds parameters to IpOverride
+message IpOverrideRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+
+  string ip = 3;
+}
+
+//ForgetParameters holds parameters to Forget
+message ForgetRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+}
+
+//GdprConsentParameters holds parameters to GdprConsent
+message GdprConsentRequest {
+  int32 network_id = 1;
+
+  ConsentRequest consent_request = 2;
+}
+
+//MatchUserParameters holds parameters to MatchUser
+message MatchUserRequest {
+  int32 network_id = 1;
+
+  string user_key = 2;
+
+  int32 partner_id = 3;
+
+  int32 user_id = 4;
+}
+
+service DecisionService {
+  rpc GetDecisions ( GetDecisionsRequest ) returns ( DecisionResponse ) {
+    option (google.api.http) = { post:"/api/v2" body:"decision_request"  };
+  }
+
+  rpc AddCustomProperties ( AddCustomPropertiesRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { post:"/udb/{networkId}/custom" body:"add_custom_properties_request_body"  };
+  }
+
+  rpc AddInterests ( AddInterestsRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { get:"/udb/{networkId}/interest/i.gif"  };
+  }
+
+  rpc AddRetargetingSegment ( AddRetargetingSegmentRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { get:"/udb/{networkId}/rt/{advertiserId}/{retargetingSegmentId}/i.gif"  };
+  }
+
+  rpc OptOut ( OptOutRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { get:"/udb/{networkId}/optout/i.gif"  };
+  }
+
+  rpc Read ( ReadRequest ) returns ( ReadOK ) {
+    option (google.api.http) = { get:"/udb/{networkId}/read"  };
+  }
+
+  rpc IpOverride ( IpOverrideRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { get:"/udb/{networkId}/ip/i.gif"  };
+  }
+
+  rpc Forget ( ForgetRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { delete:"/udb/{networkId}"  };
+  }
+
+  rpc GdprConsent ( GdprConsentRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { post:"/udb/{networkId}/consent" body:"consent_request"  };
+  }
+
+  rpc MatchUser ( MatchUserRequest ) returns ( google.protobuf.Empty ) {
+    option (google.api.http) = { get:"/udb/{networkId}/sync/i.gif"  };
+  }
+}
+

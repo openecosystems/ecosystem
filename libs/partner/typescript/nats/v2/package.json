@@ -1,5 +1,5 @@
 {
-  "name": "@openecosystems/connectorv2alpha",
+  "name": "@openecosystems/natsv2",
   "version": "0.0.1",
   "files": [
     "dist",
