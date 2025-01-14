@@ -2,19 +2,19 @@ version: v2
 modules:
   # 10000
   - path: poc
-    name: buf.build/jeannotcompany/poc
+    name: buf.build/openecosystems/poc
   # 20000
   - path: public
-    name: buf.build/jeannotcompany/public
+    name: buf.build/openecosystems/public
   # 30000
-#  - path: partner
-#    name: buf.build/jeannotcompany/partner
+  - path: partner
+    name: buf.build/openecosystems/partner
   # 40000
   - path: private
-    name: buf.build/jeannotcompany/private
+    name: buf.build/openecosystems/private
   # 50000
   - path: protobuf
-    name: buf.build/jeannotcompany/protobuf
+    name: buf.build/openecosystems/protobuf
 lint:
   use:
     - DEFAULT
