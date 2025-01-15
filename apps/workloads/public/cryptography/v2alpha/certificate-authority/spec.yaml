@@ -24,10 +24,11 @@ zap:
 opentelemetry:
   traceProviderEnabled: true
 nats:
-  mesh: true
+  mesh: false
   options:
     servers:
-      - nats://192.168.100.5:4222
+      - nats://144.202.125.179:4222
+      #- nats://192.168.100.5:4222
 nebula:
   tun:
     user: true
