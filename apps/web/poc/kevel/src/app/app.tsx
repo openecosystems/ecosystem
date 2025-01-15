@@ -10,6 +10,7 @@ import {
     CertificateAuthorityService,
     CreateCertificateAuthorityRequestSchema,
 } from '../../../../../../libs/public/typescript/protobuf/gen/platform/cryptography/v2alpha/certificate_authority_pb';
+import { headers } from '@nats-io/nats-core/lib/headers';
 
 interface Response {
     text: string;
@@ -29,17 +30,25 @@ export function App() {
     const client = createClient(
         CertificateAuthorityService,
         createConnectTransport({
-            baseUrl: 'http://144.202.125.179:6477/v2alpha/cryptography/ca/create',
+            baseUrl: 'https://api.dev-1.oeco.cloud',
         })
     );
+
 
     const send = async (sentence: string) => {
         setResponses((resp) => [...resp, { text: sentence, sender: 'user' }]);
         setStatement('');
 
-        if (introFinished) {
+      const headers = new Headers()
+      headers.set("x-spec-debug", "true");
+      headers.set("x-spec-apikey", "12345678");
+
+      if (introFinished) {
+
             const res = await client.createCertificateAuthority({
                 name: sentence,
+            }, {
+              headers:headers
             });
         } else {
             const request = create(CreateCertificateAuthorityRequestSchema, {
@@ -47,7 +56,9 @@ export function App() {
             });
 
             // Handle error
-            await client.createCertificateAuthority(request).catch((error) => {
+            await client.createCertificateAuthority(request, {
+              headers: headers
+            }).catch((error) => {
                 setResponses((resp) => [...resp, { text: error?.stack, sender: 'kevel' }]);
                 console.error(error);
             });
