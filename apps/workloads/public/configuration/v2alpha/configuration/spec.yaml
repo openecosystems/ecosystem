@@ -10,10 +10,11 @@ zap:
 opentelemetry:
   traceProviderEnabled: true
 nats:
-  mesh: true
+  mesh: false
   options:
     servers:
-      - nats://192.168.100.5:4222
+      - nats://api.dev-1.na-us-1.oeco.cloud:4222
+      #- nats://192.168.100.5:4222
 nebula:
   tun:
     user: true

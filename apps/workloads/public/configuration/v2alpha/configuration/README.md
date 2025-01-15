@@ -63,6 +63,31 @@ curl -X GET \
 --header "x-spec-fieldmask: spec_context.organization_slug,configuration.id" \
 http://localhost:6477/v2/configurations/123 | jq .
 
+curl -X GET \
+--header "Content-Type: application/json" \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--header "x-spec-workspace-jan: JURISDICTION_USA" \
+--header "x-spec-validate-only: true" \
+--header "x-spec-principal-id: djeannot" \
+--header "x-spec-sent-at: 2022-12-10T04:08:31.581Z" \
+--header "x-spec-principal-email: dimy@jeannotfamily.com" \
+--header "x-spec-connection-id: corporate" \
+--header "x-spec-fieldmask: spec_context.organization_slug,configuration.id" \
+http://localhost:6477/v2/configurations/123
+
+curl -X GET -vv --http1.1 \
+--header "Content-Type: application/json" \
+--header "x-spec-apikey: 12345678" \
+--header "x-spec-debug: true" \
+https://api.dev-1.oeco.cloud/v2/configurations/123 | jq .
+
+curl -X POST \
+--header "Content-Type: application/json" \
+--header "x-spec-apikey: 12345678" \
+--header "x-spec-debug: true" \
+--data '{"parent_id": "123"}' \
+https://api.dev-1.oeco.cloud/v2/configurations
 
 curl -X POST \
 --header "Content-Type: application/json" \
