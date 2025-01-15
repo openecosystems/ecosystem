@@ -91,10 +91,10 @@
   "generators": {
     "@nx/react": {
       "application": {
+        "babel": true,
         "style": "scss",
         "linter": "eslint",
-        "bundler": "esbuild",
-        "babel": true
+        "bundler": "webpack"
       },
       "component": {
         "style": "scss"
@@ -131,6 +131,14 @@
       "exclude": [
         "apps/connectors/public/configuration/v2alpha/configuration-e2e/**/*"
       ]
+    },
+    {
+      "plugin": "@nx/webpack/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "serveTargetName": "serve",
+        "previewTargetName": "preview"
+      }
     }
   ],
   "pluginsConfig": {},

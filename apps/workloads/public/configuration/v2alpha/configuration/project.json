@@ -39,7 +39,7 @@
       "options": {
         "cmd": "go",
         "cwd": "apps/workloads/public/configuration/v2alpha/configuration",
-        "main": "*.go"
+        "main": "."
       }
     },
     "container": {

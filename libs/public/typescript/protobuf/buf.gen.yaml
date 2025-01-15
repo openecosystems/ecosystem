@@ -4,3 +4,4 @@ inputs:
 plugins:
   - remote: buf.build/bufbuild/es:v2.2.3
     out: ./gen
+    include_imports: true

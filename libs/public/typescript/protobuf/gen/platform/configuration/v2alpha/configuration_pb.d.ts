@@ -50,6 +50,8 @@ export declare type CreateConfigurationRequest = Message<"platform.configuration
 export declare const CreateConfigurationRequestSchema: GenMessage<CreateConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.CreateConfigurationResponse
  */
 export declare type CreateConfigurationResponse = Message<"platform.configuration.v2alpha.CreateConfigurationResponse"> & {
@@ -61,6 +63,8 @@ export declare type CreateConfigurationResponse = Message<"platform.configuratio
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -73,6 +77,8 @@ export declare type CreateConfigurationResponse = Message<"platform.configuratio
 export declare const CreateConfigurationResponseSchema: GenMessage<CreateConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.GetConfigurationRequest
  */
 export declare type GetConfigurationRequest = Message<"platform.configuration.v2alpha.GetConfigurationRequest"> & {
@@ -84,6 +90,8 @@ export declare type GetConfigurationRequest = Message<"platform.configuration.v2
   specContext?: SpecRequestContext;
 
   /**
+   * 
+   *
    * @generated from field: string id = 2;
    */
   id: string;
@@ -96,6 +104,8 @@ export declare type GetConfigurationRequest = Message<"platform.configuration.v2
 export declare const GetConfigurationRequestSchema: GenMessage<GetConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.GetConfigurationResponse
  */
 export declare type GetConfigurationResponse = Message<"platform.configuration.v2alpha.GetConfigurationResponse"> & {
@@ -107,6 +117,8 @@ export declare type GetConfigurationResponse = Message<"platform.configuration.v
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -119,6 +131,8 @@ export declare type GetConfigurationResponse = Message<"platform.configuration.v
 export declare const GetConfigurationResponseSchema: GenMessage<GetConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.ListConfigurationsRequest
  */
 export declare type ListConfigurationsRequest = Message<"platform.configuration.v2alpha.ListConfigurationsRequest"> & {
@@ -151,6 +165,8 @@ export declare type ListConfigurationsRequest = Message<"platform.configuration.
 export declare const ListConfigurationsRequestSchema: GenMessage<ListConfigurationsRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.ListConfigurationsResponse
  */
 export declare type ListConfigurationsResponse = Message<"platform.configuration.v2alpha.ListConfigurationsResponse"> & {
@@ -190,10 +206,14 @@ export declare type ListConfigurationsResponse = Message<"platform.configuration
 export declare const ListConfigurationsResponseSchema: GenMessage<ListConfigurationsResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.ConfigurationsFilter
  */
 export declare type ConfigurationsFilter = Message<"platform.configuration.v2alpha.ConfigurationsFilter"> & {
   /**
+   * 
+   *
    * @generated from field: string filter = 1;
    */
   filter: string;
@@ -206,6 +226,8 @@ export declare type ConfigurationsFilter = Message<"platform.configuration.v2alp
 export declare const ConfigurationsFilterSchema: GenMessage<ConfigurationsFilter>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.UpdateConfigurationRequest
  */
 export declare type UpdateConfigurationRequest = Message<"platform.configuration.v2alpha.UpdateConfigurationRequest"> & {
@@ -217,6 +239,8 @@ export declare type UpdateConfigurationRequest = Message<"platform.configuration
   specContext?: SpecRequestContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
    */
   config?: Configuration;
@@ -229,6 +253,8 @@ export declare type UpdateConfigurationRequest = Message<"platform.configuration
 export declare const UpdateConfigurationRequestSchema: GenMessage<UpdateConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.UpdateConfigurationResponse
  */
 export declare type UpdateConfigurationResponse = Message<"platform.configuration.v2alpha.UpdateConfigurationResponse"> & {
@@ -240,6 +266,8 @@ export declare type UpdateConfigurationResponse = Message<"platform.configuratio
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -252,6 +280,8 @@ export declare type UpdateConfigurationResponse = Message<"platform.configuratio
 export declare const UpdateConfigurationResponseSchema: GenMessage<UpdateConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.LoadConfigurationRequest
  */
 export declare type LoadConfigurationRequest = Message<"platform.configuration.v2alpha.LoadConfigurationRequest"> & {
@@ -263,6 +293,8 @@ export declare type LoadConfigurationRequest = Message<"platform.configuration.v
   specContext?: SpecRequestContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
    */
   config?: Configuration;
@@ -275,6 +307,8 @@ export declare type LoadConfigurationRequest = Message<"platform.configuration.v
 export declare const LoadConfigurationRequestSchema: GenMessage<LoadConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.LoadConfigurationResponse
  */
 export declare type LoadConfigurationResponse = Message<"platform.configuration.v2alpha.LoadConfigurationResponse"> & {
@@ -286,6 +320,8 @@ export declare type LoadConfigurationResponse = Message<"platform.configuration.
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -298,6 +334,8 @@ export declare type LoadConfigurationResponse = Message<"platform.configuration.
 export declare const LoadConfigurationResponseSchema: GenMessage<LoadConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.DeleteConfigurationRequest
  */
 export declare type DeleteConfigurationRequest = Message<"platform.configuration.v2alpha.DeleteConfigurationRequest"> & {
@@ -309,6 +347,8 @@ export declare type DeleteConfigurationRequest = Message<"platform.configuration
   specContext?: SpecRequestContext;
 
   /**
+   * 
+   *
    * @generated from field: string id = 2;
    */
   id: string;
@@ -321,6 +361,8 @@ export declare type DeleteConfigurationRequest = Message<"platform.configuration
 export declare const DeleteConfigurationRequestSchema: GenMessage<DeleteConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.DeleteConfigurationResponse
  */
 export declare type DeleteConfigurationResponse = Message<"platform.configuration.v2alpha.DeleteConfigurationResponse"> & {
@@ -332,6 +374,8 @@ export declare type DeleteConfigurationResponse = Message<"platform.configuratio
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -344,6 +388,8 @@ export declare type DeleteConfigurationResponse = Message<"platform.configuratio
 export declare const DeleteConfigurationResponseSchema: GenMessage<DeleteConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.PublishConfigurationRequest
  */
 export declare type PublishConfigurationRequest = Message<"platform.configuration.v2alpha.PublishConfigurationRequest"> & {
@@ -355,6 +401,8 @@ export declare type PublishConfigurationRequest = Message<"platform.configuratio
   specContext?: SpecRequestContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
    */
   config?: Configuration;
@@ -372,6 +420,8 @@ export declare type PublishConfigurationRequest = Message<"platform.configuratio
 export declare const PublishConfigurationRequestSchema: GenMessage<PublishConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.PublishConfigurationResponse
  */
 export declare type PublishConfigurationResponse = Message<"platform.configuration.v2alpha.PublishConfigurationResponse"> & {
@@ -383,6 +433,8 @@ export declare type PublishConfigurationResponse = Message<"platform.configurati
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -395,6 +447,8 @@ export declare type PublishConfigurationResponse = Message<"platform.configurati
 export declare const PublishConfigurationResponseSchema: GenMessage<PublishConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.ArchiveConfigurationRequest
  */
 export declare type ArchiveConfigurationRequest = Message<"platform.configuration.v2alpha.ArchiveConfigurationRequest"> & {
@@ -406,6 +460,8 @@ export declare type ArchiveConfigurationRequest = Message<"platform.configuratio
   specContext?: SpecRequestContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
    */
   config?: Configuration;
@@ -423,6 +479,8 @@ export declare type ArchiveConfigurationRequest = Message<"platform.configuratio
 export declare const ArchiveConfigurationRequestSchema: GenMessage<ArchiveConfigurationRequest>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.ArchiveConfigurationResponse
  */
 export declare type ArchiveConfigurationResponse = Message<"platform.configuration.v2alpha.ArchiveConfigurationResponse"> & {
@@ -434,6 +492,8 @@ export declare type ArchiveConfigurationResponse = Message<"platform.configurati
   specContext?: SpecResponseContext;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
    */
   configuration?: Configuration;
@@ -446,70 +506,98 @@ export declare type ArchiveConfigurationResponse = Message<"platform.configurati
 export declare const ArchiveConfigurationResponseSchema: GenMessage<ArchiveConfigurationResponse>;
 
 /**
+ * 
+ *
  * @generated from message platform.configuration.v2alpha.Configuration
  */
 export declare type Configuration = Message<"platform.configuration.v2alpha.Configuration"> & {
   /**
+   * 
+   *
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
+   * 
+   *
    * @generated from field: string organization_slug = 2;
    */
   organizationSlug: string;
 
   /**
+   * 
+   *
    * @generated from field: string workspace_slug = 3;
    */
   workspaceSlug: string;
 
   /**
+   * 
+   *
    * @generated from field: google.protobuf.Timestamp created_at = 4;
    */
   createdAt?: Timestamp;
 
   /**
+   * 
+   *
    * @generated from field: google.protobuf.Timestamp updated_at = 5;
    */
   updatedAt?: Timestamp;
 
   /**
+   * 
+   *
    * @generated from field: string source_id = 6;
    */
   sourceId: string;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.ConfigurationType type = 7;
    */
   type: ConfigurationType;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.ConfigurationStatus status = 8;
    */
   status: ConfigurationStatus;
 
   /**
+   * 
+   *
    * @generated from field: string status_details = 9;
    */
   statusDetails: string;
 
   /**
+   * 
+   *
    * @generated from field: string parent_id = 10;
    */
   parentId: string;
 
   /**
+   * 
+   *
    * @generated from field: platform.ontology.v2alpha.SpecDataCatalog data_catalog = 13;
    */
   dataCatalog?: SpecDataCatalog;
 
   /**
+   * 
+   *
    * @generated from field: string clinical_catalog = 14;
    */
   clinicalCatalog: string;
 
   /**
+   * 
+   *
    * @generated from field: platform.configuration.v2alpha.SpecPlatformConfiguration platform_configuration = 15;
    */
   platformConfiguration?: SpecPlatformConfiguration;
@@ -717,6 +805,8 @@ export declare const ConfigurationEventsSchema: GenEnum<ConfigurationEvents>;
  */
 export declare const ConfigurationService: GenService<{
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.CreateConfiguration
    */
   createConfiguration: {
@@ -725,6 +815,8 @@ export declare const ConfigurationService: GenService<{
     output: typeof CreateConfigurationResponseSchema;
   },
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.ListConfigurations
    */
   listConfigurations: {
@@ -733,7 +825,7 @@ export declare const ConfigurationService: GenService<{
     output: typeof ListConfigurationsResponseSchema;
   },
   /**
-   *
+   * 
    * Get workspace location
    *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.GetConfiguration
@@ -744,6 +836,8 @@ export declare const ConfigurationService: GenService<{
     output: typeof GetConfigurationResponseSchema;
   },
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.UpdateConfiguration
    */
   updateConfiguration: {
@@ -752,6 +846,8 @@ export declare const ConfigurationService: GenService<{
     output: typeof UpdateConfigurationResponseSchema;
   },
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.LoadConfiguration
    */
   loadConfiguration: {
@@ -760,6 +856,8 @@ export declare const ConfigurationService: GenService<{
     output: typeof LoadConfigurationResponseSchema;
   },
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.DeleteConfiguration
    */
   deleteConfiguration: {
@@ -768,6 +866,8 @@ export declare const ConfigurationService: GenService<{
     output: typeof DeleteConfigurationResponseSchema;
   },
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.PublishConfiguration
    */
   publishConfiguration: {
@@ -776,6 +876,8 @@ export declare const ConfigurationService: GenService<{
     output: typeof PublishConfigurationResponseSchema;
   },
   /**
+   * 
+   *
    * @generated from rpc platform.configuration.v2alpha.ConfigurationService.ArchiveConfiguration
    */
   archiveConfiguration: {

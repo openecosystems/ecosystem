@@ -50,7 +50,7 @@
       "options": {
         "cmd": "go",
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority",
-        "main": "*.go"
+        "main": "."
       }
     },
     "container": {
