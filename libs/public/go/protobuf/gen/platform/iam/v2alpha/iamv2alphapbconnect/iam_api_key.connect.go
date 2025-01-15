@@ -41,13 +41,6 @@ const (
 	IamApiKeyServiceDeleteApiKeyProcedure = "/platform.iam.v2alpha.IamApiKeyService/DeleteApiKey"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	iamApiKeyServiceServiceDescriptor            = v2alpha.File_platform_iam_v2alpha_iam_api_key_proto.Services().ByName("IamApiKeyService")
-	iamApiKeyServiceCreateApiKeyMethodDescriptor = iamApiKeyServiceServiceDescriptor.Methods().ByName("CreateApiKey")
-	iamApiKeyServiceDeleteApiKeyMethodDescriptor = iamApiKeyServiceServiceDescriptor.Methods().ByName("DeleteApiKey")
-)
-
 // IamApiKeyServiceClient is a client for the platform.iam.v2alpha.IamApiKeyService service.
 type IamApiKeyServiceClient interface {
 	// Method to create API Key
@@ -65,17 +58,18 @@ type IamApiKeyServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewIamApiKeyServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) IamApiKeyServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	iamApiKeyServiceMethods := v2alpha.File_platform_iam_v2alpha_iam_api_key_proto.Services().ByName("IamApiKeyService").Methods()
 	return &iamApiKeyServiceClient{
 		createApiKey: connect.NewClient[v2alpha.CreateApiKeyRequest, v2alpha.CreateApiKeyResponse](
 			httpClient,
 			baseURL+IamApiKeyServiceCreateApiKeyProcedure,
-			connect.WithSchema(iamApiKeyServiceCreateApiKeyMethodDescriptor),
+			connect.WithSchema(iamApiKeyServiceMethods.ByName("CreateApiKey")),
 			connect.WithClientOptions(opts...),
 		),
 		deleteApiKey: connect.NewClient[v2alpha.DeleteApiKeyRequest, v2alpha.DeleteApiKeyResponse](
 			httpClient,
 			baseURL+IamApiKeyServiceDeleteApiKeyProcedure,
-			connect.WithSchema(iamApiKeyServiceDeleteApiKeyMethodDescriptor),
+			connect.WithSchema(iamApiKeyServiceMethods.ByName("DeleteApiKey")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -112,16 +106,17 @@ type IamApiKeyServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewIamApiKeyServiceHandler(svc IamApiKeyServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	iamApiKeyServiceMethods := v2alpha.File_platform_iam_v2alpha_iam_api_key_proto.Services().ByName("IamApiKeyService").Methods()
 	iamApiKeyServiceCreateApiKeyHandler := connect.NewUnaryHandler(
 		IamApiKeyServiceCreateApiKeyProcedure,
 		svc.CreateApiKey,
-		connect.WithSchema(iamApiKeyServiceCreateApiKeyMethodDescriptor),
+		connect.WithSchema(iamApiKeyServiceMethods.ByName("CreateApiKey")),
 		connect.WithHandlerOptions(opts...),
 	)
 	iamApiKeyServiceDeleteApiKeyHandler := connect.NewUnaryHandler(
 		IamApiKeyServiceDeleteApiKeyProcedure,
 		svc.DeleteApiKey,
-		connect.WithSchema(iamApiKeyServiceDeleteApiKeyMethodDescriptor),
+		connect.WithSchema(iamApiKeyServiceMethods.ByName("DeleteApiKey")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.iam.v2alpha.IamApiKeyService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

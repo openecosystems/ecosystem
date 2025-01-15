@@ -40,13 +40,6 @@ const (
 	ReferenceServiceServerStreamingProcedure = "/platform.reference.v2alpha.ReferenceService/ServerStreaming"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	referenceServiceServiceDescriptor               = v2alpha.File_platform_reference_v2alpha_reference_proto.Services().ByName("ReferenceService")
-	referenceServiceUnaryMethodDescriptor           = referenceServiceServiceDescriptor.Methods().ByName("Unary")
-	referenceServiceServerStreamingMethodDescriptor = referenceServiceServiceDescriptor.Methods().ByName("ServerStreaming")
-)
-
 // ReferenceServiceClient is a client for the platform.reference.v2alpha.ReferenceService service.
 type ReferenceServiceClient interface {
 	Unary(context.Context, *connect.Request[v2alpha.UnaryRequest]) (*connect.Response[v2alpha.UnaryResponse], error)
@@ -62,17 +55,18 @@ type ReferenceServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewReferenceServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) ReferenceServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	referenceServiceMethods := v2alpha.File_platform_reference_v2alpha_reference_proto.Services().ByName("ReferenceService").Methods()
 	return &referenceServiceClient{
 		unary: connect.NewClient[v2alpha.UnaryRequest, v2alpha.UnaryResponse](
 			httpClient,
 			baseURL+ReferenceServiceUnaryProcedure,
-			connect.WithSchema(referenceServiceUnaryMethodDescriptor),
+			connect.WithSchema(referenceServiceMethods.ByName("Unary")),
 			connect.WithClientOptions(opts...),
 		),
 		serverStreaming: connect.NewClient[v2alpha.ServerStreamingRequest, v2alpha.ServerStreamingResponse](
 			httpClient,
 			baseURL+ReferenceServiceServerStreamingProcedure,
-			connect.WithSchema(referenceServiceServerStreamingMethodDescriptor),
+			connect.WithSchema(referenceServiceMethods.ByName("ServerStreaming")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -107,16 +101,17 @@ type ReferenceServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewReferenceServiceHandler(svc ReferenceServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	referenceServiceMethods := v2alpha.File_platform_reference_v2alpha_reference_proto.Services().ByName("ReferenceService").Methods()
 	referenceServiceUnaryHandler := connect.NewUnaryHandler(
 		ReferenceServiceUnaryProcedure,
 		svc.Unary,
-		connect.WithSchema(referenceServiceUnaryMethodDescriptor),
+		connect.WithSchema(referenceServiceMethods.ByName("Unary")),
 		connect.WithHandlerOptions(opts...),
 	)
 	referenceServiceServerStreamingHandler := connect.NewServerStreamHandler(
 		ReferenceServiceServerStreamingProcedure,
 		svc.ServerStreaming,
-		connect.WithSchema(referenceServiceServerStreamingMethodDescriptor),
+		connect.WithSchema(referenceServiceMethods.ByName("ServerStreaming")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.reference.v2alpha.ReferenceService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

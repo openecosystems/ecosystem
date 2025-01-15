@@ -12,8 +12,6 @@ import type { FieldMask } from "@bufbuild/protobuf/wkt";
 export declare const file_platform_type_v2_mask: GenFile;
 
 /**
- * 
- *
  * @generated from message platform.type.v2.ResponseMask
  */
 export declare type ResponseMask = Message<"platform.type.v2.ResponseMask"> & {

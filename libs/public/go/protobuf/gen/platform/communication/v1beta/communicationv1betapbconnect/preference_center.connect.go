@@ -47,15 +47,6 @@ const (
 	PreferenceCenterServiceGetPreferenceOptionsProcedure = "/platform.communication.v1beta.PreferenceCenterService/GetPreferenceOptions"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	preferenceCenterServiceServiceDescriptor                        = v1beta.File_platform_communication_v1beta_preference_center_proto.Services().ByName("PreferenceCenterService")
-	preferenceCenterServiceCreateOrUpdatePreferenceMethodDescriptor = preferenceCenterServiceServiceDescriptor.Methods().ByName("CreateOrUpdatePreference")
-	preferenceCenterServiceDeletePreferenceMethodDescriptor         = preferenceCenterServiceServiceDescriptor.Methods().ByName("DeletePreference")
-	preferenceCenterServiceGetPreferenceMethodDescriptor            = preferenceCenterServiceServiceDescriptor.Methods().ByName("GetPreference")
-	preferenceCenterServiceGetPreferenceOptionsMethodDescriptor     = preferenceCenterServiceServiceDescriptor.Methods().ByName("GetPreferenceOptions")
-)
-
 // PreferenceCenterServiceClient is a client for the
 // platform.communication.v1beta.PreferenceCenterService service.
 type PreferenceCenterServiceClient interface {
@@ -79,29 +70,30 @@ type PreferenceCenterServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewPreferenceCenterServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) PreferenceCenterServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	preferenceCenterServiceMethods := v1beta.File_platform_communication_v1beta_preference_center_proto.Services().ByName("PreferenceCenterService").Methods()
 	return &preferenceCenterServiceClient{
 		createOrUpdatePreference: connect.NewClient[v1beta.CreateOrUpdatePreferenceRequest, v1beta.CreateOrUpdatePreferenceResponse](
 			httpClient,
 			baseURL+PreferenceCenterServiceCreateOrUpdatePreferenceProcedure,
-			connect.WithSchema(preferenceCenterServiceCreateOrUpdatePreferenceMethodDescriptor),
+			connect.WithSchema(preferenceCenterServiceMethods.ByName("CreateOrUpdatePreference")),
 			connect.WithClientOptions(opts...),
 		),
 		deletePreference: connect.NewClient[v1beta.DeletePreferenceRequest, v1beta.DeletePreferenceResponse](
 			httpClient,
 			baseURL+PreferenceCenterServiceDeletePreferenceProcedure,
-			connect.WithSchema(preferenceCenterServiceDeletePreferenceMethodDescriptor),
+			connect.WithSchema(preferenceCenterServiceMethods.ByName("DeletePreference")),
 			connect.WithClientOptions(opts...),
 		),
 		getPreference: connect.NewClient[v1beta.GetPreferenceRequest, v1beta.GetPreferenceResponse](
 			httpClient,
 			baseURL+PreferenceCenterServiceGetPreferenceProcedure,
-			connect.WithSchema(preferenceCenterServiceGetPreferenceMethodDescriptor),
+			connect.WithSchema(preferenceCenterServiceMethods.ByName("GetPreference")),
 			connect.WithClientOptions(opts...),
 		),
 		getPreferenceOptions: connect.NewClient[v1beta.GetPreferenceOptionsRequest, v1beta.GetPreferenceOptionsResponse](
 			httpClient,
 			baseURL+PreferenceCenterServiceGetPreferenceOptionsProcedure,
-			connect.WithSchema(preferenceCenterServiceGetPreferenceOptionsMethodDescriptor),
+			connect.WithSchema(preferenceCenterServiceMethods.ByName("GetPreferenceOptions")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -156,28 +148,29 @@ type PreferenceCenterServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewPreferenceCenterServiceHandler(svc PreferenceCenterServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	preferenceCenterServiceMethods := v1beta.File_platform_communication_v1beta_preference_center_proto.Services().ByName("PreferenceCenterService").Methods()
 	preferenceCenterServiceCreateOrUpdatePreferenceHandler := connect.NewUnaryHandler(
 		PreferenceCenterServiceCreateOrUpdatePreferenceProcedure,
 		svc.CreateOrUpdatePreference,
-		connect.WithSchema(preferenceCenterServiceCreateOrUpdatePreferenceMethodDescriptor),
+		connect.WithSchema(preferenceCenterServiceMethods.ByName("CreateOrUpdatePreference")),
 		connect.WithHandlerOptions(opts...),
 	)
 	preferenceCenterServiceDeletePreferenceHandler := connect.NewUnaryHandler(
 		PreferenceCenterServiceDeletePreferenceProcedure,
 		svc.DeletePreference,
-		connect.WithSchema(preferenceCenterServiceDeletePreferenceMethodDescriptor),
+		connect.WithSchema(preferenceCenterServiceMethods.ByName("DeletePreference")),
 		connect.WithHandlerOptions(opts...),
 	)
 	preferenceCenterServiceGetPreferenceHandler := connect.NewUnaryHandler(
 		PreferenceCenterServiceGetPreferenceProcedure,
 		svc.GetPreference,
-		connect.WithSchema(preferenceCenterServiceGetPreferenceMethodDescriptor),
+		connect.WithSchema(preferenceCenterServiceMethods.ByName("GetPreference")),
 		connect.WithHandlerOptions(opts...),
 	)
 	preferenceCenterServiceGetPreferenceOptionsHandler := connect.NewUnaryHandler(
 		PreferenceCenterServiceGetPreferenceOptionsProcedure,
 		svc.GetPreferenceOptions,
-		connect.WithSchema(preferenceCenterServiceGetPreferenceOptionsMethodDescriptor),
+		connect.WithSchema(preferenceCenterServiceMethods.ByName("GetPreferenceOptions")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.communication.v1beta.PreferenceCenterService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -59,19 +59,6 @@ const (
 	ConfigurationServiceArchiveConfigurationProcedure = "/platform.configuration.v2alpha.ConfigurationService/ArchiveConfiguration"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	configurationServiceServiceDescriptor                    = v2alpha.File_platform_configuration_v2alpha_configuration_proto.Services().ByName("ConfigurationService")
-	configurationServiceCreateConfigurationMethodDescriptor  = configurationServiceServiceDescriptor.Methods().ByName("CreateConfiguration")
-	configurationServiceListConfigurationsMethodDescriptor   = configurationServiceServiceDescriptor.Methods().ByName("ListConfigurations")
-	configurationServiceGetConfigurationMethodDescriptor     = configurationServiceServiceDescriptor.Methods().ByName("GetConfiguration")
-	configurationServiceUpdateConfigurationMethodDescriptor  = configurationServiceServiceDescriptor.Methods().ByName("UpdateConfiguration")
-	configurationServiceLoadConfigurationMethodDescriptor    = configurationServiceServiceDescriptor.Methods().ByName("LoadConfiguration")
-	configurationServiceDeleteConfigurationMethodDescriptor  = configurationServiceServiceDescriptor.Methods().ByName("DeleteConfiguration")
-	configurationServicePublishConfigurationMethodDescriptor = configurationServiceServiceDescriptor.Methods().ByName("PublishConfiguration")
-	configurationServiceArchiveConfigurationMethodDescriptor = configurationServiceServiceDescriptor.Methods().ByName("ArchiveConfiguration")
-)
-
 // ConfigurationServiceClient is a client for the
 // platform.configuration.v2alpha.ConfigurationService service.
 type ConfigurationServiceClient interface {
@@ -96,53 +83,54 @@ type ConfigurationServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewConfigurationServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) ConfigurationServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	configurationServiceMethods := v2alpha.File_platform_configuration_v2alpha_configuration_proto.Services().ByName("ConfigurationService").Methods()
 	return &configurationServiceClient{
 		createConfiguration: connect.NewClient[v2alpha.CreateConfigurationRequest, v2alpha.CreateConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServiceCreateConfigurationProcedure,
-			connect.WithSchema(configurationServiceCreateConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("CreateConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 		listConfigurations: connect.NewClient[v2alpha.ListConfigurationsRequest, v2alpha.ListConfigurationsResponse](
 			httpClient,
 			baseURL+ConfigurationServiceListConfigurationsProcedure,
-			connect.WithSchema(configurationServiceListConfigurationsMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("ListConfigurations")),
 			connect.WithClientOptions(opts...),
 		),
 		getConfiguration: connect.NewClient[v2alpha.GetConfigurationRequest, v2alpha.GetConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServiceGetConfigurationProcedure,
-			connect.WithSchema(configurationServiceGetConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("GetConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 		updateConfiguration: connect.NewClient[v2alpha.UpdateConfigurationRequest, v2alpha.UpdateConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServiceUpdateConfigurationProcedure,
-			connect.WithSchema(configurationServiceUpdateConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("UpdateConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 		loadConfiguration: connect.NewClient[v2alpha.LoadConfigurationRequest, v2alpha.LoadConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServiceLoadConfigurationProcedure,
-			connect.WithSchema(configurationServiceLoadConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("LoadConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 		deleteConfiguration: connect.NewClient[v2alpha.DeleteConfigurationRequest, v2alpha.DeleteConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServiceDeleteConfigurationProcedure,
-			connect.WithSchema(configurationServiceDeleteConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("DeleteConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 		publishConfiguration: connect.NewClient[v2alpha.PublishConfigurationRequest, v2alpha.PublishConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServicePublishConfigurationProcedure,
-			connect.WithSchema(configurationServicePublishConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("PublishConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 		archiveConfiguration: connect.NewClient[v2alpha.ArchiveConfigurationRequest, v2alpha.ArchiveConfigurationResponse](
 			httpClient,
 			baseURL+ConfigurationServiceArchiveConfigurationProcedure,
-			connect.WithSchema(configurationServiceArchiveConfigurationMethodDescriptor),
+			connect.WithSchema(configurationServiceMethods.ByName("ArchiveConfiguration")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -225,52 +213,53 @@ type ConfigurationServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewConfigurationServiceHandler(svc ConfigurationServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	configurationServiceMethods := v2alpha.File_platform_configuration_v2alpha_configuration_proto.Services().ByName("ConfigurationService").Methods()
 	configurationServiceCreateConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServiceCreateConfigurationProcedure,
 		svc.CreateConfiguration,
-		connect.WithSchema(configurationServiceCreateConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("CreateConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServiceListConfigurationsHandler := connect.NewUnaryHandler(
 		ConfigurationServiceListConfigurationsProcedure,
 		svc.ListConfigurations,
-		connect.WithSchema(configurationServiceListConfigurationsMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("ListConfigurations")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServiceGetConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServiceGetConfigurationProcedure,
 		svc.GetConfiguration,
-		connect.WithSchema(configurationServiceGetConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("GetConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServiceUpdateConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServiceUpdateConfigurationProcedure,
 		svc.UpdateConfiguration,
-		connect.WithSchema(configurationServiceUpdateConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("UpdateConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServiceLoadConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServiceLoadConfigurationProcedure,
 		svc.LoadConfiguration,
-		connect.WithSchema(configurationServiceLoadConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("LoadConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServiceDeleteConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServiceDeleteConfigurationProcedure,
 		svc.DeleteConfiguration,
-		connect.WithSchema(configurationServiceDeleteConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("DeleteConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServicePublishConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServicePublishConfigurationProcedure,
 		svc.PublishConfiguration,
-		connect.WithSchema(configurationServicePublishConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("PublishConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	configurationServiceArchiveConfigurationHandler := connect.NewUnaryHandler(
 		ConfigurationServiceArchiveConfigurationProcedure,
 		svc.ArchiveConfiguration,
-		connect.WithSchema(configurationServiceArchiveConfigurationMethodDescriptor),
+		connect.WithSchema(configurationServiceMethods.ByName("ArchiveConfiguration")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.configuration.v2alpha.ConfigurationService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

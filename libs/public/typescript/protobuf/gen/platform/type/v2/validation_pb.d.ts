@@ -11,21 +11,15 @@ import type { Message } from "@bufbuild/protobuf";
 export declare const file_platform_type_v2_validation: GenFile;
 
 /**
- * 
- *
  * @generated from message platform.type.v2.RequestValidation
  */
 export declare type RequestValidation = Message<"platform.type.v2.RequestValidation"> & {
   /**
-   * 
-   *
    * @generated from field: bool validate_only = 1;
    */
   validateOnly: boolean;
 
   /**
-   * 
-   *
    * @generated from field: platform.type.v2.ValidationSignature signature = 2;
    */
   signature?: ValidationSignature;
@@ -38,21 +32,15 @@ export declare type RequestValidation = Message<"platform.type.v2.RequestValidat
 export declare const RequestValidationSchema: GenMessage<RequestValidation>;
 
 /**
- * 
- *
  * @generated from message platform.type.v2.ResponseValidation
  */
 export declare type ResponseValidation = Message<"platform.type.v2.ResponseValidation"> & {
   /**
-   * 
-   *
    * @generated from field: bool validate_only = 1;
    */
   validateOnly: boolean;
 
   /**
-   * 
-   *
    * @generated from field: platform.type.v2.ValidationSignature signature = 2;
    */
   signature?: ValidationSignature;
@@ -69,8 +57,6 @@ export declare const ResponseValidationSchema: GenMessage<ResponseValidation>;
  */
 export declare type ValidationSignature = Message<"platform.type.v2.ValidationSignature"> & {
   /**
-   * 
-   *
    * @generated from field: string jwt = 1;
    */
   jwt: string;
