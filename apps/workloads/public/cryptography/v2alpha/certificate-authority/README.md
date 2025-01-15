@@ -68,3 +68,6 @@ curl -X POST -vv \
 --header "x-spec-sent-at: 2022-12-10T04:08:31.581Z" \
 --data '{"parent_id": "123", "name": "hello"}' \
 http://localhost:7676/v2alpha/cryptography/ca/create
+
+
+curl -v  --request OPTIONS 'https://api.communication.dev-1.jeannot.company/v2alpha/cryptography/ca/create' --header 'Origin: https://example.com' --header 'Access-Control-Request-Method: POST'
