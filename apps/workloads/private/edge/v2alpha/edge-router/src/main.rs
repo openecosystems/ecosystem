@@ -101,14 +101,14 @@ fn main(mut req: Request) -> Result<Response, Error> {
 
     let ingress_gateway = match ingress::determine_ingress_gateway(&mut req, &ctx, &routing_rule, &sanitized_query_strings, &protocol) {
         Some(val) => val,
-        _ => return errors::fail("Could not process ingress gateway".to_string(), &protocol),
+        _ => return errors::fail("Could not determine ingress gateway".to_string(), &protocol),
     };
 
     //let _ = observability::observe_successful_distributed_transaction(start_time, &mut req, &ctx);
 
     let mut _beresp = match ingress::route_to_ingress_gateway(req, ingress_gateway, &protocol) {
         Some(val) => val,
-        _ => return errors::fail("Could not process ingress gateway".to_string(), &protocol),
+        _ => return errors::fail("Could not route to ingress gateway".to_string(), &protocol),
     };
 
     //let mut _beresp = req.send(ingress_gateway);

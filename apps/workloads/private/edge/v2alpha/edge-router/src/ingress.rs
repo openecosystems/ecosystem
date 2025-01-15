@@ -17,7 +17,7 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
     let name = _name.as_str();
 
     let mut _target = String::new();
-    write!(&mut _target, "api.{}.{}.{}.{}", &ctx.system, &ctx.env, &routing_rule.jan, &ctx.host).unwrap();
+    write!(&mut _target, "api.{}.{}.{}.{}:{}", &ctx.system, &ctx.env, &routing_rule.jan, &ctx.host, &ctx.port).unwrap();
     let mut target = _target.as_str();
 
     let mut _path = String::new();
@@ -25,7 +25,8 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
     let path = _path.as_str();
 
     let mut _url = String::new();
-    write!(&mut _url, "https://{}", path).unwrap();
+    // TODO: Revert this back to https once settled on server approach
+    write!(&mut _url, "http://{}", path).unwrap();
     let mut url = _url.as_str();
 
     if local {
@@ -43,6 +44,8 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
         println!("Ingress Name: {}", name);
         println!("Ingress Target: {}", target);
         println!("Ingress URL: {}",  url);
+        println!("Method: {}",  req.get_method().to_string());
+
         if local { println!("Running locally"); }
     }
 
@@ -65,10 +68,11 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
     if local {
         backend_builder = backend_builder.override_host(&ctx.host);
     } else {
-        backend_builder = backend_builder.enable_ssl();
+        // TODO Revert this once SSL is set
+        //backend_builder = backend_builder.enable_ssl();
         backend_builder = backend_builder.override_host(target);
-        backend_builder = backend_builder.sni_hostname(target);
-        backend_builder = backend_builder.check_certificate(target);
+        //backend_builder = backend_builder.sni_hostname(target);
+        //backend_builder = backend_builder.check_certificate(target);
     }
 
     //let ingress = backend_builder.finish().ok()?;
