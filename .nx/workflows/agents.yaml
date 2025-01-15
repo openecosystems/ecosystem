@@ -76,7 +76,7 @@ launch-templates:
           echo "PATH=/home/workflows/.cargo/bin:$PATH" >> $NX_CLOUD_ENV
           /home/workflows/.cargo/bin/rustup install 1.81.0
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
-          /home/workflows/.cargo/bin/rustup toolchain add stable
+          /home/workflows/.cargo/bin/rustup toolchain add 1.81.0
           /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
           . "/home/workflows/.cargo/env"
 
