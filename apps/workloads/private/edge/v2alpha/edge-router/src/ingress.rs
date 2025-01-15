@@ -20,6 +20,12 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
     write!(&mut _target, "api.{}.{}.{}.{}:{}", &ctx.system, &ctx.env, &routing_rule.jan, &ctx.host, &ctx.port).unwrap();
     let mut target = _target.as_str();
 
+    if let "nosystem" = &*ctx.system {
+        _target = String::new();
+        write!(&mut _target, "api.{}.{}.{}:{}", &ctx.env, &routing_rule.jan, &ctx.host, &ctx.port).unwrap();
+        target = _target.as_str();
+    }
+
     let mut _path = String::new();
     write!(&mut _path, "{}{}{}", target, req.get_path(),  sanitized_query_string).unwrap();
     let path = _path.as_str();
@@ -44,7 +50,6 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
         println!("Ingress Name: {}", name);
         println!("Ingress Target: {}", target);
         println!("Ingress URL: {}",  url);
-        println!("Method: {}",  req.get_method().to_string());
 
         if local { println!("Running locally"); }
     }

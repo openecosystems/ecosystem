@@ -85,6 +85,7 @@ pub(crate) fn extract_context(req: &mut Request, debug: bool) -> Option<Context>
         println!("Host: {}", host);
         println!("System: {}", system);
         println!("Port: {}", port);
+        println!("Method: {}", req.get_method_str());
         println!("Path: {}", req.get_path());
         println!("Version: {:?}", req.get_version());
         let mime_type = req.get_content_type();
