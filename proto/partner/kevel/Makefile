@@ -25,7 +25,8 @@ generate:
 else
 generate: download
 	gnostic --pb-out=. ./bin/decision/decision.yaml --resolve-refs && \
-	gnostic-grpc -input ./bin/decision/decision.pb -output ./advertisement/${versionChannel}
+	gnostic-grpc -input ./bin/decision/decision.pb -output ./advertisement/${version}
+	@mv ./advertisement/${version}/decision.proto ./advertisement/${version}/decision.proto.original
 
 download:
 	@echo "Downloading binaries"

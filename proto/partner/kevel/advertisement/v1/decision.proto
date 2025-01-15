@@ -1,14 +1,156 @@
 syntax = "proto3";
 
-package decision;
+package kevel.advertisement.v1;
 
 import "google/api/annotations.proto";
-
+import "platform/options/v2/annotations.proto";
 import "google/protobuf/descriptor.proto";
 
-import "google/protobuf/empty.proto";
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG, LANGUAGE_TYPE_TYPESCRIPT]};
+option (platform.options.v2.configuration) = {enabled: false};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PARTNER;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "decision";
+  entity_plural: "decisions";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
 
-option go_package = ".;decision";
+option go_package = "libs/partner/go/protobuf/gen/platform/advertisement/v1;advertisementv1pb";
+
+service DecisionService {
+  rpc GetDecisions ( GetDecisionsRequest ) returns ( GetDecisionsResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = {
+      post:"/api/v2"
+      body:"decision_request"
+    };
+  }
+
+  rpc AddCustomProperties ( AddCustomPropertiesRequest ) returns ( AddCustomPropertiesResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = { post:"/udb/{networkId}/custom" body:"add_custom_properties_request_body"  };
+  }
+
+  rpc AddInterests ( AddInterestsRequest ) returns ( AddInterestsResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = { get:"/udb/{networkId}/interest/i.gif"  };
+  }
+
+  rpc AddRetargetingSegment ( AddRetargetingSegmentRequest ) returns ( AddRetargetingSegmentResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = { get:"/udb/{networkId}/rt/{advertiserId}/{retargetingSegmentId}/i.gif"  };
+  }
+
+  rpc OptOut ( OptOutRequest ) returns ( OptOutResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = { get:"/udb/{networkId}/optout/i.gif"  };
+  }
+
+  rpc Read ( ReadRequest ) returns ( ReadResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = { get:"/udb/{networkId}/read"  };
+  }
+
+  rpc IpOverride ( IpOverrideRequest ) returns ( IpOverrideResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = { get:"/udb/{networkId}/ip/i.gif"  };
+  }
+
+  rpc Forget ( ForgetRequest ) returns ( ForgetResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_DELETE
+    };
+    option (google.api.http) = { delete:"/udb/{networkId}"  };
+  }
+
+  rpc GdprConsent ( GdprConsentRequest ) returns ( GdprConsentResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = { post:"/udb/{networkId}/consent" body:"consent_request"  };
+  }
+
+  rpc MatchUser ( MatchUserRequest ) returns ( MatchUserResponse ) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PARTNER;
+      cycle: API_LIFECYCLE_ALPHA;
+      interface: API_INTERFACE_TYPE_OPERATIONAL
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = { get:"/udb/{networkId}/sync/i.gif"  };
+  }
+}
+
 
 message Consent {
 }
@@ -119,7 +261,9 @@ message User {
 }
 
 message Decision {
-  int64 ad_id = 1;
+  int64 ad_id = 1 [(platform.options.v2.entity_field) = {
+    key: true
+  }];
 
   int64 advertiser_id = 2;
 
@@ -183,7 +327,7 @@ message Decisions {
 message Explain {
 }
 
-message DecisionResponse {
+message GetDecisionsResponse {
   User user = 1;
 
   Decisions decisions = 2;
@@ -246,6 +390,10 @@ message AddCustomPropertiesRequest {
   AddCustomPropertiesRequestBody add_custom_properties_request_body = 3;
 }
 
+message AddCustomPropertiesResponse {
+
+}
+
 //AddInterestsParameters holds parameters to AddInterests
 message AddInterestsRequest {
   int32 network_id = 1;
@@ -253,6 +401,10 @@ message AddInterestsRequest {
   string user_key = 2;
 
   string interest = 3;
+}
+
+message AddInterestsResponse {
+
 }
 
 //AddRetargetingSegmentParameters holds parameters to AddRetargetingSegment
@@ -266,11 +418,18 @@ message AddRetargetingSegmentRequest {
   string user_key = 4;
 }
 
+message AddRetargetingSegmentResponse {
+}
+
 //OptOutParameters holds parameters to OptOut
 message OptOutRequest {
   int32 network_id = 1;
 
   string user_key = 2;
+}
+
+message OptOutResponse {
+
 }
 
 //ReadParameters holds parameters to Read
@@ -280,7 +439,7 @@ message ReadRequest {
   string user_key = 2;
 }
 
-message ReadOK {
+message ReadResponse {
 }
 
 //IpOverrideParameters holds parameters to IpOverride
@@ -292,6 +451,10 @@ message IpOverrideRequest {
   string ip = 3;
 }
 
+message IpOverrideResponse {
+
+}
+
 //ForgetParameters holds parameters to Forget
 message ForgetRequest {
   int32 network_id = 1;
@@ -299,11 +462,19 @@ message ForgetRequest {
   string user_key = 2;
 }
 
+message ForgetResponse {
+
+}
+
 //GdprConsentParameters holds parameters to GdprConsent
 message GdprConsentRequest {
   int32 network_id = 1;
 
   ConsentRequest consent_request = 2;
+}
+
+message GdprConsentResponse {
+
 }
 
 //MatchUserParameters holds parameters to MatchUser
@@ -317,45 +488,7 @@ message MatchUserRequest {
   int32 user_id = 4;
 }
 
-service DecisionService {
-  rpc GetDecisions ( GetDecisionsRequest ) returns ( DecisionResponse ) {
-    option (google.api.http) = { post:"/api/v2" body:"decision_request"  };
-  }
+message MatchUserResponse {
 
-  rpc AddCustomProperties ( AddCustomPropertiesRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { post:"/udb/{networkId}/custom" body:"add_custom_properties_request_body"  };
-  }
-
-  rpc AddInterests ( AddInterestsRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { get:"/udb/{networkId}/interest/i.gif"  };
-  }
-
-  rpc AddRetargetingSegment ( AddRetargetingSegmentRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { get:"/udb/{networkId}/rt/{advertiserId}/{retargetingSegmentId}/i.gif"  };
-  }
-
-  rpc OptOut ( OptOutRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { get:"/udb/{networkId}/optout/i.gif"  };
-  }
-
-  rpc Read ( ReadRequest ) returns ( ReadOK ) {
-    option (google.api.http) = { get:"/udb/{networkId}/read"  };
-  }
-
-  rpc IpOverride ( IpOverrideRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { get:"/udb/{networkId}/ip/i.gif"  };
-  }
-
-  rpc Forget ( ForgetRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { delete:"/udb/{networkId}"  };
-  }
-
-  rpc GdprConsent ( GdprConsentRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { post:"/udb/{networkId}/consent" body:"consent_request"  };
-  }
-
-  rpc MatchUser ( MatchUserRequest ) returns ( google.protobuf.Empty ) {
-    option (google.api.http) = { get:"/udb/{networkId}/sync/i.gif"  };
-  }
 }
 

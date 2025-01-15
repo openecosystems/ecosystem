@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/opentelemetry/v2"
+	"libs/partner/go/protobuf/gen/kevel/advertisement/v1/advertisementv1pbconnect"
 	"libs/partner/go/protovalidate/v0"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -19,6 +20,7 @@ import (
 	"connectrpc.com/otelconnect"
 	"connectrpc.com/vanguard"
 
+	"libs/partner/go/server/v2alpha/gen/kevel/advertisement/v1"
 	communicationv1alphapbsrv "libs/public/go/server/v2alpha/gen/platform/communication/v1alpha"
 	configurationv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
 	cryptographyv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/cryptography/v2alpha"
@@ -67,6 +69,7 @@ func main() {
 	services = append(services, vanguard.NewService(communicationv1alphapbconnect.NewPreferenceCenterServiceHandler(&communicationv1alphapbsrv.PreferenceCenterServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(cryptographyv2alphapbconnect.NewCertificateAuthorityServiceHandler(&cryptographyv2alphapbsrv.CertificateAuthorityServiceHandler{}, interceptors)))
+	services = append(services, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 
 	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, services)
 

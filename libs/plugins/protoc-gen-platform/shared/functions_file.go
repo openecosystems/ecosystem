@@ -3,6 +3,7 @@ package shared
 import (
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	options "libs/protobuf/go/protobuf/gen/platform/options/v2"
+	"strings"
 )
 
 func (fns Functions) ApiOptions(file pgs.File) options.ApiOptions {
@@ -39,4 +40,10 @@ func (fns Functions) GetApiOptionsTypeName(file pgs.File) pgs.Name {
 
 func (fns Functions) GetApiOptionsType(file pgs.File) string {
 	return fns.GetApiOptionsTypeName(file).LowerCamelCase().String()
+}
+
+func (fns Functions) GetTopLevelFolderFromFile(file pgs.File) pgs.Name {
+	path := file.Name().Split()
+	v := strings.Split(path[0], "/")
+	return pgs.Name(v[0])
 }

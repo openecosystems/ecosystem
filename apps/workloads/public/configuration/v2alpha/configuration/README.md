@@ -5,22 +5,35 @@
 protoset <(buf build -o -)
 
 # gRPC Call
-buf curl --protocol grpc --http2-prior-knowledge \
+buf curl --protocol connect --http2-prior-knowledge \
 --schema <(buf build -o -) \
 --header "x-spec-apikey: 12345678" \
 --data '{"parent_id": "123"}' \
 http://api.dev-1.oeco.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
 
-# Create
+buf curl --protocol connect --http2-prior-knowledge \
+--schema ./public/platform/configuration/v2alpha/configuration.proto \
+--header "x-spec-apikey: 12345678" \
+--data '{"parent_id": "123"}' \
+http://api.dev-1.oeco.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
 grpcurl \
---plaintext -v \
+-protoset <(buf build -o -) -plaintext \
+-rpc-header "x-spec-apikey: 12345678" \
+-rpc-header "x-spec-workspace-slug: workspace123" \
+-rpc-header "x-spec-organization-slug: organization123" \
+-rpc-header "x-spec-workspace-jan: JURISDICTION_USA" \
 -d '{"parent_id": "123"}' \
--rpc-header ctx-organization-slug:test-organization \
--rpc-header ctx-workspace-slug:test-workspace \
--rpc-header ctx-locale:en_US \
--rpc-header auth-user-id:djeannot \
--rpc-header ctx-timezone:"America/New_York" \
-localhost:6568 platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+api.dev-1.na-us-1.oeco.cloud:6477 platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
+grpcurl \
+-protoset <(buf build -o -) -plaintext \
+-rpc-header "x-spec-apikey: 12345678" \
+-rpc-header "x-spec-workspace-slug: workspace123" \
+-rpc-header "x-spec-organization-slug: organization123" \
+-rpc-header "x-spec-workspace-jan: JURISDICTION_USA" \
+-d '{"parent_id": "123"}' \
+api.dev-1.oeco.cloud:443 platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
 
 # Latency Test
 ghz -c 100 -n 1 --insecure \
