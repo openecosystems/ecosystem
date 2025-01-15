@@ -46,18 +46,18 @@ RUN echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc
 RUN echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc
 RUN /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
-# Dotnet
-RUN WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb" && \
-    wget "$WGET_DOTNET" -O packages-microsoft-prod.deb && \
-    sudo dpkg -i packages-microsoft-prod.deb && \
-    rm packages-microsoft-prod.deb
-RUN sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref && \
-    echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
-
-# Apt Java, Dotnet
-RUN sudo apt-get update && sudo apt-get install -y openjdk-17-jdk aspnetcore-runtime-6.0 dotnet-sdk-7.0
-RUN curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
-RUN chmod +x go/bin/protoc-gen-grpc-java
+## Dotnet
+#RUN WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb" && \
+#    wget "$WGET_DOTNET" -O packages-microsoft-prod.deb && \
+#    sudo dpkg -i packages-microsoft-prod.deb && \
+#    rm packages-microsoft-prod.deb
+#RUN sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref && \
+#    echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
+#
+## Apt Java, Dotnet
+#RUN sudo apt-get update && sudo apt-get install -y openjdk-17-jdk aspnetcore-runtime-6.0 dotnet-sdk-7.0
+#RUN curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
+#RUN chmod +x go/bin/protoc-gen-grpc-java
 
 # Golang
 COPY --from=go-installs /home/circleci/go/bin /home/circleci/go/bin

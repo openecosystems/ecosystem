@@ -1,17 +1,17 @@
 package main
 
 import (
-  "fmt"
-  infrastructurev2alphalib "libs/private/go/infrastructure/v2alpha"
+	"fmt"
+	infrastructurev2alphalib "libs/private/go/infrastructure/v2alpha"
 )
 
 func cloudinit(key, caCrt, hostCrt, hostKey, version string) string {
-  _caCrt := infrastructurev2alphalib.WriteIndentedMultilineText(caCrt)
-  _hostCrt := infrastructurev2alphalib.WriteIndentedMultilineText(hostCrt)
-  _hostKey := infrastructurev2alphalib.WriteIndentedMultilineText(hostKey)
+	_caCrt := infrastructurev2alphalib.WriteIndentedMultilineText(caCrt)
+	_hostCrt := infrastructurev2alphalib.WriteIndentedMultilineText(hostCrt)
+	_hostKey := infrastructurev2alphalib.WriteIndentedMultilineText(hostKey)
 
-  return fmt.Sprintf(
-    `#cloud-config
+	return fmt.Sprintf(
+		`#cloud-config
 package_update: true
 package_upgrade: true
 users:
