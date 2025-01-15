@@ -5,6 +5,7 @@ package kevel.advertisement.v1;
 import "google/api/annotations.proto";
 import "platform/options/v2/annotations.proto";
 import "google/protobuf/descriptor.proto";
+import "platform/spec/v2/spec.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
 option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG, LANGUAGE_TYPE_TYPESCRIPT]};
@@ -51,7 +52,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
-    option (google.api.http) = { post:"/udb/{networkId}/custom" body:"add_custom_properties_request_body"  };
+    option (google.api.http) = { post:"/udb/{network_id}/custom" body:"add_custom_properties_request_body"  };
   }
 
   rpc AddInterests ( AddInterestsRequest ) returns ( AddInterestsResponse ) {
@@ -63,7 +64,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
-    option (google.api.http) = { get:"/udb/{networkId}/interest/i.gif"  };
+    option (google.api.http) = { get:"/udb/{network_id}/interest/i.gif"  };
   }
 
   rpc AddRetargetingSegment ( AddRetargetingSegmentRequest ) returns ( AddRetargetingSegmentResponse ) {
@@ -75,7 +76,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
-    option (google.api.http) = { get:"/udb/{networkId}/rt/{advertiserId}/{retargetingSegmentId}/i.gif"  };
+    option (google.api.http) = { get:"/udb/{network_id}/rt/{advertiser_id}/{retargeting_segment_id}/i.gif"  };
   }
 
   rpc OptOut ( OptOutRequest ) returns ( OptOutResponse ) {
@@ -87,7 +88,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
-    option (google.api.http) = { get:"/udb/{networkId}/optout/i.gif"  };
+    option (google.api.http) = { get:"/udb/{network_id}/optout/i.gif"  };
   }
 
   rpc Read ( ReadRequest ) returns ( ReadResponse ) {
@@ -99,7 +100,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
-    option (google.api.http) = { get:"/udb/{networkId}/read"  };
+    option (google.api.http) = { get:"/udb/{network_id}/read"  };
   }
 
   rpc IpOverride ( IpOverrideRequest ) returns ( IpOverrideResponse ) {
@@ -111,7 +112,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
-    option (google.api.http) = { get:"/udb/{networkId}/ip/i.gif"  };
+    option (google.api.http) = { get:"/udb/{network_id}/ip/i.gif"  };
   }
 
   rpc Forget ( ForgetRequest ) returns ( ForgetResponse ) {
@@ -123,7 +124,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_DELETE
     };
-    option (google.api.http) = { delete:"/udb/{networkId}"  };
+    option (google.api.http) = { delete:"/udb/{network_id}"  };
   }
 
   rpc GdprConsent ( GdprConsentRequest ) returns ( GdprConsentResponse ) {
@@ -135,7 +136,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
-    option (google.api.http) = { post:"/udb/{networkId}/consent" body:"consent_request"  };
+    option (google.api.http) = { post:"/udb/{network_id}/consent" body:"consent_request"  };
   }
 
   rpc MatchUser ( MatchUserRequest ) returns ( MatchUserResponse ) {
@@ -147,7 +148,7 @@ service DecisionService {
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
-    option (google.api.http) = { get:"/udb/{networkId}/sync/i.gif"  };
+    option (google.api.http) = { get:"/udb/{network_id}/sync/i.gif"  };
   }
 }
 
@@ -328,11 +329,14 @@ message Explain {
 }
 
 message GetDecisionsResponse {
-  User user = 1;
+  // The response context
+  platform.spec.v2.SpecResponseContext spec_context = 1;
 
-  Decisions decisions = 2;
+  User user = 2;
 
-  Explain explain = 3;
+  Decisions decisions = 3;
+
+  Explain explain = 4;
 }
 
 message ConsentRequest {
@@ -392,6 +396,8 @@ message AddCustomPropertiesRequest {
 
 message AddCustomPropertiesResponse {
 
+  platform.spec.v2.SpecResponseContext spec_context = 1;
+
 }
 
 //AddInterestsParameters holds parameters to AddInterests
@@ -404,6 +410,8 @@ message AddInterestsRequest {
 }
 
 message AddInterestsResponse {
+
+  platform.spec.v2.SpecResponseContext spec_context = 1;
 
 }
 
@@ -419,6 +427,9 @@ message AddRetargetingSegmentRequest {
 }
 
 message AddRetargetingSegmentResponse {
+
+  platform.spec.v2.SpecResponseContext spec_context = 1;
+
 }
 
 //OptOutParameters holds parameters to OptOut
@@ -440,6 +451,9 @@ message ReadRequest {
 }
 
 message ReadResponse {
+
+  platform.spec.v2.SpecResponseContext spec_context = 1;
+
 }
 
 //IpOverrideParameters holds parameters to IpOverride
@@ -452,6 +466,8 @@ message IpOverrideRequest {
 }
 
 message IpOverrideResponse {
+
+  platform.spec.v2.SpecResponseContext spec_context = 1;
 
 }
 
@@ -475,6 +491,8 @@ message GdprConsentRequest {
 
 message GdprConsentResponse {
 
+  platform.spec.v2.SpecResponseContext spec_context = 1;
+
 }
 
 //MatchUserParameters holds parameters to MatchUser
@@ -489,6 +507,8 @@ message MatchUserRequest {
 }
 
 message MatchUserResponse {
+
+  platform.spec.v2.SpecResponseContext spec_context = 1;
 
 }
 

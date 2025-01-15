@@ -18,82 +18,87 @@ export declare const file_platform_ontology_v2alpha_spec_data_catalog: GenFile;
  */
 export declare type SpecDataCatalog = Message<"platform.ontology.v2alpha.SpecDataCatalog"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.Audit audit = 1;
+   * @generated from field: platform.ontology.v2alpha.Advertisement advertisement = 1;
+   */
+  advertisement?: Advertisement;
+
+  /**
+   * @generated from field: platform.ontology.v2alpha.Audit audit = 2;
    */
   audit?: Audit;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Cli cli = 2;
+   * @generated from field: platform.ontology.v2alpha.Cli cli = 3;
    */
   cli?: Cli;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Communication communication = 3;
+   * @generated from field: platform.ontology.v2alpha.Communication communication = 4;
    */
   communication?: Communication;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Configuration configuration = 4;
+   * @generated from field: platform.ontology.v2alpha.Configuration configuration = 5;
    */
   configuration?: Configuration;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Cryptography cryptography = 5;
+   * @generated from field: platform.ontology.v2alpha.Cryptography cryptography = 6;
    */
   cryptography?: Cryptography;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Dns dns = 6;
+   * @generated from field: platform.ontology.v2alpha.Dns dns = 7;
    */
   dns?: Dns;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Edge edge = 7;
+   * @generated from field: platform.ontology.v2alpha.Edge edge = 8;
    */
   edge?: Edge;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Event event = 8;
+   * @generated from field: platform.ontology.v2alpha.Event event = 9;
    */
   event?: Event;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Iam iam = 9;
+   * @generated from field: platform.ontology.v2alpha.Iam iam = 10;
    */
   iam?: Iam;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Mesh mesh = 10;
+   * @generated from field: platform.ontology.v2alpha.Mesh mesh = 11;
    */
   mesh?: Mesh;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Ontology ontology = 11;
+   * @generated from field: platform.ontology.v2alpha.Ontology ontology = 12;
    */
   ontology?: Ontology;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Options options = 12;
+   * @generated from field: platform.ontology.v2alpha.Options options = 13;
    */
   options?: Options;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Reference reference = 13;
+   * @generated from field: platform.ontology.v2alpha.Reference reference = 14;
    */
   reference?: Reference;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Spec spec = 14;
+   * @generated from field: platform.ontology.v2alpha.Spec spec = 15;
    */
   spec?: Spec;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.System system = 15;
+   * @generated from field: platform.ontology.v2alpha.System system = 16;
    */
   system?: System;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.Type type = 16;
+   * @generated from field: platform.ontology.v2alpha.Type type = 17;
    */
   type?: Type;
 };
@@ -105,11 +110,27 @@ export declare type SpecDataCatalog = Message<"platform.ontology.v2alpha.SpecDat
 export declare const SpecDataCatalogSchema: GenMessage<SpecDataCatalog>;
 
 /**
+ * @generated from message platform.ontology.v2alpha.Advertisement
+ */
+export declare type Advertisement = Message<"platform.ontology.v2alpha.Advertisement"> & {
+  /**
+   * @generated from field: platform.ontology.v2alpha.DecisionV1 decision_v1 = 1;
+   */
+  decisionV1?: DecisionV1;
+};
+
+/**
+ * Describes the message platform.ontology.v2alpha.Advertisement.
+ * Use `create(AdvertisementSchema)` to create a new message.
+ */
+export declare const AdvertisementSchema: GenMessage<Advertisement>;
+
+/**
  * @generated from message platform.ontology.v2alpha.Audit
  */
 export declare type Audit = Message<"platform.ontology.v2alpha.Audit"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.AuditV2Alpha audit_v2alpha = 1;
+   * @generated from field: platform.ontology.v2alpha.AuditV2Alpha audit_v2alpha = 2;
    */
   auditV2alpha?: AuditV2Alpha;
 };
@@ -137,12 +158,12 @@ export declare const CliSchema: GenMessage<Cli>;
  */
 export declare type Communication = Message<"platform.ontology.v2alpha.Communication"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Beta preference_center_v1beta = 2;
+   * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Beta preference_center_v1beta = 3;
    */
   preferenceCenterV1beta?: PreferenceCenterV1Beta;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Alpha preference_center_v1alpha = 3;
+   * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Alpha preference_center_v1alpha = 4;
    */
   preferenceCenterV1alpha?: PreferenceCenterV1Alpha;
 };
@@ -158,7 +179,7 @@ export declare const CommunicationSchema: GenMessage<Communication>;
  */
 export declare type Configuration = Message<"platform.ontology.v2alpha.Configuration"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.ConfigurationV2Alpha configuration_v2alpha = 4;
+   * @generated from field: platform.ontology.v2alpha.ConfigurationV2Alpha configuration_v2alpha = 5;
    */
   configurationV2alpha?: ConfigurationV2Alpha;
 };
@@ -174,12 +195,12 @@ export declare const ConfigurationSchema: GenMessage<Configuration>;
  */
 export declare type Cryptography = Message<"platform.ontology.v2alpha.Cryptography"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.CertificateV2Alpha certificate_v2alpha = 5;
+   * @generated from field: platform.ontology.v2alpha.CertificateV2Alpha certificate_v2alpha = 6;
    */
   certificateV2alpha?: CertificateV2Alpha;
 
   /**
-   * @generated from field: platform.ontology.v2alpha.CertificateAuthorityV2Alpha certificate_authority_v2alpha = 6;
+   * @generated from field: platform.ontology.v2alpha.CertificateAuthorityV2Alpha certificate_authority_v2alpha = 7;
    */
   certificateAuthorityV2alpha?: CertificateAuthorityV2Alpha;
 };
@@ -219,7 +240,7 @@ export declare const EdgeSchema: GenMessage<Edge>;
  */
 export declare type Event = Message<"platform.ontology.v2alpha.Event"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.EventSubscriptionV2Alpha event_subscription_v2alpha = 7;
+   * @generated from field: platform.ontology.v2alpha.EventSubscriptionV2Alpha event_subscription_v2alpha = 8;
    */
   eventSubscriptionV2alpha?: EventSubscriptionV2Alpha;
 };
@@ -283,7 +304,7 @@ export declare const OptionsSchema: GenMessage<Options>;
  */
 export declare type Reference = Message<"platform.ontology.v2alpha.Reference"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.ReferenceV2Alpha reference_v2alpha = 8;
+   * @generated from field: platform.ontology.v2alpha.ReferenceV2Alpha reference_v2alpha = 9;
    */
   referenceV2alpha?: ReferenceV2Alpha;
 };
@@ -311,7 +332,7 @@ export declare const SpecSchema: GenMessage<Spec>;
  */
 export declare type System = Message<"platform.ontology.v2alpha.System"> & {
   /**
-   * @generated from field: platform.ontology.v2alpha.SystemV2Alpha system_v2alpha = 9;
+   * @generated from field: platform.ontology.v2alpha.SystemV2Alpha system_v2alpha = 10;
    */
   systemV2alpha?: SystemV2Alpha;
 };
@@ -655,6 +676,77 @@ export declare type SystemV2Alpha = Message<"platform.ontology.v2alpha.SystemV2A
  * Use `create(SystemV2AlphaSchema)` to create a new message.
  */
 export declare const SystemV2AlphaSchema: GenMessage<SystemV2Alpha>;
+
+/**
+ * @generated from message platform.ontology.v2alpha.DecisionV1
+ */
+export declare type DecisionV1 = Message<"platform.ontology.v2alpha.DecisionV1"> & {
+  /**
+   * @generated from field: platform.options.v2.ClassificationType ad_id = 1;
+   */
+  adId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType advertiser_id = 2;
+   */
+  advertiserId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType creative_id = 3;
+   */
+  creativeId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType flight_id = 4;
+   */
+  flightId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType campaign_id = 5;
+   */
+  campaignId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType priority_id = 6;
+   */
+  priorityId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType click_url = 7;
+   */
+  clickUrl: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType contents = 8;
+   */
+  contents: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType impression_url = 9;
+   */
+  impressionUrl: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType events = 10;
+   */
+  events: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType matched_points = 11;
+   */
+  matchedPoints: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType pricing = 12;
+   */
+  pricing: ClassificationType;
+};
+
+/**
+ * Describes the message platform.ontology.v2alpha.DecisionV1.
+ * Use `create(DecisionV1Schema)` to create a new message.
+ */
+export declare const DecisionV1Schema: GenMessage<DecisionV1>;
 
 /**
  * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Beta

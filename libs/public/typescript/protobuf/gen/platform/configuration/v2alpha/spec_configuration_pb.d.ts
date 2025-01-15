@@ -20,8 +20,8 @@ import type { IamAuthenticationConfiguration } from "../../iam/v2alpha/iam_authe
 import type { CryptographicMeshConfiguration } from "../../mesh/v2alpha/cryptographic_mesh_pb";
 import type { ReferenceConfiguration } from "../../reference/v2alpha/reference_pb";
 import type { SystemConfiguration } from "../../system/v2alpha/system_pb";
-import type { PreferenceCenterConfiguration } from "../../communication/v1beta/preference_center_pb";
-import type { PreferenceCenterConfiguration as PreferenceCenterConfiguration$1 } from "../../communication/v1alpha/preference_center_pb";
+import type { PreferenceCenterConfiguration } from "../../communication/v1alpha/preference_center_pb";
+import type { PreferenceCenterConfiguration as PreferenceCenterConfiguration$1 } from "../../communication/v1beta/preference_center_pb";
 
 /**
  * Describes the file platform/configuration/v2alpha/spec_configuration.proto.
@@ -103,14 +103,14 @@ export declare type SpecPlatformConfiguration = Message<"platform.configuration.
   systemConfigurationV2alpha?: SystemConfiguration;
 
   /**
-   * @generated from field: platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 16;
+   * @generated from field: platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 16;
    */
-  preferenceCenterConfigurationV1beta?: PreferenceCenterConfiguration;
+  preferenceCenterConfigurationV1alpha?: PreferenceCenterConfiguration;
 
   /**
-   * @generated from field: platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 17;
+   * @generated from field: platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 17;
    */
-  preferenceCenterConfigurationV1alpha?: PreferenceCenterConfiguration$1;
+  preferenceCenterConfigurationV1beta?: PreferenceCenterConfiguration$1;
 };
 
 /**

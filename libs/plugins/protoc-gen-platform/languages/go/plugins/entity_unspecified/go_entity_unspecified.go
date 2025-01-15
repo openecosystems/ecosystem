@@ -134,6 +134,7 @@ func (m GoEntityUnspecifiedModule) GenerateFile(file pgs.File) {
 		"getPackageVersion":             fns.GetPackageVersion,
 		"getApiOptionsTypeName":         fns.GetApiOptionsTypeName,
 		"domainSystemName2":             fns.DomainSystemName2,
+		"getTopLevelFolderFromFile":     fns.GetTopLevelFolderFromFile,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl

@@ -18,6 +18,8 @@ import (
 
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
+	_ "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
 	"context"
 )
 

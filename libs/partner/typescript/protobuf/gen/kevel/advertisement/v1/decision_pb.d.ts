@@ -4,6 +4,7 @@
 
 import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
+import type { SpecResponseContext } from "../../../platform/spec/v2/spec_pb";
 
 /**
  * Describes the file kevel/advertisement/v1/decision.proto.
@@ -527,17 +528,24 @@ export declare const ExplainSchema: GenMessage<Explain>;
  */
 export declare type GetDecisionsResponse = Message<"kevel.advertisement.v1.GetDecisionsResponse"> & {
   /**
-   * @generated from field: kevel.advertisement.v1.User user = 1;
+   * The response context
+   *
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
+
+  /**
+   * @generated from field: kevel.advertisement.v1.User user = 2;
    */
   user?: User;
 
   /**
-   * @generated from field: kevel.advertisement.v1.Decisions decisions = 2;
+   * @generated from field: kevel.advertisement.v1.Decisions decisions = 3;
    */
   decisions?: Decisions;
 
   /**
-   * @generated from field: kevel.advertisement.v1.Explain explain = 3;
+   * @generated from field: kevel.advertisement.v1.Explain explain = 4;
    */
   explain?: Explain;
 };
@@ -735,6 +743,10 @@ export declare const AddCustomPropertiesRequestSchema: GenMessage<AddCustomPrope
  * @generated from message kevel.advertisement.v1.AddCustomPropertiesResponse
  */
 export declare type AddCustomPropertiesResponse = Message<"kevel.advertisement.v1.AddCustomPropertiesResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**
@@ -775,6 +787,10 @@ export declare const AddInterestsRequestSchema: GenMessage<AddInterestsRequest>;
  * @generated from message kevel.advertisement.v1.AddInterestsResponse
  */
 export declare type AddInterestsResponse = Message<"kevel.advertisement.v1.AddInterestsResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**
@@ -820,6 +836,10 @@ export declare const AddRetargetingSegmentRequestSchema: GenMessage<AddRetargeti
  * @generated from message kevel.advertisement.v1.AddRetargetingSegmentResponse
  */
 export declare type AddRetargetingSegmentResponse = Message<"kevel.advertisement.v1.AddRetargetingSegmentResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**
@@ -890,6 +910,10 @@ export declare const ReadRequestSchema: GenMessage<ReadRequest>;
  * @generated from message kevel.advertisement.v1.ReadResponse
  */
 export declare type ReadResponse = Message<"kevel.advertisement.v1.ReadResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**
@@ -930,6 +954,10 @@ export declare const IpOverrideRequestSchema: GenMessage<IpOverrideRequest>;
  * @generated from message kevel.advertisement.v1.IpOverrideResponse
  */
 export declare type IpOverrideResponse = Message<"kevel.advertisement.v1.IpOverrideResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**
@@ -1000,6 +1028,10 @@ export declare const GdprConsentRequestSchema: GenMessage<GdprConsentRequest>;
  * @generated from message kevel.advertisement.v1.GdprConsentResponse
  */
 export declare type GdprConsentResponse = Message<"kevel.advertisement.v1.GdprConsentResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**
@@ -1045,6 +1077,10 @@ export declare const MatchUserRequestSchema: GenMessage<MatchUserRequest>;
  * @generated from message kevel.advertisement.v1.MatchUserResponse
  */
 export declare type MatchUserResponse = Message<"kevel.advertisement.v1.MatchUserResponse"> & {
+  /**
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
 };
 
 /**

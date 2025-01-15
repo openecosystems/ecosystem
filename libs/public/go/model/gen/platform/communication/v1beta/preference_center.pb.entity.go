@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/communication/v1beta"
 	"libs/public/go/sdk/v2alpha"
@@ -23,15 +22,8 @@ type PreferenceCenterSpecEntity struct {
 
 func NewPreferenceCenterSpecEntity(specContext *specv2pb.SpecContext) (*PreferenceCenterSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &PreferenceCenterSpecEntity{
-		PreferenceCenter: &communicationv1betapb.PreferenceCenter{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		PreferenceCenter: &communicationv1betapb.PreferenceCenter{},
 	}, nil
 
 }

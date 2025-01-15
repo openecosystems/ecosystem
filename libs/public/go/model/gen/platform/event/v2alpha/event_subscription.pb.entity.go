@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/event/v2alpha"
 	"libs/public/go/sdk/v2alpha"
@@ -23,15 +22,8 @@ type EventSubscriptionSpecEntity struct {
 
 func NewEventSubscriptionSpecEntity(specContext *specv2pb.SpecContext) (*EventSubscriptionSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &EventSubscriptionSpecEntity{
-		EventSubscription: &eventv2alphapb.EventSubscription{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		EventSubscription: &eventv2alphapb.EventSubscription{},
 	}, nil
 
 }

@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 
@@ -24,15 +23,8 @@ type ConfigurationSpecEntity struct {
 
 func NewConfigurationSpecEntity(specContext *specv2pb.SpecContext) (*ConfigurationSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &ConfigurationSpecEntity{
-		Configuration: &configurationv2alphapb.Configuration{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		Configuration: &configurationv2alphapb.Configuration{},
 	}, nil
 
 }

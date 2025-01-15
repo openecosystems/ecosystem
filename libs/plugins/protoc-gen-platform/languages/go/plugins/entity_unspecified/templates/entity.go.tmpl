@@ -7,14 +7,9 @@ type {{ $entityName.UpperCamelCase }}SpecEntity struct {
 
 func New{{ $entityName.UpperCamelCase }}SpecEntity(specContext *specv2pb.SpecContext) (*{{ $entityName.UpperCamelCase }}SpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &{{ $entityName.UpperCamelCase }}SpecEntity{
 		{{ $entityName.UpperCamelCase }}: &{{ package .File }}.{{ $entityName.UpperCamelCase }}{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
+
 		},
 	}, nil
 

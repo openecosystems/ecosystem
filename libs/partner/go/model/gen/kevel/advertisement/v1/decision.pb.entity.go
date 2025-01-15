@@ -8,10 +8,11 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
-	"libs/partner/go/protobuf/gen/platform/advertisement/v1"
+	"libs/partner/go/protobuf/gen/kevel/advertisement/v1"
 	"libs/public/go/sdk/v2alpha"
+
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type DecisionSpecEntity struct {
@@ -20,15 +21,8 @@ type DecisionSpecEntity struct {
 
 func NewDecisionSpecEntity(specContext *specv2pb.SpecContext) (*DecisionSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &DecisionSpecEntity{
-		Decision: &advertisementv1pb.Decision{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		Decision: &advertisementv1pb.Decision{},
 	}, nil
 
 }
