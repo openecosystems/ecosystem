@@ -44,7 +44,7 @@ localhost:6568
 
 
 # When using the Edge Router, you can run the following
-buf curl -X GET -vv --http1.1 \
+curl -X GET -vv --http1.1 \
 --header "Content-Type: application/json" \
 --header "x-spec-apikey: 12345678" \
 https://api.dev-1.oeco.cloud/v2/configurations/123 | jq .
