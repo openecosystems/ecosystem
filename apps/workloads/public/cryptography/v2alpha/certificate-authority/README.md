@@ -55,9 +55,6 @@ https://api.communication.dev-1.jeannot.company/v2alpha/cryptography/ca/create
 curl -X POST -vv \
 --header "Content-Type: application/json" \
 --header "x-spec-apikey: 12345678" \
---header "x-spec-debug: true" \
---header "x-spec-validate-only: true" \
---header "x-spec-sent-at: 2022-12-10T04:08:31.581Z" \
 --data '{"parent_id": "123", "name": "hello"}' \
 https://api.dev-1.oeco.cloud/v2alpha/cryptography/ca/create
 
