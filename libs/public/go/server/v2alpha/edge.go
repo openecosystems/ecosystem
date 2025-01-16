@@ -9,17 +9,17 @@ import (
 func edgeRouter(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
+		w.Header().Set(sdkv2alphalib.AccessControlAllowOrigin, r.Header.Get(sdkv2alphalib.Origin))
+		w.Header().Set(sdkv2alphalib.AccessControlAllowMethods, "HEAD,OPTIONS,GET,PUT,PATCH,POST,DELETE")
+		w.Header().Set(sdkv2alphalib.AccessControlAllowHeaders, "*")
+		w.Header().Set(sdkv2alphalib.AccessControlMaxAge, "86400")
+		w.Header().Set(sdkv2alphalib.CacheControl, "public, max-age=86400")
+
 		// Handle Cors Preflight
 		if r.Method == http.MethodOptions &&
 			r.Header[sdkv2alphalib.Origin] != nil &&
 			r.Header[sdkv2alphalib.AccessControlRequestHeaders] != nil &&
 			r.Header[sdkv2alphalib.AccessControlRequestMethod] != nil {
-
-			w.Header().Set(sdkv2alphalib.AccessControlAllowOrigin, r.Header.Get(sdkv2alphalib.Origin))
-			w.Header().Set(sdkv2alphalib.AccessControlAllowMethods, "HEAD,OPTIONS,GET,PUT,PATCH,POST,DELETE")
-			w.Header().Set(sdkv2alphalib.AccessControlAllowHeaders, "*")
-			w.Header().Set(sdkv2alphalib.AccessControlMaxAge, "86400")
-			w.Header().Set(sdkv2alphalib.CacheControl, "public, max-age=86400")
 
 			if r.Method == http.MethodOptions {
 				w.WriteHeader(http.StatusNoContent) // HTTP 204 No Content
