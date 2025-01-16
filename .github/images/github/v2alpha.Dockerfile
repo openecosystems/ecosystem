@@ -69,10 +69,10 @@ COPY --from=buf /usr/local/bin/buf /home/circleci/go/bin
 RUN echo 'export PATH=/home/circleci/project/node_modules/.bin:$PATH' >> ~/.bashrc
 
 # Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.81.0
 RUN echo 'export PATH=/home/circleci/.cargo/bin:$PATH' >> ~/.bashrc
-RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
-RUN /home/circleci/.cargo/bin/rustup toolchain add stable
-RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
+RUN /home/circleci/.cargo/bin/rustup toolchain add 1.81.0
+RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
 
 #

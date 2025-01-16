@@ -4,36 +4,28 @@
 
 protoset <(buf build -o -)
 
-# gRPC Call
-buf curl --protocol connect --http2-prior-knowledge \
---schema <(buf build -o -) \
+# gRPC Call to Edge Router
+```sh
+cd /proto
+buf curl --protocol connect --verbose --http2-prior-knowledge \
+--schema public \
 --header "x-spec-apikey: 12345678" \
+--header "x-spec-debug: true" \
 --data '{"parent_id": "123"}' \
-http://api.dev-1.oeco.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+https://api.dev-1.oeco.cloud/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+```
 
-buf curl --protocol connect --http2-prior-knowledge \
---schema ./public/platform/configuration/v2alpha/configuration.proto \
---header "x-spec-apikey: 12345678" \
+# gRPC Call to directly to Multiplexer
+```sh
+cd /proto
+buf curl --protocol connect --verbose --http2-prior-knowledge \
+--schema public \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--header "x-spec-workspace-jan: JURISDICTION_USA" \
 --data '{"parent_id": "123"}' \
-http://api.dev-1.oeco.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
-
-grpcurl \
--protoset <(buf build -o -) -plaintext \
--rpc-header "x-spec-apikey: 12345678" \
--rpc-header "x-spec-workspace-slug: workspace123" \
--rpc-header "x-spec-organization-slug: organization123" \
--rpc-header "x-spec-workspace-jan: JURISDICTION_USA" \
--d '{"parent_id": "123"}' \
-api.dev-1.na-us-1.oeco.cloud:6477 platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
-
-grpcurl \
--protoset <(buf build -o -) -plaintext \
--rpc-header "x-spec-apikey: 12345678" \
--rpc-header "x-spec-workspace-slug: workspace123" \
--rpc-header "x-spec-organization-slug: organization123" \
--rpc-header "x-spec-workspace-jan: JURISDICTION_USA" \
--d '{"parent_id": "123"}' \
-api.dev-1.oeco.cloud:443 platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+```
 
 # Latency Test
 ghz -c 100 -n 1 --insecure \
@@ -106,4 +98,4 @@ curl -X POST \
 --header "x-spec-principal-id: djeannot" \
 --header "x-spec-principal-email: dimy@jeannotfamily.com" \
 --data '{"parent_id": "123"}' \
-http://144.202.125.179:6477/v2/configurations
+http://api.dev-1.na-us-1.oeco.cloud:6477/v2/configurations

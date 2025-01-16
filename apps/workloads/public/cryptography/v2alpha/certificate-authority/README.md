@@ -80,3 +80,10 @@ http://localhost:7676/v2alpha/cryptography/ca/create
 
 curl -v  --request OPTIONS 'https://api.communication.dev-1.jeannot.company/v2alpha/cryptography/ca/create' --header 'Origin: https://example.com' --header 'Access-Control-Request-Method: POST'
 
+
+buf curl --protocol connect --http2-prior-knowledge \
+--schema <(buf build -o -) \
+--header "x-spec-apikey: 12345678" \
+--data '{"parent_id": "123", "name": "hello"}' \
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.cryptography.v2alpha.CertificateAuthorityService/CreateCertificateAuthority
+

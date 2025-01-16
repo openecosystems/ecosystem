@@ -4,8 +4,8 @@ import type { Subscription } from "@nats-io/nats-core";
 
 async function app() {
 
-  //const nc = await connect({ servers: "api.dev-1.na-us-1.oeco.cloud:4222" });
-  const nc = await connect({ servers: "localhost:4222" });
+  const nc = await connect({ servers: "api.dev-1.na-us-1.oeco.cloud:4222" });
+  //const nc = await connect({ servers: "localhost:4222" });
 
   const s1 = nc.subscribe("configuration.>");
 
