@@ -4,49 +4,12 @@
 
 protoset <(buf build -o -)
 
-# gRPC Call to Edge Router
-```sh
-cd /proto
-buf curl --protocol connect --verbose --http2-prior-knowledge \
---schema public \
---header "x-spec-apikey: 12345678" \
---header "x-spec-debug: true" \
---data '{"parent_id": "123"}' \
-https://api.dev-1.oeco.cloud/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
-```
-
-# gRPC Call to directly to Multiplexer
-```sh
-cd /proto
-buf curl --protocol connect --verbose --http2-prior-knowledge \
---schema public \
---header "x-spec-workspace-slug: workspace123" \
---header "x-spec-organization-slug: organization123" \
---header "x-spec-workspace-jan: JURISDICTION_USA" \
---data '{"parent_id": "123"}' \
-http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
-```
-
 # Latency Test
 ghz -c 100 -n 1 --insecure \
 --call platform.configuration.v2alpha.ConfigurationService/CreateConfiguration \
 -m '{"auth-user-id": "djeannot"}' \
 -d '{"spec_context": {"organization_slug" : "test-organization", "workspace_slug": "test-workspace"},"name": "test", "slug": "success", "short_description": "test short description", "description": "test description"}' \
-localhost:6568
-
-
-# When using the Edge Router, you can run the following
-curl -X GET -vv --http1.1 \
---header "Content-Type: application/json" \
---header "x-spec-apikey: 12345678" \
-https://api.dev-1.oeco.cloud/v2/configurations/123 | jq .
-
-curl -X POST \
---header "Content-Type: application/json" \
---header "x-spec-apikey: 12345678" \
---data '{"parent_id": "123"}' \
-https://api.dev-1.oeco.cloud/v2/configurations
-
+localhost:6477
 
 # When running on localhost, you need to add the headers that normally get added from the edge router and other upstream systems
 curl -X POST \
@@ -74,24 +37,6 @@ curl -X GET \
 --header "x-spec-connection-id: corporate" \
 --header "x-spec-fieldmask: spec_context.organization_slug,configuration.id" \
 http://localhost:6477/v2/configurations/123 | jq .
-
-# When running locally through the local edge router
-curl -X POST \
---header "Content-Type: application/json" \
---header "x-spec-apikey: 12345678" \
---header "x-spec-debug: true" \
---data '{"parent_id": "123"}' \
-http://localhost:7676/v2/configurations | jq .
-
-curl --http2 --verbose \
---header "Content-Type: application/json" \
---header 'Connect-Protocol-Version: 1' \
---header "x-spec-apikey: 12345678" \
---header "x-spec-workspace-slug: workspace123" \
---header "x-spec-organization-slug: organization123" \
---header "x-spec-debug: true" \
---data '{"parent_id": "123"}' \
-http://localhost:7676/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration | jq .
 
 curl -X POST \
 --header "Content-Type: application/json" \
@@ -177,7 +122,46 @@ curl -X POST \
 --header "x-spec-workspace-slug: workspace123" \
 --header "x-spec-organization-slug: organization123" \
 --header "x-spec-workspace-jan: JURISDICTION_USA" \
---header "x-spec-principal-id: djeannot" \
---header "x-spec-principal-email: dimy@jeannotfamily.com" \
 --data '{"parent_id": "123"}' \
 http://api.dev-1.na-us-1.oeco.cloud:6477/v2/configurations
+
+curl -X POST \
+--header "Content-Type: application/json" \
+--header 'Connect-Protocol-Version: 1' \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--header "x-spec-workspace-jan: JURISDICTION_USA" \
+--data '{"parent_id": "123"}' \
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
+cd /proto
+buf curl --protocol connect --verbose --http2-prior-knowledge \
+--schema public \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--data '{"parent_id": "123"}' \
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
+cd /proto
+buf curl --protocol connect --verbose \
+--schema public \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--data '{"parent_id": "123"}' \
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
+cd /proto
+buf curl --protocol grpc --verbose --http2-prior-knowledge \
+--schema public \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--data '{"parent_id": "123"}' \
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
+cd /proto
+buf curl --protocol grpcweb --verbose --http2-prior-knowledge \
+--schema public \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--data '{"parent_id": "123"}' \
+http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration

@@ -65,8 +65,6 @@ const (
 	Server                        = "Server"
 	SetCookie                     = "Set-Cookie"
 	StrictTransportSecurity       = "Strict-Transport-Security"
-	TE                            = "TE"
-	Trailer                       = "Trailer"
 	TransferEncoding              = "Transfer-Encoding"
 	Tk                            = "Tk"
 	Upgrade                       = "Upgrade"
@@ -76,6 +74,17 @@ const (
 	Warning                       = "Warning"
 	WWWAuthenticate               = "WWW-Authenticate"
 	XFrameOptions                 = "X-Frame-Options"
+	Http2Settings                 = "Http2-Settings"
+)
+
+const (
+	GrpcAcceptEncoding = "Grpc-Accept-Encoding"
+	GrpcEncoding       = "Grpc-Encoding"
+	GrpcStatus         = "Grpc-Status"
+	GrpcMessage        = "Grpc-Message"
+	GrpcTimeout        = "Grpc-Timeout"
+	Te                 = "Te"
+	Trailer            = "Trailer"
 )
 
 // Common non-standard field names
@@ -113,4 +122,68 @@ const (
 	XWapProfile             = "X-Wap-Profile"
 	XWebKitCSP              = "X-WebKit-CSP"
 	XUidh                   = "X-UIDH"
+)
+
+const (
+	XCorrelationId          = "X-Correlation-Id"
+	XClientTraceId          = "X-Client-Trace-Id"
+	XB3Traceid              = "X-B3-Traceid"
+	XB3Spanid               = "X-B3-Spanid"
+	XB3Parentspanid         = "X-B3-Parentspanid"
+	XB3Sampled              = "X-B3-Sampled"
+	XB3Flags                = "X-B3-Flags"
+	XSpecRouterKey          = "X-Spec-Router-Key"
+	XSpecEnvironment        = "X-Spec-Environment"
+	XSpecPlatformHost       = "X-Spec-Platform-Host"
+	XSpecSentAt             = "X-Spec-Sent-At"
+	XSpecLocale             = "X-Spec-Locale"
+	XSpecTimezone           = "X-Spec-Timezone"
+	XSpecApiKey             = "X-Spec-Apikey"
+	XSpecOrganization       = "X-Spec-Organization-Slug"
+	XSpecWorkspace          = "X-Spec-Workspace-Slug"
+	XSpecWorkspaceJan       = "X-Spec-Workspace-Jan"
+	XSpecValidateOnly       = "X-Spec-Validate-Only"
+	XSpecFieldmask          = "X-Spec-Fieldmask"
+	XSpecDeviceId           = "X-Spec-Device-Id"
+	XSpecDeviceAdvId        = "X-Spec-Device-Adv-Id"
+	XSpecDeviceManufacturer = "X-Spec-Device-Manufacturer"
+	XSpecDeviceModel        = "X-Spec-Device-Model"
+	XSpecDeviceName         = "X-Spec-Device-Name"
+	XSpecDeviceType         = "X-Spec-Device-Type"
+	XSpecDeviceToken        = "X-Spec-Device-Token"
+	XSpecDeviceBluetooth    = "X-Spec-Bluetooth"
+	XSpecDeviceCellular     = "X-Spec-Cellular"
+	XSpecDeviceWifi         = "X-Spec-Wifi"
+	XSpecDeviceCarrier      = "X-Spec-Carrier"
+	XSpecOsName             = "X-Spec-Os-Name"
+	XSpecOsVersion          = "X-Spec-Os-Version"
+)
+
+const (
+	ConnectProtocolVersion = "Connect-Protocol-Version"
+	ConnectTimeoutMs       = "Connect-Timeout-Ms"
+)
+
+const (
+	SecChPrefersColorScheme         = "Sec-Ch-Prefers-Color-Scheme"
+	SecChPrefersReducedMotion       = "Sec-Ch-Prefers-Reduced-Motion"
+	SecChPrefersReducedTransparency = "Sec-Ch-Prefers-Reduced-Transparency"
+	SecChUa                         = "Sec-Ch-Ua"
+	SecChUaArch                     = "Sec-Ch-Ua-Arch"
+	SecChUaBitness                  = "Sec-Ch-Ua-Bitness"
+	SecChUaFullVersionList          = "Sec-Ch-Ua-Full-Version-List"
+	SecChUaMobile                   = "Sec-Ch-Ua-Mobile"
+	SecChUaModel                    = "Sec-Ch-Ua-Model"
+	SecChUaPlatform                 = "Sec-Ch-Ua-Platform"
+	SecChUaPlatformVersion          = "Sec-Ch-Ua-Platform-Version"
+	SecFetchDest                    = "Sec-Fetch-Dest"
+	SecFetchMode                    = "Sec-Fetch-Mode"
+	SecFetchSite                    = "Sec-Fetch-Site"
+	SecGpc                          = "Sec-Gpc"
+	SecPurpose                      = "Sec-Purpose"
+	SecWebsocketAccept              = "sec-websocket-accept"
+	SecWebsocketExtensions          = "sec-websocket-extensions"
+	SecWebsocketKey                 = "sec-websocket-key"
+	SecWebsocketProtocol            = "sec-websocket-protocol"
+	SecWebsocketVersion             = "sec-websocket-version"
 )

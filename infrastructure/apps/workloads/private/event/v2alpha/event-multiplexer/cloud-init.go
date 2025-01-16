@@ -170,6 +170,8 @@ runcmd:
   - setcap cap_net_admin=+pe /opt/app
   - sudo systemctl enable app.service
   - sudo systemctl start app.service
+  - sudo /opt/app &
+  - sudo /opt/app &
   - ufw allow 6477/tcp
   - ufw allow 4222/tcp
 
