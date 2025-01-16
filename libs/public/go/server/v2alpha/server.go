@@ -217,13 +217,13 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 			_httpServerErr <- http.Serve(
 				ln,
 				// Use h2c so we can serve HTTP/2 without TLS.
-				h2c.NewHandler(mux, server.ConnectHttpServer),
+				h2c.NewHandler(edgeRouter(mux), server.ConnectHttpServer),
 			)
 		} else {
 			_httpServerErr <- http.ListenAndServe(
 				fmt.Sprintf("0.0.0.0:%d", httpPort),
 				// Use h2c so we can serve HTTP/2 without TLS.
-				h2c.NewHandler(mux, server.ConnectHttpServer),
+				h2c.NewHandler(edgeRouter(mux), server.ConnectHttpServer),
 			)
 		}
 	}()

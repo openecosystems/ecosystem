@@ -27,7 +27,7 @@ type Entity interface {
 	SystemName() string
 }
 
-type Server interface{}
+//type Server interface{}
 
 type Connector interface {
 	MethodsByPath() map[string]*Method

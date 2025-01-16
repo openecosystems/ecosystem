@@ -1,5 +1,6 @@
 use fastly::http::Version;
 use fastly::Request;
+use crate::headers;
 
 // JSON Content Type
 pub(crate) const  PROTOCOL_APPLICATION_JSON: &str = "application/json";
@@ -42,17 +43,16 @@ pub(crate) enum SpecProtocol {
     Soap
 }
 
-#[derive(serde::Serialize, Debug)]
+#[derive(Debug)]
 pub(crate) struct Protocol {
     pub content_type: String,
-    //pub http_protocol: Version,
+    pub http_protocol: Version,
     pub spec_protocol: SpecProtocol,
 }
 
 impl Protocol {
     pub(crate) fn get_spec_protocol(&self) -> SpecProtocol {
         todo!()
-
     }
 }
 
@@ -63,38 +63,38 @@ pub(crate) fn get_protocol(req: &mut Request) -> Protocol {
     match req.get_version() {
 
         Version::HTTP_09 => {
-            return determine_known_mime_types(req, Version::HTTP_09);
+            determine_known_mime_types(req, Version::HTTP_09)
         }
 
         Version::HTTP_10 => {
-            return determine_known_mime_types(req, Version::HTTP_10);
+            determine_known_mime_types(req, Version::HTTP_10)
         }
 
         Version::HTTP_11 => {
-            return determine_known_mime_types(req, Version::HTTP_11);
+            determine_known_mime_types(req, Version::HTTP_11)
         }
 
         // https://chromium.googlesource.com/external/github.com/grpc/grpc/+/HEAD/doc/PROTOCOL-HTTP2.md
         Version::HTTP_2 => {
-            return determine_known_mime_types(req, Version::HTTP_2);
+            determine_known_mime_types(req, Version::HTTP_2)
         },
 
         Version::HTTP_3 => {
-            return determine_known_mime_types(req, Version::HTTP_3);
+            determine_known_mime_types(req, Version::HTTP_3)
         },
 
         _ => {
-            return Protocol{
+            Protocol{
                 content_type: "".to_string(),
-                //http_protocol: Version::HTTP_2,
+                http_protocol: Version::HTTP_11,
                 spec_protocol: SpecProtocol::Rest,
             }
         },
-    };
+    }
 }
 
 //
-fn determine_known_mime_types(req: &mut Request, _: Version) -> Protocol {
+fn determine_known_mime_types(req: &mut Request, version: Version) -> Protocol {
 
     let mime_type = req.get_content_type();
     let m = mime_type.clone();
@@ -106,38 +106,38 @@ fn determine_known_mime_types(req: &mut Request, _: Version) -> Protocol {
             {
 
                 match mime.subtype().as_str() {
-                    "grpc" => {
+                    "grpc" | "grpc+proto" | "grpc+json"  => {
                         return Protocol{
                             content_type: mime.to_string(),
-                            //http_protocol: version,
+                            http_protocol: version,
                             spec_protocol: SpecProtocol::Grpc,
                         }
                     },
-                    "grpc-web" => {
+                    "grpc-web" | "grpc-web+proto" | "grpc-web+json" => {
                         return Protocol{
                             content_type: mime.to_string(),
-                            //http_protocol: version,
+                            http_protocol: version,
                             spec_protocol: SpecProtocol::GrpcWeb,
                         }
                     },
-                    "connect" => {
+                    "proto" | "connect" | "connect+proto" | "connect+json" => {
                         return Protocol{
                             content_type: mime.to_string(),
-                            //http_protocol: version,
+                            http_protocol: version,
                             spec_protocol: SpecProtocol::Connect,
                         }
                     },
-                    "graphql" => {
+                    "graphql" | "graphql+json" => {
                         return Protocol{
                             content_type: mime.to_string(),
-                            //http_protocol: version,
+                            http_protocol: version,
                             spec_protocol: SpecProtocol::Graphql,
                         }
                     },
-                    "soap" => {
+                    "soap" | "soap+xml" => {
                         return Protocol{
                             content_type: mime.to_string(),
-                            //http_protocol: version,
+                            http_protocol: version,
                             spec_protocol: SpecProtocol::Soap,
                         }
                     },
@@ -146,23 +146,23 @@ fn determine_known_mime_types(req: &mut Request, _: Version) -> Protocol {
                             "/graphql" => {
                                 return Protocol{
                                     content_type: mime.to_string(),
-                                    //http_protocol: version,
+                                    http_protocol: version,
                                     spec_protocol: SpecProtocol::Graphql,
                                 }
                             },
                             _ => {
                                 // TODO: Refine this. Find a better way to check for the Connect case without using periods
                                 // Handle Connect Case which can either be HTTP/1.1 or HTTP/2 with either application/proto or application/json
-                                if req.get_path().contains(".") {
+                                if req.get_path().contains(".") && req.contains_header(headers::CONNECT_PROTOCOL_VERSION) {
                                     return Protocol{
                                         content_type: mime.to_string(),
-                                        //http_protocol: version,
+                                        http_protocol: version,
                                         spec_protocol: SpecProtocol::Connect,
                                     }
                                 } else {
                                     return Protocol{
                                         content_type: mime.to_string(),
-                                        //http_protocol: version,
+                                        http_protocol: version,
                                         spec_protocol: SpecProtocol::Rest,
                                     }
                                 }
@@ -174,7 +174,7 @@ fn determine_known_mime_types(req: &mut Request, _: Version) -> Protocol {
             } else {
                 return Protocol{
                     content_type: mime.to_string(),
-                    //http_protocol: version,
+                    http_protocol: version,
                     spec_protocol: SpecProtocol::Rest,
                 }
             }
@@ -183,7 +183,7 @@ fn determine_known_mime_types(req: &mut Request, _: Version) -> Protocol {
 
     Protocol{
         content_type: "".to_string(),
-        //http_protocol: version,
+        http_protocol: version,
         spec_protocol: SpecProtocol::HTTP,
     }
 }

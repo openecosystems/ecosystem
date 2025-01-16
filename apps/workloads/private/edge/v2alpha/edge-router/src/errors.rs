@@ -21,7 +21,7 @@ pub(crate) struct ErrorResponse {
 }
 
 pub(crate) fn create_error(err: &String) -> ErrorResponse {
-    return ErrorResponse {
+    ErrorResponse {
         correlation_id: "".to_string(),
         result_code: ResultCode {
             message: err.to_string(),
@@ -30,7 +30,7 @@ pub(crate) fn create_error(err: &String) -> ErrorResponse {
             api_status: 0,
             user_message: "".to_string(),
         }
-    };
+    }
 }
 
 pub(crate) fn fail(err: String, protocol: &Protocol) -> Result<Response, Error> {
