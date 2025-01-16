@@ -165,3 +165,18 @@ buf curl --protocol grpcweb --verbose --http2-prior-knowledge \
 --header "x-spec-organization-slug: organization123" \
 --data '{"parent_id": "123"}' \
 http://api.dev-1.na-us-1.oeco.cloud:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration
+
+curl 'http://localhost:6477/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration' \
+-X 'OPTIONS' \
+-H 'Accept: */*' \
+-H 'Accept-Language: en-US,en;q=0.9,ru;q=0.8' \
+-H 'Access-Control-Request-Headers: connect-protocol-version,content-type,x-spec-organization-slug,x-spec-workspace-slug' \
+-H 'Access-Control-Request-Method: POST' \
+-H 'Cache-Control: no-cache' \
+-H 'Connection: keep-alive' \
+-H 'Origin: http://localhost:4200' \
+-H 'Pragma: no-cache' \
+-H 'Referer: http://localhost:4200/' \
+-H 'Sec-Fetch-Mode: cors' \
+-H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' \
+--insecure

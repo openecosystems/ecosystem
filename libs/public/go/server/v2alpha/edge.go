@@ -20,6 +20,12 @@ func edgeRouter(next http.Handler) http.Handler {
 			w.Header().Set(sdkv2alphalib.AccessControlAllowHeaders, "*")
 			w.Header().Set(sdkv2alphalib.AccessControlMaxAge, "86400")
 			w.Header().Set(sdkv2alphalib.CacheControl, "public, max-age=86400")
+
+			if r.Method == http.MethodOptions {
+				w.WriteHeader(http.StatusNoContent) // HTTP 204 No Content
+				return
+			}
+
 		}
 
 		// Handle robots
