@@ -185,6 +185,7 @@ export function App() {
         <div>
             <header className="app-header">
                 <h1>Kevel</h1>
+                <h4>React/esbuild</h4>
             </header>
             <div className="container">
                 {responses.map((resp, i) => {
