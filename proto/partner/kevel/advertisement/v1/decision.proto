@@ -153,6 +153,25 @@ service DecisionService {
 }
 
 
+enum DecisionCommands {
+  option (platform.options.v2.spec) = {
+    type: SPEC_ENUM_TYPE_COMMANDS
+  };
+
+  DECISION_COMMANDS_UNSPECIFIED = 0;
+  DECISION_COMMANDS_OPT_OUT = 1;
+}
+
+enum DecisionEvents {
+  option (platform.options.v2.spec) = {
+    type: SPEC_ENUM_TYPE_EVENTS
+  };
+
+  DECISION_EVENTS_UNSPECIFIED = 0;
+  DECISION_EVENTS_OPTED_OUT = 1;
+}
+
+
 message Consent {
 }
 

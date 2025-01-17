@@ -1,30 +1,28 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2020", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@openecosystems/connectorv2alpha": [
-        "libs/public/typescript/connector/v2alpha/src/index.ts"
-      ],
-      "@openecosystems/natsv2": [
-        "libs/partner/typescript/nats/v2/src/index.ts"
-      ],
-      "@openecosystems/sdkv2alpha": [
-        "libs/public/typescript/sdk/v2alpha/src/index.ts"
-      ]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "lib": ["es2020", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@openecosystems/connectorv2alpha": ["libs/public/typescript/connector/v2alpha/src/index.ts"],
+            "@openecosystems/model-partner": ["libs/partner/typescript/model/src/index.ts"],
+            "@openecosystems/model-poc": ["libs/poc/typescript/model/src/index.ts"],
+            "@openecosystems/model-private": ["libs/private/typescript/model/src/index.ts"],
+            "@openecosystems/model-public": ["libs/public/typescript/model/src/index.ts"],
+            "@openecosystems/natsv2": ["libs/partner/typescript/nats/v2/src/index.ts"],
+            "@openecosystems/sdkv2alpha": ["libs/public/typescript/sdk/v2alpha/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
 }

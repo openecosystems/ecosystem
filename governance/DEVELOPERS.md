@@ -36,3 +36,43 @@ nx g @nx/node:library \
 --linter=eslint \
 --publishable=true \
 --unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/public/typescript/model \
+--name=libs-public-typescript-model \
+--importPath=@openecosystems/model-public \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/private/typescript/model \
+--name=libs-private-typescript-model \
+--importPath=@openecosystems/model-private \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/partner/typescript/model \
+--name=libs-partner-typescript-model \
+--importPath=@openecosystems/model-partner \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/poc/typescript/model \
+--name=libs-poc-typescript-model \
+--importPath=@openecosystems/model-poc \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest

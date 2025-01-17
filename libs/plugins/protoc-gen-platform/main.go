@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/lyft/protoc-gen-star/v2"
 	"github.com/lyft/protoc-gen-star/v2/lang/go"
+
+	// Golang Plugins
 	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_commands"
 	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_methods"
 	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_service"
@@ -17,6 +19,9 @@ import (
 	"libs/plugins/protoc-gen-platform/languages/go/plugins/spec_entities"
 	"libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
 	"libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
+
+	// Typescript Plugins
+	spectypescript "libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
 )
 
 func main() {
@@ -37,6 +42,9 @@ func main() {
 		spec.GoSpecPlugin(),
 		spec_entities.GoSpecEntitiesPlugin(),
 		sdk.GoSdkPlugin(),
+
+		// Typescript
+		spectypescript.TypeScriptSpecPlugin(),
 
 		// Protobuf
 		configuration.ProtobufConfigurationPlugin(),

@@ -5,6 +5,7 @@ package platform.configuration.v2alpha;
 
 import "platform/options/v2/annotations.proto";
 
+import "platform/communication/v1beta/preference_center.proto";
 import "platform/audit/v2alpha/audit.proto";
 import "platform/cli/v2alpha/oeco.proto";
 import "platform/cryptography/v2alpha/certificate.proto";
@@ -20,7 +21,6 @@ import "platform/mesh/v2alpha/cryptographic_mesh.proto";
 import "platform/reference/v2alpha/reference.proto";
 import "platform/system/v2alpha/system.proto";
 import "platform/communication/v1alpha/preference_center.proto";
-import "platform/communication/v1beta/preference_center.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
 option (platform.options.v2.api_file) = {

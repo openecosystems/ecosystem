@@ -2,7 +2,7 @@
 // @generated from file kevel/advertisement/v1/decision.proto (package kevel.advertisement.v1, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
 import type { SpecResponseContext } from "../../../platform/spec/v2/spec_pb";
 
@@ -1088,6 +1088,46 @@ export declare type MatchUserResponse = Message<"kevel.advertisement.v1.MatchUse
  * Use `create(MatchUserResponseSchema)` to create a new message.
  */
 export declare const MatchUserResponseSchema: GenMessage<MatchUserResponse>;
+
+/**
+ * @generated from enum kevel.advertisement.v1.DecisionCommands
+ */
+export enum DecisionCommands {
+  /**
+   * @generated from enum value: DECISION_COMMANDS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: DECISION_COMMANDS_OPT_OUT = 1;
+   */
+  OPT_OUT = 1,
+}
+
+/**
+ * Describes the enum kevel.advertisement.v1.DecisionCommands.
+ */
+export declare const DecisionCommandsSchema: GenEnum<DecisionCommands>;
+
+/**
+ * @generated from enum kevel.advertisement.v1.DecisionEvents
+ */
+export enum DecisionEvents {
+  /**
+   * @generated from enum value: DECISION_EVENTS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: DECISION_EVENTS_OPTED_OUT = 1;
+   */
+  OPTED_OUT = 1,
+}
+
+/**
+ * Describes the enum kevel.advertisement.v1.DecisionEvents.
+ */
+export declare const DecisionEventsSchema: GenEnum<DecisionEvents>;
 
 /**
  * @generated from service kevel.advertisement.v1.DecisionService

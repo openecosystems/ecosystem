@@ -15,10 +15,14 @@ const (
 )
 
 const (
+	DecisionCommandsUnspecified DecisionCommand = iota
+	DecisionCommandsOptOut      DecisionCommand = iota
 	UnrecognizedDecisionCommand DecisionCommand = -1
 )
 
 const (
+	DecisionEventsUnspecified DecisionEvent = iota
+	DecisionEventsOptedOut    DecisionEvent = iota
 	UnrecognizedDecisionEvent DecisionEvent = -1
 )
 
@@ -33,6 +37,10 @@ func (c DecisionCommand) CommandName() string {
 
 	switch c {
 
+	case DecisionCommandsUnspecified:
+		return "DecisionCommandsUnspecified"
+	case DecisionCommandsOptOut:
+		return "DecisionCommandsOptOut"
 	default:
 		return "UnrecognizedDecisionCommand"
 	}
@@ -43,6 +51,10 @@ func (e DecisionEvent) EventName() string {
 
 	switch e {
 
+	case DecisionEventsUnspecified:
+		return "DecisionEventsUnspecified"
+	case DecisionEventsOptedOut:
+		return "DecisionEventsOptedOut"
 	default:
 		return "UnrecognizedDecisionEvent"
 	}
@@ -53,6 +65,10 @@ func (c DecisionCommand) CommandTopic() string {
 
 	switch c {
 
+	case DecisionCommandsUnspecified:
+		return CommandDataDecisionTopic
+	case DecisionCommandsOptOut:
+		return CommandDataDecisionTopic
 	default:
 		return UnrecognizedDecisionTopic
 	}
@@ -63,6 +79,10 @@ func (e DecisionEvent) EventTopic() string {
 
 	switch e {
 
+	case DecisionEventsUnspecified:
+		return EventDataDecisionTopic
+	case DecisionEventsOptedOut:
+		return EventDataDecisionTopic
 	default:
 		return UnrecognizedDecisionTopic
 	}
@@ -81,6 +101,10 @@ func GetDecisionCommand(command string) DecisionCommand {
 
 	switch command {
 
+	case "DecisionCommandsUnspecified":
+		return DecisionCommandsUnspecified
+	case "DecisionCommandsOptOut":
+		return DecisionCommandsOptOut
 	default:
 		return UnrecognizedDecisionCommand
 	}
@@ -90,6 +114,10 @@ func GetDecisionEvent(event string) DecisionEvent {
 
 	switch event {
 
+	case "DecisionEventsUnspecified":
+		return DecisionEventsUnspecified
+	case "DecisionEventsOptedOut":
+		return DecisionEventsOptedOut
 	default:
 		return UnrecognizedDecisionEvent
 	}

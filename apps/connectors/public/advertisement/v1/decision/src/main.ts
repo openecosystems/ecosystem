@@ -1,33 +1,25 @@
-import {libsPartnerTypescriptNatsV2} from "@openecosystems/natsv2"
-import { connect } from "@nats-io/transport-node";
-import type { Subscription } from "@nats-io/nats-core";
+import {libsPartnerTypescriptNatsV2, Connector, GetMultiplexedRequestSubjectName} from "@openecosystems/natsv2"
+import type { NatsConnection, Subscription } from "@nats-io/nats-core";
+
 
 async function app() {
 
-  const nc = await connect({ servers: "api.dev-1.na-us-1.oeco.cloud:4222" });
-  //const nc = await connect({ servers: "localhost:4222" });
+  const subject = GetMultiplexedRequestSubjectName("", "")
 
-  const s1 = nc.subscribe("configuration.>");
+  const connections: NatsConnection[] = [];
+  connections.push(...await Connector(subject, 3, "echo"));
+  connections.push(...await Connector("other-echo", 2));
 
-  async function printMsgs(s: Subscription) {
-    const subj = s.getSubject();
-    console.log(`listening for ${subj}`);
-    const c = 13 - subj.length;
-    const pad = "".padEnd(c);
-    for await (const m of s) {
-      console.log(
-        `[${subj}]${pad} #${s.getProcessed()} - ${m.subject} ${
-          m.data ? " " + m.string() : ""
-        }`,
-      );
-    }
-  }
 
-  printMsgs(s1);
+  const a: Promise<void | Error>[] = [];
+  connections.forEach((c) => {
+    a.push(c.closed());
+  });
+  await Promise.all(a);
 
-  await nc.closed();
+  console.log('Calling library: ' + libsPartnerTypescriptNatsV2());
 
 }
 
-console.log('Calling library: ' + libsPartnerTypescriptNatsV2());
 app()
+
