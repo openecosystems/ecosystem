@@ -21,7 +21,8 @@ import (
 	"libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
 
 	// Typescript Plugins
-	spectypescript "libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
+	"libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
+	"libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec_index"
 )
 
 func main() {
@@ -45,6 +46,7 @@ func main() {
 
 		// Typescript
 		spectypescript.TypeScriptSpecPlugin(),
+		specindextypescript.TypeScriptSpecIndexPlugin(),
 
 		// Protobuf
 		configuration.ProtobufConfigurationPlugin(),

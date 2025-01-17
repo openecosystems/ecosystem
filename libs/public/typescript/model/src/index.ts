@@ -1,1 +1,1 @@
-export * from './lib/libs-public-typescript-model';
+export * from './gen';

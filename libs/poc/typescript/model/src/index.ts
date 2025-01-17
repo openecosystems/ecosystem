@@ -1,1 +1,1 @@
-export * from './lib/libs-poc-typescript-model';
+export * from './gen';

@@ -102,6 +102,12 @@ func (fns Functions) ProtoName(file pgs.File) string {
 	return strings.Split(fileName, ".proto")[0]
 }
 
+func (fns Functions) ProtoPathWithoutProtoExtension(file pgs.File) string {
+	split := strings.Split(file.Name().String(), ".")
+	fileName := split[0]
+	return fileName
+}
+
 func (fns Functions) SnakeCaseToDashCase(name string) string {
 	return strings.Replace(name, "_", "-", -1)
 }
