@@ -76,3 +76,13 @@ nx g @nx/node:library \
 --linter=eslint \
 --publishable=true \
 --unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/public/typescript/protobuf \
+--name=libs-public-typescript-protobuf \
+--importPath=@openecosystems/protobuf-public \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest

@@ -1,19 +1,49 @@
 {
-  "name": "libs-public-typescript-protobuf-v2alpha",
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
-  "sourceRoot": "libs/public/typescript/protobuf",
-  "implicitDependencies": [
-    "proto"
-  ],
-  "targets": {
-    "generate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "libs/public/typescript/protobuf"
-      }
-    }
-  },
-  "tags": []
+    "name": "libs-public-typescript-protobuf",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/public/typescript/protobuf/src",
+    "projectType": "library",
+    "implicitDependencies": [
+      "proto"
+    ],
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/{projectRoot}",
+                "currentVersionResolver": "git-tag"
+            }
+        }
+    },
+    "targets": {
+        "generate": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "buf generate",
+            "cwd": "libs/public/typescript/protobuf"
+          }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/public/typescript/protobuf",
+                "tsConfig": "libs/public/typescript/protobuf/tsconfig.lib.json",
+                "packageJson": "libs/public/typescript/protobuf/package.json",
+                "main": "libs/public/typescript/protobuf/src/index.ts",
+                "assets": ["libs/public/typescript/protobuf/*.md"]
+            }
+        },
+        "nx-release-publish": {
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
+        }
+    },
+    "tags": [
+      "type:lib",
+      "cycle:public",
+      "language:typescript",
+      "type:protobuf",
+      "exposure:external"
+    ]
 }

@@ -1,14 +1,13 @@
-import {libsPartnerTypescriptNatsV2, Connector, GetMultiplexedRequestSubjectName} from "@openecosystems/natsv2"
+import { Connector, InboundStream } from '@openecosystems/natsv2';
 import type { NatsConnection, Subscription } from "@nats-io/nats-core";
+import { DecisionV1 } from "@openecosystems/model-partner"
 
 
 async function app() {
 
-  const subject = GetMultiplexedRequestSubjectName("", "")
-
   const connections: NatsConnection[] = [];
-  connections.push(...await Connector(subject, 3, "echo"));
-  connections.push(...await Connector("other-echo", 2));
+  connections.push(...await Connector(InboundStream, DecisionV1.CommandDataDecisionTopic, "decision"));
+  //connections.push(...await Connector("other-echo", 2));
 
 
   const a: Promise<void | Error>[] = [];
@@ -16,8 +15,6 @@ async function app() {
     a.push(c.closed());
   });
   await Promise.all(a);
-
-  console.log('Calling library: ' + libsPartnerTypescriptNatsV2());
 
 }
 

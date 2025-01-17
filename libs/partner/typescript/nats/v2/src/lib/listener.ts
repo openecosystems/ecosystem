@@ -1,27 +1,23 @@
 import type { NatsConnection, Subscription } from '@nats-io/nats-core/lib/mod';
-import { Stream } from './stream';
+import { Stream, GetQueueGroupName, GetMultiplexedRequestSubjectName } from './stream';
 import { connect } from '@nats-io/transport-node';
-import { GetMultiplexedRequestSubjectName } from './registry';
 
-export function getQueueGroupName(scope: Stream, entityName: string): string {
-  return `req.${scope}-${entityName}`;
-}
 
 export async function Connector(scope: Stream, subject: string, entity: string): Promise<NatsConnection[]> {
   const connections: NatsConnection[] = [];
 
-  const queue = getQueueGroupName(scope, entity)
+  const queue = GetQueueGroupName(scope, entity)
+  const s = GetMultiplexedRequestSubjectName(scope, subject)
 
-  const nc = await connect({ servers: "localhost:4222", name: `${subject}` });
+  const nc = await connect({ servers: "localhost:4222", name: `${s}` });
   nc.closed().then((err) => {
     if (err) {
       console.error(`service ${subject} exited because of error: ${err.message}`);
     }
   });
 
-  const s = GetMultiplexedRequestSubjectName(scope, subject)
   const subscription = nc.subscribe(s, { queue: queue });
-  const _ = handleRequest(subject, subscription);
+  const _ = handleRequest(s, subscription);
   console.log(`${subject} is listening for ${s} requests...`);
   connections.push(nc);
 
@@ -33,6 +29,9 @@ async function handleRequest(subject: string, s: Subscription) {
   const p = 12 - subject.length;
   const pad = "".padEnd(p);
   for await (const m of s) {
+
+
+
     // respond returns true if the message had a reply subject, thus it could respond
     if (m.respond(m.data)) {
       console.log(

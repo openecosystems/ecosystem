@@ -60,3 +60,11 @@ export class OutboundStream implements Stream {
     return "outbound";
   }
 }
+
+export function GetQueueGroupName(scope: Stream, entityName: string): string {
+    return `req.${scope.StreamPrefix()}-${entityName}`;
+}
+
+export function GetMultiplexedRequestSubjectName(scope: Stream, subjectName: string): string {
+    return `req.${scope.StreamPrefix()}-${subjectName}`;
+}

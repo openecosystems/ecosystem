@@ -9,13 +9,7 @@ import { Response } from '../models/Response';
 import { UserCommand } from '../models/UserCommand';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import {
-    ConfigurationService,
-    CreateConfigurationRequest,
-    CreateConfigurationRequestSchema,
-    GetConfigurationRequest,
-    GetConfigurationRequestSchema,
-} from '../../../../../../libs/public/typescript/protobuf/gen/platform/configuration/v2alpha/configuration_pb';
+import { ConfigurationV2Alpha } from '@openecosystems/protobuf-public';
 import { Command } from '../models/Command';
 
 // HACK to allow BigInt to be serialized to JSON
@@ -56,7 +50,7 @@ export function App() {
     ]);
 
     const client = createClient(
-        ConfigurationService,
+        ConfigurationV2Alpha.ConfigurationService,
         createConnectTransport({
             //baseUrl: 'http://api.dev-1.na-us-1.oeco.cloud:6477',
             baseUrl: 'http://localhost:6477',
@@ -77,13 +71,13 @@ export function App() {
      */
     const getConfigurationCommand = async () => {
         // Data to send
-        const data: Partial<GetConfigurationRequest> = {
+        const data: Partial<ConfigurationV2Alpha.GetConfigurationRequest> = {
             id: '1',
         };
 
         if (introFinished) {
             const response = await client
-                .getConfiguration(data as GetConfigurationRequest, {
+                .getConfiguration(data as ConfigurationV2Alpha.GetConfigurationRequest, {
                     headers: headers,
                 })
                 .catch((error) => {
@@ -94,7 +88,7 @@ export function App() {
                 setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
             }
         } else {
-            const request = create(GetConfigurationRequestSchema, data as GetConfigurationRequest);
+            const request = create(ConfigurationV2Alpha.GetConfigurationRequestSchema, data as ConfigurationV2Alpha.GetConfigurationRequest);
 
             // Handle error
             const response = await client
@@ -119,14 +113,14 @@ export function App() {
      */
     const createConfigurationCommand = async () => {
         // Data to send
-        const data: Partial<CreateConfigurationRequest> = {
+        const data: Partial<ConfigurationV2Alpha.CreateConfigurationRequest> = {
             type: 1,
             parentId: '123',
         };
 
         if (introFinished) {
             const response = await client
-                .createConfiguration(data as CreateConfigurationRequest, {
+                .createConfiguration(data as ConfigurationV2Alpha.CreateConfigurationRequest, {
                     headers: headers,
                 })
                 .catch((error) => {
@@ -137,7 +131,7 @@ export function App() {
                 setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
             }
         } else {
-            const request = create(CreateConfigurationRequestSchema, data as CreateConfigurationRequest);
+            const request = create(ConfigurationV2Alpha.CreateConfigurationRequestSchema, data as ConfigurationV2Alpha.CreateConfigurationRequest);
 
             // Handle error
             const response = await client

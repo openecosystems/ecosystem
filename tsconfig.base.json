@@ -21,6 +21,7 @@
             "@openecosystems/model-private": ["libs/private/typescript/model/src/index.ts"],
             "@openecosystems/model-public": ["libs/public/typescript/model/src/index.ts"],
             "@openecosystems/natsv2": ["libs/partner/typescript/nats/v2/src/index.ts"],
+            "@openecosystems/protobuf-public": ["libs/public/typescript/protobuf/src/index.ts"],
             "@openecosystems/sdkv2alpha": ["libs/public/typescript/sdk/v2alpha/src/index.ts"]
         }
     },
