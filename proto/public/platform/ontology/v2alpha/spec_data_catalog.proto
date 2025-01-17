@@ -191,6 +191,23 @@ message SystemV2Alpha {
 }
 
 
+message DecisionV1 {
+    platform.options.v2.ClassificationType ad_id = 1;
+  platform.options.v2.ClassificationType advertiser_id = 2;
+  platform.options.v2.ClassificationType creative_id = 3;
+  platform.options.v2.ClassificationType flight_id = 4;
+  platform.options.v2.ClassificationType campaign_id = 5;
+  platform.options.v2.ClassificationType priority_id = 6;
+  platform.options.v2.ClassificationType click_url = 7;
+  platform.options.v2.ClassificationType contents = 8;
+  platform.options.v2.ClassificationType impression_url = 9;
+  platform.options.v2.ClassificationType events = 10;
+  platform.options.v2.ClassificationType matched_points = 11;
+  platform.options.v2.ClassificationType pricing = 12;
+
+}
+
+
 message PreferenceCenterV1Alpha {
     platform.options.v2.ClassificationType id = 1;
   platform.options.v2.ClassificationType created_at = 2;
@@ -229,22 +246,5 @@ message PreferenceCenterV1Beta {
   platform.options.v2.ClassificationType list_ids = 14;
   platform.options.v2.ClassificationType segment_ids = 15;
   platform.options.v2.ClassificationType email_subscription = 16;
-
-}
-
-
-message DecisionV1 {
-    platform.options.v2.ClassificationType ad_id = 1;
-  platform.options.v2.ClassificationType advertiser_id = 2;
-  platform.options.v2.ClassificationType creative_id = 3;
-  platform.options.v2.ClassificationType flight_id = 4;
-  platform.options.v2.ClassificationType campaign_id = 5;
-  platform.options.v2.ClassificationType priority_id = 6;
-  platform.options.v2.ClassificationType click_url = 7;
-  platform.options.v2.ClassificationType contents = 8;
-  platform.options.v2.ClassificationType impression_url = 9;
-  platform.options.v2.ClassificationType events = 10;
-  platform.options.v2.ClassificationType matched_points = 11;
-  platform.options.v2.ClassificationType pricing = 12;
 
 }

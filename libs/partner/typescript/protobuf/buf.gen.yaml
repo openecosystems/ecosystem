@@ -3,4 +3,13 @@ inputs:
   - directory: ../../../../proto/partner
 plugins:
   - remote: buf.build/bufbuild/es:v2.2.3
-    out: ./gen
+    out: ./src/gen
+    include_imports: true
+  - local: protoc-gen-platform
+    out: ./src/gen
+    opt:
+      - paths=source_relative
+      - language=typescript
+      - type=protobuf-index
+      - prefix=partner
+    strategy: all

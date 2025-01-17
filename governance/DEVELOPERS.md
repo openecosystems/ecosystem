@@ -86,3 +86,34 @@ nx g @nx/node:library \
 --linter=eslint \
 --publishable=true \
 --unitTestRunner=jest
+
+
+nx g @nx/node:library \
+--directory=libs/partner/typescript/protobuf \
+--name=libs-partner-typescript-protobuf \
+--importPath=@openecosystems/protobuf-partner \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/poc/typescript/protobuf \
+--name=libs-poc-typescript-protobuf \
+--importPath=@openecosystems/protobuf-poc \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest
+
+nx g @nx/node:library \
+--directory=libs/private/typescript/protobuf \
+--name=libs-private-typescript-protobuf \
+--importPath=@openecosystems/protobuf-private \
+--buildable=true \
+--compiler=tsc \
+--linter=eslint \
+--publishable=true \
+--unitTestRunner=jest
