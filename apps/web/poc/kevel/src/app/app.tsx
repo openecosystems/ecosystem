@@ -7,78 +7,171 @@ import { create } from '@bufbuild/protobuf';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import {
-    CertificateAuthorityService,
-    CreateCertificateAuthorityRequestSchema,
-} from '../../../../../../libs/public/typescript/protobuf/gen/platform/cryptography/v2alpha/certificate_authority_pb';
+  ConfigurationService, CreateConfigurationRequest,
+  CreateConfigurationRequestSchema,
+  GetConfigurationRequest,
+  GetConfigurationRequestSchema
+
+} from '../../../../../../libs/public/typescript/protobuf/gen/platform/configuration/v2alpha/configuration_pb';
 import { headers } from '@nats-io/nats-core/lib/headers';
+
+// HACK to allow BigInt to be serialized to JSON
+(BigInt.prototype as any)['toJSON'] = function () {
+  return this.toString()
+}
+
+enum Command {
+  GetConfiguration = 'getConfig',
+  CreateConfiguration = 'createConfig'
+}
 
 interface Response {
     text: string;
     sender: 'kevel' | 'user';
 }
 
+interface UserCommand {
+  id: Command,
+  name: string
+}
+
+const commands: UserCommand[] = [
+  {
+    id: Command.GetConfiguration,
+    name: 'Get configuration'
+  },
+  {
+    id: Command.CreateConfiguration,
+    name: 'Create configuration'
+  }
+];
+
 export function App() {
-    const [statement, setStatement] = useState<string>('');
+    const [selectedCommand, setSelectedCommand] = useState<Command>(Command.GetConfiguration);
     const [introFinished, setIntroFinished] = useState<boolean>(false);
     const [responses, setResponses] = useState<Response[]>([
         {
-            text: 'Input command',
+            text: 'Select and send command',
             sender: 'kevel',
         },
     ]);
 
-    const client = createClient(
-        CertificateAuthorityService,
+  const headers = new Headers();
+
+  headers.set("x-spec-workspace-slug", "workspace123");
+  headers.set("x-spec-organization-slug", "organization123");
+
+
+  const client = createClient(
+      ConfigurationService,
         createConnectTransport({
-            baseUrl: 'https://api.dev-1.oeco.cloud',
+            //baseUrl: 'http://api.dev-1.na-us-1.oeco.cloud:6477',
+          baseUrl: 'http://localhost:6477',
         })
     );
 
 
-    const send = async (sentence: string) => {
-        setResponses((resp) => [...resp, { text: sentence, sender: 'user' }]);
-        setStatement('');
+    const send = async (command: Command) => {
+      setResponses((resp) => [...resp, { text: command, sender: 'user' }]);
 
-      const headers = new Headers()
-      headers.set("x-spec-debug", "true");
-      headers.set("x-spec-apikey", "12345678");
-
-      if (introFinished) {
-
-            const res = await client.createCertificateAuthority({
-                name: sentence,
-            }, {
-              headers:headers
-            });
-        } else {
-            const request = create(CreateCertificateAuthorityRequestSchema, {
-                name: sentence,
-            });
-
-            // Handle error
-            await client.createCertificateAuthority(request, {
-              headers: headers
-            }).catch((error) => {
-                setResponses((resp) => [...resp, { text: error?.stack, sender: 'kevel' }]);
-                console.error(error);
-            });
-
-            setIntroFinished(true);
-        }
+      if (command === Command.CreateConfiguration) {
+        await createConfigurationCommand();
+      } else if (command === Command.GetConfiguration) {
+        await getConfigurationCommand();
+      }
     };
 
   /**
-   * Handle the statement change event
+   * Get configuration command
    */
-  const handleStatementChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setStatement(event.target.value);
-    };
+  const  getConfigurationCommand= async () =>  {
+    const data: Partial<GetConfigurationRequest> = {
+      id: '1',
+    }
+
+   if (introFinished) {
+   const response = await client.getConfiguration(
+     data as GetConfigurationRequest,
+     {
+        headers: headers,
+      }
+    ).catch((error) => {
+     setResponses((resp) => [...resp, { text: error?.stack, sender: 'kevel' }]);
+     console.error(error);
+   })
+     if (response?.configuration) {
+       setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
+     }
+  } else {
+
+    const request = create(GetConfigurationRequestSchema, data as GetConfigurationRequest);
+
+    // Handle error
+    const response = await client
+      .getConfiguration(request, {
+        headers: headers,
+      })
+      .catch((error) => {
+        setResponses((resp) => [...resp, { text: error?.stack, sender: 'kevel' }]);
+        console.error(error);
+      });
+
+   if (response?.configuration) {
+     setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
+   }
+
+     setIntroFinished(true);
+  }
+}
+
+  /**
+   * Create configuration command
+  */
+ const createConfigurationCommand = async() =>  {
+   const data: Partial<CreateConfigurationRequest> = {
+      type: 1,
+      parentId: '123'
+   }
+
+   if (introFinished) {
+     const response = await client.createConfiguration(
+       data as CreateConfigurationRequest,
+       {
+         headers: headers,
+       }
+     ).catch((error) => {
+       setResponses((resp) => [...resp, { text: error?.stack, sender: 'kevel' }]);
+       console.error(error);
+     });
+     if (response?.configuration) {
+      setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
+     }
+   } else {
+
+     const request = create(CreateConfigurationRequestSchema, data as CreateConfigurationRequest);
+
+     // Handle error
+     const response = await  client
+       .createConfiguration(request, {
+         headers: headers,
+       }).catch((error) => {
+         setResponses((resp) => [...resp, { text: error?.stack, sender: 'kevel' }]);
+         console.error(error);
+       });
+
+     if (response?.configuration) {
+        setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
+     }
+
+     setIntroFinished(true);
+   }
+ }
 
   /**
    * Handle the send button click event
    */
   const handleSend = () => {
-        send(statement);
+        send(selectedCommand);
     };
 
   /**
@@ -89,6 +182,11 @@ export function App() {
             handleSend();
         }
     };
+
+  const handleCommandChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCommand(event.target.value as Command);
+  }
+
 
     return (
         <div>
@@ -107,13 +205,12 @@ export function App() {
                     );
                 })}
                 <div>
-                    <input
-                        type="text"
-                        className="text-input"
-                        value={statement}
-                        onChange={handleStatementChange}
-                        onKeyPress={handleKeyPress}
-                    />
+                    <select className="text-input" onChange={handleCommandChange} onKeyPress={handleKeyPress}>
+                      {commands.map((command) => (
+                          <option key={command.id} value={command.id}>{command.name}</option>
+                      ))}
+                    </select>
+
                     <button onClick={handleSend}>Send</button>
                 </div>
             </div>
