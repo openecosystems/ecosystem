@@ -5,6 +5,9 @@ import { createClient } from '@connectrpc/connect';
 import { createConnectTransport } from '@connectrpc/connect-web';
 import { create } from '@bufbuild/protobuf';
 
+import { Response } from '../models/Response';
+import { UserCommand } from '../models/UserCommand';
+
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import {
     ConfigurationService,
@@ -13,27 +16,16 @@ import {
     GetConfigurationRequest,
     GetConfigurationRequestSchema,
 } from '../../../../../../libs/public/typescript/protobuf/gen/platform/configuration/v2alpha/configuration_pb';
+import { Command } from '../models/Command';
 
 // HACK to allow BigInt to be serialized to JSON
 (BigInt.prototype as any)['toJSON'] = function () {
     return this.toString();
 };
 
-enum Command {
-    GetConfiguration = 'getConfig',
-    CreateConfiguration = 'createConfig',
-}
-
-interface Response {
-    text: string;
-    sender: 'kevel' | 'user';
-}
-
-interface UserCommand {
-    id: Command;
-    name: string;
-}
-
+/**
+ * List of commands
+ */
 const commands: UserCommand[] = [
     {
         id: Command.GetConfiguration,
@@ -45,6 +37,14 @@ const commands: UserCommand[] = [
     },
 ];
 
+/**
+ * Headers required for the API
+ */
+const headers = new Headers({
+    'x-spec-workspace-slug': 'workspace123',
+    'x-spec-organization-slug': 'organization123',
+});
+
 export function App() {
     const [selectedCommand, setSelectedCommand] = useState<Command>(Command.GetConfiguration);
     const [introFinished, setIntroFinished] = useState<boolean>(false);
@@ -54,11 +54,6 @@ export function App() {
             sender: 'kevel',
         },
     ]);
-
-    const headers = new Headers();
-
-    headers.set('x-spec-workspace-slug', 'workspace123');
-    headers.set('x-spec-organization-slug', 'organization123');
 
     const client = createClient(
         ConfigurationService,
@@ -70,7 +65,6 @@ export function App() {
 
     const send = async (command: Command) => {
         setResponses((resp) => [...resp, { text: command, sender: 'user' }]);
-
         if (command === Command.CreateConfiguration) {
             await createConfigurationCommand();
         } else if (command === Command.GetConfiguration) {
@@ -82,6 +76,7 @@ export function App() {
      * Get configuration command
      */
     const getConfigurationCommand = async () => {
+        // Data to send
         const data: Partial<GetConfigurationRequest> = {
             id: '1',
         };
@@ -123,6 +118,7 @@ export function App() {
      * Create configuration command
      */
     const createConfigurationCommand = async () => {
+        // Data to send
         const data: Partial<CreateConfigurationRequest> = {
             type: 1,
             parentId: '123',
