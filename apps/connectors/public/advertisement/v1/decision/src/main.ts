@@ -8,8 +8,20 @@ import { create, toBinary } from '@bufbuild/protobuf';
 async function app() {
 
     const data: Partial<DecisionV1.GetDecisionsResponse> = {
+        specContext: {
+            $typeName: 'platform.spec.v2.SpecResponseContext',
+            responseValidation: {
+                $typeName: 'platform.type.v2.ResponseValidation',
+                validateOnly: false,
+            },
+            organizationSlug:"",
+            workspaceSlug: "",
+            workspaceJan: null,
+            routineId: "",
+        },
         decisions: {
             $typeName: 'kevel.advertisement.v1.Decisions',
+
         },
     };
 
