@@ -16,17 +16,16 @@ async function app() {
     const response = create(DecisionV1.GetDecisionsResponseSchema, data as DecisionV1.GetDecisionsResponse);
     const binary = toBinary(DecisionV1.GetDecisionsResponseSchema, response);
 
-  const connections: NatsConnection[] = [];
-  connections.push(...await Connector(InboundStream, null, "decision", null));
-  connections.push(...await Connector(InboundStream, DecisionV12.CommandDataDecisionTopic, "decision", binary));
-  //connections.push(...await Connector("other-echo", 2));
+    const connections: NatsConnection[] = [];
+    //connections.push(...await Connector(InboundStream, null, "decision", null));
+    connections.push(...await Connector(InboundStream, DecisionV12.CommandDataDecisionTopic, "decision", binary));
+    //connections.push(...await Connector("other-echo", 2));
 
-
-  const a: Promise<void | Error>[] = [];
-  connections.forEach((c) => {
+    const a: Promise<void | Error>[] = [];
+    connections.forEach((c) => {
     a.push(c.closed());
-  });
-  await Promise.all(a);
+    });
+    await Promise.all(a);
 
 }
 
