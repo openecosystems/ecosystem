@@ -2,10 +2,9 @@
 // source: Generated from all proto files
 
 package specentities
+import (
 
-import
-	decision "libs/partner/go/model/gen/platform/advertisement/v1"
-	"libs/public/go/sdk/v2alpha"
+  decision "libs/partner/go/model/gen/platform/advertisement/v1"
   "libs/public/go/sdk/v2alpha"
 )
 

@@ -14,12 +14,14 @@ export const ReferenceTypeNameEventPrefix = "reference.";
 // Enums for ReferenceCommands
 export enum ReferenceCommands {
   
+  ReferenceCommandsUnspecified = 0,
   UnrecognizedReferenceCommand = -1,
 }
 
 // Enums for Reference Events
 export enum ReferenceEvents {
 
+  ReferenceEventsUnspecified = 0,
   UnrecognizedReferenceEvent  = -1,
 }
 
@@ -33,6 +35,8 @@ export const UnrecognizedReferenceTopic = "unrecognized";
 export class ReferenceCommandHelper {
   static commandName(command: ReferenceCommands): string {
     switch (command) {
+      case ReferenceCommands.ReferenceCommandsUnspecified:
+        return "ReferenceCommandsUnspecified"
       default:
         return "UnrecognizedReferenceCommand"
     }
@@ -40,6 +44,7 @@ export class ReferenceCommandHelper {
 
   static commandTopic(command: ReferenceCommands): string {
     switch (command) {
+      case ReferenceCommands.ReferenceCommandsUnspecified:
         return CommandDataReferenceTopic;
       default:
 		    return UnrecognizedReferenceTopic;
@@ -52,6 +57,8 @@ export class ReferenceCommandHelper {
 
   static getReferenceCommand(command: string): ReferenceCommands {
     switch (command) {
+      case "ReferenceCommandsUnspecified":
+        return ReferenceCommands.ReferenceCommandsUnspecified;
       default:
         return ReferenceCommands.UnrecognizedReferenceCommand;
     }
@@ -62,6 +69,8 @@ export class ReferenceCommandHelper {
 export class ReferenceEventHelper {
   static eventName(event: ReferenceEvents): string {
     switch (event) {
+      case ReferenceEvents.ReferenceEventsUnspecified:
+        return "ReferenceEventsUnspecified";
       default:
         return "UnrecognizedReferenceEvent";
     }
@@ -69,6 +78,7 @@ export class ReferenceEventHelper {
 
   static eventTopic(event: ReferenceEvents): string {
     switch (event) {
+      case ReferenceEvents.ReferenceEventsUnspecified:
         return EventDataReferenceTopic;
       default:
         return UnrecognizedReferenceTopic;
@@ -81,6 +91,8 @@ export class ReferenceEventHelper {
 
   static getReferenceEvent(event: string): ReferenceEvents {
     switch (event) {
+      case "ReferenceEventsUnspecified":
+        return ReferenceEvents.ReferenceEventsUnspecified;
       default:
         return ReferenceEvents.UnrecognizedReferenceEvent;
     }
