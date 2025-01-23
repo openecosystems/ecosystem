@@ -1,6 +1,9 @@
 import type { NatsConnection, Subscription } from '@nats-io/nats-core/lib/mod';
 import { Stream, GetQueueGroupName, GetMultiplexedRequestSubjectName } from './stream';
 import { connect } from '@nats-io/transport-node';
+import { fromBinary } from '@bufbuild/protobuf';
+import { SpecSchema } from '@openecosystems/protobuf-partner';
+import { Client } from "@adzerk/decision-sdk";
 
 
 export async function Connector(scope: Stream, subject: string, entity: string, binary: Uint8Array): Promise<NatsConnection[]> {
@@ -29,6 +32,23 @@ async function handleRequest(subject: string, s: Subscription, binary: Uint8Arra
   const p = 12 - subject.length;
   const pad = "".padEnd(p);
   for await (const m of s) {
+
+      // const spec = fromBinary(SpecSchema, m.data)
+      // console.log(`Received ${p}: ${spec}`);
+      //
+      // let client = new Client({ networkId: 11603, siteId: 1301620 });
+      //
+      // let request = {
+      //     placements: [{ adTypes: [5] }],
+      //     user: { key: "abc" },
+      //     keywords: ["keyword1", "keyword2"]
+      // };
+      //
+      // client.decisions.get(request).then(response => {
+      //     console.dir(response, { depth: null });
+      // });
+
+
 
     // respond returns true if the message had a reply subject, thus it could respond
     //if (m.respond(m.data)) {
