@@ -33,21 +33,20 @@ async function handleRequest(subject: string, s: Subscription, binary: Uint8Arra
   const pad = "".padEnd(p);
   for await (const m of s) {
 
-      // const spec = fromBinary(SpecSchema, m.data)
-      // console.log(`Received ${p}: ${spec}`);
-      //
-      // let client = new Client({ networkId: 11603, siteId: 1301620 });
-      //
-      // let request = {
-      //     placements: [{ adTypes: [5] }],
-      //     user: { key: "abc" },
-      //     keywords: ["keyword1", "keyword2"]
-      // };
-      //
-      // client.decisions.get(request).then(response => {
-      //     console.dir(response, { depth: null });
-      // });
+      const spec = fromBinary(SpecSchema, m.data)
+      console.log(`Received ${p}: ${spec}`);
 
+      let client = new Client({ networkId: 11603, siteId: 1301620 });
+
+      let request = {
+          placements: [{ adTypes: [3] }],
+          user: { key: "abc" },
+          keywords: ["keyword1", "keyword2"]
+      };
+
+      client.decisions.get(request).then(response => {
+          console.dir(response, { depth: null });
+      });
 
 
     // respond returns true if the message had a reply subject, thus it could respond
