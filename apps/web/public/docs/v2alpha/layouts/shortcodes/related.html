@@ -1,0 +1,31 @@
+{{- $header := .Get "header" -}}
+{{- $url := .Get "href" -}}
+{{- $product := default (.Get "product") (.Get 0) -}} {{- $data := (index $.Site.Data $product) }}
+
+<div class="DocsMarkdown--related-product">
+  <div class="DocsMarkdown--related-product-logo" aria-hidden="true">
+    {{- if $data.logo_name -}}
+      {{- $logo_name := printf "icons/%s.svg" $data.logo_name -}}
+      {{- $logo := resources.Get $logo_name -}}
+      {{- if $logo -}}
+        {{ $logo.Content | safeHTML }}
+      {{- else -}}
+        <!-- 
+          The following line makes Hugo crash if the resource cannot be found.
+          However, if it crashes there is no way of telling exactly which resource could not be found.
+          For debugging purposes, delete the following line, and the line after it will tell which
+          resource cannot be found.
+        -->
+        {{ $logo.Content }}
+        ERROR in generic-product-grid partial: asset '{{ $logo_name }}' not found
+      {{- end -}}
+    {{- end -}}
+  </div>
+  <div>
+    <a class="DocsMarkdown--resource-header" href="{{ $url }}"
+      >{{ $header }} {{- if strings.HasPrefix $url "http" -}} {{- partialCached
+      "external.icon" . -}} {{- end -}}</a
+    >
+    <p>{{- .Page.RenderString .Inner -}}</p>
+  </div>
+</div>

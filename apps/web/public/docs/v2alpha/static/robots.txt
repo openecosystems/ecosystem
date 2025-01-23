@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /client-ip-geolocation
+
+Sitemap: https://docs.openecosystems.com/sitemap.xml

@@ -1,0 +1,21 @@
+{{- $current := .Page.RelPermalink -}}
+{{- $len := len (split $current "/") -}}
+
+{{- range (where .Site.Pages "Section" .Page.Section).ByWeight -}}
+  {{- $x := .RelPermalink -}}
+  {{- $self := eq $x $current -}}
+  {{- $delta := sub (len (split $x "/")) $len -}}
+  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
+  <h2 id="{{ .File.BaseFileName }}">
+    <span class="DocsMarkdown--header-anchor-positioner">
+      <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#{{ .File.BaseFileName }}">&ZeroWidthSpace;&ZeroWidthSpace;</a>
+    </span>
+    <span>{{ .Title}}</span>
+  </h2>
+  <p>{{ .Page.RenderString .Params.summary }}</p>
+    {{- if or .Params.has_more (eq .Params.has_more nil) -}}
+      {{ $link := printf "[%s](%s)" "Read more" .RelPermalink -}}
+      {{- .Page.RenderString $link -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

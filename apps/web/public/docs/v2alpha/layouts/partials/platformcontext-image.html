@@ -1,0 +1,9 @@
+{{- $data := (index $.Site.Data .Section) -}}
+{{- $platformContext := $data.meta.platform_context | default .Page.Params.platform_context -}}
+{{- if $platformContext -}}
+<div class="platform-context overview">
+  <a href="/fundamentals/platform-contexts/{{- $platformContext -}}-platform/" class="DocsMarkdown--link">
+    <img src="/context/platform-{{- $platformContext -}}-icon.svg" alt="Platform context: {{- $platformContext -}}">
+  </a>
+</div>
+{{- end -}}

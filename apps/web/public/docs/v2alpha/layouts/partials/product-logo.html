@@ -1,0 +1,16 @@
+{{- $root := .Root -}}
+{{- $product := .Product -}}
+{{- if ne $product nil -}}
+  {{- $data := (index $root.Site.Data $product) -}}
+
+  {{- $logo_name := printf "icons/%s.svg" $data.logo_name -}}
+  {{- $logo := resources.GetMatch $logo_name -}}
+  {{- if ne $logo nil -}}
+    <div>{{- $logo.Content | safeHTML -}}</div>
+    <!-- 
+      The following line makes sure that the SVGs are rendered in the package,
+      and that '/icons/Proctor.svg' would work, for example.
+    -->
+    {{- $link := $logo.RelPermalink -}}
+  {{- end -}}
+{{- end -}}

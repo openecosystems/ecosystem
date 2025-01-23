@@ -1,0 +1,31 @@
+{{- $systemName := .Page.Title -}}
+{{- $section := .Page.Section -}}
+{{- $data_systems := (index $.Site.Data "systems") -}}
+{{- $system_types := (index $data_systems "systems") -}}
+
+{{- $data_products := (index $.Site.Data $section) -}}
+{{- $lifecycle := $data_products.meta.lifecycle -}}
+
+<!-- Allows the shortcode to be closed -->
+{{- $inner := .Inner -}}
+
+<div class="DocsMarkdown-system-context">
+    <h1>{{- .Page.Title -}}</h1>
+    {{- range $system_type := $system_types -}}
+        {{- range $system := $system_type.systems -}}
+            {{- if eq $system $section -}}
+            <a href="{{ $system_type.target }}">
+                <div class="DocsMarkdown--system-type-pill">{{ $system_type.title_short }}</div>
+            </a>
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+            
+    {{- if ne $lifecycle nil -}}
+        <a href="/fundamentals/system-types/system-lifecycles/#{{ $lifecycle | strings.ToLower }}">
+            <div class="DocsMarkdown--lifecycle-pill">
+                {{ $lifecycle }}
+            </div>
+        </a>
+    {{- end -}}
+</div>

@@ -1,0 +1,32 @@
+{{- $url := .RelPermalink -}}
+{{- $urlWithoutSlash := substr $url 0 -1 -}}
+{{- $allPages := .Site.Pages -}}
+{{- $items := slice -}}
+{{- range $page := $allPages -}}
+  {{- if not (in $page.Params.links_to $url) -}}
+    {{- if not (in $page.Params.links_to $urlWithoutSlash) -}}
+      {{- continue -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $items = append (dict
+    "title" $page.Title
+    "url" $page.RelPermalink
+    "section" $page.Section
+  ) $items -}}
+{{- end -}}
+
+{{- if gt (len $items) 0 -}}
+<br>
+<h2 id="related-pages">
+  <span class="DocsMarkdown--header-anchor-positioner">
+    <a class="DocsMarkdown--header-anchor Link Link-without-underline" href="#related-pages">&ZeroWidthSpace;&ZeroWidthSpace;</a>
+  </span>
+  <span>Pages linking to this page</span>
+</h2>
+<br>
+<ul>
+  {{- range $item := $items -}}
+  <li><a href="{{ $item.url }}">{{ $item.title }}</a></li>
+  {{- end -}}
+</ul>
+{{- end -}}

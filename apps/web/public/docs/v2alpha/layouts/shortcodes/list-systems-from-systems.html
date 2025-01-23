@@ -1,0 +1,59 @@
+<!--
+  The source data file that is used by this shortcode is `systems.yml`.
+
+  Systems are grouped into three types of Categories:
+
+  - focusareas
+  - systems (System Types)
+  - context
+
+  Every Category has a number of Subcategories. For example, focusareas has
+  governance and solutions, among others.
+
+  This shortcode shows all Systems that are part of a Subcategory along with
+  the System's value_plane_context and platform_context (which is retrieved from
+  the {system}.yaml).
+
+  The purpose of this Shortcode is for debugging purposes. For example, by adding it
+  to Systems of Engagement, one can see that that page is bound to the "Workload Plane",
+  but not every System that is a System of Engagement belongs to the Workload Plane.
+-->
+
+{{- $category := .Get "category" -}}
+{{- $subcategory := .Get "subcategory" -}}
+
+{{- $data_systems := (index $.Site.Data "systems") -}}
+{{- $data_category := (index $data_systems $category) -}}
+{{- $data_subcategory := (index $data_category $subcategory) -}}
+
+
+<!-- Allows the shortcode to be closed -->
+{{- $inner := .Inner -}}
+
+<style>
+  .ProductGrid--content {
+    --n: 1;
+    display: grid;
+    flex-direction: column;
+    grid-template-columns: repeat(var(--n), 1fr);
+  }
+
+  @media screen and (min-width: 600px) {
+    .ProductGrid--content { --n: 1 }
+  }
+
+  @media screen and (min-width: 978px) {
+    .ProductGrid--content { --n: 2 }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .ProductGrid--content { --n: 2 }
+  }
+</style>
+
+<p>The following Systems are {{ $data_subcategory.title }}:</p>
+<div class="ProductGrid">
+	<div class="ProductGrid--content">
+
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{{- $url := .Get "href" -}}
+{{- $icon := .Get "icon" -}}
+{{- $type := .Get "type" | default "resource" -}}
+
+<a class="Button DocsMarkdown--{{ $type }}" href="{{ $url }}">
+  <div class="DocsMarkdown--{{ $type }}-icon">
+    <img src="/context/{{ $icon }}.svg" />
+  </div>
+  <div class="DocsMarkdown--{{ $type }}-text">
+    {{- with .Get "header" -}}
+    <div class="DocsMarkdown--{{ $type }}-header">
+      {{- safeHTML . -}} {{- if strings.HasPrefix $url "http" -}} {{-
+      partialCached "external.icon" . -}} {{- end -}}
+    </div>
+    {{- end -}}
+    <span class="DocsMarkdown--{{ $type }}-content">
+      {{- .Page.RenderString .Inner -}}
+    </span>
+  </div>
+</a>

@@ -1,0 +1,95 @@
+{{- $scratch := newScratch -}}
+{{- range $i, $page := .Site.Pages -}}
+  {{- if not $page.File -}}
+    {{- continue -}}
+  {{- end -}}
+  {{- if eq $page.File.Path "404.html" -}}
+    {{- continue -}}
+  {{- end -}}
+
+  {{- $data := (index $.Site.Data $page.Section) -}}
+
+  {{- $page.Scratch.SetInMap "properties" "path" $page.File.Path -}}
+  {{- $page.Scratch.SetInMap "properties" "url" $page.RelPermalink -}}
+  {{- $page.Scratch.SetInMap "properties" "kind" $page.Kind -}}
+  {{- $page.Scratch.SetInMap "properties" "summary" (trim $page.Summary " ") -}}
+  {{- $page.Scratch.SetInMap "properties" "weight" $page.Weight -}}
+
+  {{- $title := default $data.meta.title (default $page.Params.meta.title $page.Title) -}}
+  {{- $page.Scratch.SetInMap "properties" "title" $title -}}
+
+  {{- $description := default $data.meta.description (default $page.Params.description $page.Description) -}}
+  {{- if $description -}}
+    {{- $page.Scratch.SetInMap "properties" "description" (($page.RenderString $description) | plainify) -}}
+  {{- end -}}
+
+  {{- if $data.type -}}
+    {{- $page.Scratch.SetInMap "properties" "type" $data.type -}}
+  {{- end -}}
+
+  {{- if $data.logo_name -}}
+    {{- $page.Scratch.SetInMap "properties" "logo_name" $data.logo_name -}}
+  {{- end -}}
+
+  {{- if $data.meta.lifecycle -}}
+    {{- $page.Scratch.SetInMap "properties" "lifecycle" $data.meta.lifecycle -}}
+  {{- end -}}
+
+  {{- if $page.Section -}}
+    {{- $page.Scratch.SetInMap "properties" "section" $page.Section -}}
+  {{- end -}}
+
+  {{- if eq "system" $data.type -}}
+    {{- $systems_data := (index $.Site.Data "systems") -}}
+    {{- range $category, $value := $systems_data -}}
+      {{- range $subcategory, $value := $value -}}
+        {{- range $j, $system := $value.systems -}}
+          {{- if eq $system $page.Section -}}
+            {{- $page.Scratch.Add $category (slice $value.title_short) -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $page.Scratch.SetInMap "properties" $category ($page.Scratch.Get $category) -}}
+    {{- end -}}
+  {{- end -}}
+
+
+  {{- $breadcrumb := (dict "title" $title "url" $page.RelPermalink) -}}
+  {{- $page.Scratch.Add "breadcrumbs" (slice $breadcrumb) -}}
+  {{- $page.Scratch.SetInMap "properties" "breadcrumbs" ($page.Scratch.Get "breadcrumbs") -}}
+
+  {{- if ge ($page.Plain | len) 9000 -}}
+    {{- $paragraphs := split $page.Plain "\n" -}}
+    {{- $recordObject := ($page.Scratch.Get "properties") -}}
+    {{- $uniqueID := $page.File.UniqueID -}}
+    {{- range $j, $paragraph := $paragraphs -}}
+      {{- if eq $paragraph "" -}}
+        {{- continue -}}
+      {{- end -}}
+
+      {{- $objectID := printf "%s-%d" $uniqueID $j -}}
+
+      {{- $scratchIndexRecord := newScratch -}}
+      {{- range $key, $value := $recordObject -}}
+        {{- $scratchIndexRecord.SetInMap "indexRecord" $key $value -}}
+      {{- end -}}
+      {{- $scratchIndexRecord.SetInMap "indexRecord" "objectID" $objectID -}}
+      {{- if ge ($paragraph | len ) 10000 -}}
+        {{- continue -}}
+      {{- end -}}
+      {{- $scratchIndexRecord.SetInMap "indexRecord" "content" (trim $paragraph " \r\n") -}}
+
+      {{- $indexRecord := ($scratchIndexRecord.Get "indexRecord") -}}
+      {{- $scratch.SetInMap "indexrecords" $objectID $indexRecord -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $objectID := $page.File.UniqueID -}}
+    {{- $page.Scratch.SetInMap "properties" "objectID" $objectID -}}
+    {{- $page.Scratch.SetInMap "properties" "content" (trim $page.Plain " \r\n") -}}
+    {{- $scratch.SetInMap "indexrecords" $objectID ($page.Scratch.Get "properties") -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $indexRecords := $scratch.GetSortedMapValues "indexrecords" -}}
+{{- $opts := (dict "indent" "  ") -}}
+{{- $indexRecords | jsonify $opts -}}

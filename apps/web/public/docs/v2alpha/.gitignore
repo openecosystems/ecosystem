@@ -1,0 +1,7 @@
+*-lock.*
+*.lock
+*.log
+*.backup
+
+/assets/jsconfig.json
+!bin/

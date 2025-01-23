@@ -1,0 +1,12 @@
+{{- /* First try to get the description from the pages Frontmatter. */ -}}
+{{- /* If that fails, retrieve it from the data file. */ -}}
+{{- /* If no description is found, do nothing. Otherwise render the description as HTML. */ -}}
+{{- $data := (index $.Site.Data .Page.Section) -}}
+{{- $description := default $data.meta.description (default .Page.Params.description .Page.Description) -}}
+
+<!-- Allows the shortcode to be closed -->
+{{- $inner := .Inner -}}
+
+{{- if $description -}}
+  <div class="DocsMarkdown--description">{{- .Page.RenderString $description -}}</div>
+{{- end -}}
