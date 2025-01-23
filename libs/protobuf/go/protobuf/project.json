@@ -41,13 +41,6 @@
         "cwd": "libs/protobuf/go/protobuf"
       }
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/protobuf/go/protobuf/**/*.yaml"]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

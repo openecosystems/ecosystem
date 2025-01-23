@@ -35,13 +35,6 @@
         "cwd": "libs/private/go/model"
       }
     },
-    "eslint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/private/go/model/**/*.yaml"]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

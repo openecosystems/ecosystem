@@ -71,15 +71,6 @@
         "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
       }
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "apps/workloads/public/configuration/v2alpha/configuration/**/*.yaml"
-        ]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

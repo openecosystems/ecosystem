@@ -7,6 +7,10 @@ use (
 	./apps/clients/poc/quality/v2alpha/ping
 	./apps/workloads/poc/wasm/v2alpha/wasm
 
+	// Web
+	// ===================================
+	./apps/web/public/docs/v2alpha
+
 	// Services
 	// ===================================
 	./apps/workloads/public/communications/v1alpha/preference-center

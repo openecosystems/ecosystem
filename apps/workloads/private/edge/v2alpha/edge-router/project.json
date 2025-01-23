@@ -54,15 +54,6 @@
       },
       "dependsOn": ["build"]
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "apps/workloads/private/edge/v2alpha/edge-router/**/*.yaml"
-        ]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
