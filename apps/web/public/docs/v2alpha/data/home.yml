@@ -1,0 +1,9 @@
+meta:
+  title: Docs
+  description: Browse the latest product docs including how-to guides, API reference, and sample code.
+  author: '@openecosystems'
+  image: /cf-twitter-card.png
+
+externals:
+  - title: Open Economic Systems
+    url: https://openecosystems.com

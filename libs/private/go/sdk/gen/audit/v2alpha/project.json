@@ -30,13 +30,6 @@
         "cwd": "libs/private/go/sdk/gen/audit/v2alpha"
       }
     },
-    "eslint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/private/go/sdk/gen/audit/v2alpha/**/*.yaml"]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

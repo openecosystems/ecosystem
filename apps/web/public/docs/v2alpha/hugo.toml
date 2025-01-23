@@ -1,0 +1,103 @@
+title = "Open Ecosystems Documentation"
+languageCode = "en"
+DefaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+disableHugoGeneratorInject = true
+enableRobotsTXT = false
+
+disableAliases = true
+disableKinds = ["taxonomy"]
+
+enableEmoji = true
+enableGitInfo = true
+
+publishDir = "./../../../../../dist/apps/web/public/docs/v2alpha"
+
+# TODO
+rssLimit = 10
+
+pagination.pagerSize = 12
+pagination.path = "page"
+#paginate = 12 # default 10
+#paginatePath = "page" # default
+
+
+# Algolia is a search solution - the following read-only token is used from the frontend to execute search queries
+[params.algolia]
+appId = "Q0PYQBQ376"
+apiKey = "4a80835b7bf407de83e24bfed92f712a"
+indexName = "first_index"
+
+[sitemap]
+  changefreq = "daily"
+  filename = "sitemap.xml"
+  priority = 0.7
+
+[markup]
+	[markup.goldmark]
+		[markup.goldmark.renderer]
+			unsafe = true
+	[markup.highlight]
+		tabWidth = 2
+		style = "github"
+		codeFences = true
+		guessSyntax = true
+		lineNumbersInTable = true
+		noClasses = false
+		lineNoStart = 1
+		lineNos = false
+		hl_Lines = ""
+
+[module]
+[[module.mounts]]
+  source = 'content'
+  target = 'content'
+[[module.mounts]]
+  source = 'static'
+  target = 'static'
+[[module.mounts]]
+  source = 'layouts'
+  target = 'layouts'
+[[module.mounts]]
+  source = 'data'
+  target = 'data'
+[[module.mounts]]
+  source = 'assets'
+  target = 'assets'
+[[module.mounts]]
+  source = 'i18n'
+  target = 'i18n'
+[[module.mounts]]
+  source = 'archetypes'
+  target = 'archetypes'
+
+[languages]
+  [languages.en]
+    title = 'Open Ecosystems Documentation'
+    disabled = false
+    languageCode = 'en-US'
+    weight = 1
+    languageName = 'English'
+    contentDir = 'content/en'
+    [languages.en.params]
+      linkedin = 'https://linkedin.com/openecosystems'
+  [languages.fr]
+    title = 'Open Ecosystems Documentation'
+    disabled = false
+    languageCode = 'fr-FR'
+    languageName = 'François'
+    contentDir = 'content/fr'
+    weight = 2
+    [languages.fr.params]
+      linkedin = 'https://linkedin.com/fr/openecosystems'
+      [languages.fr.params.navigation]
+        help = 'Aide'
+
+[outputs]
+home = ["HTML", "RSS", "Algolia"]
+
+[outputFormats.Algolia]
+baseName = "algolia"
+isPlainText = true
+mediaType = "application/json"
+notAlternative = true

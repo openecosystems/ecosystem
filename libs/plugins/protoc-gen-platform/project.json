@@ -8,13 +8,6 @@
     "test": {
       "executor": "@nx-go/nx-go:test"
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/plugins/protoc-gen-platform/**/*.yaml"]
-      }
-    },
     "build": {
       "executor": "@nx-go/nx-go:build",
       "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],

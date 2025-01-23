@@ -82,15 +82,6 @@
         "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
       }
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "apps/workloads/public/cryptography/v2alpha/certificate-authority/**/*.yaml"
-        ]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

@@ -31,6 +31,12 @@ http://144.202.125.179:6477/v2alpha/cryptography/ca/create
 
 curl -X POST \
 --header "Content-Type: application/json" \
+--data '{"parent_id": "123", "name": "hello"}' \
+http://144.202.125.179:6477/v2alpha/cryptography/ca/create
+
+
+curl -X POST \
+--header "Content-Type: application/json" \
 --header "x-spec-workspace-slug: workspace123" \
 --header "x-spec-organization-slug: health-organization" \
 --header "x-spec-workspace-jan: JURISDICTION_USA" \

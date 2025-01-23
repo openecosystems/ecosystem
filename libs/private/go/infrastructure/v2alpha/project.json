@@ -29,13 +29,6 @@
         "cwd": "libs/private/go/infrastructure/v2alpha"
       }
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/private/go/infrastructure/v2alpha/**/*.yaml"]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

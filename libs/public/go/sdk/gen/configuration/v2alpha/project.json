@@ -30,13 +30,6 @@
         "cwd": "libs/public/go/sdk/gen/configuration/v2alpha"
       }
     },
-    "eslint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/public/go/sdk/gen/configuration/v2alpha/**/*.yaml"]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

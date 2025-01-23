@@ -30,13 +30,6 @@
         "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
-    "eslint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}/**/*.yaml"]
-      }
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

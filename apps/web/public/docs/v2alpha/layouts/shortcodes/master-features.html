@@ -1,0 +1,14 @@
+{{- $current := .Page.RelPermalink -}}
+{{- $len := len (split $current "/") -}}
+
+<!-- Allows the shortcode to be closed -->
+{{- $inner := .Inner -}}
+
+{{- range (where .Site.Pages "Section" .Page.Section).ByWeight -}}
+  {{- $x := .RelPermalink -}}
+  {{- $self := eq $x $current -}}
+  {{- $delta := sub (len (split $x "/")) $len -}}
+  {{- if and (not $self) (hasPrefix $x $current) (lt $delta 2) -}}
+    {{- partial "feature" . -}}
+  {{- end -}}
+{{- end -}}

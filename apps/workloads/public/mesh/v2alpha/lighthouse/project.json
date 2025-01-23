@@ -76,15 +76,6 @@
         "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
       }
     },
-    "eslint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "apps/workloads/public/mesh/v2alpha/lighthouse/**/*.yaml"
-        ]
-      }
-    },
     "format": {
       "executor": "nx:run-commands",
       "options": {
