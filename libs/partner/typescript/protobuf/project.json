@@ -33,6 +33,19 @@
                 "assets": ["libs/partner/typescript/protobuf/*.md"]
             }
         },
+        "pre-build": {
+          "executor": "nx:run-commands",
+          "outputs": [
+
+          ],
+          "options": {
+            "commands": [
+              "cp -R src/gen ../../../../dist/libs/partner/typescript/protobuf/src"
+            ],
+            "parallel": false,
+            "cwd": "libs/partner/typescript/protobuf"
+          }
+        },
         "nx-release-publish": {
             "options": {
                 "packageRoot": "dist/{projectRoot}"

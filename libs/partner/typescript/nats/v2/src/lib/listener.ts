@@ -3,7 +3,7 @@ import { Stream, GetQueueGroupName, GetMultiplexedRequestSubjectName } from './s
 import { connect } from '@nats-io/transport-node';
 
 
-export async function Connector(scope: Stream, subject: string, entity: string): Promise<NatsConnection[]> {
+export async function Connector(scope: Stream, subject: string, entity: string, binary: Uint8Array): Promise<NatsConnection[]> {
   const connections: NatsConnection[] = [];
 
   const queue = GetQueueGroupName(scope, entity)
@@ -17,7 +17,7 @@ export async function Connector(scope: Stream, subject: string, entity: string):
   });
 
   const subscription = nc.subscribe(s, { queue: queue });
-  const _ = handleRequest(s, subscription);
+  const _ = handleRequest(s, subscription, binary);
   console.log(`${subject} is listening for ${s} requests...`);
   connections.push(nc);
 
@@ -25,15 +25,14 @@ export async function Connector(scope: Stream, subject: string, entity: string):
 }
 
 // simple handler for service requests
-async function handleRequest(subject: string, s: Subscription) {
+async function handleRequest(subject: string, s: Subscription, binary: Uint8Array) {
   const p = 12 - subject.length;
   const pad = "".padEnd(p);
   for await (const m of s) {
 
-
-
     // respond returns true if the message had a reply subject, thus it could respond
-    if (m.respond(m.data)) {
+    //if (m.respond(m.data)) {
+    if (m.respond(binary)) {
       console.log(
         `[${subject}]:${pad} #${s.getProcessed()} echoed ${m.string()}`,
       );
