@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/opentelemetry/v2"
+	"libs/partner/go/protobuf/gen/kevel/advertisement/v1/advertisementv1pbconnect"
 	"libs/partner/go/protovalidate/v0"
+	advertisementv1pbsrv "libs/partner/go/server/v2alpha/gen/kevel/advertisement/v1"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
 	"libs/public/go/protobuf/gen/platform/communication/v1alpha/communicationv1alphapbconnect"
@@ -13,15 +15,15 @@ import (
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 	"libs/public/go/sdk/v2alpha"
 	"libs/public/go/server/v2alpha"
+	communicationv1alphapbsrv "libs/public/go/server/v2alpha/gen/platform/communication/v1alpha"
+	cryptographyv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/cryptography/v2alpha"
 	"os"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
 	"connectrpc.com/vanguard"
 
-	communicationv1alphapbsrv "libs/public/go/server/v2alpha/gen/platform/communication/v1alpha"
 	configurationv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
-	cryptographyv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/cryptography/v2alpha"
 )
 
 func main() {
@@ -67,6 +69,7 @@ func main() {
 	services = append(services, vanguard.NewService(communicationv1alphapbconnect.NewPreferenceCenterServiceHandler(&communicationv1alphapbsrv.PreferenceCenterServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(cryptographyv2alphapbconnect.NewCertificateAuthorityServiceHandler(&cryptographyv2alphapbsrv.CertificateAuthorityServiceHandler{}, interceptors)))
+	services = append(services, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 
 	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, services)
 

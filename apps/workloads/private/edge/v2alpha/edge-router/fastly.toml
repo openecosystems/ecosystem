@@ -18,11 +18,12 @@ service_id = "P7ph3LOR6cyc47YRegHpM0"
     [local_server.config_stores.context_localhost]
       format = "inline-toml"
     [local_server.config_stores.context_localhost.contents]
-      "context" = "localhost;local-2;6477;communication"
+      #"context" = "localhost;local-2;6477;communication"
+      "context" = "oeco.cloud;local-2;6477;nosystem"
     [local_server.config_stores.routes_localhost]
       format = "inline-toml"
     [local_server.config_stores.routes_localhost.contents]
-      "12345678" = "na-us-1;health-organization;workspace123"
+      "12345678" = "na-us-1;organization123;workspace123"
       "23456789" = "na-us-1;health-organization;wecare_local"
       "34567890" = "na-us-1;platform;dimy"
       "45678901" = "na-us-1;platform;ricky"

@@ -46,13 +46,6 @@ const (
 	IamAuthenticationServiceLogoutProcedure = "/platform.iam.v2alpha.IamAuthenticationService/Logout"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	iamAuthenticationServiceServiceDescriptor      = v2alpha.File_platform_iam_v2alpha_iam_authentication_proto.Services().ByName("IamAuthenticationService")
-	iamAuthenticationServiceLoginMethodDescriptor  = iamAuthenticationServiceServiceDescriptor.Methods().ByName("Login")
-	iamAuthenticationServiceLogoutMethodDescriptor = iamAuthenticationServiceServiceDescriptor.Methods().ByName("Logout")
-)
-
 // IamAuthenticationServiceClient is a client for the platform.iam.v2alpha.IamAuthenticationService
 // service.
 type IamAuthenticationServiceClient interface {
@@ -72,17 +65,18 @@ type IamAuthenticationServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewIamAuthenticationServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) IamAuthenticationServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	iamAuthenticationServiceMethods := v2alpha.File_platform_iam_v2alpha_iam_authentication_proto.Services().ByName("IamAuthenticationService").Methods()
 	return &iamAuthenticationServiceClient{
 		login: connect.NewClient[v2alpha.LoginRequest, v2alpha.LoginResponse](
 			httpClient,
 			baseURL+IamAuthenticationServiceLoginProcedure,
-			connect.WithSchema(iamAuthenticationServiceLoginMethodDescriptor),
+			connect.WithSchema(iamAuthenticationServiceMethods.ByName("Login")),
 			connect.WithClientOptions(opts...),
 		),
 		logout: connect.NewClient[v2alpha.LogoutRequest, v2alpha.LogoutResponse](
 			httpClient,
 			baseURL+IamAuthenticationServiceLogoutProcedure,
-			connect.WithSchema(iamAuthenticationServiceLogoutMethodDescriptor),
+			connect.WithSchema(iamAuthenticationServiceMethods.ByName("Logout")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -119,16 +113,17 @@ type IamAuthenticationServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewIamAuthenticationServiceHandler(svc IamAuthenticationServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	iamAuthenticationServiceMethods := v2alpha.File_platform_iam_v2alpha_iam_authentication_proto.Services().ByName("IamAuthenticationService").Methods()
 	iamAuthenticationServiceLoginHandler := connect.NewUnaryHandler(
 		IamAuthenticationServiceLoginProcedure,
 		svc.Login,
-		connect.WithSchema(iamAuthenticationServiceLoginMethodDescriptor),
+		connect.WithSchema(iamAuthenticationServiceMethods.ByName("Login")),
 		connect.WithHandlerOptions(opts...),
 	)
 	iamAuthenticationServiceLogoutHandler := connect.NewUnaryHandler(
 		IamAuthenticationServiceLogoutProcedure,
 		svc.Logout,
-		connect.WithSchema(iamAuthenticationServiceLogoutMethodDescriptor),
+		connect.WithSchema(iamAuthenticationServiceMethods.ByName("Logout")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.iam.v2alpha.IamAuthenticationService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

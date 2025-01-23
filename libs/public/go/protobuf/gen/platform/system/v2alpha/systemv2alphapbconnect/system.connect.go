@@ -39,13 +39,6 @@ const (
 	SystemServiceDisableProcedure = "/platform.system.v2alpha.SystemService/Disable"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	systemServiceServiceDescriptor       = v2alpha.File_platform_system_v2alpha_system_proto.Services().ByName("SystemService")
-	systemServiceEnableMethodDescriptor  = systemServiceServiceDescriptor.Methods().ByName("Enable")
-	systemServiceDisableMethodDescriptor = systemServiceServiceDescriptor.Methods().ByName("Disable")
-)
-
 // SystemServiceClient is a client for the platform.system.v2alpha.SystemService service.
 type SystemServiceClient interface {
 	// Method to Subscribe to events based on scopes
@@ -63,17 +56,18 @@ type SystemServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewSystemServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) SystemServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	systemServiceMethods := v2alpha.File_platform_system_v2alpha_system_proto.Services().ByName("SystemService").Methods()
 	return &systemServiceClient{
 		enable: connect.NewClient[v2alpha.EnableRequest, v2alpha.EnableResponse](
 			httpClient,
 			baseURL+SystemServiceEnableProcedure,
-			connect.WithSchema(systemServiceEnableMethodDescriptor),
+			connect.WithSchema(systemServiceMethods.ByName("Enable")),
 			connect.WithClientOptions(opts...),
 		),
 		disable: connect.NewClient[v2alpha.DisableRequest, v2alpha.DisableResponse](
 			httpClient,
 			baseURL+SystemServiceDisableProcedure,
-			connect.WithSchema(systemServiceDisableMethodDescriptor),
+			connect.WithSchema(systemServiceMethods.ByName("Disable")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -109,16 +103,17 @@ type SystemServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewSystemServiceHandler(svc SystemServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	systemServiceMethods := v2alpha.File_platform_system_v2alpha_system_proto.Services().ByName("SystemService").Methods()
 	systemServiceEnableHandler := connect.NewServerStreamHandler(
 		SystemServiceEnableProcedure,
 		svc.Enable,
-		connect.WithSchema(systemServiceEnableMethodDescriptor),
+		connect.WithSchema(systemServiceMethods.ByName("Enable")),
 		connect.WithHandlerOptions(opts...),
 	)
 	systemServiceDisableHandler := connect.NewUnaryHandler(
 		SystemServiceDisableProcedure,
 		svc.Disable,
-		connect.WithSchema(systemServiceDisableMethodDescriptor),
+		connect.WithSchema(systemServiceMethods.ByName("Disable")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.system.v2alpha.SystemService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

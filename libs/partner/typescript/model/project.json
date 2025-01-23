@@ -1,0 +1,49 @@
+{
+    "name": "libs-partner-typescript-model",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/partner/typescript/model/src",
+    "projectType": "library",
+    "implicitDependencies": [
+      "proto"
+    ],
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/{projectRoot}",
+                "currentVersionResolver": "git-tag"
+            }
+        }
+    },
+    "targets": {
+        "generate": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "buf generate",
+            "cwd": "libs/partner/typescript/model"
+          }
+        },
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/partner/typescript/model",
+                "tsConfig": "libs/partner/typescript/model/tsconfig.lib.json",
+                "packageJson": "libs/partner/typescript/model/package.json",
+                "main": "libs/partner/typescript/model/src/index.ts",
+                "assets": ["libs/partner/typescript/model/*.md"]
+            }
+        },
+        "nx-release-publish": {
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
+        }
+    },
+    "tags": [
+      "type:lib",
+      "cycle:partner",
+      "language:typescript",
+      "type:model",
+      "exposure:external"
+    ]
+}

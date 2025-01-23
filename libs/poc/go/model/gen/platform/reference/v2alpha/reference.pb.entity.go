@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/poc/go/protobuf/gen/platform/reference/v2alpha"
 	"libs/public/go/sdk/v2alpha"
@@ -23,15 +22,8 @@ type ReferenceSpecEntity struct {
 
 func NewReferenceSpecEntity(specContext *specv2pb.SpecContext) (*ReferenceSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &ReferenceSpecEntity{
-		Reference: &referencev2alphapb.Reference{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		Reference: &referencev2alphapb.Reference{},
 	}, nil
 
 }

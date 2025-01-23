@@ -25,6 +25,8 @@ func (fns Functions) GetImportPathAndPackageForAnyMessage(msg pgs.Message) (stri
 			return "google.golang.org/protobuf/types/known/durationpb", "durationpb"
 		case pgs.TimestampWKT:
 			return "google.golang.org/protobuf/types/known/timestamppb", "timestamppb"
+		case pgs.EmptyWKT:
+			return "google.golang.org/protobuf/types/known/emptypb", "emptypb"
 		}
 	}
 
@@ -117,6 +119,8 @@ func (fns Functions) GetGoImportPathForMessage(msg pgs.Message) string {
 			return "google.golang.org/protobuf/types/known/durationpb"
 		case pgs.TimestampWKT:
 			return "google.golang.org/protobuf/types/known/timestamppb"
+		case pgs.EmptyWKT:
+			return "google.golang.org/protobuf/types/known/emptypb"
 		}
 
 	}

@@ -77,5 +77,7 @@ func (l *CreateCertificateAuthorityListener) Process(ctx context.Context, reques
 		CertificateAuthority: ca,
 	}
 
+	log.Info("Create certificate authority successfully: " + response.CertificateAuthority.Id)
+
 	natsnodev2.RespondToSyncCommand(ctx, request, &response)
 }

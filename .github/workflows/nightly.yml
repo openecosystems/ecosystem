@@ -7,6 +7,9 @@ name: nightly
 #    branches-ignore:
 #      - main
 on:
+  push:
+    branches-ignore:
+      - main
   schedule:
     - cron:  '0 0 * * 2-6' # At 12:00 AM, Tuesday through Saturday
 

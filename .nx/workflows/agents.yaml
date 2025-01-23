@@ -72,12 +72,12 @@ launch-templates:
 
       - name: Rust Dependencies
         script: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.81.0
           echo "PATH=/home/workflows/.cargo/bin:$PATH" >> $NX_CLOUD_ENV
-          /home/workflows/.cargo/bin/rustup install 1.82.0
-          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
-          /home/workflows/.cargo/bin/rustup toolchain add stable
-          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+          /home/workflows/.cargo/bin/rustup install 1.81.0
+          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
+          /home/workflows/.cargo/bin/rustup toolchain add 1.81.0
+          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
           . "/home/workflows/.cargo/env"
 
 #      - name: Dotnet Dependencies

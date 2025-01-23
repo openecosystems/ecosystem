@@ -21,7 +21,7 @@ pub(crate) fn is_local() -> bool {
 pub(crate) fn get_service_id() -> String {
     let service_id = std::env::var("FASTLY_SERVICE_ID");
 
-    return if !service_id.is_err() {
+    if !service_id.is_err() {
         let sid = service_id.unwrap();
         if sid == DEFAULT_FASTLY_SERVICE_ID {
             "localhost".to_string()
@@ -29,8 +29,6 @@ pub(crate) fn get_service_id() -> String {
             sid
         }
     } else if service_id.is_err() {
-        "localhost".to_string()
-    } else if service_id.unwrap() == DEFAULT_FASTLY_SERVICE_ID {
         "localhost".to_string()
     } else {
         std::env::var("FASTLY_SERVICE_ID").unwrap()
@@ -85,6 +83,7 @@ pub(crate) fn extract_context(req: &mut Request, debug: bool) -> Option<Context>
         println!("Host: {}", host);
         println!("System: {}", system);
         println!("Port: {}", port);
+        println!("Method: {}", req.get_method_str());
         println!("Path: {}", req.get_path());
         println!("Version: {:?}", req.get_version());
         let mime_type = req.get_content_type();

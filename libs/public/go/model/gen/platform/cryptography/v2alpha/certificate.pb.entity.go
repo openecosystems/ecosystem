@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 	"libs/public/go/sdk/v2alpha"
@@ -24,15 +23,8 @@ type CertificateSpecEntity struct {
 
 func NewCertificateSpecEntity(specContext *specv2pb.SpecContext) (*CertificateSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &CertificateSpecEntity{
-		Certificate: &cryptographyv2alphapb.Certificate{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		Certificate: &cryptographyv2alphapb.Certificate{},
 	}, nil
 
 }

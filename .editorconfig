@@ -14,3 +14,6 @@ trim_trailing_whitespace = false
 
 [.idea/*.xml]
 insert_final_newline = false
+
+[{*.ts,*.js,*.jsx,*.tsx,*.css,*.scss,*.html}]
+indent_size = 4

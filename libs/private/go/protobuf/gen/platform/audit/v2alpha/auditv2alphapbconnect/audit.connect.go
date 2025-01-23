@@ -37,12 +37,6 @@ const (
 	AuditServiceSearchProcedure = "/platform.audit.v2alpha.AuditService/Search"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	auditServiceServiceDescriptor      = v2alpha.File_platform_audit_v2alpha_audit_proto.Services().ByName("AuditService")
-	auditServiceSearchMethodDescriptor = auditServiceServiceDescriptor.Methods().ByName("Search")
-)
-
 // AuditServiceClient is a client for the platform.audit.v2alpha.AuditService service.
 type AuditServiceClient interface {
 	// Method to search for an audit event.
@@ -58,11 +52,12 @@ type AuditServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewAuditServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) AuditServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	auditServiceMethods := v2alpha.File_platform_audit_v2alpha_audit_proto.Services().ByName("AuditService").Methods()
 	return &auditServiceClient{
 		search: connect.NewClient[v2alpha.SearchRequest, v2alpha.SearchResponse](
 			httpClient,
 			baseURL+AuditServiceSearchProcedure,
-			connect.WithSchema(auditServiceSearchMethodDescriptor),
+			connect.WithSchema(auditServiceMethods.ByName("Search")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -90,10 +85,11 @@ type AuditServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewAuditServiceHandler(svc AuditServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	auditServiceMethods := v2alpha.File_platform_audit_v2alpha_audit_proto.Services().ByName("AuditService").Methods()
 	auditServiceSearchHandler := connect.NewUnaryHandler(
 		AuditServiceSearchProcedure,
 		svc.Search,
-		connect.WithSchema(auditServiceSearchMethodDescriptor),
+		connect.WithSchema(auditServiceMethods.ByName("Search")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.audit.v2alpha.AuditService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"libs/private/go/protobuf/gen/platform/audit/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 
@@ -24,15 +23,8 @@ type AuditSpecEntity struct {
 
 func NewAuditSpecEntity(specContext *specv2pb.SpecContext) (*AuditSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &AuditSpecEntity{
-		Audit: &auditv2alphapb.Audit{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		Audit: &auditv2alphapb.Audit{},
 	}, nil
 
 }

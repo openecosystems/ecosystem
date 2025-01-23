@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"go.uber.org/zap"
 	"libs/partner/go/nats/v2"
 	"libs/partner/go/zap/v1"
 	"libs/private/go/configuration/v2alpha"
@@ -51,10 +52,6 @@ func (l *CreateConfigurationListener) Process(ctx context.Context, request *nats
 	log := *zaploggerv1.Bound.Logger
 	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 
-	fmt.Println("CREATE")
-
-	fmt.Println(request.Spec)
-
 	if request.Spec == nil {
 		return
 	}
@@ -100,6 +97,7 @@ func (l *CreateConfigurationListener) Process(ctx context.Context, request *nats
 		},
 		Configuration: &conf,
 	}
+	log.Info("Create Configuration Response", zap.Any("id", response.Configuration.Id))
 
 	natsnodev2.RespondToSyncCommand(ctx, request, &response)
 }

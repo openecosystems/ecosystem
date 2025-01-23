@@ -39,12 +39,6 @@ const (
 	CertificateAuthorityServiceCreateCertificateAuthorityProcedure = "/platform.cryptography.v2alpha.CertificateAuthorityService/CreateCertificateAuthority"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	certificateAuthorityServiceServiceDescriptor                          = v2alpha.File_platform_cryptography_v2alpha_certificate_authority_proto.Services().ByName("CertificateAuthorityService")
-	certificateAuthorityServiceCreateCertificateAuthorityMethodDescriptor = certificateAuthorityServiceServiceDescriptor.Methods().ByName("CreateCertificateAuthority")
-)
-
 // CertificateAuthorityServiceClient is a client for the
 // platform.cryptography.v2alpha.CertificateAuthorityService service.
 type CertificateAuthorityServiceClient interface {
@@ -62,11 +56,12 @@ type CertificateAuthorityServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewCertificateAuthorityServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) CertificateAuthorityServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	certificateAuthorityServiceMethods := v2alpha.File_platform_cryptography_v2alpha_certificate_authority_proto.Services().ByName("CertificateAuthorityService").Methods()
 	return &certificateAuthorityServiceClient{
 		createCertificateAuthority: connect.NewClient[v2alpha.CreateCertificateAuthorityRequest, v2alpha.CreateCertificateAuthorityResponse](
 			httpClient,
 			baseURL+CertificateAuthorityServiceCreateCertificateAuthorityProcedure,
-			connect.WithSchema(certificateAuthorityServiceCreateCertificateAuthorityMethodDescriptor),
+			connect.WithSchema(certificateAuthorityServiceMethods.ByName("CreateCertificateAuthority")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -96,10 +91,11 @@ type CertificateAuthorityServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewCertificateAuthorityServiceHandler(svc CertificateAuthorityServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	certificateAuthorityServiceMethods := v2alpha.File_platform_cryptography_v2alpha_certificate_authority_proto.Services().ByName("CertificateAuthorityService").Methods()
 	certificateAuthorityServiceCreateCertificateAuthorityHandler := connect.NewUnaryHandler(
 		CertificateAuthorityServiceCreateCertificateAuthorityProcedure,
 		svc.CreateCertificateAuthority,
-		connect.WithSchema(certificateAuthorityServiceCreateCertificateAuthorityMethodDescriptor),
+		connect.WithSchema(certificateAuthorityServiceMethods.ByName("CreateCertificateAuthority")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.cryptography.v2alpha.CertificateAuthorityService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

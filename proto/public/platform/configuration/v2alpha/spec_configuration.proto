@@ -5,7 +5,6 @@ package platform.configuration.v2alpha;
 
 import "platform/options/v2/annotations.proto";
 
-import "platform/communication/v1alpha/preference_center.proto";
 import "platform/audit/v2alpha/audit.proto";
 import "platform/cli/v2alpha/oeco.proto";
 import "platform/cryptography/v2alpha/certificate.proto";
@@ -20,6 +19,7 @@ import "platform/iam/v2alpha/iam_authentication.proto";
 import "platform/mesh/v2alpha/cryptographic_mesh.proto";
 import "platform/reference/v2alpha/reference.proto";
 import "platform/system/v2alpha/system.proto";
+import "platform/communication/v1alpha/preference_center.proto";
 import "platform/communication/v1beta/preference_center.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
@@ -61,7 +61,7 @@ message SpecPlatformConfiguration {
 
     platform.system.v2alpha.SystemConfiguration system_configuration_v2alpha = 15;
 
-    platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 16;
+    platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 16;
 
-    platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 17;
+    platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 17;
 }

@@ -37,7 +37,7 @@ FROM --platform=linux/amd64 bufbuild/buf:1.47.2 AS buf
 
 # NX Environment
 FROM --platform=linux/amd64 cimg/go:1.23.3-node
-LABEL org.opencontainers.image.source=https://github.com/openecosystems/ecosystem
+LABEL org.opencontainers.image.source="=https://github.com/openecosystems/ecosystem"
 WORKDIR /home/circleci
 
 # Bashrc
@@ -46,18 +46,18 @@ RUN echo 'export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH' >> ~/.bashrc
 RUN echo 'export PATH=/home/linuxbrew/.linuxbrew/sbin:$PATH' >> ~/.bashrc
 RUN /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
 
-# Dotnet
-RUN WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb" && \
-    wget "$WGET_DOTNET" -O packages-microsoft-prod.deb && \
-    sudo dpkg -i packages-microsoft-prod.deb && \
-    rm packages-microsoft-prod.deb
-RUN sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref && \
-    echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
-
-# Apt Java, Dotnet
-RUN sudo apt-get update && sudo apt-get install -y openjdk-17-jdk aspnetcore-runtime-6.0 dotnet-sdk-7.0
-RUN curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
-RUN chmod +x go/bin/protoc-gen-grpc-java
+## Dotnet
+#RUN WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb" && \
+#    wget "$WGET_DOTNET" -O packages-microsoft-prod.deb && \
+#    sudo dpkg -i packages-microsoft-prod.deb && \
+#    rm packages-microsoft-prod.deb
+#RUN sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref && \
+#    echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
+#
+## Apt Java, Dotnet
+#RUN sudo apt-get update && sudo apt-get install -y openjdk-17-jdk aspnetcore-runtime-6.0 dotnet-sdk-7.0
+#RUN curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
+#RUN chmod +x go/bin/protoc-gen-grpc-java
 
 # Golang
 COPY --from=go-installs /home/circleci/go/bin /home/circleci/go/bin
@@ -69,10 +69,10 @@ COPY --from=buf /usr/local/bin/buf /home/circleci/go/bin
 RUN echo 'export PATH=/home/circleci/project/node_modules/.bin:$PATH' >> ~/.bashrc
 
 # Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.81.0
 RUN echo 'export PATH=/home/circleci/.cargo/bin:$PATH' >> ~/.bashrc
-RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
-RUN /home/circleci/.cargo/bin/rustup toolchain add stable
-RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain stable
+RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
+RUN /home/circleci/.cargo/bin/rustup toolchain add 1.81.0
+RUN /home/circleci/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
 
 #

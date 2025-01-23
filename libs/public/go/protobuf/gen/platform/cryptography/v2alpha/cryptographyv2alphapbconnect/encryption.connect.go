@@ -41,13 +41,6 @@ const (
 	EncryptionServiceDecryptProcedure = "/platform.cryptography.v2alpha.EncryptionService/Decrypt"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	encryptionServiceServiceDescriptor       = v2alpha.File_platform_cryptography_v2alpha_encryption_proto.Services().ByName("EncryptionService")
-	encryptionServiceEncryptMethodDescriptor = encryptionServiceServiceDescriptor.Methods().ByName("Encrypt")
-	encryptionServiceDecryptMethodDescriptor = encryptionServiceServiceDescriptor.Methods().ByName("Decrypt")
-)
-
 // EncryptionServiceClient is a client for the platform.cryptography.v2alpha.EncryptionService
 // service.
 type EncryptionServiceClient interface {
@@ -65,17 +58,18 @@ type EncryptionServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewEncryptionServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) EncryptionServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	encryptionServiceMethods := v2alpha.File_platform_cryptography_v2alpha_encryption_proto.Services().ByName("EncryptionService").Methods()
 	return &encryptionServiceClient{
 		encrypt: connect.NewClient[v2alpha.EncryptRequest, v2alpha.EncryptResponse](
 			httpClient,
 			baseURL+EncryptionServiceEncryptProcedure,
-			connect.WithSchema(encryptionServiceEncryptMethodDescriptor),
+			connect.WithSchema(encryptionServiceMethods.ByName("Encrypt")),
 			connect.WithClientOptions(opts...),
 		),
 		decrypt: connect.NewClient[v2alpha.DecryptRequest, v2alpha.DecryptResponse](
 			httpClient,
 			baseURL+EncryptionServiceDecryptProcedure,
-			connect.WithSchema(encryptionServiceDecryptMethodDescriptor),
+			connect.WithSchema(encryptionServiceMethods.ByName("Decrypt")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -110,16 +104,17 @@ type EncryptionServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewEncryptionServiceHandler(svc EncryptionServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	encryptionServiceMethods := v2alpha.File_platform_cryptography_v2alpha_encryption_proto.Services().ByName("EncryptionService").Methods()
 	encryptionServiceEncryptHandler := connect.NewUnaryHandler(
 		EncryptionServiceEncryptProcedure,
 		svc.Encrypt,
-		connect.WithSchema(encryptionServiceEncryptMethodDescriptor),
+		connect.WithSchema(encryptionServiceMethods.ByName("Encrypt")),
 		connect.WithHandlerOptions(opts...),
 	)
 	encryptionServiceDecryptHandler := connect.NewUnaryHandler(
 		EncryptionServiceDecryptProcedure,
 		svc.Decrypt,
-		connect.WithSchema(encryptionServiceDecryptMethodDescriptor),
+		connect.WithSchema(encryptionServiceMethods.ByName("Decrypt")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.cryptography.v2alpha.EncryptionService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

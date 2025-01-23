@@ -11,12 +11,22 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "command": "go build -o ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/app && cp package.json ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/.",
+        "commands": [
+          "go build -o ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/app",
+          "cp package.json ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/.",
+          "cp spec.yaml ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/."
+        ],
+        "parallel": false,
         "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
       },
       "configurations": {
         "production": {
-          "command": "GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/app && cp package.json ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/."
+          "commands": [
+            "GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/app",
+            "cp package.json ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/.",
+            "cp spec.yaml ../../../../../../dist/apps/workloads/public/configuration/v2alpha/configuration/."
+          ],
+          "parallel": false
         }
       }
     },
@@ -39,7 +49,7 @@
       "options": {
         "cmd": "go",
         "cwd": "apps/workloads/public/configuration/v2alpha/configuration",
-        "main": "*.go"
+        "main": "."
       }
     },
     "container": {

@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 
 	"errors"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/system/v2alpha"
 	"libs/public/go/sdk/v2alpha"
@@ -23,15 +22,8 @@ type SystemSpecEntity struct {
 
 func NewSystemSpecEntity(specContext *specv2pb.SpecContext) (*SystemSpecEntity, error) {
 
-	id := ksuid.New()
-	createdAt := timestamppb.Now()
-
 	return &SystemSpecEntity{
-		System: &systemv2alphapb.System{
-			Id:        id.String(),
-			CreatedAt: createdAt,
-			UpdatedAt: createdAt,
-		},
+		System: &systemv2alphapb.System{},
 	}, nil
 
 }

@@ -34,6 +34,9 @@ use (
 	./libs/partner/go/opentelemetry/v2
 	./libs/partner/go/protovalidate/v0
 	./libs/partner/go/pushpin/v1
+	./libs/partner/go/server/v2alpha
+	./libs/partner/go/protobuf
+    ./libs/partner/go/model
 
 	// Plugin libraries
 	// ===================================

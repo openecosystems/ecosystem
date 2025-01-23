@@ -1,355 +1,346 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "affected": {
-    "defaultBase": "main"
-  },
-  "cli": {
-    "packageManager": "pnpm"
-  },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"],
-      "cache": true
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "affected": {
+        "defaultBase": "main"
     },
-    "generate": {
-      "cache": true
+    "cli": {
+        "packageManager": "pnpm"
     },
-    "pack": {
-      "dependsOn": ["build", "^pack"]
-    },
-    "container": {
-      "dependsOn": ["build"]
-    },
-    "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "cache": true
-    },
-    "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true
-    },
-    "eslint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true
-    },
-    "e2e": {
-      "inputs": ["default", "^production"],
-      "cache": true
-    },
-    "vulnerability": {
-      "cache": true
-    },
-    "distribute": {
-      "cache": true
-    },
-    "snapshot": {
-      "cache": true
-    },
-    "nightly": {
-      "cache": true
-    },
-    "build-storybook": {
-      "inputs": [
-        "default",
-        "^production",
-        "{projectRoot}/.storybook/**/*",
-        "{projectRoot}/tsconfig.storybook.json"
-      ],
-      "cache": true
-    },
-    "pre-build": {
-      "cache": true
-    },
-    "chromatic": {
-      "cache": true
-    },
-    "@nx/jest:jest": {
-      "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
+    "targetDefaults": {
+        "build": {
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"],
+            "cache": true
+        },
+        "generate": {
+            "cache": true
+        },
+        "pack": {
+            "dependsOn": ["build", "^pack"]
+        },
+        "container": {
+            "dependsOn": ["build"]
+        },
+        "test": {
+            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+            "cache": true
+        },
+        "lint": {
+            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+            "cache": true
+        },
+        "eslint": {
+            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+            "cache": true
+        },
+        "e2e": {
+            "inputs": ["default", "^production"],
+            "cache": true
+        },
+        "vulnerability": {
+            "cache": true
+        },
+        "distribute": {
+            "cache": true
+        },
+        "snapshot": {
+            "cache": true
+        },
+        "nightly": {
+            "cache": true
+        },
+        "build-storybook": {
+            "inputs": [
+                "default",
+                "^production",
+                "{projectRoot}/.storybook/**/*",
+                "{projectRoot}/tsconfig.storybook.json"
+            ],
+            "cache": true
+        },
+        "pre-build": {
+            "cache": true
+        },
+        "chromatic": {
+            "cache": true
+        },
+        "@nx/jest:jest": {
+            "cache": true,
+            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+            "options": {
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        },
+        "@nx/js:tsc": {
+            "cache": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
+        },
+        "@nx/esbuild:esbuild": {
+            "cache": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
         }
-      }
     },
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+    "generators": {
+        "@nx/react": {
+            "application": {
+                "babel": true,
+                "style": "scss",
+                "linter": "eslint",
+                "bundler": "webpack"
+            },
+            "component": {
+                "style": "scss"
+            },
+            "library": {
+                "style": "scss",
+                "linter": "eslint",
+                "unitTestRunner": "jest"
+            }
+        },
+        "@nx/node": {
+            "application": {
+                "standaloneConfig": true
+            },
+            "library": {
+                "standaloneConfig": true
+            }
+        }
     },
-    "@nx/esbuild:esbuild": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    }
-  },
-  "generators": {
-    "@nx/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "bundler": "esbuild",
-        "babel": true
-      },
-      "component": {
-        "style": "scss"
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint",
-        "unitTestRunner": "jest"
-      }
-    },
-    "@nx/node": {
-      "application": {
-        "standaloneConfig": true
-      },
-      "library": {
-        "standaloneConfig": true
-      }
-    }
-  },
-  "defaultProject": "proto",
-  "plugins": [
-    "@nx-go/nx-go",
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      },
-      "exclude": [
-        "apps/connectors/public/configuration/v2alpha/configuration-e2e/**/*"
-      ]
-    }
-  ],
-  "pluginsConfig": {},
-  "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": [
-      "{workspaceRoot}/babel.config.json",
-      "{workspaceRoot}/go.work"
+    "defaultProject": "proto",
+    "plugins": [
+        "@nx-go/nx-go",
+        {
+            "plugin": "@nx/eslint/plugin",
+            "options": {
+                "targetName": "lint"
+            }
+        },
+        {
+            "plugin": "@nx/jest/plugin",
+            "options": {
+                "targetName": "test"
+            },
+            "exclude": ["apps/connectors/public/configuration/v2alpha/configuration-e2e/**/*"]
+        },
+        {
+            "plugin": "@nx/webpack/plugin",
+            "options": {
+                "buildTargetName": "build",
+                "serveTargetName": "serve",
+                "previewTargetName": "preview"
+            }
+        }
     ],
-    "production": [
-      "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.cjs",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
-    ]
-  },
-  "release": {
-    "groups": {
-      "sdks-public": {
-        "projectsRelationship": "independent",
-        "projects": ["tag:type:sdk", "!tag:cycle:private", "!tag:cycle:poc"],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "sdks-private": {
-        "projectsRelationship": "independent",
-        "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:poc"],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "sdks-poc": {
-        "projectsRelationship": "independent",
-        "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:private"],
-        "git": {
-          "commit": false,
-          "tag": false,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "workloads-public": {
-        "projectsRelationship": "independent",
-        "projects": [
-          "tag:type:workload",
-          "!tag:cycle:private",
-          "!tag:cycle:poc"
-        ],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "workloads-private": {
-        "projectsRelationship": "independent",
-        "projects": [
-          "tag:type:workload",
-          "!tag:cycle:public",
-          "!tag:cycle:poc"
-        ],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "workloads-poc": {
-        "projectsRelationship": "independent",
-        "projects": [
-          "tag:type:workload",
-          "!tag:cycle:public",
-          "!tag:cycle:private"
-        ],
-        "git": {
-          "commit": false,
-          "tag": false,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "clis": {
-        "projectsRelationship": "independent",
-        "projects": ["tag:type:cli"],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      },
-      "plugins": {
-        "projectsRelationship": "independent",
-        "projects": ["tag:type:plugin"],
-        "git": {
-          "commit": true,
-          "tag": true,
-          "commitMessage": "chore: updated version [no ci]"
-        },
-        "version": {
-          "conventionalCommits": true,
-          "generatorOptions": {
-            "fallbackCurrentVersionResolver": "disk"
-          }
-        },
-        "changelog": {
-          "projectChangelogs": {
-            "file": true,
-            "createRelease": "github"
-          }
-        },
-        "releaseTagPattern": "{projectName}/{version}"
-      }
+    "pluginsConfig": {},
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "sharedGlobals": ["{workspaceRoot}/babel.config.json", "{workspaceRoot}/go.work"],
+        "production": [
+            "default",
+            "!{projectRoot}/.eslintrc.json",
+            "!{projectRoot}/eslint.config.cjs",
+            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+            "!{projectRoot}/tsconfig.spec.json",
+            "!{projectRoot}/jest.config.[jt]s",
+            "!{projectRoot}/src/test-setup.[jt]s",
+            "!{projectRoot}/test-setup.[jt]s"
+        ]
     },
-    "changelog": {
-      "workspaceChangelog": false,
-      "projectChangelogs": true,
-      "automaticFromRef": true
+    "release": {
+        "groups": {
+            "sdks-public": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:sdk", "!tag:cycle:private", "!tag:cycle:poc"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "sdks-private": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:poc"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "sdks-poc": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:private"],
+                "git": {
+                    "commit": false,
+                    "tag": false,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "workloads-public": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:workload", "!tag:cycle:private", "!tag:cycle:poc"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "workloads-private": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:workload", "!tag:cycle:public", "!tag:cycle:poc"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "workloads-poc": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:workload", "!tag:cycle:public", "!tag:cycle:private"],
+                "git": {
+                    "commit": false,
+                    "tag": false,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "clis": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:cli"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "plugins": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:plugin"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            }
+        },
+        "changelog": {
+            "workspaceChangelog": false,
+            "projectChangelogs": true,
+            "automaticFromRef": true
+        },
+        "version": {
+            "preVersionCommand": "pnpm dlx nx run-many -t build"
+        }
     },
-    "version": {
-      "preVersionCommand": "pnpm dlx nx run-many -t build"
-    }
-  },
-  "nxCloudAccessToken": "ODZhYjY0ZjgtM2M1Yi00NTU2LTgyZjEtYzg1M2M2MTUxNzg0fHJlYWQtd3JpdGU="
+    "nxCloudAccessToken": "ODZhYjY0ZjgtM2M1Yi00NTU2LTgyZjEtYzg1M2M2MTUxNzg0fHJlYWQtd3JpdGU="
 }

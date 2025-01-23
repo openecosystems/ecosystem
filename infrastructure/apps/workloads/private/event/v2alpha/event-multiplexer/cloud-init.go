@@ -39,27 +39,27 @@ write_files:
       Description=Event Multiplexer
       ConditionPathExists=/opt/app
       After=network.target
-       
+
       [Service]
       Type=simple
       User=notroot
       Group=notroot
       LimitNOFILE=1024
-      
+
       Restart=on-failure
       RestartSec=10
       startLimitIntervalSec=60
-      
+
       WorkingDirectory=/opt
       ExecStart=/opt/app
-      
+
       # make sure log directory exists and owned by syslog
       #PermissionsStartOnly=true
       #ExecStartPre=/bin/mkdir -p /var/log/app
       #ExecStartPre=/bin/chown syslog:adm /var/log/app
       #ExecStartPre=/bin/chmod 755 /var/log/app
       #SyslogIdentifier=app
-       
+
       [Install]
       WantedBy=multi-user.target
     path: /lib/systemd/system/app.service
@@ -92,7 +92,7 @@ write_files:
         enabled: true
         options:
           serverName: "platform-leaf-node-local"
-          host: "localhost"
+          host: "0.0.0.0"
           port: 4222
           debug: true
           leafNode:
@@ -118,6 +118,9 @@ write_files:
           - name: "certificate"
             subjects:
               - "certificate.>"
+          - name: "decision"
+            subjects:
+              - "decision.>"
       nebula:
         tun:
           user: true
@@ -167,9 +170,10 @@ runcmd:
   - setcap cap_net_admin=+pe /opt/app
   - sudo systemctl enable app.service
   - sudo systemctl start app.service
+  - sudo /opt/app &
+  - sudo /opt/app &
   - ufw allow 6477/tcp
-  - ufw allow proto tcp from 192.168.100.0/24 to 192.168.100.5 port 4222
-  - ufw allow proto tcp from 192.168.100.0/24 to 192.168.100.5 port 7999
+  - ufw allow 4222/tcp
 
 `, key, _caCrt, _hostCrt, _hostKey, version)
 }

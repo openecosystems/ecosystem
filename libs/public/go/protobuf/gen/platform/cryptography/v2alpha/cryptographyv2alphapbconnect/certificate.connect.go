@@ -41,13 +41,6 @@ const (
 	CertificateServiceCreateAndSignCertificateProcedure = "/platform.cryptography.v2alpha.CertificateService/CreateAndSignCertificate"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	certificateServiceServiceDescriptor                        = v2alpha.File_platform_cryptography_v2alpha_certificate_proto.Services().ByName("CertificateService")
-	certificateServiceCreateCertificateMethodDescriptor        = certificateServiceServiceDescriptor.Methods().ByName("CreateCertificate")
-	certificateServiceCreateAndSignCertificateMethodDescriptor = certificateServiceServiceDescriptor.Methods().ByName("CreateAndSignCertificate")
-)
-
 // CertificateServiceClient is a client for the platform.cryptography.v2alpha.CertificateService
 // service.
 type CertificateServiceClient interface {
@@ -67,17 +60,18 @@ type CertificateServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewCertificateServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) CertificateServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	certificateServiceMethods := v2alpha.File_platform_cryptography_v2alpha_certificate_proto.Services().ByName("CertificateService").Methods()
 	return &certificateServiceClient{
 		createCertificate: connect.NewClient[v2alpha.CreateCertificateRequest, v2alpha.CreateCertificateResponse](
 			httpClient,
 			baseURL+CertificateServiceCreateCertificateProcedure,
-			connect.WithSchema(certificateServiceCreateCertificateMethodDescriptor),
+			connect.WithSchema(certificateServiceMethods.ByName("CreateCertificate")),
 			connect.WithClientOptions(opts...),
 		),
 		createAndSignCertificate: connect.NewClient[v2alpha.CreateAndSignCertificateRequest, v2alpha.CreateAndSignCertificateResponse](
 			httpClient,
 			baseURL+CertificateServiceCreateAndSignCertificateProcedure,
-			connect.WithSchema(certificateServiceCreateAndSignCertificateMethodDescriptor),
+			connect.WithSchema(certificateServiceMethods.ByName("CreateAndSignCertificate")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -115,16 +109,17 @@ type CertificateServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewCertificateServiceHandler(svc CertificateServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	certificateServiceMethods := v2alpha.File_platform_cryptography_v2alpha_certificate_proto.Services().ByName("CertificateService").Methods()
 	certificateServiceCreateCertificateHandler := connect.NewServerStreamHandler(
 		CertificateServiceCreateCertificateProcedure,
 		svc.CreateCertificate,
-		connect.WithSchema(certificateServiceCreateCertificateMethodDescriptor),
+		connect.WithSchema(certificateServiceMethods.ByName("CreateCertificate")),
 		connect.WithHandlerOptions(opts...),
 	)
 	certificateServiceCreateAndSignCertificateHandler := connect.NewUnaryHandler(
 		CertificateServiceCreateAndSignCertificateProcedure,
 		svc.CreateAndSignCertificate,
-		connect.WithSchema(certificateServiceCreateAndSignCertificateMethodDescriptor),
+		connect.WithSchema(certificateServiceMethods.ByName("CreateAndSignCertificate")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.cryptography.v2alpha.CertificateService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -43,6 +43,9 @@ eventStreamRegistry:
     - name: "certificate"
       subjects:
         - "certificate.>"
+    - name: "decision"
+      subjects:
+        - "decision.>"
 nebula:
   tun:
     user: true

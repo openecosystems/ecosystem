@@ -11,12 +11,22 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "command": "go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/app && cp package.json ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/.",
+        "commands": [
+          "go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/app",
+          "cp package.json ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/.",
+          "cp spec.yaml ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/."
+        ],
+        "parallel": false,
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority"
       },
       "configurations": {
         "production": {
-          "command": "GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/app && cp package.json ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/."
+          "commands": [
+            "GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/app",
+            "cp package.json ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/.",
+            "cp spec.yaml ../../../../../../dist/apps/workloads/public/cryptography/v2alpha/certificate-authority/."
+          ],
+          "parallel": false
         }
       },
       "dependsOn": [
@@ -50,7 +60,7 @@
       "options": {
         "cmd": "go",
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority",
-        "main": "*.go"
+        "main": "."
       }
     },
     "container": {

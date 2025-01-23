@@ -185,3 +185,18 @@ grpcurl \
 -H "x-spec-organization: organization123" \
 -d '{}' \
 localhost:6477 platform.communication.v1alpha.PreferenceCenterService/GetPreferenceOptions
+
+
+# Testing CORS
+curl 'http://localhost:6477/platform.communication.v1alpha.MarketingEmailService/Subscribe' --verbose \
+-X 'OPTIONS' \
+-H 'Accept: */*' \
+-H 'Accept-Language: en-US' \
+-H 'Access-Control-Request-Headers: content-type' \
+-H 'Access-Control-Request-Method: GET' \
+-H 'Connection: keep-alive' \
+-H 'Origin: http://localhost:8080' \
+-H 'Sec-Fetch-Dest: empty' \
+-H 'Sec-Fetch-Mode: cors' \
+-H 'Sec-Fetch-Site: cross-site' \
+-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FramerElectron/2024.34.1 Chrome/122.0.6261.156 Electron/29.3.0 Safari/537.36'

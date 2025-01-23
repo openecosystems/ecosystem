@@ -1,0 +1,25 @@
+{
+  "name": "libs-partner-go-model",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/partner/go/model",
+  "implicitDependencies": [
+    "proto"
+  ],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "buf generate",
+        "cwd": "libs/partner/go/model"
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:partner",
+    "language:golang",
+    "type:model",
+    "exposure:external"
+  ]
+}

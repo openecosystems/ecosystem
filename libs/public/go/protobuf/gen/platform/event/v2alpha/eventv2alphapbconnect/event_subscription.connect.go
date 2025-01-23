@@ -41,13 +41,6 @@ const (
 	EventSubscriptionServiceUnSubscribeProcedure = "/platform.event.v2alpha.EventSubscriptionService/UnSubscribe"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	eventSubscriptionServiceServiceDescriptor           = v2alpha.File_platform_event_v2alpha_event_subscription_proto.Services().ByName("EventSubscriptionService")
-	eventSubscriptionServiceSubscribeMethodDescriptor   = eventSubscriptionServiceServiceDescriptor.Methods().ByName("Subscribe")
-	eventSubscriptionServiceUnSubscribeMethodDescriptor = eventSubscriptionServiceServiceDescriptor.Methods().ByName("UnSubscribe")
-)
-
 // EventSubscriptionServiceClient is a client for the
 // platform.event.v2alpha.EventSubscriptionService service.
 type EventSubscriptionServiceClient interface {
@@ -67,17 +60,18 @@ type EventSubscriptionServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewEventSubscriptionServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) EventSubscriptionServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	eventSubscriptionServiceMethods := v2alpha.File_platform_event_v2alpha_event_subscription_proto.Services().ByName("EventSubscriptionService").Methods()
 	return &eventSubscriptionServiceClient{
 		subscribe: connect.NewClient[v2alpha.SubscribeRequest, v2alpha.SubscribeResponse](
 			httpClient,
 			baseURL+EventSubscriptionServiceSubscribeProcedure,
-			connect.WithSchema(eventSubscriptionServiceSubscribeMethodDescriptor),
+			connect.WithSchema(eventSubscriptionServiceMethods.ByName("Subscribe")),
 			connect.WithClientOptions(opts...),
 		),
 		unSubscribe: connect.NewClient[v2alpha.UnSubscribeRequest, v2alpha.UnSubscribeResponse](
 			httpClient,
 			baseURL+EventSubscriptionServiceUnSubscribeProcedure,
-			connect.WithSchema(eventSubscriptionServiceUnSubscribeMethodDescriptor),
+			connect.WithSchema(eventSubscriptionServiceMethods.ByName("UnSubscribe")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -114,16 +108,17 @@ type EventSubscriptionServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewEventSubscriptionServiceHandler(svc EventSubscriptionServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	eventSubscriptionServiceMethods := v2alpha.File_platform_event_v2alpha_event_subscription_proto.Services().ByName("EventSubscriptionService").Methods()
 	eventSubscriptionServiceSubscribeHandler := connect.NewUnaryHandler(
 		EventSubscriptionServiceSubscribeProcedure,
 		svc.Subscribe,
-		connect.WithSchema(eventSubscriptionServiceSubscribeMethodDescriptor),
+		connect.WithSchema(eventSubscriptionServiceMethods.ByName("Subscribe")),
 		connect.WithHandlerOptions(opts...),
 	)
 	eventSubscriptionServiceUnSubscribeHandler := connect.NewUnaryHandler(
 		EventSubscriptionServiceUnSubscribeProcedure,
 		svc.UnSubscribe,
-		connect.WithSchema(eventSubscriptionServiceUnSubscribeMethodDescriptor),
+		connect.WithSchema(eventSubscriptionServiceMethods.ByName("UnSubscribe")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.event.v2alpha.EventSubscriptionService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -121,8 +121,9 @@ func main() {
 			FirewallGroupId:   firewallGroup.ID(),
 			Hostname:          pulumi.String(name),
 			Label:             pulumi.String(name),
-			OsId:              pulumi.Int(2136),                // "Debian 12 x64 (bookworm)"
-			Plan:              pulumi.String("vhp-1c-1gb-amd"), // AMD High Performance
+			OsId:              pulumi.Int(2136),                                      // "Debian 12 x64 (bookworm)"
+			ReservedIpId:      pulumi.String("624af82d-cd58-4c7a-b7fb-848affafd7fe"), // Multiplexer IP address 149.28.81.51
+			Plan:              pulumi.String("vhp-1c-1gb-amd"),                       // AMD High Performance
 			Region:            pulumi.String("lax"),
 			ScriptId:          script.ID(),
 			Tags: pulumi.StringArray{

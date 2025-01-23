@@ -1,0 +1,110 @@
+{{- $commands := getSpecCommands .File }}{{ $events := getSpecEvents .File }}{{ $topics := getSpecTopics .File }}{{ $entityName := entityName . }}{{ $entityNamePlural := entityNamePlural . }}
+export type {{ $entityName.UpperCamelCase }}Command = number;
+export type {{ $entityName.UpperCamelCase }}Event = number;
+
+// Constants for {{ $entityName.UpperCamelCase }} Type Names
+export const {{ $entityName.UpperCamelCase }}TypeName = "{{ $entityName.LowerCamelCase }}";
+export const {{ $entityName.UpperCamelCase }}TypeNamePlural = "{{ $entityNamePlural.LowerCamelCase }}";
+export const {{ $entityName.UpperCamelCase }}TypeNameScreamingCamelCase = "{{ $entityName.ScreamingSnakeCase }}";
+export const {{ $entityName.UpperCamelCase }}TypeNamePluralScreamingCamelCase = "{{ $entityNamePlural.ScreamingSnakeCase }}";
+export const {{ $entityName.UpperCamelCase }}TypeNameEventPrefix = "{{ $entityName.LowerCamelCase }}.";
+
+// Enums for {{ $entityName.UpperCamelCase }}Commands
+export enum {{ $entityName.UpperCamelCase }}Commands {
+  {{ if not $commands }}{{ else }}{{ range $i, $c := $commands.Values }}
+  {{ $c.Name.LowerDotNotation.UpperCamelCase }} = {{ $i }},{{ end }}{{ end }}
+  Unrecognized{{ $entityName.UpperCamelCase }}Command = -1,
+}
+
+// Enums for {{ $entityName.UpperCamelCase }} Events
+export enum {{ $entityName.UpperCamelCase }}Events {
+{{ if not $events }}{{ else }}{{ range $i, $e := $events.Values }}
+  {{ $e.Name.LowerDotNotation.UpperCamelCase }} = {{ $i }},{{ end }}{{ end }}
+  Unrecognized{{ $entityName.UpperCamelCase }}Event  = -1,
+}
+
+// Topics
+export const CommandData{{ $entityName.UpperCamelCase }}Topic = "{{ $entityName.LowerCamelCase }}.data.command";
+export const EventData{{ $entityName.UpperCamelCase }}Topic = "{{ $entityName.LowerCamelCase }}.data.event";
+export const RoutineData{{ $entityName.UpperCamelCase }}Topic = "{{ $entityName.LowerCamelCase }}.data.routine";
+export const Unrecognized{{ $entityName.UpperCamelCase }}Topic = "unrecognized";
+
+// Command Methods
+export class {{ $entityName.UpperCamelCase }}CommandHelper {
+  static commandName(command: {{ $entityName.UpperCamelCase }}Commands): string {
+    switch (command) {
+      {{- if not $commands }}{{ else }}
+      {{- range $commands.Values }}
+      case {{ $entityName.UpperCamelCase }}Commands.{{ .Name.LowerDotNotation.UpperCamelCase }}:
+        return "{{ .Name.LowerDotNotation.UpperCamelCase }}"{{ end }}{{ end }}
+      default:
+        return "Unrecognized{{ $entityName.UpperCamelCase }}Command"
+    }
+  }
+
+  static commandTopic(command: {{ $entityName.UpperCamelCase }}Commands): string {
+    switch (command) {
+      {{- if not $commands }}{{ else -}}
+      {{- range $commands.Values }}
+      case {{ $entityName.UpperCamelCase }}Commands.{{ .Name.LowerDotNotation.UpperCamelCase }}:{{ end }}{{ end }}
+        return CommandData{{ $entityName.UpperCamelCase }}Topic;
+      default:
+		    return Unrecognized{{ $entityName.UpperCamelCase }}Topic;
+    }
+  }
+
+  static commandTopicWildcard(): string {
+    return {{ $entityName.UpperCamelCase }}TypeNameEventPrefix + ">";
+  }
+
+  static get{{ $entityName.UpperCamelCase }}Command(command: string): {{ $entityName.UpperCamelCase }}Commands {
+    switch (command) {
+      {{- if not $commands }}{{ else }}
+      {{- range $commands.Values }}
+      case "{{ .Name.LowerDotNotation.UpperCamelCase }}":
+        return {{ $entityName.UpperCamelCase }}Commands.{{ .Name.LowerDotNotation.UpperCamelCase }};{{ end }}{{ end }}
+      default:
+        return {{ $entityName.UpperCamelCase }}Commands.Unrecognized{{ $entityName.UpperCamelCase }}Command;
+    }
+  }
+}
+
+// Event Methods
+export class {{ $entityName.UpperCamelCase }}EventHelper {
+  static eventName(event: {{ $entityName.UpperCamelCase }}Events): string {
+    switch (event) {
+      {{- if not $events }}{{ else }}
+      {{- range $events.Values }}
+      case {{ $entityName.UpperCamelCase }}Events.{{ .Name.LowerDotNotation.UpperCamelCase }}:
+        return "{{ .Name.LowerDotNotation.UpperCamelCase }}";{{ end }}{{ end }}
+      default:
+        return "Unrecognized{{ $entityName.UpperCamelCase }}Event";
+    }
+  }
+
+  static eventTopic(event: {{ $entityName.UpperCamelCase }}Events): string {
+    switch (event) {
+      {{- if not $events }}{{ else }}
+      {{- range $events.Values }}
+      case {{ $entityName.UpperCamelCase }}Events.{{ .Name.LowerDotNotation.UpperCamelCase }}:{{ end }}{{ end }}
+        return EventData{{ $entityName.UpperCamelCase }}Topic;
+      default:
+        return Unrecognized{{ $entityName.UpperCamelCase }}Topic;
+    }
+  }
+
+  static eventTopicWildcard(): string {
+    return {{ $entityName.UpperCamelCase }}TypeNameEventPrefix + ">";
+  }
+
+  static get{{ $entityName.UpperCamelCase }}Event(event: string): {{ $entityName.UpperCamelCase }}Events {
+    switch (event) {
+      {{- if not $events }}{{ else }}
+      {{- range $events.Values }}
+      case "{{ .Name.LowerDotNotation.UpperCamelCase }}":
+        return {{ $entityName.UpperCamelCase }}Events.{{ .Name.LowerDotNotation.UpperCamelCase }};{{ end }}{{ end }}
+      default:
+        return {{ $entityName.UpperCamelCase }}Events.Unrecognized{{ $entityName.UpperCamelCase }}Event;
+    }
+  }
+}

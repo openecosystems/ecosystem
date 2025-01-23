@@ -17,12 +17,13 @@ mod normalize;
 use fastly::{Error, Request, Response};
 use std::string::ToString;
 use std::{time::{SystemTime, UNIX_EPOCH}};
+use std::io::{ErrorKind, Read};
+use fastly::http::StatusCode;
 use log_fastly::Logger;
 /// If `main` returns an error, a 500 error response will be delivered to the client.
 
 #[fastly::main]
 fn main(mut req: Request) -> Result<Response, Error> {
-
 
     let start_time = SystemTime::now().duration_since(UNIX_EPOCH)
         .unwrap_or_default()
@@ -101,43 +102,37 @@ fn main(mut req: Request) -> Result<Response, Error> {
 
     let ingress_gateway = match ingress::determine_ingress_gateway(&mut req, &ctx, &routing_rule, &sanitized_query_strings, &protocol) {
         Some(val) => val,
-        _ => return errors::fail("Could not process ingress gateway".to_string(), &protocol),
+        _ => return errors::fail("Could not determine ingress gateway".to_string(), &protocol),
     };
 
     //let _ = observability::observe_successful_distributed_transaction(start_time, &mut req, &ctx);
 
     let mut _beresp = match ingress::route_to_ingress_gateway(req, ingress_gateway, &protocol) {
         Some(val) => val,
-        _ => return errors::fail("Could not process ingress gateway".to_string(), &protocol),
+        _ => return errors::fail("Could not route to ingress gateway".to_string(), &protocol),
     };
 
-    //let mut _beresp = req.send(ingress_gateway);
-
-    // if _beresp.is_err() {
-    //     let e = _beresp.err().unwrap();
-    //     println!("Found error from backend: {}",  e);
-    //     return errors::fail("Internal Error from JAN Gateway".to_string(), &protocol)
-    // }
-
-    let mut beresp = _beresp;
-
-    headers::sanitize_response_headers(&mut beresp);
-    headers::secure_response_headers(&mut beresp);
-    if fetch_site_mode_cors {
-        cors::resource_isolation_policy(&mut beresp);
-    }
-
     if debug {
+        let mut beresp = _beresp.clone_with_body();
+
+        println!("Ingress Gateway Backend Request: : {:?}",  beresp.get_backend_request());
         println!("Ingress Gateway Backend Response Status: : {:?}",  beresp.get_status());
         println!("Ingress Gateway Backend Response Version: : {:?}",  beresp.get_version());
+
         headers::list_response_headers(&mut beresp);
         // Used to debug proto binary issues
-        // let mut s = String::new();
-        // let _ = beresp.get_body_mut().read_to_string(&mut s);
-        // println!("Ingress Gateway Backend Response Body Length: : {:}",  s.len());
-        // println!("Ingress Gateway Backend Response Body: : {:?}",  s);
+        let mut s = String::new();
+        let _ = beresp.get_body_mut().read_to_string(&mut s);
+        println!("Ingress Gateway Backend Response Body Length: : {:}",  s.len());
+        println!("Ingress Gateway Backend Response Body: : {:?}",  s);
     }
 
-    Ok(beresp)
+    headers::sanitize_response_headers(&mut _beresp);
+    headers::secure_response_headers(&mut _beresp);
+    if fetch_site_mode_cors {
+        cors::resource_isolation_policy(&mut _beresp);
+    }
+
+    Ok(_beresp)
 
 }
