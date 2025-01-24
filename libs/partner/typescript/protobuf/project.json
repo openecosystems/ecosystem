@@ -4,7 +4,7 @@
     "sourceRoot": "libs/partner/typescript/protobuf/src",
     "projectType": "library",
     "implicitDependencies": [
-      "proto"
+
     ],
     "release": {
         "version": {

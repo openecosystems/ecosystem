@@ -34,6 +34,22 @@ service ReferenceService {
   rpc ServerStreaming(ServerStreamingRequest) returns (stream ServerStreamingResponse) {}
 }
 
+
+enum ReferenceCommands {
+  // Base class is
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  REFERENCE_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
+}
+
+enum ReferenceEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  // Unspecified or unknown event.
+  REFERENCE_EVENTS_UNSPECIFIED = 0;
+
+}
+
 message UnaryRequest {
   ClientMessage message = 1;
 }

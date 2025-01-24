@@ -306,6 +306,7 @@ message Decision {
   repeated MatchedPoint matched_points = 11;
 
   PricingData pricing = 12;
+
 }
 
 message Event {
@@ -315,6 +316,10 @@ message Event {
 }
 
 message Data {
+  int32 height = 1;
+  int32 width = 2;
+  string imageUrl = 3;
+  string fileName = 4;
 }
 
 message Content {
@@ -342,6 +347,7 @@ message PricingData {
 }
 
 message Decisions {
+
 }
 
 message Explain {
@@ -353,7 +359,8 @@ message GetDecisionsResponse {
 
   User user = 2;
 
-  Decisions decisions = 3;
+  //repeated Decision decisions = 3;
+  Decision decision = 3;
 
   Explain explain = 4;
 }

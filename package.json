@@ -9,6 +9,7 @@
     "url": "https://github.com/openecosystems/ecosystem.git"
   },
   "dependencies": {
+    "@adzerk/decision-sdk": "1.0.0-beta.25",
     "@algolia/autocomplete-js": "^1.17.9",
     "@algolia/autocomplete-plugin-query-suggestions": "^1.17.9",
     "@algolia/autocomplete-plugin-recent-searches": "^1.17.9",

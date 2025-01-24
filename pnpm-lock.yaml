@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@adzerk/decision-sdk':
+    specifier: 1.0.0-beta.25
+    version: 1.0.0-beta.25
   '@algolia/autocomplete-js':
     specifier: ^1.17.9
     version: 1.17.9(@algolia/client-search@5.20.0)(algoliasearch@5.20.0)(search-insights@2.17.3)
@@ -258,6 +261,22 @@ packages:
   /@adobe/css-tools@4.3.3:
     resolution: {integrity: sha512-rE0Pygv0sEZ4vBWHlAgJLGDU7Pm8xoO6p3wsEceb7GYAjScrOHpEo8KK/eVkAcnSM+slAEtXjA2JpdjLp4fJQQ==}
     dev: true
+
+  /@adzerk/api-decision-js@1.0.18:
+    resolution: {integrity: sha512-+ScBqJSUqXEiGdx6yLz3HUwnIZK7vebsg2gR1kQpWMFz8MSg3A752161s6BRO39aQQzUQT0t5KovK3y9Jxi1iA==}
+    dev: false
+
+  /@adzerk/decision-sdk@1.0.0-beta.25:
+    resolution: {integrity: sha512-3TqPCC4s3btD5+JvYSt6Nh/Rk8o2qQQ1iwyMpjE3Wn81OD5fyPbil0nff3Tkf+9x0YQtpWE+rxInIo0tv3wXCg==}
+    dependencies:
+      '@adzerk/api-decision-js': 1.0.18
+      debug: 4.4.0
+      form-data: 2.5.2
+      isomorphic-unfetch: 3.1.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
 
   /@algolia/autocomplete-core@1.17.9(@algolia/client-search@5.20.0)(algoliasearch@5.20.0)(search-insights@2.17.3):
     resolution: {integrity: sha512-O7BxrpLDPJWWHv/DLA9DRFWs+iY1uOJZkqUwjS5HSZAGcl0hIVCQ97LTLewiZmZ402JYUrun+8NqFP+hCknlbQ==}
@@ -7437,7 +7456,6 @@ packages:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
     dependencies:
       iconv-lite: 0.6.3
-    dev: true
 
   /end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
@@ -8463,6 +8481,16 @@ packages:
       webpack: 5.97.1(@swc/core@1.5.29)(esbuild@0.19.12)(webpack-cli@5.1.4)
     dev: true
 
+  /form-data@2.5.2:
+    resolution: {integrity: sha512-GgwY0PS7DbXqajuGf4OYlsrIu3zgxD6Vvql43IBhm6MahqA5SK/7mwhtNj2AdH2z35YR34ujJ7BN+3fFC3jP5Q==}
+    engines: {node: '>= 0.12'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+      safe-buffer: 5.2.1
+    dev: false
+
   /form-data@4.0.1:
     resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
     engines: {node: '>= 6'}
@@ -9084,7 +9112,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
-    dev: true
 
   /icss-utils@5.1.0(postcss@8.4.49):
     resolution: {integrity: sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==}
@@ -9535,6 +9562,15 @@ packages:
     resolution: {integrity: sha512-n6/XnKnZ5eLEj6VllG4XmamXG7/F69nls8dcynHyhcTpsPUYgcgx4ifEaCo4lQJ2uzwfmIT+F0KBGwBcMKmt5g==}
     engines: {node: '>=14.17.6'}
     dev: true
+
+  /isomorphic-unfetch@3.1.0:
+    resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
+    dependencies:
+      node-fetch: 2.7.0(encoding@0.1.13)
+      unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /isomorphic-ws@5.0.0(ws@8.18.0):
     resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
@@ -10933,7 +10969,6 @@ packages:
     dependencies:
       encoding: 0.1.13
       whatwg-url: 5.0.0
-    dev: true
 
   /node-forge@1.3.1:
     resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
@@ -12527,7 +12562,6 @@ packages:
 
   /safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-    dev: true
 
   /sass-loader@12.6.0(sass@1.83.0)(webpack@5.97.1):
     resolution: {integrity: sha512-oLTaH0YCtX4cfnJZxKSLAyglED0naiYfNG1iXfU5w1LNZ+ukoA5DtyDIN5zmKVZwYNJP4KRc5Y3hkWga+7tYfA==}
@@ -13485,7 +13519,6 @@ packages:
 
   /tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
-    dev: true
 
   /tr46@3.0.0:
     resolution: {integrity: sha512-l7FvfAHlcmulp8kr+flpQZmVwtu7nfRV7NZujtN0OqES8EL4O4e0qqzL0DC5gAvx/ZC/9lk6rhcUwYvkBnBnYA==}
@@ -13792,6 +13825,10 @@ packages:
       '@fastify/busboy': 2.1.1
     dev: true
 
+  /unfetch@4.2.0:
+    resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
+    dev: false
+
   /unicode-canonical-property-names-ecmascript@2.0.1:
     resolution: {integrity: sha512-dA8WbNeb2a6oQzAQ55YlT5vQAWGV9WXOsi3SskE3bcCdM0P4SDd+24zS/OCacdRq5BkdsRj9q3Pg6YyQoxIGqg==}
     engines: {node: '>=4'}
@@ -14047,7 +14084,6 @@ packages:
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
-    dev: true
 
   /webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
@@ -14308,7 +14344,6 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-    dev: true
 
   /which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}

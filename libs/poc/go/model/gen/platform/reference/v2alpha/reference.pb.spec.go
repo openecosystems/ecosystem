@@ -15,10 +15,12 @@ const (
 )
 
 const (
+	ReferenceCommandsUnspecified ReferenceCommand = iota
 	UnrecognizedReferenceCommand ReferenceCommand = -1
 )
 
 const (
+	ReferenceEventsUnspecified ReferenceEvent = iota
 	UnrecognizedReferenceEvent ReferenceEvent = -1
 )
 
@@ -33,6 +35,8 @@ func (c ReferenceCommand) CommandName() string {
 
 	switch c {
 
+	case ReferenceCommandsUnspecified:
+		return "ReferenceCommandsUnspecified"
 	default:
 		return "UnrecognizedReferenceCommand"
 	}
@@ -43,6 +47,8 @@ func (e ReferenceEvent) EventName() string {
 
 	switch e {
 
+	case ReferenceEventsUnspecified:
+		return "ReferenceEventsUnspecified"
 	default:
 		return "UnrecognizedReferenceEvent"
 	}
@@ -53,6 +59,8 @@ func (c ReferenceCommand) CommandTopic() string {
 
 	switch c {
 
+	case ReferenceCommandsUnspecified:
+		return CommandDataReferenceTopic
 	default:
 		return UnrecognizedReferenceTopic
 	}
@@ -63,6 +71,8 @@ func (e ReferenceEvent) EventTopic() string {
 
 	switch e {
 
+	case ReferenceEventsUnspecified:
+		return EventDataReferenceTopic
 	default:
 		return UnrecognizedReferenceTopic
 	}
@@ -81,6 +91,8 @@ func GetReferenceCommand(command string) ReferenceCommand {
 
 	switch command {
 
+	case "ReferenceCommandsUnspecified":
+		return ReferenceCommandsUnspecified
 	default:
 		return UnrecognizedReferenceCommand
 	}
@@ -90,6 +102,8 @@ func GetReferenceEvent(event string) ReferenceEvent {
 
 	switch event {
 
+	case "ReferenceEventsUnspecified":
+		return ReferenceEventsUnspecified
 	default:
 		return UnrecognizedReferenceEvent
 	}

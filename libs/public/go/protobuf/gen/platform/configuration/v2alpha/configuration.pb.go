@@ -370,8 +370,8 @@ func (x *CreateConfigurationRequest) GetParentId() string {
 type CreateConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -423,8 +423,8 @@ func (x *CreateConfigurationResponse) GetConfiguration() *Configuration {
 type GetConfigurationRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The request context
-	SpecContext   *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	SpecContext *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -476,8 +476,8 @@ func (x *GetConfigurationRequest) GetId() string {
 type GetConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -662,8 +662,8 @@ func (x *ListConfigurationsResponse) GetConfigurations() []*Configuration {
 }
 
 type ConfigurationsFilter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Filter        string                 `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Filter        string `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -708,8 +708,8 @@ func (x *ConfigurationsFilter) GetFilter() string {
 type UpdateConfigurationRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The request context
-	SpecContext   *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Config        *Configuration         `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	SpecContext *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Config        *Configuration `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -761,8 +761,8 @@ func (x *UpdateConfigurationRequest) GetConfig() *Configuration {
 type UpdateConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -814,8 +814,8 @@ func (x *UpdateConfigurationResponse) GetConfiguration() *Configuration {
 type LoadConfigurationRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The request context
-	SpecContext   *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Config        *Configuration         `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	SpecContext *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Config        *Configuration `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -867,8 +867,8 @@ func (x *LoadConfigurationRequest) GetConfig() *Configuration {
 type LoadConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -920,8 +920,8 @@ func (x *LoadConfigurationResponse) GetConfiguration() *Configuration {
 type DeleteConfigurationRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The request context
-	SpecContext   *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	SpecContext *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -973,8 +973,8 @@ func (x *DeleteConfigurationRequest) GetId() string {
 type DeleteConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1026,9 +1026,9 @@ func (x *DeleteConfigurationResponse) GetConfiguration() *Configuration {
 type PublishConfigurationRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The request context
-	SpecContext   *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Config        *Configuration         `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
-	Id            string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	SpecContext *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Config        *Configuration `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	Id            string         `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1087,8 +1087,8 @@ func (x *PublishConfigurationRequest) GetId() string {
 type PublishConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1140,9 +1140,9 @@ func (x *PublishConfigurationResponse) GetConfiguration() *Configuration {
 type ArchiveConfigurationRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The request context
-	SpecContext   *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Config        *Configuration         `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
-	Id            string                 `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+	SpecContext *v2.SpecRequestContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Config        *Configuration `protobuf:"bytes,2,opt,name=config,proto3" json:"config,omitempty"`
+	Id            string         `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1201,8 +1201,8 @@ func (x *ArchiveConfigurationRequest) GetId() string {
 type ArchiveConfigurationResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
-	SpecContext   *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Configuration *Configuration          `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
+	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
+	Configuration *Configuration `protobuf:"bytes,2,opt,name=configuration,proto3" json:"configuration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1252,19 +1252,19 @@ func (x *ArchiveConfigurationResponse) GetConfiguration() *Configuration {
 }
 
 type Configuration struct {
-	state                   protoimpl.MessageState     `protogen:"open.v1"`
-	Id                      string                     `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	OrganizationSlug        string                     `protobuf:"bytes,2,opt,name=organization_slug,json=organizationSlug,proto3" json:"organization_slug,omitempty"`
-	WorkspaceSlug           string                     `protobuf:"bytes,3,opt,name=workspace_slug,json=workspaceSlug,proto3" json:"workspace_slug,omitempty"`
-	CreatedAt               *timestamppb.Timestamp     `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt               *timestamppb.Timestamp     `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	SourceId                string                     `protobuf:"bytes,6,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
-	Type                    ConfigurationType          `protobuf:"varint,7,opt,name=type,proto3,enum=platform.configuration.v2alpha.ConfigurationType" json:"type,omitempty"`
-	Status                  ConfigurationStatus        `protobuf:"varint,8,opt,name=status,proto3,enum=platform.configuration.v2alpha.ConfigurationStatus" json:"status,omitempty"`
-	StatusDetails           string                     `protobuf:"bytes,9,opt,name=status_details,json=statusDetails,proto3" json:"status_details,omitempty"`
-	ParentId                string                     `protobuf:"bytes,10,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	DataCatalog             *v2alpha.SpecDataCatalog   `protobuf:"bytes,13,opt,name=data_catalog,json=dataCatalog,proto3" json:"data_catalog,omitempty"`
-	ClinicalCatalog         string                     `protobuf:"bytes,14,opt,name=clinical_catalog,json=clinicalCatalog,proto3" json:"clinical_catalog,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	OrganizationSlug string `protobuf:"bytes,2,opt,name=organization_slug,json=organizationSlug,proto3" json:"organization_slug,omitempty"`
+	WorkspaceSlug string `protobuf:"bytes,3,opt,name=workspace_slug,json=workspaceSlug,proto3" json:"workspace_slug,omitempty"`
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	SourceId string `protobuf:"bytes,6,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	Type ConfigurationType `protobuf:"varint,7,opt,name=type,proto3,enum=platform.configuration.v2alpha.ConfigurationType" json:"type,omitempty"`
+	Status ConfigurationStatus `protobuf:"varint,8,opt,name=status,proto3,enum=platform.configuration.v2alpha.ConfigurationStatus" json:"status,omitempty"`
+	StatusDetails string `protobuf:"bytes,9,opt,name=status_details,json=statusDetails,proto3" json:"status_details,omitempty"`
+	ParentId string `protobuf:"bytes,10,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
+	DataCatalog *v2alpha.SpecDataCatalog `protobuf:"bytes,13,opt,name=data_catalog,json=dataCatalog,proto3" json:"data_catalog,omitempty"`
+	ClinicalCatalog string `protobuf:"bytes,14,opt,name=clinical_catalog,json=clinicalCatalog,proto3" json:"clinical_catalog,omitempty"`
 	PlatformConfiguration   *SpecPlatformConfiguration `protobuf:"bytes,15,opt,name=platform_configuration,json=platformConfiguration,proto3" json:"platform_configuration,omitempty"`
 	PlatformConfigurations  map[string]*anypb.Any      `protobuf:"bytes,16,rep,name=platform_configurations,json=platformConfigurations,proto3" json:"platform_configurations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	SolutionConfigurations  map[string]*anypb.Any      `protobuf:"bytes,17,rep,name=solution_configurations,json=solutionConfigurations,proto3" json:"solution_configurations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`

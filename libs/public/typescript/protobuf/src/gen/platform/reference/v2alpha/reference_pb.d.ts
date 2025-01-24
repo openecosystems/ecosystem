@@ -2,7 +2,7 @@
 // @generated from file platform/reference/v2alpha/reference.proto (package platform.reference.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
+import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
@@ -166,6 +166,40 @@ export declare type Reference = Message<"platform.reference.v2alpha.Reference"> 
  * Use `create(ReferenceSchema)` to create a new message.
  */
 export declare const ReferenceSchema: GenMessage<Reference>;
+
+/**
+ * @generated from enum platform.reference.v2alpha.ReferenceCommands
+ */
+export enum ReferenceCommands {
+  /**
+   * Unspecified or unknown command
+   *
+   * @generated from enum value: REFERENCE_COMMANDS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+}
+
+/**
+ * Describes the enum platform.reference.v2alpha.ReferenceCommands.
+ */
+export declare const ReferenceCommandsSchema: GenEnum<ReferenceCommands>;
+
+/**
+ * @generated from enum platform.reference.v2alpha.ReferenceEvents
+ */
+export enum ReferenceEvents {
+  /**
+   * Unspecified or unknown event.
+   *
+   * @generated from enum value: REFERENCE_EVENTS_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+}
+
+/**
+ * Describes the enum platform.reference.v2alpha.ReferenceEvents.
+ */
+export declare const ReferenceEventsSchema: GenEnum<ReferenceEvents>;
 
 /**
  * @generated from service platform.reference.v2alpha.ReferenceService

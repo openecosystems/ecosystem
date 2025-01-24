@@ -419,6 +419,25 @@ export declare const EventSchema: GenMessage<Event>;
  * @generated from message kevel.advertisement.v1.Data
  */
 export declare type Data = Message<"kevel.advertisement.v1.Data"> & {
+  /**
+   * @generated from field: int32 height = 1;
+   */
+  height: number;
+
+  /**
+   * @generated from field: int32 width = 2;
+   */
+  width: number;
+
+  /**
+   * @generated from field: string imageUrl = 3;
+   */
+  imageUrl: string;
+
+  /**
+   * @generated from field: string fileName = 4;
+   */
+  fileName: string;
 };
 
 /**
@@ -540,9 +559,11 @@ export declare type GetDecisionsResponse = Message<"kevel.advertisement.v1.GetDe
   user?: User;
 
   /**
-   * @generated from field: kevel.advertisement.v1.Decisions decisions = 3;
+   * repeated Decision decisions = 3;
+   *
+   * @generated from field: kevel.advertisement.v1.Decision decision = 3;
    */
-  decisions?: Decisions;
+  decision?: Decision;
 
   /**
    * @generated from field: kevel.advertisement.v1.Explain explain = 4;
