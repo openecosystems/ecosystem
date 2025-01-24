@@ -8,9 +8,9 @@ import { create } from '@bufbuild/protobuf';
 import { Response } from '../models/Response';
 import { UserCommand } from '../models/UserCommand';
 
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { ConfigurationV2Alpha } from '@openecosystems/protobuf-public';
 import { Command } from '../models/Command';
+import { Banner } from '../components/banner';
 
 // HACK to allow BigInt to be serialized to JSON
 (BigInt.prototype as any)['toJSON'] = function () {
@@ -88,7 +88,10 @@ export function App() {
                 setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
             }
         } else {
-            const request = create(ConfigurationV2Alpha.GetConfigurationRequestSchema, data as ConfigurationV2Alpha.GetConfigurationRequest);
+            const request = create(
+                ConfigurationV2Alpha.GetConfigurationRequestSchema,
+                data as ConfigurationV2Alpha.GetConfigurationRequest
+            );
 
             // Handle error
             const response = await client
@@ -131,7 +134,10 @@ export function App() {
                 setResponses((resp) => [...resp, { text: JSON.stringify(response.configuration), sender: 'kevel' }]);
             }
         } else {
-            const request = create(ConfigurationV2Alpha.CreateConfigurationRequestSchema, data as ConfigurationV2Alpha.CreateConfigurationRequest);
+            const request = create(
+                ConfigurationV2Alpha.CreateConfigurationRequestSchema,
+                data as ConfigurationV2Alpha.CreateConfigurationRequest
+            );
 
             // Handle error
             const response = await client
@@ -177,6 +183,9 @@ export function App() {
                 <h1>Kevel</h1>
                 <h4>React/esbuild</h4>
             </header>
+            <div className="banner">
+                <Banner></Banner>
+            </div>
             <div className="container">
                 {responses.map((resp, i) => {
                     return (

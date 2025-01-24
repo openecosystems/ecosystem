@@ -114,3 +114,16 @@ input:focus-visible, select:focus-visible {
   width: 200px;
   margin-right: 5px;
 }
+
+.banner {
+    width: 100%;
+    min-height: 50px;
+    background-color: #e0edff;
+    color: #000;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

@@ -4,7 +4,6 @@
     "sourceRoot": "libs/partner/typescript/model/src",
     "projectType": "library",
     "implicitDependencies": [
-      "proto"
     ],
     "release": {
         "version": {
