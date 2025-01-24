@@ -2,6 +2,7 @@
 
 ==================
 
+## Curl/HTTPie or simple network semantics
 http localhost:6477/api/v2 \
 Content-Type:application/json \
 x-spec-workspace-slug:workspace123 \
@@ -9,6 +10,20 @@ x-spec-organization-slug:organization123 \
 x-spec-workspace-jan:JURISDICTION_USA \
 parent_id=123
 
+## Field Mask Support
+curl -X GET \
+--header "Content-Type: application/json" \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+--header "x-spec-fieldmask: spec_context.organization_slug,configuration.id,configuration.created_at" \
+http://localhost:6477/v2/configurations/123 | jq .
+
+# Latency Test
+cd proto
+ghz -c 10 -n 100 --insecure --protoset <(buf build -o -) \
+--call platform.configuration.v2alpha.ConfigurationService/GetConfiguration \
+-m '{"x-spec-organization-slug": "organization123", "x-spec-workspace-slug": "workspace123"}' \
+localhost:6477
 
 ## HTTP2 and Connect
 cd /proto
