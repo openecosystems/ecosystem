@@ -18,6 +18,8 @@ curl -X GET \
 --header "x-spec-fieldmask: spec_context.organization_slug,configuration.id,configuration.created_at" \
 http://localhost:6477/v2/configurations/123 | jq .
 
+
+
 # Latency Test
 cd proto
 ghz -c 10 -n 100 --insecure --protoset <(buf build -o -) \

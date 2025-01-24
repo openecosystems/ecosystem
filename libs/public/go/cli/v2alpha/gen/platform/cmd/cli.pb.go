@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 )
+import "libs/public/go/cli/v2alpha/gen/platform/communication/v1beta"
 import "libs/public/go/cli/v2alpha/gen/platform/configuration/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/cryptography/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/event/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/system/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/communication/v1alpha"
-import "libs/public/go/cli/v2alpha/gen/platform/communication/v1beta"
 
 var CommandRegistry *Commands = new(Commands)
 
