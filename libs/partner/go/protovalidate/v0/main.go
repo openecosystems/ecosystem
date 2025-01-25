@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"sync"
 
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"github.com/bufbuild/protovalidate-go"
-	"libs/public/go/sdk/v2alpha"
 )
 
 // Binding struct that holds binding specific fields

@@ -5,6 +5,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// Styles defines a collection of visual styles used to format various UI components in the application.
 type Styles struct {
 	Common CommonStyles
 	Tabs   struct {
@@ -69,6 +70,7 @@ type Styles struct {
 	}
 }
 
+// InitStyles initializes and returns a Styles struct based on the provided Theme configuration.
 func InitStyles(theme Theme) Styles {
 	var s Styles
 

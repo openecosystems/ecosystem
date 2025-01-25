@@ -9,14 +9,17 @@ import (
 	"github.com/charmbracelet/log"
 )
 
+// OrganizationKeyMap defines key bindings specific to organizational operations or actions in the application.
 type OrganizationKeyMap struct {
 	Create key.Binding
 }
 
+// Name returns the KeyBindingType associated with the OrganizationKeyMap, which is Organization.
 func (k OrganizationKeyMap) Name() KeyBindingType {
 	return Organization
 }
 
+// OrganizationKeys provides key bindings specific to organization-related operations, such as creating an organization.
 var OrganizationKeys = OrganizationKeyMap{
 	Create: key.NewBinding(
 		key.WithKeys("c"),
@@ -24,12 +27,16 @@ var OrganizationKeys = OrganizationKeyMap{
 	),
 }
 
+// OrganizationFullHelp returns a list of key bindings related to organization actions for display or processing.
 func OrganizationFullHelp() []key.Binding {
 	return []key.Binding{
 		OrganizationKeys.Create,
 	}
 }
 
+// rebindOrganizationKeys updates the key bindings for organizational actions based on provided configurations.
+//
+//nolint:unused
 func rebindOrganizationKeys(keys []config.KeyBinding) error {
 	for _, kb := range keys {
 		if kb.Builtin == "" {

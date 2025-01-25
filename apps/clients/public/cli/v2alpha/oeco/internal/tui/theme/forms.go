@@ -5,7 +5,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-// FormTheme returns a new theme for huh forms
+// FormTheme defines and returns a customized theme for form elements, including focused and blurred styles.
 func FormTheme() *huh.Theme {
 	t := huh.ThemeBase()
 

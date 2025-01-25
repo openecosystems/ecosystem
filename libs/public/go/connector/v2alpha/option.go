@@ -3,9 +3,9 @@ package connectorv2alphalib
 import (
 	"fmt"
 
-	"connectrpc.com/connect"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
+	"connectrpc.com/connect"
 
 	"google.golang.org/protobuf/reflect/protoreflect"
 )

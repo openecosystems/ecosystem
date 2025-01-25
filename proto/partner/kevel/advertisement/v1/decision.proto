@@ -318,8 +318,8 @@ message Event {
 message Data {
   int32 height = 1;
   int32 width = 2;
-  string imageUrl = 3;
-  string fileName = 4;
+  string image_url = 3;
+  string file_name = 4;
 }
 
 message Content {

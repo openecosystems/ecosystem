@@ -4,34 +4,36 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	"libs/public/go/sdk/gen/configuration/v2alpha"
+	configurationv2alphapbsdk "libs/public/go/sdk/gen/configuration/v2alpha"
 	cryptographyv2alphapbsdk "libs/public/go/sdk/gen/cryptography/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
 
 	"connectrpc.com/connect"
 
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
-
 	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
+// createConfigurationRequest represents the request payload for creating a configuration.
+// createConfigurationFieldMask specifies the fields to be updated in the configuration.
+// createConfigurationValidateOnly indicates if the operation should validate the request without applying changes.
 var (
 	createConfigurationRequest      string
 	createConfigurationFieldMask    string
 	createConfigurationValidateOnly bool
 )
 
+// CreateConfigurationV2AlphaCmd is a command to create a new configuration using the provided request parameters.
 var CreateConfigurationV2AlphaCmd = &cobra.Command{
 	Use:   "createConfiguration",
 	Short: ``,
 	Long: `
 `,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(cmd *cobra.Command, _ []string) {
 		log.Debug("Calling createConfiguration configuration")
 
 		_request, err := cmd.Flags().GetString("request")
@@ -45,7 +47,7 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 
 		_r := configurationv2alphapb.CreateConfigurationRequest{}
 		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -88,6 +90,8 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 	},
 }
 
+// init initializes persistent flags for the CreateConfigurationV2AlphaCmd command.
+// It defines CLI options for request payload, validation-only mode, and field mask for response fields.
 func init() {
 	CreateConfigurationV2AlphaCmd.PersistentFlags().StringVarP(&createConfigurationRequest, "request", "r", "{}", "Request for api call")
 	CreateConfigurationV2AlphaCmd.PersistentFlags().BoolVar(&createConfigurationValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")

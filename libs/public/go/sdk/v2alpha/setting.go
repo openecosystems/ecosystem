@@ -1,3 +1,4 @@
+//nolint:revive
 package sdkv2alphalib
 
 import (
@@ -11,7 +12,7 @@ import (
 	"strings"
 	"sync"
 
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"dario.cat/mergo"
 
@@ -23,6 +24,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+// viperInstance is a singleton instance of the viper.Viper configuration library.
+// viperOnce ensures viperInstance is initialized only once in a thread-safe manner.
+// Config holds global settings for the application, managed via SpecSettings.
+// Overrides contains runtime-specific configuration that can override the default settings.
 var (
 	viperInstance *viper.Viper
 	viperOnce     sync.Once
@@ -31,15 +36,21 @@ var (
 	Overrides *RuntimeConfigurationOverrides
 )
 
+// SpecSettingsProvider defines an interface for obtaining and monitoring specification settings.
+// GetSettings retrieves the current specification settings.
+// WatchSettings initiates a watching mechanism to monitor settings updates.
 type SpecSettingsProvider interface {
 	GetSettings() *specv2pb.SpecSettings
 	WatchSettings() error
 }
 
+// DotConfigSettingsProvider is responsible for managing and providing configuration settings parsed
+// from a .config file. It encapsulates the SpecSettings structure to hold configuration data.
 type DotConfigSettingsProvider struct {
 	settings *specv2pb.SpecSettings
 }
 
+// NewDotConfigSettingsProvider initializes a new instance of DotConfigSettingsProvider by loading and unmarshalling configuration.
 func NewDotConfigSettingsProvider() (*DotConfigSettingsProvider, error) {
 	_, configurer, err := getFileSystemAndConfigurer("")
 	if err != nil {
@@ -59,25 +70,27 @@ func NewDotConfigSettingsProvider() (*DotConfigSettingsProvider, error) {
 	}, nil
 }
 
+// GetSettings retrieves the current SpecSettings instance from the DotConfigSettingsProvider.
 func (p *DotConfigSettingsProvider) GetSettings() *specv2pb.SpecSettings {
 	return p.settings
 }
 
+// WatchSettings sets up file system watchers to monitor changes in settings files and triggers appropriate updates.
 func (p *DotConfigSettingsProvider) WatchSettings() error {
 	return watchSettings(p.settings, Filesystem.ContextDirectory)
 }
 
+// SpecYamlSettingsProvider provides access to spec settings configured in a YAML file.
+// It encapsulates and manages a SpecSettings instance for configuration retrieval and watching updates.
 type SpecYamlSettingsProvider struct {
 	settings *specv2pb.SpecSettings
 }
 
+// NewSpecYamlSettingsProvider creates a new instance of SpecYamlSettingsProvider by loading and resolving YAML configuration.
 func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
 	viperOnce.Do(
 		func() {
-			err := godotenv.Load()
-			if err != nil {
-				// fmt.Println(err.Error())
-			}
+			_ = godotenv.Load()
 
 			viperInstance = viper.New()
 			viperInstance.SetConfigName("spec")
@@ -97,14 +110,17 @@ func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
 	}, nil
 }
 
+// GetSettings retrieves the SpecSettings instance associated with the SpecYamlSettingsProvider.
 func (p *SpecYamlSettingsProvider) GetSettings() *specv2pb.SpecSettings {
 	return p.settings
 }
 
+// WatchSettings monitors file changes in specified directories to dynamically reload SpecSettings if enabled.
 func (p *SpecYamlSettingsProvider) WatchSettings() error {
 	return watchSettings(p.settings, ".", "/etc/spec")
 }
 
+// RuntimeConfigurationOverrides holds runtime configuration flags and settings that override default behavior.
 type RuntimeConfigurationOverrides struct {
 	Context      *string
 	Logging      *bool
@@ -116,11 +132,14 @@ type RuntimeConfigurationOverrides struct {
 	ValidateOnly bool
 }
 
+// CLISettingsProvider manages and provides specification settings for a CLI runtime environment.
+// It includes parsed settings and runtime overrides for configuration flexibility.
 type CLISettingsProvider struct {
 	settings *specv2pb.SpecSettings
 	Flags    *RuntimeConfigurationOverrides
 }
 
+// NewCLISettingsProvider creates a new CLISettingsProvider by loading configuration and applying runtime overrides.
 func NewCLISettingsProvider(flags *RuntimeConfigurationOverrides) (*CLISettingsProvider, error) {
 	platformContext := ""
 	if flags != nil && flags.Context != nil {
@@ -148,14 +167,19 @@ func NewCLISettingsProvider(flags *RuntimeConfigurationOverrides) (*CLISettingsP
 	}, nil
 }
 
+// GetSettings retrieves the current SpecSettings instance managed by the CLISettingsProvider.
 func (p *CLISettingsProvider) GetSettings() *specv2pb.SpecSettings {
 	return p.settings
 }
 
+// WatchSettings monitors filesystem changes to dynamically reload settings if enabled in the configuration.
 func (p *CLISettingsProvider) WatchSettings() error {
 	return watchSettings(p.settings, Filesystem.ContextDirectory)
 }
 
+// getFileSystemAndConfigurer creates and initializes a FileSystem and viper.Viper configurer, handling context overrides and config file setup.
+//
+//nolint:unparam
 func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Viper, error) {
 	fs := NewFileSystem()
 	ufs := fs.UnderlyingFileSystem
@@ -223,6 +247,10 @@ platform:
 	return fs, configurer, nil
 }
 
+// watchSettings enables watching for configuration file changes in specified directories if dynamic reload is allowed.
+// settings: The specification settings containing configuration details and dynamic reload flag.
+// directories: One or more directories to monitor for configuration file changes.
+// Returns an error if the file watcher setup fails or if issues occur during monitoring events.
 func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error {
 	// If dynamic settings enabled, turn on filesystem notification
 	if settings.Platform != nil && !settings.Platform.DynamicConfigReload {
@@ -235,9 +263,7 @@ func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error
 		return err
 	}
 	defer func(watcher *fsnotify.Watcher) {
-		err := watcher.Close()
-		if err != nil {
-		}
+		_ = watcher.Close()
 	}(watcher)
 
 	// Add the directory to be watched
@@ -278,11 +304,15 @@ func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error
 	}
 }
 
+// PackageJson represents the structure of a package.json file containing name and version information.
 type PackageJson struct {
 	Name    string `json:"name"`
 	Version string `json:"version"`
 }
 
+// setEnv maps and sets an environment variable value to a corresponding YAML configuration field using Viper.
+// It converts the YAML field into an environment variable format, optionally prepending a prefix if provided.
+// If the environment variable is present, its value is used to update the corresponding Viper configuration field.
 func setEnv(envPrefix, yaml string) {
 	envVar := strcase.ToScreamingSnake(strcase.ToLowerCamel(strings.ReplaceAll(yaml, ".", "_")))
 	if envPrefix != "" {
@@ -292,11 +322,13 @@ func setEnv(envPrefix, yaml string) {
 	// fmt.Println(envVar + "=")
 	val, present := os.LookupEnv(envVar)
 	if present {
-		fmt.Println(fmt.Sprintf("Setting %s from %s to %s", yaml, envVar, val))
+		fmt.Printf("Setting %s from %s to %s\n", yaml, envVar, val)
 		viperInstance.Set(yaml, val)
 	}
 }
 
+// ImportEnvironmentVariables sets configuration values from environment variables based on struct fields and provided tags.
+// It processes "mapstructure" and "env" tags, supports nested structs, and recursively applies prefix logic for key formatting.
 func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix string) {
 	// https://github.com/spf13/viper/issues/188#issuecomment-399884438
 	ifv := reflect.ValueOf(iface)
@@ -322,7 +354,7 @@ func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix stri
 		if ok {
 			val, present := os.LookupEnv(envVar)
 			if present {
-				fmt.Println(fmt.Sprintf("Setting %s from %s to %s", fieldName, envVar, val))
+				fmt.Printf("Setting %s from %s to %s\n", fieldName, envVar, val)
 				viperInstance.Set(fieldName, val)
 				continue
 			}
@@ -344,6 +376,8 @@ func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix stri
 	}
 }
 
+// ImportPackageJson reads and parses the `package.json` file, updating the Configuration with the app name and version.
+// Panics if the file cannot be read or the `name` and `version` fields are missing.
 func ImportPackageJson(config *Configuration) {
 	content, err := os.ReadFile("./package.json")
 	if err != nil {
@@ -368,6 +402,7 @@ func ImportPackageJson(config *Configuration) {
 	config.App.Version = data.Version
 }
 
+// StringExpandEnv creates a DecodeHookFuncKind that replaces environment variable placeholders in strings with their values.
 func StringExpandEnv() mapstructure.DecodeHookFuncKind {
 	return func(
 		f reflect.Kind,
@@ -382,6 +417,7 @@ func StringExpandEnv() mapstructure.DecodeHookFuncKind {
 	}
 }
 
+// Resolve reads configuration, unmarshals it into the destination, validates required fields, and merges with the source structure.
 func Resolve(dst, src interface{}) {
 	err := viperInstance.ReadInConfig()
 	if err != nil {
@@ -415,6 +451,7 @@ func Resolve(dst, src interface{}) {
 	}
 }
 
+// IsLower checks if all characters in the provided string are lowercase alphabetic letters (a-z). Returns true if so, otherwise false.
 func IsLower(s string) bool {
 	for _, charNumber := range s {
 		if charNumber > 122 || charNumber < 97 {

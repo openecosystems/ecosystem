@@ -1,18 +1,18 @@
 package commands
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/data"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 	"bytes"
 	"fmt"
 	"maps"
 	"text/template"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/data"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 )
 
+// IssueCommandTemplateInput defines the input parameters required to execute an issue command template in a repository context.
 type IssueCommandTemplateInput struct {
 	RepoName    string
 	RepoPath    string
@@ -20,11 +20,12 @@ type IssueCommandTemplateInput struct {
 	HeadRefName string
 }
 
+// Model represents the core data structure for handling commands and logic in the application.
 type Model struct{}
 
-// runCustomCommand executes a user-defined command.
-// commandTemplate is a template string that will be parsed with the input data.
-// contextData is a map of key-value pairs of data specific to the context the command is being run in.
+// runCustomCommand parses a command template with provided context data and executes the resulting command.
+//
+//nolint:unused
 func (m *Model) runCustomCommand(commandTemplate string, contextData *map[string]any) tea.Cmd {
 	// A generic map is a pretty easy & flexible way to populate a template if there's no pressing need
 	// for structured data, existing structs, etc. Especially if holes in the data are expected.
@@ -54,6 +55,9 @@ func (m *Model) runCustomCommand(commandTemplate string, contextData *map[string
 	return m.executeCustomCommand(buff.String())
 }
 
+// runCustomPRCommand generates and runs a custom command for a pull request using provided template and PR data.
+//
+//nolint:unused
 func (m *Model) runCustomPRCommand(commandTemplate string, prData *data.PullRequestData) tea.Cmd {
 	return m.runCustomCommand(commandTemplate,
 		&map[string]any{
@@ -64,9 +68,15 @@ func (m *Model) runCustomPRCommand(commandTemplate string, prData *data.PullRequ
 		})
 }
 
+// execProcessFinishedMsg represents a message signaling the completion of an execution process.
+//
+//nolint:unused
 type execProcessFinishedMsg struct{}
 
-func (m *Model) executeCustomCommand(cmd string) tea.Cmd {
+// executeCustomCommand executes a custom shell command and returns a tea.Cmd to handle the process execution.
+//
+//nolint:unused
+func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 	//log.Debug("executing custom command", "cmd", cmd)
 	//shell := os.Getenv("SHELL")
 	//if shell == "" {

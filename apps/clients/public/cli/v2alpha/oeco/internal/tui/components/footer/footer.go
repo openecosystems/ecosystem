@@ -1,12 +1,12 @@
 package footer
 
 import (
-	"strings"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	"strings"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
@@ -14,6 +14,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// Model represents the state and behavior of the application UI, managing sections, help views, and user interactions.
 type Model struct {
 	ctx             *context.ProgramContext
 	leftSection     *string
@@ -23,6 +24,7 @@ type Model struct {
 	ShowConfirmQuit bool
 }
 
+// NewModel initializes and returns a new Model instance with default help settings and empty left and right sections.
 func NewModel(ctx *context.ProgramContext) Model {
 	h := help.New()
 	h.ShowAll = true
@@ -37,6 +39,7 @@ func NewModel(ctx *context.ProgramContext) Model {
 	}
 }
 
+// Update handles incoming messages, updating the model state and determining the command to execute next.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
@@ -57,6 +60,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	return m, nil
 }
 
+// View generates the string representation of the current model state, including footer and optional help view.
 func (m Model) View() string {
 	var footer string
 
@@ -105,15 +109,20 @@ func (m Model) View() string {
 	return footer
 }
 
+// SetWidth sets the width of the help model to the specified value.
 func (m Model) SetWidth(width int) {
 	m.help.Width = width
 }
 
+// UpdateProgramContext updates the model's context and applies styles from the updated context to the help view.
+//
+//nolint:staticcheck
 func (m Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.ctx = ctx
 	m.help.Styles = ctx.Styles.Help.BubbleStyles
 }
 
+// renderViewSwitcher generates a horizontal view switcher string based on the current section and user context.
 func (m Model) renderViewSwitcher(ctx context.ProgramContext) string {
 	var view string
 	if ctx.Section == config.EnclaveSection {
@@ -126,7 +135,7 @@ func (m Model) renderViewSwitcher(ctx context.ProgramContext) string {
 		view += " Package"
 	} else if ctx.Section == config.ConnectorSection {
 		view += " Connector"
-	} else if ctx.Section == config.ApiSection {
+	} else if ctx.Section == config.APISection {
 		view += " Api"
 	} else if ctx.Section == config.EcosystemSection {
 		view += " Ecosystem"
@@ -141,10 +150,12 @@ func (m Model) renderViewSwitcher(ctx context.ProgramContext) string {
 		Render(view), user)
 }
 
+// SetLeftSection sets the content of the left section in the model footer view. Updates the `leftSection` field.
 func (m Model) SetLeftSection(leftSection string) {
 	*m.leftSection = leftSection
 }
 
+// SetRightSection sets the value of the right section in the Model.
 func (m Model) SetRightSection(rightSection string) {
 	*m.rightSection = rightSection
 }

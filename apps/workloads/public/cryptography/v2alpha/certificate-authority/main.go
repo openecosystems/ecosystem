@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
-	"libs/partner/go/nats/v2"
-	//nebulav1 "libs/partner/go/nebula/v1"
+	natsnodev2 "libs/partner/go/nats/v2"
+
+	// nebulav1 "libs/partner/go/nebula/v1"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
-	"libs/partner/go/zap/v1"
-	"libs/private/go/configuration/v2alpha"
-	"libs/public/go/connector/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+	zaploggerv1 "libs/partner/go/zap/v1"
+	configurationv2alphalib "libs/private/go/configuration/v2alpha"
+	connectorv2alphalib "libs/public/go/connector/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 func main() {

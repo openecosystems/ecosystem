@@ -79,9 +79,7 @@ pki:
 			break
 		}
 		defer func(conn net.Conn) {
-			err := conn.Close()
-			if err != nil {
-			}
+			_ = conn.Close()
 		}(conn)
 
 		log.Printf("got connection")

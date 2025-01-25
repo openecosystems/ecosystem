@@ -13,6 +13,10 @@ import (
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
+// GithubRegistryName defines the base name of the GitHub registry for the company.
+// GithubRegistryBasePath specifies the base path for the GitHub ecosystem registry.
+// PathRegistryName defines the local path name used for registry operations.
+// DependencyFileExt specifies the file extension for dependency binary protocol buffers.
 const (
 	GithubRegistryName     = "github.com/jeannotcompany"
 	GithubRegistryBasePath = GithubRegistryName + "/ecosystem"
@@ -20,16 +24,23 @@ const (
 	DependencyFileExt      = ".binpb"
 )
 
+// Dependency represents a structure containing a reference to a registry provider and associated dependency data.
 type Dependency struct {
 	registry DependencyRegistryProvider
 	data     []byte
 }
 
+// DependencyRegistryProvider is an interface to provide access to dependency registry details and metadata.
+// GetDependency retrieves the associated Dependency instance or returns an error if unavailable.
+// Name returns the name or identifier of the dependency registry.
 type DependencyRegistryProvider interface {
 	GetDependency() (*Dependency, error)
 	Name() string
 }
 
+// NewDynamicDependencyProvider creates a Dependency based on the specified SpecSystem configuration.
+// It determines the appropriate DependencyRegistryProvider to use (e.g., GitHub, Path) or logs an error
+// if a custom registry type is unsupported.
 func NewDynamicDependencyProvider(s *specv2pb.SpecSystem) *Dependency {
 	dependency := Dependency{}
 	if s.Registry == nil {
@@ -51,11 +62,13 @@ func NewDynamicDependencyProvider(s *specv2pb.SpecSystem) *Dependency {
 	return &dependency
 }
 
+// GitHubDependencyProvider provides dependencies from GitHub using a specified system configuration and file system.
 type GitHubDependencyProvider struct {
 	settings   *specv2pb.SpecSystem
 	fileSystem *FileSystem
 }
 
+// newGitHubDependencyProvider creates a new GitHubDependencyProvider instance with the given settings and initializes a file system.
 func newGitHubDependencyProvider(settings *specv2pb.SpecSystem) *GitHubDependencyProvider {
 	return &GitHubDependencyProvider{
 		settings:   settings,
@@ -63,8 +76,10 @@ func newGitHubDependencyProvider(settings *specv2pb.SpecSystem) *GitHubDependenc
 	}
 }
 
+// Name returns the constant name of the GitHub dependency provider, used to identify the provider in the registry system.
 func (provider *GitHubDependencyProvider) Name() string { return GithubRegistryName }
 
+// GetDependency retrieves a dependency data from the cache or downloads it, storing it in the file system if necessary.
 func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
 	baseDest, dest := generatePath(provider.settings.Name, provider)
 	err := provider.fileSystem.UnderlyingFileSystem.MkdirAll(baseDest, os.ModePerm)
@@ -92,12 +107,10 @@ func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
 		return nil, fmt.Errorf("failed to download: %w", err)
 	}
 	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-		}
+		_ = Body.Close()
 	}(resp.Body)
 
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck
 
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
@@ -116,11 +129,13 @@ func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
 	}, nil
 }
 
+// PathDependencyProvider manages dependencies by integrating specification settings with file system operations.
 type PathDependencyProvider struct {
 	settings   *specv2pb.SpecSystem
 	fileSystem *FileSystem
 }
 
+// newPathDependencyProvider creates and initializes a PathDependencyProvider using the given SpecSystem settings.
 func newPathDependencyProvider(settings *specv2pb.SpecSystem) *PathDependencyProvider {
 	return &PathDependencyProvider{
 		settings:   settings,
@@ -128,8 +143,10 @@ func newPathDependencyProvider(settings *specv2pb.SpecSystem) *PathDependencyPro
 	}
 }
 
+// Name returns the name of the registry as a string, which is a constant value defined as PathRegistryName.
 func (provider *PathDependencyProvider) Name() string { return PathRegistryName }
 
+// GetDependency retrieves a dependency from the cache or creates it if not present and returns it as a Dependency instance.
 func (provider *PathDependencyProvider) GetDependency() (*Dependency, error) {
 	src := provider.settings.Registry.Path
 	baseDest, dest := generatePath(provider.settings.Name, provider)
@@ -168,8 +185,7 @@ func (provider *PathDependencyProvider) GetDependency() (*Dependency, error) {
 	}, nil
 }
 
-// generateIdentifier creates a unique identifier based on the given input.
-// The identifier is an SHA-256 hash truncated to 16 characters.
+// generatePath generates a unique cache path and file path for a dependency based on the registry provider and system.
 func generatePath(system string, provider DependencyRegistryProvider) (string, string) {
 	// Generate SHA-256 hash of the input and encode the hash to a hex string and truncate to 16 characters
 	_url := provider.Name()

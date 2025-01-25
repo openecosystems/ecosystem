@@ -24,35 +24,20 @@ issues:
     - ".github"
     - ".spec"
     - ".vscode"
-
-  #max-issues-per-linter: 0
-  #max-same-issues: 0
+  max-issues-per-linter: 0
+  max-same-issues: 0
 
 linters:
-  disable:
-    - staticcheck
-    - unused
-    - gosimple
-    - unconvert
-    - govet
-    - errcheck
-    - nilerr
   enable:
-    #- bodyclose
+    - bodyclose
     - gofumpt
     - goimports
-    #- gosec
-    #- nilerr
-    #- revive TODO: Add comments to all fields and methods or unexport them
+    - gosec
+    - nilerr
+    - revive
     - rowserrcheck
     - sqlclosecheck
     - tparallel
-    #- unconvert
-    #- unparam
+    - unconvert
+    - unparam
     - whitespace
-#    - govet
-#    - errcheck
-#    - staticcheck
-#    - unused
-#    - gosimple
-#    - gocyclo

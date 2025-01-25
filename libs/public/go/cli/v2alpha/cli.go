@@ -2,8 +2,7 @@ package cliv2alphalib
 
 import (
 	"context"
-
-	"libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 type CLI struct {

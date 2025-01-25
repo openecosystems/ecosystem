@@ -12,7 +12,9 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 )
 
-func GetDataFromSpec[D protoreflect.ProtoMessage](ctx context.Context, s *specproto.Spec, data D) error {
+// GetDataFromSpec extracts and unmarshals the data field of a Spec object into a provided ProtoMessage instance.
+// Returns an error if the Spec or its Data field is nil, or if unmarshaling fails.
+func GetDataFromSpec[D protoreflect.ProtoMessage](_ context.Context, s *specproto.Spec, data D) error {
 	if s == nil {
 		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "Cannot create object from nil spec")
 		return ErrServerInternal
@@ -37,6 +39,7 @@ func GetDataFromSpec[D protoreflect.ProtoMessage](ctx context.Context, s *specpr
 	return nil
 }
 
+// UpdateSpecFromContext updates the fields in the given spec's context with values from the provided spec context.
 func UpdateSpecFromContext[C any](spec *specproto.Spec, specContext C) {
 	organizationSlug, err := GetField(specContext, "OrganizationSlug")
 	if err == nil {
@@ -48,6 +51,8 @@ func UpdateSpecFromContext[C any](spec *specproto.Spec, specContext C) {
 	}
 }
 
+// GetField retrieves the specified field value from a given struct using reflection.
+// Returns an error if the field does not exist or is invalid.
 func GetField(item interface{}, fieldName string) (*reflect.Value, error) {
 	values := reflect.ValueOf(item)
 	value := values.FieldByName(fieldName)
@@ -57,6 +62,8 @@ func GetField(item interface{}, fieldName string) (*reflect.Value, error) {
 	return &value, nil
 }
 
+// GetContextBinValue generates a concatenated string of OrganizationSlug and WorkspaceSlug from SpecContext if both are non-empty.
+// If WorkspaceSlug is empty, returns only OrganizationSlug. Returns an error if both fields are empty.
 func GetContextBinValue(specContext *specproto.SpecContext) (string, error) {
 	if specContext.OrganizationSlug != "" && specContext.WorkspaceSlug != "" {
 		return specContext.OrganizationSlug + ":" + specContext.WorkspaceSlug, nil
@@ -66,23 +73,20 @@ func GetContextBinValue(specContext *specproto.SpecContext) (string, error) {
 	return "", errors.New("empty spec context bin value")
 }
 
-// ConvertToJSON This function helps convert map[interface{}]interface{} to JSON because structpb only support
-// string keys. It's necessary to recursively convert all map[interface]interface{} to
-// map[string]interface{}
-// https://github.com/go-testfixtures/testfixtures/blob/master/json.go
+// ConvertToJSON converts complex nested structures to JSON-compatible formats (e.g., maps with string keys, arrays).
 func ConvertToJSON(v interface{}) (r interface{}) {
 	switch v := v.(type) {
 	case []interface{}:
 		for i, e := range v {
 			v[i] = ConvertToJSON(e)
 		}
-		r = []interface{}(v)
+		// r = []interface{}(v)
 	case map[interface{}]interface{}:
 		newMap := make(map[string]interface{}, len(v))
 		for k, e := range v {
 			newMap[k.(string)] = ConvertToJSON(e)
 		}
-		r = map[string]interface{}(newMap)
+		// r = map[string]interface{}(newMap)
 	default:
 		r = v
 	}

@@ -6,6 +6,17 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// SearchHeight defines the height of the search bar.
+// FooterHeight defines the height of the footer section.
+// ExpandedHelpHeight defines the height of the expanded help section.
+// InputBoxHeight defines the height of the input box.
+// SingleRuneWidth defines the width allocated for a single rune.
+// MainContentPadding defines the padding used for the main content area.
+// TabsBorderHeight defines the height of the tab borders.
+// TabsContentHeight defines the height of the tab content area.
+// TabsHeight combines border and content heights to define total tab height.
+// ViewSwitcherMargin defines the margin around the view switcher.
+// TableHeaderHeight defines the height of the table header section.
 var (
 	SearchHeight       = 3
 	FooterHeight       = 1
@@ -20,6 +31,7 @@ var (
 	TableHeaderHeight  = 2
 )
 
+// CommonStyles defines a set of reusable styles and symbols used for consistent UI rendering throughout the application.
 type CommonStyles struct {
 	MainTextStyle lipgloss.Style
 	FooterStyle   lipgloss.Style
@@ -29,6 +41,7 @@ type CommonStyles struct {
 	SuccessGlyph  string
 }
 
+// BuildStyles generates and returns a CommonStyles struct by applying styles based on the provided Theme configuration.
 func BuildStyles(theme Theme) CommonStyles {
 	var s CommonStyles
 

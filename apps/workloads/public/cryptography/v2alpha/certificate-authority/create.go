@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	"libs/partner/go/nats/v2"
-	"libs/partner/go/zap/v1"
+	natsnodev2 "libs/partner/go/nats/v2"
+	zaploggerv1 "libs/partner/go/zap/v1"
 
 	"github.com/nats-io/nats.go/jetstream"
 
@@ -16,8 +16,10 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
+// CreateCertificateAuthorityListener represents a listener for handling requests to create a certificate authority.
 type CreateCertificateAuthorityListener struct{}
 
+// GetConfiguration provides the listener configuration for CreateCertificateAuthorityListener, including subject, queue, and jetstream settings.
 func (l *CreateCertificateAuthorityListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
 	entity := &cryptographyv2alphapbmodel.CertificateAuthoritySpecEntity{}
 	streamType := natsnodev2.InboundStream{}
@@ -39,10 +41,14 @@ func (l *CreateCertificateAuthorityListener) GetConfiguration() *natsnodev2.List
 	}
 }
 
+// Listen synchronously listens for multiplexed spec events and routes them to the associated handler.
 func (l *CreateCertificateAuthorityListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
 	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
+// Process handles the incoming ListenerMessage, processes the request, and sends an appropriate response back to the client.
+// It validates the Spec field in the request, extracts the necessary data, retrieves or creates a Certificate Authority,
+// and constructs a response to be sent. Logs errors and success for debugging and tracking purposes.
 func (l *CreateCertificateAuthorityListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
 	nca := *nebulav1ca.Bound

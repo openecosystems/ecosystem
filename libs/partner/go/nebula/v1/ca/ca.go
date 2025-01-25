@@ -10,32 +10,38 @@ import (
 	"path/filepath"
 	"sync"
 
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 )
 
-// Binding struct that holds binding specific fields
+// Binding represents an entity responsible for managing Nebula certificate binary and its file path.
 type Binding struct {
 	NebulaCertBinaryFile *os.File
 	NebulaCertBinaryPath string
 }
 
+// Bound is a global Binding instance that holds configuration and state for the Certificate Authority binding.
+// BindingName is the constant string representing the name of the Certificate Authority binding.
 var (
 	Bound       *Binding
 	BindingName = "CA_BINDING"
 )
 
+// Name returns the name of the binding as a string. It is used to identify the binding in the registered bindings map.
 func (b *Binding) Name() string {
 	return BindingName
 }
 
+// Validate checks the validity and correctness of the binding within the provided context and bindings.
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	return nil
 }
 
+// Bind adds the current Binding instance to the provided bindings map, initializing it if not already bound.
 func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
@@ -82,19 +88,21 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 	return bindings
 }
 
+// GetBinding returns the globally initialized instance of the Binding. If no instance exists, it returns nil.
 func (b *Binding) GetBinding() interface{} {
 	return Bound
 }
 
+// Close removes the temporary Nebula Certificate Binary file and returns any errors encountered during the removal.
 func (b *Binding) Close() error {
 	defer func(name string) {
-		err := os.Remove(name)
-		if err != nil {
-		}
+		_ = os.Remove(name)
 	}(b.NebulaCertBinaryFile.Name()) // Clean up after execution
 	return nil
 }
 
+// GetCertificateAuthority creates a new Certificate Authority using the specified request parameters.
+// Returns the created Certificate Authority or an error if the operation fails.
 func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2alphapb.CreateCertificateAuthorityRequest) (*cryptographyv2alphapb.CertificateAuthority, error) {
 	nca := b.NebulaCertBinaryPath
 
@@ -103,8 +111,8 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 		return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("required parameter name is missing"))
 	}
 
-	c := "25519"
-	curve := cryptographyv2alphapb.Curve_CURVE_EDDSA
+	var c string
+	var curve cryptographyv2alphapb.Curve
 	switch req.Curve {
 	case cryptographyv2alphapb.Curve_CURVE_ECDSA:
 		c = "P256"
@@ -126,9 +134,7 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
 	}
 	defer func(path string) {
-		err := os.RemoveAll(path)
-		if err != nil {
-		}
+		_ = os.RemoveAll(path)
 	}(tempDir)
 
 	_ca := "ca"
@@ -188,6 +194,15 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 	}, nil
 }
 
+// getFile reads a file and constructs a File object with its metadata and content.
+// Parameters:
+// - name: The name of the file.
+// - extensionWithPeriod: The file's extension, including the leading period (e.g., ".png").
+// - path: The full path to the file.
+// - time: Timestamp for creation and modification times.
+// Returns:
+// - A pointer to a File object containing the file details.
+// - An error if the file cannot be read or MIME type cannot be determined.
 func getFile(name string, extensionWithPeriod string, path string, time *timestamppb.Timestamp) (*typev2pb.File, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

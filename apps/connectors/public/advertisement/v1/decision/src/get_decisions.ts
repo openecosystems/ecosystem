@@ -5,9 +5,9 @@ import { create, toBinary } from '@bufbuild/protobuf';
 
 export async function getDecisions(spec: Spec, m: Msg): Promise<Uint8Array> {
 
-    let client = new Client({ networkId: 11603, siteId: 1301620 });
+    const client = new Client({ networkId: 11603, siteId: 1301620 });
 
-    let request = {
+    const request = {
         placements: [{ adTypes: [3] }],
         user: { key: "local.developer" },
         keywords: ["keyword1", "keyword2"]

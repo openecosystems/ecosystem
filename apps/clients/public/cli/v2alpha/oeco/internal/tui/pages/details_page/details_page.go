@@ -10,20 +10,24 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
 
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
+// ModelConfig represents the configuration structure for initializing and customizing a model instance.
 type ModelConfig struct{}
 
+// Model represents an aggregate model combining base functionality, form element, content, and a sidebar component.
 type Model struct {
 	pages.BaseModel[ModelConfig]
 
 	form        *connector_form.Model
 	mainContent connector_details_content.Model
-	sidebar     connector_details_sidebar.Model
+	sidebar     connectordetailssidebar.Model
 }
 
+// NewModel initializes and returns a new Model instance using a ProgramContext.
+// It sets up a base model, form, main content, and sidebar with dependencies configured from the provided context.
 func NewModel(ctx *context.ProgramContext) Model {
 	c := ModelConfig{}
 
@@ -32,7 +36,7 @@ func NewModel(ctx *context.ProgramContext) Model {
 		form: &f,
 	}
 	p.mainContent = connector_details_content.NewModel(ctx, &f)
-	p.sidebar = connector_details_sidebar.NewModel(ctx, &f)
+	p.sidebar = connectordetailssidebar.NewModel(ctx, &f)
 
 	p.BaseModel = pages.NewBaseModel[ModelConfig](
 		ctx,
@@ -47,6 +51,7 @@ func NewModel(ctx *context.ProgramContext) Model {
 	return p
 }
 
+// GetPageSettings returns the settings for the "Connector Details" page, including title, default status, and page type.
 func (m Model) GetPageSettings() contract.PageSettings {
 	return contract.PageSettings{
 		Title:     "Connector Details",
@@ -57,6 +62,7 @@ func (m Model) GetPageSettings() contract.PageSettings {
 	}
 }
 
+// Update processes the given message, updates the model's components, and returns the updated model and a batch of commands.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
@@ -81,6 +87,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
+// View renders the combined view of the main content and sidebar by arranging them horizontally with a base style.
 func (m Model) View() string {
 	return m.ViewBase(lipgloss.JoinHorizontal(
 		lipgloss.Top,

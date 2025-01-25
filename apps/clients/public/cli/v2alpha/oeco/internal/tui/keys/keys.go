@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 )
 
+// KeyMap defines a set of key bindings and navigation mappings for user interaction in different application contexts.
 type KeyMap struct {
 	sectionType   config.SectionType
 	pageType      config.PageType
@@ -23,21 +24,24 @@ type KeyMap struct {
 	NextPage      key.Binding
 	PrevPage      key.Binding
 	Search        key.Binding
-	CopyUrl       key.Binding
+	CopyURL       key.Binding
 	CopyNumber    key.Binding
 	Help          key.Binding
 	Quit          key.Binding
 }
 
+// CreateKeyMapForView creates and returns a KeyMap instance configured for the specified page type.
 func CreateKeyMapForView(pageType config.PageType) help.KeyMap {
 	Keys.pageType = pageType
 	return Keys
 }
 
+// ShortHelp returns a slice of key bindings that provide concise help information.
 func (k KeyMap) ShortHelp() []key.Binding {
 	return []key.Binding{k.Help}
 }
 
+// FullHelp returns a two-dimensional slice of key bindings categorized by their context, such as navigation, app, section, and page.
 func (k KeyMap) FullHelp() [][]key.Binding {
 	var sectionKeys []key.Binding
 	if k.sectionType == config.ConnectorSection {
@@ -58,6 +62,7 @@ func (k KeyMap) FullHelp() [][]key.Binding {
 	}
 }
 
+// NavigationKeys returns a slice of key bindings used for navigation actions such as moving up, down, paging, and line navigation.
 func (k KeyMap) NavigationKeys() []key.Binding {
 	return []key.Binding{
 		k.Up,
@@ -71,6 +76,7 @@ func (k KeyMap) NavigationKeys() []key.Binding {
 	}
 }
 
+// AppKeys returns a list of key bindings related to application-level actions, including refresh, search, and copy operations.
 func (k KeyMap) AppKeys() []key.Binding {
 	return []key.Binding{
 		k.Refresh,
@@ -78,15 +84,17 @@ func (k KeyMap) AppKeys() []key.Binding {
 		k.TogglePreview,
 		k.OpenGithub,
 		k.CopyNumber,
-		k.CopyUrl,
+		k.CopyURL,
 		k.Search,
 	}
 }
 
+// QuitAndHelpKeys returns a slice of key bindings for the Help and Quit actions.
 func (k KeyMap) QuitAndHelpKeys() []key.Binding {
 	return []key.Binding{k.Help, k.Quit}
 }
 
+// Keys represents a predefined set of key bindings used for navigation, actions, and commands within the application.
 var Keys = &KeyMap{
 	Up: key.NewBinding(
 		key.WithKeys("up", "k"),
@@ -144,7 +152,7 @@ var Keys = &KeyMap{
 		key.WithKeys("y"),
 		key.WithHelp("y", "copy number"),
 	),
-	CopyUrl: key.NewBinding(
+	CopyURL: key.NewBinding(
 		key.WithKeys("Y"),
 		key.WithHelp("Y", "copy url"),
 	),

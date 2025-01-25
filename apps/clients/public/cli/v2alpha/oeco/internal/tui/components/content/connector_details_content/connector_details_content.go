@@ -7,7 +7,7 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/glamour"
 )
 
@@ -18,6 +18,7 @@ but whose actual values are randomized and synthetically generated.
 This allows you to prototype and test before doing mesh execution.
 `
 
+// Model represents a UI component that combines markdown rendering, a form interface, and contextual data handling.
 type Model struct {
 	content.BaseModel
 
@@ -26,6 +27,8 @@ type Model struct {
 	introduction     string
 }
 
+// NewModel initializes and returns a new Model instance using the provided program context and connector form model.
+// It sets up internal properties, including the base model, viewport, and a markdown renderer for introduction rendering.
 func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
 	m := Model{
 		form: form,
@@ -46,6 +49,7 @@ func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
 	return m
 }
 
+// Update handles incoming messages to update the model's state and returns the updated model along with a command batch.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var (
 		cmd         tea.Cmd

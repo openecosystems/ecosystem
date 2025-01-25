@@ -22,9 +22,9 @@ const (
 )
 
 type RequestValidation struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	ValidateOnly bool `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
-	Signature     *ValidationSignature `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ValidateOnly  bool                   `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
+	Signature     *ValidationSignature   `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -74,9 +74,9 @@ func (x *RequestValidation) GetSignature() *ValidationSignature {
 }
 
 type ResponseValidation struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	ValidateOnly bool `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
-	Signature     *ValidationSignature `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ValidateOnly  bool                   `protobuf:"varint,1,opt,name=validate_only,json=validateOnly,proto3" json:"validate_only,omitempty"`
+	Signature     *ValidationSignature   `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -126,8 +126,8 @@ func (x *ResponseValidation) GetSignature() *ValidationSignature {
 }
 
 type ValidationSignature struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	Jwt           string `protobuf:"bytes,1,opt,name=jwt,proto3" json:"jwt,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Jwt           string                 `protobuf:"bytes,1,opt,name=jwt,proto3" json:"jwt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

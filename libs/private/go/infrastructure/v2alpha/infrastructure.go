@@ -6,9 +6,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
-	"libs/public/go/sdk/v2alpha"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 type Infrastructure struct {

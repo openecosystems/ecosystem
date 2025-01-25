@@ -31,12 +31,14 @@ var (
 	}()
 )
 
+// Model represents the main application state, managing content, initialization, and the viewport functionality.
 type Model struct {
 	content  string
 	ready    bool
 	viewport viewport.Model
 }
 
+// NewModel initializes and returns a new Model instance with predefined content.
 func NewModel() Model {
 	content := []byte(`
 YOYOYOYOYGlow
@@ -90,10 +92,12 @@ _carduus_ in Carthage and Cordoba.
 	return Model{content: string(content)}
 }
 
+// Init initializes the model and returns any initial command to be executed.
 func (m Model) Init() tea.Cmd {
 	return nil
 }
 
+// Update processes incoming messages, updates the Model's state, and returns the updated Model along with any commands.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var (
 		cmd  tea.Cmd
@@ -149,6 +153,8 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
+// View generates a string representation of the model by combining the header, viewport, and footer views.
+// It displays an initializing message if the model is not ready.
 func (m Model) View() string {
 	if !m.ready {
 		return "\n  Initializing..."
@@ -156,18 +162,21 @@ func (m Model) View() string {
 	return fmt.Sprintf("%s\n%s\n%s", m.headerView(), m.viewport.View(), m.footerView())
 }
 
+// headerView constructs and returns a styled header string with a title and a separator line based on the viewport width.
 func (m Model) headerView() string {
 	title := titleStyle.Render("Mr. Pager")
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(title)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, title, line)
 }
 
+// footerView generates the footer section of the view with a scroll percentage and a horizontal line for alignment.
 func (m Model) footerView() string {
 	info := infoStyle.Render(fmt.Sprintf("%3.f%%", m.viewport.ScrollPercent()*100))
 	line := strings.Repeat("─", max(0, m.viewport.Width-lipgloss.Width(info)))
 	return lipgloss.JoinHorizontal(lipgloss.Center, line, info)
 }
 
+// max returns the greater of two integer values, a and b. If a and b are equal, it returns either of them.
 func max(a, b int) int {
 	if a > b {
 		return a

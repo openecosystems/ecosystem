@@ -1,4 +1,4 @@
-package connector_details_sidebar
+package connectordetailssidebar
 
 import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
@@ -6,15 +6,17 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/bubbles/viewport"
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
+// Model represents a user interface model combining a sidebar and a form within a program context.
 type Model struct {
 	sidebar.BaseModel
 
 	form *connector_form.Model
 }
 
+// NewModel creates and initializes a new Model instance with a given program context and connector form configuration.
 func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
 	m := Model{
 		form: form,
@@ -30,6 +32,7 @@ func NewModel(ctx *context.ProgramContext, form *connector_form.Model) Model {
 	return m
 }
 
+// Update processes the incoming message, updates the model's state, and returns the updated model along with batched commands.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var (
 		cmd         tea.Cmd

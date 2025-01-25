@@ -33,7 +33,7 @@ async function handleRequest(subject: string, s: Subscription, process: (spec: a
   for await (const m of s) {
 
       const spec = fromBinary(SpecSchema, m.data)
-      let binary = await process(spec, m)
+      const binary = await process(spec, m)
 
       // respond returns true if the message had a reply subject, thus it could respond
       if (m.respond(binary)) {

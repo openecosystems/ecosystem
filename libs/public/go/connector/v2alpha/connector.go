@@ -9,12 +9,13 @@ import (
 	"strings"
 	"syscall"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"connectrpc.com/connect"
 
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 
 	"github.com/slackhq/nebula/service"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -256,7 +257,6 @@ func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
 		defer cancel()
 
 		sdkv2alphalib.ShutdownBindings(connector.Bindings)
-
 	}
 }
 
@@ -265,12 +265,10 @@ func (connector *Connector) ListenAndProcessSpecListenable() chan sdkv2alphalib.
 	listenerErr := make(chan sdkv2alphalib.SpecListenableErr, len(listeners))
 
 	for key, listener := range listeners {
-
 		ctx := context.Background()
 		go listener.Listen(ctx, listenerErr)
 
 		fmt.Println("Registered Listenable: " + key)
-
 	}
 	return listenerErr
 }

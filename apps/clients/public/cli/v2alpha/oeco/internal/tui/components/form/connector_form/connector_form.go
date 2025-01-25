@@ -1,21 +1,22 @@
 package connector_form
 
 import (
-	"fmt"
-	"strings"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	"fmt"
+	"strings"
 
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
 )
 
+// maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.
 const maxWidth = 80
 
+// Styles is a container for styling various UI components using lipgloss styles.
 type Styles struct {
 	Base,
 	HeaderText,
@@ -26,6 +27,7 @@ type Styles struct {
 	Help lipgloss.Style
 }
 
+// NewStyles initializes and returns a Styles struct with predefined lipgloss styles for UI components.
 func NewStyles(lg *lipgloss.Renderer) *Styles {
 	s := Styles{}
 	s.Base = lg.NewStyle().
@@ -49,13 +51,23 @@ func NewStyles(lg *lipgloss.Renderer) *Styles {
 	return &s
 }
 
+// state represents the application states and is typically used with iota to define specific states.
 type state int
 
+// statusNormal represents the default or normal state in the state enum.
+// stateDone indicates that the process or operation is complete in the state enum.
 const (
 	statusNormal state = iota
 	stateDone
 )
 
+// burger represents the type of burger being prepared or served.
+// toppings holds a list of toppings added to the burger.
+// classifications categorizes the burger based on its type or style.
+// sauceLevel indicates the amount of sauce applied to the burger.
+// name is the name of the burger or dish.
+// instructions contain preparation or serving instructions for the burger.
+// discount determines whether a discount is applicable to the burger.
 var (
 	burger          string
 	toppings        []string
@@ -66,6 +78,7 @@ var (
 	discount        bool
 )
 
+// Model represents the main application model containing state, renderer, styles, form, rendered form, and layout width.
 type Model struct {
 	state        state
 	lg           *lipgloss.Renderer
@@ -75,6 +88,7 @@ type Model struct {
 	width        int
 }
 
+// NewModel initializes and returns a new Model with predefined configurations and styles.
 func NewModel(_ *context.ProgramContext) Model {
 	m := Model{width: maxWidth}
 	m.lg = lipgloss.DefaultRenderer()
@@ -138,6 +152,7 @@ func NewModel(_ *context.ProgramContext) Model {
 	return m
 }
 
+// minimum returns the smaller of two integers, x and y. If x is less than or equal to y, it returns x; otherwise, it returns y.
 func minimum(x, y int) int {
 	if x > y {
 		return y
@@ -145,6 +160,7 @@ func minimum(x, y int) int {
 	return x
 }
 
+// Update processes the incoming message, updates the model's state, and returns the updated model along with commands.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -166,6 +182,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
+// View renders the current state of the model as a string for display in the terminal. It adapts based on the form state.
 func (m Model) View() string {
 	s := m.styles
 
@@ -200,6 +217,7 @@ func (m Model) View() string {
 	}
 }
 
+// SidebarView generates the sidebar UI component for the form, displaying current build details and projected role information.
 func (m Model) SidebarView() string {
 	s := m.styles
 
@@ -253,6 +271,7 @@ func (m Model) SidebarView() string {
 	}
 }
 
+// errorView generates a string containing all error messages from the form's Errors method and concatenates them.
 func (m Model) errorView() string {
 	var s string
 	for _, err := range m.form.Errors() {
@@ -261,6 +280,7 @@ func (m Model) errorView() string {
 	return s
 }
 
+// appBoundaryView formats and horizontally aligns the provided text based on the model's width and style configurations.
 func (m Model) appBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
@@ -270,6 +290,7 @@ func (m Model) appBoundaryView(text string) string {
 	)
 }
 
+// appErrorBoundaryView renders an error-styled boundary with the given text, formatted to fit within the defined width.
 func (m Model) appErrorBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
@@ -280,6 +301,7 @@ func (m Model) appErrorBoundaryView(text string) string {
 	)
 }
 
+// getRole returns the role title and description based on the class and level obtained from the form data.
 func (m Model) getRole() (string, string) {
 	level := m.form.GetString("level")
 	switch m.form.GetString("class") {

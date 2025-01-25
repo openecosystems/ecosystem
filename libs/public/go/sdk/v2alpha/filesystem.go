@@ -10,6 +10,8 @@ import (
 	"github.com/spf13/afero"
 )
 
+// FileSystem represents a file system abstraction for managing directories and files.
+// It includes paths for home, log, temporary, context, credentials, registry, and configuration directories.
 type FileSystem struct {
 	UnderlyingFileSystem afero.Fs
 	HomeDirectory        string
@@ -23,6 +25,17 @@ type FileSystem struct {
 	ConfigurationDirectory string
 }
 
+// HomeDirectoryName defines the name of the home configuration directory.
+// ConfigurationName specifies the name of the main configuration file.
+// ConfigurationExtension defines the file extension for configuration files.
+// LogDirectoryName specifies the directory name for log files.
+// TmpDirectoryName defines the temporary directory name.
+// ContextDirectoryName specifies the directory name for context-related files.
+// DefaultContextFileName specifies the default context file name.
+// CredentialDirectoryName defines the directory name for storing credentials.
+// RegistryDirectoryName specifies the directory name for registry-related data.
+// RegistryCacheDirectoryName defines the directory name for registry cache data.
+// ConfigurationDirectoryName specifies the directory name for configuration storage.
 const (
 	HomeDirectoryName          = ".config/oeco"
 	ConfigurationName          = "config"
@@ -37,6 +50,18 @@ const (
 	ConfigurationDirectoryName = "configuration"
 )
 
+// HomeDirectory defines the default home directory path using getHomeDirectory function.
+// UserHomeDirectory defines the user's home directory path using getUserHomeDirectory function.
+// ConfigFile defines the full path to the configuration file in the home directory.
+// LogDirectory defines the path to the log directory in the home directory.
+// TmpDirectory defines the path to the temporary directory in the home directory.
+// ContextDirectory defines the path to the context directory in the home directory.
+// CredentialDirectory defines the path to the credential directory in the home directory.
+// RegistryDirectory defines the path to the registry directory in the home directory.
+// ConfigurationDirectory defines the path to the configuration directory in the home directory.
+// RegistryCacheDirectory defines the path to the registry cache directory in the registry directory.
+// DefaultContextFile defines the full path to the default context file in the context directory.
+// Filesystem is a pointer to the FileSystem struct managing file operations.
 var (
 	HomeDirectory          = getHomeDirectory()
 	UserHomeDirectory      = getUserHomeDirectory()
@@ -52,6 +77,7 @@ var (
 	Filesystem             *FileSystem
 )
 
+// NewFileSystem initializes and returns a new instance of FileSystem with preconfigured directories and files.
 func NewFileSystem() *FileSystem {
 	fs := afero.NewOsFs()
 
@@ -109,6 +135,7 @@ func NewFileSystem() *FileSystem {
 	return filesystem
 }
 
+// getUserHomeDirectory returns the current user's home directory as a string or exits the program on error.
 func getUserHomeDirectory() string {
 	home, err := homedir.Dir()
 	if err != nil {
@@ -120,6 +147,8 @@ func getUserHomeDirectory() string {
 	return home
 }
 
+// getHomeDirectory returns the path to the user's home configuration directory, constructing it with a predefined name.
+// Exits the program with an error message if the home directory cannot be determined.
 func getHomeDirectory() string {
 	home, err := homedir.Dir()
 	if err != nil {
@@ -131,6 +160,7 @@ func getHomeDirectory() string {
 	return filepath.Join(home, HomeDirectoryName)
 }
 
+// CreateDirectory ensures the specified directory exists, creating it with permissions 0755 if it does not exist.
 func (filesystem *FileSystem) CreateDirectory(directory string) error {
 	fs := filesystem.UnderlyingFileSystem
 
@@ -149,6 +179,8 @@ func (filesystem *FileSystem) CreateDirectory(directory string) error {
 	return nil
 }
 
+// CreateFile creates a new file with the specified name if it does not already exist in the filesystem.
+// Returns an error if the file cannot be created or if an underlying issue occurs.
 func (filesystem *FileSystem) CreateFile(file string) error {
 	fs := filesystem.UnderlyingFileSystem
 	exists, err := afero.Exists(fs, file)
@@ -166,16 +198,19 @@ func (filesystem *FileSystem) CreateFile(file string) error {
 	return nil
 }
 
+// Exists checks if a file exists at the specified path using the underlying file system and returns a boolean and an error.
 func (filesystem *FileSystem) Exists(file string) (bool, error) {
 	fs := filesystem.UnderlyingFileSystem
 	return afero.Exists(fs, file)
 }
 
+// DirExists checks if the specified directory exists in the underlying file system and returns a boolean and an error.
 func (filesystem *FileSystem) DirExists(directory string) (bool, error) {
 	fs := filesystem.UnderlyingFileSystem
 	return afero.DirExists(fs, directory)
 }
 
+// WriteFile writes the provided data to the specified file with the given permissions. Creates the file if it does not exist.
 func (filesystem *FileSystem) WriteFile(file string, data []byte, perm os.FileMode) error {
 	fs := filesystem.UnderlyingFileSystem
 
@@ -192,6 +227,7 @@ func (filesystem *FileSystem) WriteFile(file string, data []byte, perm os.FileMo
 	return nil
 }
 
+// ReadFile reads the contents of the specified file and returns its content as a byte slice. Returns an error if reading fails.
 func (filesystem *FileSystem) ReadFile(file string) ([]byte, error) {
 	fs := filesystem.UnderlyingFileSystem
 	bytes, err := afero.ReadFile(fs, file)
@@ -202,6 +238,7 @@ func (filesystem *FileSystem) ReadFile(file string) ([]byte, error) {
 	return bytes, nil
 }
 
+// DeleteFile removes the specified file if it exists in the underlying filesystem and returns an error if any issues occur.
 func (filesystem *FileSystem) DeleteFile(file string) error {
 	fs := filesystem.UnderlyingFileSystem
 	exists, err := afero.Exists(fs, file)
@@ -219,6 +256,7 @@ func (filesystem *FileSystem) DeleteFile(file string) error {
 	return nil
 }
 
+// CopyFile copies a file from the specified source path to the destination path within the file system.
 func (filesystem *FileSystem) CopyFile(file string, destination string) error {
 	fs := filesystem.UnderlyingFileSystem
 	exists, err := afero.Exists(fs, file)
@@ -241,6 +279,7 @@ func (filesystem *FileSystem) CopyFile(file string, destination string) error {
 	return nil
 }
 
+// ReadDir reads the contents of the specified directory and returns a slice of os.FileInfo or an error if it fails.
 func (filesystem *FileSystem) ReadDir(dir string) ([]os.FileInfo, error) {
 	fs := filesystem.UnderlyingFileSystem
 
@@ -252,6 +291,7 @@ func (filesystem *FileSystem) ReadDir(dir string) ([]os.FileInfo, error) {
 	return fileInfos, nil
 }
 
+// DeleteDirectory removes the specified directory and all its contents if it exists in the underlying file system.
 func (filesystem *FileSystem) DeleteDirectory(directory string) error {
 	fs := filesystem.UnderlyingFileSystem
 

@@ -2,11 +2,12 @@ package sdkv2alphalib
 
 import (
 	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/options/v2"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"os"
 	"strings"
 	"sync"
+
+	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
@@ -15,35 +16,42 @@ import (
 	"google.golang.org/protobuf/types/descriptorpb"
 )
 
+// globalMutex is a read-write mutex used to synchronize access to global resources.
+// GlobalSystems is a globally accessible instance of the Systems type, initialized with default values.
 var (
 	globalMutex   sync.RWMutex
 	GlobalSystems = new(Systems)
 )
 
+// System describes a system entity composed of a SpecSystem, a collection of Connectors, and an optional Dependency.
 type System struct {
 	specv2pb.SpecSystem
 	Connectors []*Connector
 	Dependency *Dependency
 }
 
+// Systems represents a collection of systems and their associated connectors.
+// It maintains mappings by system name and connector path while tracking other configurations and dependencies.
+// A file system and specification settings are also managed within this type.
 type Systems struct {
 	systemsByName    map[FullSystemName]*System
 	connectorsByPath map[string][]protoreflect.FileDescriptor
-	numSystems       int
-	fileSystem       *FileSystem
-	settings         *specv2pb.SpecSettings
+	// numSystems       int
+	fileSystem *FileSystem
+	settings   *specv2pb.SpecSettings
 }
 
-type FullSystemName string // e.g., "oeco.public.platform.Configuration"
+// FullSystemName represents the name identifier for a system.
+type FullSystemName string
 
+// IsValid checks if the FullSystemName has a non-zero length and returns true if valid, otherwise false.
 func (s FullSystemName) IsValid() bool {
 	i := len(s)
-	if i < 0 {
-		return false
-	}
-	return true
+	return i > 0
 }
 
+// RegisterSystems initializes the Systems instance with provided settings and processes system definitions.
+// Returns an error if system registration fails.
 func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
 	if s == GlobalSystems {
 		globalMutex.Lock()
@@ -64,10 +72,12 @@ func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
 	return nil
 }
 
+// GetSystems retrieves a map of all registered systems, keyed by their FullSystemName.
 func (s *Systems) GetSystems() map[FullSystemName]*System {
 	return s.systemsByName
 }
 
+// GetSystemByName retrieves a system by its name from the systemsByName map and returns it. Returns an error if not found.
 func (s *Systems) GetSystemByName(systemName string) (*System, error) {
 	if system, ok := s.systemsByName[FullSystemName(systemName)]; ok {
 		return system, nil
@@ -76,6 +86,7 @@ func (s *Systems) GetSystemByName(systemName string) (*System, error) {
 	return nil, fmt.Errorf("system '%s' not found", systemName)
 }
 
+// processSystems initializes, validates, and registers systems using the provided configuration and dependencies.
 func (s *Systems) processSystems() error {
 	for _, ss := range s.settings.Systems2 {
 		// Validate system
@@ -106,7 +117,7 @@ func (s *Systems) processSystems() error {
 	return nil
 }
 
-// loadSystemDescriptors loads protobuf descriptors from a FileDescriptorSet and registers them
+// loadSystemDescriptors processes a SpecSystem and its data to create and return a System object or an error if it fails.
 func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*System, error) {
 	if err := os.Setenv("GOLANG_PROTOBUF_REGISTRATION_CONFLICT", "ignore"); err != nil {
 		fmt.Println("Error setting environment variable:", err)
@@ -148,10 +159,10 @@ func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*
 			return true
 		}
 
-		sds := fd.Services()
-		for i := 0; i < sds.Len(); i++ {
-			// connectors = append(connectors, connectorv2alphalib.NewConnectorWithSchema(sds.Get(i)))
-		}
+		_ = fd.Services()
+		//for i := 0; i < sds.Len(); i++ {
+		// connectors = append(connectors, connectorv2alphalib.NewConnectorWithSchema(sds.Get(i)))
+		//}
 
 		return true
 	})
@@ -166,7 +177,10 @@ func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*
 	}, nil
 }
 
-// parseFields dynamically parses and displays information about each field in a MessageDescriptor
+// parseFields prints detailed information about the fields of a provided protoreflect.MessageDescriptor.
+// It outputs the field name, type, cardinality (repeated, optional, or required), and any nested message or enum details.
+//
+//nolint:unused
 func parseFields(messageDesc protoreflect.MessageDescriptor) {
 	fields := messageDesc.Fields()
 	for i := 0; i < fields.Len(); i++ {
