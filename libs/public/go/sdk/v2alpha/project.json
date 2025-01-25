@@ -31,7 +31,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "commands": ["gofumpt -l .", "golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "libs/public/go/sdk/v2alpha"
       }

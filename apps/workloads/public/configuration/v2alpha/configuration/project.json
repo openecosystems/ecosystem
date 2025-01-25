@@ -74,7 +74,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "commands": ["gofumpt -l .", "golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "apps/workloads/public/configuration/v2alpha/configuration"
       }

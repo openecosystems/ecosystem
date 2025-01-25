@@ -43,7 +43,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "commands": ["gofumpt -l .", "golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "apps/clients/public/cli/v2alpha/oeco"
       }
