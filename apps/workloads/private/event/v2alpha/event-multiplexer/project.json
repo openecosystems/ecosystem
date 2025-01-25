@@ -84,7 +84,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "apps/workloads/private/event/v2alpha/event-multiplexer"
       }

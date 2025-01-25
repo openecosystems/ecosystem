@@ -51,7 +51,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "apps/clients/public/cli/v2alpha/oeco"
       }

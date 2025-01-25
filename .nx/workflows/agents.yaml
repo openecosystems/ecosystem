@@ -8,11 +8,6 @@ launch-templates:
       GITHUB_TOKEN: ${GITHUB_TOKEN}
       GITHUB_ACTOR: ${GITHUB_ACTOR}
     init-steps:
-      - name: Debug
-        script: |
-          go env
-          echo PATH=$PATH:/home/workflows/go/bin >> $NX_CLOUD_ENV
-          cat $NX_CLOUD_ENV
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
 
