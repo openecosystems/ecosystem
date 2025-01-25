@@ -1,6 +1,6 @@
 {
   "name": "libs-poc-go-model",
-  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/poc/go/model",
   "implicitDependencies": [
@@ -38,7 +38,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./... --timeout=5m"],
+        "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "libs/poc/go/model"
       }

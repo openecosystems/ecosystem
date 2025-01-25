@@ -44,7 +44,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./... --timeout=5m"],
+        "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "libs/protobuf/go/protobuf"
       }
