@@ -8,11 +8,10 @@ launch-templates:
       GITHUB_TOKEN: ${GITHUB_TOKEN}
       GITHUB_ACTOR: ${GITHUB_ACTOR}
     init-steps:
-      - name: Brew Dependencies
+      - name: Debug
         script: |
           go env
-          env
-          echo PATH=$PATH:$GOROOT/bin:$GOPATH/bin >> $NX_CLOUD_ENV
+          echo PATH=$PATH:/home/workflows/go/bin >> $NX_CLOUD_ENV
           cat $NX_CLOUD_ENV
       - name: Checkout
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
@@ -57,7 +56,7 @@ launch-templates:
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
           brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          echo "PATH=$PATH" >> $NX_CLOUD_ENV
+          echo "PATH=$PATH:/home/workflows/go/bin" >> $NX_CLOUD_ENV
           echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
           echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
           echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
