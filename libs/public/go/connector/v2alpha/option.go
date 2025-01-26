@@ -10,11 +10,12 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-// A ConnectorOption configures a [Connector].
+// ConnectorOption defines an interface for applying custom configuration to a connectorOptions object.
 type ConnectorOption interface {
 	apply(*connectorOptions)
 }
 
+// WithTargetProtocols sets the allowed target protocols for the connector using the provided list of protocols.
 func WithTargetProtocols(protocols ...typev2pb.Protocol) ConnectorOption {
 	return connectorOptionFunc(func(opts *connectorOptions) {
 		opts.protocols = make(map[typev2pb.Protocol]struct{}, len(protocols))
@@ -24,12 +25,14 @@ func WithTargetProtocols(protocols ...typev2pb.Protocol) ConnectorOption {
 	})
 }
 
+// connectorOptions defines the configuration options for a connector, including supported protocols and codecs.
 type connectorOptions struct {
-	protocols      map[typev2pb.Protocol]struct{}
-	codecNames     map[string]struct{}
-	preferredCodec string
+	protocols map[typev2pb.Protocol]struct{}
+	// codecNames     map[string]struct{}
+	// preferredCodec string
 }
 
+// descKind returns a string describing the kind of protoreflect.Descriptor instance provided as input.
 func descKind(desc protoreflect.Descriptor) string {
 	switch desc := desc.(type) {
 	case protoreflect.FileDescriptor:
@@ -56,6 +59,8 @@ func descKind(desc protoreflect.Descriptor) string {
 	}
 }
 
+// newConnectorOptions creates and configures a new connectorOptions instance using the provided ConnectorOption slice.
+// Returns the configured connectorOptions and an error if validation fails.
 func newConnectorOptions(options []ConnectorOption) (*connectorOptions, *connect.Error) {
 	config := connectorOptions{
 		protocols: nil,
@@ -72,12 +77,16 @@ func newConnectorOptions(options []ConnectorOption) (*connectorOptions, *connect
 	return &config, nil
 }
 
+// validate checks the integrity and consistency of the connectorOptions fields.
+// Returns a *connect.Error if validation fails or nil if successful.
 func (c *connectorOptions) validate() *connect.Error {
 	return nil
 }
 
+// connectorOptionFunc is a function type that modifies the settings of a connectorOptions instance.
 type connectorOptionFunc func(*connectorOptions)
 
+// apply applies the connectorOptionFunc to the given connectorOptions.
 func (f connectorOptionFunc) apply(opts *connectorOptions) {
 	f(opts)
 }

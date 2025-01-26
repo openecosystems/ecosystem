@@ -5,6 +5,7 @@ import (
 	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 )
 
+// PCI represents an instance of SpecDataCatalog used for defining and organizing multiple configurations and ontologies.
 var PCI = &ontologyv2alphapb.SpecDataCatalog{
 	Audit: &ontologyv2alphapb.Audit{
 		AuditV2Alpha: &ontologyv2alphapb.AuditV2Alpha{

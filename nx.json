@@ -156,9 +156,31 @@
     },
     "release": {
         "groups": {
+            "sdks-typescript": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:sdk", "tag:cycle:public", "tag:language:typescript", "!tag:language:golang", "!tag:language:rust", "!tag:cycle:private", "!tag:cycle:poc", "!tag:cycle:partner"],
+                "git": {
+                    "commit": true,
+                    "tag": true,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
             "sdks-public": {
                 "projectsRelationship": "independent",
-                "projects": ["tag:type:sdk", "!tag:cycle:private", "!tag:cycle:poc"],
+                "projects": ["tag:type:sdk", "!tag:cycle:private", "!tag:cycle:poc", "!tag:cycle:partner"],
                 "git": {
                     "commit": true,
                     "tag": true,
@@ -180,7 +202,7 @@
             },
             "sdks-private": {
                 "projectsRelationship": "independent",
-                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:poc"],
+                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:poc", "!tag:cycle:partner"],
                 "git": {
                     "commit": true,
                     "tag": true,
@@ -202,7 +224,29 @@
             },
             "sdks-poc": {
                 "projectsRelationship": "independent",
-                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:private"],
+                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:private", "!tag:cycle:partner"],
+                "git": {
+                    "commit": false,
+                    "tag": false,
+                    "commitMessage": "chore: updated version [no ci]"
+                },
+                "version": {
+                    "conventionalCommits": true,
+                    "generatorOptions": {
+                        "fallbackCurrentVersionResolver": "disk"
+                    }
+                },
+                "changelog": {
+                    "projectChangelogs": {
+                        "file": true,
+                        "createRelease": "github"
+                    }
+                },
+                "releaseTagPattern": "{projectName}/{version}"
+            },
+            "sdks-partner": {
+                "projectsRelationship": "independent",
+                "projects": ["tag:type:sdk", "!tag:cycle:public", "!tag:cycle:private", "!tag:cycle:poc"],
                 "git": {
                     "commit": false,
                     "tag": false,

@@ -6,15 +6,17 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-// ResolvedConfiguration holds the configuration for this binding
+// ResolvedConfiguration is a pointer to the resolved configuration settings used by the application at runtime.
 var ResolvedConfiguration *Configuration
 
+// Configuration represents a primary structure for handling application configuration, extending sdkv2alphalib.App.
 type Configuration struct {
 	sdkv2alphalib.App
 
 	err error
 }
 
+// ResolveConfiguration resolves and merges configuration data from multiple sources into a unified structure.
 func (c *Configuration) ResolveConfiguration() {
 	_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
 	if err != nil {
@@ -51,10 +53,12 @@ func (c *Configuration) ResolveConfiguration() {
 	sdkv2alphalib.ResolvedConfiguration = &sdkConfig
 }
 
+// ValidateConfiguration checks the integrity and validity of the Configuration object and returns an error if invalid.
 func (c *Configuration) ValidateConfiguration() error {
 	return nil
 }
 
+// GetDefaultConfiguration returns the default configuration for the application, including app name, version, and environment.
 func (c *Configuration) GetDefaultConfiguration() interface{} {
 	return Configuration{
 		App: sdkv2alphalib.App{
