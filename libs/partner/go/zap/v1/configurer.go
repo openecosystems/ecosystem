@@ -7,13 +7,15 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// ResolvedConfiguration holds the configuration for this binding
+// ResolvedConfiguration holds the resolved runtime configuration for the application and is shared across components.
 var ResolvedConfiguration *Configuration
 
+// Configuration holds the settings for initializing a zap-based logging framework with custom configuration options.
 type Configuration struct {
 	Zap zap.Config `yaml:"zap,omitempty"`
 }
 
+// ResolveConfiguration resolves and merges the Binding's configuration by utilizing the default configuration as a base.
 func (b *Binding) ResolveConfiguration() {
 	var c Configuration
 	dc := b.GetDefaultConfiguration().(Configuration)
@@ -22,10 +24,12 @@ func (b *Binding) ResolveConfiguration() {
 	ResolvedConfiguration = &c
 }
 
+// ValidateConfiguration performs validation checks on the logger configuration and returns an error if invalid.
 func (b *Binding) ValidateConfiguration() error {
 	return nil
 }
 
+// GetDefaultConfiguration returns the default logging configuration for the Binding with predefined settings for Zap.
 func (b *Binding) GetDefaultConfiguration() interface{} {
 	level, _ := zap.ParseAtomicLevel("info")
 

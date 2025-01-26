@@ -16,6 +16,7 @@ type Carrier struct {
 	data map[string]string
 }
 
+// NewCarrier creates a new Carrier instance by copying data from the provided metadata.MD object.
 func NewCarrier(m *metadata.MD) *Carrier {
 	copied := make(map[string]string, m.Len())
 	for k, v := range *m {

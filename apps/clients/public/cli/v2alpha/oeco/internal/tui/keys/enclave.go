@@ -9,16 +9,19 @@ import (
 	"github.com/charmbracelet/log"
 )
 
+// EnclaveKeyMap defines a set of key bindings for interacting with an enclave through list, view, and edit actions.
 type EnclaveKeyMap struct {
 	List key.Binding
 	View key.Binding
 	Edit key.Binding
 }
 
+// Name returns the KeyBindingType associated with the EnclaveKeyMap, which is Enclave.
 func (k EnclaveKeyMap) Name() KeyBindingType {
 	return Enclave
 }
 
+// EnclaveKeys provides predefined key bindings for enclave actions such as list, view, and edit.
 var EnclaveKeys = EnclaveKeyMap{
 	List: key.NewBinding(
 		key.WithKeys("l"),
@@ -34,6 +37,7 @@ var EnclaveKeys = EnclaveKeyMap{
 	),
 }
 
+// EnclaveFullHelp returns a slice of key bindings for enclave operations, including list, view, and edit actions.
 func EnclaveFullHelp() []key.Binding {
 	return []key.Binding{
 		EnclaveKeys.List,
@@ -42,6 +46,10 @@ func EnclaveFullHelp() []key.Binding {
 	}
 }
 
+// rebindEnclaveKeys updates the key bindings for enclave-specific actions based on provided configuration.
+// Returns an error if a provided built-in key is unknown.
+//
+//nolint:unused
 func rebindEnclaveKeys(keys []config.KeyBinding) error {
 	for _, kb := range keys {
 		if kb.Builtin == "" {

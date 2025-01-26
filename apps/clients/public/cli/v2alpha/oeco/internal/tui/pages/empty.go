@@ -12,14 +12,17 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// EmptyModelConfig defines the configuration for an empty model, including basic metadata like the title of the page.
 type EmptyModelConfig struct {
 	Title string
 }
 
+// EmptyModel represents a UI page with minimal functionality, inheriting behavior and properties from BaseModel.
 type EmptyModel struct {
 	BaseModel[EmptyModelConfig]
 }
 
+// NewEmptyModel creates and initializes an EmptyModel as a Page using a given ProgramContext.
 func NewEmptyModel(ctx *context.ProgramContext) contract.Page {
 	m := &EmptyModel{}
 
@@ -40,6 +43,7 @@ func NewEmptyModel(ctx *context.ProgramContext) contract.Page {
 	return m
 }
 
+// Update processes a given message and updates the EmptyModel's state and commands, returning the updated model and a batch of commands.
 func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
@@ -54,8 +58,8 @@ func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
 	case tea.KeyMsg:
 		m.Ctx.Error = nil
 		_ = message
-		switch {
-		}
+		//switch {
+		//}
 	}
 
 	m.UpdateProgramContext(m.Ctx)
@@ -71,10 +75,12 @@ func (m EmptyModel) Update(msg tea.Msg) (EmptyModel, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
+// View renders the current state of the `EmptyModel` as a string, displaying "Empty Page" vertically aligned to the left.
 func (m EmptyModel) View() string {
 	return lipgloss.JoinVertical(lipgloss.Left, "Empty Page")
 }
 
+// GetPageSettings returns the page settings for an EmptyModel, including title, default status, key bindings, and type.
 func (m EmptyModel) GetPageSettings() contract.PageSettings {
 	return contract.PageSettings{
 		Title:         "Empty Page",
@@ -85,4 +91,5 @@ func (m EmptyModel) GetPageSettings() contract.PageSettings {
 	}
 }
 
+// UpdateProgramContext updates the ProgramContext for the EmptyModel, syncing any relevant data for rendering or behavior.
 func (m EmptyModel) UpdateProgramContext(_ *context.ProgramContext) {}

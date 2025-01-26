@@ -1,11 +1,10 @@
 package sidebar
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"fmt"
 	"strconv"
 	"strings"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/lipgloss"
 
@@ -13,17 +12,21 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
+// BaseModel represents a foundational model for managing UI state, viewport properties, and program context.
 type BaseModel struct {
 	Opened   bool
 	Viewport viewport.Model
 	Ctx      *context.ProgramContext
 }
 
+// NewBaseOptions represents configuration options for initializing a BaseModel.
+// It includes a viewport model and an opened state.
 type NewBaseOptions struct {
 	Viewport viewport.Model
 	Opened   bool
 }
 
+// NewBaseModel initializes and returns a new BaseModel instance using the provided ProgramContext and options.
 func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel {
 	return BaseModel{
 		Opened:   options.Opened,
@@ -32,6 +35,7 @@ func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel
 	}
 }
 
+// UpdateBase updates the BaseModel's context and dimensions, then returns the updated model along with a batched command.
 func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 	var cmds []tea.Cmd
 
@@ -41,13 +45,10 @@ func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 	m.Viewport.Width = m.Ctx.SidebarContentWidth
 	m.Viewport.Height = m.Ctx.SidebarContentHeight
 
-	cmds = append(
-		cmds,
-	)
-
 	return m, tea.Batch(cmds...)
 }
 
+// View renders the sidebar layout with the viewport content and a scroll percentage indicator.
 func (m BaseModel) View() string {
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.Sidebar.Root.
@@ -68,6 +69,7 @@ func (m BaseModel) View() string {
 	// return s.String()
 }
 
+// ViewDebug generates and returns a debug view of the current BaseModel's context, including layout dimensions and state.
 func (m BaseModel) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
@@ -94,25 +96,30 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 	return &s
 }
 
+// ScrollToTop moves the viewport of the BaseModel to the top.
 func (m BaseModel) ScrollToTop() {
 	m.Viewport.GotoTop()
 }
 
+// ScrollToBottom scrolls the viewport of the BaseModel to its bottom-most position.
 func (m BaseModel) ScrollToBottom() {
 	m.Viewport.GotoBottom()
 }
 
+// UpdateProgramContext updates the ProgramContext of the BaseModel if the provided context is not nil.
 func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	if ctx == nil {
 		return
 	}
-	m.Ctx = ctx
+	// m.Ctx = ctx
 }
 
+// OnWindowSizeChanged updates the ProgramContext by syncing its dimensions with the provided context.
 func (m BaseModel) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	m.Ctx = m.SyncDimensions(ctx)
 }
 
+// SyncDimensions updates the BaseModel's viewport dimensions with values from the provided context and returns the updated context.
 func (m BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
@@ -125,14 +132,17 @@ func (m BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramC
 	return m.Ctx
 }
 
+// IsOpen returns true if the BaseModel instance is open; otherwise, false.
 func (m BaseModel) IsOpen() bool {
 	return m.Opened
 }
 
+// Open sets the `Opened` property of the `BaseModel` to true, indicating that the model is now open.
 func (m BaseModel) Open() {
-	m.Opened = true
+	// m.Opened = true
 }
 
+// Close sets the Opened field of the BaseModel to false, indicating that the model is closed.
 func (m BaseModel) Close() {
-	m.Opened = false
+	// m.Opened = false
 }

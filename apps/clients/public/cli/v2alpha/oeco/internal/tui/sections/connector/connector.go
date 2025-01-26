@@ -1,28 +1,30 @@
 package connector
 
 import (
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/details_page"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/logs_page"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/requests_page"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
+	requestspage "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/requests_page"
 
 	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
+// Model represents the main state containing a base model, key bindings, and tasks for the application.
 type Model struct {
 	sections.BaseModel
 	keys  *keys.KeyMap
 	tasks map[string]context.Task
 }
 
+// NewModel initializes and returns a new instance of the Model with the provided SpecSettings.
 func NewModel(settings *specv2pb.SpecSettings) Model {
 	m := Model{
 		keys:  keys.Keys,
@@ -35,14 +37,14 @@ func NewModel(settings *specv2pb.SpecSettings) Model {
 		Section:  config.ConnectorSection,
 		Page:     config.ConnectorDetailsPage,
 		User:     "dimyjeannot",
-		StartTask: func(task context.Task) tea.Cmd {
+		StartTask: func(_ context.Task) tea.Cmd {
 			return m.Spinner.Tick
 		},
 	}
 
 	var pages []contract.Page
 	pages = append(pages, details_page.NewModel(ctx))
-	pages = append(pages, requests_page.NewModel(ctx))
+	pages = append(pages, requestspage.NewModel(ctx))
 	pages = append(pages, logs_page.NewModel(ctx))
 	m.Pages = pages
 	m.BaseModel = sections.NewBaseModel(
@@ -61,10 +63,12 @@ func NewModel(settings *specv2pb.SpecSettings) Model {
 	return m
 }
 
+// Init initializes the model by batching the BaseModel initialization and enabling the alternative screen mode.
 func (m Model) Init() tea.Cmd {
 	return tea.Batch(m.InitBase(), tea.EnterAltScreen)
 }
 
+// Update handles incoming messages, updates the model state, and returns the updated model and command batch.
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd       tea.Cmd
@@ -90,7 +94,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case details_page.Model:
 		m.Ctx.Page = config.ConnectorDetailsPage
 		m.CurrentPage, pageCmd = page.Update(msg)
-	case requests_page.Model:
+	case requestspage.Model:
 		m.Ctx.Page = config.ConnectorRequestsPage
 		m.CurrentPage, pageCmd = page.Update(msg)
 	case logs_page.Model:
@@ -111,6 +115,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
+// View renders the current application's view by combining the base layout and the current page's view content.
 func (m Model) View() string {
 	return m.ViewBase(m.CurrentPage.View())
 
@@ -119,6 +124,7 @@ func (m Model) View() string {
 	// return s.String()
 }
 
+// GetPages returns the collection of pages managed by the model.
 func (m Model) GetPages() []contract.Page {
 	return m.Pages
 }

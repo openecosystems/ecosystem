@@ -30,8 +30,6 @@ operational CRUD (Create, Read, Update and Delete) transactions.
 
 Contribution interface design allows for deep extensibility by introducing strategic injection points into any System
 
-
-
 ## Analytical Interface Design
 
 - Search, List, Analytics, Statistics, Get Connected Test Demographics, Top Daily Test

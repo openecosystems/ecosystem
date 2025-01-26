@@ -1,11 +1,6 @@
 package sections
 
 import (
-	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"strconv"
-	"strings"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -15,13 +10,18 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	"fmt"
+	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	"strconv"
+	"strings"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
+// BaseModel encapsulates the primary state and components for managing UI layout, navigation, and application context.
 type BaseModel struct {
 	Ctx           *context.ProgramContext
 	Pages         []contract.Page
@@ -35,6 +35,7 @@ type BaseModel struct {
 	PluralForm    string
 }
 
+// NewBaseOptions holds configuration for initializing a base model with singular/plural names, pages, and settings.
 type NewBaseOptions struct {
 	Singular      string
 	Plural        string
@@ -43,6 +44,7 @@ type NewBaseOptions struct {
 	Settings      *specv2pb.SpecSettings
 }
 
+// NewBaseModel creates and initializes a new BaseModel instance with the provided context and options.
 func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel {
 	var p []contract.Page
 	if options.Pages != nil {
@@ -67,11 +69,13 @@ func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel
 	return m
 }
 
-// initialize The initial tea.Msg in the ELM architecture
+// initialize represents a configuration initialization containing the application's main configuration.
 type initialize struct {
 	Config config.Config
 }
 
+// init initializes the application by parsing the configuration file and handling potential parsing errors.
+// Returns an `initialize` message containing the parsed configuration.
 func (m BaseModel) init() tea.Msg {
 	cfg, err := config.ParseConfig()
 	if err != nil {
@@ -82,11 +86,12 @@ func (m BaseModel) init() tea.Msg {
 	return initialize{Config: cfg}
 }
 
-// InitBase Returns a [tea.Cmd] that can be used in Updates to change state
+// InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
 func (m BaseModel) InitBase() tea.Cmd {
 	return tea.Batch(m.init)
 }
 
+// UpdateBase processes incoming messages to update the state of the BaseModel and returns the updated model and command.
 func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 	var (
 		cmd  tea.Cmd
@@ -143,6 +148,7 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
+// ViewBase generates and returns a string representation of the current UI, including tabs, content, error, and footer.
 func (m BaseModel) ViewBase(content string) string {
 	s := strings.Builder{}
 	s.WriteString(m.Tabs.View())
@@ -174,6 +180,7 @@ func (m BaseModel) ViewBase(content string) string {
 	return s.String()
 }
 
+// ViewDebug generates and returns a structured debug representation of the BaseModel's current state as a strings.Builder.
 func (m BaseModel) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
@@ -219,6 +226,7 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 	return &s
 }
 
+// UpdateProgramContext updates the BaseModel's context and propagates it to tabs, the current page, and the footer.
 func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.Ctx = ctx
 	m.Tabs.UpdateProgramContext(ctx)
@@ -228,6 +236,7 @@ func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.Footer.UpdateProgramContext(ctx)
 }
 
+// OnWindowSizeChanged updates context dimensions and page content size based on the new window size from the message.
 func (m BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
 	m.Ctx.ScreenWidth = msg.Width
 	m.Ctx.ScreenHeight = msg.Height
@@ -240,6 +249,7 @@ func (m BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
 	m.CurrentPage.OnWindowSizeChanged(m.Ctx)
 }
 
+// SetCurrentPage sets the current page of the BaseModel to the page at the given ID, updates the context and tabs, and returns the page and its ID.
 func (m BaseModel) SetCurrentPage(id int) (contract.Page, int) {
 	p := m.GetPageAt(id)
 	if p == nil {
@@ -253,6 +263,7 @@ func (m BaseModel) SetCurrentPage(id int) (contract.Page, int) {
 	return p, id
 }
 
+// GetCurrentPage returns the currently active page from the Pages slice based on the CurrentPageId. Returns nil if no valid page exists.
 func (m BaseModel) GetCurrentPage() contract.Page {
 	p := m.Pages
 	if len(p) == 0 || m.CurrentPageId >= len(p) {
@@ -261,6 +272,7 @@ func (m BaseModel) GetCurrentPage() contract.Page {
 	return p[m.CurrentPageId]
 }
 
+// GetPageAt retrieves the page at the specified index from the Pages slice. If the index is out of range, it returns nil.
 func (m BaseModel) GetPageAt(id int) contract.Page {
 	p := m.Pages
 	if len(p) <= id {
@@ -269,14 +281,17 @@ func (m BaseModel) GetPageAt(id int) contract.Page {
 	return p[id]
 }
 
+// GetPrevPageId calculates and returns the ID of the previous page in the Pages slice, wrapping around if necessary.
 func (m BaseModel) GetPrevPageId() int {
 	return (m.CurrentPageId - 1 + len(m.Pages)) % len(m.Pages)
 }
 
+// GetNextPageId calculates and returns the ID of the next page, cycling back to the start if the end is reached.
 func (m BaseModel) GetNextPageId() int {
 	return (m.CurrentPageId + 1) % len(m.Pages)
 }
 
+// GetDefaultPageId identifies and returns the index of the default page in the Pages slice. Defaults to 0 if none is found.
 func (m BaseModel) GetDefaultPageId() int {
 	for i, page := range m.Pages {
 		if page.GetPageSettings().IsDefault {

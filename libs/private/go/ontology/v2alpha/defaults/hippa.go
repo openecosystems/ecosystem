@@ -5,6 +5,7 @@ import (
 	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 )
 
+// Hippa represents a predefined variable containing a comprehensive configuration of SpecDataCatalog for managing HIPAA-related data.
 var Hippa = ontologyv2alphapb.SpecDataCatalog{
 	Audit: &ontologyv2alphapb.Audit{
 		AuditV2Alpha: &ontologyv2alphapb.AuditV2Alpha{

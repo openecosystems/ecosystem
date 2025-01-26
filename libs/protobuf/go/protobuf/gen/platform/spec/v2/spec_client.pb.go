@@ -247,8 +247,8 @@ func (x *Lighthouse) GetInterval() uint32 {
 }
 
 type SpecClientSettings struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Name          string                   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Description   string                   `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
 	Platform      *SpecClientPlatform      `protobuf:"bytes,3,opt,name=platform,proto3" json:"platform,omitempty"`
 	Context       *SpecClientContext       `protobuf:"bytes,4,opt,name=context,proto3" json:"context,omitempty"`
@@ -692,13 +692,13 @@ func (x *ConfigurationConfiguration) GetVersion() string {
 }
 
 type SpecSettings struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	Name    string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Version string `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
-	Description   string                `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Platform      *SpecSettingsPlatform `protobuf:"bytes,4,opt,name=platform,proto3" json:"platform,omitempty"`
-	Context       *SpecSettingsContext  `protobuf:"bytes,5,opt,name=context,proto3" json:"context,omitempty"`
-	Systems2      []*SpecSystem         `protobuf:"bytes,6,rep,name=systems2,proto3" json:"systems2,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Version       string                 `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Platform      *SpecSettingsPlatform  `protobuf:"bytes,4,opt,name=platform,proto3" json:"platform,omitempty"`
+	Context       *SpecSettingsContext   `protobuf:"bytes,5,opt,name=context,proto3" json:"context,omitempty"`
+	Systems2      []*SpecSystem          `protobuf:"bytes,6,rep,name=systems2,proto3" json:"systems2,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

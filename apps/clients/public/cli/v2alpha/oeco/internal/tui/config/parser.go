@@ -1,7 +1,7 @@
 package config
 
 import (
-	"libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 	"reflect"
 	"strings"
@@ -10,10 +10,12 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Parser is a structure that holds a reference to a FileSystem for interacting with the underlying filesystem.
 type Parser struct {
 	Filesystem *sdkv2alphalib.FileSystem
 }
 
+// getDefaultConfig returns a Config object initialized with the default configuration settings for the application.
 func (parser Parser) getDefaultConfig() Config {
 	return Config{
 		Sections: []SectionConfig{
@@ -45,7 +47,7 @@ func (parser Parser) getDefaultConfig() Config {
 			Context:      []KeyBinding{},
 			Organization: []KeyBinding{},
 			Connector:    []KeyBinding{},
-			Api:          []KeyBinding{},
+			API:          []KeyBinding{},
 			Ecosystem:    []KeyBinding{},
 		},
 		Theme: &ThemeConfig{
@@ -61,6 +63,7 @@ func (parser Parser) getDefaultConfig() Config {
 	}
 }
 
+// getDefaultConfigYamlContents serializes the default configuration into a YAML string format and returns it.
 func (parser Parser) getDefaultConfigYamlContents() string {
 	defaultConfig := parser.getDefaultConfig()
 	y, _ := yaml.Marshal(defaultConfig)
@@ -68,6 +71,7 @@ func (parser Parser) getDefaultConfigYamlContents() string {
 	return string(y)
 }
 
+// getDefaultConfigFileOrCreateIfMissing checks if the default config file exists, creates it with default content if missing.
 func (parser Parser) getDefaultConfigFileOrCreateIfMissing() (string, error) {
 	fs := *parser.Filesystem
 
@@ -94,6 +98,8 @@ func (parser Parser) getDefaultConfigFileOrCreateIfMissing() (string, error) {
 	return TuiConfigurationFile, nil
 }
 
+// readConfigFile reads and parses the configuration file from the specified path.
+// It returns the parsed Config object and an error if the operation fails.
 func (parser Parser) readConfigFile(path string) (Config, error) {
 	config := parser.getDefaultConfig()
 
@@ -111,6 +117,7 @@ func (parser Parser) readConfigFile(path string) (Config, error) {
 	return config, err
 }
 
+// initParser initializes and returns a new Parser object with configured filesystem and validation settings.
 func initParser() Parser {
 	validate = validator.New()
 
@@ -127,6 +134,8 @@ func initParser() Parser {
 	}
 }
 
+// ParseConfig reads and parses the application's configuration file or generates a default configuration if missing.
+// Returns a Config struct and an error if parsing fails or configuration is invalid.
 func ParseConfig() (Config, error) {
 	parser := initParser()
 

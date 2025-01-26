@@ -32,6 +32,7 @@ type parsingError struct {
 	err error
 }
 
+// Error returns a formatted error message indicating failure in parsing tui.yaml with the underlying error detail.
 func (e parsingError) Error() string {
 	return fmt.Sprintf("failed parsing tui.yaml: %v", e.err)
 }

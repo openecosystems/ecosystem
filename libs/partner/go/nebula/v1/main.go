@@ -8,35 +8,41 @@ import (
 	"net/http"
 	"sync"
 
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/sdk/v2alpha"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	nebulaConfig "github.com/slackhq/nebula/config"
 	"github.com/slackhq/nebula/service"
 	"gopkg.in/yaml.v2"
 )
 
-// Binding struct that holds binding specific fields
+// Binding represents a configuration and mesh socket service for the Nebula binding integration.
 type Binding struct {
 	MeshSocket *service.Service
 
 	configuration *Configuration
 }
 
+// Bound holds the reference to the active Binding instance once configured and initialized.
+// BindingName represents the identifier used for the binding instance in the application.
+// IsBound indicates whether the Binding instance has been successfully initialized and configured.
 var (
 	Bound       *Binding
 	BindingName = "NEBULA_BINDING"
 	IsBound     = false
 )
 
+// Name returns the predefined name of the Binding instance.
 func (b *Binding) Name() string {
 	return BindingName
 }
 
+// Validate performs validation of the binding within the given context and bindings. Returns an error if validation fails.
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	return nil
 }
 
+// Bind creates a binding by configuring a mesh socket, registers it, and ensures the binding is only initialized once.
 func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
@@ -63,22 +69,24 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 	return bindings
 }
 
+// GetBinding returns the current binding instance that is stored in the global Bound variable.
 func (b *Binding) GetBinding() interface{} {
 	return Bound
 }
 
+// Close releases resources associated with the Binding instance and ensures a clean shutdown of any active services.
 func (b *Binding) Close() error {
 	return nil
 }
 
-// GetSocket gets a direct socket for servers that need to host TCP level traffic on the mesh
+// GetSocket initializes a network listener on the given HTTP port if the binding is properly configured and bound.
+// Returns a pointer to the listener or an error if preconditions are not met or configuration fails.
 func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 	if IsBound {
-
 		configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)
 		if err != nil {
 			fmt.Printf("Error resolving Nebula configuration: %v\n", err)
-			fmt.Printf(err.Error())
+			fmt.Println(err.Error())
 		}
 
 		var cfg nebulaConfig.C
@@ -89,30 +97,27 @@ func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 		svc, err := service.New(&cfg)
 		if err != nil {
 			fmt.Printf("Error creating service: %v\n", err)
-			fmt.Printf(err.Error())
+			fmt.Println(err.Error())
 		}
 
-		fmt.Println(fmt.Sprintf(":%d", httpPort))
-		ln, err := svc.Listen("tcp", fmt.Sprintf(":%d", httpPort))
+		ln, err := svc.Listen("tcp", ":"+httpPort)
 		if err != nil {
 			fmt.Println("Error listening:", err)
 		}
 
 		return &ln, nil
-
 	}
 
 	return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("the Nebula binding is not properly configured or not set"))
 }
 
-// GetMeshHttpClient gets an HTTP Client that is mesh-accessible
-func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *http.Client {
+// GetMeshHTTPClient creates and returns an HTTP client configured optionally for Mesh or Internet-based calls depending on config.
+func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, url string) *http.Client {
 	httpClient := http.DefaultClient
 
 	go func() {
 		// TODO: Check the service in the Global Settings to see if this call is a Mesh or Internet based call
 		if config != nil && config.Platform != nil && config.Platform.Pki != nil {
-
 			h := make(map[string][]string)
 			for k, e := range config.Platform.StaticHostMap {
 				h[k] = e.Map
@@ -159,7 +164,7 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 			configBytes, err := yaml.Marshal(nebulaC)
 			if err != nil {
 				fmt.Printf("Error resolving Nebula configuration: %v\n", err)
-				fmt.Printf(err.Error())
+				fmt.Println(err.Error())
 			}
 
 			var cfg nebulaConfig.C
@@ -170,7 +175,7 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 			svc, err := service.New(&cfg)
 			if err != nil {
 				fmt.Printf("Error creating service: %v\n", err)
-				fmt.Printf(err.Error())
+				fmt.Println(err.Error())
 			}
 			// defer svc.Close()
 
@@ -178,7 +183,7 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 
 			httpClient = &http.Client{
 				Transport: &http.Transport{
-					DialContext: func(ctx context.Context, network string, addr string) (net.Conn, error) {
+					DialContext: func(_ context.Context, _ string, _ string) (net.Conn, error) {
 						return svc.Dial("tcp", url)
 					},
 				},
@@ -189,13 +194,14 @@ func (b *Binding) GetMeshHttpClient(config *specv2pb.SpecSettings, url string) *
 	return httpClient
 }
 
+// ConfigureMeshSocket initializes and configures the Nebula mesh socket, returning the created service or an error.
 func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 	// go func() {
 	// if IsBound {
 	configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)
 	if err != nil {
 		fmt.Printf("Error resolving Nebula configuration: %v\n", err)
-		fmt.Printf(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	var cfg nebulaConfig.C
@@ -207,7 +213,7 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 	svc, err := service.New(&cfg)
 	if err != nil {
 		fmt.Printf("Error creating service: %v\n", err)
-		fmt.Printf(err.Error())
+		fmt.Println(err.Error())
 		return nil, errors.New("the Nebula binding is not properly configured or not set")
 	}
 

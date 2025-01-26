@@ -1,19 +1,18 @@
 package configurationdefaultsv2alphalib
 
 import (
-	"libs/poc/go/protobuf/gen/platform/reference/v2alpha"
-	"libs/private/go/protobuf/gen/platform/audit/v2alpha"
-	v2alpha1 "libs/private/go/protobuf/gen/platform/edge/v2alpha"
-	v2alpha3 "libs/private/go/protobuf/gen/platform/event/v2alpha"
-	"libs/public/go/protobuf/gen/platform/communication/v1alpha"
+	referencev2alphapb "libs/poc/go/protobuf/gen/platform/reference/v2alpha"
+	auditv2alphapb "libs/private/go/protobuf/gen/platform/audit/v2alpha"
+	edgev2alphapb "libs/private/go/protobuf/gen/platform/edge/v2alpha"
+	communicationv1alphapb "libs/public/go/protobuf/gen/platform/communication/v1alpha"
 	v1beta "libs/public/go/protobuf/gen/platform/communication/v1beta"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	"libs/public/go/protobuf/gen/platform/event/v2alpha"
-	v2alpha "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	"libs/public/go/protobuf/gen/platform/system/v2alpha"
+	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
+	systemv2alphapb "libs/public/go/protobuf/gen/platform/system/v2alpha"
 )
 
+// DefaultEnterpriseConfiguration defines the default enterprise platform configuration with multiple sub-configurations.
 var DefaultEnterpriseConfiguration = configurationv2alphapb.SpecPlatformConfiguration{
 	PreferenceCenterConfigurationV1Beta:  &v1beta.PreferenceCenterConfiguration{},
 	PreferenceCenterConfigurationV1Alpha: &communicationv1alphapb.PreferenceCenterConfiguration{},
@@ -21,17 +20,11 @@ var DefaultEnterpriseConfiguration = configurationv2alphapb.SpecPlatformConfigur
 		Id: "",
 	},
 	EncryptionConfigurationV2Alpha: &cryptographyv2alphapb.EncryptionConfiguration{},
-	EdgeRouterConfigurationV2Alpha: &v2alpha1.EdgeRouterConfiguration{
+	EdgeRouterConfigurationV2Alpha: &edgev2alphapb.EdgeRouterConfiguration{
 		EdgeRouterConfig: "",
 	},
-	EventMultiplexerConfigurationV2Alpha: &v2alpha3.EventMultiplexerConfiguration{},
-	EventSubscriptionConfigurationV2Alpha: &eventv2alphapb.EventSubscriptionConfiguration{
-		ConfigOne:   "",
-		ConfigTwo:   false,
-		ConfigThree: 0,
-	},
-	IamApiKeyConfigurationV2Alpha:         &v2alpha.IamApiKeyConfiguration{},
-	IamAuthenticationConfigurationV2Alpha: &v2alpha.IamAuthenticationConfiguration{},
+	IamApiKeyConfigurationV2Alpha:         &iamv2alphapb.IamApiKeyConfiguration{},
+	IamAuthenticationConfigurationV2Alpha: &iamv2alphapb.IamAuthenticationConfiguration{},
 	ReferenceConfigurationV2Alpha:         &referencev2alphapb.ReferenceConfiguration{},
 	SystemConfigurationV2Alpha: &systemv2alphapb.SystemConfiguration{
 		PublicSystems: &systemv2alphapb.PublicSystems{

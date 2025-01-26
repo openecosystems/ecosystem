@@ -10,20 +10,24 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
 
 	"connectrpc.com/vanguard"
 
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
-	"libs/public/go/sdk/v2alpha"
 )
 
+// quit is a channel used to handle OS signals for graceful shutdown of the server.
 var quit = make(chan os.Signal, 1)
 
+// Server represents a configurable HTTP/2 server with bindings and service handlers.
 type Server struct {
 	Bindings          *sdkv2alphalib.Bindings
-	ConnectHttpServer *http2.Server
-	HttpServerHandler *http.ServeMux
+	ConnectHTTPServer *http2.Server
+	HTTPServerHandler *http.ServeMux
 	Bounds            []sdkv2alphalib.Binding
 	ServicePath       string
 	ServiceHandler    *vanguard.Transcoder
@@ -33,6 +37,7 @@ type Server struct {
 	err     error
 }
 
+// NewServer initializes and returns a new Server instance with specified context, bindings, path, handler, and options.
 func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
 	c := Configuration{}
 	c.ResolveConfiguration()
@@ -45,16 +50,16 @@ func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string,
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	httpServer := &http2.Server{
+		IdleTimeout:      15 * time.Second,
+		WriteByteTimeout: 10 * time.Second,
+		ReadIdleTimeout:  5 * time.Second,
 		// MaxConcurrentStreams:         0,
 		// PermitProhibitedCipherSuites: false,
 		// MaxUploadBufferPerConnection: 0,
 		// MaxUploadBufferPerStream:     0,
 	}
 
-	options, err := newServerOptions(path, opts)
-	if err != nil {
-		fmt.Println("new server options error: ", err)
-	}
+	options, _ := newServerOptions(path, opts)
 
 	s := vanguard.NewService(path, *handler)
 	transcoder, err2 := vanguard.NewTranscoder([]*vanguard.Service{s})
@@ -64,7 +69,7 @@ func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string,
 
 	return &Server{
 		Bindings:          bindings,
-		ConnectHttpServer: httpServer,
+		ConnectHTTPServer: httpServer,
 		Bounds:            bounds,
 		ServicePath:       path,
 		ServiceHandler:    transcoder,
@@ -74,6 +79,7 @@ func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string,
 	}
 }
 
+// NewMultiplexedServer creates and initializes a new multiplexed server with bindings, services, and server options.
 func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, services []*vanguard.Service, opts ...ServerOption) *Server {
 	c := Configuration{}
 	c.ResolveConfiguration()
@@ -85,12 +91,13 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, s
 
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
-	httpServer := &http2.Server{}
-
-	options, err := newServerOptions("", opts)
-	if err != nil {
-		fmt.Println(err)
+	httpServer := &http2.Server{
+		IdleTimeout:      15 * time.Second,
+		WriteByteTimeout: 10 * time.Second,
+		ReadIdleTimeout:  5 * time.Second,
 	}
+
+	options, _ := newServerOptions("", opts)
 
 	transcoder, err2 := vanguard.NewTranscoder(services)
 	if err2 != nil {
@@ -99,7 +106,7 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, s
 
 	return &Server{
 		Bindings:          bindings,
-		ConnectHttpServer: httpServer,
+		ConnectHTTPServer: httpServer,
 		Bounds:            bounds,
 		ServicePath:       "/",
 		ServiceHandler:    transcoder,
@@ -109,6 +116,8 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, s
 	}
 }
 
+// NewRawServer initializes and returns a new Server instance with provided bindings, path, handler, and options.
+// It resolves and validates configuration, registers bindings, and sets up the HTTP/2 server.
 func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
 	c := Configuration{}
 	c.ResolveConfiguration()
@@ -121,20 +130,20 @@ func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path stri
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	httpServer := &http2.Server{
+		IdleTimeout:      15 * time.Second,
+		WriteByteTimeout: 10 * time.Second,
+		ReadIdleTimeout:  5 * time.Second,
 		// MaxConcurrentStreams:         0,
 		// PermitProhibitedCipherSuites: false,
 		// MaxUploadBufferPerConnection: 0,
 		// MaxUploadBufferPerStream:     0,
 	}
 
-	options, err := newServerOptions(path, opts)
-	if err != nil {
-		fmt.Println(err)
-	}
+	options, _ := newServerOptions(path, opts)
 
 	return &Server{
 		Bindings:          bindings,
-		ConnectHttpServer: httpServer,
+		ConnectHTTPServer: httpServer,
 		Bounds:            bounds,
 		ServicePath:       path,
 		RawServiceHandler: handler,
@@ -144,6 +153,7 @@ func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path stri
 	}
 }
 
+// ListenAndServe starts the server and listens for incoming HTTP requests on the configured address and port.
 func (server *Server) ListenAndServe() {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -152,8 +162,10 @@ func (server *Server) ListenAndServe() {
 	server.ListenAndServeWithCtx(ctx)
 }
 
+// ListenAndServeWithCtx starts the server with a provided context, handling HTTP and specialized bindings listeners.
+// It supports graceful shutdown management upon receiving termination signals.
 func (server *Server) ListenAndServeWithCtx(_ context.Context) {
-	httpServerErr := server.ListenAndServeMultiplexedHttp()
+	httpServerErr := server.ListenAndServeMultiplexedHTTP()
 
 	var specListenableErr chan sdkv2alphalib.SpecListenableErr
 	if server.Bindings.RegisteredListenableChannels != nil {
@@ -162,7 +174,7 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 		}()
 	}
 
-	fmt.Println("Server started successfully. HTTP listening on " + ResolvedConfiguration.Http.Port)
+	fmt.Println("Server started successfully. HTTP listening on " + ResolvedConfiguration.HTTP.Port)
 
 	/*
 	 * Graceful Shutdown Management
@@ -184,26 +196,30 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 		defer cancel()
 
 		sdkv2alphalib.ShutdownBindings(server.Bindings)
-
 	}
 }
 
+// ListenAndServeWithProvidedSocket starts serving HTTP requests using the provided net.Listener and returns an error channel.
 func (server *Server) ListenAndServeWithProvidedSocket(ln net.Listener) (httpServerErr chan error) {
 	return server.listenAndServe(ln)
 }
 
-func (server *Server) ListenAndServeMultiplexedHttp() (httpServerErr chan error) {
+// ListenAndServeMultiplexedHTTP starts an HTTP server supporting HTTP/2 without TLS over a multiplexed handler function.
+// It returns a channel for listening to server errors during execution.
+func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error) {
 	return server.listenAndServe(nil)
 }
 
+// listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
+// It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	httpPort, _ := strconv.Atoi(ResolvedConfiguration.Http.Port)
+	httpPort, _ := strconv.Atoi(ResolvedConfiguration.HTTP.Port)
 	mux := http.NewServeMux()
-	if server.HttpServerHandler != nil {
-		mux = server.HttpServerHandler
+	if server.HTTPServerHandler != nil {
+		mux = server.HTTPServerHandler
 	}
 
-	server.HttpServerHandler = mux
+	server.HTTPServerHandler = mux
 
 	if server.RawServiceHandler != nil {
 		mux.Handle(server.ServicePath, *server.RawServiceHandler)
@@ -211,37 +227,37 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 		mux.Handle("/", server.ServiceHandler)
 	}
 
+	httpServer := &http.Server{
+		Addr: fmt.Sprintf("0.0.0.0:%d", httpPort),
+		// Use h2c so we can serve HTTP/2 without TLS.
+		Handler:      h2c.NewHandler(edgeRouter(mux), server.ConnectHTTPServer),
+		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
+		WriteTimeout: 10 * time.Second, // Time allowed to write the response
+		IdleTimeout:  15 * time.Second, // Time for keep-alive connections
+	}
+
 	_httpServerErr := make(chan error)
 	go func() {
 		if ln != nil {
-			_httpServerErr <- http.Serve(
-				ln,
-				// Use h2c so we can serve HTTP/2 without TLS.
-				h2c.NewHandler(edgeRouter(mux), server.ConnectHttpServer),
-			)
+			_httpServerErr <- httpServer.Serve(ln)
 		} else {
-			_httpServerErr <- http.ListenAndServe(
-				fmt.Sprintf("0.0.0.0:%d", httpPort),
-				// Use h2c so we can serve HTTP/2 without TLS.
-				h2c.NewHandler(edgeRouter(mux), server.ConnectHttpServer),
-			)
+			_httpServerErr <- httpServer.ListenAndServe()
 		}
 	}()
 
 	return _httpServerErr
 }
 
+// ListenAndServeSpecListenable starts listening on all registered SpecListenable channels and returns a channel for errors.
 func (server *Server) ListenAndServeSpecListenable() chan sdkv2alphalib.SpecListenableErr {
 	listeners := server.Bindings.RegisteredListenableChannels
 	listenerErr := make(chan sdkv2alphalib.SpecListenableErr, len(listeners))
 
 	for key, listener := range listeners {
-
 		ctx := context.Background()
 		go listener.Listen(ctx, listenerErr)
 
 		fmt.Println("Registered Listenable: " + key)
-
 	}
 	return listenerErr
 }

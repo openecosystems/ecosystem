@@ -6,6 +6,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// RenderLabels generates a styled, multi-line string of labels formatted to fit within a given sidebar width.
+// It arranges the labels horizontally until the width limit is reached, then wraps them to a new line.
+// Labels are styled using the provided pillStyle and their background is set based on the color property of each label.
 func RenderLabels(sidebarWidth int, labels []data.Label, pillStyle lipgloss.Style) string {
 	width := sidebarWidth
 

@@ -16,6 +16,7 @@
     "@bufbuild/protobuf": "^2.2.3",
     "@connectrpc/connect": "^2.0.1",
     "@connectrpc/connect-web": "^2.0.1",
+    "@eslint/eslintrc": "^3.2.0",
     "@nats-io/nats-core": "3.0.0-48",
     "@nats-io/transport-node": "3.0.0-33",
     "@nx/devkit": "20.3.1",

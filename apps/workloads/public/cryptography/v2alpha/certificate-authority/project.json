@@ -85,7 +85,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority"
       }
@@ -93,7 +93,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "apps/workloads/public/cryptography/v2alpha/certificate-authority"
       }

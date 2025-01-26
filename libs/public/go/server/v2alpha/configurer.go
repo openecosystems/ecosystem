@@ -7,25 +7,29 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-// ResolvedConfiguration holds the configuration for this binding
+// ResolvedConfiguration stores the resolved and finalized configuration for the application.
 var ResolvedConfiguration *Configuration
 
+// Grpc represents the configuration for a gRPC server, including its port.
 type Grpc struct {
 	Port string `yaml:"port,omitempty"`
 }
 
-type Http struct {
+// HTTP represents the configuration for the HTTP server, including its port.
+type HTTP struct {
 	Port string `yaml:"port,omitempty"`
 }
 
+// Configuration represents a structure for application configuration settings, including app, GRPC, and HTTP details.
 type Configuration struct {
 	App  sdkv2alphalib.App `yaml:"app,omitempty"`
 	Grpc Grpc              `yaml:"grpc,omitempty"`
-	Http Http              `yaml:"http,omitempty"`
+	HTTP HTTP              `yaml:"http,omitempty"`
 
 	err error
 }
 
+// ResolveConfiguration merges and resolves the environment and default configuration settings into a unified structure.
 func (c *Configuration) ResolveConfiguration() {
 	_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
 	if err != nil {
@@ -62,10 +66,12 @@ func (c *Configuration) ResolveConfiguration() {
 	sdkv2alphalib.ResolvedConfiguration = &sdkConfig
 }
 
+// ValidateConfiguration checks if the configuration instance is valid and returns an error if validation fails.
 func (c *Configuration) ValidateConfiguration() error {
 	return nil
 }
 
+// GetDefaultConfiguration returns a default `Configuration` instance with preset values for App, Grpc, and Http fields.
 func (c *Configuration) GetDefaultConfiguration() interface{} {
 	return Configuration{
 		App: sdkv2alphalib.App{
@@ -77,7 +83,7 @@ func (c *Configuration) GetDefaultConfiguration() interface{} {
 		Grpc: Grpc{
 			Port: "6510",
 		},
-		Http: Http{
+		HTTP: HTTP{
 			Port: "6410",
 		},
 	}

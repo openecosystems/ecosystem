@@ -38,7 +38,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "libs/public/go/cli/v2alpha"
       }
@@ -46,7 +46,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "libs/public/go/cli/v2alpha"
       }

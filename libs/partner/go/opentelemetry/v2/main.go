@@ -7,6 +7,8 @@ import (
 	"sync"
 	"time"
 
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
@@ -19,7 +21,6 @@ import (
 	"go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/trace"
 	tracer "go.opentelemetry.io/otel/trace"
-	"libs/public/go/sdk/v2alpha"
 )
 
 // Binding struct that holds binding specific fields
@@ -36,20 +37,27 @@ type Binding struct {
 }
 
 var (
-	Bound       *Binding
+
+	// Bound is a globally accessible pointer to the Binding instance, used for managing OpenTelemetry providers and resources.
+	Bound *Binding
+
+	// BindingName is a constant that defines the identifier name for the OpenTelemetry binding instance.
 	BindingName = "OPEN_TELEMETRY_BINDING"
 )
 
+// Name returns the identifier name for the Binding instance.
 func (b *Binding) Name() string {
 	return BindingName
 }
 
+// Validate checks the given bindings and ensures they meet the necessary requirements for the binding to function properly.
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	// Verify any requirements
 
 	return nil
 }
 
+// Bind initializes and registers the binding to the provided bindings map. It sets up OpenTelemetry providers if enabled.
 func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
@@ -108,10 +116,12 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 	return bindings
 }
 
+// GetBinding returns the globally bound Binding instance.
 func (b *Binding) GetBinding() interface{} {
 	return Bound
 }
 
+// Close shuts down OpenTelemetry providers if enabled and releases associated resources. Returns an error on failure.
 func (b *Binding) Close() error {
 	var err error
 
@@ -134,7 +144,7 @@ func (b *Binding) Close() error {
 	if ResolvedConfiguration.Opentelemetry.LoggerProviderEnabled {
 		l := b.LoggerProvider.Shutdown(context.Background())
 		if l != nil {
-			err = errors.Join(err, l)
+			_ = errors.Join(err, l)
 		}
 		fmt.Println("Closing the Open telemetry LoggerProvider Binding")
 	}

@@ -3,17 +3,18 @@ package main
 import (
 	"context"
 	"fmt"
-	"go.uber.org/zap"
-	"libs/partner/go/nats/v2"
-	"libs/partner/go/zap/v1"
-	"libs/private/go/configuration/v2alpha"
-	"libs/private/go/configuration/v2alpha/defaults"
-	"libs/private/go/ontology/v2alpha/defaults"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
+	natsnodev2 "libs/partner/go/nats/v2"
+	zaploggerv1 "libs/partner/go/zap/v1"
+	configurationv2alphalib "libs/private/go/configuration/v2alpha"
+	configurationdefaultsv2alphalib "libs/private/go/configuration/v2alpha/defaults"
+	ontologydefaultsv2alphalib "libs/private/go/ontology/v2alpha/defaults"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	configurationv2alphapbmodel "libs/public/go/model/gen/platform/configuration/v2alpha"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	"go.uber.org/zap"
 
 	"github.com/nats-io/nats.go/jetstream"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -21,8 +22,10 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+// CreateConfigurationListener is a struct that listens for create configuration events and processes them.
 type CreateConfigurationListener struct{}
 
+// GetConfiguration returns the ListenerConfiguration for CreateConfigurationListener, defining subject, queue, entity, and stream settings.
 func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
 	entity := &configurationv2alphapbmodel.ConfigurationSpecEntity{}
 	streamType := natsnodev2.InboundStream{}
@@ -44,10 +47,12 @@ func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerCon
 	}
 }
 
+// Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
 	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
+// Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
 func (l *CreateConfigurationListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
 	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl

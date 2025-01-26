@@ -10,12 +10,16 @@ import (
 	"github.com/charmbracelet/log"
 )
 
+// ApproxDaysInYear represents the approximate number of days in a year.
+// ApproxDaysInMonth represents the approximate number of days in a month.
+// DaysInWeek represents the number of days in a week.
 const (
 	ApproxDaysInYear  = 365
 	ApproxDaysInMonth = 28
 	DaysInWeek        = 7
 )
 
+// Max returns the greater of two integer values a and b.
 func Max(a, b int) int {
 	if a > b {
 		return a
@@ -23,6 +27,7 @@ func Max(a, b int) int {
 	return b
 }
 
+// Min returns the smaller of the two integer values a and b.
 func Min(a, b int) int {
 	if a < b {
 		return a
@@ -30,6 +35,7 @@ func Min(a, b int) int {
 	return b
 }
 
+// TimeElapsed returns a human-readable string representing the elapsed time from the given time to the current time.
 func TimeElapsed(then time.Time) string {
 	var parts []string
 	var text string
@@ -79,14 +85,19 @@ func TimeElapsed(then time.Time) string {
 	return parts[0] + text
 }
 
+// BoolPtr returns a pointer to the given boolean value.
 func BoolPtr(b bool) *bool { return &b }
 
+// StringPtr takes a string and returns a pointer to that string.
 func StringPtr(s string) *string { return &s }
 
+// UintPtr takes a uint value and returns a pointer to that value.
 func UintPtr(u uint) *uint { return &u }
 
+// IntPtr takes an integer value and returns a pointer to that integer.
 func IntPtr(u int) *int { return &u }
 
+// ShortNumber formats an integer as a shorter string representation, using "k" for thousands and "m" for millions.
 func ShortNumber(n int) string {
 	if n < 1000 {
 		return strconv.Itoa(n)
@@ -99,6 +110,7 @@ func ShortNumber(n int) string {
 	return strconv.Itoa(n/1000000) + "m"
 }
 
+// ShowError is a function that logs a fatal error message with detailed context such as timestamp and caller information.
 var ShowError = func(err error) {
 	styles := log.DefaultStyles()
 	styles.Key = lipgloss.NewStyle().

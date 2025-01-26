@@ -4,32 +4,35 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	"libs/public/go/sdk/gen/configuration/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	configurationv2alphapbsdk "libs/public/go/sdk/gen/configuration/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
 
 	"connectrpc.com/connect"
 
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/spf13/cobra"
 )
 
+// deleteConfigurationRequest holds the request identifier for the delete configuration action.
+// deleteConfigurationFieldMask specifies the fields to be included in the delete configuration operation.
+// deleteConfigurationValidateOnly indicates if the operation should only validate the request without executing it.
 var (
 	deleteConfigurationRequest      string
 	deleteConfigurationFieldMask    string
 	deleteConfigurationValidateOnly bool
 )
 
+// DeleteConfigurationV2AlphaCmd is a Cobra command for deleting a configuration in the V2 Alpha API service.
 var DeleteConfigurationV2AlphaCmd = &cobra.Command{
 	Use:   "deleteConfiguration",
 	Short: ``,
 	Long: `
 `,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(cmd *cobra.Command, _ []string) {
 		log.Debug("Calling deleteConfiguration configuration")
 
 		_request, err := cmd.Flags().GetString("request")
@@ -43,7 +46,7 @@ var DeleteConfigurationV2AlphaCmd = &cobra.Command{
 
 		_r := configurationv2alphapb.DeleteConfigurationRequest{}
 		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -65,6 +68,7 @@ var DeleteConfigurationV2AlphaCmd = &cobra.Command{
 	},
 }
 
+// init initializes the persistent flags for the DeleteConfigurationV2AlphaCmd, including request, validate-only, and field-mask options.
 func init() {
 	DeleteConfigurationV2AlphaCmd.PersistentFlags().StringVarP(&deleteConfigurationRequest, "request", "r", "{}", "Request for api call")
 	DeleteConfigurationV2AlphaCmd.PersistentFlags().BoolVar(&deleteConfigurationValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")

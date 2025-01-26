@@ -6,17 +6,19 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
-	"libs/public/go/sdk/v2alpha"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
+// Infrastructure represents the core structure for managing configuration, bindings, and their associated instances.
 type Infrastructure struct {
 	Config   *Configuration
 	Bindings *sdkv2alphalib.Bindings
 	Bounds   []sdkv2alphalib.Binding
 }
 
+// NewInfrastructure initializes a new Infrastructure instance with specified bindings and resolved configuration.
 func NewInfrastructure(bounds []sdkv2alphalib.Binding) *Infrastructure {
 	ctx := context.Background()
 
@@ -34,10 +36,12 @@ func NewInfrastructure(bounds []sdkv2alphalib.Binding) *Infrastructure {
 	}
 }
 
+// Run executes a Pulumi program using the provided RunFunc and optional runtime configuration options.
 func (infrastructure *Infrastructure) Run(runFunc pulumi.RunFunc, opts ...pulumi.RunOption) {
 	pulumi.Run(runFunc, opts...)
 }
 
+// ShortenString truncates the input string `s` to the specified `limit` while ensuring it remains a valid UTF-8 string.
 func ShortenString(s string, limit int) string {
 	if len(s) < limit {
 		return s
@@ -49,6 +53,7 @@ func ShortenString(s string, limit int) string {
 	return s[:limit+1]
 }
 
+// WriteIndentedMultilineText takes a multiline string and returns it with each line prefixed by an 8-space indentation.
 func WriteIndentedMultilineText(text string) string {
 	indent := "        "
 	lines := strings.Split(text, "\n")

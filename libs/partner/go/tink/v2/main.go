@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"sync"
 
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"github.com/tink-crypto/tink-go-gcpkms/v2/integration/gcpkms"
 	"github.com/tink-crypto/tink-go/v2/core/registry"
 	"github.com/tink-crypto/tink-go/v2/tink"
-	"libs/public/go/sdk/v2alpha"
 )
 
 // Binding struct that holds binding specific fields
@@ -19,21 +20,26 @@ type Binding struct {
 	configuration *Configuration
 }
 
+// Bound is a global reference to the Binding instance used for cryptographic operations.
+// BindingName is the identifier for the Tink binding.
 var (
 	Bound       *Binding
 	BindingName = "TINK_BINDING"
 )
 
+// Name returns the name identifier of the binding, defined as the constant `BindingName`.
 func (b *Binding) Name() string {
 	return BindingName
 }
 
+// Validate checks the validity of the current binding's setup and ensures any required logging conditions are met.
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	// Verify any log requirements
 
 	return nil
 }
 
+// Bind initializes and registers the Binding with provided configurations and returns the updated Bindings instance.
 func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
@@ -67,10 +73,12 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 	return bindings
 }
 
+// GetBinding retrieves the currently initialized Binding instance stored in the global Bound variable.
 func (b *Binding) GetBinding() interface{} {
 	return Bound
 }
 
+// Close releases any resources held by the Binding and performs necessary cleanup operations.
 func (b *Binding) Close() error {
 	fmt.Println("Closing the Tink Binding")
 	return nil

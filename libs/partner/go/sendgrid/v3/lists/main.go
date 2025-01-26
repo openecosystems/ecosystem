@@ -8,16 +8,21 @@ import (
 	"os"
 	"sync"
 
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"github.com/apex/log"
 	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"
-	"libs/public/go/sdk/v2alpha"
 )
 
-// Binding struct that holds binding specific fields
+// Binding represents a structure containing a client for interacting with SendGrid services.
 type Binding struct {
 	Client *ClientWithResponses
 }
 
+// Bound is a singleton instance of Binding used to manage connection to the SendGrid API.
+// BindingName is the constant name used to identify the Binding type for SendGrid lists.
+// SendGridAPIEndpoint is the base URL for SendGrid API requests.
+// SendGridAPIKey retrieves the SendGrid API key from the environment variable "SENDGRID_API_KEY".
 var (
 	Bound               *Binding
 	BindingName         = "SEND_GRID_LISTS_BINDING"
@@ -25,11 +30,13 @@ var (
 	SendGridAPIKey      = os.Getenv("SENDGRID_API_KEY")
 )
 
+// Name returns the name of the binding as a string identifier.
 func (b *Binding) Name() string {
 	return BindingName
 }
 
-func (b *Binding) Validate(_ context.Context, c *sdkv2alphalib.Configuration, _ *sdkv2alphalib.Bindings) error {
+// Validate checks if the required SendGrid API key is set in the environment variables. Returns an error if not found.
+func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	if SendGridAPIKey == "" {
 		return errors.New("SENDGRID_API_KEY environment variable is required")
 	}
@@ -37,7 +44,8 @@ func (b *Binding) Validate(_ context.Context, c *sdkv2alphalib.Configuration, _ 
 	return nil
 }
 
-func (b *Binding) Bind(ctx context.Context, c *sdkv2alphalib.Configuration, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
+// Bind initializes and registers the SendGrid API binding if not already bound, or uses the existing binding instance.
+func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
 		once.Do(
@@ -54,11 +62,6 @@ func (b *Binding) Bind(ctx context.Context, c *sdkv2alphalib.Configuration, bind
 					log.Fatal(err.Error())
 				}
 
-				if client == nil {
-					log.Fatal("Could not connect to the Send Grid Client ")
-					panic(err)
-				}
-
 				Bound = &Binding{
 					Client: client,
 				}
@@ -72,10 +75,12 @@ func (b *Binding) Bind(ctx context.Context, c *sdkv2alphalib.Configuration, bind
 	return bindings
 }
 
+// GetBinding returns the currently bound instance of the Binding or nil if not initialized.
 func (b *Binding) GetBinding() interface{} {
 	return Bound
 }
 
+// Close gracefully shuts down the Sendgrid List API Binding and releases any associated resources.
 func (b *Binding) Close() error {
 	fmt.Println("Closing Sendgrid List API Binding")
 	return nil
