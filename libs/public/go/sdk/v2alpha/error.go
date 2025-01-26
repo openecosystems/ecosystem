@@ -119,7 +119,7 @@ func (se *Error) Error() string {
 
 	if len(se.internalApiErr) > 0 {
 		for _, e := range se.internalApiErr {
-			buffer.WriteString(fmt.Sprintf("server: %s", e.Error()))
+			buffer.WriteString("server: " + e.Error())
 		}
 	}
 

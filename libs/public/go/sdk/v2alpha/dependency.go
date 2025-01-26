@@ -1,6 +1,7 @@
 package sdkv2alphalib
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -9,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
@@ -102,14 +104,20 @@ func (provider *GitHubDependencyProvider) GetDependency() (*Dependency, error) {
 	}
 
 	// Download the file
-	resp, err := http.Get("https://" + GithubRegistryBasePath + "/" + provider.settings.Name + DependencyFileExt)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	url := "https://" + GithubRegistryBasePath + "/" + provider.settings.Name + DependencyFileExt
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// Use the default HTTP client to execute the request
+	client := http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download: %w", err)
 	}
-	defer func(Body io.ReadCloser) {
-		_ = Body.Close()
-	}(resp.Body)
-
 	defer resp.Body.Close() //nolint:errcheck
 
 	data, err := io.ReadAll(resp.Body)

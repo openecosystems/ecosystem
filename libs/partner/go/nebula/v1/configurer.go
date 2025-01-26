@@ -1,7 +1,7 @@
 package nebulav1
 
 import (
-	"fmt"
+	"errors"
 
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
@@ -151,7 +151,7 @@ func (b *Binding) ResolveConfiguration() {
 func (b *Binding) ValidateConfiguration() error {
 	var errs []error
 	if b.configuration == nil || b.configuration.Nebula.Pki.Ca == "" {
-		_ = append(errs, fmt.Errorf("Nebula.Pki.Ca is required"))
+		_ = append(errs, errors.New("Nebula.Pki.Ca is required"))
 	}
 	// Host: nil,
 	//  Pki: Pki{

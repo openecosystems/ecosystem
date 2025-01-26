@@ -41,3 +41,8 @@ linters:
     - unconvert
     - unparam
     - whitespace
+    - noctx
+    - perfsprint
+    #- wrapcheck # Wrap all errors returned from partners
+    - recvcheck
+    #- protogetter # Clean up proto access
