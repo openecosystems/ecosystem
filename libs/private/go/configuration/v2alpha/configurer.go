@@ -8,7 +8,9 @@ import (
 var ResolvedConfiguration *Configuration
 
 // Configuration represents the main configuration structure used for setting and resolving application configurations.
-type Configuration struct{}
+type Configuration struct {
+	sdkv2alphalib.App
+}
 
 // ResolveConfiguration initializes and resolves the binding's configuration by merging default and external configurations.
 func (b *Binding) ResolveConfiguration() {

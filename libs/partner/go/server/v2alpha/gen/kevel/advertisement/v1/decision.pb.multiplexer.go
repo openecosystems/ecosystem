@@ -41,7 +41,7 @@ func (s *DecisionServiceHandler) GetDecisions(ctx context.Context, req *connect.
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -100,7 +100,7 @@ func (s *DecisionServiceHandler) AddCustomProperties(ctx context.Context, req *c
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -159,7 +159,7 @@ func (s *DecisionServiceHandler) Forget(ctx context.Context, req *connect.Reques
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -218,7 +218,7 @@ func (s *DecisionServiceHandler) GdprConsent(ctx context.Context, req *connect.R
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -277,7 +277,7 @@ func (s *DecisionServiceHandler) AddInterests(ctx context.Context, req *connect.
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -336,7 +336,7 @@ func (s *DecisionServiceHandler) AddRetargetingSegment(ctx context.Context, req 
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -395,7 +395,7 @@ func (s *DecisionServiceHandler) OptOut(ctx context.Context, req *connect.Reques
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -454,7 +454,7 @@ func (s *DecisionServiceHandler) Read(ctx context.Context, req *connect.Request[
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -513,7 +513,7 @@ func (s *DecisionServiceHandler) IpOverride(ctx context.Context, req *connect.Re
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -572,7 +572,7 @@ func (s *DecisionServiceHandler) MatchUser(ctx context.Context, req *connect.Req
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}

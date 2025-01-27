@@ -50,7 +50,7 @@ var CreateCertificateAuthorityV2AlphaCmd = &cobra.Command{
 			return
 		}
 
-		ca, err := nca.GetCertificateAuthority(cmd.Context(), &req)
+		ca, err := nca.GetAccountAuthority(cmd.Context(), &req)
 		if err != nil {
 			return
 		}

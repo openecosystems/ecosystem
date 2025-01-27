@@ -23,16 +23,17 @@ message SpecDataCatalog {
     Configuration configuration = 5;
     Cryptography cryptography = 6;
     Dns dns = 7;
-    Edge edge = 8;
-    Event event = 9;
-    Iam iam = 10;
-    Mesh mesh = 11;
-    Ontology ontology = 12;
-    Options options = 13;
-    Reference reference = 14;
-    Spec spec = 15;
-    System system = 16;
-    Type type = 17;
+    Ecosystem ecosystem = 8;
+    Edge edge = 9;
+    Event event = 10;
+    Iam iam = 11;
+    Mesh mesh = 12;
+    Ontology ontology = 13;
+    Options options = 14;
+    Reference reference = 15;
+    Spec spec = 16;
+    System system = 17;
+    Type type = 18;
 }
 
 message Advertisement {
@@ -70,6 +71,9 @@ message Cryptography {
 message Dns {
 }
 
+message Ecosystem {
+}
+
 message Edge {
 }
 
@@ -79,6 +83,8 @@ message Event {
 }
 
 message Iam {
+
+    AccountAuthorityV2Alpha account_authority_v2alpha = 9;
 }
 
 message Mesh {
@@ -92,7 +98,7 @@ message Options {
 
 message Reference {
 
-    ReferenceV2Alpha reference_v2alpha = 9;
+    ReferenceV2Alpha reference_v2alpha = 10;
 }
 
 message Spec {
@@ -100,10 +106,52 @@ message Spec {
 
 message System {
 
-    SystemV2Alpha system_v2alpha = 10;
+    SystemV2Alpha system_v2alpha = 11;
 }
 
 message Type {
+}
+
+
+message PreferenceCenterV1Alpha {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType created_at = 2;
+  platform.options.v2.ClassificationType updated_at = 3;
+  platform.options.v2.ClassificationType anonymous_id = 4;
+  platform.options.v2.ClassificationType email = 5;
+  platform.options.v2.ClassificationType external_id = 6;
+  platform.options.v2.ClassificationType phone_number = 7;
+  platform.options.v2.ClassificationType first_name = 8;
+  platform.options.v2.ClassificationType last_name = 9;
+  platform.options.v2.ClassificationType postal_code = 10;
+  platform.options.v2.ClassificationType city = 11;
+  platform.options.v2.ClassificationType state_province_region = 12;
+  platform.options.v2.ClassificationType country = 13;
+  platform.options.v2.ClassificationType list_ids = 14;
+  platform.options.v2.ClassificationType segment_ids = 15;
+  platform.options.v2.ClassificationType email_subscription = 16;
+
+}
+
+
+message PreferenceCenterV1Beta {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType created_at = 2;
+  platform.options.v2.ClassificationType updated_at = 3;
+  platform.options.v2.ClassificationType anonymous_id = 4;
+  platform.options.v2.ClassificationType email = 5;
+  platform.options.v2.ClassificationType external_id = 6;
+  platform.options.v2.ClassificationType phone_number = 7;
+  platform.options.v2.ClassificationType first_name = 8;
+  platform.options.v2.ClassificationType last_name = 9;
+  platform.options.v2.ClassificationType postal_code = 10;
+  platform.options.v2.ClassificationType city = 11;
+  platform.options.v2.ClassificationType state_province_region = 12;
+  platform.options.v2.ClassificationType country = 13;
+  platform.options.v2.ClassificationType list_ids = 14;
+  platform.options.v2.ClassificationType segment_ids = 15;
+  platform.options.v2.ClassificationType email_subscription = 16;
+
 }
 
 
@@ -174,6 +222,20 @@ message EventSubscriptionV2Alpha {
 }
 
 
+message AccountAuthorityV2Alpha {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType created_at = 2;
+  platform.options.v2.ClassificationType updated_at = 3;
+  platform.options.v2.ClassificationType name = 4;
+  platform.options.v2.ClassificationType curve = 5;
+  platform.options.v2.ClassificationType duration = 6;
+  platform.options.v2.ClassificationType ca_cert = 7;
+  platform.options.v2.ClassificationType ca_key = 8;
+  platform.options.v2.ClassificationType ca_qr_code = 9;
+
+}
+
+
 message ReferenceV2Alpha {
     platform.options.v2.ClassificationType id = 1;
   platform.options.v2.ClassificationType created_at = 2;
@@ -191,27 +253,6 @@ message SystemV2Alpha {
 }
 
 
-message PreferenceCenterV1Alpha {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType anonymous_id = 4;
-  platform.options.v2.ClassificationType email = 5;
-  platform.options.v2.ClassificationType external_id = 6;
-  platform.options.v2.ClassificationType phone_number = 7;
-  platform.options.v2.ClassificationType first_name = 8;
-  platform.options.v2.ClassificationType last_name = 9;
-  platform.options.v2.ClassificationType postal_code = 10;
-  platform.options.v2.ClassificationType city = 11;
-  platform.options.v2.ClassificationType state_province_region = 12;
-  platform.options.v2.ClassificationType country = 13;
-  platform.options.v2.ClassificationType list_ids = 14;
-  platform.options.v2.ClassificationType segment_ids = 15;
-  platform.options.v2.ClassificationType email_subscription = 16;
-
-}
-
-
 message DecisionV1 {
     platform.options.v2.ClassificationType ad_id = 1;
   platform.options.v2.ClassificationType advertiser_id = 2;
@@ -225,26 +266,5 @@ message DecisionV1 {
   platform.options.v2.ClassificationType events = 10;
   platform.options.v2.ClassificationType matched_points = 11;
   platform.options.v2.ClassificationType pricing = 12;
-
-}
-
-
-message PreferenceCenterV1Beta {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType anonymous_id = 4;
-  platform.options.v2.ClassificationType email = 5;
-  platform.options.v2.ClassificationType external_id = 6;
-  platform.options.v2.ClassificationType phone_number = 7;
-  platform.options.v2.ClassificationType first_name = 8;
-  platform.options.v2.ClassificationType last_name = 9;
-  platform.options.v2.ClassificationType postal_code = 10;
-  platform.options.v2.ClassificationType city = 11;
-  platform.options.v2.ClassificationType state_province_region = 12;
-  platform.options.v2.ClassificationType country = 13;
-  platform.options.v2.ClassificationType list_ids = 14;
-  platform.options.v2.ClassificationType segment_ids = 15;
-  platform.options.v2.ClassificationType email_subscription = 16;
 
 }

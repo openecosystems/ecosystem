@@ -44,7 +44,7 @@ func (s *CertificateAuthorityServiceHandler) CreateCertificateAuthority(ctx cont
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}

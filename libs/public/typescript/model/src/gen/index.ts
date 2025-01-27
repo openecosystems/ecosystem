@@ -5,4 +5,5 @@ export * as ConfigurationV2Alpha from './platform/configuration/v2alpha/configur
 export * as CertificateV2Alpha from './platform/cryptography/v2alpha/certificate.pb.spec'
 export * as CertificateAuthorityV2Alpha from './platform/cryptography/v2alpha/certificate_authority.pb.spec'
 export * as EventSubscriptionV2Alpha from './platform/event/v2alpha/event_subscription.pb.spec'
+export * as AccountAuthorityV2Alpha from './platform/iam/v2alpha/account_authority.pb.spec'
 export * as SystemV2Alpha from './platform/system/v2alpha/system.pb.spec'

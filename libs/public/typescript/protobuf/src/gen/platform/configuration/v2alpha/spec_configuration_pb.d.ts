@@ -6,22 +6,24 @@
 
 import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
-import type { PreferenceCenterConfiguration } from "../../communication/v1beta/preference_center_pb";
+import type { PreferenceCenterConfiguration } from "../../communication/v1alpha/preference_center_pb";
 import type { AuditConfiguration } from "../../audit/v2alpha/audit_pb";
 import type { OecoConfiguration } from "../../cli/v2alpha/oeco_pb";
 import type { CertificateConfiguration } from "../../cryptography/v2alpha/certificate_pb";
 import type { CertificateAuthorityConfiguration } from "../../cryptography/v2alpha/certificate_authority_pb";
 import type { EncryptionConfiguration } from "../../cryptography/v2alpha/encryption_pb";
 import type { DynamicDnsConfiguration } from "../../dns/v2alpha/dynamic_dns_pb";
+import type { EcosystemConfiguration } from "../../ecosystem/v2alpha/ecosystem_pb";
 import type { EdgeRouterConfiguration } from "../../edge/v2alpha/edge_router_pb";
 import type { EventMultiplexerConfiguration } from "../../event/v2alpha/event_multiplexer_pb";
 import type { EventSubscriptionConfiguration } from "../../event/v2alpha/event_subscription_pb";
+import type { AccountAuthorityConfiguration } from "../../iam/v2alpha/account_authority_pb";
 import type { IamApiKeyConfiguration } from "../../iam/v2alpha/iam_api_key_pb";
 import type { IamAuthenticationConfiguration } from "../../iam/v2alpha/iam_authentication_pb";
 import type { CryptographicMeshConfiguration } from "../../mesh/v2alpha/cryptographic_mesh_pb";
 import type { ReferenceConfiguration } from "../../reference/v2alpha/reference_pb";
 import type { SystemConfiguration } from "../../system/v2alpha/system_pb";
-import type { PreferenceCenterConfiguration as PreferenceCenterConfiguration$1 } from "../../communication/v1alpha/preference_center_pb";
+import type { PreferenceCenterConfiguration as PreferenceCenterConfiguration$1 } from "../../communication/v1beta/preference_center_pb";
 
 /**
  * Describes the file platform/configuration/v2alpha/spec_configuration.proto.
@@ -33,9 +35,9 @@ export declare const file_platform_configuration_v2alpha_spec_configuration: Gen
  */
 export declare type SpecPlatformConfiguration = Message<"platform.configuration.v2alpha.SpecPlatformConfiguration"> & {
   /**
-   * @generated from field: platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 2;
+   * @generated from field: platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 2;
    */
-  preferenceCenterConfigurationV1beta?: PreferenceCenterConfiguration;
+  preferenceCenterConfigurationV1alpha?: PreferenceCenterConfiguration;
 
   /**
    * @generated from field: platform.audit.v2alpha.AuditConfiguration audit_configuration_v2alpha = 3;
@@ -68,49 +70,59 @@ export declare type SpecPlatformConfiguration = Message<"platform.configuration.
   dynamicDnsConfigurationV2alpha?: DynamicDnsConfiguration;
 
   /**
-   * @generated from field: platform.edge.v2alpha.EdgeRouterConfiguration edge_router_configuration_v2alpha = 9;
+   * @generated from field: platform.ecosystem.v2alpha.EcosystemConfiguration ecosystem_configuration_v2alpha = 9;
+   */
+  ecosystemConfigurationV2alpha?: EcosystemConfiguration;
+
+  /**
+   * @generated from field: platform.edge.v2alpha.EdgeRouterConfiguration edge_router_configuration_v2alpha = 10;
    */
   edgeRouterConfigurationV2alpha?: EdgeRouterConfiguration;
 
   /**
-   * @generated from field: platform.event.v2alpha.EventMultiplexerConfiguration event_multiplexer_configuration_v2alpha = 10;
+   * @generated from field: platform.event.v2alpha.EventMultiplexerConfiguration event_multiplexer_configuration_v2alpha = 11;
    */
   eventMultiplexerConfigurationV2alpha?: EventMultiplexerConfiguration;
 
   /**
-   * @generated from field: platform.event.v2alpha.EventSubscriptionConfiguration event_subscription_configuration_v2alpha = 11;
+   * @generated from field: platform.event.v2alpha.EventSubscriptionConfiguration event_subscription_configuration_v2alpha = 12;
    */
   eventSubscriptionConfigurationV2alpha?: EventSubscriptionConfiguration;
 
   /**
-   * @generated from field: platform.iam.v2alpha.IamApiKeyConfiguration iam_api_key_configuration_v2alpha = 12;
+   * @generated from field: platform.iam.v2alpha.AccountAuthorityConfiguration account_authority_configuration_v2alpha = 13;
+   */
+  accountAuthorityConfigurationV2alpha?: AccountAuthorityConfiguration;
+
+  /**
+   * @generated from field: platform.iam.v2alpha.IamApiKeyConfiguration iam_api_key_configuration_v2alpha = 14;
    */
   iamApiKeyConfigurationV2alpha?: IamApiKeyConfiguration;
 
   /**
-   * @generated from field: platform.iam.v2alpha.IamAuthenticationConfiguration iam_authentication_configuration_v2alpha = 13;
+   * @generated from field: platform.iam.v2alpha.IamAuthenticationConfiguration iam_authentication_configuration_v2alpha = 15;
    */
   iamAuthenticationConfigurationV2alpha?: IamAuthenticationConfiguration;
 
   /**
-   * @generated from field: platform.mesh.v2alpha.CryptographicMeshConfiguration cryptographic_mesh_configuration_v2alpha = 14;
+   * @generated from field: platform.mesh.v2alpha.CryptographicMeshConfiguration cryptographic_mesh_configuration_v2alpha = 16;
    */
   cryptographicMeshConfigurationV2alpha?: CryptographicMeshConfiguration;
 
   /**
-   * @generated from field: platform.reference.v2alpha.ReferenceConfiguration reference_configuration_v2alpha = 15;
+   * @generated from field: platform.reference.v2alpha.ReferenceConfiguration reference_configuration_v2alpha = 17;
    */
   referenceConfigurationV2alpha?: ReferenceConfiguration;
 
   /**
-   * @generated from field: platform.system.v2alpha.SystemConfiguration system_configuration_v2alpha = 16;
+   * @generated from field: platform.system.v2alpha.SystemConfiguration system_configuration_v2alpha = 18;
    */
   systemConfigurationV2alpha?: SystemConfiguration;
 
   /**
-   * @generated from field: platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 17;
+   * @generated from field: platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 19;
    */
-  preferenceCenterConfigurationV1alpha?: PreferenceCenterConfiguration$1;
+  preferenceCenterConfigurationV1beta?: PreferenceCenterConfiguration$1;
 };
 
 /**

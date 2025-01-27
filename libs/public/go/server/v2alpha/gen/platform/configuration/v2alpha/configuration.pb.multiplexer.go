@@ -44,7 +44,7 @@ func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, r
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -103,7 +103,7 @@ func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, r
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -162,7 +162,7 @@ func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -221,7 +221,7 @@ func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, r
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -280,7 +280,7 @@ func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, 
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -339,7 +339,7 @@ func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, 
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -398,7 +398,7 @@ func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, re
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -457,7 +457,7 @@ func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req 
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
