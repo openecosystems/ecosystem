@@ -3,7 +3,7 @@ syntax = "proto3";
 package platform.ecosystem.v2alpha;
 
 import "platform/options/v2/annotations.proto";
-import "platform/type/v2/label.proto";
+//import "platform/type/v2/label.proto";
 import "platform/spec/v2/spec.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -229,7 +229,7 @@ message CreateEcosystemRequest {
   }];
 
   //Label your ecosystem
-  repeated platform.type.v2.LabelDescriptor labels = 8;
+  //repeated platform.type.v2.LabelDescriptor labels = 8;
 
 }
 
@@ -359,7 +359,7 @@ message UpdateEcosystemRequest {
   }];
 
   //Label your ecosystem
-  repeated platform.type.v2.LabelDescriptor labels = 7;
+  //repeated platform.type.v2.LabelDescriptor labels = 7;
 }
 
 //
@@ -447,6 +447,6 @@ message Ecosystem {
   string cidr = 12;
 
   //
-  repeated platform.type.v2.LabelDescriptor labels = 13;
+  //repeated platform.type.v2.LabelDescriptor labels = 13;
 
 }

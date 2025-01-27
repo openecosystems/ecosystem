@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	"os"
 
 	"connectrpc.com/connect"
@@ -20,10 +21,12 @@ import (
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
 	configurationv2alphapbconnect "libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
+
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	serverv2alphalib "libs/public/go/server/v2alpha"
 	configurationv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
+	ecosystemv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/ecosystem/v2alpha"
 	iamv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/iam/v2alpha"
 )
 
@@ -42,8 +45,14 @@ func main() {
 
 		//&nebulav1.Binding{},
 		// Add PushPin Server
+		// Add a Raw server to listen on public traffic
 		// Listen on outbound.channels and PushPin to Clients
 		// Create a new Connector Listener and listen of outbound channels
+
+		// Public traffic
+		// Sign Certificate
+		// https://api.oeco.cloud
+		// https://api.oeco.mesh
 	}
 
 	provider, err := sdkv2alphalib.NewDotConfigSettingsProvider()
@@ -73,6 +82,7 @@ func main() {
 	//	}
 	//}
 
+	services = append(services, vanguard.NewService(ecosystemv2alphapbconnect.NewEcosystemServiceHandler(&ecosystemv2alphapbsrv.EcosystemServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(iamv2alphapbconnect.NewAccountAuthorityServiceHandler(&iamv2alphapbsrv.AccountAuthorityServiceHandler{}, interceptors)))
 	services = append(services, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))

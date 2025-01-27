@@ -4,7 +4,6 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
-import type { LabelDescriptor } from "../../type/v2/label_pb";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 
@@ -72,13 +71,6 @@ export declare type CreateEcosystemRequest = Message<"platform.ecosystem.v2alpha
    * @generated from field: string cidr = 7;
    */
   cidr: string;
-
-  /**
-   * Label your ecosystem
-   *
-   * @generated from field: repeated platform.type.v2.LabelDescriptor labels = 8;
-   */
-  labels: LabelDescriptor[];
 };
 
 /**
@@ -260,13 +252,6 @@ export declare type UpdateEcosystemRequest = Message<"platform.ecosystem.v2alpha
    * @generated from field: string description = 6;
    */
   description: string;
-
-  /**
-   * Label your ecosystem
-   *
-   * @generated from field: repeated platform.type.v2.LabelDescriptor labels = 7;
-   */
-  labels: LabelDescriptor[];
 };
 
 /**
@@ -402,11 +387,6 @@ export declare type Ecosystem = Message<"platform.ecosystem.v2alpha.Ecosystem"> 
    * @generated from field: string cidr = 12;
    */
   cidr: string;
-
-  /**
-   * @generated from field: repeated platform.type.v2.LabelDescriptor labels = 13;
-   */
-  labels: LabelDescriptor[];
 };
 
 /**
