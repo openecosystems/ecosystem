@@ -25,15 +25,14 @@ message SpecDataCatalog {
     Dns dns = 7;
     Ecosystem ecosystem = 8;
     Edge edge = 9;
-    Event event = 10;
-    Iam iam = 11;
-    Mesh mesh = 12;
-    Ontology ontology = 13;
-    Options options = 14;
-    Reference reference = 15;
-    Spec spec = 16;
-    System system = 17;
-    Type type = 18;
+    Iam iam = 10;
+    Mesh mesh = 11;
+    Ontology ontology = 12;
+    Options options = 13;
+    Reference reference = 14;
+    Spec spec = 15;
+    System system = 16;
+    Type type = 17;
 }
 
 message Advertisement {
@@ -51,9 +50,9 @@ message Cli {
 
 message Communication {
 
-    PreferenceCenterV1Beta preference_center_v1beta = 3;
+    PreferenceCenterV1Alpha preference_center_v1alpha = 3;
 
-    PreferenceCenterV1Alpha preference_center_v1alpha = 4;
+    PreferenceCenterV1Beta preference_center_v1beta = 4;
 }
 
 message Configuration {
@@ -62,29 +61,22 @@ message Configuration {
 }
 
 message Cryptography {
-
-    CertificateV2Alpha certificate_v2alpha = 6;
-
-    CertificateAuthorityV2Alpha certificate_authority_v2alpha = 7;
 }
 
 message Dns {
 }
 
 message Ecosystem {
+
+    EcosystemV2Alpha ecosystem_v2alpha = 6;
 }
 
 message Edge {
 }
 
-message Event {
-
-    EventSubscriptionV2Alpha event_subscription_v2alpha = 8;
-}
-
 message Iam {
 
-    AccountAuthorityV2Alpha account_authority_v2alpha = 9;
+    AccountAuthorityV2Alpha account_authority_v2alpha = 7;
 }
 
 message Mesh {
@@ -98,7 +90,7 @@ message Options {
 
 message Reference {
 
-    ReferenceV2Alpha reference_v2alpha = 10;
+    ReferenceV2Alpha reference_v2alpha = 8;
 }
 
 message Spec {
@@ -106,52 +98,10 @@ message Spec {
 
 message System {
 
-    SystemV2Alpha system_v2alpha = 11;
+    SystemV2Alpha system_v2alpha = 9;
 }
 
 message Type {
-}
-
-
-message PreferenceCenterV1Alpha {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType anonymous_id = 4;
-  platform.options.v2.ClassificationType email = 5;
-  platform.options.v2.ClassificationType external_id = 6;
-  platform.options.v2.ClassificationType phone_number = 7;
-  platform.options.v2.ClassificationType first_name = 8;
-  platform.options.v2.ClassificationType last_name = 9;
-  platform.options.v2.ClassificationType postal_code = 10;
-  platform.options.v2.ClassificationType city = 11;
-  platform.options.v2.ClassificationType state_province_region = 12;
-  platform.options.v2.ClassificationType country = 13;
-  platform.options.v2.ClassificationType list_ids = 14;
-  platform.options.v2.ClassificationType segment_ids = 15;
-  platform.options.v2.ClassificationType email_subscription = 16;
-
-}
-
-
-message PreferenceCenterV1Beta {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType anonymous_id = 4;
-  platform.options.v2.ClassificationType email = 5;
-  platform.options.v2.ClassificationType external_id = 6;
-  platform.options.v2.ClassificationType phone_number = 7;
-  platform.options.v2.ClassificationType first_name = 8;
-  platform.options.v2.ClassificationType last_name = 9;
-  platform.options.v2.ClassificationType postal_code = 10;
-  platform.options.v2.ClassificationType city = 11;
-  platform.options.v2.ClassificationType state_province_region = 12;
-  platform.options.v2.ClassificationType country = 13;
-  platform.options.v2.ClassificationType list_ids = 14;
-  platform.options.v2.ClassificationType segment_ids = 15;
-  platform.options.v2.ClassificationType email_subscription = 16;
-
 }
 
 
@@ -186,38 +136,20 @@ message ConfigurationV2Alpha {
 }
 
 
-message CertificateV2Alpha {
+message EcosystemV2Alpha {
     platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType name = 4;
-  platform.options.v2.ClassificationType duration = 6;
-
-}
-
-
-message CertificateAuthorityV2Alpha {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType name = 4;
-  platform.options.v2.ClassificationType curve = 5;
-  platform.options.v2.ClassificationType duration = 6;
-  platform.options.v2.ClassificationType ca_cert = 7;
-  platform.options.v2.ClassificationType ca_key = 8;
-  platform.options.v2.ClassificationType ca_qr_code = 9;
-
-}
-
-
-message EventSubscriptionV2Alpha {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType status = 5;
-  platform.options.v2.ClassificationType status_details = 6;
-  platform.options.v2.ClassificationType type = 7;
-  platform.options.v2.ClassificationType data = 8;
+  platform.options.v2.ClassificationType slug = 2;
+  platform.options.v2.ClassificationType created_at = 3;
+  platform.options.v2.ClassificationType updated_at = 4;
+  platform.options.v2.ClassificationType source_id = 5;
+  platform.options.v2.ClassificationType type = 6;
+  platform.options.v2.ClassificationType status = 7;
+  platform.options.v2.ClassificationType status_details = 8;
+  platform.options.v2.ClassificationType name = 9;
+  platform.options.v2.ClassificationType short_description = 10;
+  platform.options.v2.ClassificationType description = 11;
+  platform.options.v2.ClassificationType cidr = 12;
+  platform.options.v2.ClassificationType labels = 13;
 
 }
 
@@ -266,5 +198,47 @@ message DecisionV1 {
   platform.options.v2.ClassificationType events = 10;
   platform.options.v2.ClassificationType matched_points = 11;
   platform.options.v2.ClassificationType pricing = 12;
+
+}
+
+
+message PreferenceCenterV1Alpha {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType created_at = 2;
+  platform.options.v2.ClassificationType updated_at = 3;
+  platform.options.v2.ClassificationType anonymous_id = 4;
+  platform.options.v2.ClassificationType email = 5;
+  platform.options.v2.ClassificationType external_id = 6;
+  platform.options.v2.ClassificationType phone_number = 7;
+  platform.options.v2.ClassificationType first_name = 8;
+  platform.options.v2.ClassificationType last_name = 9;
+  platform.options.v2.ClassificationType postal_code = 10;
+  platform.options.v2.ClassificationType city = 11;
+  platform.options.v2.ClassificationType state_province_region = 12;
+  platform.options.v2.ClassificationType country = 13;
+  platform.options.v2.ClassificationType list_ids = 14;
+  platform.options.v2.ClassificationType segment_ids = 15;
+  platform.options.v2.ClassificationType email_subscription = 16;
+
+}
+
+
+message PreferenceCenterV1Beta {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType created_at = 2;
+  platform.options.v2.ClassificationType updated_at = 3;
+  platform.options.v2.ClassificationType anonymous_id = 4;
+  platform.options.v2.ClassificationType email = 5;
+  platform.options.v2.ClassificationType external_id = 6;
+  platform.options.v2.ClassificationType phone_number = 7;
+  platform.options.v2.ClassificationType first_name = 8;
+  platform.options.v2.ClassificationType last_name = 9;
+  platform.options.v2.ClassificationType postal_code = 10;
+  platform.options.v2.ClassificationType city = 11;
+  platform.options.v2.ClassificationType state_province_region = 12;
+  platform.options.v2.ClassificationType country = 13;
+  platform.options.v2.ClassificationType list_ids = 14;
+  platform.options.v2.ClassificationType segment_ids = 15;
+  platform.options.v2.ClassificationType email_subscription = 16;
 
 }

@@ -5,23 +5,19 @@ import (
 	"fmt"
 	"os"
 
-	configurationv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
-	cryptographyv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/cryptography/v2alpha"
-	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+	"github.com/apex/log"
+	"github.com/apex/log/handlers/cli"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/muesli/termenv"
+	"github.com/spf13/cobra"
 
+	configurationv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
+	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
+	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
-	"github.com/charmbracelet/lipgloss"
-	"github.com/muesli/termenv"
-
-	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
-
-	"github.com/apex/log"
-	"github.com/apex/log/handlers/cli"
-	"github.com/spf13/cobra"
 )
 
 // DefaultVersion defines the fallback version identifier when no compile-time version is provided.
@@ -153,7 +149,6 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 	}
 
 	// Manually add certain system commands
-	RootCmd.AddCommand(cryptographyv2alphapbint.SystemCmd)
 	RootCmd.AddCommand(configurationv2alphapbint.SystemCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)
 }

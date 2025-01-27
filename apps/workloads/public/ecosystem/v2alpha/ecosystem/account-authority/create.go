@@ -82,7 +82,7 @@ func (l *CreateAccountAuthorityListener) Process(ctx context.Context, request *n
 		AccountAuthority: ca,
 	}
 
-	log.Info("Create account authority successfully: " + response.AccountAuthority.Id)
+	log.Info("Created account authority successfully: " + response.AccountAuthority.Id)
 
 	natsnodev2.RespondToSyncCommand(ctx, request, &response)
 }

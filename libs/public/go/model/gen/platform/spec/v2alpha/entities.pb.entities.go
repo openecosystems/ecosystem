@@ -6,11 +6,7 @@ import (
 
   configuration "libs/public/go/model/gen/platform/configuration/v2alpha"
 
-  certificate "libs/public/go/model/gen/platform/cryptography/v2alpha"
-
-  certificate_authority "libs/public/go/model/gen/platform/cryptography/v2alpha"
-
-  event_subscription "libs/public/go/model/gen/platform/event/v2alpha"
+  ecosystem "libs/public/go/model/gen/platform/ecosystem/v2alpha"
 
   account_authority "libs/public/go/model/gen/platform/iam/v2alpha"
 
@@ -22,11 +18,7 @@ var Registry = []sdkv2alphalib.Entity{
 
 	&configuration.ConfigurationSpecEntity{},
 
-	&certificate.CertificateSpecEntity{},
-
-	&certificate_authority.CertificateAuthoritySpecEntity{},
-
-	&event_subscription.EventSubscriptionSpecEntity{},
+	&ecosystem.EcosystemSpecEntity{},
 
 	&account_authority.AccountAuthoritySpecEntity{},
 

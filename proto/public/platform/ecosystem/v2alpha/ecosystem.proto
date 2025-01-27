@@ -19,6 +19,14 @@ option (platform.options.v2.api_file) = {
   cycle: API_LIFECYCLE_ALPHA;
   interface: API_INTERFACE_TYPE_OPERATIONAL;
 };
+option (platform.options.v2.entity) = {
+  entity: "ecosystem";
+  entity_plural: "ecosystems";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
 
 option go_package = "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha;ecosystemv2alphapb";
 

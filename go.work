@@ -79,7 +79,6 @@ use (
 	./libs/public/go/sdk/gen/communication/v1beta
 	./libs/public/go/sdk/gen/configuration/v2alpha
 	./libs/public/go/sdk/gen/cryptography/v2alpha
-	./libs/public/go/sdk/gen/event/v2alpha
 	./libs/public/go/sdk/gen/system/v2alpha
 	./libs/private/go/sdk/gen/audit/v2alpha
 	./libs/poc/go/sdk/gen/reference/v2alpha
