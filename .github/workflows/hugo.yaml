@@ -41,6 +41,8 @@ jobs:
         run: sudo snap install dart-sass
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.9
       - name: Checkout
         uses: actions/checkout@v4
         with:
