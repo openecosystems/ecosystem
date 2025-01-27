@@ -37,7 +37,7 @@ func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerCon
 		Queue:      queue,
 		StreamType: &natsnodev2.InboundStream{},
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable:       "listener-configuration-createConfiguration",
+			Durable:       "configuration-createConfiguration",
 			AckPolicy:     jetstream.AckExplicitPolicy,
 			MemoryStorage: false,
 			FilterSubject: "inbound-configuration.data.command",

@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 )
-import "libs/public/go/cli/v2alpha/gen/platform/communication/v1alpha"
-import "libs/public/go/cli/v2alpha/gen/platform/communication/v1beta"
 import "libs/public/go/cli/v2alpha/gen/platform/configuration/v2alpha"
+import "libs/public/go/cli/v2alpha/gen/platform/cryptography/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/ecosystem/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/iam/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/system/v2alpha"
+import "libs/public/go/cli/v2alpha/gen/platform/communication/v1alpha"
+import "libs/public/go/cli/v2alpha/gen/platform/communication/v1beta"
 
 var CommandRegistry *Commands = new(Commands)
 
@@ -35,6 +36,7 @@ func (s FullCommandName) IsValid() bool {
 func (c *Commands) RegisterCommands() map[FullCommandName]*cobra.Command {
 	commands := make(map[FullCommandName]*cobra.Command)
   commands[FullCommandName{Name: "configuration", Version: "v2alpha"}] = configurationv2alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "cryptography", Version: "v2alpha"}] = cryptographyv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "ecosystem", Version: "v2alpha"}] = ecosystemv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "iam", Version: "v2alpha"}] = iamv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "system", Version: "v2alpha"}] = systemv2alphapbcmd.SystemCmd

@@ -1,0 +1,141 @@
+syntax = "proto3";
+
+package platform.cryptography.v2alpha;
+
+import "google/api/annotations.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+import "platform/type/v2/file.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_DISCOVERABLE;
+};
+option (platform.options.v2.entity) = {
+  entity: "certificate";
+  entity_plural: "certificates";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/cryptography/v2alpha;cryptographyv2alphapb";
+
+message CertificateConfiguration {
+
+  string pki = 1;
+
+}
+
+service CertificateService {
+  
+  // Method to VerifyCertificate to events based on scopes
+  rpc VerifyCertificate(VerifyCertificateRequest) returns (VerifyCertificateResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
+    option (google.api.http) = {
+      post: "/v2alpha/cryptography/certificate/verify"
+      body: "*"
+    };
+  }
+
+  // Method to SignCertificate to events based on scopes
+  rpc SignCertificate(SignCertificateRequest) returns (SignCertificateResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
+    option (google.api.http) = {
+      post: "/v2alpha/cryptography/certificate/sign"
+      body: "*"
+    };
+  }
+
+}
+
+// The current status of a certificate
+enum EventCertificateStatus {
+  EVENT_CERTIFICATE_STATUS_UNSPECIFIED = 0; // Unspecified or unknown status.
+  EVENT_CERTIFICATE_STATUS_VERIFYING = 1; // Certificate is being verified.
+  EVENT_CERTIFICATE_STATUS_SIGNING = 2; // Certificate is being signed.
+  EVENT_CERTIFICATE_STATUS_ERROR = 3; // Error.
+}
+
+enum CertificateCommands {
+  // Base class is
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  CERTIFICATE_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
+  CERTIFICATE_COMMANDS_VERIFY_CERTIFICATE = 1;
+  CERTIFICATE_COMMANDS_SIGN_CERTIFICATE = 2;
+}
+
+enum CertificateEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  // Unspecified or unknown event.
+  CERTIFICATE_EVENTS_UNSPECIFIED = 0;
+  CERTIFICATE_EVENTS_VERIFIED_CERTIFICATE = 1;
+  CERTIFICATE_EVENTS_SIGNED_CERTIFICATE = 2;
+
+}
+
+// Request for VerifyCertificate
+message VerifyCertificateRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  platform.type.v2.File certificate = 1;
+
+}
+
+// Response to VerifyCertificate
+message VerifyCertificateResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  Certificate certificate = 2;
+}
+
+// Request for SignCertificate
+message SignCertificateRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  platform.type.v2.File certificate = 1;
+
+}
+
+// Response to VerifyCertificate
+message SignCertificateResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  Certificate certificate = 2;
+}
+
+message Certificate {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // Identifier for this Certificate Authority
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  // Timestamp indicating when this event subscription was created.
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp indicating when this event subscription was last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  string name = 4;
+
+  google.protobuf.Duration duration = 6;
+
+  platform.type.v2.File certificate = 7;
+
+}

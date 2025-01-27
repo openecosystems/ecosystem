@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	"os"
 
 	"connectrpc.com/connect"
@@ -11,7 +10,9 @@ import (
 	"connectrpc.com/vanguard"
 
 	accountauthority "apps/workloads/public/ecosystem/v2alpha/ecosystem/account-authority"
+	certificate "apps/workloads/public/ecosystem/v2alpha/ecosystem/certificate"
 	configuration "apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
+	ecosystem "apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
 	natsnodev2 "libs/partner/go/nats/v2"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	opentelemetryv2 "libs/partner/go/opentelemetry/v2"
@@ -21,11 +22,13 @@ import (
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
 	configurationv2alphapbconnect "libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
-
+	cryptographyv2alphapbconnect "libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
+	ecosystemv2alphapbconnect "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	serverv2alphalib "libs/public/go/server/v2alpha"
 	configurationv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
+	cryptographyv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/cryptography/v2alpha"
 	ecosystemv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/ecosystem/v2alpha"
 	iamv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/iam/v2alpha"
 )
@@ -37,22 +40,18 @@ func main() {
 		&zaploggerv1.Binding{},
 		&nebulav1ca.Binding{},
 		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
+			&ecosystem.CreateEcosystemListener{},
 			&configuration.CreateConfigurationListener{},
 			&configuration.GetConfigurationListener{},
 			&accountauthority.CreateAccountAuthorityListener{},
+			&certificate.SignCertificateListener{},
 		}},
 		&configurationv2alphalib.Binding{},
 
 		//&nebulav1.Binding{},
 		// Add PushPin Server
-		// Add a Raw server to listen on public traffic
 		// Listen on outbound.channels and PushPin to Clients
 		// Create a new Connector Listener and listen of outbound channels
-
-		// Public traffic
-		// Sign Certificate
-		// https://api.oeco.cloud
-		// https://api.oeco.mesh
 	}
 
 	provider, err := sdkv2alphalib.NewDotConfigSettingsProvider()
@@ -70,11 +69,6 @@ func main() {
 		return
 	}
 
-	telemetry, _ := otelconnect.NewInterceptor(otelconnect.WithTrustRemote())
-	interceptors := connect.WithInterceptors(sdkv2alphalib.NewSpecInterceptor(), telemetry)
-
-	var services []*vanguard.Service
-
 	// TODO: Work on Dynamic Connector Handlers
 	//for _, s := range sdkv2alphalib.GlobalSystems.GetSystems() {
 	//	for _, c := range s.Connectors {
@@ -82,12 +76,19 @@ func main() {
 	//	}
 	//}
 
-	services = append(services, vanguard.NewService(ecosystemv2alphapbconnect.NewEcosystemServiceHandler(&ecosystemv2alphapbsrv.EcosystemServiceHandler{}, interceptors)))
-	services = append(services, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
-	services = append(services, vanguard.NewService(iamv2alphapbconnect.NewAccountAuthorityServiceHandler(&iamv2alphapbsrv.AccountAuthorityServiceHandler{}, interceptors)))
-	services = append(services, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
+	telemetry, _ := otelconnect.NewInterceptor(otelconnect.WithTrustRemote())
+	interceptors := connect.WithInterceptors(sdkv2alphalib.NewSpecInterceptor(), telemetry)
 
-	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, services)
+	var publicServices []*vanguard.Service
+	publicServices = append(publicServices, vanguard.NewService(cryptographyv2alphapbconnect.NewCertificateServiceHandler(&cryptographyv2alphapbsrv.CertificateServiceHandler{}, interceptors)))
+
+	var meshServices []*vanguard.Service
+	meshServices = append(meshServices, vanguard.NewService(ecosystemv2alphapbconnect.NewEcosystemServiceHandler(&ecosystemv2alphapbsrv.EcosystemServiceHandler{}, interceptors)))
+	meshServices = append(meshServices, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
+	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountAuthorityServiceHandler(&iamv2alphapbsrv.AccountAuthorityServiceHandler{}, interceptors)))
+	meshServices = append(meshServices, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
+
+	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, meshServices, publicServices)
 
 	multiplexedServer.ListenAndServe()
 }

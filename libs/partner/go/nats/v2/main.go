@@ -102,7 +102,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 
 					bindings = b.RegisterSpecListeners(bindings)
 
-					fmt.Println("Nats Leaf Node Server started successfully. NATS listening on port " + strconv.Itoa(options.Port))
+					fmt.Println("NATS TCP listening on " + strconv.Itoa(options.Port))
 
 					RegisterEventStreams()
 				case false:

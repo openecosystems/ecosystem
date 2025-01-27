@@ -3,7 +3,12 @@ app:
   version: 'v2.0.0'
   environmentName: 'local-1'
   environmentType: 'local'
-http:
+  debug: false
+publicHTTP:
+  host: '0.0.0.0'
+  port: '6577'
+meshHTTP:
+  host: '0.0.0.0'
   port: '6477'
 zap:
   level: 'debug'
@@ -29,6 +34,9 @@ natsd:
 
 eventStreamRegistry:
   streams:
+    - name: "ecosystem"
+      subjects:
+        - "ecosystem.>"
     - name: "audit"
       subjects:
         - "audit.>"
@@ -38,9 +46,6 @@ eventStreamRegistry:
     - name: "configuration"
       subjects:
         - "configuration.>"
-    - name: "certificateAuthority"
-      subjects:
-        - "certificateAuthority.>"
     - name: "accountAuthority"
       subjects:
         - "accountAuthority.>"

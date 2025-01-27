@@ -25,62 +25,23 @@ var quit = make(chan os.Signal, 1)
 
 // Server represents a configurable HTTP/2 server with bindings and service handlers.
 type Server struct {
-	Bindings          *sdkv2alphalib.Bindings
-	ConnectHTTPServer *http2.Server
-	HTTPServerHandler *http.ServeMux
-	Bounds            []sdkv2alphalib.Binding
-	ServicePath       string
-	ServiceHandler    *vanguard.Transcoder
-	RawServiceHandler *http.Handler
+	Bindings                *sdkv2alphalib.Bindings
+	PublicConnectHTTPServer *http2.Server
+	MeshConnectHTTPServer   *http2.Server
+	PublicHTTPServerHandler *http.ServeMux
+	MeshHTTPServerHandler   *http.ServeMux
+	Bounds                  []sdkv2alphalib.Binding
+	ServicePath             string
+	PublicServiceHandler    *vanguard.Transcoder
+	MeshServiceHandler      *vanguard.Transcoder
+	RawServiceHandler       *http.Handler
 
 	options *serverOptions
 	err     error
 }
 
-// NewServer initializes and returns a new Server instance with specified context, bindings, path, handler, and options.
-func NewServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
-	c := Configuration{}
-	c.ResolveConfiguration()
-	err := c.ValidateConfiguration()
-	if err != nil {
-		fmt.Println("validate server configuration error: ", err)
-		panic(err)
-	}
-
-	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
-
-	httpServer := &http2.Server{
-		IdleTimeout:      15 * time.Second,
-		WriteByteTimeout: 10 * time.Second,
-		ReadIdleTimeout:  5 * time.Second,
-		// MaxConcurrentStreams:         0,
-		// PermitProhibitedCipherSuites: false,
-		// MaxUploadBufferPerConnection: 0,
-		// MaxUploadBufferPerStream:     0,
-	}
-
-	options, _ := newServerOptions(path, opts)
-
-	s := vanguard.NewService(path, *handler)
-	transcoder, err2 := vanguard.NewTranscoder([]*vanguard.Service{s})
-	if err2 != nil {
-		fmt.Println(err2)
-	}
-
-	return &Server{
-		Bindings:          bindings,
-		ConnectHTTPServer: httpServer,
-		Bounds:            bounds,
-		ServicePath:       path,
-		ServiceHandler:    transcoder,
-
-		options: options,
-		err:     errors.Join(err, err2),
-	}
-}
-
 // NewMultiplexedServer creates and initializes a new multiplexed server with bindings, services, and server options.
-func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, services []*vanguard.Service, opts ...ServerOption) *Server {
+func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, meshServices []*vanguard.Service, publicServices []*vanguard.Service, opts ...ServerOption) *Server {
 	c := Configuration{}
 	c.ResolveConfiguration()
 	err := c.ValidateConfiguration()
@@ -91,7 +52,13 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, s
 
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
-	httpServer := &http2.Server{
+	publicHTTPServer := &http2.Server{
+		IdleTimeout:      15 * time.Second,
+		WriteByteTimeout: 10 * time.Second,
+		ReadIdleTimeout:  5 * time.Second,
+	}
+
+	meshHTTPServer := &http2.Server{
 		IdleTimeout:      15 * time.Second,
 		WriteByteTimeout: 10 * time.Second,
 		ReadIdleTimeout:  5 * time.Second,
@@ -99,17 +66,24 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, s
 
 	options, _ := newServerOptions("", opts)
 
-	transcoder, err2 := vanguard.NewTranscoder(services)
+	publicTranscoder, err2 := vanguard.NewTranscoder(publicServices)
+	if err2 != nil {
+		fmt.Println(err2)
+	}
+
+	meshTranscoder, err2 := vanguard.NewTranscoder(meshServices)
 	if err2 != nil {
 		fmt.Println(err2)
 	}
 
 	return &Server{
-		Bindings:          bindings,
-		ConnectHTTPServer: httpServer,
-		Bounds:            bounds,
-		ServicePath:       "/",
-		ServiceHandler:    transcoder,
+		Bindings:                bindings,
+		PublicConnectHTTPServer: publicHTTPServer,
+		MeshConnectHTTPServer:   meshHTTPServer,
+		Bounds:                  bounds,
+		ServicePath:             "/",
+		PublicServiceHandler:    publicTranscoder,
+		MeshServiceHandler:      meshTranscoder,
 
 		options: options,
 		err:     errors.Join(err, err2),
@@ -142,11 +116,11 @@ func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path stri
 	options, _ := newServerOptions(path, opts)
 
 	return &Server{
-		Bindings:          bindings,
-		ConnectHTTPServer: httpServer,
-		Bounds:            bounds,
-		ServicePath:       path,
-		RawServiceHandler: handler,
+		Bindings:              bindings,
+		MeshConnectHTTPServer: httpServer,
+		Bounds:                bounds,
+		ServicePath:           path,
+		RawServiceHandler:     handler,
 
 		options: options,
 		err:     errors.Join(err),
@@ -173,8 +147,6 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 			specListenableErr = server.ListenAndServeSpecListenable()
 		}()
 	}
-
-	fmt.Println("Server started successfully. HTTP listening on " + ResolvedConfiguration.HTTP.Port)
 
 	/*
 	 * Graceful Shutdown Management
@@ -213,37 +185,66 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	httpPort, _ := strconv.Atoi(ResolvedConfiguration.HTTP.Port)
-	mux := http.NewServeMux()
-	if server.HTTPServerHandler != nil {
-		mux = server.HTTPServerHandler
+	publicHTTPHost, _ := strconv.Atoi(ResolvedConfiguration.PublicHTTP.Host)
+	publicHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.PublicHTTP.Port)
+	meshHTTPHost, _ := strconv.Atoi(ResolvedConfiguration.MeshHTTP.Host)
+	meshHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.MeshHTTP.Port)
+
+	publicMux := http.NewServeMux()
+	if server.PublicHTTPServerHandler != nil {
+		publicMux = server.PublicHTTPServerHandler
 	}
+	server.PublicHTTPServerHandler = publicMux
+	publicMux.Handle("/", server.PublicServiceHandler)
 
-	server.HTTPServerHandler = mux
-
+	meshMux := http.NewServeMux()
+	if server.MeshHTTPServerHandler != nil {
+		meshMux = server.MeshHTTPServerHandler
+	}
+	server.MeshHTTPServerHandler = meshMux
 	if server.RawServiceHandler != nil {
-		mux.Handle(server.ServicePath, *server.RawServiceHandler)
+		meshMux.Handle(server.ServicePath, *server.RawServiceHandler)
 	} else {
-		mux.Handle("/", server.ServiceHandler)
+		meshMux.Handle("/", server.MeshServiceHandler)
 	}
 
-	httpServer := &http.Server{
-		Addr: fmt.Sprintf("0.0.0.0:%d", httpPort),
+	publicHTTPServer := &http.Server{
+		Addr: fmt.Sprintf("%d:%d", publicHTTPHost, publicHTTPPort),
 		// Use h2c so we can serve HTTP/2 without TLS.
-		Handler:      h2c.NewHandler(edgeRouter(mux), server.ConnectHTTPServer),
+		Handler:      h2c.NewHandler(edgeRouter(publicMux), server.PublicConnectHTTPServer),
+		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
+		WriteTimeout: 10 * time.Second, // Time allowed to write the response
+		IdleTimeout:  15 * time.Second, // Time for keep-alive connections
+	}
+
+	meshHTTPServer := &http.Server{
+		Addr: fmt.Sprintf("%d:%d", meshHTTPHost, meshHTTPPort),
+		// Use h2c so we can serve HTTP/2 without TLS.
+		Handler:      h2c.NewHandler(edgeRouter(meshMux), server.MeshConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
 		WriteTimeout: 10 * time.Second, // Time allowed to write the response
 		IdleTimeout:  15 * time.Second, // Time for keep-alive connections
 	}
 
 	_httpServerErr := make(chan error)
+
 	go func() {
 		if ln != nil {
-			_httpServerErr <- httpServer.Serve(ln)
+			_httpServerErr <- publicHTTPServer.Serve(ln)
 		} else {
-			_httpServerErr <- httpServer.ListenAndServe()
+			_httpServerErr <- publicHTTPServer.ListenAndServe()
 		}
 	}()
+	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.PublicHTTP.Port)
+
+	go func() {
+		if ln != nil {
+			_httpServerErr <- meshHTTPServer.Serve(ln)
+		} else {
+			_httpServerErr <- meshHTTPServer.ListenAndServe()
+		}
+	}()
+	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.MeshHTTP.Port)
 
 	return _httpServerErr
 }
@@ -257,47 +258,7 @@ func (server *Server) ListenAndServeSpecListenable() chan sdkv2alphalib.SpecList
 		ctx := context.Background()
 		go listener.Listen(ctx, listenerErr)
 
-		fmt.Println("Registered Listenable: " + key)
+		fmt.Println("Registered Embedded Connector: " + key)
 	}
 	return listenerErr
 }
-
-//&http.Client{
-//Transport: &http.Transport{
-//DialContext: func(ctx context.Context, network string, addr string) (net.Conn, error) {
-//return svc.Dial("tcp", "192.168.100.5:4222")
-//},
-//},
-//}
-//get, err := hc.Get("/")
-//if err != nil {
-//fmt.Println("GET ERROR")
-//fmt.Println(err)
-//return
-//}
-//
-//fmt.Println(get.Status)
-//
-//conn, err := svc.Dial("tcp", "192.168.100.5:4222")
-//
-//if err != nil {
-//fmt.Println("NEBULA BOUND ERROR")
-//fmt.Println(err)
-//return
-//}
-//
-//// buffer to get data
-//received := make([]byte, 1024)
-//_, err = conn.Read(received)
-//if err != nil {
-//println("Read data failed:", err.Error())
-//os.Exit(1)
-//}
-//
-//println("Received message:", string(received))
-//defer conn.Close()
-//
-//fmt.Println("NEBULA BOUND3")
-//
-//fmt.Fprintf(conn, "GET / HTTP/1.0\r\n\r\n")
-//_, err = bufio.NewReader(conn).ReadString('\n')

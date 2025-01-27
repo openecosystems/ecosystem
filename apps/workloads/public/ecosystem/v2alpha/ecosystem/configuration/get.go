@@ -32,7 +32,7 @@ func (l *GetConfigurationListener) GetConfiguration() *natsnodev2.ListenerConfig
 		Queue:      queue,
 		StreamType: &natsnodev2.InboundStream{},
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable: "listener-configuration-getConfiguration",
+			Durable: "configuration-getConfiguration",
 			//Durable: natsnodev2.GetListenerGroup(
 			//	&configurationv2alphapb.ConfigurationSpecEntity{},
 			//	&configurationv2alphapb.ConfigurationSpecEntity{},

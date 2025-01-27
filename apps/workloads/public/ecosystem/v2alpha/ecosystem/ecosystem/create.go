@@ -16,13 +16,14 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	ecosystemv2alphapbmodel "libs/public/go/model/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // CreateEcosystemListener is a struct that listens for create configuration events and processes them.
 type CreateEcosystemListener struct{}
 
-// GetEcosystem returns the ListenerEcosystem for CreateEcosystemListener, defining subject, queue, entity, and stream settings.
-func (l *CreateEcosystemListener) GetEcosystem() *natsnodev2.ListenerConfiguration {
+// GetConfiguration returns the listener configuration for the CreateEcosystemListener, including entity, subject, and queue details.
+func (l *CreateEcosystemListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
 	entity := &ecosystemv2alphapbmodel.EcosystemSpecEntity{}
 	streamType := natsnodev2.InboundStream{}
 	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
@@ -34,7 +35,7 @@ func (l *CreateEcosystemListener) GetEcosystem() *natsnodev2.ListenerConfigurati
 		Queue:      queue,
 		StreamType: &natsnodev2.InboundStream{},
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable:       "listener-ecosystem-createEcosystem",
+			Durable:       "ecosystem-createEcosystem",
 			AckPolicy:     jetstream.AckExplicitPolicy,
 			MemoryStorage: false,
 			FilterSubject: "inbound-ecosystem.data.command",
@@ -44,9 +45,9 @@ func (l *CreateEcosystemListener) GetEcosystem() *natsnodev2.ListenerConfigurati
 }
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
-//func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-// natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
-//}
+func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
+}
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
 func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {

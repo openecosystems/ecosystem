@@ -74,8 +74,11 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 		}
 
 		bindingsInstance = b.Bind(ctx, bindingsInstance)
-	}
 
+		if ResolvedConfiguration.App.Debug {
+			fmt.Println("Registered Binding: " + b.Name())
+		}
+	}
 	Bounds = bindingsInstance
 
 	return bindingsInstance
