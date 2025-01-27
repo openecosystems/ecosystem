@@ -39,20 +39,23 @@ jobs:
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
         run: sudo snap install dart-sass
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8.15.9
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.9
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Install Node.js dependencies
-        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && pnpm install --frozen-lockfile || true"
+#      - name: Install Node.js dependencies
+#        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && pnpm install --frozen-lockfile || true"
       - name: Build Hugo with NX
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
