@@ -1,7 +1,7 @@
 {
-  "name": "ecosystem-v2alpha-ecosystem",
-  "version": "0.34.0",
-  "description": "Ecosystem Multiplexer",
-  "private": true,
-  "license": "Apache-2.0"
+    "name": "ecosystem-v2alpha",
+    "version": "0.34.1",
+    "description": "Ecosystem Multiplexer",
+    "private": true,
+    "license": "Apache-2.0"
 }

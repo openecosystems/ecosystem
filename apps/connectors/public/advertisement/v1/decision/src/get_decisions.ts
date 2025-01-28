@@ -40,6 +40,7 @@ export async function getDecisions(spec: Spec, m: Msg): Promise<Uint8Array> {
                     $typeName: 'platform.type.v2.ResponseValidation',
                     validateOnly: spec.context.validation.validateOnly,
                 },
+                ecosystemSlug: spec.context.ecosystemSlug,
                 organizationSlug: spec.context.organizationSlug,
                 workspaceSlug: spec.context.workspaceSlug,
                 workspaceJan: spec.context.workspaceJan,

@@ -1,5 +1,5 @@
 {
-  "name": "apps-workloads-public-ecosystem-v2alpha-ecosystem",
+  "name": "ecosystem-v2alpha",
   "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/workloads/public/ecosystem/v2alpha/ecosystem",
@@ -87,13 +87,6 @@
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem"
-      }
-    },
-    "version": {
-      "outputs": ["{options.packageJson}"],
-      "executor": "@platform/nx-version:bump",
-      "options": {
-        "packageJson": "apps/workloads/public/ecosystem/v2alpha/ecosystem/package.json"
       }
     },
     "distribute": {
