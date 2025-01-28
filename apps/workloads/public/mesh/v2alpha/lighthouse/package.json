@@ -1,5 +1,5 @@
 {
-  "name": "workloads-public-mesh-v2alpha-lighthouse",
+  "name": "lighthouse-v2alpha",
   "version": "0.34.0",
   "description": "Cryptographic Mesh Lighthouse",
   "private": true,

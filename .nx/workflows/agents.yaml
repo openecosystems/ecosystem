@@ -24,7 +24,7 @@ launch-templates:
       - name: Restore Binary Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
-          key: 'libs/partner/go/nebula/v1/ca/bin/v1.9.4'
+          key: '"libs/partner/go/nebula/v1/ca/bin/v1.9.4"'
           paths: 'libs/partner/go/nebula/v1/ca/bin'
           base-branch: 'main'
 
