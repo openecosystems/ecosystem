@@ -1,4 +1,4 @@
-name: Build and Deploy Hugo documentation site
+name: hugo
 
 on:
   # Runs on pushes targeting the default branch
