@@ -1,4 +1,5 @@
 title = "Open Ecosystems Documentation"
+baseURL = "https://www.openecosystems.com/"
 languageCode = "en"
 DefaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
