@@ -82,3 +82,19 @@ curl 'http://localhost:6477/platform.configuration.v2alpha.ConfigurationService/
 -H 'Sec-Fetch-Mode: cors' \
 -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36' \
 --insecure
+
+
+## 
+
+http http://api.demo-1.oeco.cloud:6477/v2/configurations \
+Content-Type:application/json \
+x-spec-workspace-slug:workspace123 \
+x-spec-organization-slug:organization123 \
+x-spec-workspace-jan:JURISDICTION_USA \
+parent_id=123
+
+curl -X GET \
+--header "Content-Type: application/json" \
+--header "x-spec-workspace-slug: workspace123" \
+--header "x-spec-organization-slug: organization123" \
+http://api.demo-1.oeco.cloud:6477/v2/configurations/123 | jq .

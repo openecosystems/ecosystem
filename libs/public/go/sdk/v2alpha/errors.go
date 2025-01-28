@@ -15,7 +15,7 @@ import (
 // ErrServerUnimplemented represents an error indicating that the requested API call is not implemented.
 // ErrServerUnknownResource represents an error indicating that the requested resource could not be found.
 var (
-	ErrServerInternal           SpecError = &Error{SpecApiErr: &SpecAPIError{*NewConnectError(connect.CodeInternal, &SpecServerInternalErrorDetail, "Error on our side")}}
+	ErrServerInternal           SpecError = &Error{SpecApiErr: &SpecAPIError{*NewConnectError(connect.CodeInternal, &SpecServerInternalErrorDetail, "Error on our side sdklib")}}
 	ErrServerAuthentication     SpecError = &Error{SpecApiErr: &SpecAPIError{*NewConnectError(connect.CodeUnauthenticated, &SpecServerAuthenticationErrorDetail, "Invalid or incorrect credentials")}}
 	ErrServerRequest            SpecError = &Error{SpecApiErr: &SpecAPIError{*NewConnectError(connect.CodeInvalidArgument, &SpecServerRequestErrorDetail, "There was an error with your request")}}
 	ErrServerAlreadyExists      SpecError = &Error{SpecApiErr: &SpecAPIError{*NewConnectError(connect.CodeAlreadyExists, &SpecServerAlreadyExistsErrorDetail, "Resource already exist")}}
