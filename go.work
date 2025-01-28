@@ -13,12 +13,10 @@ use (
 
 	// Services
 	// ===================================
-	./apps/workloads/public/communications/v1alpha/preference-center
-	./apps/workloads/public/configuration/v2alpha/configuration
-	./apps/workloads/public/cryptography/v2alpha/certificate-authority
+	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
-	./apps/workloads/private/event/v2alpha/event-multiplexer
 	./apps/workloads/public/cryptography/v2alpha/encryption
+	./apps/workloads/poc/communications/v1alpha/preference-center
 	./apps/workloads/poc/i18n/v1alpha
 
 	// Infrastructure
@@ -81,7 +79,6 @@ use (
 	./libs/public/go/sdk/gen/communication/v1beta
 	./libs/public/go/sdk/gen/configuration/v2alpha
 	./libs/public/go/sdk/gen/cryptography/v2alpha
-	./libs/public/go/sdk/gen/event/v2alpha
 	./libs/public/go/sdk/gen/system/v2alpha
 	./libs/private/go/sdk/gen/audit/v2alpha
 	./libs/poc/go/sdk/gen/reference/v2alpha

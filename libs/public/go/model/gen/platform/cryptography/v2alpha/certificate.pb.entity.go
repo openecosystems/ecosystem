@@ -15,6 +15,7 @@ import (
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 type CertificateSpecEntity struct {
@@ -135,4 +136,5 @@ func (entity *CertificateSpecEntity) internal() {
 
 	//duration
 
+	var _ *typev2pb.File
 }

@@ -210,16 +210,23 @@ export declare const SpecPublicSchema: GenMessage<SpecPublic>;
  */
 export declare type SpecContext = Message<"platform.spec.v2.SpecContext"> & {
   /**
+   * The ecosystem associated with this context.
+   *
+   * @generated from field: string ecosystem_slug = 1;
+   */
+  ecosystemSlug: string;
+
+  /**
    * The organization associated with this context.
    *
-   * @generated from field: string organization_slug = 1;
+   * @generated from field: string organization_slug = 50;
    */
   organizationSlug: string;
 
   /**
    * The workspace associated with this context.
    *
-   * @generated from field: string workspace_slug = 2;
+   * @generated from field: string workspace_slug = 51;
    */
   workspaceSlug: string;
 
@@ -229,7 +236,7 @@ export declare type SpecContext = Message<"platform.spec.v2.SpecContext"> & {
    * That is incorrect. This should be a string instead.
    * See `2023-09-14 - Docs Sync` in sf-docs-internal.
    *
-   * @generated from field: platform.type.v2.Jurisdiction workspace_jan = 3;
+   * @generated from field: platform.type.v2.Jurisdiction workspace_jan = 2;
    */
   workspaceJan: Jurisdiction;
 
@@ -687,28 +694,33 @@ export declare type SpecResponseContext = Message<"platform.spec.v2.SpecResponse
   responseMask?: ResponseMask;
 
   /**
+   * @generated from field: string ecosystem_slug = 3;
+   */
+  ecosystemSlug: string;
+
+  /**
    * The organization associated with this response
    *
-   * @generated from field: string organization_slug = 3;
+   * @generated from field: string organization_slug = 50;
    */
   organizationSlug: string;
 
   /**
    * The workspace associated with this response
    *
-   * @generated from field: string workspace_slug = 4;
+   * @generated from field: string workspace_slug = 51;
    */
   workspaceSlug: string;
 
   /**
    * The workspace location associated with this response
    *
-   * @generated from field: platform.type.v2.Jurisdiction workspace_jan = 5;
+   * @generated from field: platform.type.v2.Jurisdiction workspace_jan = 52;
    */
   workspaceJan: Jurisdiction;
 
   /**
-   * @generated from field: string routine_id = 6;
+   * @generated from field: string routine_id = 53;
    */
   routineId: string;
 };
@@ -718,112 +730,6 @@ export declare type SpecResponseContext = Message<"platform.spec.v2.SpecResponse
  * Use `create(SpecResponseContextSchema)` to create a new message.
  */
 export declare const SpecResponseContextSchema: GenMessage<SpecResponseContext>;
-
-/**
- * @generated from message platform.spec.v2.SpecOrganizationRequestContext
- */
-export declare type SpecOrganizationRequestContext = Message<"platform.spec.v2.SpecOrganizationRequestContext"> & {
-  /**
-   * Should we only validate this request? There are no mutating side effects
-   *
-   * @generated from field: platform.type.v2.RequestValidation request_validation = 1;
-   */
-  requestValidation?: RequestValidation;
-
-  /**
-   * The organization to which you want to associate this request
-   *
-   * @generated from field: string organization_slug = 2;
-   */
-  organizationSlug: string;
-
-  /**
-   * @generated from field: string routine_id = 4;
-   */
-  routineId: string;
-};
-
-/**
- * Describes the message platform.spec.v2.SpecOrganizationRequestContext.
- * Use `create(SpecOrganizationRequestContextSchema)` to create a new message.
- */
-export declare const SpecOrganizationRequestContextSchema: GenMessage<SpecOrganizationRequestContext>;
-
-/**
- * @generated from message platform.spec.v2.SpecOrganizationResponseContext
- */
-export declare type SpecOrganizationResponseContext = Message<"platform.spec.v2.SpecOrganizationResponseContext"> & {
-  /**
-   * Whether this request is a validate only request
-   *
-   * @generated from field: platform.type.v2.ResponseValidation response_validation = 1;
-   */
-  responseValidation?: ResponseValidation;
-
-  /**
-   * The organization associated with this response
-   *
-   * @generated from field: string organization_slug = 2;
-   */
-  organizationSlug: string;
-
-  /**
-   * @generated from field: string routine_id = 5;
-   */
-  routineId: string;
-};
-
-/**
- * Describes the message platform.spec.v2.SpecOrganizationResponseContext.
- * Use `create(SpecOrganizationResponseContextSchema)` to create a new message.
- */
-export declare const SpecOrganizationResponseContextSchema: GenMessage<SpecOrganizationResponseContext>;
-
-/**
- * @generated from message platform.spec.v2.SpecPlatformRequestContext
- */
-export declare type SpecPlatformRequestContext = Message<"platform.spec.v2.SpecPlatformRequestContext"> & {
-  /**
-   * Should we only validate this request? There are no mutating side effects
-   *
-   * @generated from field: platform.type.v2.RequestValidation request_validation = 1;
-   */
-  requestValidation?: RequestValidation;
-
-  /**
-   * @generated from field: string routine_id = 4;
-   */
-  routineId: string;
-};
-
-/**
- * Describes the message platform.spec.v2.SpecPlatformRequestContext.
- * Use `create(SpecPlatformRequestContextSchema)` to create a new message.
- */
-export declare const SpecPlatformRequestContextSchema: GenMessage<SpecPlatformRequestContext>;
-
-/**
- * @generated from message platform.spec.v2.SpecPlatformResponseContext
- */
-export declare type SpecPlatformResponseContext = Message<"platform.spec.v2.SpecPlatformResponseContext"> & {
-  /**
-   * Whether this request is a validate only request
-   *
-   * @generated from field: platform.type.v2.ResponseValidation response_validation = 1;
-   */
-  responseValidation?: ResponseValidation;
-
-  /**
-   * @generated from field: string routine_id = 5;
-   */
-  routineId: string;
-};
-
-/**
- * Describes the message platform.spec.v2.SpecPlatformResponseContext.
- * Use `create(SpecPlatformResponseContextSchema)` to create a new message.
- */
-export declare const SpecPlatformResponseContextSchema: GenMessage<SpecPlatformResponseContext>;
 
 /**
  * @generated from enum platform.spec.v2.SpecEventType

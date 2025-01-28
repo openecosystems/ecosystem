@@ -21,6 +21,7 @@ import (
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	_ "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	_ "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"context"
 )
@@ -28,7 +29,7 @@ import (
 // CertificateServiceHandler is the domain level implementation of the server API for mutations of the CertificateService service
 type CertificateServiceHandler struct{}
 
-func (s *CertificateServiceHandler) CreateCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.CreateCertificateRequest]) (*connect.Response[cryptographyv2alphapb.CreateCertificateResponse], error) {
+func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.VerifyCertificateRequest]) (*connect.Response[cryptographyv2alphapb.VerifyCertificateResponse], error) {
 
 	tracer := *opentelemetryv2.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
@@ -43,7 +44,7 @@ func (s *CertificateServiceHandler) CreateCertificate(ctx context.Context, req *
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -52,7 +53,7 @@ func (s *CertificateServiceHandler) CreateCertificate(ctx context.Context, req *
 	// Validate field mask
 	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 		spec.SpecData.FieldMask.Normalize()
-		if !spec.SpecData.FieldMask.IsValid(&cryptographyv2alphapb.CreateCertificateResponse{}) {
+		if !spec.SpecData.FieldMask.IsValid(&cryptographyv2alphapb.VerifyCertificateResponse{}) {
 			log.Error("Invalid field mask")
 			return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
 		}
@@ -74,7 +75,7 @@ func (s *CertificateServiceHandler) CreateCertificate(ctx context.Context, req *
 		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
 	}
 
-	var dd cryptographyv2alphapb.CreateCertificateResponse
+	var dd cryptographyv2alphapb.VerifyCertificateResponse
 	err3 := proto.Unmarshal(reply.Data, &dd)
 	if err3 != nil {
 		log.Error(err3.Error())
@@ -87,7 +88,7 @@ func (s *CertificateServiceHandler) CreateCertificate(ctx context.Context, req *
 
 }
 
-func (s *CertificateServiceHandler) CreateAndSignCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.CreateAndSignCertificateRequest]) (*connect.Response[cryptographyv2alphapb.CreateAndSignCertificateResponse], error) {
+func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.SignCertificateRequest]) (*connect.Response[cryptographyv2alphapb.SignCertificateResponse], error) {
 
 	tracer := *opentelemetryv2.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
@@ -102,7 +103,7 @@ func (s *CertificateServiceHandler) CreateAndSignCertificate(ctx context.Context
 
 	// Spec Propagation
 	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value("spec").(*specv2pb.Spec)
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
 	if !ok {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
 	}
@@ -111,7 +112,7 @@ func (s *CertificateServiceHandler) CreateAndSignCertificate(ctx context.Context
 	// Validate field mask
 	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 		spec.SpecData.FieldMask.Normalize()
-		if !spec.SpecData.FieldMask.IsValid(&cryptographyv2alphapb.CreateAndSignCertificateResponse{}) {
+		if !spec.SpecData.FieldMask.IsValid(&cryptographyv2alphapb.SignCertificateResponse{}) {
 			log.Error("Invalid field mask")
 			return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
 		}
@@ -133,7 +134,7 @@ func (s *CertificateServiceHandler) CreateAndSignCertificate(ctx context.Context
 		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
 	}
 
-	var dd cryptographyv2alphapb.CreateAndSignCertificateResponse
+	var dd cryptographyv2alphapb.SignCertificateResponse
 	err3 := proto.Unmarshal(reply.Data, &dd)
 	if err3 != nil {
 		log.Error(err3.Error())

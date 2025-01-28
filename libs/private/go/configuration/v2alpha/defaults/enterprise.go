@@ -8,7 +8,6 @@ import (
 	v1beta "libs/public/go/protobuf/gen/platform/communication/v1beta"
 	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	systemv2alphapb "libs/public/go/protobuf/gen/platform/system/v2alpha"
 )
 
@@ -23,9 +22,7 @@ var DefaultEnterpriseConfiguration = configurationv2alphapb.SpecPlatformConfigur
 	EdgeRouterConfigurationV2Alpha: &edgev2alphapb.EdgeRouterConfiguration{
 		EdgeRouterConfig: "",
 	},
-	IamApiKeyConfigurationV2Alpha:         &iamv2alphapb.IamApiKeyConfiguration{},
-	IamAuthenticationConfigurationV2Alpha: &iamv2alphapb.IamAuthenticationConfiguration{},
-	ReferenceConfigurationV2Alpha:         &referencev2alphapb.ReferenceConfiguration{},
+	ReferenceConfigurationV2Alpha: &referencev2alphapb.ReferenceConfiguration{},
 	SystemConfigurationV2Alpha: &systemv2alphapb.SystemConfiguration{
 		PublicSystems: &systemv2alphapb.PublicSystems{
 			Communication: false,

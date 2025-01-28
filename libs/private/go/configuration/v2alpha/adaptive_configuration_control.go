@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"strings"
 
-	connectorv2alphalib "libs/public/go/connector/v2alpha"
 	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
@@ -93,7 +92,7 @@ func (acc AdaptiveConfigurationControl) GetPlatformConfiguration(ctx context.Con
 //
 //nolint:unparam
 func (acc AdaptiveConfigurationControl) getKey(orgOrWorkspaceOrConfigGroupID string) (string, error) {
-	rootConfig := connectorv2alphalib.ResolvedConfiguration
+	rootConfig := ResolvedConfiguration
 
 	// local-1.cfg.organization123.platform.configuration.v2alpha.Configuration
 	key := rootConfig.App.EnvironmentName + configPrefix + orgOrWorkspaceOrConfigGroupID

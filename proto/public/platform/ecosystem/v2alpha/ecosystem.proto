@@ -1,0 +1,452 @@
+syntax = "proto3";
+
+package platform.ecosystem.v2alpha;
+
+import "platform/options/v2/annotations.proto";
+//import "platform/type/v2/label.proto";
+import "platform/spec/v2/spec.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "buf/validate/validate.proto";
+
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_OVERLAY;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: false};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "ecosystem";
+  entity_plural: "ecosystems";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha;ecosystemv2alphapb";
+
+service EcosystemService {
+  option (platform.options.v2.api_service) = {
+    type: API_TYPE_PUBLIC;
+    cycle: API_LIFECYCLE_ALPHA;
+  };
+
+  //
+  rpc CreateEcosystem(CreateEcosystemRequest) returns (CreateEcosystemResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_CREATE
+    };
+    option (google.api.http) = {
+      post: "/v2alpha/ecosystem"
+      body: "*"
+    };
+  }
+
+  //
+  rpc ListEcosystems(ListEcosystemsRequest) returns (ListEcosystemsResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_LIST
+    };
+    option (google.api.http) = {
+      get: "/v2alpha/ecosystem"
+    };
+  }
+
+  //
+  rpc GetEcosystem(GetEcosystemRequest) returns (GetEcosystemResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_QUERY_GET
+    };
+    option (google.api.http) = {
+      get: "/v2alpha/ecosystem/{slug}"
+    };
+  }
+
+  //
+  rpc UpdateEcosystem(UpdateEcosystemRequest) returns (UpdateEcosystemResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_UPDATE
+    };
+    option (google.api.http) = {
+      put: "/v2alpha/ecosystem/{slug}"
+      body: "*"
+    };
+  }
+
+  //
+  rpc DeleteEcosystem(DeleteEcosystemRequest) returns (DeleteEcosystemResponse) {
+    option (platform.options.v2.api_method) = {
+      type: API_TYPE_PUBLIC;
+      cycle: API_LIFECYCLE_ALPHA;
+    };
+    option (platform.options.v2.cqrs) = {
+      type: CQRS_TYPE_MUTATION_DELETE
+    };
+    option (google.api.http) = {
+      delete: "/v2alpha/ecosystem/{slug}"
+    };
+  }
+}
+
+//Supported ecosystem type
+enum EcosystemType {
+  ECOSYSTEM_TYPE_UNSPECIFIED = 0;
+  ECOSYSTEM_TYPE_PUBLIC = 1;
+  ECOSYSTEM_TYPE_PRIVATE = 2;
+  ECOSYSTEM_TYPE_PATIENT = 3;
+}
+
+//The current status of a ecosystem
+enum EcosystemStatus {
+  ECOSYSTEM_STATUS_UNSPECIFIED = 0;
+  ECOSYSTEM_STATUS_CREATING = 1;
+  ECOSYSTEM_STATUS_ACTIVE = 2;
+  ECOSYSTEM_STATUS_INACTIVE = 3;
+  ECOSYSTEM_STATUS_UPDATING = 4;
+  ECOSYSTEM_STATUS_DELETING = 5;
+  ECOSYSTEM_STATUS_ERROR = 6;
+}
+
+//The current billing status of a ecosystem
+enum EcosystemBillingStatus {
+  ECOSYSTEM_BILLING_STATUS_UNSPECIFIED = 0;
+  ECOSYSTEM_BILLING_STATUS_ACTIVE = 1;
+  ECOSYSTEM_BILLING_STATUS_INACTIVE = 2;
+  ECOSYSTEM_BILLING_STATUS_WARNING = 3;
+  ECOSYSTEM_BILLING_STATUS_ERROR = 4;
+}
+
+enum EcosystemCommands {
+  option (platform.options.v2.spec) = {
+    type: SPEC_ENUM_TYPE_COMMANDS
+  };
+
+  ECOSYSTEM_COMMANDS_UNSPECIFIED = 0;
+  ECOSYSTEM_COMMANDS_CREATE = 1;
+  ECOSYSTEM_COMMANDS_UPDATE = 2;
+  ECOSYSTEM_COMMANDS_DELETE = 3;
+}
+
+enum EcosystemEvents {
+  option (platform.options.v2.spec) = {
+    type: SPEC_ENUM_TYPE_EVENTS
+  };
+
+  ECOSYSTEM_EVENTS_UNSPECIFIED = 0;
+  ECOSYSTEM_EVENTS_CREATED = 1 [(platform.options.v2.billing) = {
+    billable: true,
+    metered: false
+  }];
+  ECOSYSTEM_EVENTS_UPDATED = 2;
+  ECOSYSTEM_EVENTS_DELETED = 3;
+  ECOSYSTEM_EVENTS_ERRORED = 4;
+}
+
+message EcosystemConfiguration {
+
+  bool closed = 1 [(platform.options.v2.configuration_field) = {
+    configuration: {
+      description: "Is this ecosystem open to connections?",
+      enabled: true
+    }
+  }];
+
+}
+
+//Supported fields to create a ecosystem
+message CreateEcosystemRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //Globally unique slug for this ecosystem
+  string slug = 1 [(buf.validate.field).cel = {
+    id: "slug_format"
+    message: "slug must be 3 - 24 characters long and only contain letters and digits"
+    // `this.matches` match the string against a regex pattern, and evaluates to a bool.
+    expression: "this.matches('^[A-Za-z0-9]{3,24}$')"
+  }];
+
+  // What type of ecosystem is this?
+  EcosystemType type = 3;
+
+  string name = 4 [(buf.validate.field).string = {
+    // `min_len` validates that name must have at least 3 characters.
+    min_len: 3
+    // `max_len` validates that name must have at most 16 characters.
+    max_len: 16
+  }];
+
+  // Give your ecosystem a short description
+  string short_description = 5  [(buf.validate.field).string = {
+    // `min_len` validates that the short_description must have at least 3 characters.
+    min_len: 5
+    // `max_len` validates that the short_description must have at most 255 characters.
+    max_len: 255
+  }];
+
+  //Describe your ecosystem in detail
+  string description = 6  [(buf.validate.field).string = {
+    // `min_len` validates that the short_description must have at least 3 characters.
+    min_len: 5
+    // `max_len` validates that the short_description must have at most 1024 characters.
+    max_len: 1024
+  }];
+
+  string cidr = 7 [(buf.validate.field).cel = {
+    id: "valid_prefix"
+    message: "."
+    // `some_string.isIpPrefix()` returns whether the string is a valid ip with prefix length.
+    // `isIpPrefix(4)` returns whether a string is an ipv4 with prefix length.
+    // `isIpPrefix(6)` returns whether a string is an ipv6 with prefix length.
+    // `isIpPrefix(true)` returns whether a string is an ip prefix.
+    // `isIpPrefix(4, true)` returns whether a string is an ipv4 prefix.
+    // `isIpPrefix(6, true)` returns whether a string is an ipv6 prefix.
+    // In this case, it validates that field `ip_prefix` must be a valid ip with
+    // prefix length, either ipv4 or ipv6.
+    expression: "this.isIpPrefix()"
+  }];
+
+  //Label your ecosystem
+  //repeated platform.type.v2.LabelDescriptor labels = 8;
+
+}
+
+//
+message CreateEcosystemResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Ecosystem ecosystem = 2;
+}
+
+//
+message GetEcosystemRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //Globally unique slug for this ecosystem
+  string slug = 1 [(buf.validate.field).cel = {
+    id: "slug_format"
+    message: "slug must be 3 - 24 characters long and only contain letters and digits"
+    // `this.matches` match the string against a regex pattern, and evaluates to a bool.
+    expression: "this.matches('^[A-Za-z0-9]{3,24}$')"
+  }];
+}
+
+//
+message GetEcosystemResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Ecosystem ecosystem = 2;
+}
+
+//
+message ListEcosystemsRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //How many records would you like returned within one page?
+  uint32 page_size = 1 [(buf.validate.field).uint32 = {
+    // validates a rating is greater than 0
+    gt: 0
+    // validates a rating is at most 10
+    lte: 10
+  }];
+
+  //Page token provided in the response
+  string page_token = 2;
+}
+
+//
+message ListEcosystemsResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //Total count of ecosystems
+  int32 total_size = 2;
+
+  //Token to retrieve the next page
+  string next_page_token = 3;
+
+  //List of ecosystems
+  repeated Ecosystem ecosystems = 4;
+}
+
+//
+message EcosystemsFilter {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //
+  string filter = 1;
+}
+
+//
+message UpdateEcosystemRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //Globally unique slug for this ecosystem
+  string slug = 1 [(buf.validate.field).cel = {
+    id: "slug_format"
+    message: "slug must be 3 - 24 characters long and only contain letters and digits"
+    // `this.matches` match the string against a regex pattern, and evaluates to a bool.
+    expression: "this.matches('^[A-Za-z0-9]{3,24}$')"
+  }];
+
+  string name = 4 [(buf.validate.field).string = {
+    // `min_len` validates that name must have at least 3 characters.
+    min_len: 3
+    // `max_len` validates that name must have at most 16 characters.
+    max_len: 16
+  }];
+
+  // Give your ecosystem a short description
+  string short_description = 5  [(buf.validate.field).string = {
+    // `min_len` validates that the short_description must have at least 3 characters.
+    min_len: 5
+    // `max_len` validates that the short_description must have at most 255 characters.
+    max_len: 255
+  }];
+
+  //Describe your ecosystem in detail
+  string description = 6  [(buf.validate.field).string = {
+    // `min_len` validates that the short_description must have at least 3 characters.
+    min_len: 5
+    // `max_len` validates that the short_description must have at most 1024 characters.
+    max_len: 1024
+  }];
+
+  //Label your ecosystem
+  //repeated platform.type.v2.LabelDescriptor labels = 7;
+}
+
+//
+message UpdateEcosystemResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Ecosystem ecosystem = 2;
+}
+
+//
+message DeleteEcosystemRequest {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //Globally unique slug for this ecosystem
+  string slug = 1 [(buf.validate.field).cel = {
+    id: "slug_format"
+    message: "slug must be 3 - 24 characters long and only contain letters and digits"
+    // `this.matches` match the string against a regex pattern, and evaluates to a bool.
+    expression: "this.matches('^[A-Za-z0-9]{3,24}$')"
+  }];
+}
+
+//
+message DeleteEcosystemResponse {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  //
+  Ecosystem ecosystem = 2;
+}
+
+//
+message Ecosystem {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_OUTPUT
+  };
+
+  //
+  string id = 1;
+
+  //
+  string slug = 2 [(platform.options.v2.entity_field) = {
+    key: true
+  }];
+
+  //
+  google.protobuf.Timestamp created_at = 3;
+
+  //
+  google.protobuf.Timestamp updated_at = 4;
+
+  //
+  string source_id = 5;
+
+  //
+  EcosystemType type = 6;
+
+  //
+  EcosystemStatus status = 7;
+
+  //
+  string status_details = 8;
+
+  //
+  string name = 9;
+
+  //
+  string short_description = 10;
+
+  //
+  string description = 11;
+
+  string cidr = 12;
+
+  //
+  //repeated platform.type.v2.LabelDescriptor labels = 13;
+
+}

@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package platform.iam.v2alpha;
+
+import "google/api/annotations.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/type/v2/file.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_DISCOVERABLE;
+};
+option (platform.options.v2.entity) = {
+  entity: "account_authority";
+  entity_plural: "account_authorities";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/iam/v2alpha;iamv2alphapb";
+
+message AccountAuthorityConfiguration {
+
+  string pki = 1;
+
+}
+
+service AccountAuthorityService {
+
+  // Method to CreateAccountAuthority to events based on scopes
+  rpc CreateAccountAuthority(CreateAccountAuthorityRequest) returns (CreateAccountAuthorityResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+    option (google.api.http) = {
+      post: "/v2alpha/iam/aa/create"
+      body: "*"
+    };
+  }
+
+  // Delete CA
+  // Evict Member of Ecosystem
+
+}
+
+// Supported event type for subscription.
+enum AccountAuthorityType {
+  ACCOUNT_AUTHORITY_TYPE_UNSPECIFIED = 0; // Unspecified or unknown subscription type.
+  ACCOUNT_AUTHORITY_TYPE_ORGANIZATION = 1; // AccountAuthority for an organization.
+  ACCOUNT_AUTHORITY_TYPE_ECOSYSTEM = 2; // AccountAuthority for an ecosystem
+  ACCOUNT_AUTHORITY_TYPE_USER = 3; // AccountAuthority for a user.
+}
+
+// The current status of a event
+enum EventAccountAuthorityStatus {
+  EVENT_ACCOUNT_AUTHORITY_STATUS_UNSPECIFIED = 0; // Unspecified or unknown status.
+  EVENT_ACCOUNT_AUTHORITY_STATUS_CREATING = 1; // AccountAuthority is being created.
+  EVENT_ACCOUNT_AUTHORITY_STATUS_ERROR = 4; // Error.
+}
+
+enum AccountAuthorityCommands {
+  // Base class is
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  ACCOUNT_AUTHORITY_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
+  ACCOUNT_AUTHORITY_COMMANDS_CREATE_ACCOUNT_AUTHORITY = 1;
+}
+
+enum AccountAuthorityEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  // Unspecified or unknown event.
+  ACCOUNT_AUTHORITY_EVENTS_UNSPECIFIED = 0;
+
+  // Event AccountAuthority complete.
+  ACCOUNT_AUTHORITY_EVENTS_CREATED_ACCOUNT_AUTHORITY = 1 [(platform.options.v2.billing) = {
+    billable: true,
+    metered: true
+  }];
+
+}
+
+enum Curve {
+  CURVE_UNSPECIFIED = 0;
+  CURVE_EDDSA = 1;
+  CURVE_ECDSA = 2;
+}
+
+// Request for CreateAccountAuthority
+message CreateAccountAuthorityRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  // Name of the Account Authority. For example, 'Open Ecosystems, Inc.'
+  string name = 1;
+
+  Curve curve = 2;
+
+  google.protobuf.Duration duration = 3;
+
+  // Encrypt key with this passphrase and write out key in an encrypted format
+  string encrypt_key_passphrase = 4;
+
+}
+
+// Response to CreateAccountAuthority
+message CreateAccountAuthorityResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  AccountAuthority account_authority = 2;
+}
+
+message AccountAuthority {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // Identifier for this Account Authority
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  // Timestamp indicating when this event subscription was created.
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp indicating when this event subscription was last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  string name = 4;
+
+  Curve curve = 5;
+
+  google.protobuf.Duration duration = 6;
+
+  platform.type.v2.File ca_cert = 7;
+
+  platform.type.v2.File ca_key = 8;
+
+  platform.type.v2.File ca_qr_code = 9;
+}

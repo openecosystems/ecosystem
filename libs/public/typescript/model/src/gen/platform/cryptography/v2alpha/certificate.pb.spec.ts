@@ -15,7 +15,8 @@ export const CertificateTypeNameEventPrefix = "certificate.";
 export enum CertificateCommands {
   
   CertificateCommandsUnspecified = 0,
-  CertificateCommandsCreateCertificate = 1,
+  CertificateCommandsVerifyCertificate = 1,
+  CertificateCommandsSignCertificate = 2,
   UnrecognizedCertificateCommand = -1,
 }
 
@@ -23,7 +24,8 @@ export enum CertificateCommands {
 export enum CertificateEvents {
 
   CertificateEventsUnspecified = 0,
-  CertificateEventsCreatedCertificate = 1,
+  CertificateEventsVerifiedCertificate = 1,
+  CertificateEventsSignedCertificate = 2,
   UnrecognizedCertificateEvent  = -1,
 }
 
@@ -39,8 +41,10 @@ export class CertificateCommandHelper {
     switch (command) {
       case CertificateCommands.CertificateCommandsUnspecified:
         return "CertificateCommandsUnspecified"
-      case CertificateCommands.CertificateCommandsCreateCertificate:
-        return "CertificateCommandsCreateCertificate"
+      case CertificateCommands.CertificateCommandsVerifyCertificate:
+        return "CertificateCommandsVerifyCertificate"
+      case CertificateCommands.CertificateCommandsSignCertificate:
+        return "CertificateCommandsSignCertificate"
       default:
         return "UnrecognizedCertificateCommand"
     }
@@ -49,7 +53,8 @@ export class CertificateCommandHelper {
   static commandTopic(command: CertificateCommands): string {
     switch (command) {
       case CertificateCommands.CertificateCommandsUnspecified:
-      case CertificateCommands.CertificateCommandsCreateCertificate:
+      case CertificateCommands.CertificateCommandsVerifyCertificate:
+      case CertificateCommands.CertificateCommandsSignCertificate:
         return CommandDataCertificateTopic;
       default:
 		    return UnrecognizedCertificateTopic;
@@ -64,8 +69,10 @@ export class CertificateCommandHelper {
     switch (command) {
       case "CertificateCommandsUnspecified":
         return CertificateCommands.CertificateCommandsUnspecified;
-      case "CertificateCommandsCreateCertificate":
-        return CertificateCommands.CertificateCommandsCreateCertificate;
+      case "CertificateCommandsVerifyCertificate":
+        return CertificateCommands.CertificateCommandsVerifyCertificate;
+      case "CertificateCommandsSignCertificate":
+        return CertificateCommands.CertificateCommandsSignCertificate;
       default:
         return CertificateCommands.UnrecognizedCertificateCommand;
     }
@@ -78,8 +85,10 @@ export class CertificateEventHelper {
     switch (event) {
       case CertificateEvents.CertificateEventsUnspecified:
         return "CertificateEventsUnspecified";
-      case CertificateEvents.CertificateEventsCreatedCertificate:
-        return "CertificateEventsCreatedCertificate";
+      case CertificateEvents.CertificateEventsVerifiedCertificate:
+        return "CertificateEventsVerifiedCertificate";
+      case CertificateEvents.CertificateEventsSignedCertificate:
+        return "CertificateEventsSignedCertificate";
       default:
         return "UnrecognizedCertificateEvent";
     }
@@ -88,7 +97,8 @@ export class CertificateEventHelper {
   static eventTopic(event: CertificateEvents): string {
     switch (event) {
       case CertificateEvents.CertificateEventsUnspecified:
-      case CertificateEvents.CertificateEventsCreatedCertificate:
+      case CertificateEvents.CertificateEventsVerifiedCertificate:
+      case CertificateEvents.CertificateEventsSignedCertificate:
         return EventDataCertificateTopic;
       default:
         return UnrecognizedCertificateTopic;
@@ -103,8 +113,10 @@ export class CertificateEventHelper {
     switch (event) {
       case "CertificateEventsUnspecified":
         return CertificateEvents.CertificateEventsUnspecified;
-      case "CertificateEventsCreatedCertificate":
-        return CertificateEvents.CertificateEventsCreatedCertificate;
+      case "CertificateEventsVerifiedCertificate":
+        return CertificateEvents.CertificateEventsVerifiedCertificate;
+      case "CertificateEventsSignedCertificate":
+        return CertificateEvents.CertificateEventsSignedCertificate;
       default:
         return CertificateEvents.UnrecognizedCertificateEvent;
     }

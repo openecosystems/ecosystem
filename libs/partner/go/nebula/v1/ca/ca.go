@@ -10,12 +10,12 @@ import (
 	"path/filepath"
 	"sync"
 
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
-	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/timestamppb"
+
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // Binding represents an entity responsible for managing Nebula certificate binary and its file path.
@@ -101,9 +101,9 @@ func (b *Binding) Close() error {
 	return nil
 }
 
-// GetCertificateAuthority creates a new Certificate Authority using the specified request parameters.
+// GetAccountAuthority creates a new Certificate Authority using the specified request parameters.
 // Returns the created Certificate Authority or an error if the operation fails.
-func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2alphapb.CreateCertificateAuthorityRequest) (*cryptographyv2alphapb.CertificateAuthority, error) {
+func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.CreateAccountAuthorityRequest) (*iamv2alphapb.AccountAuthority, error) {
 	nca := b.NebulaCertBinaryPath
 
 	// TODO: This should be done in the initial validate
@@ -112,20 +112,20 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 	}
 
 	var c string
-	var curve cryptographyv2alphapb.Curve
+	var curve iamv2alphapb.Curve
 	switch req.Curve {
-	case cryptographyv2alphapb.Curve_CURVE_ECDSA:
+	case iamv2alphapb.Curve_CURVE_ECDSA:
 		c = "P256"
-		curve = cryptographyv2alphapb.Curve_CURVE_ECDSA
-	case cryptographyv2alphapb.Curve_CURVE_EDDSA:
+		curve = iamv2alphapb.Curve_CURVE_ECDSA
+	case iamv2alphapb.Curve_CURVE_EDDSA:
 		c = "25519"
-		curve = cryptographyv2alphapb.Curve_CURVE_EDDSA
-	case cryptographyv2alphapb.Curve_CURVE_UNSPECIFIED:
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	case iamv2alphapb.Curve_CURVE_UNSPECIFIED:
 		c = "25519"
-		curve = cryptographyv2alphapb.Curve_CURVE_EDDSA
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
 	default:
 		c = "25519"
-		curve = cryptographyv2alphapb.Curve_CURVE_EDDSA
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
 	}
 
 	// Write the binary to a temporary file
@@ -181,7 +181,7 @@ func (b *Binding) GetCertificateAuthority(_ context.Context, req *cryptographyv2
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err5)
 	}
 
-	return &cryptographyv2alphapb.CertificateAuthority{
+	return &iamv2alphapb.AccountAuthority{
 		Id:        id.String(),
 		CreatedAt: now,
 		UpdatedAt: now,

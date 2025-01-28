@@ -1,7 +1,0 @@
-{
-  "name": "workloads-public-configuration-v2alpha-configuration",
-  "version": "0.38.0",
-  "description": "Configuration",
-  "private": true,
-  "license": "Apache-2.0"
-}

@@ -23,8 +23,8 @@ message SpecDataCatalog {
     Configuration configuration = 5;
     Cryptography cryptography = 6;
     Dns dns = 7;
-    Edge edge = 8;
-    Event event = 9;
+    Ecosystem ecosystem = 8;
+    Edge edge = 9;
     Iam iam = 10;
     Mesh mesh = 11;
     Ontology ontology = 12;
@@ -50,9 +50,9 @@ message Cli {
 
 message Communication {
 
-    PreferenceCenterV1Beta preference_center_v1beta = 3;
+    PreferenceCenterV1Alpha preference_center_v1alpha = 3;
 
-    PreferenceCenterV1Alpha preference_center_v1alpha = 4;
+    PreferenceCenterV1Beta preference_center_v1beta = 4;
 }
 
 message Configuration {
@@ -63,22 +63,22 @@ message Configuration {
 message Cryptography {
 
     CertificateV2Alpha certificate_v2alpha = 6;
-
-    CertificateAuthorityV2Alpha certificate_authority_v2alpha = 7;
 }
 
 message Dns {
 }
 
+message Ecosystem {
+
+    EcosystemV2Alpha ecosystem_v2alpha = 7;
+}
+
 message Edge {
 }
 
-message Event {
-
-    EventSubscriptionV2Alpha event_subscription_v2alpha = 8;
-}
-
 message Iam {
+
+    AccountAuthorityV2Alpha account_authority_v2alpha = 8;
 }
 
 message Mesh {
@@ -144,11 +144,29 @@ message CertificateV2Alpha {
   platform.options.v2.ClassificationType updated_at = 3;
   platform.options.v2.ClassificationType name = 4;
   platform.options.v2.ClassificationType duration = 6;
+  platform.options.v2.ClassificationType certificate = 7;
 
 }
 
 
-message CertificateAuthorityV2Alpha {
+message EcosystemV2Alpha {
+    platform.options.v2.ClassificationType id = 1;
+  platform.options.v2.ClassificationType slug = 2;
+  platform.options.v2.ClassificationType created_at = 3;
+  platform.options.v2.ClassificationType updated_at = 4;
+  platform.options.v2.ClassificationType source_id = 5;
+  platform.options.v2.ClassificationType type = 6;
+  platform.options.v2.ClassificationType status = 7;
+  platform.options.v2.ClassificationType status_details = 8;
+  platform.options.v2.ClassificationType name = 9;
+  platform.options.v2.ClassificationType short_description = 10;
+  platform.options.v2.ClassificationType description = 11;
+  platform.options.v2.ClassificationType cidr = 12;
+
+}
+
+
+message AccountAuthorityV2Alpha {
     platform.options.v2.ClassificationType id = 1;
   platform.options.v2.ClassificationType created_at = 2;
   platform.options.v2.ClassificationType updated_at = 3;
@@ -158,18 +176,6 @@ message CertificateAuthorityV2Alpha {
   platform.options.v2.ClassificationType ca_cert = 7;
   platform.options.v2.ClassificationType ca_key = 8;
   platform.options.v2.ClassificationType ca_qr_code = 9;
-
-}
-
-
-message EventSubscriptionV2Alpha {
-    platform.options.v2.ClassificationType id = 1;
-  platform.options.v2.ClassificationType created_at = 2;
-  platform.options.v2.ClassificationType updated_at = 3;
-  platform.options.v2.ClassificationType status = 5;
-  platform.options.v2.ClassificationType status_details = 6;
-  platform.options.v2.ClassificationType type = 7;
-  platform.options.v2.ClassificationType data = 8;
 
 }
 
@@ -212,23 +218,6 @@ message PreferenceCenterV1Alpha {
 }
 
 
-message DecisionV1 {
-    platform.options.v2.ClassificationType ad_id = 1;
-  platform.options.v2.ClassificationType advertiser_id = 2;
-  platform.options.v2.ClassificationType creative_id = 3;
-  platform.options.v2.ClassificationType flight_id = 4;
-  platform.options.v2.ClassificationType campaign_id = 5;
-  platform.options.v2.ClassificationType priority_id = 6;
-  platform.options.v2.ClassificationType click_url = 7;
-  platform.options.v2.ClassificationType contents = 8;
-  platform.options.v2.ClassificationType impression_url = 9;
-  platform.options.v2.ClassificationType events = 10;
-  platform.options.v2.ClassificationType matched_points = 11;
-  platform.options.v2.ClassificationType pricing = 12;
-
-}
-
-
 message PreferenceCenterV1Beta {
     platform.options.v2.ClassificationType id = 1;
   platform.options.v2.ClassificationType created_at = 2;
@@ -246,5 +235,22 @@ message PreferenceCenterV1Beta {
   platform.options.v2.ClassificationType list_ids = 14;
   platform.options.v2.ClassificationType segment_ids = 15;
   platform.options.v2.ClassificationType email_subscription = 16;
+
+}
+
+
+message DecisionV1 {
+    platform.options.v2.ClassificationType ad_id = 1;
+  platform.options.v2.ClassificationType advertiser_id = 2;
+  platform.options.v2.ClassificationType creative_id = 3;
+  platform.options.v2.ClassificationType flight_id = 4;
+  platform.options.v2.ClassificationType campaign_id = 5;
+  platform.options.v2.ClassificationType priority_id = 6;
+  platform.options.v2.ClassificationType click_url = 7;
+  platform.options.v2.ClassificationType contents = 8;
+  platform.options.v2.ClassificationType impression_url = 9;
+  platform.options.v2.ClassificationType events = 10;
+  platform.options.v2.ClassificationType matched_points = 11;
+  platform.options.v2.ClassificationType pricing = 12;
 
 }

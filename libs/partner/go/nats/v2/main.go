@@ -100,7 +100,9 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 
 					bindings.Registered[b.Name()] = Bound
 
-					fmt.Println("Nats Leaf Node Server started successfully. NATS listening on port " + strconv.Itoa(options.Port))
+					bindings = b.RegisterSpecListeners(bindings)
+
+					fmt.Println("NATS TCP listening on " + strconv.Itoa(options.Port))
 
 					RegisterEventStreams()
 				case false:
@@ -141,30 +143,32 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 
 					bindings.Registered[b.Name()] = Bound
 
-					for _, listener := range b.SpecEventListeners {
-						configuration := listener.GetConfiguration()
-						if configuration == nil {
-							fmt.Println("Please configure the Listener")
-							panic("Misconfigured")
-						}
+					bindings = b.RegisterSpecListeners(bindings)
 
-						name := ""
-						if configuration.JetstreamConfiguration.Name == "" && configuration.JetstreamConfiguration.Durable == "" {
-							fmt.Println("Either the Name or the Durable name is required")
-							panic("Misconfigured")
-						}
-
-						if configuration.JetstreamConfiguration.Name != "" {
-							name = configuration.JetstreamConfiguration.Durable
-						}
-
-						// Use the durable name if set
-						if configuration.JetstreamConfiguration.Durable != "" {
-							name = configuration.JetstreamConfiguration.Durable
-						}
-
-						bindings.RegisteredListenableChannels[name] = listener
-					}
+					//for _, listener := range b.SpecEventListeners {
+					//	configuration := listener.GetConfiguration()
+					//	if configuration == nil {
+					//		fmt.Println("Please configure the Listener")
+					//		panic("Misconfigured")
+					//	}
+					//
+					//	name := ""
+					//	if configuration.JetstreamConfiguration.Name == "" && configuration.JetstreamConfiguration.Durable == "" {
+					//		fmt.Println("Either the Name or the Durable name is required")
+					//		panic("Misconfigured")
+					//	}
+					//
+					//	if configuration.JetstreamConfiguration.Name != "" {
+					//		name = configuration.JetstreamConfiguration.Durable
+					//	}
+					//
+					//	// Use the durable name if set
+					//	if configuration.JetstreamConfiguration.Durable != "" {
+					//		name = configuration.JetstreamConfiguration.Durable
+					//	}
+					//
+					//	bindings.RegisteredListenableChannels[name] = listener
+					//}
 				}
 			})
 	} else {
@@ -197,4 +201,34 @@ func (b *Binding) Close() error {
 	}
 
 	return nil
+}
+
+// RegisterSpecListeners registers specification event listeners by configuring them and associating them with bindings.
+func (b *Binding) RegisterSpecListeners(bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
+	for _, listener := range b.SpecEventListeners {
+		configuration := listener.GetConfiguration()
+		if configuration == nil {
+			fmt.Println("Please configure the Listener")
+			panic("Misconfigured")
+		}
+
+		name := ""
+		if configuration.JetstreamConfiguration.Name == "" && configuration.JetstreamConfiguration.Durable == "" {
+			fmt.Println("Either the Name or the Durable name is required")
+			panic("Misconfigured")
+		}
+
+		if configuration.JetstreamConfiguration.Name != "" {
+			name = configuration.JetstreamConfiguration.Durable
+		}
+
+		// Use the durable name if set
+		if configuration.JetstreamConfiguration.Durable != "" {
+			name = configuration.JetstreamConfiguration.Durable
+		}
+
+		bindings.RegisteredListenableChannels[name] = listener
+	}
+
+	return bindings
 }

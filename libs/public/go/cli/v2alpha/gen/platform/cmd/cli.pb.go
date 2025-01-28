@@ -6,56 +6,58 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 )
-import "libs/public/go/cli/v2alpha/gen/platform/communication/v1beta"
 import "libs/public/go/cli/v2alpha/gen/platform/configuration/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/cryptography/v2alpha"
-import "libs/public/go/cli/v2alpha/gen/platform/event/v2alpha"
+import "libs/public/go/cli/v2alpha/gen/platform/ecosystem/v2alpha"
+import "libs/public/go/cli/v2alpha/gen/platform/iam/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/system/v2alpha"
 import "libs/public/go/cli/v2alpha/gen/platform/communication/v1alpha"
+import "libs/public/go/cli/v2alpha/gen/platform/communication/v1beta"
 
 var CommandRegistry *Commands = new(Commands)
 
 type Commands struct {
-	systemsByName map[FullCommandName]*cobra.Command
+  systemsByName    map[FullCommandName]*cobra.Command
 }
 
 type FullCommandName struct {
-	Name    string
-	Version string
+  Name string
+  Version string
 }
 
 func (s FullCommandName) IsValid() bool {
-	if s.Name == "" || s.Version == "" {
-		return false
-	}
-	return true
+  if s.Name == "" || s.Version == "" {
+    return false
+  }
+  return true
 }
 
 // TODO: Parse multiple ServiceCommands
 func (c *Commands) RegisterCommands() map[FullCommandName]*cobra.Command {
 	commands := make(map[FullCommandName]*cobra.Command)
-	commands[FullCommandName{Name: "configuration", Version: "v2alpha"}] = configurationv2alphapbcmd.SystemCmd
-	commands[FullCommandName{Name: "cryptography", Version: "v2alpha"}] = cryptographyv2alphapbcmd.SystemCmd
-	commands[FullCommandName{Name: "event", Version: "v2alpha"}] = eventv2alphapbcmd.SystemCmd
-	commands[FullCommandName{Name: "system", Version: "v2alpha"}] = systemv2alphapbcmd.SystemCmd
-	commands[FullCommandName{Name: "communication", Version: "v1alpha"}] = communicationv1alphapbcmd.SystemCmd
-	commands[FullCommandName{Name: "communication", Version: "v1beta"}] = communicationv1betapbcmd.SystemCmd
-	c.systemsByName = commands
+  commands[FullCommandName{Name: "configuration", Version: "v2alpha"}] = configurationv2alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "cryptography", Version: "v2alpha"}] = cryptographyv2alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "ecosystem", Version: "v2alpha"}] = ecosystemv2alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "iam", Version: "v2alpha"}] = iamv2alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "system", Version: "v2alpha"}] = systemv2alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "communication", Version: "v1alpha"}] = communicationv1alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "communication", Version: "v1beta"}] = communicationv1betapbcmd.SystemCmd
+  c.systemsByName = commands
 	return commands
 }
 
 func (c *Commands) GetCommandByFullCommandName(name FullCommandName) (*cobra.Command, error) {
 
-	if !name.IsValid() {
-		return nil, fmt.Errorf("invalid system name or version number in your configuration file: %s", name)
-	}
+  if !name.IsValid() {
+    return nil, fmt.Errorf("invalid system name or version number in your configuration file: %s", name)
+  }
 
-	command, ok := c.systemsByName[name]
-	if !ok {
-		return nil, fmt.Errorf("Cannot find the system or version number identified in your configuration file: %s", name)
-	}
+  command, ok := c.systemsByName[name]
+  if !ok {
+    return nil, fmt.Errorf("Cannot find the system or version number identified in your configuration file: %s", name)
+  }
 
-	return command, nil
+  return command, nil
 
-	return c.systemsByName[name], nil
+  return c.systemsByName[name], nil
 }

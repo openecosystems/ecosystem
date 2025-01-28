@@ -16,14 +16,16 @@ const (
 
 const (
 	CertificateCommandsUnspecified       CertificateCommand = iota
-	CertificateCommandsCreateCertificate CertificateCommand = iota
+	CertificateCommandsVerifyCertificate CertificateCommand = iota
+	CertificateCommandsSignCertificate   CertificateCommand = iota
 	UnrecognizedCertificateCommand       CertificateCommand = -1
 )
 
 const (
-	CertificateEventsUnspecified        CertificateEvent = iota
-	CertificateEventsCreatedCertificate CertificateEvent = iota
-	UnrecognizedCertificateEvent        CertificateEvent = -1
+	CertificateEventsUnspecified         CertificateEvent = iota
+	CertificateEventsVerifiedCertificate CertificateEvent = iota
+	CertificateEventsSignedCertificate   CertificateEvent = iota
+	UnrecognizedCertificateEvent         CertificateEvent = -1
 )
 
 const (
@@ -39,8 +41,10 @@ func (c CertificateCommand) CommandName() string {
 
 	case CertificateCommandsUnspecified:
 		return "CertificateCommandsUnspecified"
-	case CertificateCommandsCreateCertificate:
-		return "CertificateCommandsCreateCertificate"
+	case CertificateCommandsVerifyCertificate:
+		return "CertificateCommandsVerifyCertificate"
+	case CertificateCommandsSignCertificate:
+		return "CertificateCommandsSignCertificate"
 	default:
 		return "UnrecognizedCertificateCommand"
 	}
@@ -53,8 +57,10 @@ func (e CertificateEvent) EventName() string {
 
 	case CertificateEventsUnspecified:
 		return "CertificateEventsUnspecified"
-	case CertificateEventsCreatedCertificate:
-		return "CertificateEventsCreatedCertificate"
+	case CertificateEventsVerifiedCertificate:
+		return "CertificateEventsVerifiedCertificate"
+	case CertificateEventsSignedCertificate:
+		return "CertificateEventsSignedCertificate"
 	default:
 		return "UnrecognizedCertificateEvent"
 	}
@@ -67,7 +73,9 @@ func (c CertificateCommand) CommandTopic() string {
 
 	case CertificateCommandsUnspecified:
 		return CommandDataCertificateTopic
-	case CertificateCommandsCreateCertificate:
+	case CertificateCommandsVerifyCertificate:
+		return CommandDataCertificateTopic
+	case CertificateCommandsSignCertificate:
 		return CommandDataCertificateTopic
 	default:
 		return UnrecognizedCertificateTopic
@@ -81,7 +89,9 @@ func (e CertificateEvent) EventTopic() string {
 
 	case CertificateEventsUnspecified:
 		return EventDataCertificateTopic
-	case CertificateEventsCreatedCertificate:
+	case CertificateEventsVerifiedCertificate:
+		return EventDataCertificateTopic
+	case CertificateEventsSignedCertificate:
 		return EventDataCertificateTopic
 	default:
 		return UnrecognizedCertificateTopic
@@ -103,8 +113,10 @@ func GetCertificateCommand(command string) CertificateCommand {
 
 	case "CertificateCommandsUnspecified":
 		return CertificateCommandsUnspecified
-	case "CertificateCommandsCreateCertificate":
-		return CertificateCommandsCreateCertificate
+	case "CertificateCommandsVerifyCertificate":
+		return CertificateCommandsVerifyCertificate
+	case "CertificateCommandsSignCertificate":
+		return CertificateCommandsSignCertificate
 	default:
 		return UnrecognizedCertificateCommand
 	}
@@ -116,8 +128,10 @@ func GetCertificateEvent(event string) CertificateEvent {
 
 	case "CertificateEventsUnspecified":
 		return CertificateEventsUnspecified
-	case "CertificateEventsCreatedCertificate":
-		return CertificateEventsCreatedCertificate
+	case "CertificateEventsVerifiedCertificate":
+		return CertificateEventsVerifiedCertificate
+	case "CertificateEventsSignedCertificate":
+		return CertificateEventsSignedCertificate
 	default:
 		return UnrecognizedCertificateEvent
 	}
