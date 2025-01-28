@@ -1,3 +1,13 @@
+## 0.34.1 (2025-01-28)
+
+### 🩹 Fixes
+
+- allowing for embedded connectors ([#31](https://github.com/openecosystems/ecosystem/pull/31))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.34.0 (2025-01-07)
 
 ### 🚀 Features
