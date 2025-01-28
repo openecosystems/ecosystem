@@ -1,7 +1,7 @@
 {
-  "name": "lighthouse-v2alpha",
-  "version": "0.34.0",
-  "description": "Cryptographic Mesh Lighthouse",
-  "private": true,
-  "license": "Apache-2.0"
+    "name": "lighthouse-v2alpha",
+    "version": "0.35.0",
+    "description": "Cryptographic Mesh Lighthouse",
+    "private": true,
+    "license": "Apache-2.0"
 }
