@@ -23,7 +23,7 @@ includes:
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "ecosystem-v2alpha"
+  tag_name: "ecosystem-v2alpha/devel"
   publish_release: true
   keep_single_release: true
 
