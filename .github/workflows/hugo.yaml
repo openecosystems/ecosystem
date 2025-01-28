@@ -53,8 +53,6 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-#      - name: Install Node.js dependencies
-#        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && pnpm install --frozen-lockfile || true"
       - name: Build Hugo with NX
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
@@ -62,11 +60,6 @@ jobs:
           TZ: America/New_York
         run : |
           npx nx@20.3.1 run docs:build
-#        run: |
-#          hugo \
-#          --gc \
-#          --minify \
-#          --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
