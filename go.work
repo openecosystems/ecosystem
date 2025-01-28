@@ -4,7 +4,6 @@ use (
 	// Clients
 	// ===================================
 	./apps/clients/public/cli/v2alpha/oeco
-	./apps/clients/poc/quality/v2alpha/ping
 	./apps/workloads/poc/wasm/v2alpha/wasm
 
 	// Web
@@ -79,6 +78,8 @@ use (
 	./libs/public/go/sdk/gen/communication/v1beta
 	./libs/public/go/sdk/gen/configuration/v2alpha
 	./libs/public/go/sdk/gen/cryptography/v2alpha
+	./libs/public/go/sdk/gen/ecosystem/v2alpha
+	./libs/public/go/sdk/gen/iam/v2alpha
 	./libs/public/go/sdk/gen/system/v2alpha
 	./libs/private/go/sdk/gen/audit/v2alpha
 	./libs/poc/go/sdk/gen/reference/v2alpha
