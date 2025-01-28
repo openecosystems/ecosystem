@@ -22,6 +22,7 @@ use (
 	// ===================================
 	./infrastructure/apps/workloads/private/edge/v2alpha/edge-router
 	./infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer
+	./infrastructure/apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
 	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
 

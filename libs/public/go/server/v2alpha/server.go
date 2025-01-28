@@ -156,10 +156,10 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 	select {
 	case err := <-specListenableErr:
 		if err.Error != nil {
-			fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err.Error).Error())
+			fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err.Error, errors.New("received a specListenableErr")).Error())
 		}
 	case err := <-httpServerErr:
-		fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err).Error())
+		fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err, errors.New("received an httpServerError")).Error())
 	case <-quit:
 		fmt.Printf("Stopping edged gracefully. Draining connections for up to %v seconds", 30)
 		fmt.Println()
@@ -185,9 +185,9 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	publicHTTPHost, _ := strconv.Atoi(ResolvedConfiguration.PublicHTTP.Host)
+	publicHTTPHost := ResolvedConfiguration.PublicHTTP.Host
 	publicHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.PublicHTTP.Port)
-	meshHTTPHost, _ := strconv.Atoi(ResolvedConfiguration.MeshHTTP.Host)
+	meshHTTPHost := ResolvedConfiguration.MeshHTTP.Host
 	meshHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.MeshHTTP.Port)
 
 	publicMux := http.NewServeMux()
@@ -209,7 +209,8 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	}
 
 	publicHTTPServer := &http.Server{
-		Addr: fmt.Sprintf("%d:%d", publicHTTPHost, publicHTTPPort),
+		Addr: fmt.Sprintf("%v:%d", publicHTTPHost, publicHTTPPort),
+		// Addr: fmt.Sprintf("0.0.0.0:%d", publicHTTPPort),
 		// Use h2c so we can serve HTTP/2 without TLS.
 		Handler:      h2c.NewHandler(edgeRouter(publicMux), server.PublicConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
@@ -218,7 +219,8 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	}
 
 	meshHTTPServer := &http.Server{
-		Addr: fmt.Sprintf("%d:%d", meshHTTPHost, meshHTTPPort),
+		Addr: fmt.Sprintf("%v:%d", meshHTTPHost, meshHTTPPort),
+		// Addr: fmt.Sprintf("0.0.0.0:%d", meshHTTPPort),
 		// Use h2c so we can serve HTTP/2 without TLS.
 		Handler:      h2c.NewHandler(edgeRouter(meshMux), server.MeshConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
