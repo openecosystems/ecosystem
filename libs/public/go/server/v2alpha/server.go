@@ -210,7 +210,6 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 
 	publicHTTPServer := &http.Server{
 		Addr: fmt.Sprintf("%v:%d", publicHTTPHost, publicHTTPPort),
-		// Addr: fmt.Sprintf("0.0.0.0:%d", publicHTTPPort),
 		// Use h2c so we can serve HTTP/2 without TLS.
 		Handler:      h2c.NewHandler(edgeRouter(publicMux), server.PublicConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
@@ -220,7 +219,6 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 
 	meshHTTPServer := &http.Server{
 		Addr: fmt.Sprintf("%v:%d", meshHTTPHost, meshHTTPPort),
-		// Addr: fmt.Sprintf("0.0.0.0:%d", meshHTTPPort),
 		// Use h2c so we can serve HTTP/2 without TLS.
 		Handler:      h2c.NewHandler(edgeRouter(meshMux), server.MeshConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
