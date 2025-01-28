@@ -33,21 +33,21 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// CertificateServiceCreateCertificateProcedure is the fully-qualified name of the
-	// CertificateService's CreateCertificate RPC.
-	CertificateServiceCreateCertificateProcedure = "/platform.cryptography.v2alpha.CertificateService/CreateCertificate"
-	// CertificateServiceCreateAndSignCertificateProcedure is the fully-qualified name of the
-	// CertificateService's CreateAndSignCertificate RPC.
-	CertificateServiceCreateAndSignCertificateProcedure = "/platform.cryptography.v2alpha.CertificateService/CreateAndSignCertificate"
+	// CertificateServiceVerifyCertificateProcedure is the fully-qualified name of the
+	// CertificateService's VerifyCertificate RPC.
+	CertificateServiceVerifyCertificateProcedure = "/platform.cryptography.v2alpha.CertificateService/VerifyCertificate"
+	// CertificateServiceSignCertificateProcedure is the fully-qualified name of the
+	// CertificateService's SignCertificate RPC.
+	CertificateServiceSignCertificateProcedure = "/platform.cryptography.v2alpha.CertificateService/SignCertificate"
 )
 
 // CertificateServiceClient is a client for the platform.cryptography.v2alpha.CertificateService
 // service.
 type CertificateServiceClient interface {
-	// Method to CreateCertificate to events based on scopes
-	CreateCertificate(context.Context, *connect.Request[v2alpha.CreateCertificateRequest]) (*connect.ServerStreamForClient[v2alpha.CreateCertificateResponse], error)
-	// Method to CreateAndSignCertificate to events based on scopes
-	CreateAndSignCertificate(context.Context, *connect.Request[v2alpha.CreateAndSignCertificateRequest]) (*connect.Response[v2alpha.CreateAndSignCertificateResponse], error)
+	// Method to VerifyCertificate to events based on scopes
+	VerifyCertificate(context.Context, *connect.Request[v2alpha.VerifyCertificateRequest]) (*connect.Response[v2alpha.VerifyCertificateResponse], error)
+	// Method to SignCertificate to events based on scopes
+	SignCertificate(context.Context, *connect.Request[v2alpha.SignCertificateRequest]) (*connect.Response[v2alpha.SignCertificateResponse], error)
 }
 
 // NewCertificateServiceClient constructs a client for the
@@ -62,16 +62,16 @@ func NewCertificateServiceClient(httpClient connect.HTTPClient, baseURL string, 
 	baseURL = strings.TrimRight(baseURL, "/")
 	certificateServiceMethods := v2alpha.File_platform_cryptography_v2alpha_certificate_proto.Services().ByName("CertificateService").Methods()
 	return &certificateServiceClient{
-		createCertificate: connect.NewClient[v2alpha.CreateCertificateRequest, v2alpha.CreateCertificateResponse](
+		verifyCertificate: connect.NewClient[v2alpha.VerifyCertificateRequest, v2alpha.VerifyCertificateResponse](
 			httpClient,
-			baseURL+CertificateServiceCreateCertificateProcedure,
-			connect.WithSchema(certificateServiceMethods.ByName("CreateCertificate")),
+			baseURL+CertificateServiceVerifyCertificateProcedure,
+			connect.WithSchema(certificateServiceMethods.ByName("VerifyCertificate")),
 			connect.WithClientOptions(opts...),
 		),
-		createAndSignCertificate: connect.NewClient[v2alpha.CreateAndSignCertificateRequest, v2alpha.CreateAndSignCertificateResponse](
+		signCertificate: connect.NewClient[v2alpha.SignCertificateRequest, v2alpha.SignCertificateResponse](
 			httpClient,
-			baseURL+CertificateServiceCreateAndSignCertificateProcedure,
-			connect.WithSchema(certificateServiceMethods.ByName("CreateAndSignCertificate")),
+			baseURL+CertificateServiceSignCertificateProcedure,
+			connect.WithSchema(certificateServiceMethods.ByName("SignCertificate")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -79,28 +79,27 @@ func NewCertificateServiceClient(httpClient connect.HTTPClient, baseURL string, 
 
 // certificateServiceClient implements CertificateServiceClient.
 type certificateServiceClient struct {
-	createCertificate        *connect.Client[v2alpha.CreateCertificateRequest, v2alpha.CreateCertificateResponse]
-	createAndSignCertificate *connect.Client[v2alpha.CreateAndSignCertificateRequest, v2alpha.CreateAndSignCertificateResponse]
+	verifyCertificate *connect.Client[v2alpha.VerifyCertificateRequest, v2alpha.VerifyCertificateResponse]
+	signCertificate   *connect.Client[v2alpha.SignCertificateRequest, v2alpha.SignCertificateResponse]
 }
 
-// CreateCertificate calls platform.cryptography.v2alpha.CertificateService.CreateCertificate.
-func (c *certificateServiceClient) CreateCertificate(ctx context.Context, req *connect.Request[v2alpha.CreateCertificateRequest]) (*connect.ServerStreamForClient[v2alpha.CreateCertificateResponse], error) {
-	return c.createCertificate.CallServerStream(ctx, req)
+// VerifyCertificate calls platform.cryptography.v2alpha.CertificateService.VerifyCertificate.
+func (c *certificateServiceClient) VerifyCertificate(ctx context.Context, req *connect.Request[v2alpha.VerifyCertificateRequest]) (*connect.Response[v2alpha.VerifyCertificateResponse], error) {
+	return c.verifyCertificate.CallUnary(ctx, req)
 }
 
-// CreateAndSignCertificate calls
-// platform.cryptography.v2alpha.CertificateService.CreateAndSignCertificate.
-func (c *certificateServiceClient) CreateAndSignCertificate(ctx context.Context, req *connect.Request[v2alpha.CreateAndSignCertificateRequest]) (*connect.Response[v2alpha.CreateAndSignCertificateResponse], error) {
-	return c.createAndSignCertificate.CallUnary(ctx, req)
+// SignCertificate calls platform.cryptography.v2alpha.CertificateService.SignCertificate.
+func (c *certificateServiceClient) SignCertificate(ctx context.Context, req *connect.Request[v2alpha.SignCertificateRequest]) (*connect.Response[v2alpha.SignCertificateResponse], error) {
+	return c.signCertificate.CallUnary(ctx, req)
 }
 
 // CertificateServiceHandler is an implementation of the
 // platform.cryptography.v2alpha.CertificateService service.
 type CertificateServiceHandler interface {
-	// Method to CreateCertificate to events based on scopes
-	CreateCertificate(context.Context, *connect.Request[v2alpha.CreateCertificateRequest], *connect.ServerStream[v2alpha.CreateCertificateResponse]) error
-	// Method to CreateAndSignCertificate to events based on scopes
-	CreateAndSignCertificate(context.Context, *connect.Request[v2alpha.CreateAndSignCertificateRequest]) (*connect.Response[v2alpha.CreateAndSignCertificateResponse], error)
+	// Method to VerifyCertificate to events based on scopes
+	VerifyCertificate(context.Context, *connect.Request[v2alpha.VerifyCertificateRequest]) (*connect.Response[v2alpha.VerifyCertificateResponse], error)
+	// Method to SignCertificate to events based on scopes
+	SignCertificate(context.Context, *connect.Request[v2alpha.SignCertificateRequest]) (*connect.Response[v2alpha.SignCertificateResponse], error)
 }
 
 // NewCertificateServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -110,24 +109,24 @@ type CertificateServiceHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewCertificateServiceHandler(svc CertificateServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
 	certificateServiceMethods := v2alpha.File_platform_cryptography_v2alpha_certificate_proto.Services().ByName("CertificateService").Methods()
-	certificateServiceCreateCertificateHandler := connect.NewServerStreamHandler(
-		CertificateServiceCreateCertificateProcedure,
-		svc.CreateCertificate,
-		connect.WithSchema(certificateServiceMethods.ByName("CreateCertificate")),
+	certificateServiceVerifyCertificateHandler := connect.NewUnaryHandler(
+		CertificateServiceVerifyCertificateProcedure,
+		svc.VerifyCertificate,
+		connect.WithSchema(certificateServiceMethods.ByName("VerifyCertificate")),
 		connect.WithHandlerOptions(opts...),
 	)
-	certificateServiceCreateAndSignCertificateHandler := connect.NewUnaryHandler(
-		CertificateServiceCreateAndSignCertificateProcedure,
-		svc.CreateAndSignCertificate,
-		connect.WithSchema(certificateServiceMethods.ByName("CreateAndSignCertificate")),
+	certificateServiceSignCertificateHandler := connect.NewUnaryHandler(
+		CertificateServiceSignCertificateProcedure,
+		svc.SignCertificate,
+		connect.WithSchema(certificateServiceMethods.ByName("SignCertificate")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/platform.cryptography.v2alpha.CertificateService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case CertificateServiceCreateCertificateProcedure:
-			certificateServiceCreateCertificateHandler.ServeHTTP(w, r)
-		case CertificateServiceCreateAndSignCertificateProcedure:
-			certificateServiceCreateAndSignCertificateHandler.ServeHTTP(w, r)
+		case CertificateServiceVerifyCertificateProcedure:
+			certificateServiceVerifyCertificateHandler.ServeHTTP(w, r)
+		case CertificateServiceSignCertificateProcedure:
+			certificateServiceSignCertificateHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -137,10 +136,10 @@ func NewCertificateServiceHandler(svc CertificateServiceHandler, opts ...connect
 // UnimplementedCertificateServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedCertificateServiceHandler struct{}
 
-func (UnimplementedCertificateServiceHandler) CreateCertificate(context.Context, *connect.Request[v2alpha.CreateCertificateRequest], *connect.ServerStream[v2alpha.CreateCertificateResponse]) error {
-	return connect.NewError(connect.CodeUnimplemented, errors.New("platform.cryptography.v2alpha.CertificateService.CreateCertificate is not implemented"))
+func (UnimplementedCertificateServiceHandler) VerifyCertificate(context.Context, *connect.Request[v2alpha.VerifyCertificateRequest]) (*connect.Response[v2alpha.VerifyCertificateResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.cryptography.v2alpha.CertificateService.VerifyCertificate is not implemented"))
 }
 
-func (UnimplementedCertificateServiceHandler) CreateAndSignCertificate(context.Context, *connect.Request[v2alpha.CreateAndSignCertificateRequest]) (*connect.Response[v2alpha.CreateAndSignCertificateResponse], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.cryptography.v2alpha.CertificateService.CreateAndSignCertificate is not implemented"))
+func (UnimplementedCertificateServiceHandler) SignCertificate(context.Context, *connect.Request[v2alpha.SignCertificateRequest]) (*connect.Response[v2alpha.SignCertificateResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.cryptography.v2alpha.CertificateService.SignCertificate is not implemented"))
 }

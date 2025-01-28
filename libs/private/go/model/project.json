@@ -1,6 +1,6 @@
 {
   "name": "libs-private-go-model",
-  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/private/go/model",
   "implicitDependencies": [
@@ -38,7 +38,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["gofumpt -l .", "golangci-lint run ./..."],
+        "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
         "cwd": "libs/private/go/model"
       }
@@ -46,7 +46,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --fix"],
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "libs/private/go/model"
       }

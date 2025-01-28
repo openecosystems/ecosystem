@@ -9,15 +9,18 @@ import (
 	"github.com/charmbracelet/log"
 )
 
+// PackageKeyMap defines key bindings for operations related to packages such as listing and generating them.
 type PackageKeyMap struct {
 	List     key.Binding
 	Generate key.Binding
 }
 
+// Name returns the KeyBindingType associated with the PackageKeyMap, which is typically of type 'Package'.
 func (k PackageKeyMap) Name() KeyBindingType {
 	return Package
 }
 
+// PackageKeys defines bindings for the list and generate commands using the PackageKeyMap structure.
 var PackageKeys = PackageKeyMap{
 	List: key.NewBinding(
 		key.WithKeys("l"),
@@ -29,6 +32,7 @@ var PackageKeys = PackageKeyMap{
 	),
 }
 
+// PackageFullHelp returns a slice of key bindings for the package, providing help for available actions such as list and generate.
 func PackageFullHelp() []key.Binding {
 	return []key.Binding{
 		PackageKeys.List,
@@ -36,6 +40,9 @@ func PackageFullHelp() []key.Binding {
 	}
 }
 
+// rebindPackageKeys updates key bindings for predefined package keys based on the provided configuration.
+//
+//nolint:unused
 func rebindPackageKeys(keys []config.KeyBinding) error {
 	for _, kb := range keys {
 		if kb.Builtin == "" {

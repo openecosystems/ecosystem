@@ -5,6 +5,7 @@ import (
 	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 )
 
+// Hippa represents a predefined variable containing a comprehensive configuration of SpecDataCatalog for managing HIPAA-related data.
 var Hippa = ontologyv2alphapb.SpecDataCatalog{
 	Audit: &ontologyv2alphapb.Audit{
 		AuditV2Alpha: &ontologyv2alphapb.AuditV2Alpha{
@@ -74,43 +75,13 @@ var Hippa = ontologyv2alphapb.SpecDataCatalog{
 			ConnectorConfigurations: 0,
 		},
 	},
-	Cryptography: &ontologyv2alphapb.Cryptography{
-		CertificateV2Alpha: &ontologyv2alphapb.CertificateV2Alpha{
-			Id:        0,
-			CreatedAt: 0,
-			UpdatedAt: 0,
-			Name:      0,
-			Duration:  0,
-		},
-		CertificateAuthorityV2Alpha: &ontologyv2alphapb.CertificateAuthorityV2Alpha{
-			Id:        0,
-			CreatedAt: 0,
-			UpdatedAt: 0,
-			Name:      0,
-			Curve:     0,
-			Duration:  0,
-			CaCert:    0,
-			CaKey:     0,
-			CaQrCode:  0,
-		},
-	},
-	Dns:  nil,
-	Edge: &ontologyv2alphapb.Edge{},
-	Event: &ontologyv2alphapb.Event{
-		EventSubscriptionV2Alpha: &ontologyv2alphapb.EventSubscriptionV2Alpha{
-			Id:            0,
-			CreatedAt:     0,
-			UpdatedAt:     0,
-			Status:        0,
-			StatusDetails: 0,
-			Type:          0,
-			Data:          0,
-		},
-	},
-	Iam:      &ontologyv2alphapb.Iam{},
-	Mesh:     nil,
-	Ontology: &ontologyv2alphapb.Ontology{},
-	Options:  &ontologyv2alphapb.Options{},
+	Cryptography: &ontologyv2alphapb.Cryptography{},
+	Dns:          nil,
+	Edge:         &ontologyv2alphapb.Edge{},
+	Iam:          &ontologyv2alphapb.Iam{},
+	Mesh:         nil,
+	Ontology:     &ontologyv2alphapb.Ontology{},
+	Options:      &ontologyv2alphapb.Options{},
 	Reference: &ontologyv2alphapb.Reference{
 		ReferenceV2Alpha: &ontologyv2alphapb.ReferenceV2Alpha{
 			Id:        0,

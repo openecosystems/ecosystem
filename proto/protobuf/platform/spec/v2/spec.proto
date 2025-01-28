@@ -166,17 +166,20 @@ message SpecContext {
     type: GRAPH_TYPE_INPUT
   };
 
+  // The ecosystem associated with this context.
+  string ecosystem_slug = 1;
+
   // The organization associated with this context.
-  string organization_slug = 1;
+  string organization_slug = 50;
 
   // The workspace associated with this context.
-  string workspace_slug = 2;
+  string workspace_slug = 51;
 
   // The workspace jan associated with this context.
   // Right now this is an enumeration with a finite number of items.
   // That is incorrect. This should be a string instead.
   // See `2023-09-14 - Docs Sync` in sf-docs-internal.
-  platform.type.v2.Jurisdiction workspace_jan = 3;
+  platform.type.v2.Jurisdiction workspace_jan = 2;
 
   // The ip address of the requester. MUST meet RFC 791 or
   string ip = 5;
@@ -420,68 +423,16 @@ message SpecResponseContext {
   // How we have masked the response based on requested masking and policy masking
   platform.type.v2.ResponseMask response_mask = 2;
 
+  string ecosystem_slug = 3;
+
   //The organization associated with this response
-  string organization_slug = 3;
+  string organization_slug = 50;
 
   //The workspace associated with this response
-  string workspace_slug = 4;
+  string workspace_slug = 51;
 
   //The workspace location associated with this response
-  platform.type.v2.Jurisdiction workspace_jan = 5;
+  platform.type.v2.Jurisdiction workspace_jan = 52;
 
-  string routine_id = 6;
-}
-
-//
-message SpecOrganizationRequestContext {
-  option (platform.options.v2.graph) = {
-    type: GRAPH_TYPE_INPUT
-  };
-
-  //Should we only validate this request? There are no mutating side effects
-  platform.type.v2.RequestValidation request_validation = 1;
-
-  //The organization to which you want to associate this request
-  string organization_slug = 2;
-
-  string routine_id = 4;
-}
-
-//
-message SpecOrganizationResponseContext {
-  option (platform.options.v2.graph) = {
-    type: GRAPH_TYPE_OUTPUT
-  };
-
-  //Whether this request is a validate only request
-  platform.type.v2.ResponseValidation response_validation = 1;
-
-  //The organization associated with this response
-  string organization_slug = 2;
-
-  string routine_id = 5;
-}
-
-//
-message SpecPlatformRequestContext {
-  option (platform.options.v2.graph) = {
-    type: GRAPH_TYPE_INPUT
-  };
-
-  //Should we only validate this request? There are no mutating side effects
-  platform.type.v2.RequestValidation request_validation = 1;
-
-  string routine_id = 4;
-}
-
-//
-message SpecPlatformResponseContext {
-  option (platform.options.v2.graph) = {
-    type: GRAPH_TYPE_OUTPUT
-  };
-
-  //Whether this request is a validate only request
-  platform.type.v2.ResponseValidation response_validation = 1;
-
-  string routine_id = 5;
+  string routine_id = 53;
 }

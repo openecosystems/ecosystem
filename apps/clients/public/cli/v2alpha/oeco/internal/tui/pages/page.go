@@ -1,9 +1,6 @@
 package pages
 
 import (
-	"strconv"
-	"strings"
-
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
@@ -11,12 +8,15 @@ import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	"strconv"
+	"strings"
 
 	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbletea"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
+// BaseModel defines a generic model structure that manages UI context, key configuration, and content layout components.
 type BaseModel[Cfg any] struct {
 	Ctx         *context.ProgramContext
 	Keys        *keys.KeyMap
@@ -28,6 +28,8 @@ type BaseModel[Cfg any] struct {
 	CurrentSidebar     contract.Sidebar
 }
 
+// NewBaseOptions defines options for initializing a base model, including default settings, page configuration,
+// main content, sidebar, key mappings, and key bindings.
 type NewBaseOptions[Cfg any] struct {
 	Default            bool
 	PageConfig         *Cfg
@@ -37,6 +39,7 @@ type NewBaseOptions[Cfg any] struct {
 	KeyBindings        *config.KeyBindings
 }
 
+// NewBaseModel initializes and returns a new BaseModel with the given ProgramContext and configuration options.
 func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[Cfg]) BaseModel[Cfg] {
 	m := BaseModel[Cfg]{
 		Default:            options.Default,
@@ -61,6 +64,7 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 	return m
 }
 
+// UpdateBase processes incoming messages and updates the BaseModel state, returning the updated model and commands.
 func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 	var cmds []tea.Cmd
 
@@ -90,13 +94,10 @@ func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 
 	m.UpdateProgramContext(m.Ctx)
 
-	cmds = append(
-		cmds,
-	)
-
 	return m, tea.Batch(cmds...)
 }
 
+// ViewBase generates a styled horizontal layout for rendering the provided content within the model's context.
 func (m BaseModel[Cfg]) ViewBase(content string) string {
 	return m.Ctx.Styles.Page.ContainerStyle.Render(
 		lipgloss.JoinHorizontal(
@@ -106,6 +107,7 @@ func (m BaseModel[Cfg]) ViewBase(content string) string {
 	)
 }
 
+// ViewDebug generates a debug view as a *strings.Builder, displaying detailed layout and contextual information.
 func (m BaseModel[Cfg]) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
@@ -131,16 +133,18 @@ func (m BaseModel[Cfg]) ViewDebug() *strings.Builder {
 	return &s
 }
 
+// UpdateProgramContext updates the program context for the BaseModel and its associated components: main content and sidebar.
 func (m BaseModel[Cfg]) UpdateProgramContext(ctx *context.ProgramContext) {
 	if ctx == nil {
 		return
 	}
 
-	m.Ctx = ctx
+	// m.Ctx = ctx
 	m.CurrentMainContent.UpdateProgramContext(ctx)
 	m.CurrentSidebar.UpdateProgramContext(ctx)
 }
 
+// OnWindowSizeChanged updates the program context and synchronizes dimensions when the window size changes.
 func (m BaseModel[Cfg]) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	if ctx == nil {
 		return
@@ -152,6 +156,7 @@ func (m BaseModel[Cfg]) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	m.CurrentSidebar.OnWindowSizeChanged(m.Ctx)
 }
 
+// SyncDimensions synchronizes the dimensions of the main content and sidebar based on the provided ProgramContext.
 func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
@@ -163,6 +168,7 @@ func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.Pro
 	return m.Ctx
 }
 
+// SyncMainContentDimensions adjusts dimensions of the main content area based on the context and sidebar visibility.
 func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
@@ -183,6 +189,7 @@ func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *
 	return m.Ctx
 }
 
+// SyncSidebarDimensions recalculates and updates the dimensions of the sidebar and its content in the ProgramContext.
 func (m BaseModel[Cfg]) SyncSidebarDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx

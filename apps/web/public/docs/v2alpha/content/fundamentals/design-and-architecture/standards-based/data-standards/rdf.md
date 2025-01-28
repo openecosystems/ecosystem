@@ -46,19 +46,19 @@ Then we need to repeat this process for the last name. There is no `Predicate` c
 
 This is John Doe:
 
-| Subject                                                            | Predicate                               | Object |
-| ------------------------------------------------------------------ | --------------------------------------- | ------ |
+| Subject                                                                 | Predicate                               | Object |
+| ----------------------------------------------------------------------- | --------------------------------------- | ------ |
 | `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/firstName`   | John   |
 | `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/family_name` | Doe    |
 
 Now let's say that John Doe is married to Jane Doe. We'd have to create another two `Triples` for `Jane`, and then we can create another `Triple` to marry the two. There is no existing [IRI](/fundamentals/design-and-architecture/standards-based/data-standards/iri) for "married to", but there is one for "knows". So here is John marrying Jane:
 
-| Subject                                                            | Predicate                               | Object                                                             |
-| ------------------------------------------------------------------ | --------------------------------------- | ------------------------------------------------------------------ |
-| `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/firstName`   | John                                                               |
-| `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/family_name` | Doe                                                                |
-| `http://openecosystems.com/person#7b9c0cad-a13e-4e42-850d-d7d0d0c50160` | `http://xmlns.com/foaf/0.1/firstName`   | Jane                                                               |
-| `http://openecosystems.com/person#7b9c0cad-a13e-4e42-850d-d7d0d0c50160` | `http://xmlns.com/foaf/0.1/family_name` | Doe                                                                |
+| Subject                                                                 | Predicate                               | Object                                                                  |
+| ----------------------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------- |
+| `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/firstName`   | John                                                                    |
+| `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/family_name` | Doe                                                                     |
+| `http://openecosystems.com/person#7b9c0cad-a13e-4e42-850d-d7d0d0c50160` | `http://xmlns.com/foaf/0.1/firstName`   | Jane                                                                    |
+| `http://openecosystems.com/person#7b9c0cad-a13e-4e42-850d-d7d0d0c50160` | `http://xmlns.com/foaf/0.1/family_name` | Doe                                                                     |
 | `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` | `http://xmlns.com/foaf/0.1/knows`       | `http://openecosystems.com/person#22761879-a876-4e38-a9a0-9e44fe498e3e` |
 
 ## XML Implications

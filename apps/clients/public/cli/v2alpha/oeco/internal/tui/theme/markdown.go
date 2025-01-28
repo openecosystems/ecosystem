@@ -7,6 +7,8 @@ const (
 	defaultMargin     = 2
 )
 
+// DarkStyleConfig defines a set of ANSI style configurations for a dark theme.
+// LightStyleConfig defines a set of ANSI style configurations for a light theme.
 var (
 	// DarkStyleConfig is a modified version of the default DarkStyleConfig
 	DarkStyleConfig = ansi.StyleConfig{
@@ -427,6 +429,11 @@ var (
 	}
 )
 
-func boolPtr(b bool) *bool       { return &b }
+// boolPtr returns a pointer to the given boolean value.
+func boolPtr(b bool) *bool { return &b }
+
+// stringPtr returns a pointer to the given string.
 func stringPtr(s string) *string { return &s }
-func uintPtr(u uint) *uint       { return &u }
+
+// uintPtr returns a pointer to the given uint value.
+func uintPtr(u uint) *uint { return &u }

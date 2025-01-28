@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     branches:
-      - main-disabled
+      - main
 
 #concurrency:
 #  group: snapshot

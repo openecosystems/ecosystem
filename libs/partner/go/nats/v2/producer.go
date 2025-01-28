@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"libs/partner/go/zap/v1"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/sdk/v2alpha"
+	zaploggerv1 "libs/partner/go/zap/v1"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	"connectrpc.com/connect"
 
@@ -17,7 +17,8 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 )
 
-func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {
+// MultiplexCommandSync sends a command synchronously by publishing it to a NATS stream and awaiting a reply.
+func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {
 	if command == nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecCommand object is required"))
 	}
@@ -67,7 +68,8 @@ func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, co
 	return reply, err
 }
 
-func (b *Binding) MultiplexEventSync(ctx context.Context, s *specv2pb.Spec, event *SpecEvent) (*nats.Msg, error) {
+// MultiplexEventSync sends an event to a multiplexed stream and waits for the response or error within the specified timeout.
+func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event *SpecEvent) (*nats.Msg, error) {
 	if event == nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecEvent object is required"))
 	}

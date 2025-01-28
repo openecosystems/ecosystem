@@ -29,11 +29,6 @@ we use Event Sourcing to persist multi-service transactions, and Command Query R
 
 #### Command Query Responsibility Separation (CQRS)
 
-
 #### Event Sourcing
 
-
-
 ### Polyglot Persistence
-
-

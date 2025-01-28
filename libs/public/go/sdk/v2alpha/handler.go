@@ -17,20 +17,25 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
+// ConfigurationServiceCreateConfigurationProcedure defines the RPC procedure path for creating a new configuration.
 const (
 	ConfigurationServiceCreateConfigurationProcedure = "/platform.configuration.v2alpha.ConfigurationService/CreateConfiguration"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+// configurationServiceServiceDescriptor describes the ConfigurationService service descriptor from the proto file.
+// configurationServiceCreateConfigurationMethodDescriptor describes the CreateConfiguration method descriptor.
 var (
 	configurationServiceServiceDescriptor                   = v2alpha.File_platform_configuration_v2alpha_configuration_proto.Services().ByName("ConfigurationService")
 	configurationServiceCreateConfigurationMethodDescriptor = configurationServiceServiceDescriptor.Methods().ByName("CreateConfiguration")
 )
 
+// DynamicConnectorClient is an interface that defines a dynamic gRPC client for creating configurations.
+// DynamicUnary sends a dynamic unary request to create a configuration and returns the response or an error.
 type DynamicConnectorClient interface {
 	DynamicUnary(context.Context, *connect.Request[v2alpha.CreateConfigurationRequest]) (*connect.Response[v2alpha.CreateConfigurationResponse], error)
 }
 
+// NewDynamicConnectorClient creates a new client for dynamic connector operations using the provided HTTP client and base URL.
 func NewDynamicConnectorClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) DynamicConnectorClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &dynamicConnectorClient{
@@ -43,18 +48,22 @@ func NewDynamicConnectorClient(httpClient connect.HTTPClient, baseURL string, op
 	}
 }
 
+// dynamicConnectorClient represents a client for managing dynamic configurations via remote API operations.
 type dynamicConnectorClient struct {
 	createConfiguration *connect.Client[v2alpha.CreateConfigurationRequest, v2alpha.CreateConfigurationResponse]
 }
 
+// DynamicUnary performs a unary RPC call using the createConfiguration client to handle configuration creation requests.
 func (c *dynamicConnectorClient) DynamicUnary(ctx context.Context, req *connect.Request[v2alpha.CreateConfigurationRequest]) (*connect.Response[v2alpha.CreateConfigurationResponse], error) {
 	return c.createConfiguration.CallUnary(ctx, req)
 }
 
+// DynamicConnectorHandler defines an interface for dynamically handling unary requests with context and specific responses.
 type DynamicConnectorHandler interface {
 	DynamicUnary(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[v2alpha.CreateConfigurationResponse], error)
 }
 
+// NewDynamicConnectorHandler creates an HTTP handler that dynamically resolves methods for a given Connector with options.
 func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) http.Handler {
 	_c := *c
 	_c.MethodsByPath()
@@ -64,7 +73,7 @@ func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) htt
 		if method, ok := mpb[r.URL.Path]; ok {
 			// i := dynamicpb.NewMessage(method.Input).Type()
 			// o := dynamicpb.NewMessage(method.Output).Type()
-			g := func(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
+			g := func(_ context.Context, _ *connect.Request[emptypb.Empty]) (*connect.Response[emptypb.Empty], error) {
 				//example := v2alpha.CreateConfigurationResponse{
 				//	SpecContext: &specv2pb.SpecResponseContext{
 				//		ResponseValidation: &typev2pb.ResponseValidation{
@@ -121,7 +130,9 @@ func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) htt
 	})
 }
 
-// ConvertStructToDynamicMessage converts a struct to a dynamicpb.Message based on a MessageDescriptor
+// ConvertStructToDynamicMessage converts a Go struct into a protobuf dynamic message using the provided message descriptor.
+// input is the Go struct to convert; messageDescriptor defines the structure of the target dynamic message.
+// Returns a dynamically built protobuf message or an error if the conversion fails.
 func ConvertStructToDynamicMessage(input interface{}, messageDescriptor protoreflect.MessageDescriptor) (*dynamicpb.Message, error) {
 	// Create an empty dynamic message from the descriptor
 	message := dynamicpb.NewMessage(messageDescriptor)

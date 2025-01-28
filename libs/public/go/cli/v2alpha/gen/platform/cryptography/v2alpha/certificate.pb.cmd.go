@@ -22,8 +22,8 @@ var CertificateServiceServiceCmd = &cobra.Command{
 
 func init() {
 
-	CertificateServiceServiceCmd.AddCommand(CreateCertificateV2AlphaCmd)
+	CertificateServiceServiceCmd.AddCommand(VerifyCertificateV2AlphaCmd)
 
-	CertificateServiceServiceCmd.AddCommand(CreateAndSignCertificateV2AlphaCmd)
+	CertificateServiceServiceCmd.AddCommand(SignCertificateV2AlphaCmd)
 
 }

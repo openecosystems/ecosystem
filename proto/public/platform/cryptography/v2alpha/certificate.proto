@@ -5,6 +5,7 @@ package platform.cryptography.v2alpha;
 import "google/api/annotations.proto";
 import "platform/options/v2/annotations.proto";
 import "platform/spec/v2/spec.proto";
+import "platform/type/v2/file.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -35,40 +36,33 @@ message CertificateConfiguration {
 }
 
 service CertificateService {
-
-  // Method to CreateCertificate to events based on scopes
-  rpc CreateCertificate(CreateCertificateRequest) returns (stream CreateCertificateResponse) {
-    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+  
+  // Method to VerifyCertificate to events based on scopes
+  rpc VerifyCertificate(VerifyCertificateRequest) returns (VerifyCertificateResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
     option (google.api.http) = {
-      post: "/v2alpha/cryptography/certificate/create"
+      post: "/v2alpha/cryptography/certificate/verify"
       body: "*"
     };
   }
 
-  // Method to CreateAndSignCertificate to events based on scopes
-  rpc CreateAndSignCertificate(CreateAndSignCertificateRequest) returns (CreateAndSignCertificateResponse) {
-    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+  // Method to SignCertificate to events based on scopes
+  rpc SignCertificate(SignCertificateRequest) returns (SignCertificateResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
     option (google.api.http) = {
-      post: "/v2alpha/cryptography/certificate/create"
+      post: "/v2alpha/cryptography/certificate/sign"
       body: "*"
     };
   }
 
 }
 
-// Supported event type for subscription.
-enum CertificateType {
-  CERTIFICATE_TYPE_UNSPECIFIED = 0; // Unspecified or unknown subscription type.
-  CERTIFICATE_TYPE_ORGANIZATION = 1; // Certificate for an organization.
-  CERTIFICATE_TYPE_ECOSYSTEM = 2; // Certificate for an ecosystem
-  CERTIFICATE_TYPE_USER = 3; // Certificate for a user.
-}
-
-// The current status of a event
+// The current status of a certificate
 enum EventCertificateStatus {
   EVENT_CERTIFICATE_STATUS_UNSPECIFIED = 0; // Unspecified or unknown status.
-  EVENT_CERTIFICATE_STATUS_CREATING = 1; // Certificate is being created.
-  EVENT_CERTIFICATE_STATUS_ERROR = 4; // Error.
+  EVENT_CERTIFICATE_STATUS_VERIFYING = 1; // Certificate is being verified.
+  EVENT_CERTIFICATE_STATUS_SIGNING = 2; // Certificate is being signed.
+  EVENT_CERTIFICATE_STATUS_ERROR = 3; // Error.
 }
 
 enum CertificateCommands {
@@ -76,7 +70,8 @@ enum CertificateCommands {
   option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
 
   CERTIFICATE_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
-  CERTIFICATE_COMMANDS_CREATE_CERTIFICATE = 1;
+  CERTIFICATE_COMMANDS_VERIFY_CERTIFICATE = 1;
+  CERTIFICATE_COMMANDS_SIGN_CERTIFICATE = 2;
 }
 
 enum CertificateEvents {
@@ -84,31 +79,21 @@ enum CertificateEvents {
 
   // Unspecified or unknown event.
   CERTIFICATE_EVENTS_UNSPECIFIED = 0;
-
-  // Event Certificate complete.
-  CERTIFICATE_EVENTS_CREATED_CERTIFICATE = 1 [(platform.options.v2.billing) = {
-    billable: true,
-    metered: true
-  }];
+  CERTIFICATE_EVENTS_VERIFIED_CERTIFICATE = 1;
+  CERTIFICATE_EVENTS_SIGNED_CERTIFICATE = 2;
 
 }
 
-// Request for CreateCertificate
-message CreateCertificateRequest {
+// Request for VerifyCertificate
+message VerifyCertificateRequest {
   option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
 
-  // Name of the Certificate Authority. For example, 'Open Ecosystems, Inc.'
-  string name = 1;
-
-  google.protobuf.Duration duration = 3;
-
-  // Encrypt key with this passphrase and write out key in an encrypted format
-  string encrypt_key_passphrase = 4;
+  platform.type.v2.File certificate = 1;
 
 }
 
-// Response to CreateCertificate
-message CreateCertificateResponse {
+// Response to VerifyCertificate
+message VerifyCertificateResponse {
   option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
 
   // The response context
@@ -117,23 +102,16 @@ message CreateCertificateResponse {
   Certificate certificate = 2;
 }
 
-
-// Request for CreateAndSignCertificate
-message CreateAndSignCertificateRequest {
+// Request for SignCertificate
+message SignCertificateRequest {
   option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
 
-  // Name of the Certificate Authority. For example, 'Open Ecosystems, Inc.'
-  string name = 1;
-
-  google.protobuf.Duration duration = 3;
-
-  // Encrypt key with this passphrase and write out key in an encrypted format
-  string encrypt_key_passphrase = 4;
+  platform.type.v2.File certificate = 1;
 
 }
 
-// Response to CreateAndSignCertificate
-message CreateAndSignCertificateResponse {
+// Response to VerifyCertificate
+message SignCertificateResponse {
   option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
 
   // The response context
@@ -157,5 +135,7 @@ message Certificate {
   string name = 4;
 
   google.protobuf.Duration duration = 6;
+
+  platform.type.v2.File certificate = 7;
 
 }

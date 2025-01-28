@@ -2,13 +2,13 @@ package serverv2alphalib
 
 import (
 	"fmt"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"net/http"
+
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 func edgeRouter(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 		w.Header().Set(sdkv2alphalib.AccessControlAllowOrigin, r.Header.Get(sdkv2alphalib.Origin))
 		w.Header().Set(sdkv2alphalib.AccessControlAllowMethods, "HEAD,OPTIONS,GET,PUT,PATCH,POST,DELETE")
 		w.Header().Set(sdkv2alphalib.AccessControlAllowHeaders, "*")
@@ -20,12 +20,10 @@ func edgeRouter(next http.Handler) http.Handler {
 			r.Header[sdkv2alphalib.Origin] != nil &&
 			r.Header[sdkv2alphalib.AccessControlRequestHeaders] != nil &&
 			r.Header[sdkv2alphalib.AccessControlRequestMethod] != nil {
-
 			if r.Method == http.MethodOptions {
 				w.WriteHeader(http.StatusNoContent) // HTTP 204 No Content
 				return
 			}
-
 		}
 
 		// Handle robots
@@ -41,7 +39,7 @@ func edgeRouter(next http.Handler) http.Handler {
 		// Sanitize Methods
 
 		// Sanitize request headers
-		//sanitizeRequestHeaders(r)
+		// sanitizeRequestHeaders(r)
 
 		// Before sanitization
 		//println("Before sanitization:")
@@ -58,7 +56,7 @@ func edgeRouter(next http.Handler) http.Handler {
 		//	println(k, ":", v[0])
 		//}
 
-		//sanitizeRequestHeaders(r)
+		// sanitizeRequestHeaders(r)
 		// Sanitize Query Strings
 		// Normalize Request
 

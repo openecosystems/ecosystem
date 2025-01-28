@@ -1,12 +1,14 @@
+//nolint:revive
 package sdkv2alphalib
 
 import (
 	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 	"strconv"
 	"strings"
 	"time"
+
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"connectrpc.com/connect"
 
@@ -17,18 +19,64 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
+// DefaultSpecVersion defines the default specification version to be used.
+// DefaultConnectionId specifies the default connection identifier.
 const (
 	DefaultSpecVersion  = "v2"
-	DefaultConnectionId = "corporate"
+	DefaultConnectionId = "corporate" //nolint:revive
 )
 
+// NatsMsgId is used for message deduplication in NATS.
+// ApiKey represents the API key required to access the platform.
+// SentAtKey specifies the timestamp sent by the client (not sanitized).
+// AnonymousIdKey refers to the anonymous identifier in the context principal.
+// PrincipalIdKey is the sanitized principal ID obtained from the authorization workload proxy.
+// PrincipalEmailKey is the sanitized email of the principal.
+// PrincipalTypeKey denotes the type of the principal (sanitized).
+// ConnectionIdKey represents the connection identifier in the context.
+// RequestIdKey is the request identifier sent by the client (not sanitized).
+// B3ContextHeader represents the B3 propagation context header.
+// B3DebugFlagKey indicates the B3 debug flag.
+// B3TraceIDKey contains the B3 trace identifier.
+// B3SpanIDKey holds the B3 span identifier.
+// B3SampledKey indicates if the trace is sampled in the B3 context.
+// B3ParentSpanIDKey represents the B3 parent span identifier.
+// OrganizationSlug refers to the sanitized organization slug from the edge cache.
+// WorkspaceSlug refers to the sanitized workspace slug from the edge cache.
+// WorkspaceJurisdictionAreaNetworkKey indicates the workspace jurisdiction area network.
+// IpKey specifies the IP information in the context.
+// LocaleKey contains the locale information in the context.
+// TimezoneKey specifies the timezone in the context.
+// UserAgentKey denotes the user agent string.
+// ValidateOnlyKey indicates if the request is for validation only.
+// ChannelNameKey represents the name of the channel in the context.
+// ChannelVersionKey represents the version of the channel in the context.
+// DeviceIdKey contains the device identifier sent by the client (not sanitized).
+// DeviceAdvertisingIdKey refers to the advertising identifier of the device.
+// DeviceManufacturerKey specifies the manufacturer of the device.
+// DeviceModelKey denotes the model of the device.
+// DeviceNameKey represents the name of the device.
+// DeviceTypeKey specifies the type of the device.
+// DeviceTokenKey holds the device token.
+// CityKey specifies the city information (sanitized, from edge cache).
+// CountryKey contains the country information (sanitized, from edge cache).
+// LatitudeKey provides the latitude information (sanitized, from edge cache).
+// LongitudeKey provides the longitude information (sanitized, from edge cache).
+// SpeedKey indicates the speed information (sanitized, from edge cache).
+// BluetoothKey indicates Bluetooth usage information (not sanitized).
+// CellularKey indicates cellular network information (not sanitized).
+// WifiKey indicates Wi-Fi network usage information (not sanitized).
+// CarrierKey specifies the carrier information in the network context.
+// OsNameKey provides the name of the operating system (not sanitized).
+// OsVersionKey specifies the version of the operating system (not sanitized).
+// FieldMask contains the field mask data sent in the spec (not sanitized).
 const (
 
 	// NatsMsgId Message Deduplication
 	NatsMsgId = "Nats-Msg-Id"
 
 	// ApiKey API Key to access the platform
-	ApiKey = "x-spec-apikey"
+	ApiKey = "x-spec-apikey" //nolint:gosec
 	// SentAtKey Spec
 	// Not sanitized and allowed from the client
 	SentAtKey = "x-spec-sent-at"
@@ -76,7 +124,7 @@ const (
 	DeviceModelKey         = "x-spec-device-model"
 	DeviceNameKey          = "x-spec-device-name"
 	DeviceTypeKey          = "x-spec-device-type"
-	DeviceTokenKey         = "x-spec-device-token"
+	DeviceTokenKey         = "x-spec-device-token" //nolint:gosec
 
 	// CityKey Spec.Context.Location
 	// Sanitized and comes from edge cache
@@ -103,11 +151,17 @@ const (
 	FieldMask = "x-spec-fieldmask"
 )
 
+// Factory represents an entity responsible for creating and initializing resources or objects.
+// Spec is a pointer to a Spec structure that holds specification details.
+// Headers is a map containing key-value pairs for custom headers.
 type Factory struct {
 	Spec    *specv2pb.Spec
 	Headers map[string]string
 }
 
+// NewFactory creates and initializes a new Factory instance using the provided `connect.AnyRequest`.
+// It extracts headers, processes key metadata, and constructs a structured `specv2pb.Spec` object.
+// Returns a Factory containing the built `specv2pb.Spec` and a map of parsed headers.
 func NewFactory(req connect.AnyRequest) Factory {
 	h := req.Header()
 	headers := make(map[string]string, len(h))

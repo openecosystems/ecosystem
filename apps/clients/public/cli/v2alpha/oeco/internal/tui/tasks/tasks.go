@@ -1,23 +1,29 @@
 package tasks
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"fmt"
 	"sort"
 	"strings"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/lipgloss"
 )
 
+// Model represents the main application state, managing tasks, program context, and the spinner for UI updates.
+//
+//nolint:unused
 type Model struct {
 	Ctx     context.ProgramContext
 	tasks   map[string]context.Task
 	Spinner spinner.Model
 }
 
+// renderRunningTask generates and returns a styled text representation of the currently active or recently processed task.
+// The method sorts tasks by priority, processes their state, and formats the output based on their status and count.
+//
+//nolint:unused
 func (m *Model) renderRunningTask() string {
 	tasks := make([]context.Task, 0, len(m.tasks))
 	for _, value := range m.tasks {
@@ -64,7 +70,7 @@ func (m *Model) renderRunningTask() string {
 	var numProcessing int
 	for _, task := range m.tasks {
 		if task.State == context.TaskStart {
-			numProcessing += 1
+			numProcessing++
 		}
 	}
 

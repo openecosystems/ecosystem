@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"sync"
 
+	natsnodev2 "libs/partner/go/nats/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"github.com/nats-io/nats.go/jetstream"
-	"libs/partner/go/nats/v2"
-	"libs/public/go/sdk/v2alpha"
 )
 
-// Binding struct that holds binding specific fields
+// Binding is the central struct for managing configuration storage and adaptive controls within the application context.
 type Binding struct {
 	ConfigStore                  *jetstream.KeyValue
 	AdaptiveConfigurationControl *AdaptiveConfigurationControl
@@ -18,15 +19,23 @@ type Binding struct {
 	configuration *Configuration
 }
 
+// Bound represents the singleton instance of Binding for managing and accessing configuration-related functionality.
+// BindingName is the unique identifier assigned to the configuration library binding.
 var (
-	Bound       *Binding
+
+	// Bound represents the global instance of the Binding used to manage and access configuration-related functionality.
+	Bound *Binding
+
+	// BindingName is a constant that represents the unique name for the configuration library binding.
 	BindingName = "CONFIGURATION_LIB_BINDING"
 )
 
+// Name returns the unique name of the Binding, which is used for registry and identification purposes.
 func (b *Binding) Name() string {
 	return BindingName
 }
 
+// Validate checks if the Nats Node module is bound, ensuring it is required for the binding to function properly.
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	if natsnodev2.Bound == nil {
 		fmt.Println("Please bind the Nats Node module to use this binding")
@@ -36,6 +45,7 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 	return nil
 }
 
+// Bind initializes and registers the configuration binding in the provided Bindings object and ensures it is only bound once.
 func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
@@ -76,10 +86,12 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 	return bindings
 }
 
+// GetBinding returns the global Binding instance used for configuration-related functionality management.
 func (b *Binding) GetBinding() interface{} {
 	return Bound
 }
 
+// Close safely releases resources and performs cleanup for the Configuration Library Binding.
 func (b *Binding) Close() error {
 	fmt.Println("Closing the Configuration Library Binding")
 	return nil

@@ -1,4 +1,4 @@
-package connector_requests_sidebar
+package connectorrequestssidebar
 
 import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
@@ -8,10 +8,12 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
+// Model represents a sidebar model that extends BaseModel with additional update and view capabilities.
 type Model struct {
 	sidebar.BaseModel
 }
 
+// NewModel initializes and returns a new Model instance with a sidebar base model configured using the provided context.
 func NewModel(ctx *context.ProgramContext) Model {
 	m := Model{}
 	m.BaseModel = sidebar.NewBaseModel(
@@ -25,6 +27,7 @@ func NewModel(ctx *context.ProgramContext) Model {
 	return m
 }
 
+// Update processes a message, updates the model's state, and returns the updated model along with a batch of commands.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var (
 		cmd         tea.Cmd

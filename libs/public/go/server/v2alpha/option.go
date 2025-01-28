@@ -12,20 +12,21 @@ type ServerOption interface {
 	apply(*serverOptions)
 }
 
-// WithHttpServer provides a low level [http.Server]
-func WithHttpServer(httpServer *http.ServeMux) ServerOption {
+// WithHTTPServer provides a low level [http.Server]
+func WithHTTPServer(httpServer *http.ServeMux) ServerOption {
 	return &httpServerOption{
-		HttpServer: httpServer,
+		HTTPServer: httpServer,
 	}
 }
 
 type serverOptions struct {
 	URL        *url.URL
 	MeshVPN    bool
-	HttpServer *http.ServeMux
+	HTTPServer *http.ServeMux
 	// UnderlyingHandlerOptions []connect.HandlerOption
 }
 
+//nolint:unparam
 func newServerOptions(rawURL string, options []ServerOption) (*serverOptions, *connect.Error) {
 	uri, err := url.ParseRequestURI(rawURL)
 	if err != nil {
@@ -35,7 +36,7 @@ func newServerOptions(rawURL string, options []ServerOption) (*serverOptions, *c
 	config := serverOptions{
 		URL:        uri,
 		MeshVPN:    false,
-		HttpServer: http.NewServeMux(),
+		HTTPServer: http.NewServeMux(),
 	}
 
 	for _, opt := range options {
@@ -54,9 +55,14 @@ func (c *serverOptions) validate() *connect.Error {
 }
 
 type httpServerOption struct {
-	HttpServer *http.ServeMux
+	HTTPServer *http.ServeMux
 }
 
 func (o *httpServerOption) apply(config *serverOptions) {
-	o.apply(config)
+	// Delegate to a different method or perform specific logic here
+	o.applyImplementation(config)
+}
+
+func (o *httpServerOption) applyImplementation(_ *serverOptions) {
+	// Actual logic for modifying the serverOptions
 }

@@ -18,19 +18,15 @@ launch-templates:
           paths: 'node_modules'
           base-branch: 'main'
 
-      #      - name: Restore Browser Binary Cache
-      #        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
-      #        inputs:
-      #          key: 'package-lock.json|yarn.lock|pnpm-lock.yaml|"browsers"'
-      #          paths: |
-      #            '../.cache/Cypress'
-      #          base-branch: 'main'
-
       - name: Install Node Modules
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
 
-      #      - name: Install Browsers (if needed)
-      #        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-browsers/main.yaml'
+      - name: Restore Binary Cache
+        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
+        inputs:
+          key: '"libs/partner/go/nebula/v1/ca/bin/v1.9.4"'
+          paths: 'libs/partner/go/nebula/v1/ca/bin'
+          base-branch: 'main'
 
       - name: Brew
         script: |
@@ -51,7 +47,7 @@ launch-templates:
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
           brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
           /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-          echo "PATH=$PATH" >> $NX_CLOUD_ENV
+          echo "PATH=$PATH:/home/workflows/go/bin" >> $NX_CLOUD_ENV
           echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
           echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
           echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
@@ -95,6 +91,11 @@ launch-templates:
 #          sudo apt-get install -y openjdk-17-jdk
 #          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
 #          chmod +x go/bin/protoc-gen-grpc-java
+
+      - name: Install Binary Cache (if needed)
+        script: |
+          cd libs/partner/go/nebula/v1
+          make generate
 
       - name: Git Config
         script: |

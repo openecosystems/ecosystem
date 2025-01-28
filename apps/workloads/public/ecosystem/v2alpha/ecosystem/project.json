@@ -1,0 +1,135 @@
+{
+  "name": "ecosystem-v2alpha",
+  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/workloads/public/ecosystem/v2alpha/ecosystem",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/app"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "command": "go build -o ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/app",
+        "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem"
+      },
+      "configurations": {
+        "production": {
+          "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/app"
+        }
+      },
+      "dependsOn": ["pre-build"]
+    },
+    "pre-build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/spec.yaml",
+        "{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/package.json"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
+          "cp spec.yaml ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
+          "cp package.json ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
+          "cp .goreleaser.yaml ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
+          "cp Dockerfile ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem"
+
+        ],
+        "parallel": false,
+        "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem"
+      }
+    },
+    "serve": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "cmd": "go",
+        "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem",
+        "main": "main.go"
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "context": "dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
+        "platforms": ["linux/amd64"],
+        "tags": ["workloads/public/ecosystem/v2alpha/ecosystem"]
+      }
+    },
+    "publish": {
+      "executor": "@platform/nx-container:push",
+      "options": {
+        "image": "workloads/public/ecosystem/v2alpha/ecosystem",
+        "version": {
+          "path": "apps/workloads/public/ecosystem/v2alpha/ecosystem/package.json",
+          "key": "version"
+        },
+        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "apps/workloads/public/ecosystem/v2alpha/ecosystem"
+      }
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/public/ecosystem/v2alpha/ecosystem/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/public/ecosystem/v2alpha/ecosystem/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem"],
+      "options": {
+        "commands": [
+          "goreleaser release --config apps/workloads/public/ecosystem/v2alpha/ecosystem/.goreleaser.yaml --nightly --clean --verbose"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:ecosystem",
+    "version:v2alpha",
+    "exposure:external",
+    "language:golang"
+  ]
+}

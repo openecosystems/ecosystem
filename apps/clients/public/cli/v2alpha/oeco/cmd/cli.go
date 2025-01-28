@@ -2,32 +2,35 @@ package cmd
 
 import (
 	"context"
-	_ "embed"
 	"fmt"
+	"os"
+
+	"github.com/apex/log"
+	"github.com/apex/log/handlers/cli"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/muesli/termenv"
+	"github.com/spf13/cobra"
+
+	configurationv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
+	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
+	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-	"os"
-
-	"apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
-	"apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
-	"apps/clients/public/cli/v2alpha/oeco/internal/cryptography/v2alpha"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
-
-	"github.com/charmbracelet/lipgloss"
-	"github.com/muesli/termenv"
-
-	"github.com/apex/log"
-	"github.com/apex/log/handlers/cli"
-	"github.com/spf13/cobra"
 )
 
+// DefaultVersion defines the fallback version identifier when no compile-time version is provided.
 const (
 	DefaultVersion = "0.0.0"
 )
 
-// Global Flags that can override configuration at runtime
+// context2 holds a secondary context string for the application.
+// debug indicates whether debug mode is enabled.
+// version determines if the application should display its version and exit.
+// verboseLog toggles verbose logging mode.
+// logFile specifies the file where logs should be written.
+// quiet suppresses non-essential output.
 var (
 	context2   string
 	debug      bool
@@ -37,6 +40,11 @@ var (
 	quiet      bool
 )
 
+// compileTimeVersion stores the version set at the time of compilation.
+// Version holds the current version of the application determined at runtime.
+// Commit contains the git commit hash corresponding to this build.
+// Date indicates the build date of the application.
+// BuiltBy specifies the entity or user who built the application.
 var (
 	compileTimeVersion string
 	Version            = bestVersion()
@@ -45,11 +53,13 @@ var (
 	BuiltBy            string
 )
 
+// manuallyImplementedSystems is a map of system names to a boolean indicating if the system requires manual command handling.
 var manuallyImplementedSystems = map[string]bool{
 	"cryptography":  true,
 	"configuration": true,
 }
 
+// AboutPlatformCLI represents metadata about the platform's CLI, including version, commit hash, build date, and builder info.
 type AboutPlatformCLI struct {
 	Version string
 	Commit  string
@@ -57,14 +67,14 @@ type AboutPlatformCLI struct {
 	BuiltBy string
 }
 
-// RootCmd represents the base command when called without any subcommands
+// RootCmd is the root command for the CLI, used to interact with Open Ecosystems securely and efficiently.
 var RootCmd = &cobra.Command{
 	Use:          "oeco",
 	Short:        "Connect to Open Ecosystems",
 	Long:         `Allows you to securely and efficiently interact with Open Economic Systems`,
 	Version:      Version,
 	SilenceUsage: true,
-	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+	PersistentPreRun: func(_ *cobra.Command, _ []string) {
 		if debug {
 			log.SetLevel(log.DebugLevel)
 			log.Debug("debug logging enabled")
@@ -72,6 +82,7 @@ var RootCmd = &cobra.Command{
 	},
 }
 
+// Execute runs the main command-line interface (CLI) program logic, initializing settings, context, and commands.
 func Execute(cli *cliv2alphalib.CLI) {
 	defer cli.GracefulShutdown()
 
@@ -102,7 +113,7 @@ func Execute(cli *cliv2alphalib.CLI) {
 	settings := settingsProvider.GetSettings()
 
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, "settings", settings)
+	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, settings)
 	RootCmd.SetContext(ctx)
 
 	AddCommands(settings)
@@ -113,6 +124,7 @@ func Execute(cli *cliv2alphalib.CLI) {
 	}
 }
 
+// AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
 func AddCommands(settings *specv2pb.SpecSettings) {
 	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
 
@@ -137,11 +149,11 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 	}
 
 	// Manually add certain system commands
-	RootCmd.AddCommand(cryptographyv2alphapbint.SystemCmd)
 	RootCmd.AddCommand(configurationv2alphapbint.SystemCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)
 }
 
+// init initializes the logging handler, persistent flags, and markdown styling based on terminal background settings.
 func init() {
 	log.SetHandler(cli.Default)
 
@@ -159,6 +171,7 @@ func init() {
 	markdown.InitializeMarkdownStyle(termenv.HasDarkBackground())
 }
 
+// bestVersion returns the compile-time specified version if available; otherwise, it defaults to "0.0.0".
 func bestVersion() string {
 	if compileTimeVersion != "" {
 		return compileTimeVersion

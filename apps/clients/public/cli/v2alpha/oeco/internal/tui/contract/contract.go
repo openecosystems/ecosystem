@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 )
 
+// PageSettings defines the configuration and metadata for a page, including its title, default status, and other settings.
 type PageSettings struct {
 	Title         string
 	IsDefault     bool
@@ -15,22 +16,27 @@ type PageSettings struct {
 	Type          config.PageType
 }
 
+// ContextAware is an interface for components that can update or respond to changes in the ProgramContext.
+// It provides the UpdateProgramContext method to receive the current program context instance.
 type ContextAware interface {
 	UpdateProgramContext(ctx *context.ProgramContext)
 }
 
+// Configurable represents an entity that allows customization or adjustment of its properties or behavior.
 type Configurable interface{}
 
+// Responsive defines an interface for components to handle UI responsiveness and dynamic resizing behavior.
 type Responsive interface {
 	SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext
 	OnWindowSizeChanged(ctx *context.ProgramContext)
 }
 
+// Displayable defines an interface for entities that can render or return a string representation for display purposes.
 type Displayable interface {
 	View() string
 }
 
-// Section represents the largest grouping of functionality. A Section can have multiple [Pages]
+// Section defines an interface representing a categorized module containing pages, capable of being displayed and configured.
 type Section interface {
 	GetPages() []Page
 	Configurable
@@ -38,7 +44,9 @@ type Section interface {
 	Displayable
 }
 
-// Tabs are a special type of [Component] used to toggle between [Page]s
+// Tabs represents an interface for managing and displaying tab-based UI components with context and configuration support.
+// It combines Configurable, ContextAware, and Displayable interfaces to provide a flexible and dynamic tab system.
+// The GetContentHeight method retrieves the height of the content within the tabs.
 type Tabs interface {
 	GetContentHeight() int
 	Configurable
@@ -46,7 +54,7 @@ type Tabs interface {
 	Displayable
 }
 
-// Page represents a single view of functionality within a [Section]. A [Page] is made up of multiple [Component]s
+// Page represents a configurable and responsive UI element with context awareness and display capabilities.
 type Page interface {
 	GetPageSettings() PageSettings
 	Configurable
@@ -55,7 +63,7 @@ type Page interface {
 	Displayable
 }
 
-// MainContent is a special type of [Component] that contains the main details of a [Page]
+// MainContent is an interface that combines Configurable, ContextAware, Responsive, and Displayable behaviors.
 type MainContent interface {
 	Configurable
 	ContextAware
@@ -63,7 +71,7 @@ type MainContent interface {
 	Displayable
 }
 
-// Sidebar is a special type of [Component] that highlights details of a [Page]'s [Component]s
+// Sidebar represents a UI component, ensuring open/close state handling, configurability, responsiveness, and display logic.
 type Sidebar interface {
 	IsOpen() bool
 	Open()
@@ -74,7 +82,8 @@ type Sidebar interface {
 	Displayable
 }
 
-// Footer is a special type of [Component] that shows different capabilities
+// Footer represents an interface for footer components in the application.
+// Footer provides functionalities for state checking, configuration, context updates, and display rendering.
 type Footer interface {
 	IsOpen() bool
 	Configurable
@@ -82,4 +91,5 @@ type Footer interface {
 	Displayable
 }
 
+// Task represents a generic interface for tasks, used as a placeholder for various implementations.
 type Task interface{}

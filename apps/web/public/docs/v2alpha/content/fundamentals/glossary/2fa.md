@@ -24,7 +24,7 @@ There are three mechanisms for authentication:
 | Mechanism  | Meaning                     | Example                                      |
 | ---------- | --------------------------- | -------------------------------------------- |
 | Inherence  | Something the user _is_.    | Fingerprint, Facial recognition.             |
-| Knowledge  | Something the user _knows_. | Open Ecosystems password.                        |
+| Knowledge  | Something the user _knows_. | Open Ecosystems password.                    |
 | Possession | Something the user _has_.   | An authentication code from a mobile device. |
 
 Two-factor authentication (2FA) adds an additional layer of login security to Open Ecosystems accounts by requiring users to provide two mechanisms of authentication instead of just one.

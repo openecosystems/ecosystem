@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/log"
 )
 
+// Theme defines a structure containing color configurations using lipgloss.AdaptiveColor for light and dark mode adaptability.
 type Theme struct {
 	PrimaryColor       lipgloss.AdaptiveColor
 	SecondaryColor     lipgloss.AdaptiveColor
@@ -27,6 +28,7 @@ type Theme struct {
 	ErrorText          lipgloss.AdaptiveColor // config.Theme.Colors.Text.Error
 }
 
+// DefaultTheme defines the default color scheme for the application's UI, using adaptive light and dark mode colors.
 var DefaultTheme = &Theme{
 	PrimaryColor:       lipgloss.AdaptiveColor{Light: "#5A56E0", Dark: "#7571F9"},
 	SecondaryColor:     lipgloss.AdaptiveColor{Light: "#FE5F86", Dark: "#FE5F86"},
@@ -47,6 +49,7 @@ var DefaultTheme = &Theme{
 	ErrorText:          lipgloss.AdaptiveColor{Light: "001", Dark: "001"},
 }
 
+// ParseTheme generates a Theme object based on the given configuration, merging user-defined colors with default values.
 func ParseTheme(cfg *config.Config) Theme {
 	_shimHex := func(hex config.HexColor, fallback lipgloss.AdaptiveColor) lipgloss.AdaptiveColor {
 		if hex == "" {

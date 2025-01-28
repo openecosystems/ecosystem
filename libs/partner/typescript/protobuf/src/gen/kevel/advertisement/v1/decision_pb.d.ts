@@ -430,12 +430,12 @@ export declare type Data = Message<"kevel.advertisement.v1.Data"> & {
   width: number;
 
   /**
-   * @generated from field: string imageUrl = 3;
+   * @generated from field: string image_url = 3;
    */
   imageUrl: string;
 
   /**
-   * @generated from field: string fileName = 4;
+   * @generated from field: string file_name = 4;
    */
   fileName: string;
 };

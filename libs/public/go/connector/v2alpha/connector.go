@@ -9,12 +9,13 @@ import (
 	"strings"
 	"syscall"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
 	"connectrpc.com/connect"
 
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/protobuf/go/protobuf/gen/platform/type/v2"
 	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 
 	"github.com/slackhq/nebula/service"
 	"google.golang.org/protobuf/reflect/protoreflect"
@@ -23,6 +24,7 @@ import (
 
 var quit = make(chan os.Signal, 1)
 
+// Method represents a gRPC method within a service, including its name, input/output descriptors, and schema information.
 type Method struct {
 	ProcedureName string
 	Input         protoreflect.MessageDescriptor
@@ -30,6 +32,7 @@ type Method struct {
 	Schema        protoreflect.MethodDescriptor
 }
 
+// Connector represents a structure for managing service bindings, procedures, configuration options, & service handlers.
 type Connector struct {
 	Bindings      *sdkv2alphalib.Bindings
 	Bounds        []sdkv2alphalib.Binding
@@ -44,9 +47,12 @@ type Connector struct {
 	Opts          []ConnectorOption
 
 	options *connectorOptions
-	err     error
+	// err     error
 }
 
+// NewConnector initializes a new Connector instance with the provided context, bindings, and optional configuration options.
+// It resolves and validates the configuration, registers bindings, processes options, and returns the constructed Connector.
+// Panics if configuration resolution or validation fails.
 func NewConnector(ctx context.Context, bounds []sdkv2alphalib.Binding, opts ...ConnectorOption) *Connector {
 	c := Configuration{}
 	c.ResolveConfiguration()
@@ -71,6 +77,7 @@ func NewConnector(ctx context.Context, bounds []sdkv2alphalib.Binding, opts ...C
 	}
 }
 
+// NewDynamicConnectorWithSchema creates a dynamically configured Connector using the provided schema, bindings, and options.
 func NewDynamicConnectorWithSchema(ctx context.Context, service protoreflect.ServiceDescriptor, bounds []sdkv2alphalib.Binding, opts ...ConnectorOption) *Connector {
 	procedureName := "/" + string(service.FullName()) + "/"
 	methods := make([]*Method, 0, service.Methods().Len())
@@ -121,6 +128,9 @@ func NewDynamicConnectorWithSchema(ctx context.Context, service protoreflect.Ser
 	return connector
 }
 
+// NewDynamicConnector creates a new instance of Connector based on the given service path, bindings, and optional configurations.
+// It resolves the service schema dynamically and initializes the Connector with methods and bindings information.
+// Returns a Connector, which may include an error if schema resolution fails.
 func NewDynamicConnector(ctx context.Context, servicePath string, bounds []sdkv2alphalib.Binding, opts ...ConnectorOption) *Connector {
 	serviceName := strings.TrimSuffix(strings.TrimPrefix(servicePath, "/"), "/")
 	desc, err := protoregistry.GlobalFiles.FindDescriptorByName(protoreflect.FullName(serviceName))
@@ -138,6 +148,7 @@ func NewDynamicConnector(ctx context.Context, servicePath string, bounds []sdkv2
 
 // func (ImplementedDynamicServiceHandler) DynamicUnary(context.Context, *connect.Request[dynamicpb.Message]) (*connect.Response[dynamicpb.Message], error) {
 
+// DynamicUnary processes a CreateConfigurationRequest and returns a CreateConfigurationResponse or an error.
 func (connector *Connector) DynamicUnary(_ context.Context, req *connect.Request[v2alpha.CreateConfigurationRequest]) (*connect.Response[v2alpha.CreateConfigurationResponse], error) {
 	// fmt.Println(req.HTTPMethod())
 	// fmt.Println(req.Spec().Schema)
@@ -218,6 +229,7 @@ func (connector *Connector) DynamicUnary(_ context.Context, req *connect.Request
 	//return connect.NewResponse(&dd), nil
 }
 
+// ListenAndProcess initializes the connector's context, manages its lifecycle, and delegates processing tasks with context.
 func (connector *Connector) ListenAndProcess() {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -228,6 +240,7 @@ func (connector *Connector) ListenAndProcess() {
 	connector.ListenAndProcessWithCtx(ctx)
 }
 
+// ListenAndProcessWithCtx listens on registered channels and processes events while managing graceful shutdowns using context.
 func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
 	var specListenableErr chan sdkv2alphalib.SpecListenableErr
 	if connector.Bindings.RegisteredListenableChannels != nil {
@@ -256,21 +269,19 @@ func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
 		defer cancel()
 
 		sdkv2alphalib.ShutdownBindings(connector.Bindings)
-
 	}
 }
 
+// ListenAndProcessSpecListenable starts listening on all registered listenable channels and returns a channel for errors.
 func (connector *Connector) ListenAndProcessSpecListenable() chan sdkv2alphalib.SpecListenableErr {
 	listeners := connector.Bindings.RegisteredListenableChannels
 	listenerErr := make(chan sdkv2alphalib.SpecListenableErr, len(listeners))
 
 	for key, listener := range listeners {
-
 		ctx := context.Background()
 		go listener.Listen(ctx, listenerErr)
 
 		fmt.Println("Registered Listenable: " + key)
-
 	}
 	return listenerErr
 }

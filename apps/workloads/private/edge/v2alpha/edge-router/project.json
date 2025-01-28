@@ -91,7 +91,7 @@
   "tags": [
     "type:app",
     "type:workload",
-    "cycle:public",
+    "cycle:private",
     "system:edge",
     "version:v2alpha",
     "exposure:internal",

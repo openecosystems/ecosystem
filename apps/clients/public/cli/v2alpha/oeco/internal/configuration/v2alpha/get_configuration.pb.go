@@ -4,17 +4,16 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	"libs/public/go/sdk/gen/configuration/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	configurationv2alphapbsdk "libs/public/go/sdk/gen/configuration/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"connectrpc.com/connect"
 
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/spf13/cobra"
 )
@@ -25,13 +24,14 @@ var (
 	getConfigurationValidateOnly bool
 )
 
+// GetConfigurationV2AlphaCmd defines a cobra command for fetching and handling workspace configurations.
 var GetConfigurationV2AlphaCmd = &cobra.Command{
 	Use:   "getConfiguration",
 	Short: ``,
 	Long: `
  Get workspace location
 `,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(cmd *cobra.Command, _ []string) {
 		log.Debug("Calling getConfiguration configuration")
 
 		_request, err := cmd.Flags().GetString("request")
@@ -45,7 +45,7 @@ var GetConfigurationV2AlphaCmd = &cobra.Command{
 
 		_r := configurationv2alphapb.GetConfigurationRequest{}
 		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -74,6 +74,7 @@ var GetConfigurationV2AlphaCmd = &cobra.Command{
 	},
 }
 
+// init initializes persistent flags for the GetConfigurationV2AlphaCmd command, including request, validate-only, and field-mask.
 func init() {
 	GetConfigurationV2AlphaCmd.PersistentFlags().StringVarP(&getConfigurationRequest, "request", "r", "{}", "Request for api call")
 	GetConfigurationV2AlphaCmd.PersistentFlags().BoolVar(&getConfigurationValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")

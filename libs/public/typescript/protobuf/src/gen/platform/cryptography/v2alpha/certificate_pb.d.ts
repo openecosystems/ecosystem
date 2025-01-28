@@ -4,8 +4,9 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
-import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { File } from "../../type/v2/file_pb";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
+import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
 
 /**
  * Describes the file platform/cryptography/v2alpha/certificate.proto.
@@ -29,43 +30,29 @@ export declare type CertificateConfiguration = Message<"platform.cryptography.v2
 export declare const CertificateConfigurationSchema: GenMessage<CertificateConfiguration>;
 
 /**
- * Request for CreateCertificate
+ * Request for VerifyCertificate
  *
- * @generated from message platform.cryptography.v2alpha.CreateCertificateRequest
+ * @generated from message platform.cryptography.v2alpha.VerifyCertificateRequest
  */
-export declare type CreateCertificateRequest = Message<"platform.cryptography.v2alpha.CreateCertificateRequest"> & {
+export declare type VerifyCertificateRequest = Message<"platform.cryptography.v2alpha.VerifyCertificateRequest"> & {
   /**
-   * Name of the Certificate Authority. For example, 'Open Ecosystems, Inc.'
-   *
-   * @generated from field: string name = 1;
+   * @generated from field: platform.type.v2.File certificate = 1;
    */
-  name: string;
-
-  /**
-   * @generated from field: google.protobuf.Duration duration = 3;
-   */
-  duration?: Duration;
-
-  /**
-   * Encrypt key with this passphrase and write out key in an encrypted format
-   *
-   * @generated from field: string encrypt_key_passphrase = 4;
-   */
-  encryptKeyPassphrase: string;
+  certificate?: File;
 };
 
 /**
- * Describes the message platform.cryptography.v2alpha.CreateCertificateRequest.
- * Use `create(CreateCertificateRequestSchema)` to create a new message.
+ * Describes the message platform.cryptography.v2alpha.VerifyCertificateRequest.
+ * Use `create(VerifyCertificateRequestSchema)` to create a new message.
  */
-export declare const CreateCertificateRequestSchema: GenMessage<CreateCertificateRequest>;
+export declare const VerifyCertificateRequestSchema: GenMessage<VerifyCertificateRequest>;
 
 /**
- * Response to CreateCertificate
+ * Response to VerifyCertificate
  *
- * @generated from message platform.cryptography.v2alpha.CreateCertificateResponse
+ * @generated from message platform.cryptography.v2alpha.VerifyCertificateResponse
  */
-export declare type CreateCertificateResponse = Message<"platform.cryptography.v2alpha.CreateCertificateResponse"> & {
+export declare type VerifyCertificateResponse = Message<"platform.cryptography.v2alpha.VerifyCertificateResponse"> & {
   /**
    * The response context
    *
@@ -80,49 +67,35 @@ export declare type CreateCertificateResponse = Message<"platform.cryptography.v
 };
 
 /**
- * Describes the message platform.cryptography.v2alpha.CreateCertificateResponse.
- * Use `create(CreateCertificateResponseSchema)` to create a new message.
+ * Describes the message platform.cryptography.v2alpha.VerifyCertificateResponse.
+ * Use `create(VerifyCertificateResponseSchema)` to create a new message.
  */
-export declare const CreateCertificateResponseSchema: GenMessage<CreateCertificateResponse>;
+export declare const VerifyCertificateResponseSchema: GenMessage<VerifyCertificateResponse>;
 
 /**
- * Request for CreateAndSignCertificate
+ * Request for SignCertificate
  *
- * @generated from message platform.cryptography.v2alpha.CreateAndSignCertificateRequest
+ * @generated from message platform.cryptography.v2alpha.SignCertificateRequest
  */
-export declare type CreateAndSignCertificateRequest = Message<"platform.cryptography.v2alpha.CreateAndSignCertificateRequest"> & {
+export declare type SignCertificateRequest = Message<"platform.cryptography.v2alpha.SignCertificateRequest"> & {
   /**
-   * Name of the Certificate Authority. For example, 'Open Ecosystems, Inc.'
-   *
-   * @generated from field: string name = 1;
+   * @generated from field: platform.type.v2.File certificate = 1;
    */
-  name: string;
-
-  /**
-   * @generated from field: google.protobuf.Duration duration = 3;
-   */
-  duration?: Duration;
-
-  /**
-   * Encrypt key with this passphrase and write out key in an encrypted format
-   *
-   * @generated from field: string encrypt_key_passphrase = 4;
-   */
-  encryptKeyPassphrase: string;
+  certificate?: File;
 };
 
 /**
- * Describes the message platform.cryptography.v2alpha.CreateAndSignCertificateRequest.
- * Use `create(CreateAndSignCertificateRequestSchema)` to create a new message.
+ * Describes the message platform.cryptography.v2alpha.SignCertificateRequest.
+ * Use `create(SignCertificateRequestSchema)` to create a new message.
  */
-export declare const CreateAndSignCertificateRequestSchema: GenMessage<CreateAndSignCertificateRequest>;
+export declare const SignCertificateRequestSchema: GenMessage<SignCertificateRequest>;
 
 /**
- * Response to CreateAndSignCertificate
+ * Response to VerifyCertificate
  *
- * @generated from message platform.cryptography.v2alpha.CreateAndSignCertificateResponse
+ * @generated from message platform.cryptography.v2alpha.SignCertificateResponse
  */
-export declare type CreateAndSignCertificateResponse = Message<"platform.cryptography.v2alpha.CreateAndSignCertificateResponse"> & {
+export declare type SignCertificateResponse = Message<"platform.cryptography.v2alpha.SignCertificateResponse"> & {
   /**
    * The response context
    *
@@ -137,10 +110,10 @@ export declare type CreateAndSignCertificateResponse = Message<"platform.cryptog
 };
 
 /**
- * Describes the message platform.cryptography.v2alpha.CreateAndSignCertificateResponse.
- * Use `create(CreateAndSignCertificateResponseSchema)` to create a new message.
+ * Describes the message platform.cryptography.v2alpha.SignCertificateResponse.
+ * Use `create(SignCertificateResponseSchema)` to create a new message.
  */
-export declare const CreateAndSignCertificateResponseSchema: GenMessage<CreateAndSignCertificateResponse>;
+export declare const SignCertificateResponseSchema: GenMessage<SignCertificateResponse>;
 
 /**
  * @generated from message platform.cryptography.v2alpha.Certificate
@@ -176,6 +149,11 @@ export declare type Certificate = Message<"platform.cryptography.v2alpha.Certifi
    * @generated from field: google.protobuf.Duration duration = 6;
    */
   duration?: Duration;
+
+  /**
+   * @generated from field: platform.type.v2.File certificate = 7;
+   */
+  certificate?: File;
 };
 
 /**
@@ -185,47 +163,7 @@ export declare type Certificate = Message<"platform.cryptography.v2alpha.Certifi
 export declare const CertificateSchema: GenMessage<Certificate>;
 
 /**
- * Supported event type for subscription.
- *
- * @generated from enum platform.cryptography.v2alpha.CertificateType
- */
-export enum CertificateType {
-  /**
-   * Unspecified or unknown subscription type.
-   *
-   * @generated from enum value: CERTIFICATE_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
-
-  /**
-   * Certificate for an organization.
-   *
-   * @generated from enum value: CERTIFICATE_TYPE_ORGANIZATION = 1;
-   */
-  ORGANIZATION = 1,
-
-  /**
-   * Certificate for an ecosystem
-   *
-   * @generated from enum value: CERTIFICATE_TYPE_ECOSYSTEM = 2;
-   */
-  ECOSYSTEM = 2,
-
-  /**
-   * Certificate for a user.
-   *
-   * @generated from enum value: CERTIFICATE_TYPE_USER = 3;
-   */
-  USER = 3,
-}
-
-/**
- * Describes the enum platform.cryptography.v2alpha.CertificateType.
- */
-export declare const CertificateTypeSchema: GenEnum<CertificateType>;
-
-/**
- * The current status of a event
+ * The current status of a certificate
  *
  * @generated from enum platform.cryptography.v2alpha.EventCertificateStatus
  */
@@ -238,18 +176,25 @@ export enum EventCertificateStatus {
   UNSPECIFIED = 0,
 
   /**
-   * Certificate is being created.
+   * Certificate is being verified.
    *
-   * @generated from enum value: EVENT_CERTIFICATE_STATUS_CREATING = 1;
+   * @generated from enum value: EVENT_CERTIFICATE_STATUS_VERIFYING = 1;
    */
-  CREATING = 1,
+  VERIFYING = 1,
+
+  /**
+   * Certificate is being signed.
+   *
+   * @generated from enum value: EVENT_CERTIFICATE_STATUS_SIGNING = 2;
+   */
+  SIGNING = 2,
 
   /**
    * Error.
    *
-   * @generated from enum value: EVENT_CERTIFICATE_STATUS_ERROR = 4;
+   * @generated from enum value: EVENT_CERTIFICATE_STATUS_ERROR = 3;
    */
-  ERROR = 4,
+  ERROR = 3,
 }
 
 /**
@@ -269,9 +214,14 @@ export enum CertificateCommands {
   UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: CERTIFICATE_COMMANDS_CREATE_CERTIFICATE = 1;
+   * @generated from enum value: CERTIFICATE_COMMANDS_VERIFY_CERTIFICATE = 1;
    */
-  CREATE_CERTIFICATE = 1,
+  VERIFY_CERTIFICATE = 1,
+
+  /**
+   * @generated from enum value: CERTIFICATE_COMMANDS_SIGN_CERTIFICATE = 2;
+   */
+  SIGN_CERTIFICATE = 2,
 }
 
 /**
@@ -291,11 +241,14 @@ export enum CertificateEvents {
   UNSPECIFIED = 0,
 
   /**
-   * Event Certificate complete.
-   *
-   * @generated from enum value: CERTIFICATE_EVENTS_CREATED_CERTIFICATE = 1;
+   * @generated from enum value: CERTIFICATE_EVENTS_VERIFIED_CERTIFICATE = 1;
    */
-  CREATED_CERTIFICATE = 1,
+  VERIFIED_CERTIFICATE = 1,
+
+  /**
+   * @generated from enum value: CERTIFICATE_EVENTS_SIGNED_CERTIFICATE = 2;
+   */
+  SIGNED_CERTIFICATE = 2,
 }
 
 /**
@@ -308,24 +261,24 @@ export declare const CertificateEventsSchema: GenEnum<CertificateEvents>;
  */
 export declare const CertificateService: GenService<{
   /**
-   * Method to CreateCertificate to events based on scopes
+   * Method to VerifyCertificate to events based on scopes
    *
-   * @generated from rpc platform.cryptography.v2alpha.CertificateService.CreateCertificate
+   * @generated from rpc platform.cryptography.v2alpha.CertificateService.VerifyCertificate
    */
-  createCertificate: {
-    methodKind: "server_streaming";
-    input: typeof CreateCertificateRequestSchema;
-    output: typeof CreateCertificateResponseSchema;
+  verifyCertificate: {
+    methodKind: "unary";
+    input: typeof VerifyCertificateRequestSchema;
+    output: typeof VerifyCertificateResponseSchema;
   },
   /**
-   * Method to CreateAndSignCertificate to events based on scopes
+   * Method to SignCertificate to events based on scopes
    *
-   * @generated from rpc platform.cryptography.v2alpha.CertificateService.CreateAndSignCertificate
+   * @generated from rpc platform.cryptography.v2alpha.CertificateService.SignCertificate
    */
-  createAndSignCertificate: {
+  signCertificate: {
     methodKind: "unary";
-    input: typeof CreateAndSignCertificateRequestSchema;
-    output: typeof CreateAndSignCertificateResponseSchema;
+    input: typeof SignCertificateRequestSchema;
+    output: typeof SignCertificateResponseSchema;
   },
 }>;
 

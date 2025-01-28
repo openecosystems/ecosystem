@@ -7,25 +7,31 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-// ResolvedConfiguration holds the configuration for this binding
+// ResolvedConfiguration stores the resolved and finalized configuration for the application.
 var ResolvedConfiguration *Configuration
 
-type Grpc struct {
+// PublicHTTP represents the configuration for a public HTTP server, including its port.
+type PublicHTTP struct {
+	Host string `yaml:"host,omitempty"`
 	Port string `yaml:"port,omitempty"`
 }
 
-type Http struct {
+// MeshHTTP represents the configuration for the HTTP server, including its port.
+type MeshHTTP struct {
+	Host string `yaml:"host,omitempty"`
 	Port string `yaml:"port,omitempty"`
 }
 
+// Configuration represents a structure for application configuration settings, including app, GRPC, and HTTP details.
 type Configuration struct {
-	App  sdkv2alphalib.App `yaml:"app,omitempty"`
-	Grpc Grpc              `yaml:"grpc,omitempty"`
-	Http Http              `yaml:"http,omitempty"`
+	App        sdkv2alphalib.App `yaml:"app,omitempty"`
+	PublicHTTP PublicHTTP        `yaml:"publicHTTP,omitempty"`
+	MeshHTTP   MeshHTTP          `yaml:"meshHTTP,omitempty"`
 
 	err error
 }
 
+// ResolveConfiguration merges and resolves the environment and default configuration settings into a unified structure.
 func (c *Configuration) ResolveConfiguration() {
 	_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
 	if err != nil {
@@ -62,10 +68,12 @@ func (c *Configuration) ResolveConfiguration() {
 	sdkv2alphalib.ResolvedConfiguration = &sdkConfig
 }
 
+// ValidateConfiguration checks if the configuration instance is valid and returns an error if validation fails.
 func (c *Configuration) ValidateConfiguration() error {
 	return nil
 }
 
+// GetDefaultConfiguration returns a default `Configuration` instance with preset values for App, Grpc, and Http fields.
 func (c *Configuration) GetDefaultConfiguration() interface{} {
 	return Configuration{
 		App: sdkv2alphalib.App{
@@ -74,11 +82,13 @@ func (c *Configuration) GetDefaultConfiguration() interface{} {
 			EnvironmentName: "local-1",
 			EnvironmentType: "local",
 		},
-		Grpc: Grpc{
-			Port: "6510",
+		PublicHTTP: PublicHTTP{
+			Host: "0.0.0.0",
+			Port: "6577",
 		},
-		Http: Http{
-			Port: "6410",
+		MeshHTTP: MeshHTTP{
+			Host: "0.0.0.0",
+			Port: "6477",
 		},
 	}
 }
