@@ -4,8 +4,7 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches:
-      #- main
-      - OECO-DOCS-1
+      - main
     paths:
       - 'apps/web/public/docs/v2alpha/**'
 
