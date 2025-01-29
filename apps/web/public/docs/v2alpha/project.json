@@ -47,6 +47,20 @@
         "command": "npx tsx bin/format.ts",
         "cwd": "apps/web/public/docs/v2alpha"
       }
+    },
+    "docker-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose up --build",
+        "cwd": "apps/web/public/docs/v2alpha"
+      }
+    },
+    "docker-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose down",
+        "cwd": "apps/web/public/docs/v2alpha"
+      }
     }
   }
 }
