@@ -90,5 +90,6 @@
   },
   "nx": {
     "includedScripts": []
-  }
+  },
+  "packageManager": "pnpm@8.15.9"
 }

@@ -1,0 +1,13 @@
+services:
+  hugo:
+    container_name: hugo
+    restart: no
+
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "1010:1010"
