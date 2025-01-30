@@ -18,7 +18,6 @@ import (
 
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
-	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	_ "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "libs/protobuf/go/protobuf/gen/platform/type/v2"
@@ -76,6 +75,124 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 	}
 
 	var dd iamv2alphapb.CreateAccountResponse
+	err3 := proto.Unmarshal(reply.Data, &dd)
+	if err3 != nil {
+		log.Error(err3.Error())
+		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	handlerSpan.End()
+
+	return connect.NewResponse(&dd), nil
+
+}
+
+func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.Request[iamv2alphapb.VerifyAccountRequest]) (*connect.Response[iamv2alphapb.VerifyAccountResponse], error) {
+
+	tracer := *opentelemetryv2.Bound.Tracer
+	log := *zaploggerv1.Bound.Logger
+
+	// Executes top level validation, no business domain validation
+	validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	v := *protovalidatev0.Bound.Validator
+	if err := v.Validate(req.Msg); err != nil {
+		return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+	}
+	validationSpan.End()
+
+	// Spec Propagation
+	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
+	if !ok {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
+	specSpan.End()
+
+	// Validate field mask
+	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
+		spec.SpecData.FieldMask.Normalize()
+		if !spec.SpecData.FieldMask.IsValid(&iamv2alphapb.VerifyAccountResponse{}) {
+			log.Error("Invalid field mask")
+			return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
+		}
+	}
+
+	// Distributed Domain Handler
+	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+
+	entity := iamv2alphapbmodel.AccountSpecEntity{}
+	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+		Request:        req.Msg,
+		Stream:         natsnodev2.NewInboundStream(),
+		CommandName:    "",
+		CommandTopic:   iamv2alphapbmodel.CommandDataAccountTopic,
+		EntityTypeName: entity.TypeName(),
+	})
+	if err2 != nil {
+		log.Error(err2.Error())
+		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	var dd iamv2alphapb.VerifyAccountResponse
+	err3 := proto.Unmarshal(reply.Data, &dd)
+	if err3 != nil {
+		log.Error(err3.Error())
+		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	handlerSpan.End()
+
+	return connect.NewResponse(&dd), nil
+
+}
+
+func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Request[iamv2alphapb.SignAccountRequest]) (*connect.Response[iamv2alphapb.SignAccountResponse], error) {
+
+	tracer := *opentelemetryv2.Bound.Tracer
+	log := *zaploggerv1.Bound.Logger
+
+	// Executes top level validation, no business domain validation
+	validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	v := *protovalidatev0.Bound.Validator
+	if err := v.Validate(req.Msg); err != nil {
+		return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+	}
+	validationSpan.End()
+
+	// Spec Propagation
+	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
+	spec, ok := ctx.Value(sdkv2alphalib.SpecContextKey).(*specv2pb.Spec)
+	if !ok {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
+	specSpan.End()
+
+	// Validate field mask
+	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
+		spec.SpecData.FieldMask.Normalize()
+		if !spec.SpecData.FieldMask.IsValid(&iamv2alphapb.SignAccountResponse{}) {
+			log.Error("Invalid field mask")
+			return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
+		}
+	}
+
+	// Distributed Domain Handler
+	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+
+	entity := iamv2alphapbmodel.AccountSpecEntity{}
+	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+		Request:        req.Msg,
+		Stream:         natsnodev2.NewInboundStream(),
+		CommandName:    "",
+		CommandTopic:   iamv2alphapbmodel.CommandDataAccountTopic,
+		EntityTypeName: entity.TypeName(),
+	})
+	if err2 != nil {
+		log.Error(err2.Error())
+		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	var dd iamv2alphapb.SignAccountResponse
 	err3 := proto.Unmarshal(reply.Data, &dd)
 	if err3 != nil {
 		log.Error(err3.Error())

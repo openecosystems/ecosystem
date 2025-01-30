@@ -24,13 +24,11 @@ import (
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
 	configurationv2alphapbconnect "libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
-	cryptographyv2alphapbconnect "libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 	ecosystemv2alphapbconnect "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	serverv2alphalib "libs/public/go/server/v2alpha"
 	configurationv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
-	cryptographyv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/cryptography/v2alpha"
 	ecosystemv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/ecosystem/v2alpha"
 	iamv2alphapbsrv "libs/public/go/server/v2alpha/gen/platform/iam/v2alpha"
 )
@@ -83,7 +81,7 @@ func main() {
 	interceptors := connect.WithInterceptors(sdkv2alphalib.NewSpecInterceptor(), telemetry)
 
 	var publicServices []*vanguard.Service
-	publicServices = append(publicServices, vanguard.NewService(cryptographyv2alphapbconnect.NewCertificateServiceHandler(&cryptographyv2alphapbsrv.CertificateServiceHandler{}, interceptors)))
+	publicServices = append(publicServices, vanguard.NewService(iamv2alphapbconnect.NewAccountServiceHandler(&iamv2alphapbsrv.AccountServiceHandler{}, interceptors)))
 
 	var meshServices []*vanguard.Service
 	meshServices = append(meshServices, vanguard.NewService(ecosystemv2alphapbconnect.NewEcosystemServiceHandler(&ecosystemv2alphapbsrv.EcosystemServiceHandler{}, interceptors)))

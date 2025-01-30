@@ -7,7 +7,8 @@ import type { Message } from "@bufbuild/protobuf";
 import type { Curve } from "./account_authority_pb";
 import type { File } from "../../type/v2/file_pb";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { Credential } from "../../type/v2/credential_pb";
 
 /**
  * Describes the file platform/iam/v2alpha/account.proto.
@@ -82,6 +83,97 @@ export declare type CreateAccountResponse = Message<"platform.iam.v2alpha.Create
 export declare const CreateAccountResponseSchema: GenMessage<CreateAccountResponse>;
 
 /**
+ * Request for VerifyAccount
+ *
+ * @generated from message platform.iam.v2alpha.VerifyAccountRequest
+ */
+export declare type VerifyAccountRequest = Message<"platform.iam.v2alpha.VerifyAccountRequest"> & {
+  /**
+   * @generated from field: platform.type.v2.File public_cert = 1;
+   */
+  publicCert?: File;
+};
+
+/**
+ * Describes the message platform.iam.v2alpha.VerifyAccountRequest.
+ * Use `create(VerifyAccountRequestSchema)` to create a new message.
+ */
+export declare const VerifyAccountRequestSchema: GenMessage<VerifyAccountRequest>;
+
+/**
+ * Response to VerifyAccount
+ *
+ * @generated from message platform.iam.v2alpha.VerifyAccountResponse
+ */
+export declare type VerifyAccountResponse = Message<"platform.iam.v2alpha.VerifyAccountResponse"> & {
+  /**
+   * The response context
+   *
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
+
+  /**
+   * @generated from field: platform.iam.v2alpha.Account account = 2;
+   */
+  account?: Account;
+};
+
+/**
+ * Describes the message platform.iam.v2alpha.VerifyAccountResponse.
+ * Use `create(VerifyAccountResponseSchema)` to create a new message.
+ */
+export declare const VerifyAccountResponseSchema: GenMessage<VerifyAccountResponse>;
+
+/**
+ * Request for SignAccount
+ *
+ * @generated from message platform.iam.v2alpha.SignAccountRequest
+ */
+export declare type SignAccountRequest = Message<"platform.iam.v2alpha.SignAccountRequest"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: platform.type.v2.File public_cert = 2;
+   */
+  publicCert?: File;
+};
+
+/**
+ * Describes the message platform.iam.v2alpha.SignAccountRequest.
+ * Use `create(SignAccountRequestSchema)` to create a new message.
+ */
+export declare const SignAccountRequestSchema: GenMessage<SignAccountRequest>;
+
+/**
+ * Response to VerifyAccount
+ *
+ * @generated from message platform.iam.v2alpha.SignAccountResponse
+ */
+export declare type SignAccountResponse = Message<"platform.iam.v2alpha.SignAccountResponse"> & {
+  /**
+   * The response context
+   *
+   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+   */
+  specContext?: SpecResponseContext;
+
+  /**
+   * @generated from field: platform.iam.v2alpha.Account account = 2;
+   */
+  account?: Account;
+};
+
+/**
+ * Describes the message platform.iam.v2alpha.SignAccountResponse.
+ * Use `create(SignAccountResponseSchema)` to create a new message.
+ */
+export declare const SignAccountResponseSchema: GenMessage<SignAccountResponse>;
+
+/**
  * @generated from message platform.iam.v2alpha.Account
  */
 export declare type Account = Message<"platform.iam.v2alpha.Account"> & {
@@ -93,48 +185,23 @@ export declare type Account = Message<"platform.iam.v2alpha.Account"> & {
   id: string;
 
   /**
-   * Timestamp indicating when this event subscription was created.
+   * Timestamp indicating when this account subscription was created.
    *
    * @generated from field: google.protobuf.Timestamp created_at = 2;
    */
   createdAt?: Timestamp;
 
   /**
-   * Timestamp indicating when this event subscription was last updated.
+   * Timestamp indicating when this account subscription was last updated.
    *
    * @generated from field: google.protobuf.Timestamp updated_at = 3;
    */
   updatedAt?: Timestamp;
 
   /**
-   * @generated from field: string name = 4;
+   * @generated from field: platform.type.v2.Credential credential = 4;
    */
-  name: string;
-
-  /**
-   * @generated from field: string hostname = 5;
-   */
-  hostname: string;
-
-  /**
-   * @generated from field: string ip = 6;
-   */
-  ip: string;
-
-  /**
-   * @generated from field: google.protobuf.Duration duration = 7;
-   */
-  duration?: Duration;
-
-  /**
-   * @generated from field: platform.type.v2.File ca_cert = 8;
-   */
-  caCert?: File;
-
-  /**
-   * @generated from field: platform.type.v2.File signed_cert = 9;
-   */
-  signedCert?: File;
+  credential?: Credential;
 };
 
 /**
@@ -144,7 +211,7 @@ export declare type Account = Message<"platform.iam.v2alpha.Account"> & {
 export declare const AccountSchema: GenMessage<Account>;
 
 /**
- * Supported event type for subscription.
+ * Supported account type for subscription.
  *
  * @generated from enum platform.iam.v2alpha.AccountType
  */
@@ -177,7 +244,7 @@ export enum AccountType {
 export declare const AccountTypeSchema: GenEnum<AccountType>;
 
 /**
- * The current status of a event
+ * The current status of a account
  *
  * @generated from enum platform.iam.v2alpha.EventAccountStatus
  */
@@ -195,6 +262,20 @@ export enum EventAccountStatus {
    * @generated from enum value: EVENT_ACCOUNT_STATUS_CREATING = 1;
    */
   CREATING = 1,
+
+  /**
+   * Account is being verified.
+   *
+   * @generated from enum value: EVENT_ACCOUNT_STATUS_VERIFYING = 2;
+   */
+  VERIFYING = 2,
+
+  /**
+   * Account is being signed.
+   *
+   * @generated from enum value: EVENT_ACCOUNT_STATUS_SIGNING = 3;
+   */
+  SIGNING = 3,
 
   /**
    * Error.
@@ -224,6 +305,16 @@ export enum AccountCommands {
    * @generated from enum value: ACCOUNT_COMMANDS_CREATE_ACCOUNT = 1;
    */
   CREATE_ACCOUNT = 1,
+
+  /**
+   * @generated from enum value: ACCOUNT_COMMANDS_VERIFY_ACCOUNT = 2;
+   */
+  VERIFY_ACCOUNT = 2,
+
+  /**
+   * @generated from enum value: ACCOUNT_COMMANDS_SIGN_ACCOUNT = 3;
+   */
+  SIGN_ACCOUNT = 3,
 }
 
 /**
@@ -236,7 +327,7 @@ export declare const AccountCommandsSchema: GenEnum<AccountCommands>;
  */
 export enum AccountEvents {
   /**
-   * Unspecified or unknown event.
+   * Unspecified or unknown account.
    *
    * @generated from enum value: ACCOUNT_EVENTS_UNSPECIFIED = 0;
    */
@@ -248,6 +339,16 @@ export enum AccountEvents {
    * @generated from enum value: ACCOUNT_EVENTS_CREATED_ACCOUNT = 1;
    */
   CREATED_ACCOUNT = 1,
+
+  /**
+   * @generated from enum value: ACCOUNT_EVENTS_VERIFIED_ACCOUNT = 2;
+   */
+  VERIFIED_ACCOUNT = 2,
+
+  /**
+   * @generated from enum value: ACCOUNT_EVENTS_SIGNED_ACCOUNT = 3;
+   */
+  SIGNED_ACCOUNT = 3,
 }
 
 /**
@@ -256,6 +357,8 @@ export enum AccountEvents {
 export declare const AccountEventsSchema: GenEnum<AccountEvents>;
 
 /**
+ * Account Service exposes capabilities to connect to an Ecosystem
+ *
  * @generated from service platform.iam.v2alpha.AccountService
  */
 export declare const AccountService: GenService<{
@@ -268,6 +371,26 @@ export declare const AccountService: GenService<{
     methodKind: "unary";
     input: typeof CreateAccountRequestSchema;
     output: typeof CreateAccountResponseSchema;
+  },
+  /**
+   * Verify an existing account
+   *
+   * @generated from rpc platform.iam.v2alpha.AccountService.VerifyAccount
+   */
+  verifyAccount: {
+    methodKind: "unary";
+    input: typeof VerifyAccountRequestSchema;
+    output: typeof VerifyAccountResponseSchema;
+  },
+  /**
+   * Sign a public key granting it access to the Ecosystem
+   *
+   * @generated from rpc platform.iam.v2alpha.AccountService.SignAccount
+   */
+  signAccount: {
+    methodKind: "unary";
+    input: typeof SignAccountRequestSchema;
+    output: typeof SignAccountResponseSchema;
   },
 }>;
 

@@ -8,6 +8,7 @@ import "platform/spec/v2/spec.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "platform/type/v2/file.proto";
+import "platform/type/v2/credential.proto";
 import "platform/iam/v2alpha/account_authority.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};
@@ -34,10 +35,13 @@ message AccountConfiguration {
   
 }
 
+/* Account Service */
+
+//Account Service exposes capabilities to connect to an Ecosystem
 service AccountService {
 
   /* Create an account to connect to an ecosystem.
-  Facilitates creating a PKI certificate and getting it signed by an Ecosystem Account Authority */
+  Facilitates creating a PKI account and getting it signed by an Ecosystem Account Authority */
 
   //Create an Account to connect to an ecosystem
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {
@@ -49,19 +53,45 @@ service AccountService {
     };
   }
 
+  /* Verify */
+
+  //Verify an existing account
+  rpc VerifyAccount(VerifyAccountRequest) returns (VerifyAccountResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
+    option (platform.options.v2.api_method) = {shortname: "verify"};
+    option (google.api.http) = {
+      post: "/v2alpha/iam/a/verify"
+      body: "*"
+    };
+  }
+
+  /* Sign a public key */
+
+  //Sign a public key granting it access to the Ecosystem
+  rpc SignAccount(SignAccountRequest) returns (SignAccountResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
+    option (platform.options.v2.api_method) = {shortname: "sign"};
+    option (google.api.http) = {
+      post: "/v2alpha/iam/a/sign"
+      body: "*"
+    };
+  }
+
 }
 
-// Supported event type for subscription.
+// Supported account type for subscription.
 enum AccountType {
   ACCOUNT_TYPE_UNSPECIFIED = 0; // Unspecified or unknown subscription type.
   ACCOUNT_TYPE_ORGANIZATION = 1; // Account for an organization.
   ACCOUNT_TYPE_USER = 2; // Account for a user.
 }
 
-// The current status of a event
+// The current status of a account
 enum EventAccountStatus {
   EVENT_ACCOUNT_STATUS_UNSPECIFIED = 0; // Unspecified or unknown status.
   EVENT_ACCOUNT_STATUS_CREATING = 1; // Account is being created.
+  EVENT_ACCOUNT_STATUS_VERIFYING = 2; // Account is being verified.
+  EVENT_ACCOUNT_STATUS_SIGNING = 3; // Account is being signed.
   EVENT_ACCOUNT_STATUS_ERROR = 4; // Error.
 }
 
@@ -70,12 +100,14 @@ enum AccountCommands {
 
   ACCOUNT_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
   ACCOUNT_COMMANDS_CREATE_ACCOUNT = 1;
+  ACCOUNT_COMMANDS_VERIFY_ACCOUNT = 2;
+  ACCOUNT_COMMANDS_SIGN_ACCOUNT = 3;
 }
 
 enum AccountEvents {
   option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
 
-  // Unspecified or unknown event.
+  // Unspecified or unknown account.
   ACCOUNT_EVENTS_UNSPECIFIED = 0;
 
   // Event Account complete.
@@ -83,6 +115,9 @@ enum AccountEvents {
     billable: true,
     metered: true
   }];
+
+  ACCOUNT_EVENTS_VERIFIED_ACCOUNT = 2;
+  ACCOUNT_EVENTS_SIGNED_ACCOUNT = 3;
 
 }
 
@@ -109,27 +144,56 @@ message CreateAccountResponse {
   Account account = 2;
 }
 
+
+// Request for VerifyAccount
+message VerifyAccountRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  platform.type.v2.File public_cert = 1;
+
+}
+
+// Response to VerifyAccount
+message VerifyAccountResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  Account account = 2;
+}
+
+// Request for SignAccount
+message SignAccountRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  string name = 1;
+
+  platform.type.v2.File public_cert = 2;
+
+}
+
+// Response to VerifyAccount
+message SignAccountResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  Account account = 2;
+}
+
 message Account {
   option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
 
   // Identifier for this Account
   string id = 1 [(platform.options.v2.entity_field) = {key: true}];
 
-  // Timestamp indicating when this event subscription was created.
+  // Timestamp indicating when this account subscription was created.
   google.protobuf.Timestamp created_at = 2;
 
-  // Timestamp indicating when this event subscription was last updated.
+  // Timestamp indicating when this account subscription was last updated.
   google.protobuf.Timestamp updated_at = 3;
 
-  string name = 4;
-
-  string hostname = 5;
-
-  string ip = 6;
-
-  google.protobuf.Duration duration = 7;
-
-  platform.type.v2.File ca_cert = 8;
-
-  platform.type.v2.File signed_cert = 9;
+  platform.type.v2.Credential credential = 4;
 }

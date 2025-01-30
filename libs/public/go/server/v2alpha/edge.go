@@ -140,6 +140,7 @@ var allowedRequestHeaders = map[string]struct{}{
 	sdkv2alphalib.XSpecDeviceCarrier:              {},
 	sdkv2alphalib.XSpecOsName:                     {},
 	sdkv2alphalib.XSpecOsVersion:                  {},
+	sdkv2alphalib.XSpecEcosystem:                  {},
 	sdkv2alphalib.XSpecOrganization:               {},
 	sdkv2alphalib.XSpecWorkspace:                  {},
 	sdkv2alphalib.XSpecWorkspaceJan:               {},

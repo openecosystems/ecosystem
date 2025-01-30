@@ -11,7 +11,8 @@ import (
 var AccountServiceServiceCmd = &cobra.Command{
 	Use:   "account",
 	Short: ``,
-	Long:  ``,
+	Long: `Account Service exposes capabilities to connect to an Ecosystem
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := cmd.Help(); err != nil {
 			os.Exit(0)
@@ -23,5 +24,9 @@ var AccountServiceServiceCmd = &cobra.Command{
 func init() {
 
 	AccountServiceServiceCmd.AddCommand(CreateAccountV2AlphaCmd)
+
+	AccountServiceServiceCmd.AddCommand(VerifyAccountV2AlphaCmd)
+
+	AccountServiceServiceCmd.AddCommand(SignAccountV2AlphaCmd)
 
 }

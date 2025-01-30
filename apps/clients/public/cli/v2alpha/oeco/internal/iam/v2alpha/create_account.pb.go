@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"connectrpc.com/connect"
 	"github.com/apex/log"
@@ -24,6 +25,7 @@ var (
 	createAccountRequest      string
 	createAccountFieldMask    string
 	createAccountValidateOnly bool
+	fs                        = sdkv2alphalib.NewFileSystem()
 )
 
 // CreateAccountV2AlphaCmd is a Cobra command for creating an account to connect to an ecosystem.
@@ -69,6 +71,29 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
+		}
+
+		if response.Msg == nil && response.Msg.Account == nil && response.Msg.Account.Credential == nil {
+			fmt.Println("internal error parsing credential")
+			return
+		}
+
+		if response.Msg.SpecContext.EcosystemSlug == "" {
+			fmt.Println("ecosystem slug is not set within the response context; internal error")
+			return
+		}
+
+		credential, err := protojson.MarshalOptions{
+			Multiline: true,
+			Indent:    "  ",
+		}.Marshal(response.Msg.Account.Credential)
+		if err != nil {
+			return
+		}
+
+		err = fs.WriteFile(filepath.Join(fs.CredentialsDirectory, response.Msg.SpecContext.EcosystemSlug+"-credential.json"), credential, os.ModePerm)
+		if err != nil {
+			fmt.Println(err)
 		}
 
 		val, _ := json.MarshalIndent(&response, "", "    ")

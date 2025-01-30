@@ -19,19 +19,18 @@ import (
 )
 
 var (
-	createAccountRequest      string
-	createAccountFieldMask    string
-	createAccountValidateOnly bool
+	verifyAccountRequest      string
+	verifyAccountFieldMask    string
+	verifyAccountValidateOnly bool
 )
 
-var CreateAccountV2AlphaCmd = &cobra.Command{
-	Use:   "create",
-	Short: `Create an Account to connect to an ecosystem`,
-	Long: `[ Create an account to connect to an ecosystem.
-Facilitates creating a PKI account and getting it signed by an Ecosystem Account Authority ]`,
+var VerifyAccountV2AlphaCmd = &cobra.Command{
+	Use:   "verify",
+	Short: `Verify an existing account`,
+	Long:  `[ Verify ]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		log.Debug("Calling createAccount account")
+		log.Debug("Calling verifyAccount account")
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -42,20 +41,20 @@ Facilitates creating a PKI account and getting it signed by an Ecosystem Account
 			_request = "{}"
 		}
 
-		_r := iamv2alphapb.CreateAccountRequest{}
+		_r := iamv2alphapb.VerifyAccountRequest{}
 		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
 
-		sdkv2alphalib.Overrides.FieldMask = createAccountFieldMask
-		sdkv2alphalib.Overrides.ValidateOnly = createAccountValidateOnly
+		sdkv2alphalib.Overrides.FieldMask = verifyAccountFieldMask
+		sdkv2alphalib.Overrides.ValidateOnly = verifyAccountValidateOnly
 
-		request := connect.NewRequest[iamv2alphapb.CreateAccountRequest](&_r)
+		request := connect.NewRequest[iamv2alphapb.VerifyAccountRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
 		client := *iamv2alphapbsdk.NewAccountServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
-		response, err := client.CreateAccount(context.Background(), request)
+		response, err := client.VerifyAccount(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -67,7 +66,7 @@ Facilitates creating a PKI account and getting it signed by an Ecosystem Account
 }
 
 func init() {
-	CreateAccountV2AlphaCmd.PersistentFlags().StringVarP(&createAccountRequest, "request", "r", "{}", "Request for api call")
-	CreateAccountV2AlphaCmd.PersistentFlags().BoolVar(&createAccountValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")
-	CreateAccountV2AlphaCmd.PersistentFlags().StringVarP(&createAccountFieldMask, "field-mask", "m", "", "Limit the returned response fields")
+	VerifyAccountV2AlphaCmd.PersistentFlags().StringVarP(&verifyAccountRequest, "request", "r", "{}", "Request for api call")
+	VerifyAccountV2AlphaCmd.PersistentFlags().BoolVar(&verifyAccountValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")
+	VerifyAccountV2AlphaCmd.PersistentFlags().StringVarP(&verifyAccountFieldMask, "field-mask", "m", "", "Limit the returned response fields")
 }

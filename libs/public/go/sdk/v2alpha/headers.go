@@ -251,6 +251,7 @@ const (
 // XSpecLocale represents a header for specifying the locale of the request.
 // XSpecTimezone represents a header for specifying the timezone information.
 // XSpecApiKey represents a header for specifying the API key for authentication.
+// XSpecEcosystem represents a header specifying the ecosystem slug for the request.
 // XSpecOrganization represents a header specifying the organization slug for the request.
 // XSpecWorkspace represents a header specifying the workspace slug for the request.
 // XSpecWorkspaceJan represents a header linked to the workspace Jan for specific routing.
@@ -284,6 +285,7 @@ const (
 	XSpecLocale             = "X-Spec-Locale"
 	XSpecTimezone           = "X-Spec-Timezone"
 	XSpecApiKey             = "X-Spec-Apikey" //nolint:gosec
+	XSpecEcosystem          = "X-Spec-Ecosystem-Slug"
 	XSpecOrganization       = "X-Spec-Organization-Slug"
 	XSpecWorkspace          = "X-Spec-Workspace-Slug"
 	XSpecWorkspaceJan       = "X-Spec-Workspace-Jan"

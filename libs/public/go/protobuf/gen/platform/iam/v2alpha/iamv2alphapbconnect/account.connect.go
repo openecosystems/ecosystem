@@ -36,12 +36,22 @@ const (
 	// AccountServiceCreateAccountProcedure is the fully-qualified name of the AccountService's
 	// CreateAccount RPC.
 	AccountServiceCreateAccountProcedure = "/platform.iam.v2alpha.AccountService/CreateAccount"
+	// AccountServiceVerifyAccountProcedure is the fully-qualified name of the AccountService's
+	// VerifyAccount RPC.
+	AccountServiceVerifyAccountProcedure = "/platform.iam.v2alpha.AccountService/VerifyAccount"
+	// AccountServiceSignAccountProcedure is the fully-qualified name of the AccountService's
+	// SignAccount RPC.
+	AccountServiceSignAccountProcedure = "/platform.iam.v2alpha.AccountService/SignAccount"
 )
 
 // AccountServiceClient is a client for the platform.iam.v2alpha.AccountService service.
 type AccountServiceClient interface {
 	// Create an Account to connect to an ecosystem
 	CreateAccount(context.Context, *connect.Request[v2alpha.CreateAccountRequest]) (*connect.Response[v2alpha.CreateAccountResponse], error)
+	// Verify an existing account
+	VerifyAccount(context.Context, *connect.Request[v2alpha.VerifyAccountRequest]) (*connect.Response[v2alpha.VerifyAccountResponse], error)
+	// Sign a public key granting it access to the Ecosystem
+	SignAccount(context.Context, *connect.Request[v2alpha.SignAccountRequest]) (*connect.Response[v2alpha.SignAccountResponse], error)
 }
 
 // NewAccountServiceClient constructs a client for the platform.iam.v2alpha.AccountService service.
@@ -61,12 +71,26 @@ func NewAccountServiceClient(httpClient connect.HTTPClient, baseURL string, opts
 			connect.WithSchema(accountServiceMethods.ByName("CreateAccount")),
 			connect.WithClientOptions(opts...),
 		),
+		verifyAccount: connect.NewClient[v2alpha.VerifyAccountRequest, v2alpha.VerifyAccountResponse](
+			httpClient,
+			baseURL+AccountServiceVerifyAccountProcedure,
+			connect.WithSchema(accountServiceMethods.ByName("VerifyAccount")),
+			connect.WithClientOptions(opts...),
+		),
+		signAccount: connect.NewClient[v2alpha.SignAccountRequest, v2alpha.SignAccountResponse](
+			httpClient,
+			baseURL+AccountServiceSignAccountProcedure,
+			connect.WithSchema(accountServiceMethods.ByName("SignAccount")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // accountServiceClient implements AccountServiceClient.
 type accountServiceClient struct {
 	createAccount *connect.Client[v2alpha.CreateAccountRequest, v2alpha.CreateAccountResponse]
+	verifyAccount *connect.Client[v2alpha.VerifyAccountRequest, v2alpha.VerifyAccountResponse]
+	signAccount   *connect.Client[v2alpha.SignAccountRequest, v2alpha.SignAccountResponse]
 }
 
 // CreateAccount calls platform.iam.v2alpha.AccountService.CreateAccount.
@@ -74,10 +98,24 @@ func (c *accountServiceClient) CreateAccount(ctx context.Context, req *connect.R
 	return c.createAccount.CallUnary(ctx, req)
 }
 
+// VerifyAccount calls platform.iam.v2alpha.AccountService.VerifyAccount.
+func (c *accountServiceClient) VerifyAccount(ctx context.Context, req *connect.Request[v2alpha.VerifyAccountRequest]) (*connect.Response[v2alpha.VerifyAccountResponse], error) {
+	return c.verifyAccount.CallUnary(ctx, req)
+}
+
+// SignAccount calls platform.iam.v2alpha.AccountService.SignAccount.
+func (c *accountServiceClient) SignAccount(ctx context.Context, req *connect.Request[v2alpha.SignAccountRequest]) (*connect.Response[v2alpha.SignAccountResponse], error) {
+	return c.signAccount.CallUnary(ctx, req)
+}
+
 // AccountServiceHandler is an implementation of the platform.iam.v2alpha.AccountService service.
 type AccountServiceHandler interface {
 	// Create an Account to connect to an ecosystem
 	CreateAccount(context.Context, *connect.Request[v2alpha.CreateAccountRequest]) (*connect.Response[v2alpha.CreateAccountResponse], error)
+	// Verify an existing account
+	VerifyAccount(context.Context, *connect.Request[v2alpha.VerifyAccountRequest]) (*connect.Response[v2alpha.VerifyAccountResponse], error)
+	// Sign a public key granting it access to the Ecosystem
+	SignAccount(context.Context, *connect.Request[v2alpha.SignAccountRequest]) (*connect.Response[v2alpha.SignAccountResponse], error)
 }
 
 // NewAccountServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -93,10 +131,26 @@ func NewAccountServiceHandler(svc AccountServiceHandler, opts ...connect.Handler
 		connect.WithSchema(accountServiceMethods.ByName("CreateAccount")),
 		connect.WithHandlerOptions(opts...),
 	)
+	accountServiceVerifyAccountHandler := connect.NewUnaryHandler(
+		AccountServiceVerifyAccountProcedure,
+		svc.VerifyAccount,
+		connect.WithSchema(accountServiceMethods.ByName("VerifyAccount")),
+		connect.WithHandlerOptions(opts...),
+	)
+	accountServiceSignAccountHandler := connect.NewUnaryHandler(
+		AccountServiceSignAccountProcedure,
+		svc.SignAccount,
+		connect.WithSchema(accountServiceMethods.ByName("SignAccount")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/platform.iam.v2alpha.AccountService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AccountServiceCreateAccountProcedure:
 			accountServiceCreateAccountHandler.ServeHTTP(w, r)
+		case AccountServiceVerifyAccountProcedure:
+			accountServiceVerifyAccountHandler.ServeHTTP(w, r)
+		case AccountServiceSignAccountProcedure:
+			accountServiceSignAccountHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -108,4 +162,12 @@ type UnimplementedAccountServiceHandler struct{}
 
 func (UnimplementedAccountServiceHandler) CreateAccount(context.Context, *connect.Request[v2alpha.CreateAccountRequest]) (*connect.Response[v2alpha.CreateAccountResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.iam.v2alpha.AccountService.CreateAccount is not implemented"))
+}
+
+func (UnimplementedAccountServiceHandler) VerifyAccount(context.Context, *connect.Request[v2alpha.VerifyAccountRequest]) (*connect.Response[v2alpha.VerifyAccountResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.iam.v2alpha.AccountService.VerifyAccount is not implemented"))
+}
+
+func (UnimplementedAccountServiceHandler) SignAccount(context.Context, *connect.Request[v2alpha.SignAccountRequest]) (*connect.Response[v2alpha.SignAccountResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("platform.iam.v2alpha.AccountService.SignAccount is not implemented"))
 }

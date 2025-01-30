@@ -17,13 +17,17 @@ const (
 const (
 	AccountCommandsUnspecified   AccountCommand = iota
 	AccountCommandsCreateAccount AccountCommand = iota
+	AccountCommandsVerifyAccount AccountCommand = iota
+	AccountCommandsSignAccount   AccountCommand = iota
 	UnrecognizedAccountCommand   AccountCommand = -1
 )
 
 const (
-	AccountEventsUnspecified    AccountEvent = iota
-	AccountEventsCreatedAccount AccountEvent = iota
-	UnrecognizedAccountEvent    AccountEvent = -1
+	AccountEventsUnspecified     AccountEvent = iota
+	AccountEventsCreatedAccount  AccountEvent = iota
+	AccountEventsVerifiedAccount AccountEvent = iota
+	AccountEventsSignedAccount   AccountEvent = iota
+	UnrecognizedAccountEvent     AccountEvent = -1
 )
 
 const (
@@ -41,6 +45,10 @@ func (c AccountCommand) CommandName() string {
 		return "AccountCommandsUnspecified"
 	case AccountCommandsCreateAccount:
 		return "AccountCommandsCreateAccount"
+	case AccountCommandsVerifyAccount:
+		return "AccountCommandsVerifyAccount"
+	case AccountCommandsSignAccount:
+		return "AccountCommandsSignAccount"
 	default:
 		return "UnrecognizedAccountCommand"
 	}
@@ -55,6 +63,10 @@ func (e AccountEvent) EventName() string {
 		return "AccountEventsUnspecified"
 	case AccountEventsCreatedAccount:
 		return "AccountEventsCreatedAccount"
+	case AccountEventsVerifiedAccount:
+		return "AccountEventsVerifiedAccount"
+	case AccountEventsSignedAccount:
+		return "AccountEventsSignedAccount"
 	default:
 		return "UnrecognizedAccountEvent"
 	}
@@ -69,6 +81,10 @@ func (c AccountCommand) CommandTopic() string {
 		return CommandDataAccountTopic
 	case AccountCommandsCreateAccount:
 		return CommandDataAccountTopic
+	case AccountCommandsVerifyAccount:
+		return CommandDataAccountTopic
+	case AccountCommandsSignAccount:
+		return CommandDataAccountTopic
 	default:
 		return UnrecognizedAccountTopic
 	}
@@ -82,6 +98,10 @@ func (e AccountEvent) EventTopic() string {
 	case AccountEventsUnspecified:
 		return EventDataAccountTopic
 	case AccountEventsCreatedAccount:
+		return EventDataAccountTopic
+	case AccountEventsVerifiedAccount:
+		return EventDataAccountTopic
+	case AccountEventsSignedAccount:
 		return EventDataAccountTopic
 	default:
 		return UnrecognizedAccountTopic
@@ -105,6 +125,10 @@ func GetAccountCommand(command string) AccountCommand {
 		return AccountCommandsUnspecified
 	case "AccountCommandsCreateAccount":
 		return AccountCommandsCreateAccount
+	case "AccountCommandsVerifyAccount":
+		return AccountCommandsVerifyAccount
+	case "AccountCommandsSignAccount":
+		return AccountCommandsSignAccount
 	default:
 		return UnrecognizedAccountCommand
 	}
@@ -118,6 +142,10 @@ func GetAccountEvent(event string) AccountEvent {
 		return AccountEventsUnspecified
 	case "AccountEventsCreatedAccount":
 		return AccountEventsCreatedAccount
+	case "AccountEventsVerifiedAccount":
+		return AccountEventsVerifiedAccount
+	case "AccountEventsSignedAccount":
+		return AccountEventsSignedAccount
 	default:
 		return UnrecognizedAccountEvent
 	}

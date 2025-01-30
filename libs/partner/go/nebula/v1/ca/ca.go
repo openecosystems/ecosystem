@@ -2,12 +2,14 @@ package nebulav1ca
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/segmentio/ksuid"
@@ -16,6 +18,22 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+)
+
+const (
+	_ca            = "ca"
+	_host          = "host"
+	_signed        = "signed"
+	crtext         = ".crt"
+	keyext         = ".key"
+	pngext         = ".png"
+	cacertname     = _ca + crtext
+	cakeyname      = _ca + keyext
+	caqrname       = _ca + pngext
+	hostcertname   = _host + crtext
+	hostkeyname    = _host + keyext
+	signedcertname = _signed + crtext
+	signedqrname   = _signed + pngext
 )
 
 // Binding represents an entity responsible for managing Nebula certificate binary and its file path.
@@ -137,22 +155,15 @@ func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.Creat
 		_ = os.RemoveAll(path)
 	}(tempDir)
 
-	_ca := "ca"
-	cext := ".crt"
-	kext := ".key"
-	qext := ".png"
-	cname := _ca + cext
-	kname := _ca + kext
-	qname := _ca + qext
-	cpath := filepath.Join(tempDir, cname)
-	kpath := filepath.Join(tempDir, kname)
-	qpath := filepath.Join(tempDir, qname)
+	certpath := filepath.Join(tempDir, cacertname)
+	keypath := filepath.Join(tempDir, cakeyname)
+	qpath := filepath.Join(tempDir, caqrname)
 
 	nebula := exec.Command(nca, "ca",
 		"-name", req.Name,
 		"-curve", c,
-		"-out-crt", cpath,
-		"-out-key", kpath,
+		"-out-crt", certpath,
+		"-out-key", keypath,
 		"-out-qr", qpath,
 	)
 
@@ -166,17 +177,17 @@ func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.Creat
 	id := ksuid.New()
 	now := timestamppb.Now()
 
-	cfile, err3 := getFile(cname, cext, cpath, now)
+	cfile, err3 := getFile(cacertname, crtext, certpath, now)
 	if err3 != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err3)
 	}
 
-	kfile, err4 := getFile(kname, kext, kpath, now)
+	kfile, err4 := getFile(cakeyname, keyext, keypath, now)
 	if err4 != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err4)
 	}
 
-	qfile, err5 := getFile(qname, qext, qpath, now)
+	qfile, err5 := getFile(caqrname, pngext, qpath, now)
 	if err5 != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err5)
 	}
@@ -227,18 +238,13 @@ func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountReque
 		_ = os.RemoveAll(path)
 	}(tempDir)
 
-	_host := "host"
-	cext := ".crt"
-	kext := ".key"
-	cname := _host + cext
-	kname := _host + kext
-	cpath := filepath.Join(tempDir, cname)
-	kpath := filepath.Join(tempDir, kname)
+	hostcertpath := filepath.Join(tempDir, hostcertname)
+	hostkeypath := filepath.Join(tempDir, hostkeyname)
 
 	nebula := exec.Command(nca, "keygen",
 		"-curve", c,
-		"-out-pub", cpath,
-		"-out-key", kpath,
+		"-out-pub", hostcertpath,
+		"-out-key", hostkeypath,
 	)
 
 	nebula.Stdout = os.Stdout
@@ -250,12 +256,12 @@ func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountReque
 
 	now := timestamppb.Now()
 
-	cfile, err3 := getFile(cname, cext, cpath, now)
+	cfile, err3 := getFile(hostcertname, crtext, hostcertpath, now)
 	if err3 != nil {
 		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err3)
 	}
 
-	kfile, err4 := getFile(kname, kext, kpath, now)
+	kfile, err4 := getFile(hostkeyname, keyext, hostkeypath, now)
 	if err4 != nil {
 		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err4)
 	}
@@ -265,71 +271,105 @@ func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountReque
 
 // SignCert creates a new Certificate Authority using the specified request parameters.
 // Returns the created Certificate Authority or an error if the operation fails.
-func (b *Binding) SignCert(_ context.Context, req *iamv2alphapb.CreateAccountRequest) (cert *typev2pb.File, key *typev2pb.File, err error) {
+func (b *Binding) SignCert(_ context.Context, req *iamv2alphapb.SignAccountRequest) (*typev2pb.Credential, error) {
 	nca := b.NebulaCertBinaryPath
-
-	var c string
-	var curve iamv2alphapb.Curve
-	switch req.Curve {
-	case iamv2alphapb.Curve_CURVE_ECDSA:
-		c = "P256"
-		curve = iamv2alphapb.Curve_CURVE_ECDSA
-	case iamv2alphapb.Curve_CURVE_EDDSA:
-		c = "25519"
-		curve = iamv2alphapb.Curve_CURVE_EDDSA
-	case iamv2alphapb.Curve_CURVE_UNSPECIFIED:
-		c = "25519"
-		curve = iamv2alphapb.Curve_CURVE_EDDSA
-	default:
-		c = "25519"
-		curve = iamv2alphapb.Curve_CURVE_EDDSA
-	}
-
-	_ = curve
 
 	// Write the binary to a temporary file
 	tempDir, err := os.MkdirTemp("", "oeco-ca-*")
 	if err != nil {
-		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
 	}
 	defer func(path string) {
 		_ = os.RemoveAll(path)
 	}(tempDir)
 
-	_host := "host"
-	cext := ".crt"
-	kext := ".key"
-	cname := _host + cext
-	kname := _host + kext
-	cpath := filepath.Join(tempDir, cname)
-	kpath := filepath.Join(tempDir, kname)
+	cacertpath := filepath.Join(sdkv2alphalib.CredentialDirectory, cacertname)
+	cakeypath := filepath.Join(sdkv2alphalib.CredentialDirectory, cakeyname)
+	signedcertpath := filepath.Join(tempDir, signedcertname)
+	signedqrpath := filepath.Join(tempDir, signedqrname)
 
-	nebula := exec.Command(nca, "keygen",
-		"-curve", c,
-		"-out-pub", cpath,
-		"-out-key", kpath,
+	unsignedCertPath, err := saveFileTemporarily(tempDir, req.PublicCert)
+	if err != nil {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to save unsigned cert file temporarily"), err)
+	}
+
+	ip, err := getAnAvailableIPAddress()
+	if err != nil {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to get an available IP address"), err)
+	}
+
+	hostname, err := getAvailableHostname()
+	if err != nil {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to parse a hostname"), err)
+	}
+
+	groups := getAvailableGroups()
+
+	nebula := exec.Command(nca, "sign",
+		"-ca-crt", cacertpath,
+		"-ca-key", cakeypath,
+		"-in-pub", unsignedCertPath,
+		"-ip", ip,
+		"-groups", strings.Join(groups, ","),
+		"-name", hostname,
+		"-out-crt", signedcertpath,
+		"-out-qr", signedqrpath,
 	)
 
 	nebula.Stdout = os.Stdout
 	nebula.Stderr = os.Stderr
 
 	if err2 := nebula.Run(); err2 != nil {
-		return nil, nil, ErrFailedToRunCommand.WithInternalErrorDetail(errors.New("failed to execute binary"), err2)
+		return nil, ErrFailedToRunCommand.WithInternalErrorDetail(errors.New("failed to execute binary"), err2)
 	}
 
 	now := timestamppb.Now()
 
-	cfile, err3 := getFile(cname, cext, cpath, now)
-	if err3 != nil {
-		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err3)
-	}
-
-	kfile, err4 := getFile(kname, kext, kpath, now)
+	cafile, err4 := getFile(cacertname, crtext, cacertpath, now)
 	if err4 != nil {
-		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err4)
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error getting ca cert file"), err4)
 	}
 
-	return cfile, kfile, nil
+	cfile, err3 := getFile(signedcertname, crtext, signedcertpath, now)
+	if err3 != nil {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error getting cert file"), err3)
+	}
+
+	qrfile, err4 := getFile(signedqrname, pngext, signedqrpath, now)
+	if err4 != nil {
+		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error getting qr code cert file"), err4)
+	}
+
+	_ = cafile
+	_ = cfile
+	_ = qrfile
+
+	return &typev2pb.Credential{
+		Type:           0,
+		MeshAccountId:  "",
+		EcosystemSlug:  "",
+		MeshHostname:   hostname,
+		MeshIp:         ip,
+		AaCertX509:     string(cafile.GetContent()),
+		CertX509:       string(cfile.GetContent()),
+		CertX509QrCode: base64.StdEncoding.EncodeToString(qrfile.GetContent()),
+		PrivateKey:     "",
+		NKey:           "",
+		Groups:         groups,
+		Subnets:        nil,
+	}, nil
+}
+
+func getAvailableGroups() []string {
+	return []string{"connector", "user"}
+}
+
+func getAvailableHostname() (string, error) {
+	return "test.oeco.mesh", nil
+}
+
+func getAnAvailableIPAddress() (string, error) {
+	return "192.168.100.20/24", nil
 }
 
 // getFile reads a file and constructs a File object with its metadata and content.
@@ -355,4 +395,26 @@ func getFile(name string, extensionWithPeriod string, path string, time *timesta
 		CreationTime:     time.GetSeconds(),
 		ModificationTime: time.GetSeconds(),
 	}, nil
+}
+
+func saveFileTemporarily(tempFolder string, file *typev2pb.File) (string, error) {
+	path := filepath.Join(tempFolder, file.GetName())
+
+	// err := os.WriteFile(path, sanitizeCertificateInput(file.GetContent()), 0o600)
+	err := os.WriteFile(path, file.GetContent(), 0o600)
+	if err != nil {
+		return "", sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to save cert temporarily in : "+tempFolder), err)
+	}
+
+	return path, nil
+}
+
+//nolint:unused
+func sanitizeCertificateInput(input []byte) []byte {
+	// Remove dangerous shell characters
+	dangerousChars := []string{";", "&", "|", "`", "$(", ")", ">", "<"}
+	for _, char := range dangerousChars {
+		input = []byte(strings.ReplaceAll(string(input), char, ""))
+	}
+	return input
 }

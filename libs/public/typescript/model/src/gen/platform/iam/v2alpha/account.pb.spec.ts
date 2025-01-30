@@ -16,6 +16,8 @@ export enum AccountCommands {
   
   AccountCommandsUnspecified = 0,
   AccountCommandsCreateAccount = 1,
+  AccountCommandsVerifyAccount = 2,
+  AccountCommandsSignAccount = 3,
   UnrecognizedAccountCommand = -1,
 }
 
@@ -24,6 +26,8 @@ export enum AccountEvents {
 
   AccountEventsUnspecified = 0,
   AccountEventsCreatedAccount = 1,
+  AccountEventsVerifiedAccount = 2,
+  AccountEventsSignedAccount = 3,
   UnrecognizedAccountEvent  = -1,
 }
 
@@ -41,6 +45,10 @@ export class AccountCommandHelper {
         return "AccountCommandsUnspecified"
       case AccountCommands.AccountCommandsCreateAccount:
         return "AccountCommandsCreateAccount"
+      case AccountCommands.AccountCommandsVerifyAccount:
+        return "AccountCommandsVerifyAccount"
+      case AccountCommands.AccountCommandsSignAccount:
+        return "AccountCommandsSignAccount"
       default:
         return "UnrecognizedAccountCommand"
     }
@@ -50,6 +58,8 @@ export class AccountCommandHelper {
     switch (command) {
       case AccountCommands.AccountCommandsUnspecified:
       case AccountCommands.AccountCommandsCreateAccount:
+      case AccountCommands.AccountCommandsVerifyAccount:
+      case AccountCommands.AccountCommandsSignAccount:
         return CommandDataAccountTopic;
       default:
 		    return UnrecognizedAccountTopic;
@@ -66,6 +76,10 @@ export class AccountCommandHelper {
         return AccountCommands.AccountCommandsUnspecified;
       case "AccountCommandsCreateAccount":
         return AccountCommands.AccountCommandsCreateAccount;
+      case "AccountCommandsVerifyAccount":
+        return AccountCommands.AccountCommandsVerifyAccount;
+      case "AccountCommandsSignAccount":
+        return AccountCommands.AccountCommandsSignAccount;
       default:
         return AccountCommands.UnrecognizedAccountCommand;
     }
@@ -80,6 +94,10 @@ export class AccountEventHelper {
         return "AccountEventsUnspecified";
       case AccountEvents.AccountEventsCreatedAccount:
         return "AccountEventsCreatedAccount";
+      case AccountEvents.AccountEventsVerifiedAccount:
+        return "AccountEventsVerifiedAccount";
+      case AccountEvents.AccountEventsSignedAccount:
+        return "AccountEventsSignedAccount";
       default:
         return "UnrecognizedAccountEvent";
     }
@@ -89,6 +107,8 @@ export class AccountEventHelper {
     switch (event) {
       case AccountEvents.AccountEventsUnspecified:
       case AccountEvents.AccountEventsCreatedAccount:
+      case AccountEvents.AccountEventsVerifiedAccount:
+      case AccountEvents.AccountEventsSignedAccount:
         return EventDataAccountTopic;
       default:
         return UnrecognizedAccountTopic;
@@ -105,6 +125,10 @@ export class AccountEventHelper {
         return AccountEvents.AccountEventsUnspecified;
       case "AccountEventsCreatedAccount":
         return AccountEvents.AccountEventsCreatedAccount;
+      case "AccountEventsVerifiedAccount":
+        return AccountEvents.AccountEventsVerifiedAccount;
+      case "AccountEventsSignedAccount":
+        return AccountEvents.AccountEventsSignedAccount;
       default:
         return AccountEvents.UnrecognizedAccountEvent;
     }

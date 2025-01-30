@@ -2,12 +2,14 @@ package iam
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	natsnodev2 "libs/partner/go/nats/v2"
+	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
@@ -60,14 +62,28 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev2
 		return
 	}
 
+	if req.Name == "" {
+		fmt.Println("Name is required")
+		return
+	}
+
+	signreq := iamv2alphapb.SignAccountRequest{
+		Name:       req.Name,
+		PublicCert: req.Cert,
+	}
+
 	// Sign Cert
+	credential, err := nebulav1ca.Bound.SignCert(ctx, &signreq)
+	if err != nil {
+		return
+	}
 
 	now := timestamppb.Now()
 	conf := iamv2alphapb.Account{
 		Id:         "12345678",
 		CreatedAt:  now,
 		UpdatedAt:  now,
-		SignedCert: req.Cert,
+		Credential: credential,
 	}
 
 	response := iamv2alphapb.CreateAccountResponse{
@@ -75,6 +91,7 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev2
 			ResponseValidation: &typev2pb.ResponseValidation{
 				ValidateOnly: request.Spec.Context.Validation.ValidateOnly,
 			},
+			EcosystemSlug:    request.Spec.Context.EcosystemSlug,
 			OrganizationSlug: request.Spec.Context.OrganizationSlug,
 			WorkspaceSlug:    request.Spec.Context.WorkspaceSlug,
 			WorkspaceJan:     request.Spec.Context.WorkspaceJan,
