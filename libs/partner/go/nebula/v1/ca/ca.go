@@ -71,7 +71,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 				}
 
 				// Write the binary to a temporary file
-				nebulaCertBinary, err := os.CreateTemp("", "oeco-ca-*")
+				nebulaCertBinary, err := os.CreateTemp("", "oeco-bin-*")
 				if err != nil {
 					log.Fatalf("Failed to create temp file: %v", err)
 				}
@@ -147,13 +147,12 @@ func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.Creat
 	}
 
 	// Write the binary to a temporary file
-	tempDir, err := os.MkdirTemp("", "oeco-ca-*")
+	tempDir, err := os.MkdirTemp("", "oeco-aa-*")
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
 	}
-	defer func(path string) {
-		_ = os.RemoveAll(path)
-	}(tempDir)
+
+	defer os.RemoveAll(tempDir) //nolint:errcheck
 
 	certpath := filepath.Join(tempDir, cacertname)
 	keypath := filepath.Join(tempDir, cakeyname)
@@ -230,13 +229,11 @@ func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountReque
 	_ = curve
 
 	// Write the binary to a temporary file
-	tempDir, err := os.MkdirTemp("", "oeco-ca-*")
+	tempDir, err := os.MkdirTemp("", "oeco-pki-*")
 	if err != nil {
 		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
 	}
-	defer func(path string) {
-		_ = os.RemoveAll(path)
-	}(tempDir)
+	defer os.RemoveAll(tempDir) //nolint:errcheck
 
 	hostcertpath := filepath.Join(tempDir, hostcertname)
 	hostkeypath := filepath.Join(tempDir, hostkeyname)
@@ -275,13 +272,11 @@ func (b *Binding) SignCert(_ context.Context, req *iamv2alphapb.SignAccountReque
 	nca := b.NebulaCertBinaryPath
 
 	// Write the binary to a temporary file
-	tempDir, err := os.MkdirTemp("", "oeco-ca-*")
+	tempDir, err := os.MkdirTemp("", "oeco-s-*")
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
 	}
-	defer func(path string) {
-		_ = os.RemoveAll(path)
-	}(tempDir)
+	defer os.RemoveAll(tempDir) //nolint:errcheck
 
 	cacertpath := filepath.Join(sdkv2alphalib.CredentialDirectory, cacertname)
 	cakeypath := filepath.Join(sdkv2alphalib.CredentialDirectory, cakeyname)
@@ -399,6 +394,8 @@ func getFile(name string, extensionWithPeriod string, path string, time *timesta
 
 func saveFileTemporarily(tempFolder string, file *typev2pb.File) (string, error) {
 	path := filepath.Join(tempFolder, file.GetName())
+
+	fmt.Println("SAVING TEMP FILE: " + path)
 
 	// err := os.WriteFile(path, sanitizeCertificateInput(file.GetContent()), 0o600)
 	err := os.WriteFile(path, file.GetContent(), 0o600)

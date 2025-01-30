@@ -10,23 +10,24 @@ import (
 // ResolvedConfiguration stores the resolved and finalized configuration for the application.
 var ResolvedConfiguration *Configuration
 
-// PublicHTTP represents the configuration for a public HTTP server, including its port.
-type PublicHTTP struct {
+// HTTP represents the configuration for a public HTTP server, including its port.
+type HTTP struct {
 	Host string `yaml:"host,omitempty"`
 	Port string `yaml:"port,omitempty"`
 }
 
-// MeshHTTP represents the configuration for the HTTP server, including its port.
-type MeshHTTP struct {
-	Host string `yaml:"host,omitempty"`
-	Port string `yaml:"port,omitempty"`
+// Mesh represents the configuration settings for a network mesh, including its enabled state, host, and port details.
+type Mesh struct {
+	Enabled bool   `yaml:"enabled,omitempty"`
+	Host    string `yaml:"host,omitempty"`
+	Port    string `yaml:"port,omitempty"`
 }
 
 // Configuration represents a structure for application configuration settings, including app, GRPC, and HTTP details.
 type Configuration struct {
-	App        sdkv2alphalib.App `yaml:"app,omitempty"`
-	PublicHTTP PublicHTTP        `yaml:"publicHTTP,omitempty"`
-	MeshHTTP   MeshHTTP          `yaml:"meshHTTP,omitempty"`
+	App  sdkv2alphalib.App `yaml:"app,omitempty"`
+	Mesh Mesh              `yaml:"mesh,omitempty"`
+	HTTP HTTP              `yaml:"http,omitempty"`
 
 	err error
 }
@@ -82,13 +83,14 @@ func (c *Configuration) GetDefaultConfiguration() interface{} {
 			EnvironmentName: "local-1",
 			EnvironmentType: "local",
 		},
-		PublicHTTP: PublicHTTP{
+		HTTP: HTTP{
 			Host: "0.0.0.0",
 			Port: "6577",
 		},
-		MeshHTTP: MeshHTTP{
-			Host: "0.0.0.0",
-			Port: "6477",
+		Mesh: Mesh{
+			Enabled: false,
+			Host:    "0.0.0.0",
+			Port:    "6477",
 		},
 	}
 }

@@ -108,6 +108,7 @@ func (m GoCliMethodsModule) GenerateFile(file pgs.File) {
 		"getApiOptionsTypeName":         fns.GetApiOptionsTypeName,
 		"domainSystemName2":             fns.DomainSystemName2,
 		"getMethodShortName":            fns.GetMethodShortName,
+		"getApiOptionsNetwork":          fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl

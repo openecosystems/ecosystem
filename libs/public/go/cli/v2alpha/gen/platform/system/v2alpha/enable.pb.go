@@ -53,7 +53,8 @@ var EnableV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[systemv2alphapb.EnableRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *systemv2alphapbsdk.NewSystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *systemv2alphapbsdk.NewSystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.Enable(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

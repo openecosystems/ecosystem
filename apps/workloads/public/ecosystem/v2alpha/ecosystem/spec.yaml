@@ -4,12 +4,14 @@ app:
   environmentName: 'local-1'
   environmentType: 'local'
   debug: false
-publicHTTP:
+mesh:
+  enabled: false
+  #host: '192.168.100.5'
+  host: '0.0.0.0'
+  port: '6477'
+http:
   host: '0.0.0.0'
   port: '6577'
-meshHTTP:
-  host: '192.168.100.5'
-  port: '6477'
 zap:
   level: 'debug'
   development: true
@@ -17,10 +19,10 @@ zap:
 opentelemetry:
   traceProviderEnabled: true
 nats:
-  mesh: true
   options:
     servers:
-      - nats://192.168.100.5:4222
+      #- nats://192.168.100.5:4222
+      - nats://localhost:4222
 natsd:
   enabled: true
   options:

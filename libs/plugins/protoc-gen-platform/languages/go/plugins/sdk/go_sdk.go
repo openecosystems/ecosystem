@@ -7,7 +7,7 @@ import (
 	"text/template"
 
 	_go "libs/plugins/protoc-gen-platform/languages/go"
-	"libs/plugins/protoc-gen-platform/shared"
+	shared "libs/plugins/protoc-gen-platform/shared"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
@@ -98,6 +98,7 @@ func (m GoSdkModule) GenerateClientFile(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -131,6 +132,7 @@ func (m GoSdkModule) GenerateProjectJsonFile(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -165,6 +167,7 @@ func (m GoSdkModule) GeneratePackageJsonFile(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -199,6 +202,7 @@ func (m GoSdkModule) GenerateGoModFile(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -233,6 +237,7 @@ func (m GoSdkModule) GenerateGoReleaserFile(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -267,6 +272,7 @@ func (m GoSdkModule) GenerateReadmeFile(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl

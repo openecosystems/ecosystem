@@ -118,8 +118,8 @@ func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*ur
 	httpClient := http.DefaultClient
 
 	// go func() {
-	// TODO: Check the service in the Global Settings to see if this call is a Mesh or Internet based call
-	if config != nil && config.Platform != nil && config.Platform.Pki != nil {
+
+	if config != nil && config.Platform != nil && config.Platform.Mesh != nil && config.Platform.Mesh.Enabled {
 		h := make(map[string][]string)
 		for k, e := range config.Platform.StaticHostMap {
 			h[k] = e.Map
@@ -219,7 +219,6 @@ func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*ur
 			Transport: &http.Transport{
 				DialContext: func(_ context.Context, network string, address string) (net.Conn, error) {
 					return svc.Dial(network, address)
-					// return svc.Dial("tcp", url)
 				},
 			},
 		}

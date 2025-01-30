@@ -185,10 +185,10 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	publicHTTPHost := ResolvedConfiguration.PublicHTTP.Host
-	publicHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.PublicHTTP.Port)
-	meshHTTPHost := ResolvedConfiguration.MeshHTTP.Host
-	meshHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.MeshHTTP.Port)
+	publicHTTPHost := ResolvedConfiguration.HTTP.Host
+	publicHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.HTTP.Port)
+	meshHTTPHost := ResolvedConfiguration.Mesh.Host
+	meshHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.Mesh.Port)
 
 	publicMux := http.NewServeMux()
 	if server.PublicHTTPServerHandler != nil {
@@ -231,16 +231,17 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	go func() {
 		_httpServerErr <- publicHTTPServer.ListenAndServe()
 	}()
-	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.PublicHTTP.Port)
+	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.HTTP.Port)
 
-	_ln, err3 := nebulav1.Bound.GetSocket(strconv.Itoa(meshHTTPPort))
-
-	if err3 != nil {
-		fmt.Println("get socket error: ", err3)
-		return _httpServerErr
+	if ResolvedConfiguration.Mesh.Enabled {
+		_ln, err3 := nebulav1.Bound.GetSocket(strconv.Itoa(meshHTTPPort))
+		if err3 != nil {
+			fmt.Println("get socket error: ", err3)
+			return _httpServerErr
+		}
+		ln = *_ln
+		fmt.Println("Mesh traffic routing enabled")
 	}
-
-	ln = *_ln
 
 	go func() {
 		if ln != nil {
@@ -249,7 +250,7 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 			_httpServerErr <- meshHTTPServer.ListenAndServe()
 		}
 	}()
-	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.MeshHTTP.Port)
+	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.Mesh.Port)
 
 	return _httpServerErr
 }

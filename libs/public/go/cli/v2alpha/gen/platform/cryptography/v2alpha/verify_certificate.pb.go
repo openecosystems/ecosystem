@@ -53,7 +53,8 @@ var VerifyCertificateV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[cryptographyv2alphapb.VerifyCertificateRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *cryptographyv2alphapbsdk.NewCertificateServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *cryptographyv2alphapbsdk.NewCertificateServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.VerifyCertificate(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

@@ -53,7 +53,8 @@ var CreateOrUpdatePreferenceV1BetaCmd = &cobra.Command{
 
 		request := connect.NewRequest[communicationv1betapb.CreateOrUpdatePreferenceRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *communicationv1betapbsdk.NewPreferenceCenterServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *communicationv1betapbsdk.NewPreferenceCenterServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.CreateOrUpdatePreference(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

@@ -60,7 +60,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					options := ResolvedConfiguration.Natsd.Options
 
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
-					if ResolvedConfiguration.Nats.Mesh {
+					if ResolvedConfiguration.Mesh.Enabled {
 						if !nebulav1.IsBound {
 							fmt.Println("You have enabled the mesh network for Nats traffic, however, you haven't bound Nebula. Please add the Nebula binding.")
 							panic("Missing Nebula binding")
@@ -117,7 +117,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					servers := strings.Replace(strings.Trim(fmt.Sprint(ResolvedConfiguration.Nats.Options.Servers), "[]"), " ", ",", -1)
 
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
-					if ResolvedConfiguration.Nats.Mesh {
+					if ResolvedConfiguration.Mesh.Enabled {
 						if !nebulav1.IsBound {
 							fmt.Println("You have enabled the mesh network for Nats traffic, however, you haven't bound Nebula. Please add the Nebula binding.")
 							panic("Missing Nebula binding")

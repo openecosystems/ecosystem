@@ -11,8 +11,9 @@ import (
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
-	"libs/public/go/sdk/gen/iam/v2alpha"
+	"libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	"libs/public/go/sdk/v2alpha"
+	"net/http"
 	"os"
 
 	"libs/public/go/protobuf/gen/platform/iam/v2alpha"
@@ -53,7 +54,9 @@ var VerifyAccountV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[iamv2alphapb.VerifyAccountRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *iamv2alphapbsdk.NewAccountServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		httpClient := http.DefaultClient
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.VerifyAccount(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

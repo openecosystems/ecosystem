@@ -10,11 +10,16 @@ import (
     "encoding/json"
     "fmt"
     "libs/public/go/sdk/v2alpha"
-    "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
     "os"
     "github.com/apex/log"
     "google.golang.org/protobuf/encoding/protojson"
     "github.com/spf13/cobra"
+{{ if ne (getApiOptionsNetwork . ) "overlay" -}}
+    "net/http"
+    "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
+{{ else -}}
+    "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
+{{ end }}
 
 {{ range getImportPackages .File }}
     "{{ . }}"
@@ -56,7 +61,13 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
 
         request := connect.NewRequest[{{ getImportName .Input }}.{{ .Input.Name.UpperCamelCase }}](&_r)
         // Add GZIP Support: connect.WithSendGzip(),
-        client := *{{ getImportName .Input }}sdk.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+        {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
+        httpClient := http.DefaultClient
+        client := {{ getImportName .Input }}connect.NewAccountServiceClient(httpClient, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+        {{ else -}}
+        client := *{{ getImportName .Input }}sdk.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+        {{ end }}
+
         response, err := client.{{ .Name }}(context.Background(), request)
         if err != nil {
           fmt.Println(err)

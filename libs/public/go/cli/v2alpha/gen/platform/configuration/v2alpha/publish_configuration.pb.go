@@ -53,7 +53,8 @@ var PublishConfigurationV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[configurationv2alphapb.PublishConfigurationRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.PublishConfiguration(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

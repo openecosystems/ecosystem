@@ -51,7 +51,12 @@ export declare type ApiOptions = Message<"platform.options.v2.ApiOptions"> & {
   interface: ApiInterfaceType;
 
   /**
-   * @generated from field: string shortname = 4;
+   * @generated from field: platform.options.v2.NetworkType network = 4;
+   */
+  network: NetworkType;
+
+  /**
+   * @generated from field: string shortname = 5;
    */
   shortname: string;
 };

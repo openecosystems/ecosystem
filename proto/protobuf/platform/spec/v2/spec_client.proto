@@ -145,6 +145,12 @@ message SpecSettings {
 
 }
 
+message SpecSettingsMesh {
+  bool enabled = 1;
+  string endpoint = 2;
+  bool insecure = 3;
+}
+
 message SpecSettingsPlatform {
   option (platform.options.v2.graph) = {
     type: GRAPH_TYPE_INPUT
@@ -154,15 +160,17 @@ message SpecSettingsPlatform {
 
   bool insecure = 2;
 
-  Pki pki = 3;
+  SpecSettingsMesh mesh = 3;
 
-  Punchy punchy = 4;
+  Pki pki = 4;
 
-  Lighthouse lighthouse = 5;
+  Punchy punchy = 5;
 
-  map<string, StaticHostMap> static_host_map = 6;
+  Lighthouse lighthouse = 6;
 
-  bool dynamic_config_reload = 7;
+  map<string, StaticHostMap> static_host_map = 7;
+
+  bool dynamic_config_reload = 8;
 
 }
 

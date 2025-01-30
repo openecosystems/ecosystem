@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
+	"net/http"
 	"os"
 	"path/filepath"
 
@@ -14,7 +16,7 @@ import (
 
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	iamv2alphapbsdk "libs/public/go/sdk/gen/iam/v2alpha"
+
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -65,8 +67,9 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 		sdkv2alphalib.Overrides.ValidateOnly = createAccountValidateOnly
 
 		request := connect.NewRequest[iamv2alphapb.CreateAccountRequest](&_r)
-		// Add GZIP Support: connect.WithSendGzip(),
-		client := *iamv2alphapbsdk.NewAccountServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		httpClient := http.DefaultClient
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.CreateAccount(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

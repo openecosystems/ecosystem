@@ -53,7 +53,8 @@ var GetEcosystemV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[ecosystemv2alphapb.GetEcosystemRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
 		response, err := client.GetEcosystem(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

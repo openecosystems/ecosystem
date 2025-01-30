@@ -46,7 +46,7 @@ service AccountService {
   //Create an Account to connect to an ecosystem
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
-    option (platform.options.v2.api_method) = {shortname: "create"};
+    option (platform.options.v2.api_method) = {shortname: "create", network: NETWORK_TYPE_INTERNET};
     option (google.api.http) = {
       post: "/v2alpha/iam/a"
       body: "*"
@@ -58,7 +58,7 @@ service AccountService {
   //Verify an existing account
   rpc VerifyAccount(VerifyAccountRequest) returns (VerifyAccountResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
-    option (platform.options.v2.api_method) = {shortname: "verify"};
+    option (platform.options.v2.api_method) = {shortname: "verify", network: NETWORK_TYPE_INTERNET};
     option (google.api.http) = {
       post: "/v2alpha/iam/a/verify"
       body: "*"

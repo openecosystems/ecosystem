@@ -10,6 +10,8 @@ import (
 
 	"dario.cat/mergo"
 
+	serverv2alphalib "libs/public/go/server/v2alpha"
+
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
@@ -35,7 +37,6 @@ var (
 
 // Nats represents the configuration for NATS connectivity including mesh and specific connection options.
 type Nats struct {
-	Mesh    bool
 	Options nats.Options
 }
 
@@ -54,6 +55,7 @@ type EventStreamRegistry struct {
 
 // Configuration represents the overall settings structure comprising NATS, NATS server options, and stream registry configurations.
 type Configuration struct {
+	Mesh                serverv2alphalib.Mesh
 	Nats                Nats
 	Natsd               Natsd
 	EventStreamRegistry EventStreamRegistry
@@ -146,6 +148,9 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 	cfg := sdkv2alphalib.ResolvedConfiguration
 
 	return Configuration{
+		Mesh: serverv2alphalib.Mesh{
+			Enabled: false,
+		},
 		Nats: Nats{
 			Options: nats.Options{
 				Servers: NatsServers,
