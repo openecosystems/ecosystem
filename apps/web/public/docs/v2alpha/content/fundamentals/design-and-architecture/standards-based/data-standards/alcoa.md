@@ -40,13 +40,13 @@ For digital records an audit trail should describe:
 
 ## Legible
 
-Everything that is written must be legible an unambiguous.
+Everything that is written must be legible and unambiguous.
 
 "0" and "O" could be ambiguous, as could various ways for writing down a date.
 
 Signatures must be identifiable.
 
-All data Must be in an identifiable format.
+All data must be in an identifiable format.
 
 ## Contemporaneous
 
@@ -71,9 +71,9 @@ In any case it MUST be possible to retrieve the original record.
 
 A record must completely reflect the true observation. Either the document is complete, consistent and correct, or an explanation has to be attached why it is not.
 
-Systems that process records Must have mechanisms is place that prevent recording of inaccurate data.
+Systems that process records must have mechanisms is place that prevent recording of inaccurate data.
 
-Data Must be correct, truthful, complete, valid, and reliable.
+Data must be correct, truthful, complete, valid, and reliable.
 
 ## Sources
 
