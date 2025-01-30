@@ -1,11 +1,12 @@
 package main
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/cmd"
+	"runtime"
+
+	cmd "apps/clients/public/cli/v2alpha/oeco/cmd"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-	"runtime"
 )
 
 func main() {

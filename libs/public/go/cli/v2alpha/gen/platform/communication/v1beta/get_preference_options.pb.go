@@ -9,13 +9,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
 	"libs/public/go/sdk/gen/communication/v1beta"
 	"libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
-
-	"github.com/spf13/cobra"
 
 	"libs/public/go/protobuf/gen/platform/communication/v1beta"
 )
@@ -28,9 +26,8 @@ var (
 
 var GetPreferenceOptionsV1BetaCmd = &cobra.Command{
 	Use:   "getPreferenceOptions",
-	Short: ``,
-	Long: ` Get Preference Options
-`,
+	Short: `Get Preference Options`,
+	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling getPreferenceOptions preferenceCenter")
@@ -45,8 +42,7 @@ var GetPreferenceOptionsV1BetaCmd = &cobra.Command{
 		}
 
 		_r := communicationv1betapb.GetPreferenceOptionsRequest{}
-		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -56,7 +52,8 @@ var GetPreferenceOptionsV1BetaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = getPreferenceOptionsValidateOnly
 
 		request := connect.NewRequest[communicationv1betapb.GetPreferenceOptionsRequest](&_r)
-		client := *communicationv1betapbsdk.NewPreferenceCenterServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		// Add GZIP Support: connect.WithSendGzip(),
+		client := *communicationv1betapbsdk.NewPreferenceCenterServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 		response, err := client.GetPreferenceOptions(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

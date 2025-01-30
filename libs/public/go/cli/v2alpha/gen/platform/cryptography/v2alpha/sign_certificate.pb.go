@@ -9,13 +9,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
 	"libs/public/go/sdk/gen/cryptography/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
-
-	"github.com/spf13/cobra"
 
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 )
@@ -27,10 +25,9 @@ var (
 )
 
 var SignCertificateV2AlphaCmd = &cobra.Command{
-	Use:   "signCertificate",
-	Short: ``,
-	Long: ` Method to SignCertificate to events based on scopes
-`,
+	Use:   "sign",
+	Short: `Method to SignCertificate to events based on scopes`,
+	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling signCertificate certificate")
@@ -45,8 +42,7 @@ var SignCertificateV2AlphaCmd = &cobra.Command{
 		}
 
 		_r := cryptographyv2alphapb.SignCertificateRequest{}
-		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -56,7 +52,8 @@ var SignCertificateV2AlphaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = signCertificateValidateOnly
 
 		request := connect.NewRequest[cryptographyv2alphapb.SignCertificateRequest](&_r)
-		client := *cryptographyv2alphapbsdk.NewCertificateServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		// Add GZIP Support: connect.WithSendGzip(),
+		client := *cryptographyv2alphapbsdk.NewCertificateServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 		response, err := client.SignCertificate(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

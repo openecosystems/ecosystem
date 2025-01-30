@@ -5,15 +5,15 @@ package iamv2alphapbsdk
 
 import (
 	"connectrpc.com/connect"
+
+	nebulav1 "libs/partner/go/nebula/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
-	"net/http"
+	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 )
 
 func NewAccountAuthorityServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *iamv2alphapbconnect.AccountAuthorityServiceClient {
-
-	//httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-	httpClient := http.DefaultClient
+	nebula := nebulav1.Binding{}
+	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := iamv2alphapbconnect.NewAccountAuthorityServiceClient(httpClient, baseURL, opts...)
 	return &c
 }

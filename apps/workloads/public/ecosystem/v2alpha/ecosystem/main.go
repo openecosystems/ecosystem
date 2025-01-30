@@ -13,7 +13,9 @@ import (
 	certificate "apps/workloads/public/ecosystem/v2alpha/ecosystem/certificate"
 	configuration "apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
 	ecosystem "apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
+	iam "apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
 	natsnodev2 "libs/partner/go/nats/v2"
+	nebulav1 "libs/partner/go/nebula/v1"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	opentelemetryv2 "libs/partner/go/opentelemetry/v2"
 	advertisementv1pbconnect "libs/partner/go/protobuf/gen/kevel/advertisement/v1/advertisementv1pbconnect"
@@ -39,16 +41,17 @@ func main() {
 		&opentelemetryv2.Binding{},
 		&zaploggerv1.Binding{},
 		&nebulav1ca.Binding{},
+		&nebulav1.Binding{},
 		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
 			&ecosystem.CreateEcosystemListener{},
 			&configuration.CreateConfigurationListener{},
 			&configuration.GetConfigurationListener{},
 			&accountauthority.CreateAccountAuthorityListener{},
 			&certificate.SignCertificateListener{},
+			&iam.CreateAccountListener{},
 		}},
 		&configurationv2alphalib.Binding{},
 
-		//&nebulav1.Binding{},
 		// Add PushPin Server
 		// Listen on outbound.channels and PushPin to Clients
 		// Create a new Connector Listener and listen of outbound channels
@@ -86,6 +89,7 @@ func main() {
 	meshServices = append(meshServices, vanguard.NewService(ecosystemv2alphapbconnect.NewEcosystemServiceHandler(&ecosystemv2alphapbsrv.EcosystemServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountAuthorityServiceHandler(&iamv2alphapbsrv.AccountAuthorityServiceHandler{}, interceptors)))
+	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountServiceHandler(&iamv2alphapbsrv.AccountServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 
 	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, meshServices, publicServices)

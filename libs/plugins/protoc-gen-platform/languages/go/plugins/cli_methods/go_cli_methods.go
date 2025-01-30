@@ -2,14 +2,15 @@ package cli_methods
 
 import (
 	"embed"
+	"libs/plugins/protoc-gen-platform/shared"
 	"sort"
 	"strings"
 	"text/template"
 
+	_go "libs/plugins/protoc-gen-platform/languages/go"
+
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
-	_go "libs/plugins/protoc-gen-platform/languages/go"
-	"libs/plugins/protoc-gen-platform/shared"
 )
 
 //go:embed templates/*.tmpl
@@ -56,7 +57,7 @@ func (m *GoCliMethodsModule) Execute(targets map[string]pgs.File, _ map[string]p
 
 	// Idempotent looping, use keys for range NOT targets
 	keys := make([]string, 0)
-	for k, _ := range targets {
+	for k := range targets {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
@@ -83,28 +84,30 @@ func (m GoCliMethodsModule) GenerateFile(file pgs.File) {
 
 	tpl := l.Template()
 	tpl.Funcs(map[string]interface{}{
-		"service":               fns.Service,
-		"parentService":         fns.ParentService,
-		"queries":               fns.QueryMethods,
-		"isMethodQuery":         fns.IsMethodQuery,
-		"mutations":             fns.MutationMethods,
-		"isMethodMutation":      fns.IsMethodMutation,
-		"getCqrsType":           fns.GetCQRSType,
-		"getSpecCommands":       fns.GetSpecCommands,
-		"getSpecEvents":         fns.GetSpecEvents,
-		"getSpecTopics":         fns.GetSpecTopics,
-		"goPackageOverwrite":    fns.GoPackageOverwrite,
-		"goPath":                fns.GoPath,
-		"getImportPackages":     fns.GetGoImportPackagesCLI,
-		"getImportName":         fns.GetImportPackageMessageDirectlyFromGoPackage,
-		"getMethodVerb":         fns.GetMethodVerb,
-		"dotNotationToFilePath": fns.DotNotationToFilePath,
-		"methodTrailingComment": fns.MethodTrailingComment,
-		"methodLeadingComment":  fns.MethodLeadingComment,
-		"getPackageVersion":     fns.GetPackageVersion,
-		"getPackageVersionName": fns.GetPackageVersionName,
-		"getApiOptionsTypeName": fns.GetApiOptionsTypeName,
-		"domainSystemName2":     fns.DomainSystemName2,
+		"service":                       fns.Service,
+		"parentService":                 fns.ParentService,
+		"queries":                       fns.QueryMethods,
+		"isMethodQuery":                 fns.IsMethodQuery,
+		"mutations":                     fns.MutationMethods,
+		"isMethodMutation":              fns.IsMethodMutation,
+		"getCqrsType":                   fns.GetCQRSType,
+		"getSpecCommands":               fns.GetSpecCommands,
+		"getSpecEvents":                 fns.GetSpecEvents,
+		"getSpecTopics":                 fns.GetSpecTopics,
+		"goPackageOverwrite":            fns.GoPackageOverwrite,
+		"goPath":                        fns.GoPath,
+		"getImportPackages":             fns.GetGoImportPackagesCLI,
+		"getImportName":                 fns.GetImportPackageMessageDirectlyFromGoPackage,
+		"getMethodVerb":                 fns.GetMethodVerb,
+		"dotNotationToFilePath":         fns.DotNotationToFilePath,
+		"methodTrailingComment":         fns.MethodTrailingComment,
+		"methodLeadingComment":          fns.MethodLeadingComment,
+		"methodLeadingDetachedComments": fns.MethodLeadingDetachedComments,
+		"getPackageVersion":             fns.GetPackageVersion,
+		"getPackageVersionName":         fns.GetPackageVersionName,
+		"getApiOptionsTypeName":         fns.GetApiOptionsTypeName,
+		"domainSystemName2":             fns.DomainSystemName2,
+		"getMethodShortName":            fns.GetMethodShortName,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl

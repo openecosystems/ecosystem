@@ -5,15 +5,15 @@ package configurationv2alphapbsdk
 
 import (
 	"connectrpc.com/connect"
+
+	nebulav1 "libs/partner/go/nebula/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
-	"net/http"
+	configurationv2alphapbconnect "libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
 )
 
 func NewConfigurationServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *configurationv2alphapbconnect.ConfigurationServiceClient {
-
-	//httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-	httpClient := http.DefaultClient
+	nebula := nebulav1.Binding{}
+	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := configurationv2alphapbconnect.NewConfigurationServiceClient(httpClient, baseURL, opts...)
 	return &c
 }

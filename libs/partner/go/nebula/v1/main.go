@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"os"
 	"sync"
+	"time"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
@@ -112,84 +114,117 @@ func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 }
 
 // GetMeshHTTPClient creates and returns an HTTP client configured optionally for Mesh or Internet-based calls depending on config.
-func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, url string) *http.Client {
+func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*url*/) *http.Client {
 	httpClient := http.DefaultClient
 
-	go func() {
-		// TODO: Check the service in the Global Settings to see if this call is a Mesh or Internet based call
-		if config != nil && config.Platform != nil && config.Platform.Pki != nil {
-			h := make(map[string][]string)
-			for k, e := range config.Platform.StaticHostMap {
-				h[k] = e.Map
-			}
-
-			nebulaC := Nebula{
-				Host: h,
-				Pki: Pki{
-					Ca:   config.Platform.Pki.Ca,
-					Cert: config.Platform.Pki.Cert,
-					Key:  config.Platform.Pki.Key,
-				},
-				Lighthouse: Lighthouse{
-					AmLighthouse: false,
-					Interval:     int(config.Platform.Lighthouse.Interval),
-					Hosts:        config.Platform.Lighthouse.Hosts,
-				},
-				Punchy: Punchy{
-					Punch:        config.Platform.Punchy.Punch,
-					Respond:      config.Platform.Punchy.Respond,
-					RespondDelay: config.Platform.Punchy.RespondDelay,
-					Delay:        config.Platform.Punchy.Delay,
-				},
-				Tun: Tun{
-					User: true,
-				},
-				Logging: Logging{
-					Level:  "info",
-					Format: "",
-				},
-				Firewall: Firewall{
-					OutboundAction: "",
-					InboundAction:  "",
-					Conntrack: Conntrack{
-						TCPTimeout:     "",
-						UDPTimeout:     "",
-						DefaultTimeout: "",
-					},
-					Outbound: nil,
-					Inbound:  nil,
-				},
-			}
-
-			configBytes, err := yaml.Marshal(nebulaC)
-			if err != nil {
-				fmt.Printf("Error resolving Nebula configuration: %v\n", err)
-				fmt.Println(err.Error())
-			}
-
-			var cfg nebulaConfig.C
-			if err = cfg.LoadString(string(configBytes)); err != nil {
-				fmt.Println("ERROR loading config:", err)
-			}
-
-			svc, err := service.New(&cfg)
-			if err != nil {
-				fmt.Printf("Error creating service: %v\n", err)
-				fmt.Println(err.Error())
-			}
-			// defer svc.Close()
-
-			// config.MeshSocket = svc
-
-			httpClient = &http.Client{
-				Transport: &http.Transport{
-					DialContext: func(_ context.Context, _ string, _ string) (net.Conn, error) {
-						return svc.Dial("tcp", url)
-					},
-				},
-			}
+	// go func() {
+	// TODO: Check the service in the Global Settings to see if this call is a Mesh or Internet based call
+	if config != nil && config.Platform != nil && config.Platform.Pki != nil {
+		h := make(map[string][]string)
+		for k, e := range config.Platform.StaticHostMap {
+			h[k] = e.Map
 		}
-	}()
+
+		nebulaC := Nebula{
+			Host: h,
+			Pki: Pki{
+				Ca:   os.ExpandEnv(config.Platform.Pki.Ca),
+				Cert: os.ExpandEnv(config.Platform.Pki.Cert),
+				Key:  os.ExpandEnv(config.Platform.Pki.Key),
+			},
+			Lighthouse: Lighthouse{
+				AmLighthouse: false,
+				Interval:     int(config.Platform.Lighthouse.Interval),
+				Hosts:        config.Platform.Lighthouse.Hosts,
+			},
+			Punchy: Punchy{
+				Punch:        config.Platform.Punchy.Punch,
+				Respond:      config.Platform.Punchy.Respond,
+				RespondDelay: config.Platform.Punchy.RespondDelay,
+				Delay:        config.Platform.Punchy.Delay,
+			},
+			Tun: Tun{
+				// User:     true,
+				Disabled:           false,
+				Dev:                "utun8",
+				DropLocalBroadcast: false,
+				DropMulticast:      false,
+				TxQueue:            500,
+				Mtu:                1300,
+			},
+			Listen: Listen{
+				Host: "0.0.0.0",
+				Port: 4242,
+			},
+			Relay: Relay{
+				AmRelay:   false,
+				UseRelays: false,
+			},
+			Logging: Logging{
+				Level:  "error",
+				Format: "text",
+			},
+			Firewall: Firewall{
+				OutboundAction: "drop",
+				InboundAction:  "drop",
+				Conntrack: Conntrack{
+					TCPTimeout:     "12m",
+					UDPTimeout:     "3m",
+					DefaultTimeout: "10m",
+				},
+				Outbound: Outbound{
+					{
+						Port:  "any",
+						Proto: "any",
+						Host:  "any",
+					},
+				},
+				Inbound: Inbound{
+					{
+						Port:  "any",
+						Proto: "any",
+						Host:  "any",
+					},
+					{
+						Port:  "any",
+						Proto: "any",
+						Host:  "any",
+					},
+				},
+			},
+		}
+
+		configBytes, err := yaml.Marshal(nebulaC)
+		if err != nil {
+			fmt.Printf("Error resolving Nebula configuration: %v\n", err)
+			fmt.Println(err.Error())
+		}
+
+		var cfg nebulaConfig.C
+		if err = cfg.LoadString(string(configBytes)); err != nil {
+			fmt.Println("ERROR loading config:", err)
+		}
+
+		svc, err := service.New(&cfg)
+		if err != nil {
+			fmt.Printf("Error creating service: %v\n", err)
+			fmt.Println(err.Error())
+		}
+		// defer svc.Close()
+
+		// config.MeshSocket = svc
+
+		httpClient = &http.Client{
+			Timeout: 10 * time.Second,
+			Transport: &http.Transport{
+				DialContext: func(_ context.Context, network string, address string) (net.Conn, error) {
+					return svc.Dial(network, address)
+					// return svc.Dial("tcp", url)
+				},
+			},
+		}
+	}
+	//}()
 
 	return httpClient
 }

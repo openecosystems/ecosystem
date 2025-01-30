@@ -41,7 +41,7 @@ const (
 // AccountAuthorityServiceClient is a client for the platform.iam.v2alpha.AccountAuthorityService
 // service.
 type AccountAuthorityServiceClient interface {
-	// Method to CreateAccountAuthority to events based on scopes
+	// Method to create an Account Authority to manage the ecosystem partners
 	CreateAccountAuthority(context.Context, *connect.Request[v2alpha.CreateAccountAuthorityRequest]) (*connect.Response[v2alpha.CreateAccountAuthorityResponse], error)
 }
 
@@ -79,7 +79,7 @@ func (c *accountAuthorityServiceClient) CreateAccountAuthority(ctx context.Conte
 // AccountAuthorityServiceHandler is an implementation of the
 // platform.iam.v2alpha.AccountAuthorityService service.
 type AccountAuthorityServiceHandler interface {
-	// Method to CreateAccountAuthority to events based on scopes
+	// Method to create an Account Authority to manage the ecosystem partners
 	CreateAccountAuthority(context.Context, *connect.Request[v2alpha.CreateAccountAuthorityRequest]) (*connect.Response[v2alpha.CreateAccountAuthorityResponse], error)
 }
 

@@ -3,12 +3,13 @@ package shared
 import (
 	"strings"
 
-	pgs "github.com/lyft/protoc-gen-star/v2"
 	options "libs/protobuf/go/protobuf/gen/platform/options/v2"
+
+	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
+// CQRSOptions retrieves the CQRSOptions extension from the specified proto method and returns it.
 func (fns Functions) CQRSOptions(method pgs.Method) options.CQRSOptions {
-
 	var cqrs options.CQRSOptions
 
 	_, err := method.Extension(options.E_Cqrs, &cqrs)
@@ -19,8 +20,8 @@ func (fns Functions) CQRSOptions(method pgs.Method) options.CQRSOptions {
 	return cqrs
 }
 
+// QueryMethods extracts and returns all method descriptors from the given file that are identified as query methods.
 func (fns Functions) QueryMethods(file pgs.File) []pgs.Method {
-
 	var methods []pgs.Method
 	for _, service := range file.Services() {
 		methods = service.Methods()
@@ -36,11 +37,10 @@ func (fns Functions) QueryMethods(file pgs.File) []pgs.Method {
 	}
 
 	return queryMethods
-
 }
 
+// IsMethodQuery determines if a given pgs.Method is categorized as a "query" based on its CQRSType prefix.
 func (fns Functions) IsMethodQuery(method pgs.Method) bool {
-
 	if strings.HasPrefix(fns.IsCQRSType(method), "query") {
 		return true
 	}
@@ -48,8 +48,8 @@ func (fns Functions) IsMethodQuery(method pgs.Method) bool {
 	return false
 }
 
+// HasAnyCQRSMethods checks if the given file contains at least one method classified as a Query or Mutation method.
 func (fns Functions) HasAnyCQRSMethods(file pgs.File) bool {
-
 	if fns.HasQueryMethods(file) {
 		return true
 	}
@@ -59,11 +59,10 @@ func (fns Functions) HasAnyCQRSMethods(file pgs.File) bool {
 	}
 
 	return false
-
 }
 
+// HasQueryMethods checks if the given file contains any query methods and returns true if at least one is found.
 func (fns Functions) HasQueryMethods(file pgs.File) bool {
-
 	methods := fns.QueryMethods(file)
 
 	if len(methods) > 0 {
@@ -71,11 +70,10 @@ func (fns Functions) HasQueryMethods(file pgs.File) bool {
 	}
 
 	return false
-
 }
 
+// MutationMethods extracts and returns methods that are classified as "mutation" based on their CQRS type from the provided file.
 func (fns Functions) MutationMethods(file pgs.File) []pgs.Method {
-
 	var methods []pgs.Method
 	for _, service := range file.Services() {
 		methods = service.Methods()
@@ -91,11 +89,10 @@ func (fns Functions) MutationMethods(file pgs.File) []pgs.Method {
 	}
 
 	return mutationMethods
-
 }
 
+// IsMethodMutation determines if the given method is a mutation based on its CQRS type prefix.
 func (fns Functions) IsMethodMutation(method pgs.Method) bool {
-
 	if strings.HasPrefix(fns.IsCQRSType(method), "mutation") {
 		return true
 	}
@@ -103,8 +100,8 @@ func (fns Functions) IsMethodMutation(method pgs.Method) bool {
 	return false
 }
 
+// HasMutationMethods determines if the given file contains any mutation methods by checking the length of retrieved methods.
 func (fns Functions) HasMutationMethods(file pgs.File) bool {
-
 	methods := fns.MutationMethods(file)
 
 	if len(methods) > 0 {
@@ -112,11 +109,10 @@ func (fns Functions) HasMutationMethods(file pgs.File) bool {
 	}
 
 	return false
-
 }
 
+// IsCQRSType determines the CQRS type of the given gRPC method and returns it as a string representation.
 func (fns Functions) IsCQRSType(method pgs.Method) string {
-
 	var cqrs options.CQRSOptions
 
 	_, err := method.Extension(options.E_Cqrs, &cqrs)
@@ -152,11 +148,10 @@ func (fns Functions) IsCQRSType(method pgs.Method) string {
 	default:
 		return "none"
 	}
-
 }
 
+// IsCQRSList determines if the given method is of the CQRS type "list" by evaluating its associated CQRS type.
 func (fns Functions) IsCQRSList(method pgs.Method) bool {
-
 	t := fns.GetCQRSType(method)
 	if t == "list" {
 		return true
@@ -165,8 +160,8 @@ func (fns Functions) IsCQRSList(method pgs.Method) bool {
 	return false
 }
 
+// GetCQRSType determines the CQRS type of a given method based on its CQRS extension options and returns it as a string.
 func (fns Functions) GetCQRSType(method pgs.Method) string {
-
 	var cqrs options.CQRSOptions
 
 	_, err := method.Extension(options.E_Cqrs, &cqrs)
@@ -202,11 +197,10 @@ func (fns Functions) GetCQRSType(method pgs.Method) string {
 	default:
 		return "none"
 	}
-
 }
 
+// ConvertCQRSTypeToString converts a given CQRSType value to its corresponding string representation such as "Mutation" or "Query".
 func (fns Functions) ConvertCQRSTypeToString(t options.CQRSType) string {
-
 	switch t {
 	case options.CQRSType_CQRS_TYPE_MUTATION_CREATE:
 		fallthrough

@@ -11,8 +11,8 @@ import (
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
 
-	configurationv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
 	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
+	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
@@ -55,8 +55,9 @@ var (
 
 // manuallyImplementedSystems is a map of system names to a boolean indicating if the system requires manual command handling.
 var manuallyImplementedSystems = map[string]bool{
-	"cryptography":  true,
-	"configuration": true,
+	//"cryptography":  true,
+	//"configuration": true,
+	"iam": true,
 }
 
 // AboutPlatformCLI represents metadata about the platform's CLI, including version, commit hash, build date, and builder info.
@@ -144,12 +145,13 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 				continue
 			}
 
-			RootCmd.AddCommand(command)
+			RootCmd.AddCommand(command.Commands()...)
 		}
 	}
 
 	// Manually add certain system commands
-	RootCmd.AddCommand(configurationv2alphapbint.SystemCmd)
+	// RootCmd.AddCommand(configurationv2alphapbint.ConfigurationServiceServiceCmd)
+	RootCmd.AddCommand(iamv2alphapbint.AccountServiceServiceCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)
 }
 

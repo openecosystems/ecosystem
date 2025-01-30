@@ -101,11 +101,28 @@ type Conntrack struct {
 	DefaultTimeout string `json:"default_timeout,omitempty" yaml:"default_timeout,omitempty"`
 }
 
+// OutboundRule defines a network rule specifying the port, protocol, and host configuration for outbound traffic.
+type OutboundRule struct {
+	Port  string `json:"port,omitempty" yaml:"port,omitempty"`
+	Proto string `json:"proto,omitempty" yaml:"proto,omitempty"`
+	Host  string `json:"host,omitempty" yaml:"host,omitempty"`
+}
+
 // Outbound represents a collection of outbound rules with port, protocol, and host information.
 type Outbound []struct {
 	Port  string `json:"port,omitempty" yaml:"port,omitempty"`
 	Proto string `json:"proto,omitempty" yaml:"proto,omitempty"`
 	Host  string `json:"host,omitempty" yaml:"host,omitempty"`
+}
+
+// InboundRule represents a network rule defining inbound traffic configurations such as port, protocol, host, and groups.
+type InboundRule struct {
+	Port      string   `json:"port,omitempty" yaml:"port,omitempty"`
+	Proto     string   `json:"proto,omitempty" yaml:"proto,omitempty"`
+	Host      string   `json:"host,omitempty" yaml:"host,omitempty"`
+	Groups    []string `json:"groups,omitempty" yaml:"groups,omitempty"`
+	Group     string   `json:"group,omitempty" yaml:"group,omitempty"`
+	LocalCidr string   `json:"local_cidr,omitempty" yaml:"local_cidr,omitempty"`
 }
 
 // Inbound represents a collection of inbound rules with port, protocol, host, groups, and CIDR configuration options.
@@ -153,6 +170,7 @@ func (b *Binding) ValidateConfiguration() error {
 	if b.configuration == nil || b.configuration.Nebula.Pki.Ca == "" {
 		_ = append(errs, errors.New("Nebula.Pki.Ca is required"))
 	}
+
 	// Host: nil,
 	//  Pki: Pki{
 	//    Ca:   "",

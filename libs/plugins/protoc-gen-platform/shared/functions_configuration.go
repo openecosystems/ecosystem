@@ -1,10 +1,14 @@
 package shared
 
 import (
-	pgs "github.com/lyft/protoc-gen-star/v2"
 	options "libs/protobuf/go/protobuf/gen/platform/options/v2"
+
+	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
+// ConfigurationOptions retrieves configuration options from the given proto file by accessing its associated extension.
+// Panics if the extension cannot be read or retrieved successfully.
+// Returns an instance of options.ConfigurationOptions.
 func (fns Functions) ConfigurationOptions(file pgs.File) options.ConfigurationOptions {
 	var config options.ConfigurationOptions
 
@@ -16,6 +20,9 @@ func (fns Functions) ConfigurationOptions(file pgs.File) options.ConfigurationOp
 	return config
 }
 
+// Configuration locates and returns a specific protobuf message in a file based on a given configuration.
+// If the configuration is enabled, it searches for a message with an expected name derived from the file name.
+// Panics if the expected message name is not found and the configuration is enabled. Returns nil if not enabled.
 func (fns Functions) Configuration(file pgs.File) pgs.Message {
 	config := fns.ConfigurationOptions(file)
 
@@ -33,16 +40,19 @@ func (fns Functions) Configuration(file pgs.File) pgs.Message {
 	return nil
 }
 
+// ConfigurationName generates a name for the configuration by extracting it from the provided file.
 func (fns Functions) ConfigurationName(file pgs.File) pgs.Name {
 	msg := fns.Configuration(file)
 	return pgs.Name(msg.Name())
 }
 
+// ConfigurationNumber extracts and returns the field number of the configuration option for the given protobuf file.
 func (fns Functions) ConfigurationNumber(file pgs.File) int32 {
 	config := fns.ConfigurationOptions(file)
 	return config.FieldNumber
 }
 
+// IsConfiguration checks if the provided file contains a configuration message. Returns true if such a message exists.
 func (fns Functions) IsConfiguration(file pgs.File) bool {
 	msg := fns.Configuration(file)
 	return msg != nil

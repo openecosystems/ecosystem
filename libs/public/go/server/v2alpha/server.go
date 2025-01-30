@@ -13,11 +13,11 @@ import (
 	"time"
 
 	"connectrpc.com/vanguard"
-
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
+
+	nebulav1 "libs/partner/go/nebula/v1"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // quit is a channel used to handle OS signals for graceful shutdown of the server.
@@ -229,13 +229,18 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	_httpServerErr := make(chan error)
 
 	go func() {
-		if ln != nil {
-			_httpServerErr <- publicHTTPServer.Serve(ln)
-		} else {
-			_httpServerErr <- publicHTTPServer.ListenAndServe()
-		}
+		_httpServerErr <- publicHTTPServer.ListenAndServe()
 	}()
 	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.PublicHTTP.Port)
+
+	_ln, err3 := nebulav1.Bound.GetSocket(strconv.Itoa(meshHTTPPort))
+
+	if err3 != nil {
+		fmt.Println("get socket error: ", err3)
+		return _httpServerErr
+	}
+
+	ln = *_ln
 
 	go func() {
 		if ln != nil {

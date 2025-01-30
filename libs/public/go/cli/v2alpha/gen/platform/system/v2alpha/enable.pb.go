@@ -9,13 +9,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
 	"libs/public/go/sdk/gen/system/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
-
-	"github.com/spf13/cobra"
 
 	"libs/public/go/protobuf/gen/platform/system/v2alpha"
 )
@@ -28,9 +26,8 @@ var (
 
 var EnableV2AlphaCmd = &cobra.Command{
 	Use:   "enable",
-	Short: ``,
-	Long: ` Method to Subscribe to events based on scopes
-`,
+	Short: `Method to Subscribe to events based on scopes`,
+	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling enable system")
@@ -45,8 +42,7 @@ var EnableV2AlphaCmd = &cobra.Command{
 		}
 
 		_r := systemv2alphapb.EnableRequest{}
-		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -56,7 +52,8 @@ var EnableV2AlphaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = enableValidateOnly
 
 		request := connect.NewRequest[systemv2alphapb.EnableRequest](&_r)
-		client := *systemv2alphapbsdk.NewSystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		// Add GZIP Support: connect.WithSendGzip(),
+		client := *systemv2alphapbsdk.NewSystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 		response, err := client.Enable(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

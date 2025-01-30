@@ -9,13 +9,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
 	"libs/public/go/sdk/gen/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
-
-	"github.com/spf13/cobra"
 
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 )
@@ -27,10 +25,9 @@ var (
 )
 
 var UpdateConfigurationV2AlphaCmd = &cobra.Command{
-	Use:   "updateConfiguration",
-	Short: ``,
-	Long: `
-`,
+	Use:   "update",
+	Short: `Update configuration for an ecosystem`,
+	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling updateConfiguration configuration")
@@ -45,8 +42,7 @@ var UpdateConfigurationV2AlphaCmd = &cobra.Command{
 		}
 
 		_r := configurationv2alphapb.UpdateConfigurationRequest{}
-		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -56,7 +52,8 @@ var UpdateConfigurationV2AlphaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = updateConfigurationValidateOnly
 
 		request := connect.NewRequest[configurationv2alphapb.UpdateConfigurationRequest](&_r)
-		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		// Add GZIP Support: connect.WithSendGzip(),
+		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 		response, err := client.UpdateConfiguration(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

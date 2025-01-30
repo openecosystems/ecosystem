@@ -1,11 +1,13 @@
 package shared
 
 import (
-	pgs "github.com/lyft/protoc-gen-star/v2"
 	"strings"
+
+	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
-// GetGoImportPathAndPackageForAnyFieldTypeElement handles Embedded Types
+// GetGoImportPathAndPackageForAnyFieldTypeElement returns the Go import path and package for a FieldTypeElem.
+// It handles embedded messages and enums, returning empty strings for unsupported types.
 func (fns Functions) GetGoImportPathAndPackageForAnyFieldTypeElement(e pgs.FieldTypeElem) (string, string) {
 	if e.IsEmbed() {
 		return fns.GetImportPathAndPackageForAnyMessage(e.Embed())
@@ -16,6 +18,8 @@ func (fns Functions) GetGoImportPathAndPackageForAnyFieldTypeElement(e pgs.Field
 	return "", ""
 }
 
+// GetImportPathAndPackageForAnyMessage determines the import path and package name for a given Protobuf message.
+// It handles well-known types explicitly and delegates others to GetImportPathAndPackageForAnyEntity.
 func (fns Functions) GetImportPathAndPackageForAnyMessage(msg pgs.Message) (string, string) {
 	if msg.IsWellKnown() {
 		switch msg.WellKnownType() {
@@ -33,15 +37,15 @@ func (fns Functions) GetImportPathAndPackageForAnyMessage(msg pgs.Message) (stri
 	return fns.GetImportPathAndPackageForAnyEntity(msg)
 }
 
+// GetImportPathAndPackageForAnyEntity retrieves the Go import path and package name for a given protobuf entity.
 func (fns Functions) GetImportPathAndPackageForAnyEntity(e pgs.Entity) (string, string) {
-
 	o := e.File().Descriptor().GetOptions()
 	path := strings.Split(*o.GoPackage, ";")
 	return path[0], path[1]
 }
 
+// GetAllGoFileLevelImportPaths extracts and returns a map of Go import paths and their corresponding package aliases.
 func (fns Functions) GetAllGoFileLevelImportPaths(file pgs.File) map[string]string {
-
 	o := file.Descriptor().GetOptions()
 
 	p := o.GoPackage
@@ -55,14 +59,13 @@ func (fns Functions) GetAllGoFileLevelImportPaths(file pgs.File) map[string]stri
 	// serviceProto
 	// serviceGrpc
 
-	//imports["specv2"] = "anypb"
+	// imports["specv2"] = "anypb"
 
 	return imports
 }
 
-// GetAllGoFieldLevelImportPaths loops through file and identifies all imports
+// GetAllGoFieldLevelImportPaths returns a map of Go import paths and their corresponding packages for all field types in a file.
 func (fns Functions) GetAllGoFieldLevelImportPaths(file pgs.File) map[string]string {
-
 	imports := make(map[string]string)
 	for _, msg := range file.AllMessages() {
 		for _, f := range msg.Fields() {
@@ -96,11 +99,10 @@ func (fns Functions) GetAllGoFieldLevelImportPaths(file pgs.File) map[string]str
 	}
 
 	return imports
-
 }
 
+// SelectivelyAddImport determines whether an import path should be added based on its presence in the provided key.
 func (fns Functions) SelectivelyAddImport(key string, file pgs.File) bool {
-
 	path, _ := fns.GetImportPathAndPackageForAnyEntity(file)
 	if key != "" && !strings.Contains(key, path) {
 		return true
@@ -109,7 +111,7 @@ func (fns Functions) SelectivelyAddImport(key string, file pgs.File) bool {
 	return false
 }
 
-// GetGoImportPathForMessage given a Message, file the go path of that Message type
+// GetGoImportPathForMessage returns the Go import path for the given protobuf Message, including handling well-known types.
 func (fns Functions) GetGoImportPathForMessage(msg pgs.Message) string {
 	if msg.IsWellKnown() {
 		switch msg.WellKnownType() {
@@ -122,13 +124,12 @@ func (fns Functions) GetGoImportPathForMessage(msg pgs.Message) string {
 		case pgs.EmptyWKT:
 			return "google.golang.org/protobuf/types/known/emptypb"
 		}
-
 	}
 
 	return fns.GetGoImportPackageAndPathFromAnyEntity(msg)
 }
 
-// GetGoImportPackageAndPathFromAnyEntity given a pgs.Entity, find the Go path, including remote libraries
+// GetGoImportPackageAndPathFromAnyEntity determines the Go import package and path based on the provided Protobuf entity.
 func (fns Functions) GetGoImportPackageAndPathFromAnyEntity(e pgs.Entity) string {
 	if strings.HasPrefix(e.File().FullyQualifiedName(), ".platform.spec.") {
 		return fns.GetRemoteProtobufGoPathFromFile(e.File())
@@ -144,7 +145,7 @@ func (fns Functions) GetGoImportPackageAndPathFromAnyEntity(e pgs.Entity) string
 	return path[0]
 }
 
-// GetGoImportPathsElement handles Embedded Types
+// GetGoImportPathsElement returns the Go import path for a given FieldTypeElem based on whether it's an embed or enum.
 func (fns Functions) GetGoImportPathsElement(e pgs.FieldTypeElem) string {
 	if e.IsEmbed() {
 		return fns.GetImportPackageMessage(e.Embed())
@@ -155,6 +156,7 @@ func (fns Functions) GetGoImportPathsElement(e pgs.FieldTypeElem) string {
 	return ""
 }
 
+// GetImportPackageEnum returns the Go package path of a given protocol buffer entity based on its file descriptor.
 func (fns Functions) GetImportPackageEnum(e pgs.Entity) string {
 	//if strings.HasPrefix(e.File().FullyQualifiedName(), ".platform.spec.") {
 	//	return fns.GetRemoteProtoGoPathFromFile(e.File())
@@ -167,8 +169,8 @@ func (fns Functions) GetImportPackageEnum(e pgs.Entity) string {
 	return path[0]
 }
 
+// DoesImportPathContainAnyPb checks if the Go import paths for the given proto file contain the "anypb" package.
 func (fns Functions) DoesImportPathContainAnyPb(file pgs.File) bool {
-
 	paths := fns.GetAllGoFieldLevelImportPaths(file)
 	for _, key := range paths {
 		if key == "anypb" {

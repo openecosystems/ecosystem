@@ -40,6 +40,7 @@ service CertificateService {
   // Method to VerifyCertificate to events based on scopes
   rpc VerifyCertificate(VerifyCertificateRequest) returns (VerifyCertificateResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
+    option (platform.options.v2.api_method) = {shortname: "verify"};
     option (google.api.http) = {
       post: "/v2alpha/cryptography/certificate/verify"
       body: "*"
@@ -49,6 +50,7 @@ service CertificateService {
   // Method to SignCertificate to events based on scopes
   rpc SignCertificate(SignCertificateRequest) returns (SignCertificateResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
+    option (platform.options.v2.api_method) = {shortname: "sign"};
     option (google.api.http) = {
       post: "/v2alpha/cryptography/certificate/sign"
       body: "*"

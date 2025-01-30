@@ -8,7 +8,7 @@ publicHTTP:
   host: '0.0.0.0'
   port: '6577'
 meshHTTP:
-  host: '0.0.0.0'
+  host: '192.168.100.5'
   port: '6477'
 zap:
   level: 'debug'
@@ -16,10 +16,16 @@ zap:
   encoding: 'console'
 opentelemetry:
   traceProviderEnabled: true
+nats:
+  mesh: true
+  options:
+    servers:
+      - nats://192.168.100.5:4222
 natsd:
   enabled: true
   options:
     serverName: "platform-leaf-node-local"
+    #host: "0.0.0.0"
     host: "0.0.0.0"
     port: 4222
     debug: true
@@ -55,6 +61,9 @@ eventStreamRegistry:
     - name: "decision"
       subjects:
         - "decision.>"
+    - name: "account"
+      subjects:
+        - "account.>"
 nebula:
   tun:
     user: true
@@ -63,6 +72,9 @@ nebula:
     respond: true
     delay: 1s
     respond_delay: 5s
+  logging:
+    level: error
+    format: text
   static_host_map:
     - '192.168.100.1'
   host:
@@ -85,9 +97,9 @@ nebula:
         proto: any
         host: any
   pki:
-    ca: ../../../../../tmp/ca.crt
-    cert: ../../../../../tmp/local-1-event-v2alpha-event-multiplexer.crt
-    key: ../../../../../tmp/local-1-event-v2alpha-event-multiplexer.key
+    ca: ../../../../../../tmp/ca.crt
+    cert: ../../../../../../tmp/local-1-event-v2alpha-event-multiplexer.crt
+    key: ../../../../../../tmp/local-1-event-v2alpha-event-multiplexer.key
 #    ca: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/ca.crt
 #    cert: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/hosts/configuration-v2alpha-configuration.crt
 #    key: /Users/dimyjeannot/workspaces/jeannotcompany/ecosystem/.config/ca/hosts/configuration-v2alpha-configuration.key

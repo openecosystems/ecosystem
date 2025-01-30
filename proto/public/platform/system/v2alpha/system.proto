@@ -58,6 +58,7 @@ service SystemService {
 
   // Method to Subscribe to events based on scopes
   rpc Enable(EnableRequest) returns (stream EnableResponse) {
+    option (platform.options.v2.api_method) = {shortname: "enable"};
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
     option (google.api.http) = {
       post: "/v2alpha/system/enable"
@@ -67,6 +68,7 @@ service SystemService {
 
   // Method to Unsubscribe to an event scope
   rpc Disable(DisableRequest) returns (DisableResponse) {
+    option (platform.options.v2.api_method) = {shortname: "disable"};
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_DELETE};
     option (google.api.http) = {
       post: "/v2alpha/system/disable"

@@ -4,15 +4,15 @@
 package {{ package . }}sdk
 import (
     "connectrpc.com/connect"
+
+    nebulav1 "libs/partner/go/nebula/v1"
     specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-    "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
-    "net/http"
+    {{ package . }}connect "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
 )
 
 func New{{ $s.Name }}SpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *{{ package . }}connect.{{ $s.Name }}Client {
-
-  //httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-  httpClient := http.DefaultClient
+  nebula := nebulav1.Binding{}
+  httpClient := nebula.GetMeshHTTPClient(config, baseURL)
   c := {{ package . }}connect.New{{ $s.Name }}Client(httpClient, baseURL, opts...)
   return &c
 }

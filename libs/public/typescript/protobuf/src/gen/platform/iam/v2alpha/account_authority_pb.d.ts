@@ -302,7 +302,7 @@ export declare const CurveSchema: GenEnum<Curve>;
  */
 export declare const AccountAuthorityService: GenService<{
   /**
-   * Method to CreateAccountAuthority to events based on scopes
+   * Method to create an Account Authority to manage the ecosystem partners
    *
    * @generated from rpc platform.iam.v2alpha.AccountAuthorityService.CreateAccountAuthority
    */

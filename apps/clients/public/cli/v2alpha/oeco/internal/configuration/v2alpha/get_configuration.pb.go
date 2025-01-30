@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	configurationv2alphapbsdk "libs/public/go/sdk/gen/configuration/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 	"path/filepath"
@@ -55,7 +54,7 @@ var GetConfigurationV2AlphaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = getConfigurationValidateOnly
 
 		request := connect.NewRequest[configurationv2alphapb.GetConfigurationRequest](&_r)
-		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *NewConfigurationServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 		response, err := client.GetConfiguration(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

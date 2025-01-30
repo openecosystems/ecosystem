@@ -37,9 +37,12 @@ message AccountAuthorityConfiguration {
 
 service AccountAuthorityService {
 
-  // Method to CreateAccountAuthority to events based on scopes
+  /* Create an Account Authority */
+
+  //Method to create an Account Authority to manage the ecosystem partners
   rpc CreateAccountAuthority(CreateAccountAuthorityRequest) returns (CreateAccountAuthorityResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+    option (platform.options.v2.api_method) = {shortname: "create"};
     option (google.api.http) = {
       post: "/v2alpha/iam/aa/create"
       body: "*"

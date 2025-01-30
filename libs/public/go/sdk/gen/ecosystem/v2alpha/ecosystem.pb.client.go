@@ -5,15 +5,15 @@ package ecosystemv2alphapbsdk
 
 import (
 	"connectrpc.com/connect"
+
+	nebulav1 "libs/partner/go/nebula/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
-	"net/http"
+	ecosystemv2alphapbconnect "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 )
 
 func NewEcosystemServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *ecosystemv2alphapbconnect.EcosystemServiceClient {
-
-	//httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-	httpClient := http.DefaultClient
+	nebula := nebulav1.Binding{}
+	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := ecosystemv2alphapbconnect.NewEcosystemServiceClient(httpClient, baseURL, opts...)
 	return &c
 }

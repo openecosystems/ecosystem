@@ -194,6 +194,144 @@ func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.Creat
 	}, nil
 }
 
+// GetPKI creates a new Certificate Authority using the specified request parameters.
+// Returns the created Certificate Authority or an error if the operation fails.
+func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountRequest) (cert *typev2pb.File, key *typev2pb.File, err error) {
+	nca := b.NebulaCertBinaryPath
+
+	var c string
+	var curve iamv2alphapb.Curve
+	switch req.Curve {
+	case iamv2alphapb.Curve_CURVE_ECDSA:
+		c = "P256"
+		curve = iamv2alphapb.Curve_CURVE_ECDSA
+	case iamv2alphapb.Curve_CURVE_EDDSA:
+		c = "25519"
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	case iamv2alphapb.Curve_CURVE_UNSPECIFIED:
+		c = "25519"
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	default:
+		c = "25519"
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	}
+
+	_ = curve
+
+	// Write the binary to a temporary file
+	tempDir, err := os.MkdirTemp("", "oeco-ca-*")
+	if err != nil {
+		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
+	}
+	defer func(path string) {
+		_ = os.RemoveAll(path)
+	}(tempDir)
+
+	_host := "host"
+	cext := ".crt"
+	kext := ".key"
+	cname := _host + cext
+	kname := _host + kext
+	cpath := filepath.Join(tempDir, cname)
+	kpath := filepath.Join(tempDir, kname)
+
+	nebula := exec.Command(nca, "keygen",
+		"-curve", c,
+		"-out-pub", cpath,
+		"-out-key", kpath,
+	)
+
+	nebula.Stdout = os.Stdout
+	nebula.Stderr = os.Stderr
+
+	if err2 := nebula.Run(); err2 != nil {
+		return nil, nil, ErrFailedToRunCommand.WithInternalErrorDetail(errors.New("failed to execute binary"), err2)
+	}
+
+	now := timestamppb.Now()
+
+	cfile, err3 := getFile(cname, cext, cpath, now)
+	if err3 != nil {
+		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err3)
+	}
+
+	kfile, err4 := getFile(kname, kext, kpath, now)
+	if err4 != nil {
+		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err4)
+	}
+
+	return cfile, kfile, nil
+}
+
+// SignCert creates a new Certificate Authority using the specified request parameters.
+// Returns the created Certificate Authority or an error if the operation fails.
+func (b *Binding) SignCert(_ context.Context, req *iamv2alphapb.CreateAccountRequest) (cert *typev2pb.File, key *typev2pb.File, err error) {
+	nca := b.NebulaCertBinaryPath
+
+	var c string
+	var curve iamv2alphapb.Curve
+	switch req.Curve {
+	case iamv2alphapb.Curve_CURVE_ECDSA:
+		c = "P256"
+		curve = iamv2alphapb.Curve_CURVE_ECDSA
+	case iamv2alphapb.Curve_CURVE_EDDSA:
+		c = "25519"
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	case iamv2alphapb.Curve_CURVE_UNSPECIFIED:
+		c = "25519"
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	default:
+		c = "25519"
+		curve = iamv2alphapb.Curve_CURVE_EDDSA
+	}
+
+	_ = curve
+
+	// Write the binary to a temporary file
+	tempDir, err := os.MkdirTemp("", "oeco-ca-*")
+	if err != nil {
+		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to create temp file"), err)
+	}
+	defer func(path string) {
+		_ = os.RemoveAll(path)
+	}(tempDir)
+
+	_host := "host"
+	cext := ".crt"
+	kext := ".key"
+	cname := _host + cext
+	kname := _host + kext
+	cpath := filepath.Join(tempDir, cname)
+	kpath := filepath.Join(tempDir, kname)
+
+	nebula := exec.Command(nca, "keygen",
+		"-curve", c,
+		"-out-pub", cpath,
+		"-out-key", kpath,
+	)
+
+	nebula.Stdout = os.Stdout
+	nebula.Stderr = os.Stderr
+
+	if err2 := nebula.Run(); err2 != nil {
+		return nil, nil, ErrFailedToRunCommand.WithInternalErrorDetail(errors.New("failed to execute binary"), err2)
+	}
+
+	now := timestamppb.Now()
+
+	cfile, err3 := getFile(cname, cext, cpath, now)
+	if err3 != nil {
+		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err3)
+	}
+
+	kfile, err4 := getFile(kname, kext, kpath, now)
+	if err4 != nil {
+		return nil, nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err4)
+	}
+
+	return cfile, kfile, nil
+}
+
 // getFile reads a file and constructs a File object with its metadata and content.
 // Parameters:
 // - name: The name of the file.

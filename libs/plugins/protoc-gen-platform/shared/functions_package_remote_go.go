@@ -1,10 +1,12 @@
 package shared
 
 import (
-	pgs "github.com/lyft/protoc-gen-star/v2"
 	"strings"
+
+	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
+// GetRemoteProtobufGoPathFromFile derives the remote Protobuf Go import path for a given file based on its options.
 func (fns Functions) GetRemoteProtobufGoPathFromFile(file pgs.File) string {
 	o := file.Descriptor().GetOptions()
 
@@ -16,6 +18,7 @@ func (fns Functions) GetRemoteProtobufGoPathFromFile(file pgs.File) string {
 	return string(pgs.JoinPaths(RemoteGeneratedRepository+"/protobuf/protocolbuffers/go", u))
 }
 
+// GetRemoteProtoGoPathFromFile retrieves the remote Go package path for a given Protocol Buffers file.
 func (fns Functions) GetRemoteProtoGoPathFromFile(file pgs.File) string {
 	o := file.Descriptor().GetOptions()
 
@@ -29,6 +32,7 @@ func (fns Functions) GetRemoteProtoGoPathFromFile(file pgs.File) string {
 	return string(pgs.JoinPaths(RemoteGeneratedRepository+"/"+apiType+"/protocolbuffers/go", u))
 }
 
+// GetRemoteGrpcGoPathFromFile generates the remote GRPC Go path for the given Protocol Buffers file.
 func (fns Functions) GetRemoteGrpcGoPathFromFile(file pgs.File) string {
 	o := file.Descriptor().GetOptions()
 

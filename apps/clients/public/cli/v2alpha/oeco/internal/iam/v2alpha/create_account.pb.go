@@ -1,0 +1,84 @@
+package iamv2alphapbint
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"os"
+
+	"connectrpc.com/connect"
+	"github.com/apex/log"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
+
+	nebulav1ca "libs/partner/go/nebula/v1/ca"
+	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
+	iamv2alphapbsdk "libs/public/go/sdk/gen/iam/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+)
+
+// createAccountRequest stores the request data for creating an account.
+// createAccountFieldMask defines the fields to be updated or included in the create account operation.
+// createAccountValidateOnly determines if the operation should only validate the request without making changes.
+var (
+	createAccountRequest      string
+	createAccountFieldMask    string
+	createAccountValidateOnly bool
+)
+
+// CreateAccountV2AlphaCmd is a Cobra command for creating an account to connect to an ecosystem.
+// It generates a PKI certificate and optionally requests signing from an Ecosystem Account Authority.
+var CreateAccountV2AlphaCmd = &cobra.Command{
+	Use:   "create",
+	Short: `Create an Account to connect to an ecosystem`,
+	Long: `[ Create an account to connect to an ecosystem.
+Facilitates creating a PKI certificate and getting it signed by an Ecosystem Account Authority ]`,
+	Run: func(cmd *cobra.Command, _ []string) {
+		log.Debug("Calling createAccount account")
+
+		_request, err := cmd.Flags().GetString("request")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		if _request == "" {
+			_request = "{}"
+		}
+
+		_r := iamv2alphapb.CreateAccountRequest{}
+		err = protojson.Unmarshal([]byte(_request), &_r)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		cert, _, err := nebulav1ca.Bound.GetPKI(context.Background(), &_r)
+		if err != nil {
+			return
+		}
+
+		_r.Cert = cert
+
+		sdkv2alphalib.Overrides.FieldMask = createAccountFieldMask
+		sdkv2alphalib.Overrides.ValidateOnly = createAccountValidateOnly
+
+		request := connect.NewRequest[iamv2alphapb.CreateAccountRequest](&_r)
+		// Add GZIP Support: connect.WithSendGzip(),
+		client := *iamv2alphapbsdk.NewAccountServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		response, err := client.CreateAccount(context.Background(), request)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		val, _ := json.MarshalIndent(&response, "", "    ")
+		fmt.Println(string(val))
+	},
+}
+
+// init initializes persistent flags for the CreateAccountV2Alpha command, including request body, validation mode, and field mask.
+func init() {
+	CreateAccountV2AlphaCmd.PersistentFlags().StringVarP(&createAccountRequest, "request", "r", "{}", "Request for api call")
+	CreateAccountV2AlphaCmd.PersistentFlags().BoolVar(&createAccountValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")
+	CreateAccountV2AlphaCmd.PersistentFlags().StringVarP(&createAccountFieldMask, "field-mask", "m", "", "Limit the returned response fields")
+}

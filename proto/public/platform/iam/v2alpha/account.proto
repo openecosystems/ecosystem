@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package platform.iam.v2alpha;
+
+import "google/api/annotations.proto";
+import "platform/options/v2/annotations.proto";
+import "platform/spec/v2/spec.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "platform/type/v2/file.proto";
+import "platform/iam/v2alpha/account_authority.proto";
+
+option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};
+option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
+option (platform.options.v2.configuration) = {enabled: true,};
+option (platform.options.v2.graphql) = {enabled: true};
+option (platform.options.v2.api_file) = {
+  type: API_TYPE_PUBLIC;
+  cycle: API_LIFECYCLE_ALPHA;
+  interface: API_INTERFACE_TYPE_OPERATIONAL;
+};
+option (platform.options.v2.entity) = {
+  entity: "account";
+  entity_plural: "accounts";
+  type: ENTITY_TYPE_UNSPECIFIED;
+  namespace: "jan";
+  consistency: ENTITY_CONSISTENCY_EVENTUAL;
+  versionable: true;
+};
+
+option go_package = "libs/public/go/protobuf/gen/platform/iam/v2alpha;iamv2alphapb";
+
+message AccountConfiguration {
+  
+}
+
+service AccountService {
+
+  /* Create an account to connect to an ecosystem.
+  Facilitates creating a PKI certificate and getting it signed by an Ecosystem Account Authority */
+
+  //Create an Account to connect to an ecosystem
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {
+    option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
+    option (platform.options.v2.api_method) = {shortname: "create"};
+    option (google.api.http) = {
+      post: "/v2alpha/iam/a"
+      body: "*"
+    };
+  }
+
+}
+
+// Supported event type for subscription.
+enum AccountType {
+  ACCOUNT_TYPE_UNSPECIFIED = 0; // Unspecified or unknown subscription type.
+  ACCOUNT_TYPE_ORGANIZATION = 1; // Account for an organization.
+  ACCOUNT_TYPE_USER = 2; // Account for a user.
+}
+
+// The current status of a event
+enum EventAccountStatus {
+  EVENT_ACCOUNT_STATUS_UNSPECIFIED = 0; // Unspecified or unknown status.
+  EVENT_ACCOUNT_STATUS_CREATING = 1; // Account is being created.
+  EVENT_ACCOUNT_STATUS_ERROR = 4; // Error.
+}
+
+enum AccountCommands {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_COMMANDS};
+
+  ACCOUNT_COMMANDS_UNSPECIFIED = 0; // Unspecified or unknown command
+  ACCOUNT_COMMANDS_CREATE_ACCOUNT = 1;
+}
+
+enum AccountEvents {
+  option (platform.options.v2.spec) = {type: SPEC_ENUM_TYPE_EVENTS};
+
+  // Unspecified or unknown event.
+  ACCOUNT_EVENTS_UNSPECIFIED = 0;
+
+  // Event Account complete.
+  ACCOUNT_EVENTS_CREATED_ACCOUNT = 1 [(platform.options.v2.billing) = {
+    billable: true,
+    metered: true
+  }];
+
+}
+
+// Request for CreateAccount
+message CreateAccountRequest {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_INPUT};
+
+  // Name of the Account. For example, 'Open Ecosystems, Inc.'
+  string name = 1;
+
+  platform.iam.v2alpha.Curve curve = 2;
+
+  platform.type.v2.File cert = 3;
+
+}
+
+// Response to CreateAccount
+message CreateAccountResponse {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // The response context
+  spec.v2.SpecResponseContext spec_context = 1;
+
+  Account account = 2;
+}
+
+message Account {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  // Identifier for this Account
+  string id = 1 [(platform.options.v2.entity_field) = {key: true}];
+
+  // Timestamp indicating when this event subscription was created.
+  google.protobuf.Timestamp created_at = 2;
+
+  // Timestamp indicating when this event subscription was last updated.
+  google.protobuf.Timestamp updated_at = 3;
+
+  string name = 4;
+
+  string hostname = 5;
+
+  string ip = 6;
+
+  google.protobuf.Duration duration = 7;
+
+  platform.type.v2.File ca_cert = 8;
+
+  platform.type.v2.File signed_cert = 9;
+}

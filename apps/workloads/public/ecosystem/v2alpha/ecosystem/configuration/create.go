@@ -60,10 +60,10 @@ func (l *CreateConfigurationListener) Process(ctx context.Context, request *nats
 		return
 	}
 
-	if request.Spec.Context.OrganizationSlug == "" {
-		log.Error("Organization Slug is required. Quietly dropping this message")
-		return
-	}
+	//if request.Spec.Context.OrganizationSlug == "" {
+	//	log.Error("Organization Slug is required. Quietly dropping this message")
+	//	return
+	//}
 
 	now := timestamppb.Now()
 	conf := configurationv2alphapb.Configuration{

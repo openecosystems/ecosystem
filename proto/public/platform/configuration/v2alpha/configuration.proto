@@ -32,19 +32,12 @@ option (platform.options.v2.entity) = {
 option go_package = "libs/public/go/protobuf/gen/platform/configuration/v2alpha;configurationv2alphapb";
 
 service ConfigurationService {
-  //
+
+  /* Create a configuration */
+
+  //Create a configuration that manages an ecosystem
   rpc CreateConfiguration(CreateConfigurationRequest) returns (CreateConfigurationResponse) {
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PRIVATE;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
-    option (platform.options.v2.permission) = {
-      permission: "create",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
+    option (platform.options.v2.api_method) = {shortname: "create"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_CREATE
     };
@@ -54,19 +47,9 @@ service ConfigurationService {
     };
   }
 
-  //
+  //List configurations for this ecosystem
   rpc ListConfigurations(ListConfigurationsRequest) returns (ListConfigurationsResponse) {
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PUBLIC;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
-    option (platform.options.v2.permission) = {
-      permission: "list",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
+    option (platform.options.v2.api_method) = {shortname: "list"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_LIST
     };
@@ -75,20 +58,9 @@ service ConfigurationService {
     };
   }
 
-  //
-  // Get workspace location
+  //Get configuration for an ecosystem
   rpc GetConfiguration(GetConfigurationRequest) returns (GetConfigurationResponse) {
-    option (platform.options.v2.permission) = {
-      permission: "get",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PUBLIC;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
+    option (platform.options.v2.api_method) = {shortname: "get"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
@@ -97,19 +69,9 @@ service ConfigurationService {
     };
   }
 
-  //
+  //Update configuration for an ecosystem
   rpc UpdateConfiguration(UpdateConfigurationRequest) returns (UpdateConfigurationResponse) {
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PUBLIC;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
-    option (platform.options.v2.permission) = {
-      permission: "update",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
+    option (platform.options.v2.api_method) = {shortname: "update"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
@@ -119,19 +81,9 @@ service ConfigurationService {
     };
   }
 
-  //
+  //Load configuration for an ecosystem
   rpc LoadConfiguration(LoadConfigurationRequest) returns (LoadConfigurationResponse) {
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PUBLIC;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
-    option (platform.options.v2.permission) = {
-      permission: "spec.configuration.load",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
+    option (platform.options.v2.api_method) = {shortname: "load"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
@@ -141,19 +93,9 @@ service ConfigurationService {
     };
   }
 
-  //
+  //Delete configuration for an ecosystem
   rpc DeleteConfiguration(DeleteConfigurationRequest) returns (DeleteConfigurationResponse) {
-    option (platform.options.v2.permission) = {
-      permission: "delete",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PRIVATE;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
+    option (platform.options.v2.api_method) = {shortname: "delete"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_DELETE
     };
@@ -162,19 +104,9 @@ service ConfigurationService {
     };
   }
 
-  //
+  //Publish configuration for an ecosystem
   rpc PublishConfiguration(PublishConfigurationRequest) returns (PublishConfigurationResponse) {
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PRIVATE;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
-    option (platform.options.v2.permission) = {
-      permission: "spec.configuration.publish",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
+    option (platform.options.v2.api_method) = {shortname: "publish"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
@@ -183,19 +115,9 @@ service ConfigurationService {
     };
   }
 
-  //
+  //Archive configuration for an ecosystem
   rpc ArchiveConfiguration(ArchiveConfigurationRequest) returns (ArchiveConfigurationResponse) {
-    option (platform.options.v2.api_method) = {
-      type: API_TYPE_PRIVATE;
-      cycle: API_LIFECYCLE_ALPHA;
-      interface: API_INTERFACE_TYPE_OPERATIONAL
-    };
-    option (platform.options.v2.permission) = {
-      permission: "spec.configuration.archive",
-      roles: [
-        AUTH_ROLE_PLATFORM_ADMIN
-      ]
-    };
+    option (platform.options.v2.api_method) = {shortname: "archive"};
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
@@ -265,9 +187,6 @@ message CreateConfigurationRequest {
     type: GRAPH_TYPE_INPUT
   };
 
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
-
   //What type of configuration is this?
   ConfigurationType type = 2;
 
@@ -295,9 +214,6 @@ message GetConfigurationRequest {
     type: GRAPH_TYPE_INPUT
   };
 
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
-
   //
   string id = 2;
 }
@@ -320,9 +236,6 @@ message ListConfigurationsRequest {
   option (platform.options.v2.graph) = {
     type: GRAPH_TYPE_INPUT
   };
-
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
 
   //How many records would you like returned within one page?
   int32 page_size = 2 [(buf.validate.field).int32 = {
@@ -369,9 +282,6 @@ message UpdateConfigurationRequest {
     type: GRAPH_TYPE_INPUT
   };
 
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
-
   //
   Configuration config = 2;
 }
@@ -394,9 +304,6 @@ message LoadConfigurationRequest {
   option (platform.options.v2.graph) = {
     type: GRAPH_TYPE_INPUT
   };
-
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
 
   //
   Configuration config = 2;
@@ -421,9 +328,6 @@ message DeleteConfigurationRequest {
     type: GRAPH_TYPE_INPUT
   };
 
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
-
   //
   string id = 2;
 }
@@ -446,9 +350,6 @@ message PublishConfigurationRequest {
   option (platform.options.v2.graph) = {
     type: GRAPH_TYPE_INPUT
   };
-
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
 
   //
   Configuration config = 2;
@@ -475,9 +376,6 @@ message ArchiveConfigurationRequest {
   option (platform.options.v2.graph) = {
     type: GRAPH_TYPE_INPUT
   };
-
-  //The request context
-  spec.v2.SpecRequestContext spec_context = 1;
 
   //
   Configuration config = 2;

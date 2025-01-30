@@ -5,15 +5,15 @@ package systemv2alphapbsdk
 
 import (
 	"connectrpc.com/connect"
+
+	nebulav1 "libs/partner/go/nebula/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/protobuf/gen/platform/system/v2alpha/systemv2alphapbconnect"
-	"net/http"
+	systemv2alphapbconnect "libs/public/go/protobuf/gen/platform/system/v2alpha/systemv2alphapbconnect"
 )
 
 func NewSystemServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *systemv2alphapbconnect.SystemServiceClient {
-
-	//httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-	httpClient := http.DefaultClient
+	nebula := nebulav1.Binding{}
+	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := systemv2alphapbconnect.NewSystemServiceClient(httpClient, baseURL, opts...)
 	return &c
 }
