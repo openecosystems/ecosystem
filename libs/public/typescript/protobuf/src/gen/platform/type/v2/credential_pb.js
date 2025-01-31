@@ -8,7 +8,7 @@ import { enumDesc, fileDesc, messageDesc, tsEnum } from "@bufbuild/protobuf/code
  * Describes the file platform/type/v2/credential.proto.
  */
 export const file_platform_type_v2_credential = /*@__PURE__*/
-  fileDesc("CiFwbGF0Zm9ybS90eXBlL3YyL2NyZWRlbnRpYWwucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIingIKCkNyZWRlbnRpYWwSLgoEdHlwZRgBIAEoDjIgLnBsYXRmb3JtLnR5cGUudjIuQ3JlZGVudGlhbFR5cGUSFwoPbWVzaF9hY2NvdW50X2lkGAIgASgJEhYKDmVjb3N5c3RlbV9zbHVnGAMgASgJEhUKDW1lc2hfaG9zdG5hbWUYBCABKAkSDwoHbWVzaF9pcBgFIAEoCRIUCgxhYV9jZXJ0X3g1MDkYBiABKAkSEQoJY2VydF94NTA5GAcgASgJEhkKEWNlcnRfeDUwOV9xcl9jb2RlGAggASgJEhMKC3ByaXZhdGVfa2V5GAkgASgJEg0KBW5fa2V5GAogASgJEg4KBmdyb3VwcxgLIAMoCRIPCgdzdWJuZXRzGAwgAygJKlMKDkNyZWRlbnRpYWxUeXBlEh8KG0NSRURFTlRJQUxfVFlQRV9VTlNQRUNJRklFRBAAEiAKHENSRURFTlRJQUxfVFlQRV9NRVNIX0FDQ09VTlQQAUI5WjdsaWJzL3Byb3RvYnVmL2dvL3Byb3RvYnVmL2dlbi9wbGF0Zm9ybS90eXBlL3YyO3R5cGV2MnBiYgZwcm90bzM");
+  fileDesc("CiFwbGF0Zm9ybS90eXBlL3YyL2NyZWRlbnRpYWwucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIi/AIKCkNyZWRlbnRpYWwSLgoEdHlwZRgBIAEoDjIgLnBsYXRmb3JtLnR5cGUudjIuQ3JlZGVudGlhbFR5cGUSFwoPbWVzaF9hY2NvdW50X2lkGAIgASgJEhYKDmVjb3N5c3RlbV9zbHVnGAMgASgJEhUKDW1lc2hfaG9zdG5hbWUYBCABKAkSDwoHbWVzaF9pcBgFIAEoCRImCgVjdXJ2ZRgGIAEoDjIXLnBsYXRmb3JtLnR5cGUudjIuQ3VydmUSFAoMYWFfY2VydF94NTA5GAcgASgJEhwKFGFhX2NlcnRfeDUwOV9xcl9jb2RlGAggASgJEhYKDmFhX3ByaXZhdGVfa2V5GAkgASgJEhEKCWNlcnRfeDUwORgKIAEoCRIZChFjZXJ0X3g1MDlfcXJfY29kZRgLIAEoCRITCgtwcml2YXRlX2tleRgMIAEoCRINCgVuX2tleRgNIAEoCRIOCgZncm91cHMYDiADKAkSDwoHc3VibmV0cxgPIAMoCSp6Cg5DcmVkZW50aWFsVHlwZRIfChtDUkVERU5USUFMX1RZUEVfVU5TUEVDSUZJRUQQABIlCiFDUkVERU5USUFMX1RZUEVfQUNDT1VOVF9BVVRIT1JJVFkQARIgChxDUkVERU5USUFMX1RZUEVfTUVTSF9BQ0NPVU5UEAIqQAoFQ3VydmUSFQoRQ1VSVkVfVU5TUEVDSUZJRUQQABIPCgtDVVJWRV9FRERTQRABEg8KC0NVUlZFX0VDRFNBEAJCOVo3bGlicy9wcm90b2J1Zi9nby9wcm90b2J1Zi9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z");
 
 /**
  * Describes the message platform.type.v2.Credential.
@@ -28,4 +28,16 @@ export const CredentialTypeSchema = /*@__PURE__*/
  */
 export const CredentialType = /*@__PURE__*/
   tsEnum(CredentialTypeSchema);
+
+/**
+ * Describes the enum platform.type.v2.Curve.
+ */
+export const CurveSchema = /*@__PURE__*/
+  enumDesc(file_platform_type_v2_credential, 1);
+
+/**
+ * @generated from enum platform.type.v2.Curve
+ */
+export const Curve = /*@__PURE__*/
+  tsEnum(CurveSchema);
 

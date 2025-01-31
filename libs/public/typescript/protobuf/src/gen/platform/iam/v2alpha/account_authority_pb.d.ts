@@ -4,9 +4,9 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
-import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { Credential, Curve } from "../../type/v2/credential_pb";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { File } from "../../type/v2/file_pb";
+import type { Timestamp } from "@bufbuild/protobuf/wkt";
 
 /**
  * Describes the file platform/iam/v2alpha/account_authority.proto.
@@ -43,14 +43,9 @@ export declare type CreateAccountAuthorityRequest = Message<"platform.iam.v2alph
   name: string;
 
   /**
-   * @generated from field: platform.iam.v2alpha.Curve curve = 2;
+   * @generated from field: platform.type.v2.Curve curve = 2;
    */
   curve: Curve;
-
-  /**
-   * @generated from field: google.protobuf.Duration duration = 3;
-   */
-  duration?: Duration;
 
   /**
    * Encrypt key with this passphrase and write out key in an encrypted format
@@ -117,34 +112,9 @@ export declare type AccountAuthority = Message<"platform.iam.v2alpha.AccountAuth
   updatedAt?: Timestamp;
 
   /**
-   * @generated from field: string name = 4;
+   * @generated from field: platform.type.v2.Credential credential = 4;
    */
-  name: string;
-
-  /**
-   * @generated from field: platform.iam.v2alpha.Curve curve = 5;
-   */
-  curve: Curve;
-
-  /**
-   * @generated from field: google.protobuf.Duration duration = 6;
-   */
-  duration?: Duration;
-
-  /**
-   * @generated from field: platform.type.v2.File ca_cert = 7;
-   */
-  caCert?: File;
-
-  /**
-   * @generated from field: platform.type.v2.File ca_key = 8;
-   */
-  caKey?: File;
-
-  /**
-   * @generated from field: platform.type.v2.File ca_qr_code = 9;
-   */
-  caQrCode?: File;
+  credential?: Credential;
 };
 
 /**
@@ -271,31 +241,6 @@ export enum AccountAuthorityEvents {
  * Describes the enum platform.iam.v2alpha.AccountAuthorityEvents.
  */
 export declare const AccountAuthorityEventsSchema: GenEnum<AccountAuthorityEvents>;
-
-/**
- * @generated from enum platform.iam.v2alpha.Curve
- */
-export enum Curve {
-  /**
-   * @generated from enum value: CURVE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
-
-  /**
-   * @generated from enum value: CURVE_EDDSA = 1;
-   */
-  EDDSA = 1,
-
-  /**
-   * @generated from enum value: CURVE_ECDSA = 2;
-   */
-  ECDSA = 2,
-}
-
-/**
- * Describes the enum platform.iam.v2alpha.Curve.
- */
-export declare const CurveSchema: GenEnum<Curve>;
 
 /**
  * @generated from service platform.iam.v2alpha.AccountAuthorityService

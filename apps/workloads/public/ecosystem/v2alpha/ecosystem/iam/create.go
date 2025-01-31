@@ -73,7 +73,7 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev2
 	}
 
 	// Sign Cert
-	credential, err := nebulav1ca.Bound.SignCert(ctx, &signreq)
+	credential, err := nebulav1ca.Bound.SignCert(ctx, request.Spec, &signreq)
 	if err != nil {
 		return
 	}

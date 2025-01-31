@@ -128,7 +128,7 @@ message CreateAccountRequest {
   // Name of the Account. For example, 'Open Ecosystems, Inc.'
   string name = 1;
 
-  platform.iam.v2alpha.Curve curve = 2;
+  platform.type.v2.Curve curve = 2;
 
   platform.type.v2.File cert = 3;
 

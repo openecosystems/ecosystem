@@ -12,7 +12,6 @@ import (
 	"libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 
-	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
@@ -132,12 +131,5 @@ func (entity *AccountAuthoritySpecEntity) internal() {
 	var _ timestamppb.Timestamp
 	//updated_at
 
-	var _ *iamv2alphapb.Curve
-	var _ durationpb.Duration
-
-	//duration
-
-	var _ *typev2pb.File
-	var _ *typev2pb.File
-	var _ *typev2pb.File
+	var _ *typev2pb.Credential
 }

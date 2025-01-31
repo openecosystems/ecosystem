@@ -9,7 +9,6 @@ import (
 	"connectrpc.com/otelconnect"
 	"connectrpc.com/vanguard"
 
-	accountauthority "apps/workloads/public/ecosystem/v2alpha/ecosystem/account-authority"
 	certificate "apps/workloads/public/ecosystem/v2alpha/ecosystem/certificate"
 	configuration "apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
 	ecosystem "apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
@@ -44,7 +43,7 @@ func main() {
 			&ecosystem.CreateEcosystemListener{},
 			&configuration.CreateConfigurationListener{},
 			&configuration.GetConfigurationListener{},
-			&accountauthority.CreateAccountAuthorityListener{},
+			//&accountauthority.CreateAccountAuthorityListener{},
 			&certificate.SignCertificateListener{},
 			&iam.CreateAccountListener{},
 		}},
@@ -61,8 +60,8 @@ func main() {
 		return
 	}
 
-	if err2 := provider.WatchSettings(); err2 != nil {
-		fmt.Println(err2)
+	if err = provider.WatchSettings(); err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
@@ -70,7 +69,6 @@ func main() {
 		return
 	}
 
-	// TODO: Work on Dynamic Connector Handlers
 	//for _, s := range sdkv2alphalib.GlobalSystems.GetSystems() {
 	//	for _, c := range s.Connectors {
 	//		services = append(services, vanguard.NewService(c.ProcedureName, sdkv2alphalib.NewDynamicConnectorHandler[any, any]((*sdkv2alphalib.Connector[any, any])(c), interceptors)))
@@ -86,7 +84,6 @@ func main() {
 	var meshServices []*vanguard.Service
 	meshServices = append(meshServices, vanguard.NewService(ecosystemv2alphapbconnect.NewEcosystemServiceHandler(&ecosystemv2alphapbsrv.EcosystemServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(configurationv2alphapbconnect.NewConfigurationServiceHandler(&configurationv2alphapbsrv.ConfigurationServiceHandler{}, interceptors)))
-	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountAuthorityServiceHandler(&iamv2alphapbsrv.AccountAuthorityServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountServiceHandler(&iamv2alphapbsrv.AccountServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 

@@ -7,9 +7,9 @@ import (
 	"libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	"net/http"
 	"os"
-	"path/filepath"
 
 	"connectrpc.com/connect"
+
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -27,7 +27,7 @@ var (
 	createAccountRequest      string
 	createAccountFieldMask    string
 	createAccountValidateOnly bool
-	fs                        = sdkv2alphalib.NewFileSystem()
+	// fs                        = sdkv2alphalib.NewFileSystem()
 )
 
 // CreateAccountV2AlphaCmd is a Cobra command for creating an account to connect to an ecosystem.
@@ -50,14 +50,14 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 		}
 
 		_r := iamv2alphapb.CreateAccountRequest{}
-		err = protojson.Unmarshal([]byte(_request), &_r)
-		if err != nil {
-			fmt.Println(err)
+		err2 := protojson.Unmarshal([]byte(_request), &_r)
+		if err2 != nil {
+			fmt.Println(err2)
 			os.Exit(1)
 		}
 
-		cert, _, err := nebulav1ca.Bound.GetPKI(context.Background(), &_r)
-		if err != nil {
+		cert, key, err3 := nebulav1ca.Bound.GetPKI(context.Background(), &_r)
+		if err3 != nil {
 			return
 		}
 
@@ -70,9 +70,9 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 		httpClient := http.DefaultClient
 		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 
-		response, err := client.CreateAccount(context.Background(), request)
-		if err != nil {
-			fmt.Println(err)
+		response, err4 := client.CreateAccount(context.Background(), request)
+		if err4 != nil {
+			fmt.Println(err4)
 			os.Exit(1)
 		}
 
@@ -86,17 +86,16 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 			return
 		}
 
-		credential, err := protojson.MarshalOptions{
-			Multiline: true,
-			Indent:    "  ",
-		}.Marshal(response.Msg.Account.Credential)
-		if err != nil {
+		provider, err5 := sdkv2alphalib.NewCLICredentialProvider()
+		if err5 != nil {
 			return
 		}
 
-		err = fs.WriteFile(filepath.Join(fs.CredentialsDirectory, response.Msg.SpecContext.EcosystemSlug+"-credential.json"), credential, os.ModePerm)
-		if err != nil {
-			fmt.Println(err)
+		response.Msg.Account.Credential.PrivateKey = string(key.Content)
+
+		err6 := provider.SaveCredential(response.Msg.Account.Credential)
+		if err6 != nil {
+			return
 		}
 
 		val, _ := json.MarshalIndent(&response, "", "    ")

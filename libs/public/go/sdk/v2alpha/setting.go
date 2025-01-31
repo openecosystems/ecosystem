@@ -59,11 +59,13 @@ func NewDotConfigSettingsProvider() (*DotConfigSettingsProvider, error) {
 
 	c := specv2pb.SpecSettings{}
 
-	err3 := configurer.Unmarshal(&c)
-	if err3 != nil {
+	err = configurer.Unmarshal(&c)
+	if err != nil {
 		fmt.Println("Could not process configuration file")
-		return nil, err3
+		return nil, err
 	}
+
+	Config = &c
 
 	return &DotConfigSettingsProvider{
 		settings: &c,
@@ -153,10 +155,10 @@ func NewCLISettingsProvider(flags *RuntimeConfigurationOverrides) (*CLISettingsP
 
 	c := specv2pb.SpecSettings{}
 
-	err3 := configurer.Unmarshal(&c)
-	if err3 != nil {
+	err = configurer.Unmarshal(&c)
+	if err != nil {
 		fmt.Println("Could not process configuration file")
-		return nil, err3
+		return nil, err
 	}
 
 	Config = &c
@@ -210,21 +212,55 @@ func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Vip
 		ctx := strings.TrimSpace(string(file))
 
 		if ctx == "" {
-			err := fs.WriteFile(DefaultContextFile, []byte(DefaultContextFileName), os.ModePerm)
+			// Set the oeco workspace in the "default" file
+			err := fs.WriteFile(DefaultContextFile, []byte(OecoContextFileName), os.ModePerm)
 			if err != nil {
 				return nil, nil, errors.New("internal error: Cannot create default context")
 			}
 
 			fixthis := `
-name: default
+---
+name: oeco
+description: Open Economic System Context
 platform:
+    endpoint: http://localhost:6577
+    insecure: true
+    mesh:
+      enabled: true
+      endpoint: http://192.168.100.5:6477
+      insecure: true
     dynamicconfigreload: false
+    punchy:
+      punch: true
+      respond: true
+      delay: 1s
+      respond_delay: 5s
+    statichostmap:
+      - '192.168.100.1':
+          map:
+            "45.63.49.173:4242"
+    lighthouse:
+      interval: 60
+      hosts:
+        - '192.168.100.1'
+context:
+    headers:
+      - key: "x-spec-ecosystem-slug"
+        values:
+          - "oeco"
+systems2:
+  - name: configuration
+    version: v2alpha
+  - name: iam
+    version: v2alpha
 `
 
-			err = fs.WriteFile(DefaultContextFile+".yaml", []byte(fixthis), os.ModePerm)
+			err = fs.WriteFile(OecoContextFile+"."+ConfigurationExtension, []byte(fixthis), os.ModePerm)
 			if err != nil {
 				return nil, nil, errors.New("internal error: Cannot create default context")
 			}
+
+			ctx = OecoContextFileName
 		}
 
 		configurer.SetFs(ufs)
@@ -236,11 +272,11 @@ platform:
 	// Set Environment Variable Overrides
 	configurer.AutomaticEnv()
 
-	if err2 := configurer.ReadInConfig(); err2 != nil {
+	if err := configurer.ReadInConfig(); err != nil {
 		var configFileNotFoundError viper.ConfigFileNotFoundError
-		if errors.As(err2, &configFileNotFoundError) {
+		if errors.As(err, &configFileNotFoundError) {
 			// Config file not found; ignore error if desired
-			fmt.Println("Config file not found: " + err2.Error())
+			fmt.Println("Config file not found: " + err.Error())
 		}
 	}
 
@@ -442,11 +478,11 @@ func Resolve(dst, src interface{}) {
 	}
 
 	validate := validator.New()
-	if err := validate.Struct(dst); err != nil {
+	if err = validate.Struct(dst); err != nil {
 		fmt.Println("Missing required attributes", err)
 	}
 
-	if err := mergo.Merge(dst, src); err != nil {
+	if err = mergo.Merge(dst, src); err != nil {
 		fmt.Println("Error merging settings configuration:", err)
 	}
 }

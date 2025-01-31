@@ -4,11 +4,10 @@
 
 import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
-import type { Curve } from "./account_authority_pb";
+import type { Credential, Curve } from "../../type/v2/credential_pb";
 import type { File } from "../../type/v2/file_pb";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
-import type { Credential } from "../../type/v2/credential_pb";
 
 /**
  * Describes the file platform/iam/v2alpha/account.proto.
@@ -41,7 +40,7 @@ export declare type CreateAccountRequest = Message<"platform.iam.v2alpha.CreateA
   name: string;
 
   /**
-   * @generated from field: platform.iam.v2alpha.Curve curve = 2;
+   * @generated from field: platform.type.v2.Curve curve = 2;
    */
   curve: Curve;
 

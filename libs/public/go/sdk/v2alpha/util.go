@@ -7,9 +7,11 @@ import (
 
 	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
+	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/types/known/anypb"
+	"gopkg.in/yaml.v3"
 )
 
 // GetDataFromSpec extracts and unmarshals the data field of a Spec object into a provided ProtoMessage instance.
@@ -91,4 +93,41 @@ func ConvertToJSON(v interface{}) (r interface{}) {
 		r = v
 	}
 	return
+}
+
+// ProtoToYAML converts a protobuf message into its equivalent YAML representation and returns it as a string.
+// Returns an error if the conversion to JSON or YAML fails.
+func ProtoToYAML(pb proto.Message) (string, error) {
+	jsonData, err := protojson.Marshal(pb) // Protobuf → JSON
+	if err != nil {
+		return "", err
+	}
+
+	var mapData map[string]interface{}
+	if err := yaml.Unmarshal(jsonData, &mapData); err != nil {
+		return "", err
+	}
+
+	yamlData, err := yaml.Marshal(mapData) // Convert map to YAML
+	if err != nil {
+		return "", err
+	}
+
+	return string(yamlData), nil
+}
+
+// YamlToProto converts a YAML string into a Protobuf message by first translating it to JSON and then unmarshalling it.
+// It takes a YAML string (yamlStr) and a Protobuf message (pb) as input and returns an error if the conversion fails.
+func YamlToProto(yamlStr string, pb proto.Message) error {
+	var mapData map[string]interface{}
+	if err := yaml.Unmarshal([]byte(yamlStr), &mapData); err != nil {
+		return err
+	}
+
+	jsonData, err := yaml.Marshal(mapData) // Convert YAML to JSON
+	if err != nil {
+		return err
+	}
+
+	return protojson.Unmarshal(jsonData, pb) // JSON → Protobuf
 }

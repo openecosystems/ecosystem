@@ -5,9 +5,9 @@ package platform.iam.v2alpha;
 import "google/api/annotations.proto";
 import "platform/options/v2/annotations.proto";
 import "platform/spec/v2/spec.proto";
-import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 import "platform/type/v2/file.proto";
+import "platform/type/v2/credential.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};
 option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
@@ -91,11 +91,7 @@ enum AccountAuthorityEvents {
 
 }
 
-enum Curve {
-  CURVE_UNSPECIFIED = 0;
-  CURVE_EDDSA = 1;
-  CURVE_ECDSA = 2;
-}
+
 
 // Request for CreateAccountAuthority
 message CreateAccountAuthorityRequest {
@@ -104,9 +100,9 @@ message CreateAccountAuthorityRequest {
   // Name of the Account Authority. For example, 'Open Ecosystems, Inc.'
   string name = 1;
 
-  Curve curve = 2;
+  platform.type.v2.Curve curve = 2;
 
-  google.protobuf.Duration duration = 3;
+  //google.protobuf.Duration duration = 3;
 
   // Encrypt key with this passphrase and write out key in an encrypted format
   string encrypt_key_passphrase = 4;
@@ -135,15 +131,5 @@ message AccountAuthority {
   // Timestamp indicating when this event subscription was last updated.
   google.protobuf.Timestamp updated_at = 3;
 
-  string name = 4;
-
-  Curve curve = 5;
-
-  google.protobuf.Duration duration = 6;
-
-  platform.type.v2.File ca_cert = 7;
-
-  platform.type.v2.File ca_key = 8;
-
-  platform.type.v2.File ca_qr_code = 9;
+  platform.type.v2.Credential credential = 4;
 }

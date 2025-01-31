@@ -55,8 +55,6 @@ var (
 
 // manuallyImplementedSystems is a map of system names to a boolean indicating if the system requires manual command handling.
 var manuallyImplementedSystems = map[string]bool{
-	//"cryptography":  true,
-	//"configuration": true,
 	"iam": true,
 }
 
@@ -106,8 +104,8 @@ func Execute(cli *cliv2alphalib.CLI) {
 		return
 	}
 
-	if err2 := settingsProvider.WatchSettings(); err2 != nil {
-		fmt.Println(err2)
+	if err = settingsProvider.WatchSettings(); err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
@@ -150,7 +148,7 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 	}
 
 	// Manually add certain system commands
-	// RootCmd.AddCommand(configurationv2alphapbint.ConfigurationServiceServiceCmd)
+	RootCmd.AddCommand(iamv2alphapbint.AccountAuthorityServiceServiceCmd)
 	RootCmd.AddCommand(iamv2alphapbint.AccountServiceServiceCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)
 }

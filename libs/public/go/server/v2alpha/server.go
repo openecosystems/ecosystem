@@ -234,7 +234,7 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.HTTP.Port)
 
 	if ResolvedConfiguration.Mesh.Enabled {
-		_ln, err3 := nebulav1.Bound.GetSocket(strconv.Itoa(meshHTTPPort))
+		_ln, err3 := nebulav1.Bound.GetMeshListener(strconv.Itoa(meshHTTPPort))
 		if err3 != nil {
 			fmt.Println("get socket error: ", err3)
 			return _httpServerErr

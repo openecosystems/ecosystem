@@ -5,9 +5,9 @@ app:
   environmentType: 'local'
   debug: false
 mesh:
-  enabled: false
-  #host: '192.168.100.5'
-  host: '0.0.0.0'
+  enabled: true
+  host: '192.168.100.5'
+  #host: '0.0.0.0'
   port: '6477'
 http:
   host: '0.0.0.0'
@@ -21,8 +21,8 @@ opentelemetry:
 nats:
   options:
     servers:
-      #- nats://192.168.100.5:4222
-      - nats://localhost:4222
+      - nats://192.168.100.5:4222
+      #- nats://localhost:4222
 natsd:
   enabled: true
   options:

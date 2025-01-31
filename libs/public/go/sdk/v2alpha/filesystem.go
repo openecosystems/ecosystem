@@ -43,6 +43,7 @@ const (
 	LogDirectoryName           = "logs"
 	TmpDirectoryName           = "tmp"
 	ContextDirectoryName       = "context"
+	OecoContextFileName        = "oeco"
 	DefaultContextFileName     = "default"
 	CredentialDirectoryName    = "credentials"
 	RegistryDirectoryName      = "registry"
@@ -73,6 +74,7 @@ var (
 	RegistryDirectory      = filepath.Join(HomeDirectory, RegistryDirectoryName)
 	ConfigurationDirectory = filepath.Join(HomeDirectory, ConfigurationDirectoryName)
 	RegistryCacheDirectory = filepath.Join(RegistryDirectory, RegistryCacheDirectoryName)
+	OecoContextFile        = filepath.Join(ContextDirectory, OecoContextFileName)
 	DefaultContextFile     = filepath.Join(ContextDirectory, DefaultContextFileName)
 	Filesystem             *FileSystem
 )

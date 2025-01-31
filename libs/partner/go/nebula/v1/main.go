@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"os"
 	"sync"
 	"time"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	nebulaConfig "github.com/slackhq/nebula/config"
 	"github.com/slackhq/nebula/service"
@@ -23,6 +24,7 @@ type Binding struct {
 	MeshSocket *service.Service
 
 	configuration *Configuration
+	cp            *sdkv2alphalib.CLICredentialProvider
 }
 
 // Bound holds the reference to the active Binding instance once configured and initialized.
@@ -51,13 +53,22 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		once.Do(
 			func() {
 				IsBound = true
-				// Review this
-				socket, err := b.ConfigureMeshSocket()
+
+				provider, err := sdkv2alphalib.NewCLICredentialProvider()
 				if err != nil {
 					return
 				}
+				b.cp = provider
+
+				socket, err := b.ConfigureMeshSocket(sdkv2alphalib.Config)
+				if err != nil {
+					return
+				}
+
 				Bound = &Binding{
 					MeshSocket: socket,
+
+					cp: provider,
 				}
 
 				bindings.Registered[b.Name()] = Bound
@@ -78,12 +89,18 @@ func (b *Binding) GetBinding() interface{} {
 
 // Close releases resources associated with the Binding instance and ensures a clean shutdown of any active services.
 func (b *Binding) Close() error {
+	if b.MeshSocket != nil {
+		err := b.MeshSocket.Close()
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
-// GetSocket initializes a network listener on the given HTTP port if the binding is properly configured and bound.
+// GetMeshListener initializes a network listener on the given HTTP port if the binding is properly configured and bound.
 // Returns a pointer to the listener or an error if preconditions are not met or configuration fails.
-func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
+func (b *Binding) GetMeshListener(httpPort string) (*net.Listener, error) {
 	if IsBound {
 		configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)
 		if err != nil {
@@ -117,122 +134,103 @@ func (b *Binding) GetSocket(httpPort string) (*net.Listener, error) {
 func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*url*/) *http.Client {
 	httpClient := http.DefaultClient
 
-	// go func() {
-
-	if config != nil && config.Platform != nil && config.Platform.Mesh != nil && config.Platform.Mesh.Enabled {
-		h := make(map[string][]string)
-		for k, e := range config.Platform.StaticHostMap {
-			h[k] = e.Map
-		}
-
-		nebulaC := Nebula{
-			Host: h,
-			Pki: Pki{
-				Ca:   os.ExpandEnv(config.Platform.Pki.Ca),
-				Cert: os.ExpandEnv(config.Platform.Pki.Cert),
-				Key:  os.ExpandEnv(config.Platform.Pki.Key),
-			},
-			Lighthouse: Lighthouse{
-				AmLighthouse: false,
-				Interval:     int(config.Platform.Lighthouse.Interval),
-				Hosts:        config.Platform.Lighthouse.Hosts,
-			},
-			Punchy: Punchy{
-				Punch:        config.Platform.Punchy.Punch,
-				Respond:      config.Platform.Punchy.Respond,
-				RespondDelay: config.Platform.Punchy.RespondDelay,
-				Delay:        config.Platform.Punchy.Delay,
-			},
-			Tun: Tun{
-				// User:     true,
-				Disabled:           false,
-				Dev:                "utun8",
-				DropLocalBroadcast: false,
-				DropMulticast:      false,
-				TxQueue:            500,
-				Mtu:                1300,
-			},
-			Listen: Listen{
-				Host: "0.0.0.0",
-				Port: 4242,
-			},
-			Relay: Relay{
-				AmRelay:   false,
-				UseRelays: false,
-			},
-			Logging: Logging{
-				Level:  "error",
-				Format: "text",
-			},
-			Firewall: Firewall{
-				OutboundAction: "drop",
-				InboundAction:  "drop",
-				Conntrack: Conntrack{
-					TCPTimeout:     "12m",
-					UDPTimeout:     "3m",
-					DefaultTimeout: "10m",
-				},
-				Outbound: Outbound{
-					{
-						Port:  "any",
-						Proto: "any",
-						Host:  "any",
-					},
-				},
-				Inbound: Inbound{
-					{
-						Port:  "any",
-						Proto: "any",
-						Host:  "any",
-					},
-					{
-						Port:  "any",
-						Proto: "any",
-						Host:  "any",
-					},
-				},
-			},
-		}
-
-		configBytes, err := yaml.Marshal(nebulaC)
-		if err != nil {
-			fmt.Printf("Error resolving Nebula configuration: %v\n", err)
-			fmt.Println(err.Error())
-		}
-
-		var cfg nebulaConfig.C
-		if err = cfg.LoadString(string(configBytes)); err != nil {
-			fmt.Println("ERROR loading config:", err)
-		}
-
-		svc, err := service.New(&cfg)
-		if err != nil {
-			fmt.Printf("Error creating service: %v\n", err)
-			fmt.Println(err.Error())
-		}
-		// defer svc.Close()
-
-		// config.MeshSocket = svc
-
+	if config.Platform != nil && config.Platform.Mesh != nil && config.Platform.Mesh.Enabled {
 		httpClient = &http.Client{
 			Timeout: 10 * time.Second,
 			Transport: &http.Transport{
 				DialContext: func(_ context.Context, network string, address string) (net.Conn, error) {
-					return svc.Dial(network, address)
+					return b.MeshSocket.Dial(network, address)
 				},
 			},
 		}
 	}
-	//}()
 
 	return httpClient
 }
 
 // ConfigureMeshSocket initializes and configures the Nebula mesh socket, returning the created service or an error.
-func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
-	// go func() {
-	// if IsBound {
-	configBytes, err := yaml.Marshal(ResolvedConfiguration.Nebula)
+func (b *Binding) ConfigureMeshSocket(config *specv2pb.SpecSettings) (*service.Service, error) {
+	credential, err := b.cp.GetCredential(typev2pb.CredentialType_CREDENTIAL_TYPE_MESH_ACCOUNT)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	h := make(map[string][]string)
+	for k, e := range config.Platform.StaticHostMap {
+		h[k] = e.Map
+	}
+
+	nebulaC := Nebula{
+		Host: h,
+		Pki: Pki{
+			Ca:   credential.AaCertX509,
+			Cert: credential.CertX509,
+			Key:  credential.PrivateKey,
+		},
+		Lighthouse: Lighthouse{
+			AmLighthouse: false,
+			Interval:     int(config.Platform.Lighthouse.Interval),
+			Hosts:        config.Platform.Lighthouse.Hosts,
+		},
+		Punchy: Punchy{
+			Punch:        config.Platform.Punchy.Punch,
+			Respond:      config.Platform.Punchy.Respond,
+			RespondDelay: config.Platform.Punchy.RespondDelay,
+			Delay:        config.Platform.Punchy.Delay,
+		},
+		Tun: Tun{
+			// User:     true,
+			Disabled:           false,
+			Dev:                "utun8",
+			DropLocalBroadcast: false,
+			DropMulticast:      false,
+			TxQueue:            500,
+			Mtu:                1300,
+		},
+		Listen: Listen{
+			Host: "0.0.0.0",
+			Port: 4242,
+		},
+		Relay: Relay{
+			AmRelay:   false,
+			UseRelays: false,
+		},
+		Logging: Logging{
+			Level:  "error",
+			Format: "text",
+		},
+		Firewall: Firewall{
+			OutboundAction: "drop",
+			InboundAction:  "drop",
+			Conntrack: Conntrack{
+				TCPTimeout:     "12m",
+				UDPTimeout:     "3m",
+				DefaultTimeout: "10m",
+			},
+			Outbound: Outbound{
+				{
+					Port:  "any",
+					Proto: "any",
+					Host:  "any",
+				},
+			},
+			Inbound: Inbound{
+				{
+					Port:  "any",
+					Proto: "any",
+					Host:  "any",
+				},
+				{
+					Port:  "any",
+					Proto: "any",
+					Host:  "any",
+				},
+			},
+		},
+	}
+
+	configBytes, err := yaml.Marshal(nebulaC)
 	if err != nil {
 		fmt.Printf("Error resolving Nebula configuration: %v\n", err)
 		fmt.Println(err.Error())
@@ -241,18 +239,13 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 	var cfg nebulaConfig.C
 	if err = cfg.LoadString(string(configBytes)); err != nil {
 		fmt.Println("ERROR loading config:", err)
-		return nil, errors.New("the Nebula binding configuration could not be loaded")
 	}
 
 	svc, err := service.New(&cfg)
 	if err != nil {
 		fmt.Printf("Error creating service: %v\n", err)
 		fmt.Println(err.Error())
-		return nil, errors.New("the Nebula binding is not properly configured or not set")
 	}
 
 	return svc, nil
-
-	//}
-	//}()
 }

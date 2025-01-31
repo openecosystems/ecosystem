@@ -40,37 +40,52 @@ export declare type Credential = Message<"platform.type.v2.Credential"> & {
   meshIp: string;
 
   /**
-   * @generated from field: string aa_cert_x509 = 6;
+   * @generated from field: platform.type.v2.Curve curve = 6;
+   */
+  curve: Curve;
+
+  /**
+   * @generated from field: string aa_cert_x509 = 7;
    */
   aaCertX509: string;
 
   /**
-   * @generated from field: string cert_x509 = 7;
+   * @generated from field: string aa_cert_x509_qr_code = 8;
+   */
+  aaCertX509QrCode: string;
+
+  /**
+   * @generated from field: string aa_private_key = 9;
+   */
+  aaPrivateKey: string;
+
+  /**
+   * @generated from field: string cert_x509 = 10;
    */
   certX509: string;
 
   /**
-   * @generated from field: string cert_x509_qr_code = 8;
+   * @generated from field: string cert_x509_qr_code = 11;
    */
   certX509QrCode: string;
 
   /**
-   * @generated from field: string private_key = 9;
+   * @generated from field: string private_key = 12;
    */
   privateKey: string;
 
   /**
-   * @generated from field: string n_key = 10;
+   * @generated from field: string n_key = 13;
    */
   nKey: string;
 
   /**
-   * @generated from field: repeated string groups = 11;
+   * @generated from field: repeated string groups = 14;
    */
   groups: string[];
 
   /**
-   * @generated from field: repeated string subnets = 12;
+   * @generated from field: repeated string subnets = 15;
    */
   subnets: string[];
 };
@@ -93,15 +108,47 @@ export enum CredentialType {
   UNSPECIFIED = 0,
 
   /**
+   * Credential for an account authority.
+   *
+   * @generated from enum value: CREDENTIAL_TYPE_ACCOUNT_AUTHORITY = 1;
+   */
+  ACCOUNT_AUTHORITY = 1,
+
+  /**
    * Credential for a mesh service account.
    *
-   * @generated from enum value: CREDENTIAL_TYPE_MESH_ACCOUNT = 1;
+   * @generated from enum value: CREDENTIAL_TYPE_MESH_ACCOUNT = 2;
    */
-  MESH_ACCOUNT = 1,
+  MESH_ACCOUNT = 2,
 }
 
 /**
  * Describes the enum platform.type.v2.CredentialType.
  */
 export declare const CredentialTypeSchema: GenEnum<CredentialType>;
+
+/**
+ * @generated from enum platform.type.v2.Curve
+ */
+export enum Curve {
+  /**
+   * @generated from enum value: CURVE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+
+  /**
+   * @generated from enum value: CURVE_EDDSA = 1;
+   */
+  EDDSA = 1,
+
+  /**
+   * @generated from enum value: CURVE_ECDSA = 2;
+   */
+  ECDSA = 2,
+}
+
+/**
+ * Describes the enum platform.type.v2.Curve.
+ */
+export declare const CurveSchema: GenEnum<Curve>;
 
