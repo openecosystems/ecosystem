@@ -46,7 +46,7 @@ func DecorateRequest(_ context.Context, req connect.AnyRequest, settings *specv2
 	}
 
 	if settings != nil && settings.Context != nil {
-		req.Header().Set(ApiKey, settings.Context.ApiKey)
+		// req.Header().Set(ApiKey, settings.Context.ApiKey)
 		for _, header := range settings.Context.Headers {
 			for _, v := range header.Values {
 				req.Header().Add(header.Key, v)

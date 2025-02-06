@@ -3,6 +3,7 @@ package connectorv2alphalib
 import (
 	"fmt"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -11,7 +12,7 @@ var ResolvedConfiguration *Configuration
 
 // Configuration represents a primary structure for handling application configuration, extending sdkv2alphalib.App.
 type Configuration struct {
-	sdkv2alphalib.App
+	specv2pb.App
 
 	err error
 }
@@ -25,8 +26,7 @@ func (c *Configuration) ResolveConfiguration() {
 	}
 
 	var config Configuration
-	dc := c.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&config, dc)
+	sdkv2alphalib.Resolve(&config, c.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	var sdkConfig sdkv2alphalib.Configuration
 	sdkv2alphalib.ImportPackageJson(&sdkConfig)
 
@@ -47,7 +47,7 @@ func (c *Configuration) ResolveConfiguration() {
 	}
 
 	sdkConfig.App.Debug = config.App.Debug
-	sdkConfig.App.Trace = config.App.Trace
+	sdkConfig.App.Verbose = config.App.Verbose
 
 	ResolvedConfiguration = &config
 	sdkv2alphalib.ResolvedConfiguration = &sdkConfig
@@ -61,11 +61,14 @@ func (c *Configuration) ValidateConfiguration() error {
 // GetDefaultConfiguration returns the default configuration for the application, including app name, version, and environment.
 func (c *Configuration) GetDefaultConfiguration() interface{} {
 	return Configuration{
-		App: sdkv2alphalib.App{
-			Name:            "server",
+		App: specv2pb.App{
+			Name:            "connector",
 			Version:         "0.0.0",
+			Description:     "Connector",
 			EnvironmentName: "local-1",
 			EnvironmentType: "local",
+			Debug:           false,
+			Verbose:         false,
 		},
 	}
 }

@@ -10,7 +10,7 @@ import (
 
 	"dario.cat/mergo"
 
-	serverv2alphalib "libs/public/go/server/v2alpha"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
@@ -55,7 +55,7 @@ type EventStreamRegistry struct {
 
 // Configuration represents the overall settings structure comprising NATS, NATS server options, and stream registry configurations.
 type Configuration struct {
-	Mesh                serverv2alphalib.Mesh
+	Platform            specv2pb.Platform
 	Nats                Nats
 	Natsd               Natsd
 	EventStreamRegistry EventStreamRegistry
@@ -66,8 +66,7 @@ type Configuration struct {
 // ResolveConfiguration resolves and merges the binding's configuration with default settings, validating streams and settings.
 func (b *Binding) ResolveConfiguration() {
 	var c Configuration
-	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&c, dc)
+	sdkv2alphalib.Resolve(&c, b.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	b.configuration = &c
 	ResolvedConfiguration = &c
 
@@ -148,13 +147,14 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 	cfg := sdkv2alphalib.ResolvedConfiguration
 
 	return Configuration{
-		Mesh: serverv2alphalib.Mesh{
-			Enabled: false,
+		Platform: specv2pb.Platform{
+			Mesh: &specv2pb.Mesh{
+				Enabled: false,
+			},
 		},
 		Nats: Nats{
 			Options: nats.Options{
 				Servers: NatsServers,
-				// TODO: Review how to tie Mesh with this
 				//Dialer: &net.Dialer{
 				//	Timeout:   0,
 				//	Deadline:  time.Time{},
@@ -177,7 +177,7 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 				Host:       NatsdServerHost,
 				Port:       NatsdServerPort,
 				DontListen: false,
-				Trace:      cfg.App.Trace,
+				Trace:      cfg.App.Verbose,
 				Debug:      cfg.App.Debug,
 				MaxConn:    -1,
 				MaxSubs:    -1,

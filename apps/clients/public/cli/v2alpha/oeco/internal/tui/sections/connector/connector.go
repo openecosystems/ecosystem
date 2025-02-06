@@ -1,16 +1,17 @@
 package connector
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/details_page"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/logs_page"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	details_page "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/details_page"
+	homepage "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/home_page"
+	logs_page "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/logs_page"
 	requestspage "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/requests_page"
+	sections "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
 
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
@@ -43,6 +44,7 @@ func NewModel(settings *specv2pb.SpecSettings) Model {
 	}
 
 	var pages []contract.Page
+	pages = append(pages, homepage.NewModel(ctx))
 	pages = append(pages, details_page.NewModel(ctx))
 	pages = append(pages, requestspage.NewModel(ctx))
 	pages = append(pages, logs_page.NewModel(ctx))

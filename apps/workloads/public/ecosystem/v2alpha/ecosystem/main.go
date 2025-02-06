@@ -54,7 +54,7 @@ func main() {
 		// Create a new Connector Listener and listen of outbound channels
 	}
 
-	provider, err := sdkv2alphalib.NewDotConfigSettingsProvider()
+	provider, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
 	if err != nil {
 		fmt.Println("Error:", err)
 		return

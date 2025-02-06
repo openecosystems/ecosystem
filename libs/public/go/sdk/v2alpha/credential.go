@@ -1,7 +1,6 @@
 package sdkv2alphalib
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -21,7 +20,7 @@ const (
 // GetCredential retrieves a SpecSettings instance for a given ecosystem.
 // SaveCredential saves a provided Credential and returns an error if the operation fails.
 type SpecCredentialProvider interface {
-	GetCredential() (*typev2pb.Credential, error)
+	GetCredential(t typev2pb.CredentialType, override string) (*typev2pb.Credential, error)
 	SaveCredential(credential *typev2pb.Credential) error
 }
 
@@ -40,13 +39,15 @@ func NewCLICredentialProvider() (*CLICredentialProvider, error) {
 }
 
 // GetCredential retrieves a credential for the specified ecosystem and returns it along with any potential error.
-func (p *CLICredentialProvider) GetCredential(t typev2pb.CredentialType) (*typev2pb.Credential, error) {
-	file, err := p.fs.ReadFile(DefaultContextFile)
-	if err != nil {
-		return nil, errors.New("CLICredentialProvider could not read config file: " + err.Error())
+func (p *CLICredentialProvider) GetCredential(t typev2pb.CredentialType, override string) (*typev2pb.Credential, error) {
+	_ecosystem := override
+	if _ecosystem == "" {
+		file, err := p.fs.ReadFile(DefaultContextFile)
+		if err != nil {
+			return nil, fmt.Errorf("CLICredentialProvider could not read config file: %w", err)
+		}
+		_ecosystem = strings.TrimSpace(string(file))
 	}
-
-	_ecosystem := strings.TrimSpace(string(file))
 
 	switch t {
 	case typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY:

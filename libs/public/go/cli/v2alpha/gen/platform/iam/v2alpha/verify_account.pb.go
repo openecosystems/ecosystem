@@ -55,7 +55,11 @@ var VerifyAccountV2AlphaCmd = &cobra.Command{
 		request := connect.NewRequest[iamv2alphapb.VerifyAccountRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
 		httpClient := http.DefaultClient
-		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		url := "https://" + sdkv2alphalib.Config.Platform.Endpoint
+		if sdkv2alphalib.Config.Platform.Insecure {
+			url = "http://" + sdkv2alphalib.Config.Platform.Endpoint
+		}
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 
 		response, err := client.VerifyAccount(context.Background(), request)
 		if err != nil {

@@ -62,6 +62,7 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev2
 		return
 	}
 
+	fmt.Println("REEEEEUUUUUU", req) //nolint:copylocks
 	if req.Name == "" {
 		fmt.Println("Name is required")
 		return

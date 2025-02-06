@@ -1,6 +1,7 @@
 package configurationv2alphalib
 
 import (
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -9,14 +10,14 @@ var ResolvedConfiguration *Configuration
 
 // Configuration represents the main configuration structure used for setting and resolving application configurations.
 type Configuration struct {
-	sdkv2alphalib.App
+	specv2pb.App
 }
 
 // ResolveConfiguration initializes and resolves the binding's configuration by merging default and external configurations.
 func (b *Binding) ResolveConfiguration() {
 	var c Configuration
-	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&c, dc)
+
+	sdkv2alphalib.Resolve(&c, b.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	b.configuration = &c
 	ResolvedConfiguration = &c
 }

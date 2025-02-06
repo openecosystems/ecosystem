@@ -1,0 +1,83 @@
+package ecosystemv2alphapbint
+
+import (
+	"fmt"
+
+	"github.com/apex/log"
+	"github.com/spf13/cobra"
+
+	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
+)
+
+var (
+	createEcosystemRequest      string
+	createEcosystemFieldMask    string
+	createEcosystemValidateOnly bool
+)
+
+// CreateEcosystemV2AlphaCmd is a cobra command used to create a new ecosystem in the v2alpha version of the service.
+var CreateEcosystemV2AlphaCmd = &cobra.Command{
+	Use:   "create",
+	Short: ``,
+	Long:  `[]`,
+	Run: func(cmd *cobra.Command, _ []string) {
+		log.Debug("Calling createEcosystem ecosystem")
+
+		// Example JSON request argument
+		// requestArg := `{"name": "oeco"}`
+
+		// Example JSON request
+		requestValue := `{"name": "123"}`
+
+		err := iamv2alphapbint.CreateAccountV2AlphaCmd.Flags().Set("request", requestValue)
+		if err != nil {
+			fmt.Println("Error setting flag:", err)
+			return
+		}
+
+		// iamv2alphapbint.CreateAccountV2AlphaCmd.SetArgs([]string{"request", requestArg})
+		iamv2alphapbint.CreateAccountV2AlphaCmd.Run(cmd, []string{})
+
+		//_request, err := cmd.Flags().GetString("request")
+		//if err != nil {
+		//	fmt.Println(err)
+		//	os.Exit(1)
+		//}
+		//if _request == "" {
+		//	_request = "{}"
+		//}
+		//
+		//_r := ecosystemv2alphapb.CreateEcosystemRequest{}
+		//err = protojson.Unmarshal([]byte(_request), &_r)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	os.Exit(1)
+		//}
+		//
+		//sdkv2alphalib.Overrides.FieldMask = createEcosystemFieldMask
+		//sdkv2alphalib.Overrides.ValidateOnly = createEcosystemValidateOnly
+		//
+		//request := connect.NewRequest[ecosystemv2alphapb.CreateEcosystemRequest](&_r)
+		//// Add GZIP Support: connect.WithSendGzip(),
+		//url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		//if sdkv2alphalib.Config.Platform.Insecure {
+		//	url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		//}
+		//client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		//
+		//response, err := client.CreateEcosystem(context.Background(), request)
+		//if err != nil {
+		//	fmt.Println(err)
+		//	os.Exit(1)
+		//}
+		//
+		//val, _ := json.MarshalIndent(&response, "", "    ")
+		//fmt.Println(string(val))
+	},
+}
+
+func init() {
+	CreateEcosystemV2AlphaCmd.PersistentFlags().StringVarP(&createEcosystemRequest, "request", "r", "{}", "Request for api call")
+	CreateEcosystemV2AlphaCmd.PersistentFlags().BoolVar(&createEcosystemValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")
+	CreateEcosystemV2AlphaCmd.PersistentFlags().StringVarP(&createEcosystemFieldMask, "field-mask", "m", "", "Limit the returned response fields")
+}

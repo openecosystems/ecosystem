@@ -1,19 +1,19 @@
 package connectorv2alphatui
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
 	"fmt"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	slog "log"
 	"os"
 	"strconv"
 	"time"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
+
+	connector "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // Cmd defines a CLI command named "connector" for interaction, supporting one optional argument and a short description.

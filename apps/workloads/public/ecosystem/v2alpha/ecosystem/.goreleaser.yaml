@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
-project_name: ecosystem-v2alpha
+project_name: ecosystem
 
 variables:
   path_to_repo_root: "../../../../../../"
@@ -10,7 +10,7 @@ variables:
 dist: ./dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/release
 
 monorepo:
-  tag_prefix: "ecosystem-v2alpha/"
+  tag_prefix: "ecosystem/"
   dir: apps/workloads/public/ecosystem/v2alpha/ecosystem
 
 includes:
@@ -23,7 +23,7 @@ includes:
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "ecosystem-v2alpha/devel"
+  tag_name: "ecosystem/devel"
   publish_release: true
   keep_single_release: true
 

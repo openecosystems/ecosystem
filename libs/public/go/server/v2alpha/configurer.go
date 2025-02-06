@@ -4,30 +4,18 @@ import (
 	"errors"
 	"fmt"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // ResolvedConfiguration stores the resolved and finalized configuration for the application.
 var ResolvedConfiguration *Configuration
 
-// HTTP represents the configuration for a public HTTP server, including its port.
-type HTTP struct {
-	Host string `yaml:"host,omitempty"`
-	Port string `yaml:"port,omitempty"`
-}
-
-// Mesh represents the configuration settings for a network mesh, including its enabled state, host, and port details.
-type Mesh struct {
-	Enabled bool   `yaml:"enabled,omitempty"`
-	Host    string `yaml:"host,omitempty"`
-	Port    string `yaml:"port,omitempty"`
-}
-
 // Configuration represents a structure for application configuration settings, including app, GRPC, and HTTP details.
 type Configuration struct {
-	App  sdkv2alphalib.App `yaml:"app,omitempty"`
-	Mesh Mesh              `yaml:"mesh,omitempty"`
-	HTTP HTTP              `yaml:"http,omitempty"`
+	App      specv2pb.App      `yaml:"app,omitempty"`
+	Platform specv2pb.Platform `yaml:"platform,omitempty"`
+	Context  specv2pb.Context  `yaml:"context,omitempty"`
 
 	err error
 }
@@ -41,8 +29,7 @@ func (c *Configuration) ResolveConfiguration() {
 	}
 
 	var config Configuration
-	dc := c.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&config, dc)
+	sdkv2alphalib.Resolve(&config, c.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	var sdkConfig sdkv2alphalib.Configuration
 	sdkv2alphalib.ImportPackageJson(&sdkConfig)
 
@@ -63,7 +50,7 @@ func (c *Configuration) ResolveConfiguration() {
 	}
 
 	sdkConfig.App.Debug = config.App.Debug
-	sdkConfig.App.Trace = config.App.Trace
+	sdkConfig.App.Verbose = config.App.Verbose
 
 	ResolvedConfiguration = &config
 	sdkv2alphalib.ResolvedConfiguration = &sdkConfig
@@ -77,20 +64,24 @@ func (c *Configuration) ValidateConfiguration() error {
 // GetDefaultConfiguration returns a default `Configuration` instance with preset values for App, Grpc, and Http fields.
 func (c *Configuration) GetDefaultConfiguration() interface{} {
 	return Configuration{
-		App: sdkv2alphalib.App{
+		App: specv2pb.App{
 			Name:            "server",
 			Version:         "0.0.0",
 			EnvironmentName: "local-1",
 			EnvironmentType: "local",
 		},
-		HTTP: HTTP{
-			Host: "0.0.0.0",
-			Port: "6577",
-		},
-		Mesh: Mesh{
-			Enabled: false,
-			Host:    "0.0.0.0",
-			Port:    "6477",
+		Platform: specv2pb.Platform{
+			Endpoint:            "http://localhost:6577",
+			Insecure:            true,
+			DnsEndpoints:        []string{"45.63.49.173:4242"},
+			DynamicConfigReload: false,
+			Mesh: &specv2pb.Mesh{
+				Enabled:     true,
+				Endpoint:    "http://192.168.100.5:6477",
+				Insecure:    true,
+				DnsEndpoint: "192.168.100.1",
+				Punchy:      true,
+			},
 		},
 	}
 }

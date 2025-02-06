@@ -1,4 +1,4 @@
-package connector_requests_content
+package connectorrequestscontent
 
 import (
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"

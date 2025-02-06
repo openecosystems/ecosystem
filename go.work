@@ -14,6 +14,7 @@ use (
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
+	./apps/workloads/public/dns/v2alpha/dynamic-dns
 	./apps/workloads/public/cryptography/v2alpha/encryption
 	./apps/workloads/poc/communications/v1alpha/preference-center
 	./apps/workloads/poc/i18n/v1alpha

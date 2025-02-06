@@ -3,6 +3,7 @@ package infrastructurev2alphalib
 import (
 	"fmt"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -11,7 +12,7 @@ var ResolvedConfiguration *Configuration
 
 // Configuration represents the core structure for managing application-specific settings and resolving configurations.
 type Configuration struct {
-	sdkv2alphalib.App
+	specv2pb.App
 
 	err error
 }
@@ -25,8 +26,8 @@ func (c *Configuration) ResolveConfiguration() {
 	}
 
 	var config Configuration
-	dc := c.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&config, dc)
+
+	sdkv2alphalib.Resolve(&config, c.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	var sdkConfig sdkv2alphalib.Configuration
 	sdkv2alphalib.ImportPackageJson(&sdkConfig)
 
@@ -47,7 +48,7 @@ func (c *Configuration) ResolveConfiguration() {
 	}
 
 	sdkConfig.App.Debug = config.App.Debug
-	sdkConfig.App.Trace = config.App.Trace
+	sdkConfig.App.Verbose = config.App.Verbose
 
 	ResolvedConfiguration = &config
 	sdkv2alphalib.ResolvedConfiguration = &sdkConfig
@@ -61,11 +62,14 @@ func (c *Configuration) ValidateConfiguration() error {
 // GetDefaultConfiguration returns a default configuration instance with pre-defined application settings.
 func (c *Configuration) GetDefaultConfiguration() interface{} {
 	return Configuration{
-		App: sdkv2alphalib.App{
-			Name:            "server",
+		App: specv2pb.App{
+			Name:            "infrastructure",
 			Version:         "0.0.0",
+			Description:     "Infrastructure",
 			EnvironmentName: "local-1",
 			EnvironmentType: "local",
+			Debug:           false,
+			Verbose:         false,
 		},
 	}
 }

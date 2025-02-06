@@ -12,6 +12,7 @@ import (
 	"github.com/spf13/cobra"
 
 	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
+	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
@@ -55,7 +56,8 @@ var (
 
 // manuallyImplementedSystems is a map of system names to a boolean indicating if the system requires manual command handling.
 var manuallyImplementedSystems = map[string]bool{
-	"iam": true,
+	"iam":       true,
+	"ecosystem": true,
 }
 
 // AboutPlatformCLI represents metadata about the platform's CLI, including version, commit hash, build date, and builder info.
@@ -70,7 +72,8 @@ type AboutPlatformCLI struct {
 var RootCmd = &cobra.Command{
 	Use:          "oeco",
 	Short:        "Connect to Open Ecosystems",
-	Long:         `Allows you to securely and efficiently interact with Open Economic Systems`,
+	Long:         `Allows you to securely and efficiently interact with Open Economic Systems `,
+	Example:      `oeco --context=my-ecosystem`,
 	Version:      Version,
 	SilenceUsage: true,
 	PersistentPreRun: func(_ *cobra.Command, _ []string) {
@@ -114,7 +117,6 @@ func Execute(cli *cliv2alphalib.CLI) {
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, settings)
 	RootCmd.SetContext(ctx)
-
 	AddCommands(settings)
 
 	if err := RootCmd.Execute(); err != nil {
@@ -127,8 +129,8 @@ func Execute(cli *cliv2alphalib.CLI) {
 func AddCommands(settings *specv2pb.SpecSettings) {
 	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
 
-	if settings != nil && settings.Systems2 != nil {
-		for _, system := range settings.Systems2 {
+	if settings != nil && settings.Systems != nil {
+		for _, system := range settings.Systems {
 			command, err := cmdv2alphapbcmd.CommandRegistry.GetCommandByFullCommandName(cmdv2alphapbcmd.FullCommandName{
 				Name:    system.Name,
 				Version: system.Version,
@@ -148,6 +150,8 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 	}
 
 	// Manually add certain system commands
+	RootCmd.AddCommand(ecosystemv2alphapbint.EcosystemServiceServiceCmd)
+	RootCmd.AddCommand(iamv2alphapbint.AccountAuthorityServiceServiceCmd)
 	RootCmd.AddCommand(iamv2alphapbint.AccountAuthorityServiceServiceCmd)
 	RootCmd.AddCommand(iamv2alphapbint.AccountServiceServiceCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)

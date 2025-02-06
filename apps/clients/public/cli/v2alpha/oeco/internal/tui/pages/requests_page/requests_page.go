@@ -1,7 +1,7 @@
 package requestspage
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_requests_content"
+	connectorrequestscontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_requests_content"
 	connectorrequestssidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_requests_sidebar"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
@@ -20,7 +20,7 @@ type ModelConfig struct{}
 type Model struct {
 	pages.BaseModel[ModelConfig]
 
-	mainContent connector_requests_content.Model
+	mainContent connectorrequestscontent.Model
 	sidebar     connectorrequestssidebar.Model
 }
 
@@ -29,7 +29,7 @@ func NewModel(ctx *context.ProgramContext) Model {
 	c := ModelConfig{}
 
 	p := Model{
-		mainContent: connector_requests_content.NewModel(ctx),
+		mainContent: connectorrequestscontent.NewModel(ctx),
 		sidebar:     connectorrequestssidebar.NewModel(ctx),
 	}
 

@@ -88,7 +88,7 @@ func (s *Systems) GetSystemByName(systemName string) (*System, error) {
 
 // processSystems initializes, validates, and registers systems using the provided configuration and dependencies.
 func (s *Systems) processSystems() error {
-	for _, ss := range s.settings.Systems2 {
+	for _, ss := range s.settings.Systems {
 		// Validate system
 
 		//if prev := s.systemsByName[FullSystemName(ss.Name)]; len(prev) > 0 {

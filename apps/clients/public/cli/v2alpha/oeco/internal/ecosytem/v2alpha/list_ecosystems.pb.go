@@ -1,0 +1,75 @@
+package ecosystemv2alphapbint
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	ecosystemv2alphapbsdk "libs/public/go/sdk/gen/ecosystem/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+	"os"
+
+	"connectrpc.com/connect"
+
+	"github.com/apex/log"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
+)
+
+var (
+	listEcosystemsRequest      string
+	listEcosystemsFieldMask    string
+	listEcosystemsValidateOnly bool
+)
+
+// ListEcosystemsV2AlphaCmd defines a Cobra command to list ecosystems using the V2 Alpha API.
+var ListEcosystemsV2AlphaCmd = &cobra.Command{
+	Use:   "list",
+	Short: ``,
+	Long:  `[]`,
+	Run: func(cmd *cobra.Command, _ []string) {
+		log.Debug("Calling listEcosystems ecosystem")
+
+		_request, err := cmd.Flags().GetString("request")
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		if _request == "" {
+			_request = "{}"
+		}
+
+		_r := ecosystemv2alphapb.ListEcosystemsRequest{}
+		err = protojson.Unmarshal([]byte(_request), &_r)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		sdkv2alphalib.Overrides.FieldMask = listEcosystemsFieldMask
+		sdkv2alphalib.Overrides.ValidateOnly = listEcosystemsValidateOnly
+
+		request := connect.NewRequest[ecosystemv2alphapb.ListEcosystemsRequest](&_r)
+		// Add GZIP Support: connect.WithSendGzip(),
+		url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		if sdkv2alphalib.Config.Platform.Insecure {
+			url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		}
+		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+
+		response, err := client.ListEcosystems(context.Background(), request)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+
+		val, _ := json.MarshalIndent(&response, "", "    ")
+		fmt.Println(string(val))
+	},
+}
+
+func init() {
+	ListEcosystemsV2AlphaCmd.PersistentFlags().StringVarP(&listEcosystemsRequest, "request", "r", "{}", "Request for api call")
+	ListEcosystemsV2AlphaCmd.PersistentFlags().BoolVar(&listEcosystemsValidateOnly, "validate-only", false, "Only validate this request without modifying the resource")
+	ListEcosystemsV2AlphaCmd.PersistentFlags().StringVarP(&listEcosystemsFieldMask, "field-mask", "m", "", "Limit the returned response fields")
+}

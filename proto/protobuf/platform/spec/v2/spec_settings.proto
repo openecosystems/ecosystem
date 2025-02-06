@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package platform.spec.v2;
+
+import "platform/options/v2/annotations.proto";
+import "platform/type/v2/transport.proto";
+import "platform/type/v2/protocol.proto";
+import "platform/type/v2/git_repository.proto";
+import "platform/type/v2/header.proto";
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/spec/v2;specv2pb";
+
+//
+message SpecSettings {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  string name = 10;
+  string version = 11;
+  string description = 12;
+
+  App app = 1;
+  Platform platform = 4;
+  Context context = 5;
+  repeated SpecSystem systems = 6;
+
+}
+
+message App {
+  string name = 1;
+  string version = 2;
+  string description = 3;
+  string environment_name = 4;
+  string environment_type = 5;
+  bool debug = 6;
+  bool verbose = 7;
+}
+
+message Platform {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  string endpoint = 1;
+  bool insecure = 2;
+  repeated string dns_endpoints = 3;
+  bool dynamic_config_reload = 4;
+  Mesh mesh = 5;
+}
+
+message Mesh {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  bool enabled = 1;
+  string endpoint = 2;
+  bool insecure = 3;
+  string dns_endpoint = 4;
+  string udp_endpoint= 5;
+  bool punchy = 6;
+  string credential_path = 7;
+  bool dns_server = 8;
+}
+
+
+message Context {
+  option (platform.options.v2.graph) = {
+    type: GRAPH_TYPE_INPUT
+  };
+
+  //The API key associated with this request
+  //string api_key = 1;
+
+  repeated platform.type.v2.Header headers = 2;
+
+}
+
+message DependencyRegistry {
+  platform.type.v2.GitRepository git = 1;
+
+  string path = 2;
+
+  string registry = 3;
+}
+
+message SpecSystem {
+
+  string name = 1;
+
+  string version = 2;
+
+  repeated platform.type.v2.Protocol protocols = 3;
+
+  DependencyRegistry registry = 4;
+
+}

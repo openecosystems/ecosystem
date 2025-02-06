@@ -43,6 +43,7 @@ const (
 type PageType string
 
 // EmptyPage represents a page type for an empty page.
+// HomePage represents a page type for a home page.
 // ConnectorDetailsPage represents a page type for connector details.
 // ConnectorLogsPage represents a page type for connector logs.
 // ConnectorRequestsPage represents a page type for connector requests.
@@ -50,6 +51,7 @@ type PageType string
 // APIExplorerListPage represents a page type for the API explorer list.
 const (
 	EmptyPage             PageType = "empty"
+	HomePage              PageType = "home"
 	ConnectorDetailsPage  PageType = "connector_details"
 	ConnectorLogsPage     PageType = "connector_logs"
 	ConnectorRequestsPage PageType = "connector_requests"

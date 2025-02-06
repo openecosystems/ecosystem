@@ -75,7 +75,7 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 
 		bindingsInstance = b.Bind(ctx, bindingsInstance)
 
-		if ResolvedConfiguration != nil && (App{}) != ResolvedConfiguration.App && ResolvedConfiguration.App.Debug {
+		if ResolvedConfiguration != nil && ResolvedConfiguration.App.Debug {
 			fmt.Println("Registered Binding: " + b.Name())
 		}
 	}

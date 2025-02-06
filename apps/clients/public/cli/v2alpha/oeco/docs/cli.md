@@ -12,8 +12,6 @@ https://github.com/facebookincubator/sks
 
 # PUBLIC MOCK-DATA ECOSYSTEM
 ## DNS
-## Lighthouse
-## Edge Router
 ## Multiplexer
 - Keep Connectors up to date
   - Before creating a connector
@@ -23,140 +21,36 @@ https://github.com/facebookincubator/sks
       - compares time.Now to (time.Now-1h),
         - If falls outside the window, update the connector to inactive
         - If falls within the window, do nothing
-## Certificate Authority Connector
+## Account Authority Connector
 ## Certificate Connector
 ## Configuration Connector
+?oeco package
 
 
 oeco enclave
+  - oeco enclave sign
+  - oeco enclave find
+  - oeco enclave remove
+  - oeco enclave attest
 oeco context
-oeco organization
-oeco package
+  - oeco context report
+  - oeco context switch
 oeco connector
+  - oeco connector create
 oeco api
+  - oeco api configuration create --rest --request='{"name":"example"}'
+  - oeco api configuration create --grpc --request='{"name":"example"}'
+  - oeco api configuration create --grpc-web --request='{"name":"example"}'
+  - oeco api configuration create --graphql --request='{"name":"example"}'
+  - oeco api configuration create --connect --request='{"name":"example"}'
 oeco ecosystem
+  - oeco ecosystem create
+  - oeco ecosystem report
+oeco dash
+  - pages:
+    - Ecosystem Overview
+    - Connectors Overview in the Ecosystem
+    - Requests
+    - Wire
+    - Logs
 
-## oeco context
-Manage your distributed account. Manage your certificates using a secure enclave, your policies, configurations.
-
-oeco context report
-- Provide a full list of operating system, software installed etc.
-
-## oeco organization
-In the future, you will be able to create your own organization and a private ecosystem with only members of your choosing.
-
-## oeco connector
-
-This will help you explore the different connectors we support using mock-data based prototyping:
-These connectors are fake/mock versions that are identical in structure, 
-but whose actual values are randomized and synthetically generated.
-This allows you to prototype and test before doing mesh execution.
-
-
-### Connector Details Tab
-NOTES:
-Upon creating a connector
-- Create a connector in the KV as active and provide hostname
-
-**LEFT:**
-
-Jurisdiction
-- USA
-- UK
-- EU
-- Australia
-- Israel
-
-Connector Type
-- Syft
-- Tuva
-- Claim 837I (x12)
-- Claim 837P EDI (x12)
-- CareQuality
-- The CMS CCLF (a.k.a. Medicare CCLF)
-- CMS LDS
-- Athena Health
-- Health Gorilla
-- Elation
-- CommonWell
-- CoreCard
-- Cencora Financial Services
-
-Data Classification
-- HIPPA
-- PCI
-- Soc2 Type 2
-- FedRamp
-- HITRUST
-- GDPR
-
-Security Model - Mutually Untrusted
-- Secure Multi-Party Computation (sMPC) (i)
-- Homomorphic Encryption
-- Differential Privacy
-- Synthetic Data
-- Distributed Learning
-- Zero-Knowledge Proofs
-- Trusted Execution Environments and Secure Enclaves
-
-Security Model - Trusted
-- Care Quality
-- Legal Contracts
-
-Register and begin listening? Yes, No
-
---- Binding to user1.api.oeco.mesh
---- Binding to cancer-dev.api.emory.mesh
-
-**RIGHT:**
-Connector API: mesh://djeannot.api.oeco.system/v2alpha/gorilla
-Jurisdiction: United States
-Type: Syft
-Data Classification Policies: HIPPA, PCI, GDPR
-Security Model: sMPC, Synthetic Data
-Connected Since: Nov 16th, 2024
-Last Ping: Nov 16th, 2024 at 15:33:04 EDT
-Number of API Calls Handled (Show chart in ANSCII) https://github.com/guptarohit/asciigraph 
-Security:
-  - Certificate 105 days until expiration
-
-
-### Connector Requests
-**LEFT:**
-
-| Time |      |        | Protocol | Method | Path        | Status |   |   |
-|------|------|--------|----------|--------|-------------|--------|---|---|
-|      | Mesh | HTTP/2 | GRPC     | GET    | /v2/gorilla | 200    |   |   |
-
-**Sidebar**
-Response
-Protocol
-Emissions
-Time
-Performance
-  Response time
-  - Client to server
-  - Server to client
-  - RTT
-Security Validation
-
-### Connector Logs
-
-### Connector Packets
-Packet Details:
-
-
-
-## oeco api
-API Explorer allows you to connect with different areas of the application. 
-See TCP traffic, Packet traffic, UDP traffic
-
-
-## oeco ecosystem
-Dynamically see economic system members and their capabilities
-
-NOTES: When running the ecosystem, start a pushpin client to listen for discovery changes
-- Tabs
-  - Active Connectors
-    - When it starts, pull the latest available connectors in the network (fetch all keys from the connector bucket), 
-    - then start pushpin for differentials

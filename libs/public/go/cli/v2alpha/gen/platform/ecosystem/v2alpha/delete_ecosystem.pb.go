@@ -53,7 +53,11 @@ var DeleteEcosystemV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[ecosystemv2alphapb.DeleteEcosystemRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Mesh.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		if sdkv2alphalib.Config.Platform.Insecure {
+			url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		}
+		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 
 		response, err := client.DeleteEcosystem(context.Background(), request)
 		if err != nil {

@@ -181,7 +181,7 @@ func (aac *AccountAuthorityCache) Get(keyType AccountAuthorityKeyType, cp *sdkv2
 		return nil, false, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("ca: cannot create temp directory"), err)
 	}
 
-	cred, err := cp.GetCredential(typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY)
+	cred, err := cp.GetCredential(typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY, "")
 	if err != nil {
 		return nil, false, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("nebula ca: failed to get credential"), err)
 	}

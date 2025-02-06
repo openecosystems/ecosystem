@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
 	"syscall"
 	"time"
 
@@ -185,10 +184,8 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	publicHTTPHost := ResolvedConfiguration.HTTP.Host
-	publicHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.HTTP.Port)
-	meshHTTPHost := ResolvedConfiguration.Mesh.Host
-	meshHTTPPort, _ := strconv.Atoi(ResolvedConfiguration.Mesh.Port)
+	publicEndpoint := ResolvedConfiguration.Platform.Endpoint
+	meshEndpoint := ResolvedConfiguration.Platform.Mesh.Endpoint
 
 	publicMux := http.NewServeMux()
 	if server.PublicHTTPServerHandler != nil {
@@ -209,7 +206,7 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	}
 
 	publicHTTPServer := &http.Server{
-		Addr: fmt.Sprintf("%v:%d", publicHTTPHost, publicHTTPPort),
+		Addr: publicEndpoint,
 		// Use h2c so we can serve HTTP/2 without TLS.
 		Handler:      h2c.NewHandler(edgeRouter(publicMux), server.PublicConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
@@ -218,7 +215,7 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	}
 
 	meshHTTPServer := &http.Server{
-		Addr: fmt.Sprintf("%v:%d", meshHTTPHost, meshHTTPPort),
+		Addr: meshEndpoint,
 		// Use h2c so we can serve HTTP/2 without TLS.
 		Handler:      h2c.NewHandler(edgeRouter(meshMux), server.MeshConnectHTTPServer),
 		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
@@ -231,10 +228,10 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	go func() {
 		_httpServerErr <- publicHTTPServer.ListenAndServe()
 	}()
-	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.HTTP.Port)
+	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.Platform.Endpoint)
 
-	if ResolvedConfiguration.Mesh.Enabled {
-		_ln, err3 := nebulav1.Bound.GetMeshListener(strconv.Itoa(meshHTTPPort))
+	if ResolvedConfiguration.Platform.Mesh.Enabled {
+		_ln, err3 := nebulav1.Bound.GetMeshListener(meshEndpoint)
 		if err3 != nil {
 			fmt.Println("get socket error: ", err3)
 			return _httpServerErr
@@ -250,7 +247,7 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 			_httpServerErr <- meshHTTPServer.ListenAndServe()
 		}
 	}()
-	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.Mesh.Port)
+	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.Platform.Mesh.Endpoint)
 
 	return _httpServerErr
 }

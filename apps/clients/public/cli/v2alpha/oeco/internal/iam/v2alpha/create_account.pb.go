@@ -68,7 +68,12 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 
 		request := connect.NewRequest[iamv2alphapb.CreateAccountRequest](&_r)
 		httpClient := http.DefaultClient
-		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, sdkv2alphalib.Config.Platform.Endpoint, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		url := "https://" + sdkv2alphalib.Config.Platform.Endpoint
+		if sdkv2alphalib.Config.Platform.Insecure {
+			url = "http://" + sdkv2alphalib.Config.Platform.Endpoint
+		}
+
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
 
 		response, err4 := client.CreateAccount(context.Background(), request)
 		if err4 != nil {

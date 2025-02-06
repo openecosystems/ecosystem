@@ -107,6 +107,8 @@ func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
 	var c specv2pb.SpecSettings
 	Resolve(&c, specv2pb.SpecSettings{})
 
+	Config = &c
+
 	return &SpecYamlSettingsProvider{
 		settings: &c,
 	}, nil
@@ -321,7 +323,7 @@ func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error
 				fmt.Println("Detected change in:", event.Name)
 
 				// Update settings
-				for _, e := range settings.Systems2 {
+				for _, e := range settings.Systems {
 					fmt.Println(e.Name + ": " + e.Version)
 				}
 				//err := reloadProtoFile(event.Name)
