@@ -8,6 +8,8 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	"github.com/bufbuild/protovalidate-go"
+	bufcel "github.com/bufbuild/protovalidate-go/cel"
+	"github.com/google/cel-go/cel"
 )
 
 // Binding represents a structure for managing a validator and associated configuration.
@@ -49,7 +51,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 				}
 
 				Bound = &Binding{
-					Validator: v,
+					Validator: &v,
 				}
 				bindings.Registered[b.Name()] = Bound
 			})
@@ -70,4 +72,36 @@ func (b *Binding) GetBinding() interface{} {
 func (b *Binding) Close() error {
 	fmt.Println("Closing the Protovalidate binding")
 	return nil
+}
+
+// GetLibraryRules compiles and evaluates a predefined CEL expression using a library's compile and program options.
+func (b *Binding) GetLibraryRules() string {
+	library := bufcel.NewLibrary()
+
+	env, err := cel.NewEnv(
+		library.CompileOptions()...,
+	)
+	if err != nil {
+		return ""
+	}
+
+	// Compile the CEL expression
+	ast, issues := env.Compile("'1.2.3.0/24'.isIpPrefix(6)")
+	if issues != nil && issues.Err() != nil {
+		return ""
+	}
+
+	// Create the CEL program
+	program, err := env.Program(ast, library.ProgramOptions()...)
+	if err != nil {
+		return ""
+	}
+
+	// eval, details, err := program.Eval("")
+	_, _, err = program.Eval("")
+	if err != nil {
+		return ""
+	}
+
+	return ""
 }

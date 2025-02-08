@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -13,15 +14,16 @@ import (
 	"sync"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"dario.cat/mergo"
-
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-playground/validator/v10"
 	"github.com/iancoleman/strcase"
 	"github.com/joho/godotenv"
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
+	"google.golang.org/protobuf/proto"
 )
 
 // viperInstance is a singleton instance of the viper.Viper configuration library.
@@ -40,8 +42,47 @@ var (
 // GetSettings retrieves the current specification settings.
 // WatchSettings initiates a watching mechanism to monitor settings updates.
 type SpecSettingsProvider interface {
+	CreateSettings() (*specv2pb.SpecSettings, error)
 	GetSettings() *specv2pb.SpecSettings
 	WatchSettings() error
+}
+
+type ServerSettingsProvider struct {
+	settings *specv2pb.SpecSettings
+}
+
+func (s ServerSettingsProvider) CreateSettings() (*specv2pb.SpecSettings, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (s ServerSettingsProvider) GetSettings() *specv2pb.SpecSettings {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (s ServerSettingsProvider) WatchSettings() error {
+	// TODO implement me
+	panic("implement me")
+}
+
+type ConnectorSettingsProvider struct {
+	settings *specv2pb.SpecSettings
+}
+
+func (c ConnectorSettingsProvider) CreateSettings() (*specv2pb.SpecSettings, error) {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (c ConnectorSettingsProvider) GetSettings() *specv2pb.SpecSettings {
+	// TODO implement me
+	panic("implement me")
+}
+
+func (c ConnectorSettingsProvider) WatchSettings() error {
+	// TODO implement me
+	panic("implement me")
 }
 
 // DotConfigSettingsProvider is responsible for managing and providing configuration settings parsed
@@ -70,6 +111,11 @@ func NewDotConfigSettingsProvider() (*DotConfigSettingsProvider, error) {
 	return &DotConfigSettingsProvider{
 		settings: &c,
 	}, nil
+}
+
+// CreateSettings initializes and returns a new SpecSettings instance along with any potential errors encountered.
+func (p *DotConfigSettingsProvider) CreateSettings() (*specv2pb.SpecSettings, error) {
+	return createSettings("test", "test")
 }
 
 // GetSettings retrieves the current SpecSettings instance from the DotConfigSettingsProvider.
@@ -112,6 +158,11 @@ func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
 	return &SpecYamlSettingsProvider{
 		settings: &c,
 	}, nil
+}
+
+// CreateSettings initializes and returns a new SpecSettings instance along with any potential errors encountered.
+func (p *SpecYamlSettingsProvider) CreateSettings() (*specv2pb.SpecSettings, error) {
+	return createSettings("test", "test")
 }
 
 // GetSettings retrieves the SpecSettings instance associated with the SpecYamlSettingsProvider.
@@ -169,6 +220,11 @@ func NewCLISettingsProvider(flags *RuntimeConfigurationOverrides) (*CLISettingsP
 	return &CLISettingsProvider{
 		settings: &c,
 	}, nil
+}
+
+// CreateSettings initializes and returns a new SpecSettings instance along with any potential errors encountered.
+func (p *CLISettingsProvider) CreateSettings() (*specv2pb.SpecSettings, error) {
+	return createSettings("test", "test")
 }
 
 // GetSettings retrieves the current SpecSettings instance managed by the CLISettingsProvider.
@@ -283,6 +339,87 @@ systems2:
 	}
 
 	return fs, configurer, nil
+}
+
+func createSettings(ecosystemName string, cidr string) (*specv2pb.SpecSettings, error) {
+	// TODO: Sanitize ecosystemName
+
+	ip, ipnet, err := net.ParseCIDR(cidr)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return nil, err
+	}
+
+	fmt.Println("IP:", ip.String())
+	fmt.Println("Subnet Mask:", ipnet.Mask)
+
+	fs := NewFileSystem()
+	contextFile := filepath.Join(ContextDirectory, ecosystemName)
+
+	exists, err := fs.Exists(contextFile)
+	if err != nil {
+		return nil, errors.New("could not check if context file exists: " + err.Error())
+	}
+
+	if exists {
+		return nil, errors.New("context file already exists: " + contextFile)
+	}
+
+	slugHeader := typev2pb.Header{
+		Key:    "x-spec-ecosystem-slug",
+		Values: []string{ecosystemName},
+	}
+
+	configurationSystem := specv2pb.SpecSystem{
+		Name:    "configuration",
+		Version: "v2alpha",
+	}
+
+	iamSystem := specv2pb.SpecSystem{
+		Name:    "iam",
+		Version: "v2alpha",
+	}
+
+	settings := specv2pb.SpecSettings{
+		Name: ecosystemName,
+		App: &specv2pb.App{
+			Name:            ecosystemName,
+			Version:         "v2.0.0",
+			Description:     strings.ToUpper(ecosystemName[:1]) + ecosystemName[1:] + " Ecosystem Context",
+			EnvironmentName: "local-1",
+			EnvironmentType: "local",
+			Debug:           false,
+			Verbose:         false,
+		},
+		Platform: &specv2pb.Platform{
+			Endpoint:            "localhost:6577",
+			Insecure:            true,
+			DnsEndpoints:        []string{"localhost:4242"},
+			DynamicConfigReload: false,
+			Mesh: &specv2pb.Mesh{
+				Enabled:     true,
+				Endpoint:    "",
+				Insecure:    true,
+				DnsEndpoint: "",
+			},
+		},
+		Context: &specv2pb.Context{
+			Headers: []*typev2pb.Header{&slugHeader},
+		},
+		Systems: []*specv2pb.SpecSystem{&configurationSystem, &iamSystem},
+	}
+
+	settingBytes, err := proto.Marshal(&settings)
+	if err != nil {
+		return nil, err
+	}
+
+	err = fs.WriteFile(OecoContextFile+"."+ConfigurationExtension, settingBytes, os.ModePerm)
+	if err != nil {
+		return nil, errors.New("internal error: Cannot write ecosystem settings file")
+	}
+
+	return nil, nil
 }
 
 // watchSettings enables watching for configuration file changes in specified directories if dynamic reload is allowed.

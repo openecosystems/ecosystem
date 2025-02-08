@@ -718,77 +718,6 @@ export declare type SystemV2Alpha = Message<"platform.ontology.v2alpha.SystemV2A
 export declare const SystemV2AlphaSchema: GenMessage<SystemV2Alpha>;
 
 /**
- * @generated from message platform.ontology.v2alpha.DecisionV1
- */
-export declare type DecisionV1 = Message<"platform.ontology.v2alpha.DecisionV1"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType ad_id = 1;
-   */
-  adId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType advertiser_id = 2;
-   */
-  advertiserId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType creative_id = 3;
-   */
-  creativeId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType flight_id = 4;
-   */
-  flightId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType campaign_id = 5;
-   */
-  campaignId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType priority_id = 6;
-   */
-  priorityId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType click_url = 7;
-   */
-  clickUrl: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType contents = 8;
-   */
-  contents: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType impression_url = 9;
-   */
-  impressionUrl: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType events = 10;
-   */
-  events: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType matched_points = 11;
-   */
-  matchedPoints: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType pricing = 12;
-   */
-  pricing: ClassificationType;
-};
-
-/**
- * Describes the message platform.ontology.v2alpha.DecisionV1.
- * Use `create(DecisionV1Schema)` to create a new message.
- */
-export declare const DecisionV1Schema: GenMessage<DecisionV1>;
-
-/**
  * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Alpha
  */
 export declare type PreferenceCenterV1Alpha = Message<"platform.ontology.v2alpha.PreferenceCenterV1Alpha"> & {
@@ -969,4 +898,75 @@ export declare type PreferenceCenterV1Beta = Message<"platform.ontology.v2alpha.
  * Use `create(PreferenceCenterV1BetaSchema)` to create a new message.
  */
 export declare const PreferenceCenterV1BetaSchema: GenMessage<PreferenceCenterV1Beta>;
+
+/**
+ * @generated from message platform.ontology.v2alpha.DecisionV1
+ */
+export declare type DecisionV1 = Message<"platform.ontology.v2alpha.DecisionV1"> & {
+  /**
+   * @generated from field: platform.options.v2.ClassificationType ad_id = 1;
+   */
+  adId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType advertiser_id = 2;
+   */
+  advertiserId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType creative_id = 3;
+   */
+  creativeId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType flight_id = 4;
+   */
+  flightId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType campaign_id = 5;
+   */
+  campaignId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType priority_id = 6;
+   */
+  priorityId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType click_url = 7;
+   */
+  clickUrl: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType contents = 8;
+   */
+  contents: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType impression_url = 9;
+   */
+  impressionUrl: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType events = 10;
+   */
+  events: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType matched_points = 11;
+   */
+  matchedPoints: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType pricing = 12;
+   */
+  pricing: ClassificationType;
+};
+
+/**
+ * Describes the message platform.ontology.v2alpha.DecisionV1.
+ * Use `create(DecisionV1Schema)` to create a new message.
+ */
+export declare const DecisionV1Schema: GenMessage<DecisionV1>;
 

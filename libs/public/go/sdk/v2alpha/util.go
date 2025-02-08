@@ -1,7 +1,9 @@
 package sdkv2alphalib
 
 import (
+	"bytes"
 	"context"
+	"encoding/gob"
 	"errors"
 	"reflect"
 
@@ -130,4 +132,19 @@ func YamlToProto(yamlStr string, pb proto.Message) error {
 	}
 
 	return protojson.Unmarshal(jsonData, pb) // JSON → Protobuf
+}
+
+// ProtobufStructToByteArray converts a Protobuf struct into a byte array using proto.Marshal.
+// It takes an interface{} as input, which should be a valid proto.Message.
+// Returns the marshaled byte array or an error if the input cannot be marshaled.
+func ProtobufStructToByteArray(data interface{}) ([]byte, error) {
+	return proto.Marshal(data.(proto.Message))
+}
+
+// StructToByteArray encodes a given struct into a byte array using gob encoding and returns the resulting bytes and an error.
+func StructToByteArray(data interface{}) ([]byte, error) {
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(data)
+	return buf.Bytes(), err
 }
