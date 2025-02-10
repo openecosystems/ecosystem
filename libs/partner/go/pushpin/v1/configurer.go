@@ -26,3 +26,18 @@ func (b *Binding) ValidateConfiguration() error {
 func (b *Binding) GetDefaultConfiguration() interface{} {
 	return Configuration{}
 }
+
+// CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
+func (b *Binding) CreateConfiguration() (interface{}, error) {
+	return nil, nil
+}
+
+// GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
+func (b *Binding) GetConfiguration() interface{} {
+	return nil
+}
+
+// WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
+func (b *Binding) WatchConfigurations() error {
+	return nil
+}

@@ -107,12 +107,12 @@ func Execute(cli *cliv2alphalib.CLI) {
 		return
 	}
 
-	if err = settingsProvider.WatchSettings(); err != nil {
+	if err = settingsProvider.WatchConfigurations(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	settings := settingsProvider.GetSettings()
+	settings := settingsProvider.GetConfiguration()
 
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, settings)

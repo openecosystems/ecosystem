@@ -55,7 +55,8 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 
 	var errs []error
 	for _, b := range bounds {
-		if c, ok := b.(Configurable); ok {
+		fmt.Println("binding: ", b.Name())
+		if c, ok := b.(SpecConfigurationProvider); ok {
 			c.ResolveConfiguration()
 			err := c.ValidateConfiguration()
 			if err != nil {
@@ -74,11 +75,8 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 		}
 
 		bindingsInstance = b.Bind(ctx, bindingsInstance)
-
-		if ResolvedConfiguration != nil && ResolvedConfiguration.App.Debug {
-			fmt.Println("Registered Binding: " + b.Name())
-		}
 	}
+
 	Bounds = bindingsInstance
 
 	return bindingsInstance

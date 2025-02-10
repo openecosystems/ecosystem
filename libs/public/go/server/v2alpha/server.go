@@ -34,21 +34,75 @@ type Server struct {
 	PublicServiceHandler    *vanguard.Transcoder
 	MeshServiceHandler      *vanguard.Transcoder
 	RawServiceHandler       *http.Handler
+	ConfigurationProvider   *sdkv2alphalib.SpecConfigurationProvider
 
 	options *serverOptions
 	err     error
 }
 
-// NewMultiplexedServer creates and initializes a new multiplexed server with bindings, services, and server options.
-func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, meshServices []*vanguard.Service, publicServices []*vanguard.Service, opts ...ServerOption) *Server {
-	c := Configuration{}
-	c.ResolveConfiguration()
-	err := c.ValidateConfiguration()
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
+// NewServer creates and initializes a new multiplexed server with bindings, services, and server options.
+func NewServer(ctx context.Context, opts ...ServerOption) *Server {
+	options, _ := newServerOptions("", opts)
+
+	server := &Server{
+		Bounds:      options.Bounds,
+		ServicePath: "/",
+
+		options: options,
 	}
 
+	if options.ConfigurationProvider != nil {
+		server.ConfigurationProvider = options.ConfigurationProvider
+
+		t := *options.ConfigurationProvider
+		t.ResolveConfiguration()
+		err := t.ValidateConfiguration()
+		if err != nil {
+			fmt.Println(err)
+			panic(err)
+		}
+	}
+
+	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds)
+	server.Bindings = bindings
+
+	if options.PublicServices != nil {
+		publicHTTPServer := &http2.Server{
+			IdleTimeout:      15 * time.Second,
+			WriteByteTimeout: 10 * time.Second,
+			ReadIdleTimeout:  5 * time.Second,
+		}
+
+		publicTranscoder, err := vanguard.NewTranscoder(options.PublicServices)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		server.PublicConnectHTTPServer = publicHTTPServer
+		server.PublicServiceHandler = publicTranscoder
+	}
+
+	if options.MeshServices != nil {
+		meshHTTPServer := &http2.Server{
+			IdleTimeout:      15 * time.Second,
+			WriteByteTimeout: 10 * time.Second,
+			ReadIdleTimeout:  5 * time.Second,
+		}
+
+		meshTranscoder, err2 := vanguard.NewTranscoder(options.MeshServices)
+		if err2 != nil {
+			fmt.Println(err2)
+		}
+
+		server.MeshConnectHTTPServer = meshHTTPServer
+		server.MeshServiceHandler = meshTranscoder
+	}
+
+	return server
+}
+
+// NewMultiplexedServer creates and initializes a new multiplexed server with bindings, services, and server options.
+func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, meshServices []*vanguard.Service, publicServices []*vanguard.Service, opts ...ServerOption) *Server {
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	publicHTTPServer := &http2.Server{
@@ -85,21 +139,13 @@ func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, m
 		MeshServiceHandler:      meshTranscoder,
 
 		options: options,
-		err:     errors.Join(err, err2),
+		err:     err2,
 	}
 }
 
 // NewRawServer initializes and returns a new Server instance with provided bindings, path, handler, and options.
 // It resolves and validates configuration, registers bindings, and sets up the HTTP/2 server.
 func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
-	c := Configuration{}
-	c.ResolveConfiguration()
-	err := c.ValidateConfiguration()
-	if err != nil {
-		fmt.Println(err)
-		panic(err)
-	}
-
 	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
 
 	httpServer := &http2.Server{
@@ -122,7 +168,6 @@ func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path stri
 		RawServiceHandler:     handler,
 
 		options: options,
-		err:     errors.Join(err),
 	}
 }
 
@@ -184,8 +229,15 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	publicEndpoint := ResolvedConfiguration.Platform.Endpoint
-	meshEndpoint := ResolvedConfiguration.Platform.Mesh.Endpoint
+	// u := *server.ConfigurationProvider
+
+	// settings := u.GetDefaultConfiguration().(specv2pb.SpecSettings) //nolint:govet,copylocks
+
+	// publicEndpoint := settings.Platform.GetEndpoint()
+	// meshEndpoint := settings.Platform.Mesh.GetEndpoint()
+
+	publicEndpoint := "0.0.0.0:8080"
+	meshEndpoint := "0.0.0.0:8081"
 
 	publicMux := http.NewServeMux()
 	if server.PublicHTTPServerHandler != nil {
@@ -228,9 +280,11 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	go func() {
 		_httpServerErr <- publicHTTPServer.ListenAndServe()
 	}()
-	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.Platform.Endpoint)
+	// fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
+	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + publicEndpoint)
 
-	if ResolvedConfiguration.Platform.Mesh.Enabled {
+	// if settings.Platform.Mesh.Enabled {
+	if false {
 		_ln, err3 := nebulav1.Bound.GetMeshListener(meshEndpoint)
 		if err3 != nil {
 			fmt.Println("get socket error: ", err3)
@@ -247,7 +301,8 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 			_httpServerErr <- meshHTTPServer.ListenAndServe()
 		}
 	}()
-	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + ResolvedConfiguration.Platform.Mesh.Endpoint)
+	// fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Mesh.Endpoint)
+	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + meshEndpoint)
 
 	return _httpServerErr
 }

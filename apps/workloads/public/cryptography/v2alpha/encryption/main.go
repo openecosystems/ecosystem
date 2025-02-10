@@ -29,7 +29,7 @@ func main() {
 		return
 	}
 
-	if err2 := provider.WatchSettings(); err2 != nil {
+	if err2 := provider.WatchConfigurations(); err2 != nil {
 		fmt.Println("watch settings error: ", err2)
 		os.Exit(1)
 	}

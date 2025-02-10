@@ -14,8 +14,6 @@ import (
 // RegisterEventStreams initializes and registers event streams with specified scopes and subjects in the configuration.
 // It creates or updates streams by adding appropriate prefixes to subjects and setting up stream configurations.
 func RegisterEventStreams() {
-	rootConfig := sdkv2alphalib.ResolvedConfiguration
-
 	var scopes [3]string
 	scopes[0] = NewInternalStream().StreamPrefix()
 	scopes[1] = NewInboundStream().StreamPrefix()
@@ -36,7 +34,7 @@ func RegisterEventStreams() {
 				_subjects = append(_subjects, s)
 			}
 
-			cfg.Name = GetStreamName(rootConfig.App.EnvironmentName, scope, name)
+			cfg.Name = GetStreamName(conf.App.EnvironmentName, scope, name)
 			cfg.Subjects = _subjects
 
 			err := createOrUpdateStream(cfg)

@@ -9,7 +9,12 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
-const reservedIPCount = 10
+const (
+
+	// DefaultCIDR defines the default CIDR block "192.168.100.0/24" used for network configuration.
+	DefaultCIDR     = "192.168.100.0/24"
+	reservedIPCount = 10
+)
 
 // CIDRBlock represents a wrapper for the CIDR data structure, including associated network IP information.
 type CIDRBlock struct {

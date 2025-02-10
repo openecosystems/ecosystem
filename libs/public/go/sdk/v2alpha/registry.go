@@ -52,7 +52,7 @@ func (s FullSystemName) IsValid() bool {
 
 // RegisterSystems initializes the Systems instance with provided settings and processes system definitions.
 // Returns an error if system registration fails.
-func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
+func (s *Systems) RegisterSystems(settingsProvider SpecConfigurationProvider) error {
 	if s == GlobalSystems {
 		globalMutex.Lock()
 		defer globalMutex.Unlock()
@@ -64,7 +64,13 @@ func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
 	}
 
 	s.fileSystem = NewFileSystem()
-	s.settings = settingsProvider.GetSettings()
+	_s := settingsProvider.GetConfiguration()
+
+	fmt.Println("s.settings: ", _s)
+	ss := _s.(specv2pb.SpecSettings) //nolint:govet,copylocks
+
+	// s.settings = settingsProvider.GetConfiguration()
+	s.settings = &ss
 	if err := s.processSystems(); err != nil {
 		return err
 	}

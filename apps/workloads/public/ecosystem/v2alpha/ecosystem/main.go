@@ -1,9 +1,9 @@
 package main
 
 import (
+	"apps/workloads/public/ecosystem/v2alpha/ecosystem/internal"
 	"context"
 	"fmt"
-	"os"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
@@ -13,6 +13,7 @@ import (
 	configuration "apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
 	ecosystem "apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
 	iam "apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
+
 	natsnodev2 "libs/partner/go/nats/v2"
 	nebulav1 "libs/partner/go/nebula/v1"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
@@ -22,6 +23,7 @@ import (
 	advertisementv1pbsrv "libs/partner/go/server/v2alpha/gen/kevel/advertisement/v1"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	configurationv2alphapbconnect "libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
 	ecosystemv2alphapbconnect "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
@@ -54,18 +56,21 @@ func main() {
 		// Create a new Connector Listener and listen of outbound channels
 	}
 
-	provider, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
+	provider, err := sdkv2alphalib.NewConfigurationProvider(
+		sdkv2alphalib.WithConfigPathPrefix("api"),
+		sdkv2alphalib.WithWatchSettings(false),
+		sdkv2alphalib.WithConfigurationResolver(&internal.EcosystemConfiguration{
+			App: specv2pb.App{
+				Name: "ecosystem",
+			},
+			Platform: specv2pb.Platform{
+				Insecure: false,
+			},
+			Context: specv2pb.Context{},
+		}),
+	)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return
-	}
-
-	if err = provider.WatchSettings(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	if err = sdkv2alphalib.GlobalSystems.RegisterSystems(provider); err != nil {
 		return
 	}
 
@@ -87,7 +92,17 @@ func main() {
 	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountServiceHandler(&iamv2alphapbsrv.AccountServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 
-	multiplexedServer := serverv2alphalib.NewMultiplexedServer(context.Background(), bounds, meshServices, publicServices)
+	multiplexedServer := serverv2alphalib.NewServer(
+		context.Background(),
+		serverv2alphalib.WithBounds(bounds),
+		serverv2alphalib.WithPublicServices(publicServices),
+		serverv2alphalib.WithMeshServices(meshServices),
+		serverv2alphalib.WithConfigurationProvider(provider),
+	)
+
+	//if err = sdkv2alphalib.GlobalSystems.RegisterSystems(provider); err != nil {
+	//	return
+	//}
 
 	multiplexedServer.ListenAndServe()
 }

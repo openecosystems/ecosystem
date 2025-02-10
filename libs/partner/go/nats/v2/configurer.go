@@ -55,6 +55,7 @@ type EventStreamRegistry struct {
 
 // Configuration represents the overall settings structure comprising NATS, NATS server options, and stream registry configurations.
 type Configuration struct {
+	App                 specv2pb.App `yaml:"app,omitempty"`
 	Platform            specv2pb.Platform
 	Nats                Nats
 	Natsd               Natsd
@@ -144,7 +145,7 @@ natsd:
 
 // GetDefaultConfiguration returns the default configuration object for the Binding, including NATS and JetStream settings.
 func (b *Binding) GetDefaultConfiguration() interface{} {
-	cfg := sdkv2alphalib.ResolvedConfiguration
+	// cfg := sdkv2alphalib.ResolvedConfiguration
 
 	return Configuration{
 		Platform: specv2pb.Platform{
@@ -177,10 +178,10 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 				Host:       NatsdServerHost,
 				Port:       NatsdServerPort,
 				DontListen: false,
-				Trace:      cfg.App.Verbose,
-				Debug:      cfg.App.Debug,
-				MaxConn:    -1,
-				MaxSubs:    -1,
+				// Trace:      cfg.App.Verbose,
+				// Debug:      cfg.App.Debug,
+				MaxConn: -1,
+				MaxSubs: -1,
 				LeafNode: natsd.LeafNodeOpts{
 					Remotes: nil,
 				},
@@ -197,4 +198,19 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 			// Streams: mergedJsc,
 		},
 	}
+}
+
+// CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
+func (b *Binding) CreateConfiguration() (interface{}, error) {
+	return nil, nil
+}
+
+// GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
+func (b *Binding) GetConfiguration() interface{} {
+	return nil
+}
+
+// WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
+func (b *Binding) WatchConfigurations() error {
+	return nil
 }
