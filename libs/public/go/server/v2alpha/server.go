@@ -22,7 +22,6 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	"connectrpc.com/connect"
-	"google.golang.org/protobuf/proto"
 )
 
 // quit is a channel used to handle OS signals for graceful shutdown of the server.
@@ -193,26 +192,19 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 
 	bytes, err := cp.GetConfigurationBytes()
 	if err != nil {
+		fmt.Println("GetConfigurationBytes error:")
 		return nil
 	}
 
 	var settings specv2pb.SpecSettings
-	marshal, err := json.Marshal(bytes)
+	err = json.Unmarshal(bytes, &settings)
 	if err != nil {
-		return nil
+		fmt.Println("Error:", err)
+		return
 	}
 
-	fmt.Println("settings: ", string(marshal))
-	err = proto.Unmarshal(bytes, &settings)
-	if err != nil {
-		return nil
-	}
-
-	// publicEndpoint := settings.Platform.GetEndpoint()
-	// meshEndpoint := settings.Platform.Mesh.GetEndpoint()
-
-	publicEndpoint := "0.0.0.0:8080"
-	meshEndpoint := "0.0.0.0:8081"
+	publicEndpoint := settings.Platform.GetEndpoint()
+	meshEndpoint := settings.Platform.Mesh.GetEndpoint()
 
 	publicMux := http.NewServeMux()
 	if server.PublicHTTPServerHandler != nil {
@@ -255,11 +247,9 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 	go func() {
 		_httpServerErr <- publicHTTPServer.ListenAndServe()
 	}()
-	// fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
-	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + publicEndpoint)
+	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
 
-	// if settings.Platform.Mesh.Enabled {
-	if false {
+	if settings.Platform.Mesh.Enabled {
 		_ln, err3 := nebulav1.Bound.GetMeshListener(meshEndpoint)
 		if err3 != nil {
 			fmt.Println("get socket error: ", err3)
@@ -276,8 +266,7 @@ func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error)
 			_httpServerErr <- meshHTTPServer.ListenAndServe()
 		}
 	}()
-	// fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Mesh.Endpoint)
-	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + meshEndpoint)
+	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Mesh.Endpoint)
 
 	return _httpServerErr
 }

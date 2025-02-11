@@ -77,9 +77,6 @@ func NewConfigurer(opts ...ConfigurationProviderOption) (*Configurer, error) {
 		return nil, err
 	}
 
-	fmt.Println("Looking for configuration in: ", ConfigurationDirectory, " ", sctx.Cfg.ConfigPath, "")
-	fmt.Println("Looking for configuration file: ", getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
-
 	sctx.Configurer.SetConfigName(getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
 	sctx.Configurer.SetConfigType(ConfigurationExtension)
 	sctx.Configurer.AddConfigPath(ConfigurationDirectory)
@@ -180,8 +177,6 @@ func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, err
 	}
 
 	if ctx != "" {
-		fmt.Println("Overriding context to: " + ctx)
-
 		_, err := filesystem.Exists(filepath.Join(ContextDirectory, ctx))
 		if err != nil {
 			fmt.Println("Error: context does not exists: " + err.Error())

@@ -63,7 +63,9 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 		var once sync.Once
 		once.Do(
 			func() {
-				Bound = &Binding{}
+				Bound = &Binding{
+					configuration: b.configuration,
+				}
 
 				// Set up propagator
 				propagator := newPropagator()

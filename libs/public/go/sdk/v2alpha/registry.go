@@ -1,20 +1,19 @@
 package sdkv2alphalib
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
 	"sync"
-
-	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/descriptorpb"
+
+	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 // globalMutex is a read-write mutex used to synchronize access to global resources.
@@ -66,27 +65,16 @@ func (s *Systems) RegisterSystems(provider BaseSpecConfigurationProvider) error 
 
 	s.fileSystem = NewFileSystem()
 
-	//====
-
 	bytes, err := provider.GetConfigurationBytes()
 	if err != nil {
 		return nil
 	}
 
 	var settings specv2pb.SpecSettings
-	marshal, err := json.Marshal(bytes)
-	if err != nil {
-		return nil
-	}
-
-	fmt.Println("settings: ", string(marshal))
 	err = proto.Unmarshal(bytes, &settings)
 	if err != nil {
 		return nil
 	}
-
-	//fmt.Println("settings: ", settings)
-	//===
 
 	s.settings = &settings
 	if err := s.processSystems(); err != nil {

@@ -69,7 +69,8 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 				Bound = &Binding{
 					MeshSocket: socket,
 
-					cp: provider,
+					cp:            provider,
+					configuration: b.configuration,
 				}
 
 				bindings.Registered[b.Name()] = Bound

@@ -75,6 +75,8 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 				Bound = &Binding{
 					ConfigStore:                  &cs,
 					AdaptiveConfigurationControl: NewAdaptiveConfigurationControl(&cs),
+
+					configuration: b.configuration,
 				}
 				bindings.Registered[b.Name()] = Bound
 			})

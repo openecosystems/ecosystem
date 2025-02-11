@@ -7,9 +7,6 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-// ResolvedConfiguration holds the configuration for this binding
-var ResolvedConfiguration *Configuration
-
 // Configuration represents the configuration settings for Opentelemetry providers used in the binding.
 type Configuration struct {
 	Opentelemetry struct {
@@ -29,7 +26,6 @@ func (b *Binding) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProvid
 
 	sdkv2alphalib.Resolve(configurer, &c, b.GetDefaultConfiguration())
 	b.configuration = &c
-	ResolvedConfiguration = &c
 
 	return configurer, nil
 }
@@ -72,7 +68,7 @@ func (b *Binding) CreateConfiguration() (*Configuration, error) {
 
 // GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
 func (b *Binding) GetConfiguration() *Configuration {
-	return nil
+	return b.configuration
 }
 
 // GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.

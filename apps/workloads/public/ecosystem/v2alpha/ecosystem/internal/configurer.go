@@ -91,7 +91,7 @@ func (c *Configuration) GetConfiguration() *Configuration {
 
 // GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
 func (c *Configuration) GetConfigurationBytes() ([]byte, error) {
-	byteArray, err := json.Marshal(c.GetConfiguration())
+	byteArray, err := json.Marshal(*c.GetConfiguration())
 	if err != nil {
 		fmt.Println("Error:", err)
 		return nil, err

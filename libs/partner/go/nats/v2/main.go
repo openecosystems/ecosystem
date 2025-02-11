@@ -8,12 +8,12 @@ import (
 	"sync"
 	"time"
 
-	nebulav1 "libs/partner/go/nebula/v1"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
+
+	nebulav1 "libs/partner/go/nebula/v1"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // Binding represents a structure managing NATS connections, JetStream instances, and event stream configurations.
@@ -35,6 +35,7 @@ type Binding struct {
 var (
 	natsOptions []nats.Option
 	// jsOptions   []jetstream.JetStreamOpt
+
 	Bound       *Binding
 	BindingName = "NATS_NODE_BINDING"
 )
@@ -101,9 +102,10 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					b.JetStream = &js
 
 					Bound = &Binding{
-						server:    server,
-						Nats:      _nats,
-						JetStream: &js,
+						server:        server,
+						Nats:          _nats,
+						JetStream:     &js,
+						configuration: b.configuration,
 					}
 
 					bindings.Registered[b.Name()] = Bound
@@ -147,36 +149,12 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 						Listeners:          b.Listeners,
 						Nats:               _nats,
 						JetStream:          &js,
+						configuration:      b.configuration,
 					}
 
 					bindings.Registered[b.Name()] = Bound
 
 					bindings = b.RegisterSpecListeners(bindings)
-
-					//for _, listener := range b.SpecEventListeners {
-					//	configuration := listener.GetConfiguration()
-					//	if configuration == nil {
-					//		fmt.Println("Please configure the Listener")
-					//		panic("Misconfigured")
-					//	}
-					//
-					//	name := ""
-					//	if configuration.JetstreamConfiguration.Name == "" && configuration.JetstreamConfiguration.Durable == "" {
-					//		fmt.Println("Either the Name or the Durable name is required")
-					//		panic("Misconfigured")
-					//	}
-					//
-					//	if configuration.JetstreamConfiguration.Name != "" {
-					//		name = configuration.JetstreamConfiguration.Durable
-					//	}
-					//
-					//	// Use the durable name if set
-					//	if configuration.JetstreamConfiguration.Durable != "" {
-					//		name = configuration.JetstreamConfiguration.Durable
-					//	}
-					//
-					//	bindings.RegisteredListenableChannels[name] = listener
-					//}
 				}
 			})
 	} else {

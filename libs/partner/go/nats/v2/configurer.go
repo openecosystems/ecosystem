@@ -215,7 +215,7 @@ func (b *Binding) CreateConfiguration() (*Configuration, error) {
 
 // GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
 func (b *Binding) GetConfiguration() *Configuration {
-	return nil
+	return b.configuration
 }
 
 // GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.

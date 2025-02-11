@@ -40,7 +40,9 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-				Bound = &Binding{}
+				Bound = &Binding{
+					configuration: b.configuration,
+				}
 
 				bindings.Registered[b.Name()] = Bound
 				IsBound = true
