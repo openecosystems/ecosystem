@@ -45,7 +45,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		once.Do(
 			func() {
 				var err error
-				b.Logger, err = ResolvedConfiguration.Zap.Build()
+				b.Logger, err = b.configuration.Zap.Build()
 				if err != nil {
 					fmt.Println(fmt.Errorf("could not build Zap logger: %v", err))
 				}

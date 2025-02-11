@@ -48,7 +48,7 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 }
 
 // Bind creates a binding by configuring a mesh socket, registers it, and ensures the binding is only initialized once.
-func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings, opts *sdkv2alphalib.BindingOptions) *sdkv2alphalib.Bindings {
+func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
 		once.Do(
@@ -61,9 +61,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings, opts
 				}
 				b.cp = provider
 
-				// opts.ConfigurationProvider.
-
-				socket, err := b.ConfigureMeshSocket(sdkv2alphalib.Config)
+				socket, err := b.ConfigureMeshSocket()
 				if err != nil {
 					return
 				}
@@ -127,7 +125,7 @@ func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*ur
 	httpClient := http.DefaultClient
 
 	b.cp, _ = sdkv2alphalib.NewCredentialProvider()
-	socket, err := b.ConfigureMeshSocket(config)
+	socket, err := b.ConfigureMeshSocket()
 	if err != nil {
 		fmt.Println("Could not configure mesh socket", err)
 		return nil
@@ -149,12 +147,12 @@ func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*ur
 }
 
 // ConfigureMeshSocket initializes and configures the Nebula mesh socket, returning the created service or an error.
-func (b *Binding) ConfigureMeshSocket(config *specv2pb.SpecSettings) (*service.Service, error) {
+func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 	override := ""
 	credentialType := typev2pb.CredentialType_CREDENTIAL_TYPE_MESH_ACCOUNT
 
-	if config.Platform == nil || config.Platform.Mesh == nil || config.Platform.Mesh.CredentialPath != "" {
-		override = config.Platform.Mesh.CredentialPath
+	if b.configuration.Platform.Mesh == nil || b.configuration.Platform.Mesh.CredentialPath != "" {
+		override = b.configuration.Platform.Mesh.CredentialPath
 		credentialType = typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY
 	}
 
@@ -165,21 +163,21 @@ func (b *Binding) ConfigureMeshSocket(config *specv2pb.SpecSettings) (*service.S
 	}
 
 	h := make(map[string][]string)
-	h[config.Platform.Mesh.DnsEndpoint] = config.Platform.DnsEndpoints
+	h[b.configuration.Platform.Mesh.DnsEndpoint] = b.configuration.Platform.DnsEndpoints
 
 	udpHost := "0.0.0.0"
 	udpPort := 0
-	if config.Platform.Mesh.UdpEndpoint != "" {
+	if b.configuration.Platform.Mesh.UdpEndpoint != "" {
 		_udpPort := ""
-		udpHost, _udpPort, err = net.SplitHostPort(config.Platform.Mesh.UdpEndpoint)
+		udpHost, _udpPort, err = net.SplitHostPort(b.configuration.Platform.Mesh.UdpEndpoint)
 		if err != nil {
 			fmt.Println("Error:", err)
-			return nil, fmt.Errorf("invalid UDP endpoint: %s, %s", config.Platform.Mesh.UdpEndpoint, err)
+			return nil, fmt.Errorf("invalid UDP endpoint: %s, %s", b.configuration.Platform.Mesh.UdpEndpoint, err)
 		}
 		udpPort, err = strconv.Atoi(_udpPort)
 		if err != nil {
 			fmt.Println("Error:", err)
-			return nil, fmt.Errorf("cannot convert UDP port to string: %s, %s", config.Platform.Mesh.UdpEndpoint, err)
+			return nil, fmt.Errorf("cannot convert UDP port to string: %s, %s", b.configuration.Platform.Mesh.UdpEndpoint, err)
 		}
 	}
 
@@ -193,11 +191,11 @@ func (b *Binding) ConfigureMeshSocket(config *specv2pb.SpecSettings) (*service.S
 		Lighthouse: Lighthouse{
 			AmLighthouse: false,
 			Interval:     60,
-			Hosts:        []string{config.Platform.Mesh.DnsEndpoint},
+			Hosts:        []string{b.configuration.Platform.Mesh.DnsEndpoint},
 		},
 		Punchy: Punchy{
-			Punch:        config.Platform.Mesh.Punchy,
-			Respond:      config.Platform.Mesh.Punchy,
+			Punch:        b.configuration.Platform.Mesh.Punchy,
+			Respond:      b.configuration.Platform.Mesh.Punchy,
 			RespondDelay: "5s",
 			Delay:        "1s",
 		},
@@ -252,18 +250,18 @@ func (b *Binding) ConfigureMeshSocket(config *specv2pb.SpecSettings) (*service.S
 		},
 	}
 
-	if config.Platform.Mesh.DnsServer {
+	if b.configuration.Platform.Mesh.DnsServer {
 		nebulaC.Lighthouse.AmLighthouse = true
 		nebulaC.Lighthouse.Hosts = []string{}
 		nebulaC.Host = nil
 		nebulaC.Listen.Port = 4242
 	}
 
-	if config.App.Debug {
+	if b.configuration.App.Debug {
 		nebulaC.Logging.Level = "info"
 	}
 
-	if config.App.Verbose {
+	if b.configuration.App.Verbose {
 		nebulaC.Logging.Level = "debug"
 	}
 

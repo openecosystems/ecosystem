@@ -1,6 +1,7 @@
 package sdkv2alphalib
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -52,7 +53,7 @@ func (s FullSystemName) IsValid() bool {
 
 // RegisterSystems initializes the Systems instance with provided settings and processes system definitions.
 // Returns an error if system registration fails.
-func (s *Systems) RegisterSystems(settingsProvider SpecConfigurationProvider) error {
+func (s *Systems) RegisterSystems(provider BaseSpecConfigurationProvider) error {
 	if s == GlobalSystems {
 		globalMutex.Lock()
 		defer globalMutex.Unlock()
@@ -64,13 +65,30 @@ func (s *Systems) RegisterSystems(settingsProvider SpecConfigurationProvider) er
 	}
 
 	s.fileSystem = NewFileSystem()
-	_s := settingsProvider.GetConfiguration()
 
-	fmt.Println("s.settings: ", _s)
-	ss := _s.(specv2pb.SpecSettings) //nolint:govet,copylocks
+	//====
 
-	// s.settings = settingsProvider.GetConfiguration()
-	s.settings = &ss
+	bytes, err := provider.GetConfigurationBytes()
+	if err != nil {
+		return nil
+	}
+
+	var settings specv2pb.SpecSettings
+	marshal, err := json.Marshal(bytes)
+	if err != nil {
+		return nil
+	}
+
+	fmt.Println("settings: ", string(marshal))
+	err = proto.Unmarshal(bytes, &settings)
+	if err != nil {
+		return nil
+	}
+
+	//fmt.Println("settings: ", settings)
+	//===
+
+	s.settings = &settings
 	if err := s.processSystems(); err != nil {
 		return err
 	}

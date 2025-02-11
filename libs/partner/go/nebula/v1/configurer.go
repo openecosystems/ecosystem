@@ -1,8 +1,11 @@
 package nebulav1
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -151,16 +154,24 @@ type Nebula struct {
 
 // Configuration defines the configuration structure containing settings for the Nebula network.
 type Configuration struct {
-	Nebula Nebula `json:"nebula" yaml:"nebula"`
+	App      specv2pb.App
+	Platform specv2pb.Platform
+	Nebula   Nebula `json:"nebula" yaml:"nebula"`
 }
 
 // ResolveConfiguration resolves the binding's configuration using the default configuration as a base and assigns it.
-func (b *Binding) ResolveConfiguration(provider *sdkv2alphalib.ConfigurationProvider) {
+func (b *Binding) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
 	var c Configuration
-	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(provider, &c, dc)
+	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	sdkv2alphalib.Resolve(configurer, &c, b.GetDefaultConfiguration())
 	b.configuration = &c
 	ResolvedConfiguration = &c
+
+	return configurer, nil
 }
 
 // ValidateConfiguration validates the configuration of the `Binding` instance.
@@ -187,8 +198,8 @@ func (b *Binding) ValidateConfiguration() error {
 }
 
 // GetDefaultConfiguration provides the default configuration settings for the Binding instance, returning a Configuration object.
-func (b *Binding) GetDefaultConfiguration() interface{} {
-	return Configuration{
+func (b *Binding) GetDefaultConfiguration() *Configuration {
+	return &Configuration{
 		Nebula: Nebula{
 			Lighthouse: Lighthouse{
 				AmLighthouse: false,
@@ -213,16 +224,27 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 }
 
 // CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
-func (b *Binding) CreateConfiguration() (interface{}, error) {
+func (b *Binding) CreateConfiguration() (*Configuration, error) {
 	return nil, nil
 }
 
-// GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
-func (b *Binding) GetConfiguration() interface{} {
+// GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
+func (b *Binding) GetConfiguration() *Configuration {
 	return nil
 }
 
+// GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
+func (b *Binding) GetConfigurationBytes() ([]byte, error) {
+	byteArray, err := json.Marshal(b.GetConfiguration())
+	if err != nil {
+		fmt.Println("Error:", err)
+		return nil, err
+	}
+	return byteArray, nil
+}
+
 // WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
-func (b *Binding) WatchConfigurations() error {
+func (b *Binding) WatchConfigurations(directories ...string) error {
+	fmt.Println("Watch settings ecosystem internal directories:", directories)
 	return nil
 }

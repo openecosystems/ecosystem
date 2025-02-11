@@ -3,8 +3,6 @@ package sdkv2alphalib
 import (
 	"context"
 	"fmt"
-
-	"connectrpc.com/connect"
 )
 
 // Bindings represents a collection of registered bindings and their associated listenable channels.
@@ -24,7 +22,7 @@ type Binding interface {
 
 	Validate(ctx context.Context, bindings *Bindings) error
 
-	Bind(ctx context.Context, bindings *Bindings, opts *BindingOptions) *Bindings
+	Bind(ctx context.Context, bindings *Bindings) *Bindings
 
 	GetBinding() interface{}
 
@@ -47,7 +45,7 @@ var Bounds *Bindings
 
 // RegisterBindings initializes and validates bindings, resolving configurations and handling errors during the process.
 // It returns a populated *Bindings object and updates the global Bounds variable.
-func RegisterBindings(ctx context.Context, bounds []Binding, opts ...BindingOption) *Bindings {
+func RegisterBindings(ctx context.Context, bounds []Binding, opts ...ConfigurationProviderOption) *Bindings {
 	b := make(map[string]Binding)
 	c := make(map[string]Listenable)
 	bindingsInstance := &Bindings{
@@ -55,14 +53,14 @@ func RegisterBindings(ctx context.Context, bounds []Binding, opts ...BindingOpti
 		RegisteredListenableChannels: c,
 	}
 
-	options, _ := newBindingOptions(opts)
-
 	var errs []error
 	for _, b := range bounds {
-		fmt.Println("binding: ", b.Name())
-		if c, ok := b.(SpecConfigurationProvider); ok {
-			c.ResolveConfiguration(options.ConfigurationProvider)
-			err := c.ValidateConfiguration()
+		if c, ok := b.(BaseSpecConfigurationProvider); ok {
+			_, err := c.ResolveConfiguration(opts...)
+			if err != nil {
+				return nil
+			}
+			err = c.ValidateConfiguration()
 			if err != nil {
 				errs = append(errs, err)
 			}
@@ -78,7 +76,7 @@ func RegisterBindings(ctx context.Context, bounds []Binding, opts ...BindingOpti
 			panic(errs)
 		}
 
-		bindingsInstance = b.Bind(ctx, bindingsInstance, options)
+		bindingsInstance = b.Bind(ctx, bindingsInstance)
 	}
 
 	Bounds = bindingsInstance
@@ -95,53 +93,4 @@ func ShutdownBindings(bindings *Bindings) {
 			}
 		}
 	}
-}
-
-// A BindingOption configures a [Binding].
-type BindingOption interface {
-	apply(*BindingOptions)
-}
-
-type BindingOptions struct {
-	ConfigurationProvider *ConfigurationProvider
-}
-
-type bindingOptionFunc func(*BindingOptions)
-
-func (f bindingOptionFunc) apply(cfg *BindingOptions) { f(cfg) }
-
-//nolint:unparam
-func newBindingOptions(options []BindingOption) (*BindingOptions, *connect.Error) {
-	// Defaults
-	config := BindingOptions{}
-
-	for _, opt := range options {
-		opt.apply(&config)
-	}
-
-	if err := config.validate(); err != nil {
-		return nil, err
-	}
-
-	return &config, nil
-}
-
-func (c *BindingOptions) validate() *connect.Error {
-	return nil
-}
-
-// WithBindingOptions composes multiple Options into one.
-func WithBindingOptions(opts ...BindingOption) BindingOption {
-	return bindingOptionFunc(func(cfg *BindingOptions) {
-		for _, opt := range opts {
-			opt.apply(cfg)
-		}
-	})
-}
-
-// WithConfigurationProvider sets the given ConfigurationProvider for binding options.
-func WithConfigurationProvider(provider *ConfigurationProvider) BindingOption {
-	return bindingOptionFunc(func(cfg *BindingOptions) {
-		cfg.ConfigurationProvider = provider
-	})
 }

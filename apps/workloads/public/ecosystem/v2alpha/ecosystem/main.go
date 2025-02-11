@@ -1,9 +1,7 @@
 package main
 
 import (
-	"apps/workloads/public/ecosystem/v2alpha/ecosystem/internal"
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
@@ -13,7 +11,7 @@ import (
 	configuration "apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
 	ecosystem "apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
 	iam "apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
-
+	internal "apps/workloads/public/ecosystem/v2alpha/ecosystem/internal"
 	natsnodev2 "libs/partner/go/nats/v2"
 	nebulav1 "libs/partner/go/nebula/v1"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
@@ -55,16 +53,6 @@ func main() {
 		// Create a new Connector Listener and listen of outbound channels
 	}
 
-	provider, err := sdkv2alphalib.NewConfigurationProvider(
-		sdkv2alphalib.WithConfigPathPrefix("api"),
-		sdkv2alphalib.WithWatchSettings(false),
-		sdkv2alphalib.WithConfigurationResolver(&internal.Configuration{}),
-	)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
 	//for _, s := range sdkv2alphalib.GlobalSystems.GetSystems() {
 	//	for _, c := range s.Connectors {
 	//		services = append(services, vanguard.NewService(c.ProcedureName, sdkv2alphalib.NewDynamicConnectorHandler[any, any]((*sdkv2alphalib.Connector[any, any])(c), interceptors)))
@@ -88,10 +76,10 @@ func main() {
 		serverv2alphalib.WithBounds(bounds),
 		serverv2alphalib.WithPublicServices(publicServices),
 		serverv2alphalib.WithMeshServices(meshServices),
-		serverv2alphalib.WithConfigurationProvider(provider),
+		serverv2alphalib.WithConfigurationProvider(&internal.Configuration{}),
 	)
 
-	//if err = sdkv2alphalib.GlobalSystems.RegisterSystems(provider); err != nil {
+	//if err := sdkv2alphalib.GlobalSystems.RegisterSystems(provider); err != nil {
 	//	return
 	//}
 

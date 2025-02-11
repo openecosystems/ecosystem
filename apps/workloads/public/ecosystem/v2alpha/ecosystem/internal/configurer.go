@@ -1,12 +1,11 @@
 package internal
 
 import (
+	"encoding/json"
 	"fmt"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
-	"github.com/fsnotify/fsnotify"
 )
 
 // ResolvedConfiguration stores the resolved and finalized configuration for the application.
@@ -22,12 +21,19 @@ type Configuration struct {
 }
 
 // ResolveConfiguration merges and resolves the environment and default configuration settings into a unified structure.
-func (c *Configuration) ResolveConfiguration(provider *sdkv2alphalib.ConfigurationProvider) {
+func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
 	var config Configuration
-	sdkv2alphalib.Resolve(provider, &config, c.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
+
+	opts = append(opts, sdkv2alphalib.WithConfigPathPrefix("api"))
+	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	sdkv2alphalib.Resolve(configurer, &config, c.GetDefaultConfiguration())
 	name, version, err := sdkv2alphalib.ImportPackageJson()
 	if err != nil {
-		return
+		return nil, err
 	}
 
 	if config.App.Name == "" {
@@ -39,6 +45,8 @@ func (c *Configuration) ResolveConfiguration(provider *sdkv2alphalib.Configurati
 	}
 
 	ResolvedConfiguration = &config
+
+	return configurer, nil
 }
 
 // ValidateConfiguration checks if the configuration instance is valid and returns an error if validation fails.
@@ -47,8 +55,8 @@ func (c *Configuration) ValidateConfiguration() error {
 }
 
 // GetDefaultConfiguration returns a default `Configuration` instance with preset values for App, Grpc, and Http fields.
-func (c *Configuration) GetDefaultConfiguration() interface{} {
-	return Configuration{
+func (c *Configuration) GetDefaultConfiguration() *Configuration {
+	return &Configuration{
 		App: specv2pb.App{
 			Name:            "server",
 			Version:         "0.0.0",
@@ -72,18 +80,27 @@ func (c *Configuration) GetDefaultConfiguration() interface{} {
 }
 
 // CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
-func (c *Configuration) CreateConfiguration() (interface{}, error) {
+func (c *Configuration) CreateConfiguration() (*Configuration, error) {
 	return nil, nil
 }
 
 // GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
-func (c *Configuration) GetConfiguration() interface{} {
+func (c *Configuration) GetConfiguration() *Configuration {
 	return ResolvedConfiguration
 }
 
-// WatchConfigurationsHandler observes changes in the binding's configuration and updates the internal state accordingly.
-func (c *Configuration) WatchConfigurationsHandler(event fsnotify.Event) error {
-	fmt.Println("Watch settings ecosystem internal event:", event)
-	fmt.Println(event.Name, event.Op, event.String())
+// GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
+func (c *Configuration) GetConfigurationBytes() ([]byte, error) {
+	byteArray, err := json.Marshal(c.GetConfiguration())
+	if err != nil {
+		fmt.Println("Error:", err)
+		return nil, err
+	}
+	return byteArray, nil
+}
+
+// WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
+func (c *Configuration) WatchConfigurations(directories ...string) error {
+	fmt.Println("Watch settings ecosystem internal directories:", directories)
 	return nil
 }

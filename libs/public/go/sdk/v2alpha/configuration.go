@@ -13,10 +13,8 @@ import (
 	"strings"
 	"sync"
 
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
-
 	"dario.cat/mergo"
+	"github.com/apex/log"
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-playground/validator/v10"
 	"github.com/iancoleman/strcase"
@@ -24,6 +22,9 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/proto"
+
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 // once ensures viperInstance is initialized only once in a thread-safe manner.
@@ -35,43 +36,35 @@ var (
 	once sync.Once
 )
 
+// BaseSpecConfigurationProvider Non-generic interface (parent)
+type BaseSpecConfigurationProvider interface {
+	ValidateConfiguration() error
+	WatchConfigurations(directories ...string) error
+	ResolveConfiguration(opts ...ConfigurationProviderOption) (*Configurer, error)
+	GetConfigurationBytes() ([]byte, error)
+}
+
 // SpecConfigurationProvider defines an interface for obtaining and monitoring specification settings.
 // GetConfigurations retrieves the current specification settings.
 // WatchConfigurations initiates a watching mechanism to monitor settings updates.
-type SpecConfigurationProvider interface {
-	CreateConfiguration() (interface{}, error)
-	GetConfiguration() interface{}
-	WatchConfigurations(directories ...string) error
-	ResolveConfiguration(provider *ConfigurationProvider)
-	GetDefaultConfiguration() interface{}
-	ValidateConfiguration() error
+type SpecConfigurationProvider[P any] interface {
+	BaseSpecConfigurationProvider // Embed non-generic base interface
+
+	CreateConfiguration() (*P, error)
+	GetConfiguration() *P
+	GetDefaultConfiguration() *P
 }
 
-type SpecConfigurationResolver interface {
-	CreateConfiguration() (interface{}, error)
-	GetConfiguration() interface{}
-	WatchConfigurationsHandler(event fsnotify.Event) error
-	ResolveConfiguration(provider *ConfigurationProvider)
-	GetDefaultConfiguration() interface{}
-	ValidateConfiguration() error
+// Configurer manages and provides application server configuration settings.
+type Configurer struct {
+	Filesystem *FileSystem
+	Configurer *viper.Viper
+	Cfg        *configurationProviderOption
+	Options    []ConfigurationProviderOption
 }
 
-// ConfigurationContext represents a configuration and context manager for managing platform-specific and file system settings.
-type ConfigurationContext struct {
-	filesystem *FileSystem
-	configurer *viper.Viper
-	cfg        *configurationProviderOption
-}
-
-// ConfigurationProvider manages and provides application server configuration settings.
-type ConfigurationProvider struct {
-	filesystem *FileSystem
-	configurer *viper.Viper
-	cfg        *configurationProviderOption
-}
-
-// NewConfigurationProvider initializes a new ConfigurationProvider with default SpecSettings configuration.
-func NewConfigurationProvider(opts ...ConfigurationProviderOption) (*ConfigurationProvider, error) {
+// NewConfigurer initializes a new ConfigurationProvider with default SpecSettings configuration.
+func NewConfigurer(opts ...ConfigurationProviderOption) (*Configurer, error) {
 	once.Do(
 		func() {
 			_ = godotenv.Load()
@@ -79,49 +72,31 @@ func NewConfigurationProvider(opts ...ConfigurationProviderOption) (*Configurati
 		},
 	)
 
-	sctx, err := initializeContext(opts...)
+	sctx, err := initializeConfigurer(opts...)
 	if err != nil {
 		return nil, err
 	}
 
-	sctx.configurer.SetConfigName(getConfigFileName(sctx.cfg.ConfigPathPrefix, sctx.cfg.PlatformContext))
-	sctx.configurer.SetConfigType(ConfigurationExtension)
-	sctx.configurer.AddConfigPath(ConfigurationDirectory)
-	sctx.configurer.AddConfigPath(".")
-	if sctx.cfg.ConfigPath != "" {
-		sctx.configurer.AddConfigPath(sctx.cfg.ConfigPath)
+	fmt.Println("Looking for configuration in: ", ConfigurationDirectory, " ", sctx.Cfg.ConfigPath, "")
+	fmt.Println("Looking for configuration file: ", getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
+
+	sctx.Configurer.SetConfigName(getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
+	sctx.Configurer.SetConfigType(ConfigurationExtension)
+	sctx.Configurer.AddConfigPath(ConfigurationDirectory)
+	sctx.Configurer.AddConfigPath(".")
+	if sctx.Cfg.ConfigPath != "" {
+		sctx.Configurer.AddConfigPath(sctx.Cfg.ConfigPath)
 	}
 
-	// var c specv2pb.SpecSettings
-	// ResolveConfiguration(sctx.configurer, &c, sctx.cfg.DefaultSettings)
-
-	// Config = &c
-
-	return &ConfigurationProvider{
-		filesystem: sctx.filesystem,
-		configurer: sctx.configurer,
-		cfg:        sctx.cfg,
+	return &Configurer{
+		Filesystem: sctx.Filesystem,
+		Configurer: sctx.Configurer,
+		Cfg:        sctx.Cfg,
+		Options:    opts,
 	}, nil
 }
 
-func (s *ConfigurationProvider) CreateConfiguration() (interface{}, error) {
-	_r := *s.cfg.ConfigurationResolver
-	return _r.CreateConfiguration()
-}
-
-func (s *ConfigurationProvider) GetConfiguration() interface{} {
-	_r := *s.cfg.ConfigurationResolver
-
-	structType := reflect.TypeOf(_r)
-
-	fmt.Println("Struct Type:", structType.Name())
-	fmt.Println("Full Type:", structType.String())
-
-	return _r.GetConfiguration()
-}
-
-func (s *ConfigurationProvider) WatchConfigurations(directories ...string) error {
-	_r := *s.cfg.ConfigurationResolver
+func WatchConfigurations(directories ...string) error {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		return err
@@ -147,10 +122,10 @@ func (s *ConfigurationProvider) WatchConfigurations(directories ...string) error
 		case event := <-watcher.Events:
 			if event.Op&(fsnotify.Write|fsnotify.Create) != 0 && filepath.Ext(event.Name) == ".yaml" {
 				fmt.Println("Detected change in:", event.Name)
-				err = _r.WatchConfigurationsHandler(event)
-				if err != nil {
-					return err
-				}
+				//err = _r.WatchConfigurationsHandler(event)
+				//if err != nil {
+				//	return err
+				//}
 
 				// Update settings
 				//for _, e := range settings.Systems {
@@ -172,66 +147,28 @@ func (s *ConfigurationProvider) WatchConfigurations(directories ...string) error
 	}
 }
 
-func (s *ConfigurationProvider) ResolveConfiguration() {
-	_r := *s.cfg.ConfigurationResolver
-	_r.ResolveConfiguration(s)
-}
+// initializeConfigurer creates and initializes a FileSystem and viper.Viper configurer, handling context overrides and config file setup.
+//
+//nolint:unparam
+func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, error) {
+	var _cfg configurationProviderOption
+	for _, opt := range opts {
+		opt.apply(&_cfg)
+	}
 
-func (s *ConfigurationProvider) GetDefaultConfiguration() interface{} {
-	_r := *s.cfg.ConfigurationResolver
-	return _r.GetDefaultConfiguration()
-}
-
-func (s *ConfigurationProvider) ValidateConfiguration() error {
-	_r := *s.cfg.ConfigurationResolver
-	return _r.ValidateConfiguration()
-}
-
-// ResolveConfiguration reads configuration, unmarshals it into the destination, validates required fields, and merges with the source structure.
-func ResolveConfiguration(configurer *viper.Viper, dst, src interface{}) {
-	err := configurer.ReadInConfig()
-	if err != nil {
-		var configFileNotFoundError viper.ConfigFileNotFoundError
-		if errors.As(err, &configFileNotFoundError) {
-			fmt.Println("No spec configuration found.")
+	configurer := _cfg.Configurer
+	if configurer == nil {
+		configurer = &Configurer{
+			Filesystem: NewFileSystem(),
+			Configurer: viper.New(),
+			Cfg:        &_cfg,
+			Options:    opts,
 		}
 	}
 
-	err = configurer.Unmarshal(dst, viper.DecodeHook(
-		mapstructure.ComposeDecodeHookFunc(
-			mapstructure.StringToTimeDurationHookFunc(),
-			mapstructure.StringToSliceHookFunc(","),
-			mapstructure.TextUnmarshallerHookFunc(),
-			StringExpandEnv(),
-		),
-	))
-	if err != nil {
-		panic(err)
-	}
+	cfg := configurer.Cfg
 
-	validate := validator.New()
-	if err = validate.Struct(dst); err != nil {
-		fmt.Println("Missing required attributes", err)
-	}
-
-	if err = mergo.Merge(dst, src); err != nil {
-		fmt.Println("Error merging settings configuration:", err)
-	}
-
-	importEnvironmentVariables(configurer, dst, "", "")
-}
-
-// initializeContext creates and initializes a FileSystem and viper.Viper configurer, handling context overrides and config file setup.
-//
-//nolint:unparam
-func initializeContext(opts ...ConfigurationProviderOption) (*ConfigurationContext, error) {
-	fs := NewFileSystem()
-	configurer := viper.New()
-
-	var cfg configurationProviderOption
-	for _, opt := range opts {
-		opt.apply(&cfg)
-	}
+	filesystem := configurer.Filesystem
 
 	var ctx string
 	if cfg.PlatformContext != "" {
@@ -245,13 +182,13 @@ func initializeContext(opts ...ConfigurationProviderOption) (*ConfigurationConte
 	if ctx != "" {
 		fmt.Println("Overriding context to: " + ctx)
 
-		_, err := fs.Exists(filepath.Join(ContextDirectory, ctx))
+		_, err := filesystem.Exists(filepath.Join(ContextDirectory, ctx))
 		if err != nil {
 			fmt.Println("Error: context does not exists: " + err.Error())
 			return nil, errors.New("context does not exists")
 		}
 	} else {
-		file, err := fs.ReadFile(DefaultContextFile)
+		file, err := filesystem.ReadFile(DefaultContextFile)
 		if err != nil {
 			return nil, errors.New("could not read config file: " + err.Error())
 		}
@@ -260,7 +197,7 @@ func initializeContext(opts ...ConfigurationProviderOption) (*ConfigurationConte
 
 		if ctx == "" {
 			// Set the oeco workspace in the "default" file
-			err = fs.WriteFile(DefaultContextFile, []byte(OecoContextFileName), os.ModePerm)
+			err = filesystem.WriteFile(DefaultContextFile, []byte(OecoContextFileName), os.ModePerm)
 			if err != nil {
 				return nil, errors.New("internal error: Cannot create default context")
 			}
@@ -272,12 +209,13 @@ func initializeContext(opts ...ConfigurationProviderOption) (*ConfigurationConte
 		}
 	}
 
-	WithPlatformContext(ctx).apply(&cfg)
+	WithPlatformContext(ctx).apply(cfg)
 
-	return &ConfigurationContext{
-		filesystem: fs,
-		configurer: configurer,
-		cfg:        &cfg,
+	return &Configurer{
+		Filesystem: filesystem,
+		Configurer: configurer.Configurer,
+		Cfg:        cfg,
+		Options:    opts,
 	}, nil
 }
 
@@ -390,7 +328,23 @@ func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 func importEnvironmentVariables(configurer *viper.Viper, iface interface{}, envPrefix string, prefix string) {
 	// https://github.com/spf13/viper/issues/188#issuecomment-399884438
 	ifv := reflect.ValueOf(iface)
+	// Check if it's a pointer and dereference it
+	if ifv.Kind() == reflect.Ptr {
+		ifv = ifv.Elem()
+	}
+
+	// Ensure it's a struct before calling NumField
+	if ifv.Kind() != reflect.Struct {
+		log.Debugf("Expected struct, got %v", ifv.Kind())
+		return
+	}
+
 	ift := reflect.TypeOf(iface)
+	// Ensure it's a struct before calling NumField
+	if ift.Kind() != reflect.Struct {
+		log.Debugf("Expected struct, got %v", ift.Kind())
+		return
+	}
 	for i := 0; i < ift.NumField(); i++ {
 		v := ifv.Field(i)
 		t := ift.Field(i)
@@ -475,12 +429,12 @@ func StringExpandEnv() mapstructure.DecodeHookFuncKind {
 }
 
 // Resolve reads configuration, unmarshals it into the destination, validates required fields, and merges with the source structure.
-func Resolve(provider *ConfigurationProvider, dst, src interface{}) {
-	if provider == nil {
+func Resolve(_configurer *Configurer, dst, src interface{}) {
+	if _configurer == nil {
 		panic("ConfigurationProvider is nil")
 	}
 
-	configurer := provider.configurer
+	configurer := _configurer.Configurer
 
 	err := configurer.ReadInConfig()
 	if err != nil {
@@ -490,7 +444,7 @@ func Resolve(provider *ConfigurationProvider, dst, src interface{}) {
 		}
 	}
 
-	// ImportEnvironmentVariables(config, "", "")
+	importEnvironmentVariables(configurer, dst, "", "")
 
 	err = configurer.Unmarshal(dst, viper.DecodeHook(
 		mapstructure.ComposeDecodeHookFunc(
@@ -548,10 +502,9 @@ type configurationProviderOption struct {
 	PlatformContext               string
 	ConfigPath                    string
 	ConfigPathPrefix              string
-	DefaultSettings               *specv2pb.SpecSettings
 	WatchSettings                 bool
-	ConfigurationResolver         *SpecConfigurationResolver
 	RuntimeConfigurationOverrides *RuntimeConfigurationOverrides
+	Configurer                    *Configurer
 }
 
 // ConfigurationProviderOption is an interface for applying configurations to a config object.
@@ -592,18 +545,6 @@ func WithConfigPath(path string) ConfigurationProviderOption {
 	})
 }
 
-func WithConfigurationResolver(resolver SpecConfigurationResolver) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
-		cfg.ConfigurationResolver = &resolver
-	})
-}
-
-func WithDefaultSpecSettings(settings *specv2pb.SpecSettings) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
-		cfg.DefaultSettings = settings
-	})
-}
-
 func WithWatchSettings(watch bool) ConfigurationProviderOption {
 	return optionFunc(func(cfg *configurationProviderOption) {
 		cfg.WatchSettings = watch
@@ -613,5 +554,12 @@ func WithWatchSettings(watch bool) ConfigurationProviderOption {
 func WithRuntimeOverrides(overrides *RuntimeConfigurationOverrides) ConfigurationProviderOption {
 	return optionFunc(func(cfg *configurationProviderOption) {
 		cfg.RuntimeConfigurationOverrides = overrides
+	})
+}
+
+// WithConfigurer an additional path to look for settings. Can either be relative to the binary or absolute
+func WithConfigurer(configurer *Configurer) ConfigurationProviderOption {
+	return optionFunc(func(cfg *configurationProviderOption) {
+		cfg.Configurer = configurer
 	})
 }

@@ -40,7 +40,7 @@ type Server struct {
 	PublicServiceHandler    *vanguard.Transcoder
 	MeshServiceHandler      *vanguard.Transcoder
 	RawServiceHandler       *http.Handler
-	ConfigurationProvider   *sdkv2alphalib.ConfigurationProvider
+	ConfigurationProvider   *sdkv2alphalib.BaseSpecConfigurationProvider
 
 	options *serverOptions
 	// err     error
@@ -59,29 +59,23 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 	provider := options.ConfigurationProvider
 	if provider == nil {
-		_provider, err := sdkv2alphalib.NewConfigurationProvider(
-			sdkv2alphalib.WithWatchSettings(false),
-			// sdkv2alphalib.WithConfigurationResolver(&internal.Configuration{}),
-		)
-		if err != nil {
-			fmt.Println(err)
-			panic(err)
-		}
-
-		provider = _provider
+		panic("configuration provider is nil. Please provide a configuration provider to the server.")
 	}
 
-	server.ConfigurationProvider = provider
-	t := *options.ConfigurationProvider
+	server.ConfigurationProvider = &provider
+	t := options.ConfigurationProvider
 
-	t.ResolveConfiguration()
-	err := t.ValidateConfiguration()
+	configurer, err := t.ResolveConfiguration()
+	if err != nil {
+		return nil
+	}
+	err = t.ValidateConfiguration()
 	if err != nil {
 		fmt.Println(err)
 		panic(err)
 	}
 
-	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds, sdkv2alphalib.WithConfigurationProvider(provider))
+	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds, sdkv2alphalib.WithConfigurer(configurer))
 	server.Bindings = bindings
 
 	if options.PublicServices != nil {
@@ -195,19 +189,21 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	u := *server.ConfigurationProvider
+	cp := *server.ConfigurationProvider
 
-	_settings := u.GetConfiguration()
+	bytes, err := cp.GetConfigurationBytes()
+	if err != nil {
+		return nil
+	}
 
 	var settings specv2pb.SpecSettings
-	marshal, err := json.Marshal(_settings)
+	marshal, err := json.Marshal(bytes)
 	if err != nil {
 		return nil
 	}
 
 	fmt.Println("settings: ", string(marshal))
-	// err := proto.Unmarshal(_settings.([]byte), &settings)
-	err = proto.Unmarshal(_settings.([]byte), &settings)
+	err = proto.Unmarshal(bytes, &settings)
 	if err != nil {
 		return nil
 	}
@@ -321,7 +317,7 @@ type serverOptions struct {
 	Bounds                []sdkv2alphalib.Binding
 	PlatformContext       string
 	ConfigPath            string
-	ConfigurationProvider *sdkv2alphalib.ConfigurationProvider
+	ConfigurationProvider sdkv2alphalib.BaseSpecConfigurationProvider
 }
 
 type optionFunc func(*serverOptions)
@@ -396,7 +392,7 @@ func WithConfigPath(path string) ServerOption {
 }
 
 // WithConfigurationProvider sets the SpecConfigurationProvider for the server configuration and applies it as a ServerOption.
-func WithConfigurationProvider(settings *sdkv2alphalib.ConfigurationProvider) ServerOption {
+func WithConfigurationProvider(settings sdkv2alphalib.BaseSpecConfigurationProvider) ServerOption {
 	return optionFunc(func(cfg *serverOptions) {
 		cfg.ConfigurationProvider = settings
 	})

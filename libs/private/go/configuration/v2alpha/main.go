@@ -51,7 +51,7 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 		var once sync.Once
 		once.Do(
 			func() {
-				bn := ResolvedConfiguration.App.EnvironmentName + "-configuration"
+				bn := b.configuration.App.EnvironmentName + "-configuration"
 
 				js := *natsnodev2.Bound.JetStream
 				cs, err := js.CreateOrUpdateKeyValue(ctx, jetstream.KeyValueConfig{
