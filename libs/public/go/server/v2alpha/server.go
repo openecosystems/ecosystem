@@ -2,10 +2,12 @@ package serverv2alphalib
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
@@ -16,7 +18,11 @@ import (
 	"golang.org/x/net/http2/h2c"
 
 	nebulav1 "libs/partner/go/nebula/v1"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	"connectrpc.com/connect"
+	"google.golang.org/protobuf/proto"
 )
 
 // quit is a channel used to handle OS signals for graceful shutdown of the server.
@@ -34,15 +40,15 @@ type Server struct {
 	PublicServiceHandler    *vanguard.Transcoder
 	MeshServiceHandler      *vanguard.Transcoder
 	RawServiceHandler       *http.Handler
-	ConfigurationProvider   *sdkv2alphalib.SpecConfigurationProvider
+	ConfigurationProvider   *sdkv2alphalib.ConfigurationProvider
 
 	options *serverOptions
-	err     error
+	// err     error
 }
 
 // NewServer creates and initializes a new multiplexed server with bindings, services, and server options.
 func NewServer(ctx context.Context, opts ...ServerOption) *Server {
-	options, _ := newServerOptions("", opts)
+	options, _ := newServerOptions(opts)
 
 	server := &Server{
 		Bounds:      options.Bounds,
@@ -51,19 +57,31 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 		options: options,
 	}
 
-	if options.ConfigurationProvider != nil {
-		server.ConfigurationProvider = options.ConfigurationProvider
-
-		t := *options.ConfigurationProvider
-		t.ResolveConfiguration()
-		err := t.ValidateConfiguration()
+	provider := options.ConfigurationProvider
+	if provider == nil {
+		_provider, err := sdkv2alphalib.NewConfigurationProvider(
+			sdkv2alphalib.WithWatchSettings(false),
+			// sdkv2alphalib.WithConfigurationResolver(&internal.Configuration{}),
+		)
 		if err != nil {
 			fmt.Println(err)
 			panic(err)
 		}
+
+		provider = _provider
 	}
 
-	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds)
+	server.ConfigurationProvider = provider
+	t := *options.ConfigurationProvider
+
+	t.ResolveConfiguration()
+	err := t.ValidateConfiguration()
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds, sdkv2alphalib.WithConfigurationProvider(provider))
 	server.Bindings = bindings
 
 	if options.PublicServices != nil {
@@ -98,77 +116,25 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 		server.MeshServiceHandler = meshTranscoder
 	}
 
+	if options.RawServerOptions != nil {
+		rawOptions := options.RawServerOptions
+		server.RawServiceHandler = options.RawServerOptions.Handler
+		httpServer := &http2.Server{
+			IdleTimeout:      15 * time.Second,
+			WriteByteTimeout: 10 * time.Second,
+			ReadIdleTimeout:  5 * time.Second,
+			// MaxConcurrentStreams:         0,
+			// PermitProhibitedCipherSuites: false,
+			// MaxUploadBufferPerConnection: 0,
+			// MaxUploadBufferPerStream:     0,
+		}
+
+		server.ServicePath = rawOptions.Path
+		server.RawServiceHandler = rawOptions.Handler
+		server.PublicConnectHTTPServer = httpServer
+	}
+
 	return server
-}
-
-// NewMultiplexedServer creates and initializes a new multiplexed server with bindings, services, and server options.
-func NewMultiplexedServer(ctx context.Context, bounds []sdkv2alphalib.Binding, meshServices []*vanguard.Service, publicServices []*vanguard.Service, opts ...ServerOption) *Server {
-	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
-
-	publicHTTPServer := &http2.Server{
-		IdleTimeout:      15 * time.Second,
-		WriteByteTimeout: 10 * time.Second,
-		ReadIdleTimeout:  5 * time.Second,
-	}
-
-	meshHTTPServer := &http2.Server{
-		IdleTimeout:      15 * time.Second,
-		WriteByteTimeout: 10 * time.Second,
-		ReadIdleTimeout:  5 * time.Second,
-	}
-
-	options, _ := newServerOptions("", opts)
-
-	publicTranscoder, err2 := vanguard.NewTranscoder(publicServices)
-	if err2 != nil {
-		fmt.Println(err2)
-	}
-
-	meshTranscoder, err2 := vanguard.NewTranscoder(meshServices)
-	if err2 != nil {
-		fmt.Println(err2)
-	}
-
-	return &Server{
-		Bindings:                bindings,
-		PublicConnectHTTPServer: publicHTTPServer,
-		MeshConnectHTTPServer:   meshHTTPServer,
-		Bounds:                  bounds,
-		ServicePath:             "/",
-		PublicServiceHandler:    publicTranscoder,
-		MeshServiceHandler:      meshTranscoder,
-
-		options: options,
-		err:     err2,
-	}
-}
-
-// NewRawServer initializes and returns a new Server instance with provided bindings, path, handler, and options.
-// It resolves and validates configuration, registers bindings, and sets up the HTTP/2 server.
-func NewRawServer(ctx context.Context, bounds []sdkv2alphalib.Binding, path string, handler *http.Handler, opts ...ServerOption) *Server {
-	bindings := sdkv2alphalib.RegisterBindings(ctx, bounds)
-
-	httpServer := &http2.Server{
-		IdleTimeout:      15 * time.Second,
-		WriteByteTimeout: 10 * time.Second,
-		ReadIdleTimeout:  5 * time.Second,
-		// MaxConcurrentStreams:         0,
-		// PermitProhibitedCipherSuites: false,
-		// MaxUploadBufferPerConnection: 0,
-		// MaxUploadBufferPerStream:     0,
-	}
-
-	options, _ := newServerOptions(path, opts)
-
-	return &Server{
-		Bindings:              bindings,
-		MeshConnectHTTPServer: httpServer,
-		Bounds:                bounds,
-		ServicePath:           path,
-		RawServiceHandler:     handler,
-
-		options: options,
-	}
 }
 
 // ListenAndServe starts the server and listens for incoming HTTP requests on the configured address and port.
@@ -229,9 +195,22 @@ func (server *Server) ListenAndServeMultiplexedHTTP() (httpServerErr chan error)
 // listenAndServe starts an HTTP/2-compatible server, optionally on a given listener, and returns a channel for errors.
 // It configures the server with service handlers and supports HTTP/2 without TLS using h2c.
 func (server *Server) listenAndServe(ln net.Listener) (httpServerErr chan error) {
-	// u := *server.ConfigurationProvider
+	u := *server.ConfigurationProvider
 
-	// settings := u.GetDefaultConfiguration().(specv2pb.SpecSettings) //nolint:govet,copylocks
+	_settings := u.GetConfiguration()
+
+	var settings specv2pb.SpecSettings
+	marshal, err := json.Marshal(_settings)
+	if err != nil {
+		return nil
+	}
+
+	fmt.Println("settings: ", string(marshal))
+	// err := proto.Unmarshal(_settings.([]byte), &settings)
+	err = proto.Unmarshal(_settings.([]byte), &settings)
+	if err != nil {
+		return nil
+	}
 
 	// publicEndpoint := settings.Platform.GetEndpoint()
 	// meshEndpoint := settings.Platform.Mesh.GetEndpoint()
@@ -319,4 +298,115 @@ func (server *Server) ListenAndServeSpecListenable() chan sdkv2alphalib.SpecList
 		fmt.Println("Registered Embedded Connector: " + key)
 	}
 	return listenerErr
+}
+
+// A ServerOption configures a [Server].
+type ServerOption interface {
+	apply(*serverOptions)
+}
+
+// RawServerOptions defines options for setting up a raw HTTP server, including the server's path and its handler.
+type RawServerOptions struct {
+	Path    string
+	Handler *http.Handler
+}
+
+type serverOptions struct {
+	URL                   *url.URL
+	MeshVPN               bool
+	HTTPServer            *http.ServeMux
+	PublicServices        []*vanguard.Service
+	MeshServices          []*vanguard.Service
+	RawServerOptions      *RawServerOptions
+	Bounds                []sdkv2alphalib.Binding
+	PlatformContext       string
+	ConfigPath            string
+	ConfigurationProvider *sdkv2alphalib.ConfigurationProvider
+}
+
+type optionFunc func(*serverOptions)
+
+func (f optionFunc) apply(cfg *serverOptions) { f(cfg) }
+
+//nolint:unparam
+func newServerOptions(options []ServerOption) (*serverOptions, *connect.Error) {
+	// Defaults
+	config := serverOptions{
+		MeshVPN:    false,
+		HTTPServer: http.NewServeMux(),
+	}
+
+	for _, opt := range options {
+		opt.apply(&config)
+	}
+
+	if err := config.validate(); err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}
+
+func (c *serverOptions) validate() *connect.Error {
+	return nil
+}
+
+// WithOptions composes multiple Options into one.
+func WithOptions(opts ...ServerOption) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		for _, opt := range opts {
+			opt.apply(cfg)
+		}
+	})
+}
+
+// WithPublicServices sets the public services for the server configuration and returns a ServerOption.
+func WithPublicServices(services []*vanguard.Service) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		cfg.PublicServices = services
+	})
+}
+
+// WithMeshServices sets the mesh services for the server configuration.
+func WithMeshServices(services []*vanguard.Service) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		cfg.MeshServices = services
+	})
+}
+
+// WithBounds configures the server with the specified bounds, overriding the default bindings list in server options.
+func WithBounds(bounds []sdkv2alphalib.Binding) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		cfg.Bounds = bounds
+	})
+}
+
+// WithPlatformContext sets the platform context in the server options configuration.
+func WithPlatformContext(context string) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		cfg.PlatformContext = context
+	})
+}
+
+// WithConfigPath sets the configuration file path in the server options.
+func WithConfigPath(path string) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		cfg.ConfigPath = path
+	})
+}
+
+// WithConfigurationProvider sets the SpecConfigurationProvider for the server configuration and applies it as a ServerOption.
+func WithConfigurationProvider(settings *sdkv2alphalib.ConfigurationProvider) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		cfg.ConfigurationProvider = settings
+	})
+}
+
+// WithRawServer creates a ServerOption to configure raw server options with the provided RawServerOptions parameter.
+func WithRawServer(options *RawServerOptions) ServerOption {
+	return optionFunc(func(cfg *serverOptions) {
+		uri, _ := url.ParseRequestURI(options.Path)
+		cfg.URL = uri
+		cfg.RawServerOptions = options
+	})
 }

@@ -155,10 +155,10 @@ type Configuration struct {
 }
 
 // ResolveConfiguration resolves the binding's configuration using the default configuration as a base and assigns it.
-func (b *Binding) ResolveConfiguration() {
+func (b *Binding) ResolveConfiguration(provider *sdkv2alphalib.ConfigurationProvider) {
 	var c Configuration
 	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&c, dc)
+	sdkv2alphalib.Resolve(provider, &c, dc)
 	b.configuration = &c
 	ResolvedConfiguration = &c
 }

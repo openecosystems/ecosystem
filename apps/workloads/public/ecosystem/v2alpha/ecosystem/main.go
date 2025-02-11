@@ -23,7 +23,6 @@ import (
 	advertisementv1pbsrv "libs/partner/go/server/v2alpha/gen/kevel/advertisement/v1"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	configurationv2alphapbconnect "libs/public/go/protobuf/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
 	ecosystemv2alphapbconnect "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
@@ -59,15 +58,7 @@ func main() {
 	provider, err := sdkv2alphalib.NewConfigurationProvider(
 		sdkv2alphalib.WithConfigPathPrefix("api"),
 		sdkv2alphalib.WithWatchSettings(false),
-		sdkv2alphalib.WithConfigurationResolver(&internal.EcosystemConfiguration{
-			App: specv2pb.App{
-				Name: "ecosystem",
-			},
-			Platform: specv2pb.Platform{
-				Insecure: false,
-			},
-			Context: specv2pb.Context{},
-		}),
+		sdkv2alphalib.WithConfigurationResolver(&internal.Configuration{}),
 	)
 	if err != nil {
 		fmt.Println("Error:", err)

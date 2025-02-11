@@ -71,7 +71,7 @@ var CreateAccountAuthorityV2AlphaCmd = &cobra.Command{
 			AccountAuthority: ca,
 		}
 
-		provider, err5 := sdkv2alphalib.NewCLICredentialProvider()
+		provider, err5 := sdkv2alphalib.NewCredentialProvider()
 		if err5 != nil {
 			return
 		}

@@ -25,7 +25,7 @@ type Binding struct {
 	MeshSocket *service.Service
 
 	configuration *Configuration
-	cp            *sdkv2alphalib.CLICredentialProvider
+	cp            *sdkv2alphalib.CredentialProvider
 }
 
 // Bound holds the reference to the active Binding instance once configured and initialized.
@@ -48,18 +48,20 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
 }
 
 // Bind creates a binding by configuring a mesh socket, registers it, and ensures the binding is only initialized once.
-func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdkv2alphalib.Bindings {
+func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings, opts *sdkv2alphalib.BindingOptions) *sdkv2alphalib.Bindings {
 	if Bound == nil {
 		var once sync.Once
 		once.Do(
 			func() {
 				IsBound = true
 
-				provider, err := sdkv2alphalib.NewCLICredentialProvider()
+				provider, err := sdkv2alphalib.NewCredentialProvider()
 				if err != nil {
 					return
 				}
 				b.cp = provider
+
+				// opts.ConfigurationProvider.
 
 				socket, err := b.ConfigureMeshSocket(sdkv2alphalib.Config)
 				if err != nil {
@@ -124,7 +126,7 @@ func (b *Binding) GetMeshListener(endpoint string) (*net.Listener, error) {
 func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*url*/) *http.Client {
 	httpClient := http.DefaultClient
 
-	b.cp, _ = sdkv2alphalib.NewCLICredentialProvider()
+	b.cp, _ = sdkv2alphalib.NewCredentialProvider()
 	socket, err := b.ConfigureMeshSocket(config)
 	if err != nil {
 		fmt.Println("Could not configure mesh socket", err)

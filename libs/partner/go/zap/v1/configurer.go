@@ -16,10 +16,10 @@ type Configuration struct {
 }
 
 // ResolveConfiguration resolves and merges the Binding's configuration by utilizing the default configuration as a base.
-func (b *Binding) ResolveConfiguration() {
+func (b *Binding) ResolveConfiguration(provider *sdkv2alphalib.ConfigurationProvider) {
 	var c Configuration
 	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&c, dc)
+	sdkv2alphalib.Resolve(provider, &c, dc)
 	b.configuration = &c
 	ResolvedConfiguration = &c
 }

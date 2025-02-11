@@ -65,9 +65,9 @@ type Configuration struct {
 }
 
 // ResolveConfiguration resolves and merges the binding's configuration with default settings, validating streams and settings.
-func (b *Binding) ResolveConfiguration() {
+func (b *Binding) ResolveConfiguration(provider *sdkv2alphalib.ConfigurationProvider) {
 	var c Configuration
-	sdkv2alphalib.Resolve(&c, b.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
+	sdkv2alphalib.Resolve(provider, &c, b.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	b.configuration = &c
 	ResolvedConfiguration = &c
 

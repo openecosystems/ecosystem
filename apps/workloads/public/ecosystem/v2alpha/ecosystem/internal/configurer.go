@@ -1,35 +1,30 @@
 package internal
 
 import (
-	"errors"
 	"fmt"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	"github.com/fsnotify/fsnotify"
 )
 
 // ResolvedConfiguration stores the resolved and finalized configuration for the application.
-var ResolvedConfiguration *EcosystemConfiguration
+var ResolvedConfiguration *Configuration
 
-// EcosystemConfiguration represents a structure for application configuration settings, including app, GRPC, and HTTP details.
-type EcosystemConfiguration struct {
+// Configuration represents a structure for application configuration settings, including app, GRPC, and HTTP details.
+type Configuration struct {
 	App      specv2pb.App      `yaml:"app,omitempty"`
 	Platform specv2pb.Platform `yaml:"platform,omitempty"`
 	Context  specv2pb.Context  `yaml:"context,omitempty"`
 
-	err error
+	// err error
 }
 
 // ResolveConfiguration merges and resolves the environment and default configuration settings into a unified structure.
-func (c *EcosystemConfiguration) ResolveConfiguration() {
-	_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
-	if err != nil {
-		fmt.Println("spec yaml configuration error: ", err)
-		c.err = errors.Join(err)
-	}
-
-	var config EcosystemConfiguration
-	sdkv2alphalib.Resolve(&config, c.GetDefaultConfiguration().(EcosystemConfiguration)) //nolint:govet,copylocks
+func (c *Configuration) ResolveConfiguration(provider *sdkv2alphalib.ConfigurationProvider) {
+	var config Configuration
+	sdkv2alphalib.Resolve(provider, &config, c.GetDefaultConfiguration().(Configuration)) //nolint:govet,copylocks
 	name, version, err := sdkv2alphalib.ImportPackageJson()
 	if err != nil {
 		return
@@ -47,13 +42,13 @@ func (c *EcosystemConfiguration) ResolveConfiguration() {
 }
 
 // ValidateConfiguration checks if the configuration instance is valid and returns an error if validation fails.
-func (c *EcosystemConfiguration) ValidateConfiguration() error {
+func (c *Configuration) ValidateConfiguration() error {
 	return nil
 }
 
-// GetDefaultConfiguration returns a default `EcosystemConfiguration` instance with preset values for App, Grpc, and Http fields.
-func (c *EcosystemConfiguration) GetDefaultConfiguration() interface{} {
-	return EcosystemConfiguration{
+// GetDefaultConfiguration returns a default `Configuration` instance with preset values for App, Grpc, and Http fields.
+func (c *Configuration) GetDefaultConfiguration() interface{} {
+	return Configuration{
 		App: specv2pb.App{
 			Name:            "server",
 			Version:         "0.0.0",
@@ -77,16 +72,18 @@ func (c *EcosystemConfiguration) GetDefaultConfiguration() interface{} {
 }
 
 // CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
-func (c *EcosystemConfiguration) CreateConfiguration() (interface{}, error) {
+func (c *Configuration) CreateConfiguration() (interface{}, error) {
 	return nil, nil
 }
 
 // GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an interface{}.
-func (c *EcosystemConfiguration) GetConfiguration() interface{} {
-	return nil
+func (c *Configuration) GetConfiguration() interface{} {
+	return ResolvedConfiguration
 }
 
-// WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
-func (c *EcosystemConfiguration) WatchConfigurations() error {
+// WatchConfigurationsHandler observes changes in the binding's configuration and updates the internal state accordingly.
+func (c *Configuration) WatchConfigurationsHandler(event fsnotify.Event) error {
+	fmt.Println("Watch settings ecosystem internal event:", event)
+	fmt.Println(event.Name, event.Op, event.String())
 	return nil
 }

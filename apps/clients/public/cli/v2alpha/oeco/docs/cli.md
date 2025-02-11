@@ -45,6 +45,7 @@ oeco api
   - oeco api configuration create --connect --request='{"name":"example"}'
 oeco ecosystem
   - oeco ecosystem create
+  - oeco ecosystem join
   - oeco ecosystem report
 oeco dash
   - pages:

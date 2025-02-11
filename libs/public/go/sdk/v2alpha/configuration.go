@@ -26,16 +26,13 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-// viperInstance is a singleton instance of the viper.Viper configuration library.
-// viperOnce ensures viperInstance is initialized only once in a thread-safe manner.
+// once ensures viperInstance is initialized only once in a thread-safe manner.
 // Config holds global settings for the application, managed via SpecSettings.
 // Overrides contains runtime-specific configuration that can override the default settings.
 var (
-	viperInstance *viper.Viper
-	viperOnce     sync.Once
-	// Config Global Flags that can override configuration at runtime
-	Config    *specv2pb.SpecSettings
 	Overrides *RuntimeConfigurationOverrides
+
+	once sync.Once
 )
 
 // SpecConfigurationProvider defines an interface for obtaining and monitoring specification settings.
@@ -44,8 +41,17 @@ var (
 type SpecConfigurationProvider interface {
 	CreateConfiguration() (interface{}, error)
 	GetConfiguration() interface{}
-	WatchConfigurations() error
-	ResolveConfiguration()
+	WatchConfigurations(directories ...string) error
+	ResolveConfiguration(provider *ConfigurationProvider)
+	GetDefaultConfiguration() interface{}
+	ValidateConfiguration() error
+}
+
+type SpecConfigurationResolver interface {
+	CreateConfiguration() (interface{}, error)
+	GetConfiguration() interface{}
+	WatchConfigurationsHandler(event fsnotify.Event) error
+	ResolveConfiguration(provider *ConfigurationProvider)
 	GetDefaultConfiguration() interface{}
 	ValidateConfiguration() error
 }
@@ -66,7 +72,14 @@ type ConfigurationProvider struct {
 
 // NewConfigurationProvider initializes a new ConfigurationProvider with default SpecSettings configuration.
 func NewConfigurationProvider(opts ...ConfigurationProviderOption) (*ConfigurationProvider, error) {
-	sctx, err := getSettingsContext(opts...)
+	once.Do(
+		func() {
+			_ = godotenv.Load()
+			// viperInstance.AutomaticEnv()
+		},
+	)
+
+	sctx, err := initializeContext(opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,12 +104,12 @@ func NewConfigurationProvider(opts ...ConfigurationProviderOption) (*Configurati
 	}, nil
 }
 
-func (s ConfigurationProvider) CreateConfiguration() (interface{}, error) {
+func (s *ConfigurationProvider) CreateConfiguration() (interface{}, error) {
 	_r := *s.cfg.ConfigurationResolver
 	return _r.CreateConfiguration()
 }
 
-func (s ConfigurationProvider) GetConfiguration() interface{} {
+func (s *ConfigurationProvider) GetConfiguration() interface{} {
 	_r := *s.cfg.ConfigurationResolver
 
 	structType := reflect.TypeOf(_r)
@@ -107,176 +120,71 @@ func (s ConfigurationProvider) GetConfiguration() interface{} {
 	return _r.GetConfiguration()
 }
 
-func (s ConfigurationProvider) WatchConfigurations() error {
+func (s *ConfigurationProvider) WatchConfigurations(directories ...string) error {
 	_r := *s.cfg.ConfigurationResolver
-	return _r.WatchConfigurations()
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		return err
+	}
+	defer func(watcher *fsnotify.Watcher) {
+		_ = watcher.Close()
+	}(watcher)
+
+	// Add the directory to be watched
+
+	for _, dir := range directories {
+		err = watcher.Add(dir)
+		if err != nil {
+			return err
+		}
+	}
+
+	fmt.Println("Watching for context file changes in: ", strings.Join(directories, " "))
+
+	// Watch for events
+	for {
+		select {
+		case event := <-watcher.Events:
+			if event.Op&(fsnotify.Write|fsnotify.Create) != 0 && filepath.Ext(event.Name) == ".yaml" {
+				fmt.Println("Detected change in:", event.Name)
+				err = _r.WatchConfigurationsHandler(event)
+				if err != nil {
+					return err
+				}
+
+				// Update settings
+				//for _, e := range settings.Systems {
+				//	fmt.Println(e.Name + ": " + e.Version)
+				//}
+				//err := reloadProtoFile(event.Name)
+				//if err != nil {
+				//	fmt.Println("Error reloading proto file:", err)
+				//}
+				//
+				//protoregistry.GlobalFiles.RangeFiles(func(fd protoreflect.FileDescriptor) bool {
+				//	fmt.Println("File:", fd.Path())
+				//	return true // continue iteration
+				//})
+			}
+		case err := <-watcher.Errors:
+			fmt.Println("Watcher error:", err)
+		}
+	}
 }
 
-func (s ConfigurationProvider) ResolveConfiguration() {
+func (s *ConfigurationProvider) ResolveConfiguration() {
 	_r := *s.cfg.ConfigurationResolver
-	_r.ResolveConfiguration()
+	_r.ResolveConfiguration(s)
 }
 
-func (s ConfigurationProvider) GetDefaultConfiguration() interface{} {
+func (s *ConfigurationProvider) GetDefaultConfiguration() interface{} {
 	_r := *s.cfg.ConfigurationResolver
 	return _r.GetDefaultConfiguration()
 }
 
-func (s ConfigurationProvider) ValidateConfiguration() error {
+func (s *ConfigurationProvider) ValidateConfiguration() error {
 	_r := *s.cfg.ConfigurationResolver
 	return _r.ValidateConfiguration()
-}
-
-// DotConfigSettingsProvider is responsible for managing and providing configuration settings parsed
-// from a .config file. It encapsulates the SpecSettings structure to hold configuration data.
-type DotConfigSettingsProvider struct {
-	settings *specv2pb.SpecSettings
-}
-
-// NewDotConfigSettingsProvider initializes a new instance of DotConfigSettingsProvider by loading and unmarshalling configuration.
-func NewDotConfigSettingsProvider() (*DotConfigSettingsProvider, error) {
-	_, configurer, err := getFileSystemAndConfigurer("")
-	if err != nil {
-		return nil, err
-	}
-
-	c := specv2pb.SpecSettings{}
-
-	err = configurer.Unmarshal(&c)
-	if err != nil {
-		fmt.Println("Could not process configuration file")
-		return nil, err
-	}
-
-	Config = &c
-
-	return &DotConfigSettingsProvider{
-		settings: &c,
-	}, nil
-}
-
-// CreateConfiguration initializes and returns a new SpecSettings instance along with any potential errors encountered.
-func (p *DotConfigSettingsProvider) CreateConfiguration() (*specv2pb.SpecSettings, error) {
-	return createContextSettings("test", "test")
-}
-
-// GetConfiguration retrieves the current SpecSettings instance from the DotConfigSettingsProvider.
-func (p *DotConfigSettingsProvider) GetConfiguration() *specv2pb.SpecSettings {
-	return p.settings
-}
-
-// WatchConfigurations sets up file system watchers to monitor changes in settings files and triggers appropriate updates.
-func (p *DotConfigSettingsProvider) WatchConfigurations() error {
-	return watchSettings(p.settings, Filesystem.ContextDirectory)
-}
-
-// SpecYamlSettingsProvider provides access to spec settings configured in a YAML file.
-// It encapsulates and manages a SpecSettings instance for configuration retrieval and watching updates.
-type SpecYamlSettingsProvider struct {
-	settings *specv2pb.SpecSettings
-}
-
-// NewSpecYamlSettingsProvider creates a new instance of SpecYamlSettingsProvider by loading and resolving YAML configuration.
-func NewSpecYamlSettingsProvider() (*SpecYamlSettingsProvider, error) {
-	viperOnce.Do(
-		func() {
-			_ = godotenv.Load()
-
-			viperInstance = viper.New()
-			viperInstance.SetConfigName("spec")
-			viperInstance.SetConfigType("yaml")
-			viperInstance.AddConfigPath("/etc/spec")
-			viperInstance.AddConfigPath("$HOME/.spec")
-			viperInstance.AddConfigPath(".")
-			// viperInstance.AutomaticEnv()
-		},
-	)
-
-	var c specv2pb.SpecSettings
-	Resolve(&c, specv2pb.SpecSettings{})
-
-	Config = &c
-
-	return &SpecYamlSettingsProvider{
-		settings: &c,
-	}, nil
-}
-
-// CreateSettings initializes and returns a new SpecSettings instance along with any potential errors encountered.
-func (p *SpecYamlSettingsProvider) CreateConfiguration() (*specv2pb.SpecSettings, error) {
-	return createContextSettings("test", "test")
-}
-
-// GetSettings retrieves the SpecSettings instance associated with the SpecYamlSettingsProvider.
-func (p *SpecYamlSettingsProvider) GetConfiguration() *specv2pb.SpecSettings {
-	return p.settings
-}
-
-// WatchSettings monitors file changes in specified directories to dynamically reload SpecSettings if enabled.
-func (p *SpecYamlSettingsProvider) WatchConfigurations() error {
-	return watchSettings(p.settings, ".", "/etc/spec")
-}
-
-// RuntimeConfigurationOverrides holds runtime configuration flags and settings that override default behavior.
-type RuntimeConfigurationOverrides struct {
-	Context      *string
-	Logging      *bool
-	Verbose      *bool
-	VerboseLog   *bool
-	LogFile      *string
-	Quiet        *bool
-	FieldMask    string
-	ValidateOnly bool
-}
-
-// CLISettingsProvider manages and provides specification settings for a CLI runtime environment.
-// It includes parsed settings and runtime overrides for configuration flexibility.
-type CLISettingsProvider struct {
-	settings *specv2pb.SpecSettings
-	Flags    *RuntimeConfigurationOverrides
-}
-
-// NewCLISettingsProvider creates a new CLISettingsProvider by loading configuration and applying runtime overrides.
-func NewCLISettingsProvider(flags *RuntimeConfigurationOverrides) (*CLISettingsProvider, error) {
-	platformContext := ""
-	if flags != nil && flags.Context != nil {
-		platformContext = *flags.Context
-	}
-
-	_, configurer, err := getFileSystemAndConfigurer(platformContext)
-	if err != nil {
-		return nil, err
-	}
-
-	c := specv2pb.SpecSettings{}
-
-	err = configurer.Unmarshal(&c)
-	if err != nil {
-		fmt.Println("Could not process configuration file")
-		return nil, err
-	}
-
-	Config = &c
-	Overrides = flags
-
-	return &CLISettingsProvider{
-		settings: &c,
-	}, nil
-}
-
-// CreateSettings initializes and returns a new SpecSettings instance along with any potential errors encountered.
-func (p *CLISettingsProvider) CreateConfiguration() (*specv2pb.SpecSettings, error) {
-	return createContextSettings("test", "test")
-}
-
-// GetSettings retrieves the current SpecSettings instance managed by the CLISettingsProvider.
-func (p *CLISettingsProvider) GetConfiguration() *specv2pb.SpecSettings {
-	return p.settings
-}
-
-// WatchSettings monitors filesystem changes to dynamically reload settings if enabled in the configuration.
-func (p *CLISettingsProvider) WatchConfigurations() error {
-	return watchSettings(p.settings, Filesystem.ContextDirectory)
 }
 
 // ResolveConfiguration reads configuration, unmarshals it into the destination, validates required fields, and merges with the source structure.
@@ -310,13 +218,13 @@ func ResolveConfiguration(configurer *viper.Viper, dst, src interface{}) {
 		fmt.Println("Error merging settings configuration:", err)
 	}
 
-	ImportEnvironmentVariables(dst, "", "")
+	importEnvironmentVariables(configurer, dst, "", "")
 }
 
-// getSettingsContext creates and initializes a FileSystem and viper.Viper configurer, handling context overrides and config file setup.
+// initializeContext creates and initializes a FileSystem and viper.Viper configurer, handling context overrides and config file setup.
 //
 //nolint:unparam
-func getSettingsContext(opts ...ConfigurationProviderOption) (*ConfigurationContext, error) {
+func initializeContext(opts ...ConfigurationProviderOption) (*ConfigurationContext, error) {
 	fs := NewFileSystem()
 	configurer := viper.New()
 
@@ -327,15 +235,21 @@ func getSettingsContext(opts ...ConfigurationProviderOption) (*ConfigurationCont
 
 	var ctx string
 	if cfg.PlatformContext != "" {
-		fmt.Println("Overriding context to: " + cfg.PlatformContext)
+		ctx = cfg.PlatformContext
+	}
 
-		_, err := fs.Exists(filepath.Join(ContextDirectory, cfg.PlatformContext))
+	if cfg.RuntimeConfigurationOverrides != nil && cfg.RuntimeConfigurationOverrides.Context != nil {
+		ctx = *cfg.RuntimeConfigurationOverrides.Context
+	}
+
+	if ctx != "" {
+		fmt.Println("Overriding context to: " + ctx)
+
+		_, err := fs.Exists(filepath.Join(ContextDirectory, ctx))
 		if err != nil {
 			fmt.Println("Error: context does not exists: " + err.Error())
 			return nil, errors.New("context does not exists")
 		}
-
-		ctx = cfg.PlatformContext
 	} else {
 		file, err := fs.ReadFile(DefaultContextFile)
 		if err != nil {
@@ -351,7 +265,7 @@ func getSettingsContext(opts ...ConfigurationProviderOption) (*ConfigurationCont
 				return nil, errors.New("internal error: Cannot create default context")
 			}
 
-			_, err = createContextSettings(OecoContextFileName, DefaultCIDR)
+			_, err = createDefaultContextSettings(OecoContextFileName, DefaultCIDR)
 			if err != nil {
 				return nil, err
 			}
@@ -367,112 +281,7 @@ func getSettingsContext(opts ...ConfigurationProviderOption) (*ConfigurationCont
 	}, nil
 }
 
-// getFileSystemAndConfigurer creates and initializes a FileSystem and viper.Viper configurer, handling context overrides and config file setup.
-//
-//nolint:unparam
-func getFileSystemAndConfigurer(platformContext string) (*FileSystem, *viper.Viper, error) {
-	fs := NewFileSystem()
-	ufs := fs.UnderlyingFileSystem
-	contextDir := fs.ContextDirectory
-
-	configurer := viper.New()
-
-	// Set Flag Overrides
-	if platformContext != "" {
-		fmt.Println("Overriding context to: " + platformContext)
-
-		exists, err := fs.Exists(filepath.Join(ContextDirectory, platformContext))
-		if err != nil {
-			fmt.Println("Error: context does not exists: " + err.Error())
-			return nil, nil, errors.New("context does not exists")
-		}
-
-		if exists {
-			// Use config file from the flag
-			configurer.SetConfigFile(platformContext)
-		}
-	} else {
-		file, err := fs.ReadFile(DefaultContextFile)
-		if err != nil {
-			return nil, nil, errors.New("could not read config file: " + err.Error())
-		}
-
-		ctx := strings.TrimSpace(string(file))
-
-		if ctx == "" {
-			// Set the oeco workspace in the "default" file
-			err := fs.WriteFile(DefaultContextFile, []byte(OecoContextFileName), os.ModePerm)
-			if err != nil {
-				return nil, nil, errors.New("internal error: Cannot create default context")
-			}
-
-			fixthis := `
----
-name: oeco
-description: Open Economic System Context
-platform:
-    endpoint: http://localhost:6577
-    insecure: true
-    mesh:
-      enabled: true
-      endpoint: http://192.168.100.5:6477
-      insecure: true
-    dynamicconfigreload: false
-    punchy:
-      punch: true
-      respond: true
-      delay: 1s
-      respond_delay: 5s
-    statichostmap:
-      - '192.168.100.1':
-          map:
-            "45.63.49.173:4242"
-    lighthouse:
-      interval: 60
-      hosts:
-        - '192.168.100.1'
-context:
-    headers:
-      - key: "x-spec-ecosystem-slug"
-        values:
-          - "oeco"
-systems2:
-  - name: configuration
-    version: v2alpha
-  - name: iam
-    version: v2alpha
-`
-
-			err = fs.WriteFile(OecoContextFile+"."+ConfigurationExtension, []byte(fixthis), os.ModePerm)
-			if err != nil {
-				return nil, nil, errors.New("internal error: Cannot create default context")
-			}
-
-			ctx = OecoContextFileName
-		}
-
-		configurer.SetFs(ufs)
-		configurer.SetConfigName(ctx)
-		configurer.SetConfigType(ConfigurationExtension)
-		configurer.AddConfigPath(contextDir)
-	}
-
-	// Set Environment Variable Overrides
-	configurer.AutomaticEnv()
-
-	if err := configurer.ReadInConfig(); err != nil {
-		var configFileNotFoundError viper.ConfigFileNotFoundError
-		if errors.As(err, &configFileNotFoundError) {
-			// Config file not found; ignore error if desired
-			fmt.Println("Config file not found: " + err.Error())
-		}
-	}
-
-	return fs, configurer, nil
-}
-
-// c
-func createContextSettings(ecosystemName string, cidr string) (*specv2pb.SpecSettings, error) {
+func createDefaultContextSettings(ecosystemName string, cidr string) (*specv2pb.SpecSettings, error) {
 	// TODO: Sanitize ecosystemName
 
 	ip, ipnet, err := net.ParseCIDR(cidr)
@@ -550,64 +359,7 @@ func createContextSettings(ecosystemName string, cidr string) (*specv2pb.SpecSet
 		return nil, errors.New("internal error: Cannot write ecosystem settings file")
 	}
 
-	return nil, nil
-}
-
-// watchSettings enables watching for configuration file changes in specified directories if dynamic reload is allowed.
-// settings: The specification settings containing configuration details and dynamic reload flag.
-// directories: One or more directories to monitor for configuration file changes.
-// Returns an error if the file watcher setup fails or if issues occur during monitoring events.
-func watchSettings(settings *specv2pb.SpecSettings, directories ...string) error {
-	// If dynamic settings enabled, turn on filesystem notification
-	if settings.Platform != nil && !settings.Platform.DynamicConfigReload {
-		// fmt.Println("Dynamic reload is disabled in your settings. Please enable if you want to Watch Configurations: settings.platform.DynamicConfigReload")
-		return nil
-	}
-
-	watcher, err := fsnotify.NewWatcher()
-	if err != nil {
-		return err
-	}
-	defer func(watcher *fsnotify.Watcher) {
-		_ = watcher.Close()
-	}(watcher)
-
-	// Add the directory to be watched
-
-	for _, dir := range directories {
-		err = watcher.Add(dir)
-		if err != nil {
-			return err
-		}
-	}
-
-	fmt.Println("Watching for context file changes in: ", strings.Join(directories, " "))
-
-	// Watch for events
-	for {
-		select {
-		case event := <-watcher.Events:
-			if event.Op&(fsnotify.Write|fsnotify.Create) != 0 && filepath.Ext(event.Name) == ".yaml" {
-				fmt.Println("Detected change in:", event.Name)
-
-				// Update settings
-				for _, e := range settings.Systems {
-					fmt.Println(e.Name + ": " + e.Version)
-				}
-				//err := reloadProtoFile(event.Name)
-				//if err != nil {
-				//	fmt.Println("Error reloading proto file:", err)
-				//}
-				//
-				//protoregistry.GlobalFiles.RangeFiles(func(fd protoreflect.FileDescriptor) bool {
-				//	fmt.Println("File:", fd.Path())
-				//	return true // continue iteration
-				//})
-			}
-		case err := <-watcher.Errors:
-			fmt.Println("Watcher error:", err)
-		}
-	}
+	return &settings, nil
 }
 
 // PackageJson represents the structure of a package.json file containing name and version information.
@@ -619,7 +371,7 @@ type PackageJson struct {
 // setEnv maps and sets an environment variable value to a corresponding YAML configuration field using Viper.
 // It converts the YAML field into an environment variable format, optionally prepending a prefix if provided.
 // If the environment variable is present, its value is used to update the corresponding Viper configuration field.
-func setEnv(envPrefix, yaml string) {
+func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 	envVar := strcase.ToScreamingSnake(strcase.ToLowerCamel(strings.ReplaceAll(yaml, ".", "_")))
 	if envPrefix != "" {
 		envVar = envPrefix + "_" + envVar
@@ -629,13 +381,13 @@ func setEnv(envPrefix, yaml string) {
 	val, present := os.LookupEnv(envVar)
 	if present {
 		fmt.Printf("Setting %s from %s to %s\n", yaml, envVar, val)
-		viperInstance.Set(yaml, val)
+		configurer.Set(yaml, val)
 	}
 }
 
-// ImportEnvironmentVariables sets configuration values from environment variables based on struct fields and provided tags.
+// importEnvironmentVariables sets configuration values from environment variables based on struct fields and provided tags.
 // It processes "mapstructure" and "env" tags, supports nested structs, and recursively applies prefix logic for key formatting.
-func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix string) {
+func importEnvironmentVariables(configurer *viper.Viper, iface interface{}, envPrefix string, prefix string) {
 	// https://github.com/spf13/viper/issues/188#issuecomment-399884438
 	ifv := reflect.ValueOf(iface)
 	ift := reflect.TypeOf(iface)
@@ -661,7 +413,7 @@ func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix stri
 			val, present := os.LookupEnv(envVar)
 			if present {
 				fmt.Printf("Setting %s from %s to %s\n", fieldName, envVar, val)
-				viperInstance.Set(fieldName, val)
+				configurer.Set(fieldName, val)
 				continue
 			}
 		}
@@ -670,14 +422,14 @@ func ImportEnvironmentVariables(iface interface{}, envPrefix string, prefix stri
 		case reflect.Struct:
 			instance := reflect.New(t.Type)
 			if _, ok := instance.Interface().(encoding.TextUnmarshaler); ok {
-				setEnv(envPrefix, fieldName)
+				setEnv(configurer, envPrefix, fieldName)
 			} else {
 				if !IsLower(fieldName) {
-					ImportEnvironmentVariables(v.Interface(), envPrefix, fieldName)
+					importEnvironmentVariables(configurer, v.Interface(), envPrefix, fieldName)
 				}
 			}
 		default:
-			setEnv(envPrefix, fieldName)
+			setEnv(configurer, envPrefix, fieldName)
 		}
 	}
 }
@@ -723,8 +475,14 @@ func StringExpandEnv() mapstructure.DecodeHookFuncKind {
 }
 
 // Resolve reads configuration, unmarshals it into the destination, validates required fields, and merges with the source structure.
-func Resolve(dst, src interface{}) {
-	err := viperInstance.ReadInConfig()
+func Resolve(provider *ConfigurationProvider, dst, src interface{}) {
+	if provider == nil {
+		panic("ConfigurationProvider is nil")
+	}
+
+	configurer := provider.configurer
+
+	err := configurer.ReadInConfig()
 	if err != nil {
 		var configFileNotFoundError viper.ConfigFileNotFoundError
 		if errors.As(err, &configFileNotFoundError) {
@@ -734,7 +492,7 @@ func Resolve(dst, src interface{}) {
 
 	// ImportEnvironmentVariables(config, "", "")
 
-	err = viperInstance.Unmarshal(dst, viper.DecodeHook(
+	err = configurer.Unmarshal(dst, viper.DecodeHook(
 		mapstructure.ComposeDecodeHookFunc(
 			mapstructure.StringToTimeDurationHookFunc(),
 			mapstructure.StringToSliceHookFunc(","),
@@ -773,14 +531,27 @@ func IsLower(s string) bool {
 	return true
 }
 
+// RuntimeConfigurationOverrides holds runtime configuration flags and settings that override default behavior.
+type RuntimeConfigurationOverrides struct {
+	Context      *string
+	Logging      *bool
+	Verbose      *bool
+	VerboseLog   *bool
+	LogFile      *string
+	Quiet        *bool
+	FieldMask    string
+	ValidateOnly bool
+}
+
 // configurationProviderOption is the configuration for a Server.
 type configurationProviderOption struct {
-	PlatformContext       string
-	ConfigPath            string
-	ConfigPathPrefix      string
-	DefaultSettings       *specv2pb.SpecSettings
-	WatchSettings         bool
-	ConfigurationResolver *SpecConfigurationProvider
+	PlatformContext               string
+	ConfigPath                    string
+	ConfigPathPrefix              string
+	DefaultSettings               *specv2pb.SpecSettings
+	WatchSettings                 bool
+	ConfigurationResolver         *SpecConfigurationResolver
+	RuntimeConfigurationOverrides *RuntimeConfigurationOverrides
 }
 
 // ConfigurationProviderOption is an interface for applying configurations to a config object.
@@ -821,7 +592,7 @@ func WithConfigPath(path string) ConfigurationProviderOption {
 	})
 }
 
-func WithConfigurationResolver(resolver SpecConfigurationProvider) ConfigurationProviderOption {
+func WithConfigurationResolver(resolver SpecConfigurationResolver) ConfigurationProviderOption {
 	return optionFunc(func(cfg *configurationProviderOption) {
 		cfg.ConfigurationResolver = &resolver
 	})
@@ -836,5 +607,11 @@ func WithDefaultSpecSettings(settings *specv2pb.SpecSettings) ConfigurationProvi
 func WithWatchSettings(watch bool) ConfigurationProviderOption {
 	return optionFunc(func(cfg *configurationProviderOption) {
 		cfg.WatchSettings = watch
+	})
+}
+
+func WithRuntimeOverrides(overrides *RuntimeConfigurationOverrides) ConfigurationProviderOption {
+	return optionFunc(func(cfg *configurationProviderOption) {
+		cfg.RuntimeConfigurationOverrides = overrides
 	})
 }

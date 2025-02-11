@@ -53,7 +53,7 @@ type Binding struct {
 	NebulaCertBinaryPath string
 
 	aac *AccountAuthorityCache
-	cp  *sdkv2alphalib.CLICredentialProvider
+	cp  *sdkv2alphalib.CredentialProvider
 }
 
 // Bound is a global Binding instance that holds configuration and state for the Certificate Authority binding.
@@ -106,7 +106,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 
 				b.NebulaCertBinaryPath = nebulaCertBinaryPath
 
-				provider, err := sdkv2alphalib.NewCLICredentialProvider()
+				provider, err := sdkv2alphalib.NewCredentialProvider()
 				if err != nil {
 					log.Fatalf("nebula ca: failed to load credential provider: %v", err)
 				}
@@ -161,7 +161,7 @@ func NewAccountAuthorityCache() *AccountAuthorityCache {
 }
 
 // Get retrieves a value if it exists, otherwise stores a new value
-func (aac *AccountAuthorityCache) Get(keyType AccountAuthorityKeyType, cp *sdkv2alphalib.CLICredentialProvider, ecosystem string) (*CredStore, bool, error) {
+func (aac *AccountAuthorityCache) Get(keyType AccountAuthorityKeyType, cp *sdkv2alphalib.CredentialProvider, ecosystem string) (*CredStore, bool, error) {
 	// Check if key exists
 
 	key := ecosystem

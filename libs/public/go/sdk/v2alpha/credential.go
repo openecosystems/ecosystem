@@ -24,27 +24,27 @@ type SpecCredentialProvider interface {
 	SaveCredential(credential *typev2pb.Credential) error
 }
 
-// CLICredentialProvider manages CLI-specific credential operations using a file system abstraction.
-type CLICredentialProvider struct {
+// CredentialProvider manages CLI-specific credential operations using a file system abstraction.
+type CredentialProvider struct {
 	fs *FileSystem
 }
 
-// NewCLICredentialProvider initializes and returns a new instance of CLICredentialProvider with a preconfigured file system.
-func NewCLICredentialProvider() (*CLICredentialProvider, error) {
+// NewCredentialProvider initializes and returns a new instance of CredentialProvider with a preconfigured file system.
+func NewCredentialProvider() (*CredentialProvider, error) {
 	_fs := NewFileSystem()
 
-	return &CLICredentialProvider{
+	return &CredentialProvider{
 		fs: _fs,
 	}, nil
 }
 
 // GetCredential retrieves a credential for the specified ecosystem and returns it along with any potential error.
-func (p *CLICredentialProvider) GetCredential(t typev2pb.CredentialType, override string) (*typev2pb.Credential, error) {
+func (p *CredentialProvider) GetCredential(t typev2pb.CredentialType, override string) (*typev2pb.Credential, error) {
 	_ecosystem := override
 	if _ecosystem == "" {
 		file, err := p.fs.ReadFile(DefaultContextFile)
 		if err != nil {
-			return nil, fmt.Errorf("CLICredentialProvider could not read config file: %w", err)
+			return nil, fmt.Errorf("CredentialProvider could not read config file: %w", err)
 		}
 		_ecosystem = strings.TrimSpace(string(file))
 	}
@@ -71,7 +71,7 @@ func (p *CLICredentialProvider) GetCredential(t typev2pb.CredentialType, overrid
 }
 
 // SaveCredential saves the provided Credential object to a persistent storage medium and returns an error if it fails.
-func (p *CLICredentialProvider) SaveCredential(credential *typev2pb.Credential) error {
+func (p *CredentialProvider) SaveCredential(credential *typev2pb.Credential) error {
 	_credential, err := protojson.MarshalOptions{
 		Multiline: true,
 		Indent:    "  ",

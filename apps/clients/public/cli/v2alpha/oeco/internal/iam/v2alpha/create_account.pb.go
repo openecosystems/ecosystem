@@ -91,7 +91,7 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 			return
 		}
 
-		provider, err5 := sdkv2alphalib.NewCLICredentialProvider()
+		provider, err5 := sdkv2alphalib.NewCredentialProvider()
 		if err5 != nil {
 			return
 		}
