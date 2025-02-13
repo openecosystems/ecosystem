@@ -31,14 +31,6 @@ func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.Configuration
 
 	sdkv2alphalib.Resolve(configurer, &config, c.GetDefaultConfiguration())
 
-	if configurer.Cfg.RuntimeConfigurationOverrides.Overridden {
-		overrides := configurer.Cfg.RuntimeConfigurationOverrides
-
-		c.App.Debug = overrides.Debug
-		c.App.Verbose = overrides.Verbose
-		c.App.Quiet = overrides.Quiet
-	}
-
 	config.configuration = &config
 	c.configuration = &config
 
@@ -54,7 +46,7 @@ func (c *Configuration) ValidateConfiguration() error {
 func (c *Configuration) GetDefaultConfiguration() *Configuration {
 	return &Configuration{
 		App: specv2pb.App{
-			Name:            "server",
+			Name:            "oeco",
 			Version:         "0.0.0",
 			EnvironmentName: "local-1",
 			EnvironmentType: "local",
