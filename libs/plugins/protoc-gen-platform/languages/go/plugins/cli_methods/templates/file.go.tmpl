@@ -14,11 +14,13 @@ import (
     "github.com/apex/log"
     "google.golang.org/protobuf/encoding/protojson"
     "github.com/spf13/cobra"
+    cliv2alphalib "libs/public/go/cli/v2alpha"
 {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
     "net/http"
     "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ else -}}
     "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
+
 {{ end }}
 
 {{ range getImportPackages .File }}
@@ -39,6 +41,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
     Run: func(cmd *cobra.Command, args []string) {
 
         log.Debug("Calling {{ .Name.LowerCamelCase }} {{ $entityName.LowerCamelCase }}")
+        settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
         _request, err := cmd.Flags().GetString("request")
         if err != nil {
@@ -63,17 +66,17 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
         // Add GZIP Support: connect.WithSendGzip(),
         {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
         httpClient := http.DefaultClient
-        url := "https://" + sdkv2alphalib.Config.Platform.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Endpoint
+        url := "https://" + settings.Platform.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Endpoint
 		}
-        client := {{ getImportName .Input }}connect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+        client := {{ getImportName .Input }}connect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
         {{ else -}}
-        url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+        url := "https://" + settings.Platform.Mesh.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-        client := *{{ getImportName .Input }}sdk.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+        client := *{{ getImportName .Input }}sdk.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
         {{ end }}
 
         response, err := client.{{ .Name }}(context.Background(), request)

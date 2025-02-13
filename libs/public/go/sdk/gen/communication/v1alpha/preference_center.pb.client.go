@@ -11,7 +11,7 @@ import (
 	communicationv1alphapbconnect "libs/public/go/protobuf/gen/platform/communication/v1alpha/communicationv1alphapbconnect"
 )
 
-func NewPreferenceCenterServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *communicationv1alphapbconnect.PreferenceCenterServiceClient {
+func NewPreferenceCenterServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *communicationv1alphapbconnect.PreferenceCenterServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := communicationv1alphapbconnect.NewPreferenceCenterServiceClient(httpClient, baseURL, opts...)

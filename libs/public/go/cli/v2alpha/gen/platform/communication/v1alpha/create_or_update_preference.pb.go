@@ -11,6 +11,7 @@ import (
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"libs/public/go/sdk/gen/communication/v1alpha"
 	"libs/public/go/sdk/v2alpha"
 	"os"
@@ -31,6 +32,7 @@ var CreateOrUpdatePreferenceV1AlphaCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling createOrUpdatePreference preferenceCenter")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -53,11 +55,11 @@ var CreateOrUpdatePreferenceV1AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[communicationv1alphapb.CreateOrUpdatePreferenceRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		url := "https://" + settings.Platform.Mesh.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-		client := *communicationv1alphapbsdk.NewPreferenceCenterServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *communicationv1alphapbsdk.NewPreferenceCenterServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
 
 		response, err := client.CreateOrUpdatePreference(context.Background(), request)
 		if err != nil {

@@ -27,6 +27,15 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
+const (
+
+	// EdgePrefixConfiguration defines the prefix used for edge configuration settings within the system.
+	EdgePrefixConfiguration = "edge"
+
+	// ApiPrefixConfiguration defines the prefix used for API-related configurations.
+	ApiPrefixConfiguration = "api"
+)
+
 // once ensures viperInstance is initialized only once in a thread-safe manner.
 // Config holds global settings for the application, managed via SpecSettings.
 // Overrides contains runtime-specific configuration that can override the default settings.
@@ -79,11 +88,12 @@ func NewConfigurer(opts ...ConfigurationProviderOption) (*Configurer, error) {
 
 	sctx.Configurer.SetConfigName(getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
 	sctx.Configurer.SetConfigType(ConfigurationExtension)
-	sctx.Configurer.AddConfigPath(ConfigurationDirectory)
-	sctx.Configurer.AddConfigPath(".")
 	if sctx.Cfg.ConfigPath != "" {
 		sctx.Configurer.AddConfigPath(sctx.Cfg.ConfigPath)
+	} else {
+		sctx.Configurer.AddConfigPath(ConfigurationDirectory)
 	}
+	sctx.Configurer.AddConfigPath(".")
 
 	return &Configurer{
 		Filesystem: sctx.Filesystem,

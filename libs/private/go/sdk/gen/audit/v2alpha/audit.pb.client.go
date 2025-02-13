@@ -11,7 +11,7 @@ import (
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
-func NewAuditServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *auditv2alphapbconnect.AuditServiceClient {
+func NewAuditServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *auditv2alphapbconnect.AuditServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := auditv2alphapbconnect.NewAuditServiceClient(httpClient, baseURL, opts...)

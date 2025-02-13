@@ -10,7 +10,7 @@ import (
     {{ package . }}connect "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
 )
 
-func New{{ $s.Name }}SpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *{{ package . }}connect.{{ $s.Name }}Client {
+func New{{ $s.Name }}SpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *{{ package . }}connect.{{ $s.Name }}Client {
   nebula := nebulav1.Binding{}
   httpClient := nebula.GetMeshHTTPClient(config, baseURL)
   c := {{ package . }}connect.New{{ $s.Name }}Client(httpClient, baseURL, opts...)

@@ -11,7 +11,7 @@ import (
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 )
 
-func NewAccountAuthorityServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *iamv2alphapbconnect.AccountAuthorityServiceClient {
+func NewAccountAuthorityServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *iamv2alphapbconnect.AccountAuthorityServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := iamv2alphapbconnect.NewAccountAuthorityServiceClient(httpClient, baseURL, opts...)

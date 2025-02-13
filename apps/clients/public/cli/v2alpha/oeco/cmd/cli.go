@@ -15,7 +15,7 @@ import (
 	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
@@ -85,8 +85,33 @@ var RootCmd = &cobra.Command{
 }
 
 // Execute runs the main command-line interface (CLI) program logic, initializing settings, context, and commands.
-func Execute(cli *cliv2alphalib.CLI) {
-	defer cli.GracefulShutdown()
+func Execute() {
+	bounds := []sdkv2alphalib.Binding{
+		//&zaploggerv1.Binding{},
+		//&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
+		//
+		//}},
+		&nebulav1ca.Binding{},
+	}
+
+	c := cliv2alphalib.NewCLI(
+		context.Background(),
+		cliv2alphalib.WithBounds(bounds),
+		cliv2alphalib.WithConfigurationProvider(&cliv2alphalib.Configuration{}),
+		cliv2alphalib.WithRuntimeOverrides(&sdkv2alphalib.RuntimeConfigurationOverrides{
+			Context:    &context2,
+			Logging:    &debug,
+			Verbose:    &version,
+			VerboseLog: &verboseLog,
+			LogFile:    &logFile,
+			Quiet:      &quiet,
+			// TODO
+			FieldMask:    "",
+			ValidateOnly: false,
+		}),
+	)
+
+	defer c.GracefulShutdown()
 
 	err := validate()
 	if err != nil {
@@ -94,30 +119,10 @@ func Execute(cli *cliv2alphalib.CLI) {
 		return
 	}
 
-	settingsProvider, err := sdkv2alphalib.NewCLISettingsProvider(&sdkv2alphalib.RuntimeConfigurationOverrides{
-		Context:    &context2,
-		Logging:    &debug,
-		Verbose:    &version,
-		VerboseLog: &verboseLog,
-		LogFile:    &logFile,
-		Quiet:      &quiet,
-	})
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	if err = settingsProvider.WatchConfigurations(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	settings := settingsProvider.GetConfiguration()
-
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, settings)
+	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, c.GetConfiguration())
 	RootCmd.SetContext(ctx)
-	AddCommands(settings)
+	AddCommands(c.GetConfiguration())
 
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -126,11 +131,11 @@ func Execute(cli *cliv2alphalib.CLI) {
 }
 
 // AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
-func AddCommands(settings *specv2pb.SpecSettings) {
+func AddCommands(settings *cliv2alphalib.Configuration) {
 	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
 
 	if settings != nil && settings.Systems != nil {
-		for _, system := range settings.Systems {
+		for _, system := range settings.Systems { //nolint:copylocks,govet
 			command, err := cmdv2alphapbcmd.CommandRegistry.GetCommandByFullCommandName(cmdv2alphapbcmd.FullCommandName{
 				Name:    system.Name,
 				Version: system.Version,

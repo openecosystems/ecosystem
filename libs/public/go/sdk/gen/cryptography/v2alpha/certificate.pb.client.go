@@ -11,7 +11,7 @@ import (
 	cryptographyv2alphapbconnect "libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 )
 
-func NewCertificateServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *cryptographyv2alphapbconnect.CertificateServiceClient {
+func NewCertificateServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *cryptographyv2alphapbconnect.CertificateServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := cryptographyv2alphapbconnect.NewCertificateServiceClient(httpClient, baseURL, opts...)

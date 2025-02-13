@@ -73,7 +73,7 @@ func (b *Binding) GetConfiguration() *Configuration {
 
 // GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
 func (b *Binding) GetConfigurationBytes() ([]byte, error) {
-	byteArray, err := json.Marshal(b.GetConfiguration())
+	byteArray, err := json.Marshal(*b.GetConfiguration())
 	if err != nil {
 		fmt.Println("Error:", err)
 		return nil, err

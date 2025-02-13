@@ -17,6 +17,7 @@ type Configuration struct {
 	Platform specv2pb.Platform `yaml:"platform,omitempty"`
 	Context  specv2pb.Context  `yaml:"context,omitempty"`
 
+	configuration *Configuration
 	// err error
 }
 
@@ -24,7 +25,7 @@ type Configuration struct {
 func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
 	var config Configuration
 
-	opts = append(opts, sdkv2alphalib.WithConfigPathPrefix("api"))
+	opts = append(opts, sdkv2alphalib.WithConfigPathPrefix(sdkv2alphalib.ApiPrefixConfiguration) /*sdkv2alphalib.WithRuntimeOverrides()*/)
 	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
 	if err != nil {
 		return nil, err
@@ -45,6 +46,7 @@ func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.Configuration
 	}
 
 	ResolvedConfiguration = &config
+	config.configuration = &config
 
 	return configurer, nil
 }

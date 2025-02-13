@@ -17,6 +17,7 @@ import (
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -39,6 +40,7 @@ var CreateAccountV2AlphaCmd = &cobra.Command{
 Facilitates creating a PKI certificate and getting it signed by an Ecosystem Account Authority ]`,
 	Run: func(cmd *cobra.Command, _ []string) {
 		log.Debug("Calling createAccount account")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -68,12 +70,12 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 
 		request := connect.NewRequest[iamv2alphapb.CreateAccountRequest](&_r)
 		httpClient := http.DefaultClient
-		url := "https://" + sdkv2alphalib.Config.Platform.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Endpoint
+		url := "https://" + settings.Platform.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Endpoint
 		}
 
-		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
 
 		response, err4 := client.CreateAccount(context.Background(), request)
 		if err4 != nil {

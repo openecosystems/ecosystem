@@ -4,16 +4,19 @@
 package configurationv2alphapbcmd
 
 import (
-	"connectrpc.com/connect"
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+
+	"connectrpc.com/connect"
+
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"libs/public/go/sdk/gen/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
-	"os"
 
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 )
@@ -29,8 +32,8 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 	Short: `Create a configuration that manages an ecosystem`,
 	Long:  `[ Create a configuration ]`,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		log.Debug("Calling createConfiguration configuration")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -48,16 +51,21 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		sdkv2alphalib.Overrides.FieldMask = createConfigurationFieldMask
-		sdkv2alphalib.Overrides.ValidateOnly = createConfigurationValidateOnly
+		overrides := sdkv2alphalib.RuntimeConfigurationOverrides{
+			FieldMask:    createConfigurationFieldMask,
+			ValidateOnly: createConfigurationValidateOnly,
+		}
+
+		// sdkv2alphalib.Overrides.FieldMask = createConfigurationFieldMask
+		// sdkv2alphalib.Overrides.ValidateOnly = createConfigurationValidateOnly
 
 		request := connect.NewRequest[configurationv2alphapb.CreateConfigurationRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		url := "https://" + settings.Platform.Mesh.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, &overrides)))
 
 		response, err := client.CreateConfiguration(context.Background(), request)
 		if err != nil {

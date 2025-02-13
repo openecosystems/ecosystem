@@ -4,16 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
-	ecosystemv2alphapbsdk "libs/public/go/sdk/gen/ecosystem/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 
 	"connectrpc.com/connect"
-
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
+
+	cliv2alphalib "libs/public/go/cli/v2alpha"
+	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	ecosystemv2alphapbsdk "libs/public/go/sdk/gen/ecosystem/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 var (
@@ -29,6 +30,7 @@ var GetEcosystemV2AlphaCmd = &cobra.Command{
 	Long:  `[]`,
 	Run: func(cmd *cobra.Command, _ []string) {
 		log.Debug("Calling getEcosystem ecosystem")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -51,11 +53,11 @@ var GetEcosystemV2AlphaCmd = &cobra.Command{
 
 		request := connect.NewRequest[ecosystemv2alphapb.GetEcosystemRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
-		url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		url := "https://" + settings.Platform.Mesh.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
 
 		response, err := client.GetEcosystem(context.Background(), request)
 		if err != nil {

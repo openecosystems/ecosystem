@@ -11,6 +11,7 @@ import (
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	"libs/public/go/sdk/v2alpha"
 	"net/http"
@@ -32,6 +33,7 @@ var VerifyAccountV2AlphaCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling verifyAccount account")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -55,11 +57,11 @@ var VerifyAccountV2AlphaCmd = &cobra.Command{
 		request := connect.NewRequest[iamv2alphapb.VerifyAccountRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
 		httpClient := http.DefaultClient
-		url := "https://" + sdkv2alphalib.Config.Platform.Endpoint
-		if sdkv2alphalib.Config.Platform.Insecure {
-			url = "http://" + sdkv2alphalib.Config.Platform.Endpoint
+		url := "https://" + settings.Platform.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Endpoint
 		}
-		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
 
 		response, err := client.VerifyAccount(context.Background(), request)
 		if err != nil {

@@ -5,13 +5,12 @@ package ecosystemv2alphapbint
 import (
 	"errors"
 	"fmt"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
-
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 const maxWidth = 80
@@ -87,7 +86,7 @@ type CreateEcosystemModel struct {
 }
 
 // NewCreateEcosystemModel creates and initializes a new CreateEcosystemModel instance with default configurations and predefined form settings.
-func NewCreateEcosystemModel(_ *specv2pb.SpecSettings) *CreateEcosystemModel {
+func NewCreateEcosystemModel(_ *cliv2alphalib.Configuration) *CreateEcosystemModel {
 	m := CreateEcosystemModel{width: maxWidth, state: statusNormal}
 	m.lg = lipgloss.DefaultRenderer()
 	m.styles = NewStyles(m.lg)

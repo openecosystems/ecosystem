@@ -11,7 +11,7 @@ import (
 	ecosystemv2alphapbconnect "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 )
 
-func NewEcosystemServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *ecosystemv2alphapbconnect.EcosystemServiceClient {
+func NewEcosystemServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *ecosystemv2alphapbconnect.EcosystemServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := ecosystemv2alphapbconnect.NewEcosystemServiceClient(httpClient, baseURL, opts...)

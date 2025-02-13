@@ -11,7 +11,7 @@ import (
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
-func NewReferenceServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *referencev2alphapbconnect.ReferenceServiceClient {
+func NewReferenceServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *referencev2alphapbconnect.ReferenceServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := referencev2alphapbconnect.NewReferenceServiceClient(httpClient, baseURL, opts...)

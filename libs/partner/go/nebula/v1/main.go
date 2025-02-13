@@ -122,7 +122,7 @@ func (b *Binding) GetMeshListener(endpoint string) (*net.Listener, error) {
 }
 
 // GetMeshHTTPClient creates and returns an HTTP client configured optionally for Mesh or Internet-based calls depending on config.
-func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*url*/) *http.Client {
+func (b *Binding) GetMeshHTTPClient(config *specv2pb.Platform, _ string /*url*/) *http.Client {
 	httpClient := http.DefaultClient
 
 	b.cp, _ = sdkv2alphalib.NewCredentialProvider()
@@ -133,7 +133,7 @@ func (b *Binding) GetMeshHTTPClient(config *specv2pb.SpecSettings, _ string /*ur
 	}
 	b.MeshSocket = socket
 
-	if config.Platform != nil && config.Platform.Mesh != nil && config.Platform.Mesh.Enabled {
+	if config != nil && config.Mesh != nil && config.Mesh.Enabled {
 		httpClient = &http.Client{
 			Timeout: 10 * time.Second,
 			Transport: &http.Transport{

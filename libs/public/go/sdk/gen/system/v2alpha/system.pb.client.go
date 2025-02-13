@@ -11,7 +11,7 @@ import (
 	systemv2alphapbconnect "libs/public/go/protobuf/gen/platform/system/v2alpha/systemv2alphapbconnect"
 )
 
-func NewSystemServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *systemv2alphapbconnect.SystemServiceClient {
+func NewSystemServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *systemv2alphapbconnect.SystemServiceClient {
 	nebula := nebulav1.Binding{}
 	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := systemv2alphapbconnect.NewSystemServiceClient(httpClient, baseURL, opts...)
