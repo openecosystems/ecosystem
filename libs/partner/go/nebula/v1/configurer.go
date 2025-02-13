@@ -9,9 +9,6 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-// ResolvedConfiguration holds the resolved runtime configuration for the Nebula binding.
-var ResolvedConfiguration *Configuration
-
 // Pki represents Public Key Infrastructure details, including CA, certificate, and private key configuration.
 // The `Ca` field specifies the certificate authority information.
 // The `Cert` field contains the signed certificate for the entity.
@@ -169,7 +166,6 @@ func (b *Binding) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProvid
 
 	sdkv2alphalib.Resolve(configurer, &c, b.GetDefaultConfiguration())
 	b.configuration = &c
-	ResolvedConfiguration = &c
 
 	return configurer, nil
 }

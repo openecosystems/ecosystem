@@ -35,6 +35,7 @@ message App {
   string environment_type = 5;
   bool debug = 6;
   bool verbose = 7;
+  bool quiet = 8;
 }
 
 message Platform {

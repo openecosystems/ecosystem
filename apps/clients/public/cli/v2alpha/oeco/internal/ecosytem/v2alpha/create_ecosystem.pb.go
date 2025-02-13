@@ -4,14 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	slog "log"
 	"os"
-	"strconv"
-	"time"
 
 	"connectrpc.com/connect"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/log"
+	clog "github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 
@@ -33,49 +30,12 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 	Use:     "create",
 	Short:   "Create an ecosystem",
 	Version: "",
-	Args:    cobra.MaximumNArgs(1),
-}
+	// Args:    cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, _ []string) {
+		settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+		log := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*clog.Logger)
 
-// createModel initializes a connector model and optionally sets up logging based on the provided command flags.
-func createModel(cmd *cobra.Command, settings *cliv2alphalib.Configuration) (*CreateEcosystemModel, *os.File) {
-	var loggerFile *os.File
-
-	d := cmd.Flag("debug").Value.String()
-	debug, _ := strconv.ParseBool(d)
-
-	if debug {
-		var fileErr error
-		newConfigFile, fileErr := os.OpenFile("debug.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666)
-		if fileErr == nil {
-			log.SetOutput(newConfigFile)
-			log.SetTimeFormat(time.Kitchen)
-			log.SetReportCaller(true)
-			log.SetLevel(log.DebugLevel)
-			log.Debug("Logging to debug.log")
-		} else {
-			loggerFile, _ = tea.LogToFile("debug.log", "debug")
-			slog.Print("Failed setting up logging", fileErr)
-		}
-	} else {
-		log.SetOutput(os.Stderr)
-		log.SetLevel(log.FatalLevel)
-	}
-
-	return NewCreateEcosystemModel(settings), loggerFile
-}
-
-// init initializes the `Cmd` execution logic by setting up the model, logging, cleanup, and running the TUI program.
-func init() {
-	CreateEcosystemV2AlphaCmd.Run = func(cmd *cobra.Command, _ []string) {
-		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
-
-		model, logger := createModel(cmd, settings)
-
-		if logger != nil {
-			defer func(logger *os.File) {
-				_ = logger.Close()
-			}(logger)
-		}
+		model := NewCreateEcosystemModel(settings)
 
 		defer cleanup()
 
@@ -91,11 +51,11 @@ func init() {
 		}
 
 		if model.state == stateDone {
-			fmt.Println("Form completed!")
-			fmt.Println("Name:", model.Data.Name)
-			fmt.Println("Email:", model.Data.EcosystemType)
+			log.Info("Form completed!")
+			log.Info("Name:", model.Data.Name)
+			log.Info("Email:", model.Data.EcosystemType)
 
-			fmt.Println(model.Data)
+			log.Info(model.Data)
 
 			//_r := ecosystemv2alphapb.CreateEcosystemRequest{}
 			//_r.Name = model.Data.Name
@@ -110,7 +70,7 @@ func init() {
 
 			err := iamv2alphapbint.CreateAccountV2AlphaCmd.Flags().Set("request", requestValue)
 			if err != nil {
-				fmt.Println("Error setting flag:", err)
+				log.Error("Error setting flag:", err)
 				return
 			}
 
@@ -131,7 +91,7 @@ func init() {
 			_r := ecosystemv2alphapb.CreateEcosystemRequest{}
 			err = protojson.Unmarshal([]byte(_request), &_r)
 			if err != nil {
-				fmt.Println(err)
+				log.Error(err)
 				os.Exit(1)
 			}
 
@@ -148,15 +108,21 @@ func init() {
 
 			response, err := client.CreateEcosystem(context.Background(), request)
 			if err != nil {
-				fmt.Println(err)
+				log.Error(err)
 				os.Exit(1)
 			}
 
 			val, _ := json.MarshalIndent(&response, "", "    ")
-			fmt.Println(string(val))
+			log.Info("Response: ", string(val))
 		}
-	}
+	},
 }
+
+//// init initializes the `Cmd` execution logic by setting up the model, logging, cleanup, and running the TUI program.
+//func init() {
+//	CreateEcosystemV2AlphaCmd.Run = func(cmd *cobra.Command, _ []string) {
+//	}
+//}
 
 // cleanup recovers from any panic that occurred and logs the recovery message before quitting the tea program.
 func cleanup() {

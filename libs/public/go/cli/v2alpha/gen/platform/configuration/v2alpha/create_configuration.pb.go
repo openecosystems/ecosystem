@@ -4,19 +4,17 @@
 package configurationv2alphapbcmd
 
 import (
+	"connectrpc.com/connect"
 	"context"
 	"encoding/json"
 	"fmt"
-	"os"
-
-	"connectrpc.com/connect"
-
 	"github.com/apex/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"libs/public/go/sdk/gen/configuration/v2alpha"
 	"libs/public/go/sdk/v2alpha"
+	"os"
 
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 )
@@ -32,6 +30,7 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 	Short: `Create a configuration that manages an ecosystem`,
 	Long:  `[ Create a configuration ]`,
 	Run: func(cmd *cobra.Command, args []string) {
+
 		log.Debug("Calling createConfiguration configuration")
 		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
@@ -51,13 +50,8 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		overrides := sdkv2alphalib.RuntimeConfigurationOverrides{
-			FieldMask:    createConfigurationFieldMask,
-			ValidateOnly: createConfigurationValidateOnly,
-		}
-
-		// sdkv2alphalib.Overrides.FieldMask = createConfigurationFieldMask
-		// sdkv2alphalib.Overrides.ValidateOnly = createConfigurationValidateOnly
+		sdkv2alphalib.Overrides.FieldMask = createConfigurationFieldMask
+		sdkv2alphalib.Overrides.ValidateOnly = createConfigurationValidateOnly
 
 		request := connect.NewRequest[configurationv2alphapb.CreateConfigurationRequest](&_r)
 		// Add GZIP Support: connect.WithSendGzip(),
@@ -65,7 +59,7 @@ var CreateConfigurationV2AlphaCmd = &cobra.Command{
 		if settings.Platform.Insecure {
 			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, &overrides)))
+		client := *configurationv2alphapbsdk.NewConfigurationServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
 
 		response, err := client.CreateConfiguration(context.Background(), request)
 		if err != nil {

@@ -38,7 +38,12 @@ func NewCLI(ctx context.Context, opts ...CLIOption) *CLI {
 	cli.ConfigurationProvider = provider
 	t := options.ConfigurationProvider
 
-	configurer, err := t.ResolveConfiguration()
+	var copts []sdkv2alphalib.ConfigurationProviderOption
+	if options.RuntimeConfigurationOverrides.Overridden {
+		copts = append(copts, sdkv2alphalib.WithRuntimeOverrides(options.RuntimeConfigurationOverrides))
+	}
+
+	configurer, err := t.ResolveConfiguration(copts...)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -49,7 +54,9 @@ func NewCLI(ctx context.Context, opts ...CLIOption) *CLI {
 		panic(err)
 	}
 
-	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds, sdkv2alphalib.WithConfigurer(configurer))
+	copts = append(copts, sdkv2alphalib.WithConfigurer(configurer))
+
+	bindings := sdkv2alphalib.RegisterBindings(ctx, options.Bounds, copts...)
 	cli.Bindings = bindings
 
 	return &cli
@@ -94,7 +101,7 @@ type cliOptions struct {
 
 	Bounds                        []sdkv2alphalib.Binding
 	PlatformContext               string
-	RuntimeConfigurationOverrides *sdkv2alphalib.RuntimeConfigurationOverrides
+	RuntimeConfigurationOverrides sdkv2alphalib.RuntimeConfigurationOverrides
 	ConfigurationProvider         sdkv2alphalib.BaseSpecConfigurationProvider
 }
 
@@ -155,7 +162,8 @@ func WithConfigurationProvider(settings sdkv2alphalib.BaseSpecConfigurationProvi
 }
 
 // WithRuntimeOverrides sets runtime configuration overrides for the CLI, modifying default behavior based on the provided settings.
-func WithRuntimeOverrides(overrides *sdkv2alphalib.RuntimeConfigurationOverrides) CLIOption {
+func WithRuntimeOverrides(overrides sdkv2alphalib.RuntimeConfigurationOverrides) CLIOption {
+	overrides.Overridden = true
 	return optionFunc(func(cfg *cliOptions) {
 		cfg.RuntimeConfigurationOverrides = overrides
 	})

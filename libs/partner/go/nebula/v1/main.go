@@ -66,6 +66,10 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					return
 				}
 
+				fmt.Println("Nebula socket configured")
+				fmt.Println(b.configuration)
+				fmt.Println("======33")
+
 				Bound = &Binding{
 					MeshSocket: socket,
 
@@ -152,6 +156,8 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 	override := ""
 	credentialType := typev2pb.CredentialType_CREDENTIAL_TYPE_MESH_ACCOUNT
 
+	fmt.Println("Configuring Nebula mesh socket")
+	fmt.Println(b.configuration)
 	if b.configuration.Platform.Mesh == nil || b.configuration.Platform.Mesh.CredentialPath != "" {
 		override = b.configuration.Platform.Mesh.CredentialPath
 		credentialType = typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY

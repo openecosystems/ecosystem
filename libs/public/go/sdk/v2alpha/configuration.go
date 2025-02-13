@@ -182,8 +182,8 @@ func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, err
 		ctx = cfg.PlatformContext
 	}
 
-	if cfg.RuntimeConfigurationOverrides != nil && cfg.RuntimeConfigurationOverrides.Context != nil {
-		ctx = *cfg.RuntimeConfigurationOverrides.Context
+	if cfg.RuntimeConfigurationOverrides.Context != "" {
+		ctx = cfg.RuntimeConfigurationOverrides.Context
 	}
 
 	if ctx != "" {
@@ -473,6 +473,13 @@ func Resolve(_configurer *Configurer, dst, src interface{}) {
 	}
 }
 
+// Merge merge two configurations
+func Merge(dst, src interface{}) {
+	if err := mergo.Merge(dst, src); err != nil {
+		fmt.Println("Error merging settings configuration:", err)
+	}
+}
+
 func getConfigFileName(prefix, e string) string {
 	if prefix == "" {
 		return e + ".yaml"
@@ -492,14 +499,16 @@ func IsLower(s string) bool {
 
 // RuntimeConfigurationOverrides holds runtime configuration flags and settings that override default behavior.
 type RuntimeConfigurationOverrides struct {
-	Context      *string
-	Logging      *bool
-	Verbose      *bool
-	VerboseLog   *bool
-	LogFile      *string
-	Quiet        *bool
+	Context      string
+	Debug        bool
+	Verbose      bool
+	VerboseLog   bool
+	LogFile      string
+	Quiet        bool
 	FieldMask    string
 	ValidateOnly bool
+
+	Overridden bool
 }
 
 // configurationProviderOption is the configuration for a Server.
@@ -508,7 +517,7 @@ type configurationProviderOption struct {
 	ConfigPath                    string
 	ConfigPathPrefix              string
 	WatchSettings                 bool
-	RuntimeConfigurationOverrides *RuntimeConfigurationOverrides
+	RuntimeConfigurationOverrides RuntimeConfigurationOverrides
 	Configurer                    *Configurer
 }
 
@@ -556,7 +565,8 @@ func WithWatchSettings(watch bool) ConfigurationProviderOption {
 	})
 }
 
-func WithRuntimeOverrides(overrides *RuntimeConfigurationOverrides) ConfigurationProviderOption {
+func WithRuntimeOverrides(overrides RuntimeConfigurationOverrides) ConfigurationProviderOption {
+	overrides.Overridden = true
 	return optionFunc(func(cfg *configurationProviderOption) {
 		cfg.RuntimeConfigurationOverrides = overrides
 	})

@@ -23,7 +23,6 @@ type Configuration struct {
 func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
 	var config Configuration
 
-	// opts = append(opts, sdkv2alphalib.WithConfigPathPrefix(sdkv2alphalib.ApiPrefixConfiguration))
 	opts = append(opts, sdkv2alphalib.WithConfigPath(sdkv2alphalib.ContextDirectory))
 	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
 	if err != nil {
@@ -31,6 +30,14 @@ func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.Configuration
 	}
 
 	sdkv2alphalib.Resolve(configurer, &config, c.GetDefaultConfiguration())
+
+	if configurer.Cfg.RuntimeConfigurationOverrides.Overridden {
+		overrides := configurer.Cfg.RuntimeConfigurationOverrides
+
+		c.App.Debug = overrides.Debug
+		c.App.Verbose = overrides.Verbose
+		c.App.Quiet = overrides.Quiet
+	}
 
 	config.configuration = &config
 	c.configuration = &config

@@ -15,7 +15,9 @@ import (
 	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+	charmbraceletloggerv0 "libs/partner/go/charmbracelet/v0"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
@@ -26,19 +28,22 @@ const (
 	DefaultVersion = "0.0.0"
 )
 
-// context2 holds a secondary context string for the application.
+// ecosystem holds a secondary context string for the application.
 // debug indicates whether debug mode is enabled.
 // version determines if the application should display its version and exit.
 // verboseLog toggles verbose logging mode.
 // logFile specifies the file where logs should be written.
 // quiet suppresses non-essential output.
 var (
-	context2   string
-	debug      bool
-	version    bool
-	verboseLog bool
-	logFile    string
-	quiet      bool
+	ecosystem string
+	debug     bool
+	// version   bool
+	verbose bool
+	// verboseLog bool
+	logFile string
+	quiet   bool
+
+	configuration *cliv2alphalib.Configuration
 )
 
 // compileTimeVersion stores the version set at the time of compilation.
@@ -76,18 +81,31 @@ var RootCmd = &cobra.Command{
 	Example:      `oeco --context=my-ecosystem`,
 	Version:      Version,
 	SilenceUsage: true,
-	PersistentPreRun: func(_ *cobra.Command, _ []string) {
-		if debug {
-			log.SetLevel(log.DebugLevel)
-			log.Debug("debug logging enabled")
+	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
+		override := cliv2alphalib.Configuration{
+			App: specv2pb.App{
+				Debug:   debug,
+				Verbose: verbose,
+				Quiet:   quiet,
+			},
 		}
+		_ = charmbraceletloggerv0.Bound.Override(&charmbraceletloggerv0.Configuration{
+			App: specv2pb.App{
+				Debug:   debug,
+				Verbose: verbose,
+				Quiet:   quiet,
+			},
+		})
+		sdkv2alphalib.Merge(&override, configuration)
+		cmd.SetContext(context.WithValue(cmd.Root().Context(), sdkv2alphalib.SettingsContextKey, &override))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.LoggerContextKey, charmbraceletloggerv0.Bound.Logger))
 	},
 }
 
 // Execute runs the main command-line interface (CLI) program logic, initializing settings, context, and commands.
 func Execute() {
 	bounds := []sdkv2alphalib.Binding{
-		//&zaploggerv1.Binding{},
+		&charmbraceletloggerv0.Binding{},
 		//&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
 		//
 		//}},
@@ -98,17 +116,6 @@ func Execute() {
 		context.Background(),
 		cliv2alphalib.WithBounds(bounds),
 		cliv2alphalib.WithConfigurationProvider(&cliv2alphalib.Configuration{}),
-		cliv2alphalib.WithRuntimeOverrides(&sdkv2alphalib.RuntimeConfigurationOverrides{
-			Context:    &context2,
-			Logging:    &debug,
-			Verbose:    &version,
-			VerboseLog: &verboseLog,
-			LogFile:    &logFile,
-			Quiet:      &quiet,
-			// TODO
-			FieldMask:    "",
-			ValidateOnly: false,
-		}),
 	)
 
 	defer c.GracefulShutdown()
@@ -119,8 +126,9 @@ func Execute() {
 		return
 	}
 
+	configuration = c.GetConfiguration()
+
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, c.GetConfiguration())
 	RootCmd.SetContext(ctx)
 	AddCommands(c.GetConfiguration())
 
@@ -166,8 +174,10 @@ func AddCommands(settings *cliv2alphalib.Configuration) {
 func init() {
 	log.SetHandler(cli.Default)
 
-	RootCmd.PersistentFlags().StringVar(&context2, "context", "", "context to use for this call")
+	RootCmd.PersistentFlags().StringVar(&ecosystem, "context", "", "context to use for this call")
 	RootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "enable debug level logging")
+	RootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "enable additional logging")
+	RootCmd.PersistentFlags().BoolVar(&quiet, "quiet", false, "reduces logging output to only essential messages")
 	RootCmd.PersistentFlags().StringVar(&logFile, "logFile", "", "log File path (if set, logging enabled automatically)")
 
 	// Set bash-completion
