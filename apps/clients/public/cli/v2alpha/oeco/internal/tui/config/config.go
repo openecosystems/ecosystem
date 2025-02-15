@@ -57,6 +57,7 @@ const (
 	ConnectorRequestsPage PageType = "connector_requests"
 	ConnectorPacketsPage  PageType = "connector_packets"
 	APIExplorerListPage   PageType = "api_explorer_list"
+	EcosystemCreatePage   PageType = "ecosystem_create"
 )
 
 // Defaults defines the default configuration settings for sections, pages, and sidebar, including refresh intervals and date format.

@@ -108,7 +108,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //	id := fmt.Sprint(time.Now().Unix())
 //	startCmd := m.ctx.StartTask(
 //		context.Task{
-//			Id:           id,
+//			ID:           id,
 //			StartText:    text,
 //			FinishedText: text,
 //			State:        context.TaskStart,
@@ -127,7 +127,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //	id := fmt.Sprint(time.Now().Unix())
 //	startCmd := m.ctx.StartTask(
 //		context.Task{
-//			Id:           id,
+//			ID:           id,
 //			StartText:    text,
 //			FinishedText: text,
 //			State:        context.TaskStart,

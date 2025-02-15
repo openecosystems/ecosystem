@@ -1,7 +1,6 @@
-package connectorv2alphatui
+package ecosystemv2alphapbint
 
 import (
-	"fmt"
 	slog "log"
 	"os"
 	"strconv"
@@ -11,21 +10,21 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 
-	connector "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
+	ecosystemcreate "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/ecosystem_create"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
-// Cmd defines a CLI command named "connector" for interaction, supporting one optional argument and a short description.
+// Cmd defines a CLI command named "create" for interaction, supporting one optional argument and a short description.
 var Cmd = &cobra.Command{
-	Use:     "dash",
-	Short:   "Ecosystem Dashboard",
+	Use:     "create",
+	Short:   "Ecosystem Create",
 	Version: "",
 	Args:    cobra.MaximumNArgs(1),
 }
 
-// createModel initializes a connector model and optionally sets up logging based on the provided command flags.
-func createModel(cmd *cobra.Command, settings *cliv2alphalib.Configuration) (connector.Model, *os.File) {
+// createModel initializes an ecosystem model and optionally sets up logging based on the provided command flags.
+func createModel(cmd *cobra.Command, settings *cliv2alphalib.Configuration) (*ecosystemcreate.Model, *os.File) {
 	var loggerFile *os.File
 
 	d := cmd.Flag("debug").Value.String()
@@ -49,7 +48,7 @@ func createModel(cmd *cobra.Command, settings *cliv2alphalib.Configuration) (con
 		log.SetLevel(log.FatalLevel)
 	}
 
-	return connector.NewModel(settings), loggerFile
+	return ecosystemcreate.NewModel(settings), loggerFile
 }
 
 // init initializes the `Cmd` execution logic by setting up the model, logging, cleanup, and running the TUI program.
@@ -78,12 +77,4 @@ func init() {
 			log.Fatal("Failed starting the TUI", err)
 		}
 	}
-}
-
-// cleanup recovers from any panic that occurred and logs the recovery message before quitting the tea program.
-func cleanup() {
-	if r := recover(); r != nil {
-		fmt.Println("Recovered from panic:", r)
-	}
-	_ = tea.Quit()
 }

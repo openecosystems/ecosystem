@@ -3,23 +3,22 @@
 package ecosystemv2alphapbint
 
 import (
+	"context"
 	"errors"
 	"fmt"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"strings"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/huh"
+	"github.com/charmbracelet/huh/spinner"
 	"github.com/charmbracelet/lipgloss"
+
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 )
 
 const maxWidth = 80
-
-var (
-	red    = lipgloss.AdaptiveColor{Light: "#FE5F86", Dark: "#FE5F86"}
-	indigo = lipgloss.AdaptiveColor{Light: "#5A56E0", Dark: "#7571F9"}
-	green  = lipgloss.AdaptiveColor{Light: "#02BA84", Dark: "#02BF87"}
-)
 
 // Styles defines a collection of reusable lipgloss style definitions for various UI components such as Base, HeaderText, Status, etc.
 type Styles struct {
@@ -39,21 +38,21 @@ func NewStyles(lg *lipgloss.Renderer) *Styles {
 	s.Base = lg.NewStyle().
 		Padding(1, 4, 0, 1)
 	s.HeaderText = lg.NewStyle().
-		Foreground(indigo).
+		Foreground(theme.DefaultTheme.PrimaryColor500).
 		Bold(true).
 		Padding(0, 1, 0, 2)
 	s.Status = lg.NewStyle().
 		Border(lipgloss.RoundedBorder()).
-		BorderForeground(indigo).
+		BorderForeground(theme.DefaultTheme.SecondaryBorder).
 		PaddingLeft(1).
 		MarginTop(1)
 	s.StatusHeader = lg.NewStyle().
-		Foreground(green).
+		Foreground(theme.DefaultTheme.TertiaryColor500).
 		Bold(true)
 	s.Highlight = lg.NewStyle().
 		Foreground(lipgloss.Color("212"))
 	s.ErrorHeaderText = s.HeaderText.
-		Foreground(red)
+		Foreground(theme.DefaultTheme.ErrorColor)
 	s.Help = lg.NewStyle().
 		Foreground(lipgloss.Color("240"))
 	return &s
@@ -70,9 +69,9 @@ const (
 )
 
 type CreateEcosystemData struct {
-	Name          string
+	Domain        string
 	EcosystemType string
-	Cidr          string
+	CIDR          string
 }
 
 // CreateEcosystemModel represents the main structure containing the state, styles, renderer, form, and width of the application.
@@ -97,25 +96,32 @@ func NewCreateEcosystemModel(_ *cliv2alphalib.Configuration) *CreateEcosystemMod
 		huh.NewGroup(
 
 			huh.NewInput().
-				Title("Name your Economic System").
-				Suggestions([]string{"For example 'Open Ecosystems'"}).
+				Key("domain").
+				Title("Pick a domain name").
+				DescriptionFunc(func() string {
+					if data.Domain == "" {
+						return "For example if you choose 'oeco', your domain name will be 'oeco.mesh'"
+					}
+					return "Your domain name will be: " + data.Domain + ".mesh"
+				}, &data).
+				Suggestions([]string{"For example 'oeco'"}).
 				Prompt("? ").
 				// Validate(isFood).
-				Value(&data.Name),
+				Value(&data.Domain).WithHeight(29),
 
 			huh.NewSelect[string]().
-				Key("class").
-				Options(huh.NewOptions("Warrior", "Mage", "Rogue")...).
-				Title("Choose your class").
-				Description("This will determine your department").
-				Value(&data.Name),
-
-			huh.NewSelect[string]().
-				Key("level").
-				Options(huh.NewOptions("1", "20", "9999")...).
-				Title("Choose your level").
-				Description("This will determine your benefits package").
+				Key("type").
+				Options(huh.NewOptions("Private", "Public")...).
+				Title("Choose your ecosystem type").
+				Description("This will impact how people access your ecosystem").
 				Value(&data.EcosystemType),
+
+			huh.NewSelect[string]().
+				Key("cidr").
+				Options(huh.NewOptions("192.168.0.0/16", "172.16.0.0/12", "10.0.0.0/8", "100.64.0.0/10")...).
+				Title("Choose your CIDR block").
+				Description("The range you choose must be part of the RFC 1918 Private Address Space or the RFC 6598 Shared Address Space.").
+				Value(&data.CIDR),
 
 			huh.NewConfirm().
 				Key("done").
@@ -130,9 +136,10 @@ func NewCreateEcosystemModel(_ *cliv2alphalib.Configuration) *CreateEcosystemMod
 				Negative("Wait, no"),
 		),
 	).
-		WithWidth(45).
+		WithWidth(80).
 		WithShowHelp(false).
-		WithShowErrors(false)
+		WithShowErrors(false).
+		WithTheme(theme.FormTheme())
 
 	m.Data = data
 	return &m
@@ -195,7 +202,7 @@ func (m *CreateEcosystemModel) View() string {
 		title = s.Highlight.Render(title)
 		m.state = stateDone
 		var b strings.Builder
-		_, err := fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
+		_, err := fmt.Fprintf(&b, "Congratulations, you’re Ecosystem configuration is ready to be deployed\n%s!\n\n", title)
 		if err != nil {
 			return ""
 		}
@@ -203,12 +210,29 @@ func (m *CreateEcosystemModel) View() string {
 		if err != nil {
 			return ""
 		}
+
+		err = spinner.New().
+			Context(context.Background()).
+			Title("Installing context...").
+			ActionWithErr(func(context.Context) error {
+				time.Sleep(2 * time.Second)
+				return nil
+			}).
+			Accessible(false).
+			Run()
+		if err != nil {
+			fmt.Println(err)
+			// log.Fatal(err)
+		}
+
 		return s.Status.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
 	default:
 
-		var class string
-		if m.form.GetString("class") != "" {
-			class = "Class: " + m.form.GetString("class")
+		var domain string
+		if m.form.GetString("domain") != "" {
+			domain = "Domain Name: " + m.form.GetString("domain") + ".mesh" +
+				"\n\n" + "Edge Endpoint: edge." + m.form.GetString("domain") + ".mesh" +
+				"\n\n" + "Mesh Endpoint: api." + m.form.GetString("domain") + ".mesh"
 		}
 
 		// Form (left side)
@@ -219,20 +243,20 @@ func (m *CreateEcosystemModel) View() string {
 		var status string
 		{
 			var (
-				buildInfo      = "(None)"
+				domainInfo     = "(None)"
 				role           string
 				jobDescription string
-				level          string
+				eType          string
 			)
 
-			if m.form.GetString("level") != "" {
-				level = "Level: " + m.form.GetString("level")
+			if m.form.GetString("type") != "" {
+				eType = "Type: " + m.form.GetString("type")
 				role, jobDescription = m.getRole()
-				role = "\n\n" + s.StatusHeader.Render("Projected Role") + "\n" + role
+				role = "\n\n" + s.StatusHeader.Render("Ecosystem Role") + "\n" + role
 				jobDescription = "\n\n" + s.StatusHeader.Render("Duties") + "\n" + jobDescription
 			}
-			if m.form.GetString("class") != "" {
-				buildInfo = fmt.Sprintf("%s\n%s", class, level)
+			if m.form.GetString("domain") != "" {
+				domainInfo = fmt.Sprintf("%s\n%s", domain, eType)
 			}
 
 			const statusWidth = 28
@@ -241,8 +265,8 @@ func (m *CreateEcosystemModel) View() string {
 				Height(lipgloss.Height(form)).
 				Width(statusWidth).
 				MarginLeft(statusMarginLeft).
-				Render(s.StatusHeader.Render("Current Build") + "\n" +
-					buildInfo +
+				Render(s.StatusHeader.Render("Ecosystem Details") + "\n" +
+					domainInfo +
 					role +
 					jobDescription)
 		}
@@ -279,7 +303,7 @@ func (m *CreateEcosystemModel) appBoundaryView(text string) string {
 		lipgloss.Left,
 		m.styles.HeaderText.Render(text),
 		lipgloss.WithWhitespaceChars(""),
-		lipgloss.WithWhitespaceForeground(indigo),
+		lipgloss.WithWhitespaceForeground(theme.DefaultTheme.PrimaryColor500),
 	)
 }
 
@@ -290,16 +314,16 @@ func (m *CreateEcosystemModel) appErrorBoundaryView(text string) string {
 		lipgloss.Left,
 		m.styles.ErrorHeaderText.Render(text),
 		lipgloss.WithWhitespaceChars("/"),
-		lipgloss.WithWhitespaceForeground(red),
+		lipgloss.WithWhitespaceForeground(theme.DefaultTheme.ErrorColor),
 	)
 }
 
 // getRole determines the role and its description based on the class and level values retrieved from the form.
 func (m *CreateEcosystemModel) getRole() (string, string) {
-	level := m.form.GetString("level")
-	switch m.form.GetString("class") {
-	case "Warrior":
-		switch level {
+	eType := m.form.GetString("type")
+	switch m.form.GetString("type") {
+	case "Private":
+		switch eType {
 		case "1":
 			return "Tank Intern", "Assists with tank-related activities. Paid position."
 		case "9999":
@@ -307,23 +331,14 @@ func (m *CreateEcosystemModel) getRole() (string, string) {
 		default:
 			return "Tank", "General tank. Does damage, takes damage. Responsible for tanking."
 		}
-	case "Mage":
-		switch level {
+	case "Public":
+		switch eType {
 		case "1":
 			return "DPS Associate", "Finds DPS deals and passes them on to DPS Manager."
 		case "9999":
 			return "DPS Operating Officer", "Oversees all DPS activities."
 		default:
 			return "DPS", "Does damage and ideally does not take damage. Logs hours in JIRA."
-		}
-	case "Rogue":
-		switch level {
-		case "1":
-			return "Stealth Junior Designer", "Designs rougue-like activities. Reports to Stealth Lead."
-		case "9999":
-			return "Stealth Lead", "Lead designer for all things stealth. Some travel required."
-		default:
-			return "Sneaky Person", "Sneaks around and does sneaky things. Reports to Stealth Lead."
 		}
 	default:
 		return "", ""

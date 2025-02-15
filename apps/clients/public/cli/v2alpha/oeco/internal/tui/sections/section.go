@@ -1,17 +1,7 @@
 package sections
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 	"fmt"
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"strconv"
 	"strings"
 
@@ -19,6 +9,17 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	footer "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
+	tabs "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 )
 
 // BaseModel encapsulates the primary state and components for managing UI layout, navigation, and application context.
@@ -26,10 +27,10 @@ type BaseModel struct {
 	Ctx           *context.ProgramContext
 	Pages         []contract.Page
 	CurrentPage   contract.Page
-	CurrentPageId int
+	CurrentPageID int
 	Spinner       spinner.Model
 	Tabs          tabs.Model
-	Footer        footer.Model
+	Footer        *footer.Model
 	Keys          keys.KeyMap
 	SingularForm  string
 	PluralForm    string
@@ -40,8 +41,8 @@ type NewBaseOptions struct {
 	Singular      string
 	Plural        string
 	Pages         []contract.Page
-	CurrentPageId int
-	Settings      *specv2pb.SpecSettings
+	CurrentPageID int
+	Settings      *cliv2alphalib.Configuration
 }
 
 // NewBaseModel creates and initializes a new BaseModel instance with the provided context and options.
@@ -61,10 +62,10 @@ func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel
 		Footer:       footer.NewModel(ctx),
 	}
 
-	m.CurrentPage, m.CurrentPageId = m.SetCurrentPage(options.CurrentPageId)
+	m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(options.CurrentPageID)
 	m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 	m.Ctx.Settings = options.Settings
-	m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageId)
+	m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageID)
 
 	return m
 }
@@ -104,13 +105,13 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 
 		switch {
 		case key.Matches(message, keys.Keys.PrevPage):
-			m.CurrentPage, m.CurrentPageId = m.SetCurrentPage(m.GetPrevPageId())
-			m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageId)
+			m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetPrevPageID())
+			m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageID)
 			m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 
 		case key.Matches(message, keys.Keys.NextPage):
-			m.CurrentPage, m.CurrentPageId = m.SetCurrentPage(m.GetNextPageId())
-			m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageId)
+			m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetNextPageID())
+			m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageID)
 			m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 
 		case key.Matches(message, keys.Keys.Help):
@@ -125,7 +126,7 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 				m.Footer, cmd = m.Footer.Update(msg)
 				return m, cmd
 			}
-			cmd = tea.Quit
+			// cmd = tea.Quit
 		}
 	case tea.WindowSizeMsg:
 		m.OnWindowSizeChanged(message)
@@ -135,15 +136,10 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 		m.Ctx.Styles = theme.InitStyles(m.Ctx.Theme)
 		m.Ctx.Section = m.Ctx.Config.Defaults.Section
 		m.Ctx.Page = m.Ctx.Config.Defaults.Page
-		m.CurrentPage, m.CurrentPageId = m.SetCurrentPage(m.GetDefaultPageId())
-		cmds = append(cmds)
+		m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetDefaultPageID())
 	}
 
 	m.UpdateProgramContext(m.Ctx)
-
-	cmds = append(
-		cmds,
-	)
 
 	return m, tea.Batch(cmds...)
 }
@@ -187,15 +183,15 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 	s.WriteString("Section: " + string(m.Ctx.Section) + "\n")
 	s.WriteString("   Screen Width: " + strconv.Itoa(m.Ctx.ScreenWidth) + "\n")
 	s.WriteString("   Screen Height: " + strconv.Itoa(m.Ctx.ScreenHeight) + "\n")
-	s.WriteString("   Default Page Id: " + strconv.Itoa(m.GetDefaultPageId()) + "\n")
+	s.WriteString("   Default Page ID: " + strconv.Itoa(m.GetDefaultPageID()) + "\n")
 	s.WriteString("   Number of Section Pages: " + strconv.Itoa(len(m.Pages)) + "\n")
 	for _, p := range m.Pages {
 		s.WriteString("      Section Page: " + p.GetPageSettings().Title + "\n")
 	}
 	s.WriteString("\n")
 	s.WriteString("   Current Page: " + string(m.Ctx.Page) + "\n")
-	s.WriteString("      Id: " + strconv.Itoa(m.CurrentPageId) + "\n")
-	s.WriteString("      Title: " + string(m.CurrentPage.GetPageSettings().Title) + "\n")
+	s.WriteString("      ID: " + strconv.Itoa(m.CurrentPageID) + "\n")
+	s.WriteString("      Title: " + m.CurrentPage.GetPageSettings().Title + "\n")
 	s.WriteString("      Width: " + strconv.Itoa(m.Ctx.PageContentWidth) + "\n")
 	s.WriteString("      Height: " + strconv.Itoa(m.Ctx.PageContentHeight) + "\n")
 	s.WriteString("      Main Content\n")
@@ -208,15 +204,15 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 	s.WriteString("         Height: " + strconv.Itoa(m.Ctx.SidebarContentHeight) + "\n")
 	s.WriteString("         Body Width: " + strconv.Itoa(m.Ctx.SidebarContentBodyWidth) + "\n")
 	s.WriteString("         Body Height: " + strconv.Itoa(m.Ctx.SidebarContentBodyHeight) + "\n")
-	nextPage := m.GetPageAt(m.GetNextPageId())
-	s.WriteString("    Next Page: " + string(nextPage.GetPageSettings().Title) + "\n")
-	s.WriteString("       Id: " + strconv.Itoa(m.GetNextPageId()) + "\n")
-	prevPage := m.GetPageAt(m.GetPrevPageId())
-	s.WriteString("    Previous Page: " + string(prevPage.GetPageSettings().Title) + "\n")
-	s.WriteString("       Id: " + strconv.Itoa(m.GetPrevPageId()) + "\n")
+	nextPage := m.GetPageAt(m.GetNextPageID())
+	s.WriteString("    Next Page: " + nextPage.GetPageSettings().Title + "\n")
+	s.WriteString("       ID: " + strconv.Itoa(m.GetNextPageID()) + "\n")
+	prevPage := m.GetPageAt(m.GetPrevPageID())
+	s.WriteString("    Previous Page: " + prevPage.GetPageSettings().Title + "\n")
+	s.WriteString("       ID: " + strconv.Itoa(m.GetPrevPageID()) + "\n")
 	tabPage := m.GetPageAt(m.Tabs.GetCurrentPageId())
-	s.WriteString("    Current Tab: " + string(tabPage.GetPageSettings().Title) + "\n")
-	s.WriteString("       Id: " + strconv.Itoa(m.Tabs.GetCurrentPageId()) + "\n")
+	s.WriteString("    Current Tab: " + tabPage.GetPageSettings().Title + "\n")
+	s.WriteString("       ID: " + strconv.Itoa(m.Tabs.GetCurrentPageId()) + "\n")
 	s.WriteString("    Available Tab Page Count: " + strconv.Itoa(len(m.Tabs.GetPages())) + "\n")
 	for _, p := range m.Tabs.GetPages() {
 		s.WriteString("       Tab Page: " + p.GetPageSettings().Title + "\n")
@@ -228,7 +224,7 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 
 // UpdateProgramContext updates the BaseModel's context and propagates it to tabs, the current page, and the footer.
 func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
-	m.Ctx = ctx
+	// m.Ctx = ctx
 	m.Tabs.UpdateProgramContext(ctx)
 	if m.CurrentPage != nil {
 		m.CurrentPage.UpdateProgramContext(ctx)
@@ -256,20 +252,20 @@ func (m BaseModel) SetCurrentPage(id int) (contract.Page, int) {
 		p = pages.NewEmptyModel(m.Ctx)
 	}
 	m.Ctx.Page = p.GetPageSettings().Type
-	m.CurrentPageId = id
+	m.CurrentPageID = id
 	m.CurrentPage = p
 	m.Tabs = m.Tabs.SetCurrentPageId(id)
 
 	return p, id
 }
 
-// GetCurrentPage returns the currently active page from the Pages slice based on the CurrentPageId. Returns nil if no valid page exists.
+// GetCurrentPage returns the currently active page from the Pages slice based on the CurrentPageID. Returns nil if no valid page exists.
 func (m BaseModel) GetCurrentPage() contract.Page {
 	p := m.Pages
-	if len(p) == 0 || m.CurrentPageId >= len(p) {
+	if len(p) == 0 || m.CurrentPageID >= len(p) {
 		return nil
 	}
-	return p[m.CurrentPageId]
+	return p[m.CurrentPageID]
 }
 
 // GetPageAt retrieves the page at the specified index from the Pages slice. If the index is out of range, it returns nil.
@@ -281,18 +277,18 @@ func (m BaseModel) GetPageAt(id int) contract.Page {
 	return p[id]
 }
 
-// GetPrevPageId calculates and returns the ID of the previous page in the Pages slice, wrapping around if necessary.
-func (m BaseModel) GetPrevPageId() int {
-	return (m.CurrentPageId - 1 + len(m.Pages)) % len(m.Pages)
+// GetPrevPageID calculates and returns the ID of the previous page in the Pages slice, wrapping around if necessary.
+func (m BaseModel) GetPrevPageID() int {
+	return (m.CurrentPageID - 1 + len(m.Pages)) % len(m.Pages)
 }
 
-// GetNextPageId calculates and returns the ID of the next page, cycling back to the start if the end is reached.
-func (m BaseModel) GetNextPageId() int {
-	return (m.CurrentPageId + 1) % len(m.Pages)
+// GetNextPageID calculates and returns the ID of the next page, cycling back to the start if the end is reached.
+func (m BaseModel) GetNextPageID() int {
+	return (m.CurrentPageID + 1) % len(m.Pages)
 }
 
-// GetDefaultPageId identifies and returns the index of the default page in the Pages slice. Defaults to 0 if none is found.
-func (m BaseModel) GetDefaultPageId() int {
+// GetDefaultPageID identifies and returns the index of the default page in the Pages slice. Defaults to 0 if none is found.
+func (m BaseModel) GetDefaultPageID() int {
 	for i, page := range m.Pages {
 		if page.GetPageSettings().IsDefault {
 			return i

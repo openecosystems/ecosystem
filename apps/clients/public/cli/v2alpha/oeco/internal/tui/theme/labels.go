@@ -40,7 +40,7 @@ func RenderLabels(sidebarWidth int, labels []data.Label, pillStyle lipgloss.Styl
 
 		// +1 for the space between labels
 		currentRowLabels = append(currentRowLabels, " ")
-		rowContentsWidth += 1
+		rowContentsWidth++
 	}
 
 	renderedRows = append(renderedRows, lipgloss.JoinHorizontal(lipgloss.Top, currentRowLabels...))

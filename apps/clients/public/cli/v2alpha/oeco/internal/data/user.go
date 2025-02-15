@@ -1,6 +1,24 @@
 package data
 
-// CurrentLoginName retrieves the name of the current logged-in user and returns it as a string, along with any potential error.
-func CurrentLoginName() (string, error) {
-	return "dimyjeannot", nil
+import (
+	"os"
+	"os/user"
+	"runtime"
+)
+
+// GetUserName get the current username for the logged in user
+func GetUserName() string {
+	username := ""
+
+	if runtime.GOOS == "windows" {
+		username = os.Getenv("USERNAME")
+	} else {
+		current, err := user.Current()
+		if err != nil {
+			return "oeco"
+		}
+		username = current.Username
+	}
+
+	return username
 }

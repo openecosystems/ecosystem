@@ -1,17 +1,17 @@
 package footer
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 	"strings"
-
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
 
 // Model represents the state and behavior of the application UI, managing sections, help views, and user interactions.
@@ -25,13 +25,13 @@ type Model struct {
 }
 
 // NewModel initializes and returns a new Model instance with default help settings and empty left and right sections.
-func NewModel(ctx *context.ProgramContext) Model {
+func NewModel(ctx *context.ProgramContext) *Model {
 	h := help.New()
 	h.ShowAll = true
 	h.Styles = ctx.Styles.Help.BubbleStyles
 	l := ""
 	r := ""
-	return Model{
+	return &Model{
 		ctx:          ctx,
 		help:         h,
 		leftSection:  &l,
@@ -40,7 +40,7 @@ func NewModel(ctx *context.ProgramContext) Model {
 }
 
 // Update handles incoming messages, updating the model state and determining the command to execute next.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch {
@@ -61,7 +61,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 // View generates the string representation of the current model state, including footer and optional help view.
-func (m Model) View() string {
+func (m *Model) View() string {
 	var footer string
 
 	if m.ShowConfirmQuit {
@@ -110,20 +110,20 @@ func (m Model) View() string {
 }
 
 // SetWidth sets the width of the help model to the specified value.
-func (m Model) SetWidth(width int) {
+func (m *Model) SetWidth(width int) {
 	m.help.Width = width
 }
 
 // UpdateProgramContext updates the model's context and applies styles from the updated context to the help view.
 //
 //nolint:staticcheck
-func (m Model) UpdateProgramContext(ctx *context.ProgramContext) {
+func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.ctx = ctx
 	m.help.Styles = ctx.Styles.Help.BubbleStyles
 }
 
 // renderViewSwitcher generates a horizontal view switcher string based on the current section and user context.
-func (m Model) renderViewSwitcher(ctx context.ProgramContext) string {
+func (m *Model) renderViewSwitcher(ctx context.ProgramContext) string {
 	var view string
 	if ctx.Section == config.EnclaveSection {
 		view += " Enclave"
@@ -151,11 +151,11 @@ func (m Model) renderViewSwitcher(ctx context.ProgramContext) string {
 }
 
 // SetLeftSection sets the content of the left section in the model footer view. Updates the `leftSection` field.
-func (m Model) SetLeftSection(leftSection string) {
+func (m *Model) SetLeftSection(leftSection string) {
 	*m.leftSection = leftSection
 }
 
 // SetRightSection sets the value of the right section in the Model.
-func (m Model) SetRightSection(rightSection string) {
+func (m *Model) SetRightSection(rightSection string) {
 	*m.rightSection = rightSection
 }

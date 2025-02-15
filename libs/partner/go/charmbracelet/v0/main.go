@@ -120,7 +120,6 @@ func (b *Binding) Override(conf *Configuration) error {
 		b.Logger.SetLevel(log.DebugLevel)
 	}
 
-	fmt.Println("verbose:", conf.App.Verbose)
 	if conf.App.Verbose {
 		b.Logger.SetReportCaller(true)
 	}

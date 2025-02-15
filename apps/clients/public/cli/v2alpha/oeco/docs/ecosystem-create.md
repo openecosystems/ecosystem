@@ -37,8 +37,6 @@ oeco ecosystem create
 - To create more accounts, use oeco account create
 
 ### Form
-- Pick a username. This will allow you
-- Pick a title for your ecosystem
 - Pick an ecosystem domain name. This will be your main domain {domain-name}.mesh
   - (go get -u github.com/segmentio/go-slugify)
 - Type

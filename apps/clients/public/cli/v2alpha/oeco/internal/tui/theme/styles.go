@@ -80,7 +80,7 @@ func InitStyles(theme Theme) Styles {
 		Faint(false).
 		Bold(true).
 		// Background(lipgloss.Color("#323DD6")).
-		Background(theme.PrimaryColor).
+		Background(theme.PrimaryColor500).
 		Padding(0, 1)
 	s.Tabs.Tab = lipgloss.NewStyle().
 		Faint(true).
@@ -100,7 +100,7 @@ func InitStyles(theme Theme) Styles {
 		BorderStyle(lipgloss.ThickBorder()).
 		BorderBottomForeground(theme.PrimaryBorder)
 	s.Tabs.ViewSwitcher = lipgloss.NewStyle().
-		Background(theme.PrimaryColor).
+		Background(theme.PrimaryColor500).
 		Foreground(theme.InvertedText).
 		Padding(0, 1).
 		Bold(true)

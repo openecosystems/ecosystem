@@ -21,7 +21,8 @@ var EcosystemServiceServiceCmd = &cobra.Command{
 }
 
 func init() {
-	EcosystemServiceServiceCmd.AddCommand(CreateEcosystemV2AlphaCmd)
+	// EcosystemServiceServiceCmd.AddCommand(CreateEcosystemV2AlphaCmd)
+	EcosystemServiceServiceCmd.AddCommand(Cmd)
 
 	EcosystemServiceServiceCmd.AddCommand(ListEcosystemsV2AlphaCmd)
 

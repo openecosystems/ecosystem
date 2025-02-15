@@ -1,12 +1,13 @@
 package context
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 )
 
 // State is an alias for the int type, commonly used to represent various states or stages in a process.
@@ -23,7 +24,7 @@ const (
 
 // Task represents a unit of work with its associated metadata and lifecycle states.
 type Task struct {
-	Id           string
+	ID           string
 	StartText    string
 	FinishedText string
 	State        State
@@ -54,7 +55,7 @@ type ProgramContext struct {
 	// Configurable
 	Section  config.SectionType
 	Page     config.PageType
-	Settings *specv2pb.SpecSettings
+	Settings *cliv2alphalib.Configuration
 	Config   *config.Config
 	Error    error
 

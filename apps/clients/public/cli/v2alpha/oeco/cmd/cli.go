@@ -11,9 +11,10 @@ import (
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
 
+	apiv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api"
 	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
 	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
-	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
+	enclavev2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/enclave"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	charmbraceletloggerv0 "libs/partner/go/charmbracelet/v0"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
@@ -158,16 +159,16 @@ func AddCommands(settings *cliv2alphalib.Configuration) {
 				continue
 			}
 
-			RootCmd.AddCommand(command.Commands()...)
+			apiv2alphapbint.APIServiceServiceCmd.AddCommand(command.Commands()...)
 		}
 	}
 
 	// Manually add certain system commands
+	RootCmd.AddCommand(enclavev2alphapbint.EnclaveServiceServiceCmd)
+	RootCmd.AddCommand(apiv2alphapbint.APIServiceServiceCmd)
 	RootCmd.AddCommand(ecosystemv2alphapbint.EcosystemServiceServiceCmd)
-	RootCmd.AddCommand(iamv2alphapbint.AccountAuthorityServiceServiceCmd)
-	RootCmd.AddCommand(iamv2alphapbint.AccountAuthorityServiceServiceCmd)
-	RootCmd.AddCommand(iamv2alphapbint.AccountServiceServiceCmd)
 	RootCmd.AddCommand(connectorv2alphatui.Cmd)
+	// Dash
 }
 
 // init initializes the logging handler, persistent flags, and markdown styling based on terminal background settings.

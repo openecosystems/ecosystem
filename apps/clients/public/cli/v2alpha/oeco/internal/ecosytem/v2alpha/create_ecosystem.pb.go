@@ -7,12 +7,13 @@ import (
 	"os"
 
 	"connectrpc.com/connect"
+
 	tea "github.com/charmbracelet/bubbletea"
 	clog "github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/iam/v2alpha"
+	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api/iam/v2alpha"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapbsdk "libs/public/go/sdk/gen/ecosystem/v2alpha"
@@ -41,7 +42,7 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 
 		p := tea.NewProgram(
 			model,
-			// tea.WithAltScreen(),
+			tea.WithAltScreen(),
 			tea.WithReportFocus(),
 			// tea.WithMouseCellMotion(),
 		)
@@ -52,15 +53,14 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 
 		if model.state == stateDone {
 			log.Info("Form completed!")
-			log.Info("Name:", model.Data.Name)
-			log.Info("Email:", model.Data.EcosystemType)
+			log.Info("Domain:", model.Data.Domain)
+			log.Info("Type:", model.Data.EcosystemType)
+			log.Info("CIDR:", model.Data.CIDR)
 
-			log.Info(model.Data)
+			log.Info("Done!")
 
 			//_r := ecosystemv2alphapb.CreateEcosystemRequest{}
 			//_r.Name = model.Data.Name
-
-			log.Debug("Calling createEcosystem ecosystem")
 
 			// Example JSON request argument
 			// requestArg := `{"name": "oeco"}`
@@ -77,14 +77,15 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 			// iamv2alphapbint.CreateAccountV2AlphaCmd.SetArgs([]string{"request", requestArg})
 			iamv2alphapbint.CreateAccountV2AlphaCmd.Run(cmd, []string{})
 
-			//_request, err := cmd.Flags().GetString("request")
-			//if err != nil {
-			//	fmt.Println(err)
-			//	os.Exit(1)
-			//}
-			//if _request == "" {
-			//	_request = "{}"
-			//}
+			// System presents form to User
+			// The User completes form
+			// System creates a new context file: {ecosystem-name}.yaml
+			// System calls create account authority <br/>internally to create a new Account Authority credential: <br/>api.{ecosystem-name}.mesh
+			// System calls create account <br/>internally to create a new Edge Service Account credential: <br/>edge.{ecosystem-name}.mesh. <br/>system assigns a reserved ipaddress
+			// System calls create account <br/>internally to create a new Local Machine Service Account credential: <br/>{sanitized.os.hostname}.{ecosystem-name}.mesh
+			// System calls provision edge <br/>internally to configure Edge: <br/>configurations/edge.{ecosystem-name}.mesh
+			// System calls provision ecosystem <br/>internally to configure ecosystem: <br/>configurations/api.{ecosystem-name}.mesh
+			// User deploys the Ecosystem following installation guide
 
 			_request := `{"name": "123"}`
 
@@ -117,12 +118,6 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 		}
 	},
 }
-
-//// init initializes the `Cmd` execution logic by setting up the model, logging, cleanup, and running the TUI program.
-//func init() {
-//	CreateEcosystemV2AlphaCmd.Run = func(cmd *cobra.Command, _ []string) {
-//	}
-//}
 
 // cleanup recovers from any panic that occurred and logs the recovery message before quitting the tea program.
 func cleanup() {
