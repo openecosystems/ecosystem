@@ -77,7 +77,7 @@ type initialize struct {
 
 // init initializes the application by parsing the configuration file and handling potential parsing errors.
 // Returns an `initialize` message containing the parsed configuration.
-func (m BaseModel) init() tea.Msg {
+func (m *BaseModel) init() tea.Msg {
 	cfg, err := config.ParseConfig()
 	if err != nil {
 		utils.ShowError(err)
@@ -88,12 +88,12 @@ func (m BaseModel) init() tea.Msg {
 }
 
 // InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
-func (m BaseModel) InitBase() tea.Cmd {
+func (m *BaseModel) InitBase() tea.Cmd {
 	return tea.Batch(m.init)
 }
 
 // UpdateBase processes incoming messages to update the state of the BaseModel and returns the updated model and command.
-func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
+func (m *BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
@@ -124,7 +124,7 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 		case key.Matches(message, keys.Keys.Quit):
 			if m.Ctx.Config.ConfirmQuit {
 				m.Footer, cmd = m.Footer.Update(msg)
-				return m, cmd
+				return *m, cmd
 			}
 			// cmd = tea.Quit
 		}
@@ -141,11 +141,11 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 
 	m.UpdateProgramContext(m.Ctx)
 
-	return m, tea.Batch(cmds...)
+	return *m, tea.Batch(cmds...)
 }
 
 // ViewBase generates and returns a string representation of the current UI, including tabs, content, error, and footer.
-func (m BaseModel) ViewBase(content string) string {
+func (m *BaseModel) ViewBase(content string) string {
 	s := strings.Builder{}
 	s.WriteString(m.Tabs.View())
 	s.WriteString("\n")
@@ -177,7 +177,7 @@ func (m BaseModel) ViewBase(content string) string {
 }
 
 // ViewDebug generates and returns a structured debug representation of the BaseModel's current state as a strings.Builder.
-func (m BaseModel) ViewDebug() *strings.Builder {
+func (m *BaseModel) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
 	s.WriteString("Section: " + string(m.Ctx.Section) + "\n")
@@ -223,7 +223,7 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 }
 
 // UpdateProgramContext updates the BaseModel's context and propagates it to tabs, the current page, and the footer.
-func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
+func (m *BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	// m.Ctx = ctx
 	m.Tabs.UpdateProgramContext(ctx)
 	if m.CurrentPage != nil {
@@ -233,7 +233,7 @@ func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 }
 
 // OnWindowSizeChanged updates context dimensions and page content size based on the new window size from the message.
-func (m BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
+func (m *BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
 	m.Ctx.ScreenWidth = msg.Width
 	m.Ctx.ScreenHeight = msg.Height
 	m.Ctx.PageContentWidth = m.Ctx.ScreenWidth
@@ -246,7 +246,7 @@ func (m BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
 }
 
 // SetCurrentPage sets the current page of the BaseModel to the page at the given ID, updates the context and tabs, and returns the page and its ID.
-func (m BaseModel) SetCurrentPage(id int) (contract.Page, int) {
+func (m *BaseModel) SetCurrentPage(id int) (contract.Page, int) {
 	p := m.GetPageAt(id)
 	if p == nil {
 		p = pages.NewEmptyModel(m.Ctx)
@@ -260,7 +260,7 @@ func (m BaseModel) SetCurrentPage(id int) (contract.Page, int) {
 }
 
 // GetCurrentPage returns the currently active page from the Pages slice based on the CurrentPageID. Returns nil if no valid page exists.
-func (m BaseModel) GetCurrentPage() contract.Page {
+func (m *BaseModel) GetCurrentPage() contract.Page {
 	p := m.Pages
 	if len(p) == 0 || m.CurrentPageID >= len(p) {
 		return nil
@@ -269,7 +269,7 @@ func (m BaseModel) GetCurrentPage() contract.Page {
 }
 
 // GetPageAt retrieves the page at the specified index from the Pages slice. If the index is out of range, it returns nil.
-func (m BaseModel) GetPageAt(id int) contract.Page {
+func (m *BaseModel) GetPageAt(id int) contract.Page {
 	p := m.Pages
 	if len(p) <= id {
 		return nil
@@ -278,17 +278,17 @@ func (m BaseModel) GetPageAt(id int) contract.Page {
 }
 
 // GetPrevPageID calculates and returns the ID of the previous page in the Pages slice, wrapping around if necessary.
-func (m BaseModel) GetPrevPageID() int {
+func (m *BaseModel) GetPrevPageID() int {
 	return (m.CurrentPageID - 1 + len(m.Pages)) % len(m.Pages)
 }
 
 // GetNextPageID calculates and returns the ID of the next page, cycling back to the start if the end is reached.
-func (m BaseModel) GetNextPageID() int {
+func (m *BaseModel) GetNextPageID() int {
 	return (m.CurrentPageID + 1) % len(m.Pages)
 }
 
 // GetDefaultPageID identifies and returns the index of the default page in the Pages slice. Defaults to 0 if none is found.
-func (m BaseModel) GetDefaultPageID() int {
+func (m *BaseModel) GetDefaultPageID() int {
 	for i, page := range m.Pages {
 		if page.GetPageSettings().IsDefault {
 			return i

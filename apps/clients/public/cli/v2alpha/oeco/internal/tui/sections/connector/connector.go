@@ -27,7 +27,7 @@ type Model struct {
 }
 
 // NewModel initializes and returns a new instance of the Model with the provided SpecSettings.
-func NewModel(settings *cliv2alphalib.Configuration) Model {
+func NewModel(settings *cliv2alphalib.Configuration) *Model {
 	m := Model{
 		keys:  keys.Keys,
 		tasks: map[string]context.Task{},
@@ -63,7 +63,7 @@ func NewModel(settings *cliv2alphalib.Configuration) Model {
 	m.Spinner.Style = lipgloss.NewStyle().
 		Background(m.Ctx.Theme.SelectedBackground)
 
-	return m
+	return &m
 }
 
 // Init initializes the model by batching the BaseModel initialization and enabling the alternative screen mode.

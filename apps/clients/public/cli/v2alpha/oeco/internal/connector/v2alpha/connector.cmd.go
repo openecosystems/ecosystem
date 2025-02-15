@@ -25,7 +25,7 @@ var Cmd = &cobra.Command{
 }
 
 // createModel initializes a connector model and optionally sets up logging based on the provided command flags.
-func createModel(cmd *cobra.Command, settings *cliv2alphalib.Configuration) (connector.Model, *os.File) {
+func createModel(cmd *cobra.Command, settings *cliv2alphalib.Configuration) (*connector.Model, *os.File) {
 	var loggerFile *os.File
 
 	d := cmd.Flag("debug").Value.String()
