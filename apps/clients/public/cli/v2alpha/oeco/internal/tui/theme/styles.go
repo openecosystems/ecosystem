@@ -47,6 +47,7 @@ type Styles struct {
 		ContentPadding int
 		Root           lipgloss.Style
 		PagerStyle     lipgloss.Style
+		StatusHeader   lipgloss.Style
 	}
 	Table struct {
 		CellStyle                lipgloss.Style
@@ -64,9 +65,18 @@ type Styles struct {
 	CommentBox struct {
 		Text lipgloss.Style
 	}
+	StatusBox struct {
+		Box lipgloss.Style
+	}
 	Pager struct {
 		Height int
 		Root   lipgloss.Style
+	}
+	Header struct {
+		H1Text      lipgloss.Style
+		H1TextError lipgloss.Style
+		H2Text      lipgloss.Style
+		H2TextError lipgloss.Style
 	}
 }
 
@@ -179,6 +189,9 @@ func InitStyles(theme Theme) Styles {
 		Height(s.Sidebar.PagerHeight).
 		Bold(true).
 		Foreground(theme.FaintText)
+	s.Sidebar.StatusHeader = lipgloss.NewStyle().
+		Foreground(DefaultTheme.TertiaryColor500).
+		Bold(true)
 
 	s.Table.CellStyle = lipgloss.NewStyle().PaddingLeft(1).
 		PaddingRight(1).
@@ -212,6 +225,9 @@ func InitStyles(theme Theme) Styles {
 
 	s.CommentBox.Text = s.Help.Text
 
+	s.StatusBox.Box = lipgloss.NewStyle().
+		PaddingLeft(1).MarginTop(1)
+
 	s.Pager.Height = 2
 	s.Pager.Root = lipgloss.NewStyle().
 		Height(s.Pager.Height).
@@ -219,6 +235,19 @@ func InitStyles(theme Theme) Styles {
 		PaddingTop(1).
 		Bold(true).
 		Foreground(theme.FaintText)
+
+	s.Header.H1Text = lipgloss.NewStyle().
+		Foreground(DefaultTheme.PrimaryColor500).
+		Bold(true).
+		Padding(0, 1, 0, 2)
+	s.Header.H1TextError = s.Header.H1Text.
+		Foreground(DefaultTheme.ErrorColor)
+	s.Header.H2Text = lipgloss.NewStyle().
+		Foreground(DefaultTheme.TertiaryColor500).
+		Bold(true).
+		Padding(0, 1, 0, 2)
+	s.Header.H2TextError = s.Header.H1Text.
+		Foreground(DefaultTheme.ErrorColor)
 
 	return s
 }

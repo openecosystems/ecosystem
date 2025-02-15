@@ -1,6 +1,7 @@
 package ecosystemcreateform
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -16,41 +17,6 @@ import (
 
 // maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.
 const maxWidth = 80
-
-// Styles is a container for styling various UI components using lipgloss styles.
-type Styles struct {
-	Base,
-	HeaderText,
-	Status,
-	StatusHeader,
-	Highlight,
-	ErrorHeaderText,
-	Help lipgloss.Style
-}
-
-// NewStyles initializes and returns a Styles struct with predefined lipgloss styles for UI components.
-func NewStyles(lg *lipgloss.Renderer) *Styles {
-	s := Styles{}
-	s.Base = lg.NewStyle().
-		Padding(1, 4, 0, 1)
-	s.HeaderText = lg.NewStyle().
-		Foreground(theme.DefaultTheme.PrimaryColor500).
-		Bold(true).
-		Padding(0, 1, 0, 2)
-	s.Status = lg.NewStyle().
-		PaddingLeft(1).
-		MarginTop(1)
-	s.StatusHeader = lg.NewStyle().
-		Foreground(theme.DefaultTheme.TertiaryColor500).
-		Bold(true)
-	s.Highlight = lg.NewStyle().
-		Foreground(lipgloss.Color("212"))
-	s.ErrorHeaderText = s.HeaderText.
-		Foreground(theme.DefaultTheme.SecondaryColor500)
-	s.Help = lg.NewStyle().
-		Foreground(lipgloss.Color("240"))
-	return &s
-}
 
 // state represents the application states and is typically used with iota to define specific states.
 type state int
@@ -83,17 +49,17 @@ var (
 type Model struct {
 	state        state
 	lg           *lipgloss.Renderer
-	styles       *Styles
+	styles       *theme.Styles
 	form         *huh.Form
 	renderedForm string
 	width        int
 }
 
 // NewModel initializes and returns a new Model with predefined configurations and styles.
-func NewModel(_ *context.ProgramContext) Model {
+func NewModel(pctx *context.ProgramContext) Model {
 	m := Model{width: maxWidth}
 	m.lg = lipgloss.DefaultRenderer()
-	m.styles = NewStyles(m.lg)
+	m.styles = &pctx.Styles
 
 	m.form = huh.NewForm(
 		huh.NewGroup(
@@ -134,7 +100,7 @@ func NewModel(_ *context.ProgramContext) Model {
 				Title("Register and begin listening?").
 				Validate(func(v bool) error {
 					if !v {
-						return fmt.Errorf("let's finish up")
+						return errors.New("let's finish up")
 					}
 					return nil
 				}).
@@ -165,19 +131,15 @@ func minimum(x, y int) int {
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
-		m.width = minimum(msg.Width, maxWidth) - m.styles.Base.GetHorizontalFrameSize()
+		m.width = minimum(msg.Width, maxWidth) - m.styles.MainContent.ContainerStyle.GetHorizontalFrameSize()
 	}
 
 	var cmds []tea.Cmd
 
-	form, cmd := m.form.Update(msg)
-	if f, ok := form.(*huh.Form); ok {
+	frm, cmd := m.form.Update(msg)
+	if f, ok := frm.(*huh.Form); ok {
 		m.form = f
 		cmds = append(cmds, cmd)
-	}
-
-	if m.form.State == huh.StateCompleted {
-		// cmds = append(cmds, tea.Quit)
 	}
 
 	return m, tea.Batch(cmds...)
@@ -190,31 +152,31 @@ func (m Model) View() string {
 	switch m.form.State {
 	case huh.StateCompleted:
 		title, role := m.getRole()
-		title = s.Highlight.Render(title)
+		title = s.Header.H2Text.Render(title)
 		var b strings.Builder
 		fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
 		fmt.Fprintf(&b, "Your job description is as follows:\n\n%s\n\nPlease proceed to HR immediately.", role)
-		return s.Status.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
+		return s.StatusBox.Box.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
 	default:
 
 		// Form (left side)
 		v := strings.TrimSuffix(m.form.View(), "\n\n")
-		form := m.lg.NewStyle().Margin(1, 0).Render(v)
-		m.renderedForm = form
+		frm := m.lg.NewStyle().Margin(1, 0).Render(v)
+		m.renderedForm = frm
 
-		errors := m.form.Errors()
+		errs := m.form.Errors()
 		//header := m.appBoundaryView("Charm Employment Application")
 		//if len(errors) > 0 {
 		//	header = m.appErrorBoundaryView(m.errorView())
 		//}
-		body := lipgloss.JoinHorizontal(lipgloss.Top, form)
+		body := lipgloss.JoinHorizontal(lipgloss.Top, frm)
 
 		footer := m.appBoundaryView(m.form.Help().ShortHelpView(m.form.KeyBinds()))
-		if len(errors) > 0 {
+		if len(errs) > 0 {
 			footer = m.appErrorBoundaryView("")
 		}
 
-		return s.Base.Render(body + "\n\n" + footer)
+		return s.MainContent.ContainerStyle.Render(body + "\n\n" + footer)
 	}
 }
 
@@ -225,11 +187,11 @@ func (m Model) SidebarView() string {
 	switch m.form.State {
 	case huh.StateCompleted:
 		title, role := m.getRole()
-		title = s.Highlight.Render(title)
+		title = s.Header.H2Text.Render(title)
 		var b strings.Builder
 		fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
 		fmt.Fprintf(&b, "Your job description is as follows:\n\n%s\n\nPlease proceed to HR immediately.", role)
-		return s.Status.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
+		return s.StatusBox.Box.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
 	default:
 
 		var class string
@@ -249,26 +211,27 @@ func (m Model) SidebarView() string {
 			if m.form.GetString("level") != "" {
 				level = "Level: " + m.form.GetString("level")
 				role, jobDescription = m.getRole()
-				role = "\n\n" + s.StatusHeader.Render("Projected Role") + "\n" + role
-				jobDescription = "\n\n" + s.StatusHeader.Render("Duties") + "\n" + jobDescription
+				role = "\n\n" + s.Sidebar.StatusHeader.Render("Projected Role") + "\n" + role
+				jobDescription = "\n\n" + s.Sidebar.StatusHeader.Render("Duties") + "\n" + jobDescription
 			}
 			if m.form.GetString("class") != "" {
 				buildInfo = fmt.Sprintf("%s\n%s", class, level)
 			}
 
 			const statusWidth = 28
-			statusMarginLeft := m.width - statusWidth - lipgloss.Width(m.renderedForm) - s.Status.GetMarginRight()
-			status = s.Status.
+			statusMarginLeft := m.width - statusWidth - lipgloss.Width(m.renderedForm) - s.StatusBox.Box.GetMarginRight()
+			status = s.StatusBox.Box.
 				Height(lipgloss.Height(m.renderedForm)).
 				Width(statusWidth).
 				MarginLeft(statusMarginLeft).
-				Render(s.StatusHeader.Render("Current Build") + "\n" +
+				Render(s.Header.H1Text.Render("Current Build") + "\n" +
 					buildInfo +
 					role +
 					jobDescription)
 		}
 		body := lipgloss.JoinHorizontal(lipgloss.Top, status)
-		return s.Base.Render(body)
+		return s.Sidebar.Root.Render(body)
+		// return s.Base.Render(body)
 	}
 }
 
@@ -286,7 +249,7 @@ func (m Model) appBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
 		lipgloss.Left,
-		m.styles.HeaderText.Render(text),
+		m.styles.Header.H1Text.Render(text),
 		// lipgloss.WithWhitespaceForeground(indigo),
 	)
 }
@@ -296,7 +259,7 @@ func (m Model) appErrorBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
 		lipgloss.Left,
-		m.styles.ErrorHeaderText.Render(text),
+		m.styles.Header.H1TextError.Render(text),
 		lipgloss.WithWhitespaceChars("/"),
 		lipgloss.WithWhitespaceForeground(theme.DefaultTheme.SecondaryColor500),
 	)
