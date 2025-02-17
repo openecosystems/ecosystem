@@ -116,7 +116,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //
 //	finishCmd := func() tea.Msg {
 //		return constants.TaskFinishedMsg{
-//			TaskId: id,
+//			TaskID: id,
 //		}
 //	}
 //
@@ -135,7 +135,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //
 //	finishCmd := func() tea.Msg {
 //		return constants.TaskFinishedMsg{
-//			TaskId: id,
+//			TaskID: id,
 //			Err:    errors.New(text),
 //		}
 //	}

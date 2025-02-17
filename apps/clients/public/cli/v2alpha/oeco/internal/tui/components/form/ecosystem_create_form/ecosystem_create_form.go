@@ -9,7 +9,6 @@ import (
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
 
-	form "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
@@ -18,35 +17,28 @@ import (
 // maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.
 const maxWidth = 80
 
-// state represents the application states and is typically used with iota to define specific states.
+// state represents an integer-based enumeration to define various states in a model or application logic.
 type state int
 
-// statusNormal represents the default or normal state in the state enum.
-// stateDone indicates that the process or operation is complete in the state enum.
+// statusNormal represents the default or normal state.
+// stateDone represents the completed or finished state.
 const (
 	statusNormal state = iota
 	stateDone
 )
 
-// burger represents the type of burger being prepared or served.
-// toppings holds a list of toppings added to the burger.
-// classifications categorizes the burger based on its type or style.
-// sauceLevel indicates the amount of sauce applied to the burger.
-// name is the name of the burger or dish.
-// instructions contain preparation or serving instructions for the burger.
-// discount determines whether a discount is applicable to the burger.
-var (
-	burger          string
-	toppings        []string
-	classifications []string
-	sauceLevel      int
-	name            string
-	instructions    string
-	discount        bool
-)
+// CreateEcosystemData defines the structure for encapsulating information related to creating an ecosystem.
+// It includes the domain, type of ecosystem, and CIDR notation for the network.
+type CreateEcosystemData struct {
+	Domain        string
+	EcosystemType string
+	CIDR          string
+}
 
 // Model represents the main application model containing state, renderer, styles, form, rendered form, and layout width.
 type Model struct {
+	Data *CreateEcosystemData
+
 	state        state
 	lg           *lipgloss.Renderer
 	styles       *theme.Styles
@@ -56,67 +48,66 @@ type Model struct {
 }
 
 // NewModel initializes and returns a new Model with predefined configurations and styles.
-func NewModel(pctx *context.ProgramContext) Model {
-	m := Model{width: maxWidth}
+func NewModel(pctx *context.ProgramContext) *Model {
+	m := Model{width: maxWidth, state: statusNormal}
 	m.lg = lipgloss.DefaultRenderer()
 	m.styles = &pctx.Styles
 
+	var data CreateEcosystemData
+
 	m.form = huh.NewForm(
 		huh.NewGroup(
-			huh.NewSelect[string]().
-				Key("class").
-				Options(huh.NewOptions("Warrior", "Mage", "Rogue")...).
-				Title("Choose your class").
-				Description("This will determine your department"),
 
-			huh.NewSelect[string]().
-				Key("level").
-				Options(huh.NewOptions("1", "20", "9999")...).
-				Title("Choose your level").
-				Description("This will determine your benefits package"),
+			huh.NewInput().
+				Key("domain").
+				Title("Pick a domain name").
+				DescriptionFunc(func() string {
+					if data.Domain == "" {
+						return "For example if you choose 'oeco', your domain name will be 'oeco.mesh'"
+					}
+					return "Your domain name will be: " + data.Domain + ".mesh"
+				}, &data).
+				Suggestions([]string{"For example 'oeco'"}).
+				Prompt("? ").
+				// Validate(isFood).
+				Value(&data.Domain).WithHeight(29),
 
 			huh.NewSelect[string]().
 				Key("type").
-				Options(huh.NewOptions("Warrior", "Mage", "Rogue")...).
-				Title("What connector type?").
-				Description("This will determine your department"),
+				Options(huh.NewOptions("Private", "Public")...).
+				Title("Choose your ecosystem type").
+				Description("This will impact how people access your ecosystem").
+				Value(&data.EcosystemType),
 
-			huh.NewMultiSelect[string]().
-				Options(
-					huh.NewOption("Lettuce", "Lettuce").Selected(true),
-					huh.NewOption("Tomatoes", "Tomatoes").Selected(true),
-					huh.NewOption("Charm Sauce", "Charm Sauce"),
-					huh.NewOption("Jalapeños", "Jalapeños"),
-					huh.NewOption("Cheese", "Cheese"),
-					huh.NewOption("Vegan Cheese", "Vegan Cheese"),
-					huh.NewOption("Nutella", "Nutella"),
-				).
-				Title("Data Classification").
-				Limit(4).
-				Value(&classifications),
+			huh.NewSelect[string]().
+				Key("cidr").
+				Options(huh.NewOptions("192.168.0.0/16", "172.16.0.0/12", "10.0.0.0/8", "100.64.0.0/10")...).
+				Title("Choose your CIDR block").
+				Description("The range you choose must be part of the RFC 1918 Private Address Space or the RFC 6598 Shared Address Space.").
+				Value(&data.CIDR),
 
-			form.NewConfirm().
+			huh.NewConfirm().
 				Key("done").
-				Title("Register and begin listening?").
+				Title("All done?").
 				Validate(func(v bool) error {
 					if !v {
-						return errors.New("let's finish up")
+						return errors.New("we found issues")
 					}
 					return nil
 				}).
 				Affirmative("Yes").
-				Negative("Wait, No"),
+				Negative("Wait, no"),
 		),
 	).
-		WithWidth(45).
+		WithWidth(80).
 		WithShowHelp(false).
 		WithShowErrors(false).
 		WithTheme(theme.FormTheme()).
 		WithKeyMap(keys.NewFormKeyMap())
 
 	m.form.Init()
-
-	return m
+	m.Data = &data
+	return &m
 }
 
 // minimum returns the smaller of two integers, x and y. If x is less than or equal to y, it returns x; otherwise, it returns y.
@@ -128,7 +119,7 @@ func minimum(x, y int) int {
 }
 
 // Update processes the incoming message, updates the model's state, and returns the updated model along with commands.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.width = minimum(msg.Width, maxWidth) - m.styles.MainContent.ContainerStyle.GetHorizontalFrameSize()
@@ -146,97 +137,114 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 // View renders the current state of the model as a string for display in the terminal. It adapts based on the form state.
-func (m Model) View() string {
-	s := m.styles
-
+func (m *Model) View() string {
 	switch m.form.State {
 	case huh.StateCompleted:
-		title, role := m.getRole()
-		title = s.Header.H2Text.Render(title)
-		var b strings.Builder
-		fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
-		fmt.Fprintf(&b, "Your job description is as follows:\n\n%s\n\nPlease proceed to HR immediately.", role)
-		return s.StatusBox.Box.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
+		return m.CompletedView()
 	default:
-
-		// Form (left side)
-		v := strings.TrimSuffix(m.form.View(), "\n\n")
-		frm := m.lg.NewStyle().Margin(1, 0).Render(v)
-		m.renderedForm = frm
-
-		errs := m.form.Errors()
-		//header := m.appBoundaryView("Charm Employment Application")
-		//if len(errors) > 0 {
-		//	header = m.appErrorBoundaryView(m.errorView())
-		//}
-		body := lipgloss.JoinHorizontal(lipgloss.Top, frm)
-
-		footer := m.appBoundaryView(m.form.Help().ShortHelpView(m.form.KeyBinds()))
-		if len(errs) > 0 {
-			footer = m.appErrorBoundaryView("")
-		}
-
-		return s.MainContent.ContainerStyle.Render(body + "\n\n" + footer)
+		return m.InProgressView()
 	}
+}
+
+// InProgressView renders the view for the state when the form is in progress, combining the form and help view with styling.
+func (m *Model) InProgressView() string {
+	s := m.styles
+	v := strings.TrimSuffix(m.form.View(), "\n\n")
+	frm := m.lg.NewStyle().Margin(1, 0).Render(v)
+	m.renderedForm = frm
+
+	errs := m.form.Errors()
+	body := lipgloss.JoinHorizontal(lipgloss.Top, frm)
+
+	footer := m.appBoundaryView(m.form.Help().ShortHelpView(m.form.KeyBinds()))
+	if len(errs) > 0 {
+		footer = m.appErrorBoundaryView("")
+	}
+
+	return s.MainContent.ContainerStyle.Render(body + "\n\n" + footer)
+}
+
+// CompletedView generates a congratulatory message for the user upon form completion, including their new role and description.
+func (m *Model) CompletedView() string {
+	s := m.styles
+	title, role := m.getRole()
+	title = s.Header.H2Text.Render(title)
+	var b strings.Builder
+	_, _ = fmt.Fprintf(&b, "Congratulations, your Ecosystem configuration is ready.\n%s!\n\n", title)
+	_, _ = fmt.Fprintf(&b, "Please follow the documentation \n\n%s\n\nto get the Ecosystem started.", role)
+	return s.StatusBox.Box.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
 }
 
 // SidebarView generates the sidebar UI component for the form, displaying current build details and projected role information.
-func (m Model) SidebarView() string {
-	s := m.styles
-
+func (m *Model) SidebarView() string {
 	switch m.form.State {
 	case huh.StateCompleted:
-		title, role := m.getRole()
-		title = s.Header.H2Text.Render(title)
-		var b strings.Builder
-		fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
-		fmt.Fprintf(&b, "Your job description is as follows:\n\n%s\n\nPlease proceed to HR immediately.", role)
-		return s.StatusBox.Box.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
+		return m.SideBarCompletedView()
 	default:
-
-		var class string
-		if m.form.GetString("class") != "" {
-			class = "Class: " + m.form.GetString("class")
-		}
-
-		var status string
-		{
-			var (
-				buildInfo      = "(None)"
-				role           string
-				jobDescription string
-				level          string
-			)
-
-			if m.form.GetString("level") != "" {
-				level = "Level: " + m.form.GetString("level")
-				role, jobDescription = m.getRole()
-				role = "\n\n" + s.Sidebar.StatusHeader.Render("Projected Role") + "\n" + role
-				jobDescription = "\n\n" + s.Sidebar.StatusHeader.Render("Duties") + "\n" + jobDescription
-			}
-			if m.form.GetString("class") != "" {
-				buildInfo = fmt.Sprintf("%s\n%s", class, level)
-			}
-
-			const statusWidth = 28
-			statusMarginLeft := m.width - statusWidth - lipgloss.Width(m.renderedForm) - s.StatusBox.Box.GetMarginRight()
-			status = s.StatusBox.Box.
-				Height(lipgloss.Height(m.renderedForm)).
-				Width(statusWidth).
-				MarginLeft(statusMarginLeft).
-				Render(s.Header.H1Text.Render("Current Build") + "\n" +
-					buildInfo +
-					role +
-					jobDescription)
-		}
-		body := lipgloss.JoinHorizontal(lipgloss.Top, status)
-		return s.Sidebar.Root.Render(body)
-		// return s.Base.Render(body)
+		return m.SideBarInProgressView()
 	}
 }
 
-// errorView generates a string containing all error messages from the form's Errors method and concatenates them.
-func (m Model) errorView() string {
+// SideBarInProgressView generates a styled sidebar view displaying current build status, projected role, and related information.
+func (m *Model) SideBarInProgressView() string {
+	s := m.styles
+
+	var domain string
+	if m.form.GetString("domain") != "" {
+		domain = "Domain Name: " + m.form.GetString("domain") + ".mesh" +
+			"\n\n" + "Edge Endpoint: edge." + m.form.GetString("domain") + ".mesh" +
+			"\n\n" + "Mesh Endpoint: api." + m.form.GetString("domain") + ".mesh"
+	}
+
+	var status string
+	{
+		var (
+			domainInfo     = "(None)"
+			role           string
+			jobDescription string
+			eType          string
+		)
+
+		if m.form.GetString("type") != "" {
+			eType = "Type: " + m.form.GetString("type")
+			role, jobDescription = m.getRole()
+			role = "\n\n" + s.Sidebar.StatusHeader.Render("Ecosystem Role") + "\n" + role
+			jobDescription = "\n\n" + s.Sidebar.StatusHeader.Render("Duties") + "\n" + jobDescription
+		}
+		if m.form.GetString("domain") != "" {
+			domainInfo = fmt.Sprintf("%s\n%s", domain, eType)
+		}
+
+		// const statusWidth = 28
+		// statusMarginLeft := m.width - statusWidth - lipgloss.Width(m.renderedForm) - s.StatusBox.Box.GetMarginRight()
+		status = s.StatusBox.Box.
+			Height(lipgloss.Height(m.renderedForm)).
+			// Width(statusWidth).
+			// MarginLeft(statusMarginLeft).
+			Render(s.Header.H1Text.Render("Ecosystem Details") + "\n" +
+				domainInfo +
+				role +
+				jobDescription)
+	}
+
+	body := lipgloss.JoinHorizontal(lipgloss.Top, status)
+
+	return s.Sidebar.ContainerStyle.Render(body)
+}
+
+// SideBarCompletedView generates a congratulatory view for the user upon form completion, displaying their new role and description.
+func (m *Model) SideBarCompletedView() string {
+	s := m.styles
+	title, role := m.getRole()
+	title = s.Header.H2Text.Render(title)
+	var b strings.Builder
+	_, _ = fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
+	_, _ = fmt.Fprintf(&b, "Your job description is as follows:\n\n%s\n\nPlease proceed to HR immediately.", role)
+	return s.StatusBox.Box.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
+}
+
+// errorView aggregates and returns all error messages from the model's form as a single concatenated string.
+func (m *Model) errorView() string {
 	var s string
 	for _, err := range m.form.Errors() {
 		s += err.Error()
@@ -245,7 +253,7 @@ func (m Model) errorView() string {
 }
 
 // appBoundaryView formats and horizontally aligns the provided text based on the model's width and style configurations.
-func (m Model) appBoundaryView(text string) string {
+func (m *Model) appBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
 		lipgloss.Left,
@@ -255,7 +263,7 @@ func (m Model) appBoundaryView(text string) string {
 }
 
 // appErrorBoundaryView renders an error-styled boundary with the given text, formatted to fit within the defined width.
-func (m Model) appErrorBoundaryView(text string) string {
+func (m *Model) appErrorBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
 		lipgloss.Left,
@@ -265,12 +273,12 @@ func (m Model) appErrorBoundaryView(text string) string {
 	)
 }
 
-// getRole returns the role title and description based on the class and level obtained from the form data.
-func (m Model) getRole() (string, string) {
-	level := m.form.GetString("level")
-	switch m.form.GetString("class") {
-	case "Warrior":
-		switch level {
+// getRole determines the role and its description based on the class and level values retrieved from the form.
+func (m *Model) getRole() (string, string) {
+	eType := m.form.GetString("type")
+	switch m.form.GetString("type") {
+	case "Private":
+		switch eType {
 		case "1":
 			return "Tank Intern", "Assists with tank-related activities. Paid position."
 		case "9999":
@@ -278,23 +286,14 @@ func (m Model) getRole() (string, string) {
 		default:
 			return "Tank", "General tank. Does damage, takes damage. Responsible for tanking."
 		}
-	case "Mage":
-		switch level {
+	case "Public":
+		switch eType {
 		case "1":
 			return "DPS Associate", "Finds DPS deals and passes them on to DPS Manager."
 		case "9999":
 			return "DPS Operating Officer", "Oversees all DPS activities."
 		default:
 			return "DPS", "Does damage and ideally does not take damage. Logs hours in JIRA."
-		}
-	case "Rogue":
-		switch level {
-		case "1":
-			return "Stealth Junior Designer", "Designs rogue-like activities. Reports to Stealth Lead."
-		case "9999":
-			return "Stealth Lead", "Lead designer for all things stealth. Some travel required."
-		default:
-			return "Sneaky Person", "Sneaks around and does sneaky things. Reports to Stealth Lead."
 		}
 	default:
 		return "", ""

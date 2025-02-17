@@ -2,21 +2,26 @@ package sections
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	log "github.com/charmbracelet/log"
 
 	footer "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
 	tabs "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
@@ -34,6 +39,7 @@ type BaseModel struct {
 	Keys          keys.KeyMap
 	SingularForm  string
 	PluralForm    string
+	Tasks         map[string]context.Task
 }
 
 // NewBaseOptions holds configuration for initializing a base model with singular/plural names, pages, and settings.
@@ -52,16 +58,20 @@ func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel
 		p = options.Pages
 	}
 
+	taskSpinner := spinner.Model{Spinner: spinner.Dot}
+
 	m := BaseModel{
 		Ctx:          ctx,
-		Spinner:      spinner.Model{Spinner: spinner.Dot},
+		Spinner:      taskSpinner,
 		SingularForm: options.Singular,
 		PluralForm:   options.Plural,
 		Pages:        p,
 		Tabs:         tabs.NewModel(ctx, p),
 		Footer:       footer.NewModel(ctx),
+		Tasks:        map[string]context.Task{},
 	}
 
+	m.Spinner.Style = lipgloss.NewStyle().Background(m.Ctx.Theme.SelectedBackground)
 	m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(options.CurrentPageID)
 	m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 	m.Ctx.Settings = options.Settings
@@ -115,6 +125,7 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 			m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 
 		case key.Matches(message, keys.Keys.Help):
+			cmds = append(cmds, tasks.OpenBrowser(m.Ctx))
 			if !m.Footer.ShowAll {
 				m.Ctx.PageContentHeight = m.Ctx.PageContentHeight + theme.FooterHeight - theme.ExpandedHelpHeight
 			} else {
@@ -134,9 +145,36 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 		m.Ctx.Config = &message.Config
 		m.Ctx.Theme = theme.ParseTheme(m.Ctx.Config)
 		m.Ctx.Styles = theme.InitStyles(m.Ctx.Theme)
-		m.Ctx.Section = m.Ctx.Config.Defaults.Section
-		m.Ctx.Page = m.Ctx.Config.Defaults.Page
 		m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetDefaultPageID())
+	case constants.TaskFinishedMsg:
+		fmt.Println("TASK FINISHED")
+		task, ok := m.Tasks[message.TaskID]
+		if ok {
+			log.Debug("Task finished", "id", task.ID)
+			if message.Err != nil {
+				log.Error("Task finished with error", "id", task.ID, "err", message.Err)
+				task.State = context.TaskError
+				task.Error = message.Err
+			} else {
+				task.State = context.TaskFinished
+			}
+			now := time.Now()
+			task.FinishedTime = &now
+			m.Tasks[message.TaskID] = task
+			clr := tea.Tick(2*time.Second, func(_ time.Time) tea.Msg {
+				return constants.ClearTaskMsg{TaskID: message.TaskID}
+			})
+			cmds = append(cmds, clr)
+		}
+
+	case spinner.TickMsg:
+		if len(m.Tasks) > 0 {
+			taskSpinner, internalTickCmd := m.Spinner.Update(msg)
+			m.Spinner = taskSpinner
+			rTask := m.RenderRunningTask()
+			m.Footer.SetRightSection(rTask)
+			cmds = append(cmds, internalTickCmd)
+		}
 	}
 
 	m.UpdateProgramContext(m.Ctx)
@@ -296,4 +334,70 @@ func (m *BaseModel) GetDefaultPageID() int {
 	}
 
 	return 0
+}
+
+// RenderRunningTask returns a styled string representation of the currently running task and its status, including task count stats.
+func (m *BaseModel) RenderRunningTask() string {
+	tks := make([]context.Task, 0, len(m.Tasks))
+	for _, value := range m.Tasks {
+		tks = append(tks, value)
+	}
+	sort.Slice(tks, func(i, j int) bool {
+		if tks[i].FinishedTime != nil && tks[j].FinishedTime == nil {
+			return false
+		}
+		if tks[j].FinishedTime != nil && tks[i].FinishedTime == nil {
+			return true
+		}
+		if tks[j].FinishedTime != nil && tks[i].FinishedTime != nil {
+			return tks[i].FinishedTime.After(*tks[j].FinishedTime)
+		}
+
+		return tks[i].StartTime.After(tks[j].StartTime)
+	})
+	task := tks[0]
+
+	var currTaskStatus string
+	switch task.State {
+	case context.TaskStart:
+		currTaskStatus = lipgloss.NewStyle().
+			Background(m.Ctx.Theme.SelectedBackground).
+			Render(
+				fmt.Sprintf(
+					"%s%s",
+					m.Spinner.View(),
+					task.StartText,
+				))
+	case context.TaskError:
+		currTaskStatus = lipgloss.NewStyle().
+			Foreground(m.Ctx.Theme.ErrorText).
+			Background(m.Ctx.Theme.SelectedBackground).
+			Render(fmt.Sprintf("%s %s", constants.FailureIcon, task.Error.Error()))
+	case context.TaskFinished:
+		currTaskStatus = lipgloss.NewStyle().
+			Foreground(m.Ctx.Theme.SuccessText).
+			Background(m.Ctx.Theme.SelectedBackground).
+			Render(fmt.Sprintf("%s %s", constants.SuccessIcon, task.FinishedText))
+	}
+
+	var numProcessing int
+	for _, tsk := range m.Tasks {
+		if tsk.State == context.TaskStart {
+			numProcessing++
+		}
+	}
+
+	stats := ""
+	if numProcessing > 1 {
+		stats = lipgloss.NewStyle().
+			Foreground(m.Ctx.Theme.FaintText).
+			Background(m.Ctx.Theme.SelectedBackground).
+			Render(fmt.Sprintf("[ %d] ", numProcessing))
+	}
+
+	return lipgloss.NewStyle().
+		Padding(0, 1).
+		MaxHeight(1).
+		Background(m.Ctx.Theme.SelectedBackground).
+		Render(strings.TrimSpace(lipgloss.JoinHorizontal(lipgloss.Top, stats, currTaskStatus)))
 }

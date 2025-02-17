@@ -33,10 +33,10 @@ func NewModel(ctx *context.ProgramContext) *Model {
 
 	f := ecosystemcreateform.NewModel(ctx)
 	p := Model{
-		form: &f,
+		form: f,
 	}
-	p.mainContent = ecosystemcreatecontent.NewModel(ctx, &f)
-	p.sidebar = ecosystemcreatesidebar.NewModel(ctx, &f)
+	p.mainContent = ecosystemcreatecontent.NewModel(ctx, f)
+	p.sidebar = ecosystemcreatesidebar.NewModel(ctx, f)
 
 	p.BaseModel = pages.NewBaseModel[ModelConfig](
 		ctx,

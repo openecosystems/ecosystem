@@ -41,6 +41,7 @@ use (
 	./libs/partner/go/server/v2alpha
 	./libs/partner/go/protobuf
     ./libs/partner/go/model
+    ./libs/partner/go/github/v3
     ./libs/partner/go
 
 	// Plugin libraries

@@ -60,7 +60,7 @@ func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
 	f, formCmd := m.form.Update(msg)
-	m.form = &f
+	m.form = f
 	m.Viewport.SetContent(m.introduction + m.form.View())
 	m.Viewport, viewportCmd = m.Viewport.Update(msg)
 

@@ -63,6 +63,7 @@ sequenceDiagram
     S->>CLI: System calls create account <br/>internally to create a new Local Machine Service Account credential: <br/>{sanitized.os.hostname}.{ecosystem-name}.mesh
     S->>CLI: System calls provision edge <br/>internally to configure Edge: <br/>configurations/edge.{ecosystem-name}.mesh
     S->>CLI: System calls provision ecosystem <br/>internally to configure ecosystem: <br/>configurations/api.{ecosystem-name}.mesh
+    S->>CLI: System calls documentation client <br/>to pull markdown instructions for next steps
     U-->>E: User deploys the Ecosystem following installation guide
 ```
 

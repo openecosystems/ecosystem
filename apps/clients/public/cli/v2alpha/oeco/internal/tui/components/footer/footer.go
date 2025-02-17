@@ -68,11 +68,11 @@ func (m *Model) View() string {
 		footer = lipgloss.NewStyle().Render("Really quit? (Press q/esc again to quit)")
 	} else {
 		helpIndicator := lipgloss.NewStyle().
-			Background(m.ctx.Theme.FaintText).
+			Background(m.ctx.Theme.InvertedText).
 			Foreground(m.ctx.Theme.SelectedBackground).
 			Padding(0, 1).
 			Render("? help")
-		viewSwitcher := m.renderViewSwitcher(*m.ctx)
+		viewSwitcher := m.renderViewSwitcher(m.ctx)
 		leftSection := ""
 		if m.leftSection != nil {
 			leftSection = *m.leftSection
@@ -123,7 +123,7 @@ func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 }
 
 // renderViewSwitcher generates a horizontal view switcher string based on the current section and user context.
-func (m *Model) renderViewSwitcher(ctx context.ProgramContext) string {
+func (m *Model) renderViewSwitcher(ctx *context.ProgramContext) string {
 	var view string
 	if ctx.Section == config.EnclaveSection {
 		view += " Enclave"
@@ -152,10 +152,10 @@ func (m *Model) renderViewSwitcher(ctx context.ProgramContext) string {
 
 // SetLeftSection sets the content of the left section in the model footer view. Updates the `leftSection` field.
 func (m *Model) SetLeftSection(leftSection string) {
-	*m.leftSection = leftSection
+	m.leftSection = &leftSection
 }
 
 // SetRightSection sets the value of the right section in the Model.
 func (m *Model) SetRightSection(rightSection string) {
-	*m.rightSection = rightSection
+	m.rightSection = &rightSection
 }

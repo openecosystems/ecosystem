@@ -19,15 +19,13 @@ import (
 // Model represents the main state containing a base model, key bindings, and tasks for the application.
 type Model struct {
 	sections.BaseModel
-	keys  *keys.KeyMap
-	tasks map[string]context.Task
+	keys *keys.KeyMap
 }
 
 // NewModel initializes and returns a new instance of the Model with the provided SpecSettings.
 func NewModel(settings *cliv2alphalib.Configuration) *Model {
 	m := Model{
-		keys:  keys.Keys,
-		tasks: map[string]context.Task{},
+		keys: keys.Keys,
 	}
 
 	ctx := &context.ProgramContext{

@@ -19,6 +19,7 @@ require (
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/protobuf v1.36.1
 	gopkg.in/yaml.v2 v2.2.8
+	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 )
 
 require (
