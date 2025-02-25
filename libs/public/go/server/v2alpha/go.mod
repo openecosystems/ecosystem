@@ -1,6 +1,6 @@
 module libs/public/go/server/v2alpha
 
-go 1.23
+go 1.23.4
 
 require (
 	connectrpc.com/connect v1.16.2

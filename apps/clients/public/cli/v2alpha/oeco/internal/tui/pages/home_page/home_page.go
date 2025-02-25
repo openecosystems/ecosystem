@@ -4,13 +4,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	homecontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/home_content"
-	homesidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/home_sidebar"
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/content/home_content"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	homesidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/home_sidebar"
 )
 
 // ModelConfig represents the configuration settings for a model in the application.
@@ -57,8 +57,13 @@ func (m Model) GetPageSettings() contract.PageSettings {
 	}
 }
 
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m Model) Init() tea.Cmd {
+	return tea.Batch()
+}
+
 // Update processes the received message to update the model's state and returns the updated model along with any commands.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd

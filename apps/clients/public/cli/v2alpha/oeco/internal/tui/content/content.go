@@ -4,12 +4,11 @@ import (
 	"strconv"
 	"strings"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-
-	"github.com/charmbracelet/lipgloss"
-
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // BaseModel represents a foundational structure containing viewport and program context for UI components.
@@ -52,8 +51,8 @@ func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
-// View returns the rendered string representation of the BaseModel by applying contextual styles and joining content vertically.
-func (m BaseModel) View() string {
+// ViewBase returns the rendered string representation of the BaseModel by applying contextual styles and joining content vertically.
+func (m BaseModel) ViewBase() string {
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.MainContent.ContainerStyle.
 		Height(height).

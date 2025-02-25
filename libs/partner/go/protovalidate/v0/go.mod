@@ -1,8 +1,8 @@
 module libs/partner/go/protovalidate/v0
 
-go 1.23
+go 1.23.4
 
-toolchain go1.23.0
+toolchain go1.23.4
 
 require github.com/bufbuild/protovalidate-go v0.9.1
 

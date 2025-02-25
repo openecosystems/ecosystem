@@ -3,7 +3,6 @@ package ecosystemv2alphapbint
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"connectrpc.com/connect"
@@ -38,7 +37,7 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 
 		model := NewCreateEcosystemModel(settings)
 
-		defer cleanup()
+		defer gracefulShutdown()
 
 		p := tea.NewProgram(
 			model,
@@ -117,12 +116,4 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 			log.Info("Response: ", string(val))
 		}
 	},
-}
-
-// cleanup recovers from any panic that occurred and logs the recovery message before quitting the tea program.
-func cleanup() {
-	if r := recover(); r != nil {
-		fmt.Println("Recovered from panic:", r)
-	}
-	_ = tea.Quit()
 }

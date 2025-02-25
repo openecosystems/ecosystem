@@ -1,6 +1,6 @@
 module apps/workloads/public/dns/v2alpha/dynamic-dns
 
-go 1.23
+go 1.23.4
 
 require github.com/slackhq/nebula v1.9.5
 

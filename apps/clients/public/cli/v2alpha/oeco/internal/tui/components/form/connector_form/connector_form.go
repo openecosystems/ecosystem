@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"strings"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
+
+	form "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
 // maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.

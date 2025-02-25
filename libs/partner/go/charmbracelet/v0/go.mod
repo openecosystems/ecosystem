@@ -1,8 +1,8 @@
 module libs/partner/go/charmbracelet/v0
 
-go 1.23
+go 1.23.4
 
-toolchain go1.23.0
+toolchain go1.23.4
 
 require (
 	github.com/charmbracelet/log v0.4.0

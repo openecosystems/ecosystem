@@ -1,0 +1,73 @@
+1:31PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+1:32PM DEBU <tasks/queue.go:91> FIFO Task added: 123
+1:32PM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+1:32PM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+1:32PM DEBU <sections/section.go:199> Task finished id=123
+1:32PM DEBU <sections/section.go:205> Task finished id=123
+1:32PM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+1:32PM DEBU <sections/section.go:199> Task finished id=1234
+1:32PM DEBU <sections/section.go:205> Task finished id=1234
+1:33PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+1:33PM DEBU <tasks/queue.go:91> FIFO Task added: 123
+1:33PM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+1:33PM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+1:33PM DEBU <sections/section.go:200> Task finished id=123
+1:33PM DEBU <sections/section.go:207> Task finished id=123
+1:33PM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+1:33PM DEBU <sections/section.go:200> Task finished id=1234
+1:33PM DEBU <sections/section.go:207> Task finished id=1234
+1:38PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+1:38PM DEBU <tasks/queue.go:91> FIFO Task added: 123
+1:38PM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+1:38PM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+1:38PM DEBU <sections/section.go:199> Task finished id=123
+1:38PM DEBU <sections/section.go:205> Task finished id=123
+1:38PM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+1:38PM DEBU <sections/section.go:199> Task finished id=1234
+1:38PM DEBU <sections/section.go:205> Task finished id=1234
+1:39PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+1:39PM DEBU <tasks/queue.go:91> FIFO Task added: 123
+1:39PM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+1:39PM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+1:39PM DEBU <sections/section.go:199> Task finished id=123
+1:39PM DEBU <sections/section.go:205> Task finished id=123
+1:39PM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+1:39PM DEBU <sections/section.go:199> Task finished id=1234
+1:39PM DEBU <sections/section.go:205> Task finished id=1234
+1:41PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+1:41PM DEBU <tasks/queue.go:91> FIFO Task added: 123
+1:41PM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+1:41PM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+1:41PM DEBU <sections/section.go:198> Task finished id=123
+1:41PM DEBU <sections/section.go:205> Task finished id=123
+1:41PM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+1:41PM DEBU <sections/section.go:198> Task finished id=1234
+1:41PM DEBU <sections/section.go:205> Task finished id=1234
+1:42PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+1:42PM DEBU <tasks/queue.go:91> FIFO Task added: 123
+1:42PM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+1:42PM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+1:42PM DEBU <sections/section.go:198> Task finished id=123
+1:42PM DEBU <sections/section.go:205> Task finished id=123
+1:42PM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+1:42PM DEBU <sections/section.go:198> Task finished id=1234
+1:42PM DEBU <sections/section.go:205> Task finished id=1234
+1:49PM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+7:52AM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+7:53AM DEBU <tasks/queue.go:91> FIFO Task added: 123
+7:53AM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+7:53AM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+7:53AM DEBU <sections/section.go:150> Task finished id=123
+7:53AM DEBU <sections/section.go:158> Task finished id=123
+7:53AM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+7:53AM DEBU <sections/section.go:150> Task finished id=1234
+7:53AM DEBU <sections/section.go:158> Task finished id=1234
+7:58AM DEBU <v2alpha/ecosystem_create.cmd.go:41> Logging to debug.log
+7:58AM DEBU <tasks/queue.go:91> FIFO Task added: 123
+7:58AM DEBU <tasks/queue.go:91> FIFO Task added: 1234
+7:58AM DEBU <tasks/queue.go:111> Completed FIFO: 123="missing value"
+7:58AM DEBU <sections/section.go:150> Task finished id=123
+7:58AM DEBU <sections/section.go:158> Task finished id=123
+7:58AM DEBU <tasks/queue.go:111> Completed FIFO: 1234="missing value"
+7:58AM DEBU <sections/section.go:150> Task finished id=1234
+7:58AM DEBU <sections/section.go:158> Task finished id=1234

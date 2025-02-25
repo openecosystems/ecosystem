@@ -1,10 +1,11 @@
 package contract
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-
 	"github.com/charmbracelet/bubbles/key"
+	tea "github.com/charmbracelet/bubbletea"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // PageSettings defines the configuration and metadata for a page, including its title, default status, and other settings.
@@ -36,6 +37,11 @@ type Displayable interface {
 	View() string
 }
 
+// Component represents a general interface for reusable and composable UI or program components.
+type Component interface {
+	tea.Model
+}
+
 // Section defines an interface representing a categorized module containing pages, capable of being displayed and configured.
 type Section interface {
 	GetPages() []Page
@@ -61,6 +67,7 @@ type Page interface {
 	ContextAware
 	Responsive
 	Displayable
+	tea.Model
 }
 
 // MainContent is an interface that combines Configurable, ContextAware, Responsive, and Displayable behaviors.
@@ -69,6 +76,7 @@ type MainContent interface {
 	ContextAware
 	Responsive
 	Displayable
+	tea.Model
 }
 
 // Sidebar represents a UI component, ensuring open/close state handling, configurability, responsiveness, and display logic.
@@ -80,6 +88,7 @@ type Sidebar interface {
 	ContextAware
 	Responsive
 	Displayable
+	Component
 }
 
 // Footer represents an interface for footer components in the application.

@@ -1,10 +1,11 @@
 module apps/clients/public/cli/v2alpha/oeco
 
-go 1.23
+go 1.23.4
+
+toolchain go1.23.4
 
 require (
 	connectrpc.com/connect v1.17.0
-	github.com/apex/log v1.9.0
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.3.3
 	github.com/charmbracelet/glamour v0.6.0
@@ -16,10 +17,10 @@ require (
 	github.com/google/gopacket v1.1.19
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/muesli/termenv v0.15.3-0.20240618155329-98d742f6907a
+	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/protobuf v1.36.1
 	gopkg.in/yaml.v2 v2.2.8
-	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 )
 
 require (
@@ -61,10 +62,11 @@ require (
 	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/yuin/goldmark v1.5.2 // indirect
 	github.com/yuin/goldmark-emoji v1.0.1 // indirect
-	golang.org/x/crypto v0.26.0 // indirect
+	golang.org/x/crypto v0.28.0 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
-	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/net v0.30.0 // indirect
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/time v0.7.0 // indirect
 )

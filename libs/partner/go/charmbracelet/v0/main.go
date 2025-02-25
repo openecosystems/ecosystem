@@ -26,6 +26,8 @@ type Binding struct {
 var (
 	Bound       *Binding
 	BindingName = "CHARMBRACELET_LOGGING_BINDING"
+
+	logFile *os.File
 )
 
 // Name returns the unique name identifier for the Binding.
@@ -66,22 +68,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					logger.SetLevel(log.ErrorLevel)
 				}
 
-				// TODO: Add flag to track if log file should be used
-				if false {
-					var fileErr error
-
-					logFile, fileErr := os.OpenFile(sdkv2alphalib.LogDirectory+"/debug.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666)
-					if fileErr == nil {
-						log.SetOutput(logFile)
-						log.SetTimeFormat(time.RFC3339)
-						log.SetReportCaller(true)
-						log.SetLevel(log.DebugLevel)
-						log.Debug("Logging to " + sdkv2alphalib.LogDirectory + "/debug.log")
-					}
-
-					defer logFile.Close() // nolint:errcheck
-				}
-
 				b.Logger = logger
 
 				if err != nil {
@@ -110,22 +96,33 @@ func (b *Binding) GetBinding() interface{} {
 
 // Close shuts down the Charbracelet Logger Binding and performs necessary cleanup operations.
 func (b *Binding) Close() error {
-	fmt.Println("Closing the Charbracelet Logger Binding")
+	logFile.Close() // nolint:errcheck
 	return nil
 }
 
 // Override applies configuration changes to the Binding's logger based on debug, verbose, and quiet flags.
 func (b *Binding) Override(conf *Configuration) error {
-	if conf.App.Debug {
+	if conf.App.GetDebug() {
 		b.Logger.SetLevel(log.DebugLevel)
 	}
 
-	if conf.App.Verbose {
+	if conf.App.GetVerbose() {
 		b.Logger.SetReportCaller(true)
 	}
 
-	if conf.App.Quiet {
+	if conf.App.GetQuiet() {
 		b.Logger.SetLevel(log.ErrorLevel)
+	}
+
+	if conf.App.GetLogToFile() {
+		var fileErr error
+
+		logFile, fileErr = os.OpenFile(sdkv2alphalib.OecoLogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666)
+		if fileErr == nil {
+			b.Logger.SetOutput(logFile)
+			b.Logger.SetTimeFormat(time.RFC3339)
+			b.Logger.Debug("\n\nLogging to " + sdkv2alphalib.OecoLogFile)
+		}
 	}
 
 	return nil

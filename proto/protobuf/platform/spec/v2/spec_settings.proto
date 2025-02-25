@@ -36,6 +36,7 @@ message App {
   bool debug = 6;
   bool verbose = 7;
   bool quiet = 8;
+  bool log_to_file = 9;
 }
 
 message Platform {

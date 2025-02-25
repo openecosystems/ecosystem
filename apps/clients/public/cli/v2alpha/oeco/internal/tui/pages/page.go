@@ -1,19 +1,20 @@
 package pages
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	"strconv"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
 // BaseModel defines a generic model structure that manages UI context, key configuration, and content layout components.
@@ -61,6 +62,8 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 
 	m.Ctx = m.SyncDimensions(m.Ctx)
 
+	m.Ctx.Logger.Debug("Page: Base Model Initial Configuration")
+
 	return m
 }
 
@@ -68,6 +71,7 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 	var cmds []tea.Cmd
 
+	m.Ctx.Logger.Debug("Page UpdateBase", "msg", msg)
 	switch message := msg.(type) {
 	case tea.KeyMsg:
 		m.Ctx.Error = nil
@@ -81,14 +85,18 @@ func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 			}
 			m.Ctx = m.SyncDimensions(m.Ctx)
 		case key.Matches(message, keys.Keys.PrevPage):
+			m.Ctx.Logger.Debug("Page: Handling keys.Keys.PrevPage", "msg", msg)
 			m.CurrentSidebar.Close()
 			m.Ctx = m.SyncDimensions(m.Ctx)
 
 		case key.Matches(message, keys.Keys.NextPage):
+			m.Ctx.Logger.Debug("Page: Handling keys.Keys.NextPage", "msg", msg)
 
 		case key.Matches(message, keys.Keys.Help):
+			m.Ctx.Logger.Debug("Page: Handling keys.Keys.Help", "msg", msg)
 
 		case key.Matches(message, keys.Keys.Quit):
+			m.Ctx.Logger.Debug("Page: Handling keys.Keys.Quit", "msg", msg)
 		}
 	}
 
@@ -139,7 +147,6 @@ func (m BaseModel[Cfg]) UpdateProgramContext(ctx *context.ProgramContext) {
 		return
 	}
 
-	// m.Ctx = ctx
 	m.CurrentMainContent.UpdateProgramContext(ctx)
 	m.CurrentSidebar.UpdateProgramContext(ctx)
 }

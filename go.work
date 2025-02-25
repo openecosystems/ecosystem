@@ -1,67 +1,71 @@
-go 1.23
+go 1.23.4
+
+toolchain go1.23.4
 
 use (
 	// Clients
 	// ===================================
 	./apps/clients/public/cli/v2alpha/oeco
-	./apps/workloads/poc/wasm/v2alpha/wasm
 
 	// Web
 	// ===================================
 	./apps/web/public/docs/v2alpha
+	./apps/workloads/poc/communications/v1alpha/preference-center
+	./apps/workloads/poc/i18n/v1alpha
+	./apps/workloads/poc/wasm/v2alpha/wasm
+	./apps/workloads/public/cryptography/v2alpha/encryption
+	./apps/workloads/public/dns/v2alpha/dynamic-dns
 
 	// Services
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
-	./apps/workloads/public/dns/v2alpha/dynamic-dns
-	./apps/workloads/public/cryptography/v2alpha/encryption
-	./apps/workloads/poc/communications/v1alpha/preference-center
-	./apps/workloads/poc/i18n/v1alpha
 
 	// Infrastructure
 	// ===================================
 	./infrastructure/apps/workloads/private/edge/v2alpha/edge-router
 	./infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer
+	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
 	./infrastructure/apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
-	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
+	./libs/partner/go
+	./libs/partner/go/charmbracelet/v0
+	./libs/partner/go/github/v3
+	./libs/partner/go/model
+	./libs/partner/go/nats/v2
+	./libs/partner/go/nebula/v1
+	./libs/partner/go/opentelemetry/v2
+	./libs/partner/go/protobuf
+	./libs/partner/go/protovalidate/v0
+	./libs/partner/go/pushpin/v1
 
 	// Partner libraries
 	// ===================================
 	./libs/partner/go/sendgrid/v3
+	./libs/partner/go/server/v2alpha
 	./libs/partner/go/tink/v2
 	./libs/partner/go/zap/v1
-	./libs/partner/go/charmbracelet/v0
-	./libs/partner/go/nats/v2
-	./libs/partner/go/nebula/v1
-	./libs/partner/go/opentelemetry/v2
-	./libs/partner/go/protovalidate/v0
-	./libs/partner/go/pushpin/v1
-	./libs/partner/go/server/v2alpha
-	./libs/partner/go/protobuf
-    ./libs/partner/go/model
-    ./libs/partner/go/github/v3
-    ./libs/partner/go
 
 	// Plugin libraries
 	// ===================================
 	./libs/plugins/gnostic-gen-platform
 	./libs/plugins/protoc-gen-platform
+	./libs/poc/go/model
 
 	// Proof of Concept libraries
 	// ===================================
 	./libs/poc/go/protobuf
-	./libs/poc/go/model
+	./libs/poc/go/sdk/gen/reference/v2alpha
+	./libs/private/go/configuration/v2alpha
+	./libs/private/go/infrastructure/v2alpha
+	./libs/private/go/model
+	./libs/private/go/ontology/v2alpha
+	./libs/private/go/protobuf
+	./libs/private/go/sdk/gen/audit/v2alpha
 
 	// Private libraries
 	// ===================================
 	./libs/private/go/server/v2alpha
-	./libs/private/go/configuration/v2alpha
-	./libs/private/go/infrastructure/v2alpha
-	./libs/private/go/ontology/v2alpha
-	./libs/private/go/protobuf
-	./libs/private/go/model
 
 	// Protobuf libraries
 	// ===================================
@@ -70,10 +74,9 @@ use (
 	// Public libraries
 	// ===================================
 	./libs/public/go/cli/v2alpha
-	./libs/public/go/server/v2alpha
 	./libs/public/go/connector/v2alpha
-	./libs/public/go/protobuf
 	./libs/public/go/model
+	./libs/public/go/protobuf
 
 	// SDKs
 	// ===================================
@@ -84,8 +87,7 @@ use (
 	./libs/public/go/sdk/gen/ecosystem/v2alpha
 	./libs/public/go/sdk/gen/iam/v2alpha
 	./libs/public/go/sdk/gen/system/v2alpha
-	./libs/private/go/sdk/gen/audit/v2alpha
-	./libs/poc/go/sdk/gen/reference/v2alpha
 	./libs/public/go/sdk/v2alpha
+	./libs/public/go/server/v2alpha
 
 )

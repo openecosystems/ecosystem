@@ -1,8 +1,8 @@
 module libs/partner/go/sendgrid/v3
 
-go 1.23
+go 1.23.4
 
-toolchain go1.23.0
+toolchain go1.23.4
 
 require (
 	github.com/apex/log v1.9.0

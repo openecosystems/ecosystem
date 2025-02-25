@@ -1,6 +1,6 @@
 module libs/partner/go/model
 
-go 1.23
+go 1.23.4
 
 require (
 	github.com/segmentio/ksuid v1.0.4

@@ -1,17 +1,17 @@
-package details_page
+package detailspage
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_details_content"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_details_sidebar"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	connectorform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	connectordetailscontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/content/connector_details_content"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	connectordetailssidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/connector_details_sidebar"
 )
 
 // ModelConfig represents the configuration structure for initializing and customizing a model instance.
@@ -21,21 +21,21 @@ type ModelConfig struct{}
 type Model struct {
 	pages.BaseModel[ModelConfig]
 
-	form        *connector_form.Model
-	mainContent connector_details_content.Model
+	form        *connectorform.Model
+	mainContent connectordetailscontent.Model
 	sidebar     connectordetailssidebar.Model
 }
 
 // NewModel initializes and returns a new Model instance using a ProgramContext.
 // It sets up a base model, form, main content, and sidebar with dependencies configured from the provided context.
-func NewModel(ctx *context.ProgramContext) Model {
+func NewModel(ctx *context.ProgramContext) contract.Page {
 	c := ModelConfig{}
 
-	f := connector_form.NewModel(ctx)
+	f := connectorform.NewModel(ctx)
 	p := Model{
 		form: &f,
 	}
-	p.mainContent = connector_details_content.NewModel(ctx, &f)
+	p.mainContent = connectordetailscontent.NewModel(ctx, &f)
 	p.sidebar = connectordetailssidebar.NewModel(ctx, &f)
 
 	p.BaseModel = pages.NewBaseModel[ModelConfig](
@@ -62,8 +62,13 @@ func (m Model) GetPageSettings() contract.PageSettings {
 	}
 }
 
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m Model) Init() tea.Cmd {
+	return tea.Batch()
+}
+
 // Update processes the given message, updates the model's components, and returns the updated model and a batch of commands.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd

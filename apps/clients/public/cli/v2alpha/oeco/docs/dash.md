@@ -6,7 +6,9 @@
 
 | Time |      |        | Protocol | Method | Path        | Status |   |   |
 |------|------|--------|----------|--------|-------------|--------|---|---|
-|      | Mesh | HTTP/2 | GRPC     | GET    | /v2/gorilla | 200    |   |   |
+|      | Mesh | HTTP/2 | GRPC     | POST   | /v2/gorilla | 200    |   |   |
+|      | Mesh | HTTP/2 | HTTP     | GET    | /v2/gorilla | 200    |   |   |
+|      | Mesh | HTTP/2 | CONNECT  | GET    | /v2/gorilla | 200    |   |   |
 
 
 **Sidebar**

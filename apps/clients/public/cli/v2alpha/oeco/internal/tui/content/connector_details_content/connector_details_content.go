@@ -1,14 +1,15 @@
-package ecosystemcreatecontent
+package connectordetailscontent
 
 import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/glamour"
 
-	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content"
-	ecosystemcreateform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
+	connectorform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/connector_form"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 )
 
 var introduction = `
@@ -22,14 +23,14 @@ This allows you to prototype and test before doing mesh execution.
 type Model struct {
 	content.BaseModel
 
-	form             *ecosystemcreateform.Model
+	form             *connectorform.Model
 	markdownRenderer glamour.TermRenderer
 	introduction     string
 }
 
 // NewModel initializes and returns a new Model instance using the provided program context and connector form model.
 // It sets up internal properties, including the base model, viewport, and a markdown renderer for introduction rendering.
-func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) *Model {
+func NewModel(ctx *context.ProgramContext, form *connectorform.Model) contract.MainContent {
 	m := Model{
 		form: form,
 	}
@@ -46,11 +47,16 @@ func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) *Mod
 		panic(err)
 	}
 
-	return &m
+	return m
+}
+
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m Model) Init() tea.Cmd {
+	return tea.Batch()
 }
 
 // Update handles incoming messages to update the model's state and returns the updated model along with a command batch.
-func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd
@@ -60,7 +66,7 @@ func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
 	f, formCmd := m.form.Update(msg)
-	m.form = f
+	m.form = &f
 	m.Viewport.SetContent(m.introduction + m.form.View())
 	m.Viewport, viewportCmd = m.Viewport.Update(msg)
 
@@ -71,4 +77,9 @@ func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 		viewportCmd,
 	)
 	return m, tea.Batch(cmds...)
+}
+
+// View returns the rendered string representation of the BaseModel by applying contextual styles and joining content vertically.
+func (m Model) View() string {
+	return m.ViewBase()
 }

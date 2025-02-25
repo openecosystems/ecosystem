@@ -37,12 +37,12 @@ type Theme struct {
 // DefaultTheme defines the default color scheme for the application's UI, using adaptive light and dark mode colors.
 var DefaultTheme = &Theme{
 	PrimaryColor400: lipgloss.CompleteAdaptiveColor{
-		Light: lipgloss.CompleteColor{TrueColor: "#C27AFF", ANSI256: "193", ANSI: "11"},
-		Dark:  lipgloss.CompleteColor{TrueColor: "#C27AFF", ANSI256: "163", ANSI: "5"},
+		Light: lipgloss.CompleteColor{TrueColor: "#A443F2", ANSI256: "193", ANSI: "11"},
+		Dark:  lipgloss.CompleteColor{TrueColor: "#7B32B5", ANSI256: "163", ANSI: "5"},
 	},
 	PrimaryColor500: lipgloss.CompleteAdaptiveColor{
-		Light: lipgloss.CompleteColor{TrueColor: "#5A56E0", ANSI256: "193", ANSI: "11"},
-		Dark:  lipgloss.CompleteColor{TrueColor: "#7571F9", ANSI256: "163", ANSI: "5"},
+		Light: lipgloss.CompleteColor{TrueColor: "#AD46FF", ANSI256: "193", ANSI: "11"},
+		Dark:  lipgloss.CompleteColor{TrueColor: "#AD46FF", ANSI256: "163", ANSI: "5"},
 	},
 	SecondaryColor500: lipgloss.CompleteAdaptiveColor{
 		Light: lipgloss.CompleteColor{TrueColor: "#FE5F86", ANSI256: "193", ANSI: "11"},

@@ -1,6 +1,6 @@
 module libs/private/go/server/v2alpha
 
-go 1.23
+go 1.23.4
 
 require (
 	google.golang.org/grpc v1.68.0

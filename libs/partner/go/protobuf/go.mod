@@ -1,6 +1,6 @@
 module libs/partner/go/protobuf
 
-go 1.23
+go 1.23.4
 
 require (
 	connectrpc.com/connect v1.16.2

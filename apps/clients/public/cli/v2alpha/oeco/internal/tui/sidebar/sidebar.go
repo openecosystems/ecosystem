@@ -1,15 +1,15 @@
 package sidebar
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	"fmt"
 	"strconv"
 	"strings"
 
-	"github.com/charmbracelet/lipgloss"
-
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // BaseModel represents a foundational model for managing UI state, viewport properties, and program context.
@@ -48,8 +48,8 @@ func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 	return m, tea.Batch(cmds...)
 }
 
-// View renders the sidebar layout with the viewport content and a scroll percentage indicator.
-func (m BaseModel) View() string {
+// ViewBase renders the sidebar layout with the viewport content and a scroll percentage indicator.
+func (m BaseModel) ViewBase() string {
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.Sidebar.Root.
 		Height(height).

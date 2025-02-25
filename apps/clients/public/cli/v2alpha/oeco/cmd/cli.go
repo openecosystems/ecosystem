@@ -5,14 +5,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/apex/log"
-	"github.com/apex/log/handlers/cli"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
 
 	apiv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api"
-	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
 	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	enclavev2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/enclave"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
@@ -41,8 +38,9 @@ var (
 	// version   bool
 	verbose bool
 	// verboseLog bool
-	logFile string
-	quiet   bool
+	logFile   string
+	quiet     bool
+	logToFile bool
 
 	configuration *cliv2alphalib.Configuration
 )
@@ -85,16 +83,18 @@ var RootCmd = &cobra.Command{
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
 		override := cliv2alphalib.Configuration{
 			App: specv2pb.App{
-				Debug:   debug,
-				Verbose: verbose,
-				Quiet:   quiet,
+				Debug:     debug,
+				Verbose:   verbose,
+				Quiet:     quiet,
+				LogToFile: logToFile,
 			},
 		}
 		_ = charmbraceletloggerv0.Bound.Override(&charmbraceletloggerv0.Configuration{
 			App: specv2pb.App{
-				Debug:   debug,
-				Verbose: verbose,
-				Quiet:   quiet,
+				Debug:     debug,
+				Verbose:   verbose,
+				Quiet:     quiet,
+				LogToFile: logToFile,
 			},
 		})
 		sdkv2alphalib.Merge(&override, configuration)
@@ -167,18 +167,17 @@ func AddCommands(settings *cliv2alphalib.Configuration) {
 	RootCmd.AddCommand(enclavev2alphapbint.EnclaveServiceServiceCmd)
 	RootCmd.AddCommand(apiv2alphapbint.APIServiceServiceCmd)
 	RootCmd.AddCommand(ecosystemv2alphapbint.EcosystemServiceServiceCmd)
-	RootCmd.AddCommand(connectorv2alphatui.Cmd)
+	// RootCmd.AddCommand(connectorv2alphatui.Cmd)
 	// Dash
 }
 
 // init initializes the logging handler, persistent flags, and markdown styling based on terminal background settings.
 func init() {
-	log.SetHandler(cli.Default)
-
 	RootCmd.PersistentFlags().StringVar(&ecosystem, "context", "", "context to use for this call")
 	RootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "enable debug level logging")
 	RootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "enable additional logging")
 	RootCmd.PersistentFlags().BoolVar(&quiet, "quiet", false, "reduces logging output to only essential messages")
+	RootCmd.PersistentFlags().BoolVar(&logToFile, "logToFile", false, "log stdout and stderr to the default log file")
 	RootCmd.PersistentFlags().StringVar(&logFile, "logFile", "", "log File path (if set, logging enabled automatically)")
 
 	// Set bash-completion

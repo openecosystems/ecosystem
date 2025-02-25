@@ -6,7 +6,6 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	data "apps/clients/public/cli/v2alpha/oeco/internal/data"
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
@@ -16,42 +15,31 @@ import (
 	logs_page "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/logs_page"
 	requestspage "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/requests_page"
 	sections "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
 )
 
 // Model represents the main state containing a base model, key bindings, and tasks for the application.
 type Model struct {
 	sections.BaseModel
-	keys  *keys.KeyMap
-	tasks map[string]context.Task
+	keys *keys.KeyMap
 }
 
 // NewModel initializes and returns a new instance of the Model with the provided SpecSettings.
-func NewModel(settings *cliv2alphalib.Configuration) *Model {
+func NewModel(pctx *context.ProgramContext) Model {
 	m := Model{
-		keys:  keys.Keys,
-		tasks: map[string]context.Task{},
+		keys: keys.Keys,
 	}
 
-	ctx := &context.ProgramContext{
-		Config:   &config.Config{},
-		Settings: settings,
-		Section:  config.ConnectorSection,
-		Page:     config.ConnectorDetailsPage,
-		User:     data.GetUserName(),
-		StartTask: func(_ context.Task) tea.Cmd {
-			return m.Spinner.Tick
-		},
-	}
+	pctx.Section = config.ConnectorSection
+	pctx.Page = config.ConnectorDetailsPage
 
 	var pages []contract.Page
-	pages = append(pages, homepage.NewModel(ctx))
-	pages = append(pages, details_page.NewModel(ctx))
-	pages = append(pages, requestspage.NewModel(ctx))
-	pages = append(pages, logs_page.NewModel(ctx))
+	pages = append(pages, homepage.NewModel(pctx))
+	pages = append(pages, details_page.NewModel(pctx))
+	pages = append(pages, requestspage.NewModel(pctx))
+	pages = append(pages, logs_page.NewModel(pctx))
 	m.Pages = pages
 	m.BaseModel = sections.NewBaseModel(
-		ctx,
+		pctx,
 		sections.NewBaseOptions{
 			Singular:      "connector",
 			Plural:        "connectors",
@@ -63,12 +51,12 @@ func NewModel(settings *cliv2alphalib.Configuration) *Model {
 	m.Spinner.Style = lipgloss.NewStyle().
 		Background(m.Ctx.Theme.SelectedBackground)
 
-	return &m
+	return m
 }
 
 // Init initializes the model by batching the BaseModel initialization and enabling the alternative screen mode.
 func (m Model) Init() tea.Cmd {
-	return tea.Batch(m.InitBase(), tea.EnterAltScreen)
+	return tea.Batch(m.InitBase())
 }
 
 // Update handles incoming messages, updates the model state, and returns the updated model and command batch.
@@ -96,13 +84,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch page := m.CurrentPage.(type) {
 	case details_page.Model:
 		m.Ctx.Page = config.ConnectorDetailsPage
-		m.CurrentPage, pageCmd = page.Update(msg)
+		m.CurrentPageModel, pageCmd = page.Update(msg)
 	case requestspage.Model:
 		m.Ctx.Page = config.ConnectorRequestsPage
-		m.CurrentPage, pageCmd = page.Update(msg)
+		m.CurrentPageModel, pageCmd = page.Update(msg)
 	case logs_page.Model:
 		m.Ctx.Page = config.ConnectorLogsPage
-		m.CurrentPage, pageCmd = page.Update(msg)
+		m.CurrentPageModel, pageCmd = page.Update(msg)
 	}
 	m.Footer, footerCmd = m.Footer.Update(msg)
 	m.UpdateProgramContext(m.Ctx)

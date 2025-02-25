@@ -1,16 +1,16 @@
-package logs_page
+package logspage
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_logs_content"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_logs_sidebar"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	connectorlogscontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/content/connector_logs_content"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	connectorlogssidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/connector_logs_sidebar"
 )
 
 // ModelConfig represents the configuration type used to customize the behavior and properties of a specific model.
@@ -20,8 +20,8 @@ type ModelConfig struct{}
 type Model struct {
 	pages.BaseModel[ModelConfig]
 
-	mainContent connector_logs_content.Model
-	sidebar     connector_logs_sidebar.Model
+	mainContent connectorlogscontent.Model
+	sidebar     connectorlogssidebar.Model
 }
 
 // NewModel initializes and returns a new Model instance configured with the given ProgramContext.
@@ -29,8 +29,8 @@ func NewModel(ctx *context.ProgramContext) Model {
 	c := ModelConfig{}
 
 	p := Model{
-		mainContent: connector_logs_content.NewModel(ctx),
-		sidebar:     connector_logs_sidebar.NewModel(ctx),
+		mainContent: connectorlogscontent.NewModel(ctx),
+		sidebar:     connectorlogssidebar.NewModel(ctx),
 	}
 
 	p.BaseModel = pages.NewBaseModel[ModelConfig](
@@ -57,8 +57,13 @@ func (m Model) GetPageSettings() contract.PageSettings {
 	}
 }
 
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m Model) Init() tea.Cmd {
+	return tea.Batch()
+}
+
 // Update processes a given message, updates the model state, and returns the updated model along with any commands.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd

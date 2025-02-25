@@ -1,16 +1,16 @@
 package requestspage
 
 import (
-	connectorrequestscontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/content/connector_requests_content"
-	connectorrequestssidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/sidebar/connector_requests_sidebar"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/content/connector_requests_content"
+	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	connectorrequestssidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/connector_requests_sidebar"
 )
 
 // ModelConfig represents the configuration settings for a model in the application.
@@ -57,8 +57,13 @@ func (m Model) GetPageSettings() contract.PageSettings {
 	}
 }
 
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m Model) Init() tea.Cmd {
+	return tea.Batch()
+}
+
 // Update processes the received message to update the model's state and returns the updated model along with any commands.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd

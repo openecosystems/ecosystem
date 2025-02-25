@@ -1,37 +1,12 @@
 package context
 
 import (
-	"time"
-
-	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/log"
 
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 )
-
-// State is an alias for the int type, commonly used to represent various states or stages in a process.
-type State = int
-
-// TaskStart represents the initial state of a task.
-// TaskFinished represents the state when a task is successfully completed.
-// TaskError represents the state when a task encounters an error.
-const (
-	TaskStart State = iota
-	TaskFinished
-	TaskError
-)
-
-// Task represents a unit of work with its associated metadata and lifecycle states.
-type Task struct {
-	ID           string
-	StartText    string
-	FinishedText string
-	State        State
-	Error        error
-	StartTime    time.Time
-	FinishedTime *time.Time
-}
 
 // ProgramContext encapsulates the application UI's state, configuration, and behavior for rendering and interaction.
 type ProgramContext struct {
@@ -59,8 +34,8 @@ type ProgramContext struct {
 	Config   *config.Config
 	Error    error
 
-	// Executable
-	StartTask func(task Task) tea.Cmd
+	// Bindings
+	Logger *log.Logger
 
 	// Stylistic
 	Theme  theme.Theme

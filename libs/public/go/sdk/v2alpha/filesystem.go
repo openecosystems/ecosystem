@@ -43,6 +43,7 @@ const (
 	ConfigurationName          = "config"
 	ConfigurationExtension     = "yaml"
 	LogDirectoryName           = "logs"
+	LogExtension               = "log"
 	TmpDirectoryName           = "tmp"
 	ContextDirectoryName       = "context"
 	OecoContextFileName        = "oeco"
@@ -81,6 +82,7 @@ var (
 	RegistryCacheDirectory = filepath.Join(RegistryDirectory, RegistryCacheDirectoryName)
 	OecoContextFile        = filepath.Join(ContextDirectory, OecoContextFileName)
 	DefaultContextFile     = filepath.Join(ContextDirectory, DefaultContextFileName)
+	OecoLogFile            = filepath.Join(LogDirectory, OecoContextFileName+"."+LogExtension)
 	Filesystem             *FileSystem
 )
 
