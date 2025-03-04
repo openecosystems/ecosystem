@@ -28,7 +28,8 @@ func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) cont
 			Opened: true,
 		},
 	)
-	m.Viewport = viewport.New(m.Ctx.SidebarContentWidth, m.Ctx.SidebarContentHeight)
+	v := viewport.New(m.Ctx.SidebarContentWidth, m.Ctx.SidebarContentHeight)
+	m.Viewport = &v
 
 	return m
 }
@@ -48,7 +49,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
 	m.Viewport.SetContent(m.form.SidebarView())
-	m.Viewport, viewportCmd = m.Viewport.Update(msg)
+	v, c := m.Viewport.Update(msg)
+	m.Viewport = &v
+	viewportCmd = c
 
 	cmds = append(
 		cmds,

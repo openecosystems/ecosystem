@@ -15,7 +15,7 @@ import (
 // BaseModel represents a foundational model for managing UI state, viewport properties, and program context.
 type BaseModel struct {
 	Opened   bool
-	Viewport viewport.Model
+	Viewport *viewport.Model
 	Ctx      *context.ProgramContext
 }
 
@@ -30,7 +30,7 @@ type NewBaseOptions struct {
 func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel {
 	return BaseModel{
 		Opened:   options.Opened,
-		Viewport: options.Viewport,
+		Viewport: &options.Viewport,
 		Ctx:      ctx,
 	}
 }

@@ -71,7 +71,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	m.BaseModel, cmd = m.UpdateBase(msg)
 	m.formModel, formCmd = m.form.Update(msg)
 	m.Viewport.SetContent(m.introduction + m.form.View())
-	m.Viewport, viewportCmd = m.Viewport.Update(msg)
+	v, c := m.Viewport.Update(msg)
+	m.Viewport = &v
+	viewportCmd = c
 
 	m.Ctx.Logger.Debug("Content - Ecosystem Create Content - Update: Set model")
 

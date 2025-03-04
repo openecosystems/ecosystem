@@ -38,7 +38,9 @@ func (m EmptyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
 	m.Viewport.SetContent(m.ViewDebug().String())
-	m.Viewport, viewportCmd = m.Viewport.Update(msg)
+	v, c := m.Viewport.Update(msg)
+	m.Viewport = &v
+	viewportCmd = c
 
 	cmds = append(
 		cmds,

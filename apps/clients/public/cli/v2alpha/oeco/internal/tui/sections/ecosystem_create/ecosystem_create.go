@@ -68,7 +68,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	m.Tabs, tabsCmd = m.Tabs.Update(msg)
 
 	switch page := m.CurrentPage.(type) {
-	case *ecosystemcreatepage.Model:
+	case ecosystemcreatepage.Model:
 		m.Ctx.Logger.Debug("Section: Ecosystem Create: Page Update")
 		m.Ctx.Page = config.EcosystemCreatePage
 		m.CurrentPageModel, pageCmd = page.Update(msg)
