@@ -1,6 +1,7 @@
 package pages
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	"strconv"
 	"strings"
 
@@ -14,6 +15,7 @@ import (
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
+
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
@@ -98,6 +100,25 @@ func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 		case key.Matches(message, keys.Keys.Quit):
 			m.Ctx.Logger.Debug("Page: Handling keys.Keys.Quit", "msg", msg)
 		}
+	case tasks.TaskFinishedMsg:
+
+		if message.Task.Error != nil {
+			m.Ctx.Logger.Error("Page Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
+		} else {
+			m.Ctx.Logger.Debug("Page Task finished", "id", message.Task.ID)
+		}
+
+	case tasks.ClearTaskMsg:
+		// m.Footer.SetRightSection("")
+		//	delete(m.Tasks, message.TaskID)
+		// case spinner.TickMsg:
+		//	if len(m.Tasks) > 0 {
+		//		taskSpinner, internalTickCmd := m.Spinner.Update(msg)
+		//		m.Spinner = taskSpinner
+		//		rTask := m.RenderRunningTask()
+		//		m.Footer.SetRightSection(rTask)
+		//		cmds = append(cmds, internalTickCmd)
+		//	}
 	}
 
 	m.UpdateProgramContext(m.Ctx)

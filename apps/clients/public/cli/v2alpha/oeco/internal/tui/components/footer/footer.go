@@ -2,7 +2,6 @@ package footer
 
 import (
 	"strings"
-	"time"
 
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
@@ -20,8 +19,8 @@ import (
 // Model represents the state and behavior of the application UI, managing sections, help views, and user interactions.
 type Model struct {
 	pctx            *context.ProgramContext
-	leftSection     *string
-	rightSection    *string
+	leftSection     string
+	rightSection    string
 	help            help.Model
 	ShowAll         bool
 	ShowConfirmQuit bool
@@ -37,17 +36,15 @@ func NewModel(pctx *context.ProgramContext) Model {
 	return Model{
 		pctx:         pctx,
 		help:         h,
-		leftSection:  &l,
-		rightSection: &r,
+		leftSection:  l,
+		rightSection: r,
 	}
 }
 
 // Update handles incoming messages, updating the model state and determining the command to execute next.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-	var (
-		cmds      []tea.Cmd
-		footerCmd tea.Cmd
-	)
+	var cmds []tea.Cmd
+	// footerCmd tea.Cmd
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
@@ -66,17 +63,17 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	case tasks.TaskFinishedMsg:
 		log.Debug("Task finished", "id", message.Task.ID)
 
-		m.SetRightSection(message.Task.ID)
-		// m, footerCmd = m.Update(msg)
-
-		log.Debug("Task finished", "id", message.Task.ID)
-		if message.Task.Error != nil {
-			log.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
-		}
-		clr := tea.Tick(2*time.Second, func(_ time.Time) tea.Msg {
-			return tasks.ClearTaskMsg{TaskID: message.Task.ID}
-		})
-		cmds = append(cmds, footerCmd, clr)
+		//m.rightSection = message.Task.ID
+		//// SetRightSection(m, message.Task.ID)
+		//m, footerCmd = m.Update(msg)
+		//
+		//if message.Task.Error != nil {
+		//	log.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
+		//}
+		//clr := tea.Tick(2*time.Second, func(_ time.Time) tea.Msg {
+		//	return tasks.ClearTaskMsg{TaskID: message.Task.ID}
+		//})
+		//cmds = append(cmds, footerCmd, clr)
 	}
 
 	return m, tea.Batch(cmds...)
@@ -96,12 +93,12 @@ func (m Model) View() string {
 			Render("? help")
 		viewSwitcher := m.renderViewSwitcher(m.pctx)
 		leftSection := ""
-		if m.leftSection != nil {
-			leftSection = *m.leftSection
+		if m.leftSection != "" {
+			leftSection = m.leftSection
 		}
 		rightSection := ""
-		if m.rightSection != nil {
-			rightSection = *m.rightSection
+		if m.rightSection != "" {
+			rightSection = m.rightSection
 		}
 		spacing := lipgloss.NewStyle().
 			Background(m.pctx.Theme.SelectedBackground).
@@ -173,11 +170,13 @@ func (m Model) renderViewSwitcher(ctx *context.ProgramContext) string {
 }
 
 // SetLeftSection sets the content of the left section in the model footer view. Updates the `leftSection` field.
-func (m Model) SetLeftSection(leftSection string) {
-	m.leftSection = &leftSection
+func SetLeftSection(footer Model, leftSection string) Model {
+	footer.leftSection = leftSection
+	return footer
 }
 
 // SetRightSection sets the value of the right section in the Model.
-func (m Model) SetRightSection(rightSection string) {
-	m.rightSection = &rightSection
+func SetRightSection(footer Model, rightSection string) Model {
+	footer.rightSection = rightSection
+	return footer
 }

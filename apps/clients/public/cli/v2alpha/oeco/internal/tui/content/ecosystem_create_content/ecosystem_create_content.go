@@ -24,7 +24,7 @@ type Model struct {
 	content.BaseModel
 
 	form             *ecosystemcreateform.Model
-	formModel        tea.Model
+	formModel        *tea.Model
 	markdownRenderer glamour.TermRenderer
 	introduction     string
 }
@@ -69,7 +69,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	)
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
-	m.formModel, formCmd = m.form.Update(msg)
+	f, formCmd := m.form.Update(msg)
+	m.formModel = &f
+
 	m.Viewport.SetContent(m.introduction + m.form.View())
 	v, c := m.Viewport.Update(msg)
 	m.Viewport = &v

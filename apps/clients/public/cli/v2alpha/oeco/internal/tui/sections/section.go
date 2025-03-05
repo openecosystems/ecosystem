@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
@@ -30,17 +29,16 @@ var once sync.Once
 
 // BaseModel encapsulates the primary state and components for managing UI layout, navigation, and application context.
 type BaseModel struct {
-	Ctx              *context.ProgramContext
-	Pages            []contract.Page
-	CurrentPage      contract.Page
-	CurrentPageID    int
-	CurrentPageModel tea.Model
-	Spinner          spinner.Model
-	Tabs             tabs.Model
-	Footer           footer.Model
-	Keys             keys.KeyMap
-	SingularForm     string
-	PluralForm       string
+	Ctx           *context.ProgramContext
+	Pages         []contract.Page
+	CurrentPage   contract.Page
+	CurrentPageID int
+	Spinner       spinner.Model
+	Tabs          tabs.Model
+	Footer        footer.Model
+	Keys          keys.KeyMap
+	SingularForm  string
+	PluralForm    string
 }
 
 // NewBaseOptions holds configuration for initializing a base model with singular/plural names, pages, and settings.
@@ -99,6 +97,8 @@ func (m BaseModel) init() tea.Msg {
 
 // InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
 func (m BaseModel) InitBase() tea.Cmd {
+	tasks.ProcessTasks()
+	go m.HandleCompletedTasks()
 	return tea.Batch(m.init)
 }
 
@@ -145,25 +145,28 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 		m.Ctx.Config = &message.Config
 		m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetDefaultPageID())
 	case tasks.TaskFinishedMsg:
-		m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
 
-		taskSpinner, internalTickCmd := m.Spinner.Update(message)
-		m.Spinner = taskSpinner
-		m.Footer.SetRightSection(m.RenderRunningTask(message))
-		m.Footer, footerCmd = m.Footer.Update(msg)
-		cmds = append(cmds, internalTickCmd)
+		// taskSpinner, internalTickCmd := m.Spinner.Update(message)
+		// m.Spinner = taskSpinner
+		// cmds = append(cmds, internalTickCmd)
 
-		m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
-		if message.Task.Error != nil {
-			m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
-		}
-		clr := tea.Tick(2*time.Second, func(_ time.Time) tea.Msg {
-			return tasks.ClearTaskMsg{TaskID: message.Task.ID}
-		})
-		cmds = append(cmds, footerCmd, clr)
+		// m.Footer = footer.SetRightSection(m.Footer, m.RenderRunningTask(message))
+		m.Footer, footerCmd = m.Footer.Update(message)
+
+		m.Ctx.Logger.Debug("Section: Task finished", "id", message.Task.ID)
+		//if message.Task.Error != nil {
+		//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
+		//}
+		//clr := tea.Tick(2*time.Second, func(_ time.Time) tea.Msg {
+		//	return tasks.ClearTaskMsg{TaskID: message.Task.ID, Task: message.Task}
+		//})
+		//cmds = append(cmds, footerCmd, clr)
+		cmds = append(cmds, footerCmd)
 
 	case tasks.ClearTaskMsg:
-		m.Footer.SetRightSection("")
+		m.Ctx.Logger.Debug("Clear Task finished", "id", message.Task.ID)
+		m.Footer = footer.SetRightSection(m.Footer, "")
+		m.UpdateBase(message)
 		//	delete(m.Tasks, message.TaskID)
 		// case spinner.TickMsg:
 		//	if len(m.Tasks) > 0 {
@@ -176,35 +179,34 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 	}
 
 	m.UpdateProgramContext(m.Ctx)
-	tasks.ProcessTasks()
-	go m.HandleCompletedTasks()
 
 	return m, tea.Batch(cmds...)
 }
 
 // HandleCompletedTasks processes completed and cleared tasks, updates their states in the model, and generates related commands.
 func (m BaseModel) HandleCompletedTasks() {
-	once.Do(func() {
-		for msg := range tasks.CompletedTaskCmdsChan {
-			switch message := msg.(type) {
-			case tasks.TaskFinishedMsg:
-				m.UpdateBase(message)
-				//m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
-				//taskSpinner, _ := m.Spinner.Update(msg)
-				//m.Spinner = taskSpinner
-				//m.Footer.SetRightSection(m.RenderRunningTask(message))
-				//
-				//m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
-				//if message.Task.Error != nil {
-				//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
-				//}
-				//
-				//time.AfterFunc(2*time.Second, func() {
-				//	m.Footer.SetRightSection("")
-				//})
-			}
+	// once.Do(func() {
+	for msg := range tasks.CompletedTaskCmdsChan {
+		switch message := msg.(type) {
+		case tasks.TaskFinishedMsg:
+			m.Ctx.Logger.Debug("HANDLE Task finished", "id", message.Task.ID)
+			m.UpdateBase(msg)
+
+			//taskSpinner, _ := m.Spinner.Update(msg)
+			//m.Spinner = taskSpinner
+			//m.Footer.SetRightSection(m.RenderRunningTask(message))
+			//
+			//m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
+			//if message.Task.Error != nil {
+			//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
+			//}
+			//
+			//time.AfterFunc(2*time.Second, func() {
+			//	m.Footer.SetRightSection("")
+			//})
 		}
-	})
+	}
+	//})
 }
 
 // ViewBase generates and returns a string representation of the current UI, including tabs, content, error, and footer.

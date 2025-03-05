@@ -22,6 +22,7 @@ type TaskFinishedMsg struct {
 // ClearTaskMsg represents a message used to clear or remove a specific task identified by its TaskID.
 type ClearTaskMsg struct {
 	TaskID string
+	Task   Task
 }
 
 // State is an alias for the int type, commonly used to represent various states or stages in a process.
@@ -48,6 +49,7 @@ var (
 	TaskMap               sync.Map
 
 	wg               sync.WaitGroup
+	pwg              sync.WaitGroup
 	once             sync.Once
 	fifoTaskChan     = make(chan string, 10)
 	parallelTaskChan = make(chan string, 10)
@@ -82,11 +84,12 @@ func AddTask(task Task) *sync.Map {
 	}
 	TaskMap.Store(task.ID, task)
 
-	wg.Add(1)
 	if task.Parallel {
+		pwg.Add(1)
 		parallelTaskChan <- task.ID
 		log.Debugf("Parallel Task added: %s", task.ID)
 	} else {
+		wg.Add(1)
 		fifoTaskChan <- task.ID
 		log.Debugf("FIFO Task added: %s", task.ID)
 	}
@@ -108,7 +111,6 @@ func fifoWorker() {
 			TaskMap.Store(taskID, t)
 			now := time.Now()
 			t.FinishedTime = &now
-			log.Debug("Completed FIFO:", taskID)
 
 			TaskMap.Delete(taskID)
 
@@ -136,7 +138,6 @@ func parallelWorker() {
 			TaskMap.Store(taskID, t)
 			now := time.Now()
 			t.FinishedTime = &now
-			log.Debug("Completed Parallel:", taskID)
 
 			TaskMap.Delete(taskID)
 
@@ -145,7 +146,7 @@ func parallelWorker() {
 				State: TaskFinished,
 			}
 		}
-		wg.Done()
+		pwg.Done()
 	}
 }
 
@@ -163,7 +164,9 @@ func ProcessTasks() {
 // Close gracefully shutdown all channels by waiting for in flight tasks
 func Close() {
 	fmt.Println("Waiting for tasks to complete")
+
 	wg.Wait()
+	pwg.Wait()
 
 	close(fifoTaskChan)
 	close(parallelTaskChan)

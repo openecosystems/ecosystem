@@ -71,7 +71,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case ecosystemcreatepage.Model:
 		m.Ctx.Logger.Debug("Section: Ecosystem Create: Page Update")
 		m.Ctx.Page = config.EcosystemCreatePage
-		m.CurrentPageModel, pageCmd = page.Update(msg)
+		_, pageCmd = page.Update(msg)
 	}
 	m.Footer, footerCmd = m.Footer.Update(msg)
 	m.UpdateProgramContext(m.Ctx)
