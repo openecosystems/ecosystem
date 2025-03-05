@@ -9,7 +9,7 @@ import (
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
 	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
 var introduction = `
@@ -21,24 +21,27 @@ This allows you to prototype and test before doing mesh execution.
 
 // Model represents a UI component that combines markdown rendering, a form interface, and contextual data handling.
 type Model struct {
-	content.BaseModel
+	*content.BaseModel
 
 	form             *ecosystemcreateform.Model
 	formModel        *tea.Model
-	markdownRenderer glamour.TermRenderer
+	markdownRenderer *glamour.TermRenderer
 	introduction     string
 }
 
 // NewModel initializes and returns a new Model instance using the provided program context and connector form model.
 // It sets up internal properties, including the base model, viewport, and a markdown renderer for introduction rendering.
-func NewModel(pctx *context.ProgramContext, form *ecosystemcreateform.Model) contract.MainContent {
-	m := Model{
+func NewModel(pctx *context.ProgramContext, form *ecosystemcreateform.Model) *Model {
+	viewportModel := viewport.New(pctx.MainContentBodyWidth, pctx.MainContentBodyHeight)
+	markdownRendererModel := markdown.GetMarkdownRenderer(theme.MainContentMarkdownWidth)
+
+	m := &Model{
 		form:             form,
-		markdownRenderer: markdown.GetMarkdownRenderer(80),
+		markdownRenderer: &markdownRendererModel,
 		BaseModel: content.NewBaseModel(
 			pctx,
-			content.NewBaseOptions{
-				Viewport: viewport.New(pctx.MainContentBodyWidth, pctx.MainContentBodyHeight),
+			&content.NewBaseOptions{
+				Viewport: &viewportModel,
 			},
 		),
 	}
@@ -55,12 +58,12 @@ func NewModel(pctx *context.ProgramContext, form *ecosystemcreateform.Model) con
 }
 
 // Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
-func (m Model) Init() tea.Cmd {
+func (m *Model) Init() tea.Cmd {
 	return tea.Batch()
 }
 
 // Update handles incoming messages to update the model's state and returns the updated model along with a command batch.
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd
@@ -89,6 +92,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 // View returns the rendered string representation of the BaseModel by applying contextual styles and joining content vertically.
-func (m Model) View() string {
+func (m *Model) View() string {
 	return m.ViewBase()
 }

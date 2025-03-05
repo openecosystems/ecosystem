@@ -1,7 +1,6 @@
 package pages
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	"strconv"
 	"strings"
 
@@ -15,43 +14,47 @@ import (
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
-
+	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
 // BaseModel defines a generic model structure that manages UI context, key configuration, and content layout components.
-type BaseModel[Cfg any] struct {
-	Ctx         *context.ProgramContext
-	Keys        *keys.KeyMap
-	KeyBindings *config.KeyBindings
+type BaseModel struct {
+	Ctx          *context.ProgramContext
+	Keys         *keys.KeyMap
+	KeyBindings  *config.KeyBindings
+	PageSettings *contract.PageSettings
 
 	Default            bool
-	PageConfig         *Cfg
 	CurrentMainContent contract.MainContent
 	CurrentSidebar     contract.Sidebar
 }
 
 // NewBaseOptions defines options for initializing a base model, including default settings, page configuration,
 // main content, sidebar, key mappings, and key bindings.
-type NewBaseOptions[Cfg any] struct {
+type NewBaseOptions struct {
 	Default            bool
-	PageConfig         *Cfg
 	CurrentMainContent contract.MainContent
 	CurrentSidebar     contract.Sidebar
 	Keys               *keys.KeyMap
 	KeyBindings        *config.KeyBindings
+	PageSettings       *contract.PageSettings
 }
 
 // NewBaseModel initializes and returns a new BaseModel with the given ProgramContext and configuration options.
-func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[Cfg]) BaseModel[Cfg] {
-	m := BaseModel[Cfg]{
+func NewBaseModel(ctx *context.ProgramContext, options *NewBaseOptions) *BaseModel {
+	if options == nil || options.PageSettings == nil {
+		panic("NewBaseModel: PageSettings cannot be nil")
+	}
+
+	m := &BaseModel{
 		Default:            options.Default,
-		PageConfig:         options.PageConfig,
 		CurrentMainContent: content.NewEmptyModel(ctx),
 		CurrentSidebar:     sidebar.NewEmptyModel(ctx),
 		Ctx:                ctx,
 		Keys:               options.Keys,
 		KeyBindings:        options.KeyBindings,
+		PageSettings:       options.PageSettings,
 	}
 
 	if options.CurrentMainContent != nil {
@@ -70,7 +73,7 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 }
 
 // UpdateBase processes incoming messages and updates the BaseModel state, returning the updated model and commands.
-func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
+func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	m.Ctx.Logger.Debug("Page UpdateBase", "msg", msg)
@@ -127,7 +130,7 @@ func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 }
 
 // ViewBase generates a styled horizontal layout for rendering the provided content within the model's context.
-func (m BaseModel[Cfg]) ViewBase(content string) string {
+func (m *BaseModel) ViewBase(content string) string {
 	return m.Ctx.Styles.Page.ContainerStyle.Render(
 		lipgloss.JoinHorizontal(
 			lipgloss.Top,
@@ -137,7 +140,7 @@ func (m BaseModel[Cfg]) ViewBase(content string) string {
 }
 
 // ViewDebug generates a debug view as a *strings.Builder, displaying detailed layout and contextual information.
-func (m BaseModel[Cfg]) ViewDebug() *strings.Builder {
+func (m *BaseModel) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
 	s.WriteString("Section: " + string(m.Ctx.Section) + "\n")
@@ -163,7 +166,7 @@ func (m BaseModel[Cfg]) ViewDebug() *strings.Builder {
 }
 
 // UpdateProgramContext updates the program context for the BaseModel and its associated components: main content and sidebar.
-func (m BaseModel[Cfg]) UpdateProgramContext(ctx *context.ProgramContext) {
+func (m *BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	if ctx == nil {
 		return
 	}
@@ -173,7 +176,7 @@ func (m BaseModel[Cfg]) UpdateProgramContext(ctx *context.ProgramContext) {
 }
 
 // OnWindowSizeChanged updates the program context and synchronizes dimensions when the window size changes.
-func (m BaseModel[Cfg]) OnWindowSizeChanged(ctx *context.ProgramContext) {
+func (m *BaseModel) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	if ctx == nil {
 		return
 	}
@@ -185,7 +188,7 @@ func (m BaseModel[Cfg]) OnWindowSizeChanged(ctx *context.ProgramContext) {
 }
 
 // SyncDimensions synchronizes the dimensions of the main content and sidebar based on the provided ProgramContext.
-func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
+func (m *BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
 	}
@@ -197,7 +200,7 @@ func (m BaseModel[Cfg]) SyncDimensions(ctx *context.ProgramContext) *context.Pro
 }
 
 // SyncMainContentDimensions adjusts dimensions of the main content area based on the context and sidebar visibility.
-func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *context.ProgramContext {
+func (m *BaseModel) SyncMainContentDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
 	}
@@ -218,7 +221,7 @@ func (m BaseModel[Cfg]) SyncMainContentDimensions(ctx *context.ProgramContext) *
 }
 
 // SyncSidebarDimensions recalculates and updates the dimensions of the sidebar and its content in the ProgramContext.
-func (m BaseModel[Cfg]) SyncSidebarDimensions(ctx *context.ProgramContext) *context.ProgramContext {
+func (m *BaseModel) SyncSidebarDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
 	}
@@ -236,4 +239,9 @@ func (m BaseModel[Cfg]) SyncSidebarDimensions(ctx *context.ProgramContext) *cont
 	m.Ctx = m.CurrentSidebar.SyncDimensions(m.Ctx)
 
 	return m.Ctx
+}
+
+// GetPageSettings returns the settings for the "Create an Ecosystems" page, including title, default status, and page type.
+func (m *BaseModel) GetPageSettings() *contract.PageSettings {
+	return m.PageSettings
 }

@@ -19,13 +19,11 @@ type ModelConfig struct{}
 
 // Model represents an aggregate model combining base functionality, form element, content, and a sidebar component.
 type Model struct {
-	pages.BaseModel[ModelConfig]
+	*pages.BaseModel
 
 	form             contract.Component
-	mainContent      contract.MainContent
-	mainContentModel tea.Model
-	sidebar          contract.Sidebar
-	sidebarModel     tea.Model
+	mainContentModel *tea.Model
+	sidebarModel     *tea.Model
 }
 
 // NewModel initializes and returns a new Model instance using a ProgramContext.
@@ -35,19 +33,27 @@ func NewModel(pctx *context.ProgramContext) contract.Page {
 	m := ecosystemcreatecontent.NewModel(pctx, &f)
 	s := ecosystemcreatesidebar.NewModel(pctx, &f)
 
-	p := Model{
-		form:        f,
-		mainContent: m,
-		sidebar:     s,
-		BaseModel: pages.NewBaseModel[ModelConfig](
-			pctx,
-			pages.NewBaseOptions[ModelConfig]{
-				Default:     true,
-				PageConfig:  &ModelConfig{},
-				Keys:        keys.Keys,
-				KeyBindings: nil,
+	baseModel := pages.NewBaseModel(
+		pctx,
+		&pages.NewBaseOptions{
+			Default:            true,
+			Keys:               keys.Keys,
+			KeyBindings:        nil,
+			CurrentMainContent: m,
+			CurrentSidebar:     s,
+			PageSettings: &contract.PageSettings{
+				Title:     "Create an Ecosystem",
+				IsDefault: true,
+				// KeyBindings:   GetKeyBindings(),
+				ContentHeight: 0,
+				Type:          config.EcosystemCreatePage,
 			},
-		),
+		},
+	)
+
+	p := &Model{
+		form:      f,
+		BaseModel: baseModel,
 	}
 
 	pctx.Logger.Debug("Page - Ecosystem Create Page: Configured initial model")
@@ -55,36 +61,32 @@ func NewModel(pctx *context.ProgramContext) contract.Page {
 	return p
 }
 
-// GetPageSettings returns the settings for the "Create an Ecosystems" page, including title, default status, and page type.
-func (m Model) GetPageSettings() contract.PageSettings {
-	return contract.PageSettings{
-		Title:     "Create an Ecosystem",
-		IsDefault: true,
-		// KeyBindings:   GetKeyBindings(),
-		ContentHeight: 0,
-		Type:          config.EcosystemCreatePage,
-	}
-}
-
 // Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
-func (m Model) Init() tea.Cmd {
+func (m *Model) Init() tea.Cmd {
 	return tea.Batch()
 }
 
 // Update processes the given message, updates the model's components, and returns the updated model and a batch of commands.
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
 		mainContentCmd tea.Cmd
 		sidebarCmd     tea.Cmd
 		cmds           []tea.Cmd
+
+		mainContentModel tea.Model
+		sidebarModel     tea.Model
 	)
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
 
 	m.UpdateProgramContext(m.Ctx)
-	m.mainContentModel, mainContentCmd = m.mainContent.Update(msg)
-	m.sidebarModel, sidebarCmd = m.sidebar.Update(msg)
+
+	mainContentModel, mainContentCmd = m.CurrentMainContent.Update(msg)
+	m.mainContentModel = &mainContentModel
+
+	sidebarModel, sidebarCmd = m.CurrentSidebar.Update(msg)
+	m.sidebarModel = &sidebarModel
 
 	cmds = append(
 		cmds,
@@ -97,11 +99,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 // View renders the combined view of the main content and sidebar by arranging them horizontally with a base style.
-func (m Model) View() string {
+func (m *Model) View() string {
 	return m.ViewBase(lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		m.mainContent.View(),
-		m.sidebar.View(),
+		m.CurrentMainContent.View(),
+		m.CurrentSidebar.View(),
 	))
 
 	// s := m.ViewDebug()

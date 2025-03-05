@@ -22,21 +22,21 @@ type BaseModel struct {
 // NewBaseOptions represents configuration options for initializing a BaseModel.
 // It includes a viewport model and an opened state.
 type NewBaseOptions struct {
-	Viewport viewport.Model
+	Viewport *viewport.Model
 	Opened   bool
 }
 
 // NewBaseModel initializes and returns a new BaseModel instance using the provided ProgramContext and options.
-func NewBaseModel(ctx *context.ProgramContext, options NewBaseOptions) BaseModel {
-	return BaseModel{
+func NewBaseModel(ctx *context.ProgramContext, options *NewBaseOptions) *BaseModel {
+	return &BaseModel{
 		Opened:   options.Opened,
-		Viewport: &options.Viewport,
+		Viewport: options.Viewport,
 		Ctx:      ctx,
 	}
 }
 
 // UpdateBase updates the BaseModel's context and dimensions, then returns the updated model along with a batched command.
-func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
+func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	m.UpdateProgramContext(m.Ctx)
@@ -49,7 +49,7 @@ func (m BaseModel) UpdateBase(_ tea.Msg) (BaseModel, tea.Cmd) {
 }
 
 // ViewBase renders the sidebar layout with the viewport content and a scroll percentage indicator.
-func (m BaseModel) ViewBase() string {
+func (m *BaseModel) ViewBase() string {
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.Sidebar.Root.
 		Height(height).
@@ -70,7 +70,7 @@ func (m BaseModel) ViewBase() string {
 }
 
 // ViewDebug generates and returns a debug view of the current BaseModel's context, including layout dimensions and state.
-func (m BaseModel) ViewDebug() *strings.Builder {
+func (m *BaseModel) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
 	s.WriteString("Section: " + string(m.Ctx.Section) + "\n")
@@ -97,30 +97,30 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 }
 
 // ScrollToTop moves the viewport of the BaseModel to the top.
-func (m BaseModel) ScrollToTop() {
+func (m *BaseModel) ScrollToTop() {
 	m.Viewport.GotoTop()
 }
 
 // ScrollToBottom scrolls the viewport of the BaseModel to its bottom-most position.
-func (m BaseModel) ScrollToBottom() {
+func (m *BaseModel) ScrollToBottom() {
 	m.Viewport.GotoBottom()
 }
 
 // UpdateProgramContext updates the ProgramContext of the BaseModel if the provided context is not nil.
-func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
+func (m *BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	if ctx == nil {
 		return
 	}
-	// m.Ctx = ctx
+	m.Ctx = ctx
 }
 
 // OnWindowSizeChanged updates the ProgramContext by syncing its dimensions with the provided context.
-func (m BaseModel) OnWindowSizeChanged(ctx *context.ProgramContext) {
+func (m *BaseModel) OnWindowSizeChanged(ctx *context.ProgramContext) {
 	m.Ctx = m.SyncDimensions(ctx)
 }
 
 // SyncDimensions updates the BaseModel's viewport dimensions with values from the provided context and returns the updated context.
-func (m BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
+func (m *BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
 	if ctx == nil {
 		return m.Ctx
 	}
@@ -133,16 +133,16 @@ func (m BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramC
 }
 
 // IsOpen returns true if the BaseModel instance is open; otherwise, false.
-func (m BaseModel) IsOpen() bool {
+func (m *BaseModel) IsOpen() bool {
 	return m.Opened
 }
 
 // Open sets the `Opened` property of the `BaseModel` to true, indicating that the model is now open.
-func (m BaseModel) Open() {
-	// m.Opened = true
+func (m *BaseModel) Open() {
+	m.Opened = true
 }
 
 // Close sets the Opened field of the BaseModel to false, indicating that the model is closed.
-func (m BaseModel) Close() {
-	// m.Opened = false
+func (m *BaseModel) Close() {
+	m.Opened = false
 }

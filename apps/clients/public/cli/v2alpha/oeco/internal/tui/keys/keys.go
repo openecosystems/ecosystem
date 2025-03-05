@@ -1,10 +1,10 @@
 package keys
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-
 	"github.com/charmbracelet/bubbles/help"
 	"github.com/charmbracelet/bubbles/key"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // KeyMap defines a set of key bindings and navigation mappings for user interaction in different application contexts.

@@ -1,14 +1,12 @@
 package pages
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
-
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-
+	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
@@ -21,37 +19,42 @@ type EmptyModelConfig struct {
 
 // EmptyModel represents a UI page with minimal functionality, inheriting behavior and properties from BaseModel.
 type EmptyModel struct {
-	BaseModel[EmptyModelConfig]
+	*BaseModel
 }
 
 // NewEmptyModel creates and initializes an EmptyModel as a Page using a given ProgramContext.
-func NewEmptyModel(ctx *context.ProgramContext) contract.Page {
-	m := EmptyModel{}
-
-	m.BaseModel = NewBaseModel[EmptyModelConfig](
+func NewEmptyModel(ctx *context.ProgramContext) *EmptyModel {
+	baseModel := NewBaseModel(
 		ctx,
-		NewBaseOptions[EmptyModelConfig]{
-			Default: false,
-			PageConfig: &EmptyModelConfig{
-				Title: "Empty",
-			},
+		&NewBaseOptions{
+			Default:            false,
 			CurrentMainContent: content.NewEmptyModel(ctx),
 			CurrentSidebar:     sidebar.NewEmptyModel(ctx),
 			// Keys:               nil,
 			// KeyBindings:        nil,
+			PageSettings: &contract.PageSettings{
+				Title:         "Empty Page",
+				IsDefault:     false,
+				KeyBindings:   []key.Binding{},
+				ContentHeight: 0,
+				Type:          config.EmptyPage,
+			},
 		},
 	)
+	m := &EmptyModel{
+		BaseModel: baseModel,
+	}
 
 	return m
 }
 
 // Init initializes the EmptyModel and returns a tea.Cmd batch for further processing or updates.
-func (m EmptyModel) Init() tea.Cmd {
+func (m *EmptyModel) Init() tea.Cmd {
 	return tea.Batch()
 }
 
 // Update processes a given message and updates the EmptyModel's state and commands, returning the updated model and a batch of commands.
-func (m EmptyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *EmptyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd            tea.Cmd
 		cmds           []tea.Cmd
@@ -83,20 +86,33 @@ func (m EmptyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 // View renders the current state of the `EmptyModel` as a string, displaying "Empty Page" vertically aligned to the left.
-func (m EmptyModel) View() string {
+func (m *EmptyModel) View() string {
 	return lipgloss.JoinVertical(lipgloss.Left, "Empty Page")
 }
 
-// GetPageSettings returns the page settings for an EmptyModel, including title, default status, key bindings, and type.
-func (m EmptyModel) GetPageSettings() contract.PageSettings {
-	return contract.PageSettings{
-		Title:         "Empty Page",
-		IsDefault:     false,
-		KeyBindings:   []key.Binding{},
-		ContentHeight: 0,
-		Type:          config.EmptyPage,
+// UpdateProgramContext updates the ProgramContext for the EmptyModel, syncing any relevant data for rendering or behavior.
+func (m *EmptyModel) UpdateProgramContext(_ *context.ProgramContext) {}
+
+// OnWindowSizeChanged updates the program context and synchronizes dimensions when the window size changes.
+func (m *EmptyModel) OnWindowSizeChanged(ctx *context.ProgramContext) {
+	if ctx == nil {
+		return
 	}
+
+	m.Ctx = ctx
+	m.SyncDimensions(m.Ctx)
+	m.CurrentMainContent.OnWindowSizeChanged(m.Ctx)
+	m.CurrentSidebar.OnWindowSizeChanged(m.Ctx)
 }
 
-// UpdateProgramContext updates the ProgramContext for the EmptyModel, syncing any relevant data for rendering or behavior.
-func (m EmptyModel) UpdateProgramContext(_ *context.ProgramContext) {}
+// SyncDimensions synchronizes the dimensions of the main content and sidebar based on the provided ProgramContext.
+func (m *EmptyModel) SyncDimensions(ctx *context.ProgramContext) *context.ProgramContext {
+	if ctx == nil {
+		return m.Ctx
+	}
+
+	m.Ctx = m.SyncMainContentDimensions(ctx)
+	m.Ctx = m.SyncSidebarDimensions(m.Ctx)
+
+	return m.Ctx
+}

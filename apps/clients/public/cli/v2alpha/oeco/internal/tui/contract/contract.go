@@ -62,12 +62,12 @@ type Tabs interface {
 
 // Page represents a configurable and responsive UI element with context awareness and display capabilities.
 type Page interface {
-	GetPageSettings() PageSettings
+	GetPageSettings() *PageSettings
 	Configurable
 	ContextAware
 	Responsive
-	Displayable
-	tea.Model
+	// Displayable
+	// tea.Model
 }
 
 // MainContent is an interface that combines Configurable, ContextAware, Responsive, and Displayable behaviors.

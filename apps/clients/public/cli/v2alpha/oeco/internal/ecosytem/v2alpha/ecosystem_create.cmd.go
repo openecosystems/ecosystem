@@ -23,7 +23,7 @@ var Cmd = &cobra.Command{
 }
 
 // createModel initializes an ecosystem model and optionally sets up logging based on the provided command flags.
-func createModel(cmd *cobra.Command) ecosystemcreate.Model {
+func createModel(cmd *cobra.Command) *ecosystemcreate.Model {
 	settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 	logger := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*log.Logger)
 

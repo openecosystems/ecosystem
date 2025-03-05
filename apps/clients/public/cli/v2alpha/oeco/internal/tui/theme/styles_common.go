@@ -17,18 +17,21 @@ import (
 // TabsHeight combines border and content heights to define total tab height.
 // ViewSwitcherMargin defines the margin around the view switcher.
 // TableHeaderHeight defines the height of the table header section.
-var (
-	SearchHeight       = 3
-	FooterHeight       = 1
-	ExpandedHelpHeight = 14
-	InputBoxHeight     = 8
-	SingleRuneWidth    = 4
-	MainContentPadding = 1
-	TabsBorderHeight   = 1
-	TabsContentHeight  = 2
-	TabsHeight         = TabsBorderHeight + TabsContentHeight
-	ViewSwitcherMargin = 1
-	TableHeaderHeight  = 2
+// MainContentMarkdownWidth defines the height of the main content for markdown.
+const (
+	SearchHeight             = 3
+	FooterHeight             = 1
+	ExpandedHelpHeight       = 14
+	InputBoxHeight           = 8
+	SingleRuneWidth          = 4
+	MainContentPadding       = 1
+	TabsBorderHeight         = 1
+	TabsContentHeight        = 2
+	TabsHeight               = TabsBorderHeight + TabsContentHeight
+	ViewSwitcherMargin       = 1
+	TableHeaderHeight        = 2
+	MainContentMarkdownWidth = 80
+	MaxContentWidth          = 80
 )
 
 // CommonStyles defines a set of reusable styles and symbols used for consistent UI rendering throughout the application.

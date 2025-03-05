@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // EnclaveKeyMap defines a set of key bindings for interacting with an enclave through list, view, and edit actions.

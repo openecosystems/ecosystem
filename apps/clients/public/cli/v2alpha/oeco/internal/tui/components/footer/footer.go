@@ -19,30 +19,30 @@ import (
 // Model represents the state and behavior of the application UI, managing sections, help views, and user interactions.
 type Model struct {
 	pctx            *context.ProgramContext
-	leftSection     string
-	rightSection    string
-	help            help.Model
+	leftSection     *string
+	rightSection    *string
+	help            *help.Model
 	ShowAll         bool
 	ShowConfirmQuit bool
 }
 
 // NewModel initializes and returns a new Model instance with default help settings and empty left and right sections.
-func NewModel(pctx *context.ProgramContext) Model {
+func NewModel(pctx *context.ProgramContext) *Model {
 	h := help.New()
 	h.ShowAll = true
 	h.Styles = pctx.Styles.Help.BubbleStyles
 	l := ""
 	r := ""
-	return Model{
+	return &Model{
 		pctx:         pctx,
-		help:         h,
-		leftSection:  l,
-		rightSection: r,
+		help:         &h,
+		leftSection:  &l,
+		rightSection: &r,
 	}
 }
 
 // Update handles incoming messages, updating the model state and determining the command to execute next.
-func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 	var cmds []tea.Cmd
 	// footerCmd tea.Cmd
 
@@ -80,7 +80,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 // View generates the string representation of the current model state, including footer and optional help view.
-func (m Model) View() string {
+func (m *Model) View() string {
 	var footer string
 
 	if m.ShowConfirmQuit {
@@ -93,12 +93,12 @@ func (m Model) View() string {
 			Render("? help")
 		viewSwitcher := m.renderViewSwitcher(m.pctx)
 		leftSection := ""
-		if m.leftSection != "" {
-			leftSection = m.leftSection
+		if m.leftSection != nil {
+			leftSection = *m.leftSection
 		}
 		rightSection := ""
-		if m.rightSection != "" {
-			rightSection = m.rightSection
+		if m.rightSection != nil {
+			rightSection = *m.rightSection
 		}
 		spacing := lipgloss.NewStyle().
 			Background(m.pctx.Theme.SelectedBackground).
@@ -129,20 +129,18 @@ func (m Model) View() string {
 }
 
 // SetWidth sets the width of the help model to the specified value.
-func (m Model) SetWidth(width int) {
+func (m *Model) SetWidth(width int) {
 	m.help.Width = width
 }
 
 // UpdateProgramContext updates the model's context and applies styles from the updated context to the help view.
-//
-//nolint:staticcheck
-func (m Model) UpdateProgramContext(ctx *context.ProgramContext) {
+func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.pctx = ctx
 	m.help.Styles = ctx.Styles.Help.BubbleStyles
 }
 
 // renderViewSwitcher generates a horizontal view switcher string based on the current section and user context.
-func (m Model) renderViewSwitcher(ctx *context.ProgramContext) string {
+func (m *Model) renderViewSwitcher(ctx *context.ProgramContext) string {
 	var view string
 	if ctx.Section == config.EnclaveSection {
 		view += " Enclave"
@@ -170,13 +168,11 @@ func (m Model) renderViewSwitcher(ctx *context.ProgramContext) string {
 }
 
 // SetLeftSection sets the content of the left section in the model footer view. Updates the `leftSection` field.
-func SetLeftSection(footer Model, leftSection string) Model {
-	footer.leftSection = leftSection
-	return footer
+func (m *Model) SetLeftSection(leftSection string) {
+	m.leftSection = &leftSection
 }
 
 // SetRightSection sets the value of the right section in the Model.
-func SetRightSection(footer Model, rightSection string) Model {
-	footer.rightSection = rightSection
-	return footer
+func (m *Model) SetRightSection(rightSection string) {
+	m.rightSection = &rightSection
 }

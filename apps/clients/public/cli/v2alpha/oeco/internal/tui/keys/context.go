@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // ContextKeyMap represents a structure to define key bindings for different context actions such as List, View, and Edit.

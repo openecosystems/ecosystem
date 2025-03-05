@@ -25,16 +25,7 @@ var EcosystemServiceServiceCmd = &cobra.Command{
 }
 
 func init() {
-	// EcosystemServiceServiceCmd.AddCommand(CreateEcosystemV2AlphaCmd)
 	EcosystemServiceServiceCmd.AddCommand(Cmd)
-
-	EcosystemServiceServiceCmd.AddCommand(ListEcosystemsV2AlphaCmd)
-
-	EcosystemServiceServiceCmd.AddCommand(GetEcosystemV2AlphaCmd)
-
-	EcosystemServiceServiceCmd.AddCommand(UpdateEcosystemV2AlphaCmd)
-
-	EcosystemServiceServiceCmd.AddCommand(DeleteEcosystemV2AlphaCmd)
 }
 
 // gracefulShutdown recovers from any panic that occurred and logs the recovery message before quitting the tea program.

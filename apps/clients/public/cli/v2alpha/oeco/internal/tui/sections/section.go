@@ -18,7 +18,6 @@ import (
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
 	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
@@ -33,10 +32,10 @@ type BaseModel struct {
 	Pages         []contract.Page
 	CurrentPage   contract.Page
 	CurrentPageID int
-	Spinner       spinner.Model
-	Tabs          tabs.Model
-	Footer        footer.Model
-	Keys          keys.KeyMap
+	Spinner       *spinner.Model
+	Tabs          *tabs.Model
+	Footer        *footer.Model
+	Keys          *keys.KeyMap
 	SingularForm  string
 	PluralForm    string
 }
@@ -51,29 +50,32 @@ type NewBaseOptions struct {
 }
 
 // NewBaseModel creates and initializes a new BaseModel instance with the provided context and options.
-func NewBaseModel(pctx *context.ProgramContext, options NewBaseOptions) BaseModel {
-	var p []contract.Page
-	if options.Pages != nil {
-		p = options.Pages
+func NewBaseModel(pctx *context.ProgramContext, options *NewBaseOptions) *BaseModel {
+	if len(options.Pages) == 0 {
+		panic("No pages provided")
 	}
 
-	taskSpinner := spinner.Model{Spinner: spinner.Dot}
+	taskSpinner := spinner.New(spinner.WithSpinner(spinner.Dot))
+	tabsModel := tabs.NewModel(pctx, options.Pages)
+	footerModel := footer.NewModel(pctx)
 
-	m := BaseModel{
+	m := &BaseModel{
 		Ctx:          pctx,
-		Spinner:      taskSpinner,
+		Spinner:      &taskSpinner,
 		SingularForm: options.Singular,
 		PluralForm:   options.Plural,
-		Pages:        p,
-		Tabs:         tabs.NewModel(pctx, p),
-		Footer:       footer.NewModel(pctx),
+		Pages:        options.Pages,
+		Tabs:         tabsModel,
+		Footer:       footerModel,
 	}
 
 	m.Spinner.Style = lipgloss.NewStyle().Background(m.Ctx.Theme.SelectedBackground)
+
 	m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(options.CurrentPageID)
+
 	m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 	m.Ctx.Settings = options.Settings
-	m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageID)
+	m.Tabs = m.Tabs.SetCurrentPageID(m.CurrentPageID)
 
 	return m
 }
@@ -85,7 +87,7 @@ type initialize struct {
 
 // init initializes the application by parsing the configuration file and handling potential parsing errors.
 // Returns an `initialize` message containing the parsed configuration.
-func (m BaseModel) init() tea.Msg {
+func (m *BaseModel) init() tea.Msg {
 	cfg, err := config.ParseConfig()
 	if err != nil {
 		utils.ShowError(err)
@@ -96,14 +98,14 @@ func (m BaseModel) init() tea.Msg {
 }
 
 // InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
-func (m BaseModel) InitBase() tea.Cmd {
+func (m *BaseModel) InitBase() tea.Cmd {
 	tasks.ProcessTasks()
 	go m.HandleCompletedTasks()
 	return tea.Batch(m.init)
 }
 
 // UpdateBase processes incoming messages to update the state of the BaseModel and returns the updated model and command.
-func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
+func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 	var (
 		cmd       tea.Cmd
 		cmds      []tea.Cmd
@@ -117,12 +119,12 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 		switch {
 		case key.Matches(message, keys.Keys.PrevPage):
 			m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetPrevPageID())
-			m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageID)
+			m.Tabs = m.Tabs.SetCurrentPageID(m.CurrentPageID)
 			m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 
 		case key.Matches(message, keys.Keys.NextPage):
 			m.CurrentPage, m.CurrentPageID = m.SetCurrentPage(m.GetNextPageID())
-			m.Tabs = m.Tabs.SetCurrentPageId(m.CurrentPageID)
+			m.Tabs = m.Tabs.SetCurrentPageID(m.CurrentPageID)
 			m.Ctx.Page = m.CurrentPage.GetPageSettings().Type
 
 		case key.Matches(message, keys.Keys.Help):
@@ -165,7 +167,7 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 
 	case tasks.ClearTaskMsg:
 		m.Ctx.Logger.Debug("Clear Task finished", "id", message.Task.ID)
-		m.Footer = footer.SetRightSection(m.Footer, "")
+		m.Footer.SetRightSection("")
 		m.UpdateBase(message)
 		//	delete(m.Tasks, message.TaskID)
 		// case spinner.TickMsg:
@@ -184,33 +186,33 @@ func (m BaseModel) UpdateBase(msg tea.Msg) (BaseModel, tea.Cmd) {
 }
 
 // HandleCompletedTasks processes completed and cleared tasks, updates their states in the model, and generates related commands.
-func (m BaseModel) HandleCompletedTasks() {
-	// once.Do(func() {
-	for msg := range tasks.CompletedTaskCmdsChan {
-		switch message := msg.(type) {
-		case tasks.TaskFinishedMsg:
-			m.Ctx.Logger.Debug("HANDLE Task finished", "id", message.Task.ID)
-			m.UpdateBase(msg)
+func (m *BaseModel) HandleCompletedTasks() {
+	once.Do(func() {
+		for msg := range tasks.CompletedTaskCmdsChan {
+			switch message := msg.(type) {
+			case tasks.TaskFinishedMsg:
+				m.Ctx.Logger.Debug("HANDLE Task finished", "id", message.Task.ID)
+				m.UpdateBase(msg)
 
-			//taskSpinner, _ := m.Spinner.Update(msg)
-			//m.Spinner = taskSpinner
-			//m.Footer.SetRightSection(m.RenderRunningTask(message))
-			//
-			//m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
-			//if message.Task.Error != nil {
-			//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
-			//}
-			//
-			//time.AfterFunc(2*time.Second, func() {
-			//	m.Footer.SetRightSection("")
-			//})
+				//taskSpinner, _ := m.Spinner.Update(msg)
+				//m.Spinner = taskSpinner
+				//m.Footer.SetRightSection(m.RenderRunningTask(message))
+				//
+				//m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
+				//if message.Task.Error != nil {
+				//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
+				//}
+				//
+				//time.AfterFunc(2*time.Second, func() {
+				//	m.Footer.SetRightSection("")
+				//})
+			}
 		}
-	}
-	//})
+	})
 }
 
 // ViewBase generates and returns a string representation of the current UI, including tabs, content, error, and footer.
-func (m BaseModel) ViewBase(content string) string {
+func (m *BaseModel) ViewBase(content string) string {
 	s := strings.Builder{}
 	s.WriteString(m.Tabs.View())
 	s.WriteString("\n")
@@ -242,7 +244,7 @@ func (m BaseModel) ViewBase(content string) string {
 }
 
 // ViewDebug generates and returns a structured debug representation of the BaseModel's current state as a strings.Builder.
-func (m BaseModel) ViewDebug() *strings.Builder {
+func (m *BaseModel) ViewDebug() *strings.Builder {
 	s := strings.Builder{}
 	s.WriteString("\n")
 	s.WriteString("Section: " + string(m.Ctx.Section) + "\n")
@@ -275,9 +277,9 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 	prevPage := m.GetPageAt(m.GetPrevPageID())
 	s.WriteString("    Previous Page: " + prevPage.GetPageSettings().Title + "\n")
 	s.WriteString("       ID: " + strconv.Itoa(m.GetPrevPageID()) + "\n")
-	tabPage := m.GetPageAt(m.Tabs.GetCurrentPageId())
+	tabPage := m.GetPageAt(m.Tabs.GetCurrentPageID())
 	s.WriteString("    Current Tab: " + tabPage.GetPageSettings().Title + "\n")
-	s.WriteString("       ID: " + strconv.Itoa(m.Tabs.GetCurrentPageId()) + "\n")
+	s.WriteString("       ID: " + strconv.Itoa(m.Tabs.GetCurrentPageID()) + "\n")
 	s.WriteString("    Available Tab Page Count: " + strconv.Itoa(len(m.Tabs.GetPages())) + "\n")
 	for _, p := range m.Tabs.GetPages() {
 		s.WriteString("       Tab Page: " + p.GetPageSettings().Title + "\n")
@@ -288,7 +290,7 @@ func (m BaseModel) ViewDebug() *strings.Builder {
 }
 
 // UpdateProgramContext updates the BaseModel's context and propagates it to tabs, the current page, and the footer.
-func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
+func (m *BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 	// m.Ctx = ctx
 	m.Tabs.UpdateProgramContext(ctx)
 	if m.CurrentPage != nil {
@@ -298,7 +300,7 @@ func (m BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 }
 
 // OnWindowSizeChanged updates context dimensions and page content size based on the new window size from the message.
-func (m BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
+func (m *BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
 	m.Ctx.ScreenWidth = msg.Width
 	m.Ctx.ScreenHeight = msg.Height
 	m.Ctx.PageContentWidth = m.Ctx.ScreenWidth
@@ -307,26 +309,24 @@ func (m BaseModel) OnWindowSizeChanged(msg tea.WindowSizeMsg) {
 	} else {
 		m.Ctx.PageContentHeight = msg.Height - theme.TabsHeight - theme.FooterHeight
 	}
+
 	m.CurrentPage.OnWindowSizeChanged(m.Ctx)
 }
 
 // SetCurrentPage sets the current page of the BaseModel to the page at the given ID, updates the context and tabs, and returns the page and its ID.
-func (m BaseModel) SetCurrentPage(id int) (contract.Page, int) {
-	p := m.GetPageAt(id)
-	if p == nil {
-		p = pages.NewEmptyModel(m.Ctx)
-	}
+func (m *BaseModel) SetCurrentPage(id int) (contract.Page, int) {
+	page := m.GetPageAt(id)
 
-	m.Ctx.Page = p.GetPageSettings().Type
+	m.Ctx.Page = page.GetPageSettings().Type
 	m.CurrentPageID = id
-	m.CurrentPage = p
-	m.Tabs = m.Tabs.SetCurrentPageId(id)
+	m.CurrentPage = page
+	m.Tabs = m.Tabs.SetCurrentPageID(id)
 
-	return p, id
+	return page, id
 }
 
 // GetCurrentPage returns the currently active page from the Pages slice based on the CurrentPageID. Returns nil if no valid page exists.
-func (m BaseModel) GetCurrentPage() contract.Page {
+func (m *BaseModel) GetCurrentPage() contract.Page {
 	p := m.Pages
 	if len(p) == 0 || m.CurrentPageID >= len(p) {
 		return nil
@@ -336,7 +336,7 @@ func (m BaseModel) GetCurrentPage() contract.Page {
 }
 
 // GetPageAt retrieves the page at the specified index from the Pages slice. If the index is out of range, it returns nil.
-func (m BaseModel) GetPageAt(id int) contract.Page {
+func (m *BaseModel) GetPageAt(id int) contract.Page {
 	p := m.Pages
 	if len(p) <= id {
 		return nil
@@ -346,17 +346,17 @@ func (m BaseModel) GetPageAt(id int) contract.Page {
 }
 
 // GetPrevPageID calculates and returns the ID of the previous page in the Pages slice, wrapping around if necessary.
-func (m BaseModel) GetPrevPageID() int {
+func (m *BaseModel) GetPrevPageID() int {
 	return (m.CurrentPageID - 1 + len(m.Pages)) % len(m.Pages)
 }
 
 // GetNextPageID calculates and returns the ID of the next page, cycling back to the start if the end is reached.
-func (m BaseModel) GetNextPageID() int {
+func (m *BaseModel) GetNextPageID() int {
 	return (m.CurrentPageID + 1) % len(m.Pages)
 }
 
 // GetDefaultPageID identifies and returns the index of the default page in the Pages slice. Defaults to 0 if none is found.
-func (m BaseModel) GetDefaultPageID() int {
+func (m *BaseModel) GetDefaultPageID() int {
 	for i, page := range m.Pages {
 		if page.GetPageSettings().IsDefault {
 			return i
@@ -367,7 +367,7 @@ func (m BaseModel) GetDefaultPageID() int {
 }
 
 // RenderRunningTask returns a styled string representation of the currently running task and its status, including task count stats.
-func (m BaseModel) RenderRunningTask(msg tasks.TaskFinishedMsg) string {
+func (m *BaseModel) RenderRunningTask(msg tasks.TaskFinishedMsg) string {
 	var currTaskStatus string
 
 	switch msg.State {

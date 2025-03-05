@@ -6,28 +6,30 @@ import (
 
 	ecosystemcreateform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
 )
 
 // Model represents a user interface model combining a sidebar and a form within a program context.
 type Model struct {
-	sidebar.BaseModel
+	*sidebar.BaseModel
 
 	form *ecosystemcreateform.Model
 }
 
 // NewModel creates and initializes a new Model instance with a given program context and connector form configuration.
-func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) contract.Sidebar {
-	m := Model{
-		form: form,
-	}
-	m.BaseModel = sidebar.NewBaseModel(
+func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) *Model {
+	baseModel := sidebar.NewBaseModel(
 		ctx,
-		sidebar.NewBaseOptions{
+		&sidebar.NewBaseOptions{
 			Opened: true,
 		},
 	)
+
+	m := &Model{
+		BaseModel: baseModel,
+		form:      form,
+	}
+
 	v := viewport.New(m.Ctx.SidebarContentWidth, m.Ctx.SidebarContentHeight)
 	m.Viewport = &v
 
@@ -35,12 +37,12 @@ func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) cont
 }
 
 // Init initializes the EmptyModel by returning a batched command with no specific functionality.
-func (m Model) Init() tea.Cmd {
+func (m *Model) Init() tea.Cmd {
 	return tea.Batch()
 }
 
 // Update processes the incoming message, updates the model's state, and returns the updated model along with batched commands.
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd         tea.Cmd
 		cmds        []tea.Cmd
@@ -62,6 +64,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 // View returns the string representation of the BaseModel's current view by delegating to the ViewBase method.
-func (m Model) View() string {
+func (m *Model) View() string {
 	return m.ViewBase()
 }

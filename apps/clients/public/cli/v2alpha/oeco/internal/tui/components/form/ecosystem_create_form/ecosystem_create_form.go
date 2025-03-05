@@ -19,7 +19,7 @@ import (
 )
 
 // maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.
-const maxWidth = 80
+const maxWidth = theme.MaxContentWidth
 
 // state represents an integer-based enumeration to define various states in a model or application logic.
 type state int

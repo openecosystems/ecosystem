@@ -1,13 +1,14 @@
 package config
 
 import (
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
 	"reflect"
 	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/yaml.v2"
+
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // Parser is a structure that holds a reference to a FileSystem for interacting with the underlying filesystem.
