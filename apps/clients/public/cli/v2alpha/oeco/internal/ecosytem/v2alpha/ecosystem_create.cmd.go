@@ -27,7 +27,12 @@ func createModel(cmd *cobra.Command) *ecosystemcreate.Model {
 	settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 	logger := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*log.Logger)
 
-	c := config.Config{}
+	// c := config.Config{}
+	c, err := config.ParseConfig()
+	if err != nil {
+		logger.Fatal("error parsing config: ", err, "")
+	}
+
 	t := theme.ParseTheme(&c)
 	pctx := &context.ProgramContext{
 		Config:   &c,

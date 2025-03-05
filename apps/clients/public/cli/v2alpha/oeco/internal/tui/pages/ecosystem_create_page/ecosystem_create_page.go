@@ -21,9 +21,7 @@ type ModelConfig struct{}
 type Model struct {
 	*pages.BaseModel
 
-	form             contract.Component
-	mainContentModel *tea.Model
-	sidebarModel     *tea.Model
+	form contract.Component
 }
 
 // NewModel initializes and returns a new Model instance using a ProgramContext.
@@ -73,20 +71,12 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		mainContentCmd tea.Cmd
 		sidebarCmd     tea.Cmd
 		cmds           []tea.Cmd
-
-		mainContentModel tea.Model
-		sidebarModel     tea.Model
 	)
 
 	m.BaseModel, cmd = m.UpdateBase(msg)
-
 	m.UpdateProgramContext(m.Ctx)
-
-	mainContentModel, mainContentCmd = m.CurrentMainContent.Update(msg)
-	m.mainContentModel = &mainContentModel
-
-	sidebarModel, sidebarCmd = m.CurrentSidebar.Update(msg)
-	m.sidebarModel = &sidebarModel
+	_, mainContentCmd = m.CurrentMainContent.Update(msg)
+	_, sidebarCmd = m.CurrentSidebar.Update(msg)
 
 	cmds = append(
 		cmds,

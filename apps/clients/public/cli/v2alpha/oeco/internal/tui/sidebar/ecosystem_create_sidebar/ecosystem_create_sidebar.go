@@ -18,10 +18,13 @@ type Model struct {
 
 // NewModel creates and initializes a new Model instance with a given program context and connector form configuration.
 func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) *Model {
+	v := viewport.New(ctx.SidebarContentWidth, ctx.SidebarContentHeight)
+
 	baseModel := sidebar.NewBaseModel(
 		ctx,
 		&sidebar.NewBaseOptions{
-			Opened: true,
+			Opened:   true,
+			Viewport: &v,
 		},
 	)
 
@@ -29,9 +32,6 @@ func NewModel(ctx *context.ProgramContext, form *ecosystemcreateform.Model) *Mod
 		BaseModel: baseModel,
 		form:      form,
 	}
-
-	v := viewport.New(m.Ctx.SidebarContentWidth, m.Ctx.SidebarContentHeight)
-	m.Viewport = &v
 
 	return m
 }

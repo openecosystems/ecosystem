@@ -41,7 +41,7 @@ func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
 
 	m.UpdateProgramContext(m.Ctx)
 	m.SyncDimensions(m.Ctx)
-	// TODO: Investigate why we need this
+
 	m.Viewport.Width = m.Ctx.SidebarContentWidth
 	m.Viewport.Height = m.Ctx.SidebarContentHeight
 

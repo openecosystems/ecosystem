@@ -32,6 +32,7 @@ const (
 	TableHeaderHeight        = 2
 	MainContentMarkdownWidth = 80
 	MaxContentWidth          = 80
+	SideBarOffset            = 50
 )
 
 // CommonStyles defines a set of reusable styles and symbols used for consistent UI rendering throughout the application.

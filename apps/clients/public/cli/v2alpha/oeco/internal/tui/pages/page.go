@@ -207,7 +207,7 @@ func (m *BaseModel) SyncMainContentDimensions(ctx *context.ProgramContext) *cont
 
 	m.Ctx = ctx
 
-	sideBarOffset := 50
+	sideBarOffset := theme.SideBarOffset
 	if m.CurrentSidebar.IsOpen() {
 		sideBarOffset = m.Ctx.Config.Defaults.Sidebar.Width
 	}
@@ -228,10 +228,11 @@ func (m *BaseModel) SyncSidebarDimensions(ctx *context.ProgramContext) *context.
 
 	m.Ctx = ctx
 
-	sideBarOffset := 50
+	sideBarOffset := theme.SideBarOffset
 	if m.CurrentSidebar.IsOpen() {
 		sideBarOffset = m.Ctx.Config.Defaults.Sidebar.Width
 	}
+
 	m.Ctx.SidebarContentWidth = sideBarOffset
 	m.Ctx.SidebarContentHeight = m.Ctx.PageContentHeight - theme.SearchHeight
 	m.Ctx.SidebarContentBodyWidth = m.Ctx.SidebarContentWidth - 2*m.Ctx.Styles.Sidebar.ContentPadding - m.Ctx.Styles.Sidebar.BorderWidth
