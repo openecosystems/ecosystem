@@ -81,7 +81,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Ctx.Page = config.EcosystemCreatePage
 		_, pageCmd = page.Update(msg)
 	}
-	m.Footer, footerCmd = m.Footer.Update(msg)
+	_, footerCmd = m.Footer.Update(msg)
 	m.UpdateProgramContext(m.Ctx)
 
 	cmds = append(

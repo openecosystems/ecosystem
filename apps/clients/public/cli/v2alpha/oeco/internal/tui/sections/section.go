@@ -135,11 +135,13 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 			}
 
 		case key.Matches(message, keys.Keys.Quit):
-			if m.Ctx.Config.ConfirmQuit {
-				m.Footer, cmd = m.Footer.Update(msg)
+			if !m.Ctx.Config.ConfirmQuit {
+				_, cmd = m.Footer.Update(msg)
 				return m, cmd
 			}
-			// cmd = tea.Quit
+
+			// cmds = append(cmds, tea.Quit)
+			// return m, tea.Batch(cmds...)
 		}
 	case tea.WindowSizeMsg:
 		m.OnWindowSizeChanged(message)
@@ -152,8 +154,9 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 		// m.Spinner = taskSpinner
 		// cmds = append(cmds, internalTickCmd)
 
-		// m.Footer = footer.SetRightSection(m.Footer, m.RenderRunningTask(message))
-		m.Footer, footerCmd = m.Footer.Update(message)
+		// m.Footer.SetRightSection(m.RenderRunningTask(message))
+		_, footerCmd = m.Footer.Update(message)
+		m.CurrentPage.Update(message)
 
 		m.Ctx.Logger.Debug("Section: Task finished", "id", message.Task.ID)
 		//if message.Task.Error != nil {
@@ -191,21 +194,8 @@ func (m *BaseModel) HandleCompletedTasks() {
 		for msg := range tasks.CompletedTaskCmdsChan {
 			switch message := msg.(type) {
 			case tasks.TaskFinishedMsg:
-				m.Ctx.Logger.Debug("HANDLE Task finished", "id", message.Task.ID)
+				_ = message
 				m.UpdateBase(msg)
-
-				//taskSpinner, _ := m.Spinner.Update(msg)
-				//m.Spinner = taskSpinner
-				//m.Footer.SetRightSection(m.RenderRunningTask(message))
-				//
-				//m.Ctx.Logger.Debug("Task finished", "id", message.Task.ID)
-				//if message.Task.Error != nil {
-				//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
-				//}
-				//
-				//time.AfterFunc(2*time.Second, func() {
-				//	m.Footer.SetRightSection("")
-				//})
 			}
 		}
 	})

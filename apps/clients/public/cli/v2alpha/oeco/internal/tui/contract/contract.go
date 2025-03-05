@@ -66,8 +66,8 @@ type Page interface {
 	Configurable
 	ContextAware
 	Responsive
-	// Displayable
-	// tea.Model
+	Displayable
+	tea.Model
 }
 
 // MainContent is an interface that combines Configurable, ContextAware, Responsive, and Displayable behaviors.

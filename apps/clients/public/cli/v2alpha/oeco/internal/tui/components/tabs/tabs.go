@@ -80,6 +80,6 @@ func (m *Model) SetCurrentPageID(id int) *Model {
 }
 
 // UpdateProgramContext updates the ProgramContext of the Model with the provided context.
-func (m *Model) UpdateProgramContext(_ *context.ProgramContext) {
-	// m.ctx = ctx
+func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
+	m.ctx = ctx
 }

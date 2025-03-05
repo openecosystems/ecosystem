@@ -60,7 +60,7 @@ func (parser Parser) getDefaultConfig() Config {
 			},
 		},
 		Pager:       Pager{},
-		ConfirmQuit: false,
+		ConfirmQuit: true,
 	}
 }
 

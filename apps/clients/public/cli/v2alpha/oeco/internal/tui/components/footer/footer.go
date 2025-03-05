@@ -7,7 +7,6 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/charmbracelet/log"
 
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
@@ -41,10 +40,14 @@ func NewModel(pctx *context.ProgramContext) *Model {
 	}
 }
 
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m *Model) Init() tea.Cmd {
+	return tea.Batch()
+}
+
 // Update handles incoming messages, updating the model state and determining the command to execute next.
-func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
-	// footerCmd tea.Cmd
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
@@ -61,7 +64,7 @@ func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 			m.ShowAll = !m.ShowAll
 		}
 	case tasks.TaskFinishedMsg:
-		log.Debug("Task finished", "id", message.Task.ID)
+		m.pctx.Logger.Debug("Task finished", "id", message.Task.ID)
 
 		//m.rightSection = message.Task.ID
 		//// SetRightSection(m, message.Task.ID)
