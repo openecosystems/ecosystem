@@ -5,9 +5,11 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/yaml.v2"
 
+	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
@@ -40,7 +42,28 @@ func (parser Parser) getDefaultConfig() Config {
 				Open:  false,
 				Width: 50,
 			},
-			RefetchIntervalMinutes: 30,
+			StreamMaxRecordsToRetain: 25,
+			RefetchIntervalMinutes:   30,
+			Layout: LayoutConfig{
+				Packets: PacketContainerLayoutConfig{
+					UpdatedAt: ColumnConfig{
+						Width: utils.IntPtr(lipgloss.Width("2mo  ")),
+					},
+					CreatedAt: ColumnConfig{
+						Width: utils.IntPtr(lipgloss.Width("2mo  ")),
+					},
+					Repo: ColumnConfig{
+						Width: utils.IntPtr(15),
+					},
+					Creator: ColumnConfig{
+						Width: utils.IntPtr(10),
+					},
+					Assignees: ColumnConfig{
+						Width:  utils.IntPtr(20),
+						Hidden: utils.BoolPtr(true),
+					},
+				},
+			},
 		},
 		KeyBindings: KeyBindings{
 			Universal:    []KeyBinding{},
@@ -155,4 +178,16 @@ func ParseConfig() (Config, error) {
 	}
 
 	return config, nil
+}
+
+// MergeColumnConfigs merges two ColumnConfig objects, prioritizing non-nil values in sectionCfg over those in defaultCfg.
+func MergeColumnConfigs(defaultCfg, sectionCfg ColumnConfig) ColumnConfig {
+	colCfg := defaultCfg
+	if sectionCfg.Width != nil {
+		colCfg.Width = sectionCfg.Width
+	}
+	if sectionCfg.Hidden != nil {
+		colCfg.Hidden = sectionCfg.Hidden
+	}
+	return colCfg
 }

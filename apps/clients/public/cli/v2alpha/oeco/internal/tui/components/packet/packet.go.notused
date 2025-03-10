@@ -1,0 +1,154 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/google/gopacket"
+	"github.com/google/gopacket/pcap"
+)
+
+// Message type for Bubble Tea
+type packetMsg struct {
+	SrcIP    string
+	DstIP    string
+	Protocol string
+	Length   int
+}
+
+// Model for Bubble Tea
+type model struct {
+	sub      chan packetMsg // Channel to receive packets
+	packets  []packetMsg    // Store captured packets
+	device   string         // Network interface
+	quitting bool           // Quit flag
+}
+
+func (m model) Init() tea.Cmd {
+	return tea.Batch(
+		listenForPackets(m.device, m.sub), // Start capturing packets
+		waitForPacket(m.sub),              // Wait for the first packet
+	)
+}
+
+// Handle incoming messages
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		m.quitting = true
+		return m, tea.Quit
+	case packetMsg:
+		m.packets = append(m.packets, msg)
+
+		// Keep only the last 20 packets
+		if len(m.packets) > 20 {
+			m.packets = m.packets[len(m.packets)-20:]
+		}
+
+		// Wait for the next packet
+		return m, waitForPacket(m.sub)
+	default:
+		return m, nil
+	}
+}
+
+// Display the packet capture output
+func (m model) View() string {
+	s := "\nReal-Time Mesh Packet Analyzer\n" + "---------------------------------\n"
+
+	// Show captured packets
+	for i, p := range m.packets {
+		s += fmt.Sprintf("%2d: %s -> %s | %s | %d bytes\n",
+			i+1, p.SrcIP, p.DstIP, p.Protocol, p.Length)
+	}
+
+	s += "---------------------------------\n"
+	s += "Press any key to exit.\n"
+
+	if m.quitting {
+		s += "\n"
+	}
+
+	return s
+}
+
+// Start packet capturing in a goroutine and send packets through the channel
+func listenForPackets(device string, sub chan packetMsg) tea.Cmd {
+	return func() tea.Msg {
+		handle, err := pcap.OpenLive(device, 65536, true, pcap.BlockForever)
+		if err != nil {
+			log.Fatalf("Error opening device: %v", err)
+		}
+
+		packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
+
+		// Start a goroutine to send packets into the channel
+		go func() {
+			for packet := range packetSource.Packets() {
+				networkLayer := packet.NetworkLayer()
+				if networkLayer == nil {
+					continue
+				}
+
+				src, dst := networkLayer.NetworkFlow().Endpoints()
+				protocol := ""
+				if packet.TransportLayer() != nil {
+					protocol = packet.TransportLayer().LayerType().String()
+				}
+
+				// Send packet data to the channel
+				sub <- packetMsg{
+					SrcIP:    src.String(),
+					DstIP:    dst.String(),
+					Protocol: protocol,
+					Length:   len(packet.Data()),
+				}
+			}
+		}()
+
+		return nil
+	}
+}
+
+// Command that waits for a new packet from the channel
+func waitForPacket(sub chan packetMsg) tea.Cmd {
+	return func() tea.Msg {
+		return <-sub // Wait for and return the next packet
+	}
+}
+
+func main() {
+	// List available interfaces
+	interfaces, err := pcap.FindAllDevs()
+	if err != nil {
+		log.Fatalf("Failed to list interfaces: %v", err)
+	}
+
+	if len(interfaces) == 0 {
+		log.Fatal("No network interfaces found.")
+	}
+
+	// Print available interfaces
+	fmt.Println("Available network interfaces:")
+	for _, iface := range interfaces {
+		fmt.Printf("- %s (%s)\n", iface.Name, iface.Description)
+	}
+
+	// Prompt the user to enter the interface name
+	var device string
+	fmt.Print("Enter the interface name to sniff: ")
+	fmt.Scanln(&device)
+
+	// Start the Bubble Tea program
+	p := tea.NewProgram(model{
+		sub:    make(chan packetMsg),
+		device: device,
+	})
+
+	if _, err := p.Run(); err != nil {
+		fmt.Println("Error starting program:", err)
+		os.Exit(1)
+	}
+}

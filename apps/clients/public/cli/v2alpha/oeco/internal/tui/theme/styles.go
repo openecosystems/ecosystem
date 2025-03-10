@@ -50,6 +50,9 @@ type Styles struct {
 		PagerStyle     lipgloss.Style
 		StatusHeader   lipgloss.Style
 	}
+	ListViewPort struct {
+		PagerStyle lipgloss.Style
+	}
 	Table struct {
 		CellStyle                lipgloss.Style
 		SelectedCellStyle        lipgloss.Style
@@ -90,8 +93,8 @@ func InitStyles(theme Theme) Styles {
 	s.Tabs.Logo = lipgloss.NewStyle().
 		Faint(false).
 		Bold(true).
-		// Background(lipgloss.Color("#323DD6")).
 		Background(theme.PrimaryColor500).
+		Margin(1, 0, 0, 1).
 		Padding(0, 1)
 
 	s.Tabs.Tab = lipgloss.NewStyle().
@@ -196,6 +199,11 @@ func InitStyles(theme Theme) Styles {
 	s.Sidebar.StatusHeader = lipgloss.NewStyle().
 		Foreground(DefaultTheme.TertiaryColor500).
 		Bold(true)
+
+	s.ListViewPort.PagerStyle = lipgloss.NewStyle().
+		Padding(0, 1).
+		Background(theme.SelectedBackground).
+		Foreground(theme.FaintText)
 
 	s.Table.CellStyle = lipgloss.NewStyle().PaddingLeft(1).
 		PaddingRight(1).

@@ -25,20 +25,25 @@ func NewEmptyModel(ctx *context.ProgramContext) *EmptyModel {
 	return m
 }
 
-// Init initializes the EmptyModel by returning a batched command with no specific functionality.
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
 func (m *EmptyModel) Init() tea.Cmd {
-	return tea.Batch()
+	var cmds []tea.Cmd
+	cmds = append(cmds,
+		m.InitBase(),
+	)
+
+	return tea.Batch(cmds...)
 }
 
 // Update handles incoming messages, updates the base model and viewport, and returns the updated model and batched commands.
 func (m *EmptyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
-		cmd         tea.Cmd
 		cmds        []tea.Cmd
+		baseCmd     tea.Cmd
 		viewportCmd tea.Cmd
 	)
 
-	m.BaseModel, cmd = m.UpdateBase(msg)
+	m.BaseModel, baseCmd = m.UpdateBase(msg)
 	m.Viewport.SetContent(m.ViewDebug().String())
 	v, c := m.Viewport.Update(msg)
 	m.Viewport = &v
@@ -46,7 +51,7 @@ func (m *EmptyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	cmds = append(
 		cmds,
-		cmd,
+		baseCmd,
 		viewportCmd,
 	)
 	return m, tea.Batch(cmds...)

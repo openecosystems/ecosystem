@@ -15,6 +15,7 @@ import (
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 )
 
 type AccountSpecEntity struct {

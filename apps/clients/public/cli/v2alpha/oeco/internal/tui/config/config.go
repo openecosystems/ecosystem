@@ -50,15 +50,17 @@ type PageType string
 // ConnectorRequestsPage represents a page type for connector requests.
 // ConnectorPacketsPage represents a page type for connector packets.
 // APIExplorerListPage represents a page type for the API explorer list.
+// EcosystemDashboardPage represents a page type for the Ecosystem Dashboard.
 const (
-	EmptyPage             PageType = "empty"
-	HomePage              PageType = "home"
-	ConnectorDetailsPage  PageType = "connector_details"
-	ConnectorLogsPage     PageType = "connector_logs"
-	ConnectorRequestsPage PageType = "connector_requests"
-	ConnectorPacketsPage  PageType = "connector_packets"
-	APIExplorerListPage   PageType = "api_explorer_list"
-	EcosystemCreatePage   PageType = "ecosystem_create"
+	EmptyPage              PageType = "empty"
+	HomePage               PageType = "home"
+	ConnectorDetailsPage   PageType = "connector_details"
+	ConnectorLogsPage      PageType = "connector_logs"
+	ConnectorRequestsPage  PageType = "connector_requests"
+	ConnectorPacketsPage   PageType = "connector_packets"
+	APIExplorerListPage    PageType = "api_explorer_list"
+	EcosystemCreatePage    PageType = "ecosystem_create"
+	EcosystemDashboardPage PageType = "ecosystem_dashboard"
 )
 
 // Defaults defines the default configuration settings for sections, pages, and sidebar, including refresh intervals and date format.
@@ -67,8 +69,11 @@ type Defaults struct {
 	Page    PageType      `yaml:"page"`
 	Sidebar SidebarConfig `yaml:"sidebar"`
 
-	RefetchIntervalMinutes int    `yaml:"refetchIntervalMinutes,omitempty"`
-	DateFormat             string `yaml:"dateFormat,omitempty"`
+	Layout LayoutConfig `yaml:"layout,omitempty"`
+
+	StreamMaxRecordsToRetain int    `yaml:"streamMaxRecordsToRetain,omitempty"`
+	RefetchIntervalMinutes   int    `yaml:"refetchIntervalMinutes,omitempty"`
+	DateFormat               string `yaml:"dateFormat,omitempty"`
 }
 
 // Pager represents the configuration for paging functionality with a specific diff style.
@@ -84,4 +89,15 @@ type Config struct {
 	Theme       *ThemeConfig    `yaml:"theme,omitempty" validate:"omitempty"`
 	Pager       Pager           `yaml:"pager"`
 	ConfirmQuit bool            `yaml:"confirmQuit"`
+}
+
+// LayoutConfig defines the configuration structure for layout settings, including packet container configurations.
+type LayoutConfig struct {
+	Packets PacketContainerLayoutConfig `yaml:"issues,omitempty"`
+}
+
+// ColumnConfig represents the configuration for a column, including width and visibility properties.
+type ColumnConfig struct {
+	Width  *int  `yaml:"width,omitempty"  validate:"omitempty,gt=0"`
+	Hidden *bool `yaml:"hidden,omitempty"`
 }

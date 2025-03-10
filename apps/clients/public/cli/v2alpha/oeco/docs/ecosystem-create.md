@@ -58,7 +58,8 @@ sequenceDiagram
     S->>U: System presents form to User
     U->>S: User completes form
     S->>CLI: System creates a new context file: {ecosystem-name}.yaml
-    S->>CLI: System calls create account authority <br/>internally to create a new Account Authority credential: <br/>api.{ecosystem-name}.mesh
+    S->>CLI: System calls create account authority <br/>internally to create a new Account Authority credential: <br/>aa.api.{ecosystem-name}.mesh
+    S->>CLI: System calls create account authority <br/>internally t create a new Ecosystem Multiplexer Account credential: <br/>api.{ecosystem-name}.mesh <br/>system assigns a reserved ipaddress
     S->>CLI: System calls create account <br/>internally to create a new Edge Service Account credential: <br/>edge.{ecosystem-name}.mesh. <br/>system assigns a reserved ipaddress
     S->>CLI: System calls create account <br/>internally to create a new Local Machine Service Account credential: <br/>{sanitized.os.hostname}.{ecosystem-name}.mesh
     S->>CLI: System calls provision edge <br/>internally to configure Edge: <br/>configurations/edge.{ecosystem-name}.mesh

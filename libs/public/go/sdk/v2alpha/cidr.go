@@ -20,7 +20,8 @@ const (
 type CIDRBlock struct {
 	*typev2pb.CIDR
 
-	netIP *net.IP
+	NetIP    *net.IP
+	NetIPNet *net.IPNet
 }
 
 // NewCIDR creates a CIDRBlock instance by parsing the given CIDR string and calculating associated IP information.
@@ -73,20 +74,23 @@ func NewCIDR(cidr string) (*CIDRBlock, error) {
 			TotalBits:    totalBits,
 			ReservedIps:  ips,
 		},
-		netIP: &ip,
+		NetIP:    &ip,
+		NetIPNet: ipnet,
 	}, nil
 }
 
 // GetNthIP calculates and returns the nth IP address within the given CIDR block.
 // It takes a CIDR string and an integer n, representing the desired offset from the first IP address in the block.
 // If successful, it returns the nth IP address as a string and no error; otherwise, it returns an error.
-func (c *CIDRBlock) GetNthIP(n int) (string, error) {
-	ip := *c.netIP
+func (c *CIDRBlock) GetNthIP(n int) (string, string, error) {
+	ip := *c.NetIP
 	for i := 0; i < n; i++ {
 		incrementIP(ip)
 	}
 
-	return ip.String(), nil
+	c.NetIPNet.IP = ip
+
+	return ip.String(), c.NetIPNet.String(), nil
 }
 
 // incrementIP increments the given IP address by one, accounting for carry-over across byte boundaries.

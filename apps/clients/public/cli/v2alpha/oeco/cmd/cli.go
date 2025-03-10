@@ -100,6 +100,7 @@ var RootCmd = &cobra.Command{
 		sdkv2alphalib.Merge(&override, configuration)
 		cmd.SetContext(context.WithValue(cmd.Root().Context(), sdkv2alphalib.SettingsContextKey, &override))
 		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.LoggerContextKey, charmbraceletloggerv0.Bound.Logger))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.NebulaCAContextKey, nebulav1ca.Bound))
 	},
 }
 

@@ -30,6 +30,11 @@ func NewBaseModel(ctx *context.ProgramContext, options *NewBaseOptions) *BaseMod
 	}
 }
 
+// InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
+func (m *BaseModel) InitBase() tea.Cmd {
+	return tea.Batch()
+}
+
 // UpdateBase updates the BaseModel's program context and dimensions, returning the updated BaseModel and a batch of commands.
 func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
 	var (
@@ -44,7 +49,6 @@ func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
 
 	m.UpdateProgramContext(m.Ctx)
 	m.SyncDimensions(m.Ctx)
-	// TODO: Investigate why we need this
 	m.Viewport.Width = m.Ctx.MainContentWidth
 	m.Viewport.Height = m.Ctx.PageContentHeight
 

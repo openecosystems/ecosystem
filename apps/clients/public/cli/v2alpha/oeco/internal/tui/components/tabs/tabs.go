@@ -42,7 +42,7 @@ func (m *Model) Update(_ tea.Msg) (*Model, tea.Cmd) {
 // View renders the current state of tabs, including their styles and layout, as a string to be displayed in the UI.
 func (m *Model) View() string {
 	var tabs []string
-	tabs = append(tabs, m.ctx.Styles.Tabs.Logo.Render(""))
+	tabs = append(tabs, m.ctx.Styles.Tabs.Logo.Render("∑"))
 	for i, page := range m.pages {
 		if m.currentPageID == i {
 			tabs = append(tabs, m.ctx.Styles.Tabs.ActiveTab.Render(page.GetPageSettings().Title))
@@ -82,4 +82,9 @@ func (m *Model) SetCurrentPageID(id int) *Model {
 // UpdateProgramContext updates the ProgramContext of the Model with the provided context.
 func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
 	m.ctx = ctx
+}
+
+// UpdatePages updates the Model's pages with the provided slice of contract.Page entities.
+func (m *Model) UpdatePages(pages []contract.Page) {
+	m.pages = pages
 }

@@ -19,7 +19,7 @@ import (
 type Model struct {
 	pctx            *context.ProgramContext
 	leftSection     *string
-	rightSection    *string
+	rightSection    string
 	help            *help.Model
 	ShowAll         bool
 	ShowConfirmQuit bool
@@ -36,7 +36,7 @@ func NewModel(pctx *context.ProgramContext) *Model {
 		pctx:         pctx,
 		help:         &h,
 		leftSection:  &l,
-		rightSection: &r,
+		rightSection: r,
 	}
 }
 
@@ -100,8 +100,8 @@ func (m *Model) View() string {
 			leftSection = *m.leftSection
 		}
 		rightSection := ""
-		if m.rightSection != nil {
-			rightSection = *m.rightSection
+		if m.rightSection != "" {
+			rightSection = m.rightSection
 		}
 		spacing := lipgloss.NewStyle().
 			Background(m.pctx.Theme.SelectedBackground).
@@ -177,5 +177,5 @@ func (m *Model) SetLeftSection(leftSection string) {
 
 // SetRightSection sets the value of the right section in the Model.
 func (m *Model) SetRightSection(rightSection string) {
-	m.rightSection = &rightSection
+	m.rightSection = rightSection
 }

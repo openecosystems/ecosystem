@@ -107,9 +107,11 @@ func (m *BaseModel) InitBase() tea.Cmd {
 // UpdateBase processes incoming messages to update the state of the BaseModel and returns the updated model and command.
 func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 	var (
-		cmd       tea.Cmd
-		cmds      []tea.Cmd
-		footerCmd tea.Cmd
+		cmd            tea.Cmd
+		cmds           []tea.Cmd
+		footerCmd      tea.Cmd
+		tabsCmd        tea.Cmd
+		currentPageCmd tea.Cmd
 	)
 
 	switch message := msg.(type) {
@@ -155,8 +157,8 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 		// cmds = append(cmds, internalTickCmd)
 
 		// m.Footer.SetRightSection(m.RenderRunningTask(message))
-		_, footerCmd = m.Footer.Update(message)
-		m.CurrentPage.Update(message)
+		//_, footerCmd = m.Footer.Update(message)
+		//m.CurrentPage.Update(message)
 
 		m.Ctx.Logger.Debug("Section: Task finished", "id", message.Task.ID)
 		//if message.Task.Error != nil {
@@ -184,6 +186,16 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 	}
 
 	m.UpdateProgramContext(m.Ctx)
+	_, tabsCmd = m.Tabs.Update(msg)
+	_, footerCmd = m.Footer.Update(msg)
+	_, currentPageCmd = m.CurrentPage.Update(msg)
+
+	cmds = append(
+		cmds,
+		tabsCmd,
+		footerCmd,
+		currentPageCmd,
+	)
 
 	return m, tea.Batch(cmds...)
 }

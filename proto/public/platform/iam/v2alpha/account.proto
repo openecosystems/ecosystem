@@ -10,6 +10,7 @@ import "google/protobuf/timestamp.proto";
 import "platform/type/v2/file.proto";
 import "platform/type/v2/credential.proto";
 import "platform/iam/v2alpha/account_authority.proto";
+import "platform/ecosystem/v2alpha/ecosystem.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};
 option (platform.options.v2.language) = {languages: [LANGUAGE_TYPE_GOLANG]};
@@ -169,7 +170,9 @@ message SignAccountRequest {
 
   string name = 1;
 
-  platform.type.v2.File public_cert = 2;
+  platform.ecosystem.v2alpha.EcosystemPeerType ecosystem_peer_type = 2;
+
+  platform.type.v2.File public_cert = 3;
 
 }
 

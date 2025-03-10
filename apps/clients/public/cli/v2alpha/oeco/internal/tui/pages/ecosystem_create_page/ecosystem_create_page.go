@@ -27,9 +27,9 @@ type Model struct {
 // NewModel initializes and returns a new Model instance using a ProgramContext.
 // It sets up a base model, form, main content, and sidebar with dependencies configured from the provided context.
 func NewModel(pctx *context.ProgramContext) contract.Page {
-	f := ecosystemcreateform.NewModel(pctx).(ecosystemcreateform.Model)
-	m := ecosystemcreatecontent.NewModel(pctx, &f)
-	s := ecosystemcreatesidebar.NewModel(pctx, &f)
+	f := ecosystemcreateform.NewModel(pctx).(*ecosystemcreateform.Model)
+	m := ecosystemcreatecontent.NewModel(pctx, f)
+	s := ecosystemcreatesidebar.NewModel(pctx, f)
 
 	baseModel := pages.NewBaseModel(
 		pctx,
@@ -67,22 +67,22 @@ func (m *Model) Init() tea.Cmd {
 // Update processes the given message, updates the model's components, and returns the updated model and a batch of commands.
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
-		cmd            tea.Cmd
-		mainContentCmd tea.Cmd
-		sidebarCmd     tea.Cmd
-		cmds           []tea.Cmd
+		baseCmd tea.Cmd
+		// mainContentCmd tea.Cmd
+		// sidebarCmd     tea.Cmd
+		cmds []tea.Cmd
 	)
 
-	m.BaseModel, cmd = m.UpdateBase(msg)
+	m.BaseModel, baseCmd = m.UpdateBase(msg)
 	m.UpdateProgramContext(m.Ctx)
-	_, mainContentCmd = m.CurrentMainContent.Update(msg)
-	_, sidebarCmd = m.CurrentSidebar.Update(msg)
+	//_, mainContentCmd = m.CurrentMainContent.Update(msg)
+	//_, sidebarCmd = m.CurrentSidebar.Update(msg)
 
 	cmds = append(
 		cmds,
-		cmd,
-		mainContentCmd,
-		sidebarCmd,
+		baseCmd,
+		// mainContentCmd,
+		// sidebarCmd,
 	)
 
 	return m, tea.Batch(cmds...)

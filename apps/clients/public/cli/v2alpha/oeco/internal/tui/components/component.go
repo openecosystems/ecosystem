@@ -49,7 +49,6 @@ func NewBaseModel[Cfg any](ctx *context.ProgramContext, options NewBaseOptions[C
 func (m BaseModel[Cfg]) UpdateBase(msg tea.Msg) (BaseModel[Cfg], tea.Cmd) {
 	var cmds []tea.Cmd
 
-	m.Ctx.Logger.Debug("Component UpdateBase", "msg", msg)
 	switch message := msg.(type) {
 	case tea.KeyMsg:
 		m.Ctx.Error = nil

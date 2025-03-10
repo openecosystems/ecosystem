@@ -9,4 +9,5 @@ const (
 	SettingsContextKey = ContextKeyType("settings")
 	SpecContextKey     = ContextKeyType("spec")
 	LoggerContextKey   = ContextKeyType("logger")
+	NebulaCAContextKey = ContextKeyType("nebulav1ca")
 )

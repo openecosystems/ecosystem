@@ -35,6 +35,11 @@ func NewBaseModel(ctx *context.ProgramContext, options *NewBaseOptions) *BaseMod
 	}
 }
 
+// InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
+func (m *BaseModel) InitBase() tea.Cmd {
+	return tea.Batch()
+}
+
 // UpdateBase updates the BaseModel's context and dimensions, then returns the updated model along with a batched command.
 func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
 	var cmds []tea.Cmd

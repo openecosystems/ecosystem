@@ -43,6 +43,15 @@ linters:
     - whitespace
     - noctx
     - perfsprint
+    - asasalint
+    - bidichk
+    - copyloopvar
+    - decorder
+    - dogsled
+    - goconst
+    - gosimple
+    - gosmopolitan
+    - iface
     #- wrapcheck # Wrap all errors returned from partners
     - recvcheck
     #- protogetter # Clean up proto access

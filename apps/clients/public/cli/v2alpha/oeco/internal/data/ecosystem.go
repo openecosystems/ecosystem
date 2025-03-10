@@ -1,7 +1,6 @@
 package data
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -78,13 +77,6 @@ func (data EcosystemData) GetURL() string {
 // GetUpdatedAt returns the time when the EcosystemData was last updated.
 func (data EcosystemData) GetUpdatedAt() time.Time {
 	return data.UpdatedAt
-}
-
-// makeIssuesQuery formats a GitHub issues search query string by appending "is:issue" and "sort:updated" to the input query.
-//
-//nolint:unused
-func makeIssuesQuery(query string) string {
-	return fmt.Sprintf("is:issue %s sort:updated", query)
 }
 
 // FetchEcosystems retrieves a list of ecosystem issues based on the provided query, limit, and pagination information.

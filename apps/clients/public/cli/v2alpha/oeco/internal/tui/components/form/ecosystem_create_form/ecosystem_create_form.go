@@ -9,13 +9,16 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/segmentio/ksuid"
 
 	components "apps/clients/public/cli/v2alpha/oeco/internal/tui/components"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
+	ecosystem "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/ecosystem"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 )
 
 // maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.
@@ -40,6 +43,8 @@ type CreateEcosystemData struct {
 	Domain        string
 	EcosystemType string
 	CIDR          string
+
+	ecosystemType ecosystemv2alphapb.EcosystemType
 }
 
 // Model represents the main application model containing state, renderer, styles, form, rendered form, and layout width.
@@ -57,7 +62,7 @@ type Model struct {
 
 // NewModel initializes and returns a new Model with predefined configurations and styles.
 func NewModel(pctx *context.ProgramContext) contract.Component {
-	m := Model{
+	m := &Model{
 		width:  maxWidth,
 		state:  statusNormal,
 		lg:     lipgloss.DefaultRenderer(),
@@ -139,12 +144,12 @@ func minimum(x, y int) int {
 }
 
 // Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
-func (m Model) Init() tea.Cmd {
+func (m *Model) Init() tea.Cmd {
 	return tea.Batch()
 }
 
 // Update processes the incoming message, updates the model's state, and returns the updated model along with commands.
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		cmd  tea.Cmd
 		cmds []tea.Cmd
@@ -164,23 +169,22 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if f.State == huh.StateCompleted {
 				m.state = stateDone
 				tasks.AddTask(tasks.Task{
-					ID:           "123",
-					StartText:    "Starting Text",
-					FinishedText: "Finish Text",
+					Ctx:          m.Ctx,
+					ID:           ksuid.New().String(),
+					StartText:    "Creating Ecosystem",
+					FinishedText: "Created Ecosystem",
 					State:        tasks.TaskStart,
 					Error:        nil,
 					StartTime:    time.Now(),
-					Msg:          tasks.ExecuteCMD,
-					Done:         false,
-				})
-				tasks.AddTask(tasks.Task{
-					ID:           "1234",
-					StartText:    "Starting Text 1234",
-					FinishedText: "Finish Text 1234",
-					State:        tasks.TaskStart,
-					Error:        nil,
-					StartTime:    time.Now(),
-					Done:         false,
+					TaskExecutor: &ecosystem.CreateEcosystemMsg{
+						CreateEcosystemRequest: ecosystemv2alphapb.CreateEcosystemRequest{
+							Slug: m.Data.Domain,
+							Type: m.Data.ecosystemType,
+							Name: m.Data.Domain,
+							Cidr: m.Data.CIDR,
+						},
+					},
+					Done: false,
 				})
 			}
 			cmds = append(cmds, _cmd)
@@ -193,7 +197,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 // View renders the current state of the model as a string for display in the terminal. It adapts based on the form state.
-func (m Model) View() string {
+func (m *Model) View() string {
 	switch m.form.State {
 	case huh.StateCompleted:
 		return m.CompletedView()
@@ -203,7 +207,7 @@ func (m Model) View() string {
 }
 
 // InProgressView renders the view for the state when the form is in progress, combining the form and help view with styling.
-func (m Model) InProgressView() string {
+func (m *Model) InProgressView() string {
 	s := m.styles
 	v := strings.TrimSuffix(m.form.View(), "\n\n")
 	frm := m.lg.NewStyle().Margin(1, 0).Render(v)
@@ -221,9 +225,9 @@ func (m Model) InProgressView() string {
 }
 
 // CompletedView generates a congratulatory message for the user upon form completion, including their new role and description.
-func (m Model) CompletedView() string {
+func (m *Model) CompletedView() string {
 	s := m.styles
-	title, role := m.getRole()
+	title, role := m.getEcosystemType()
 	title = s.Header.H2Text.Render(title)
 	var b strings.Builder
 	_, _ = fmt.Fprintf(&b, "Congratulations, your Ecosystem configuration is ready.\n%s!\n\n", title)
@@ -232,7 +236,7 @@ func (m Model) CompletedView() string {
 }
 
 // SidebarView generates the sidebar UI component for the form, displaying current build details and projected role information.
-func (m Model) SidebarView() string {
+func (m *Model) SidebarView() string {
 	switch m.form.State {
 	case huh.StateCompleted:
 		return m.SideBarCompletedView()
@@ -242,7 +246,7 @@ func (m Model) SidebarView() string {
 }
 
 // SideBarInProgressView generates a styled sidebar view displaying current build status, projected role, and related information.
-func (m Model) SideBarInProgressView() string {
+func (m *Model) SideBarInProgressView() string {
 	s := m.styles
 
 	var domain string
@@ -255,17 +259,17 @@ func (m Model) SideBarInProgressView() string {
 	var status string
 	{
 		var (
-			domainInfo     = "(None)"
-			role           string
-			jobDescription string
-			eType          string
+			domainInfo    = "(None)"
+			role          string
+			ecosystemType string
+			eType         string
 		)
 
 		if m.form.GetString("type") != "" {
 			eType = "Type: " + m.form.GetString("type")
-			role, jobDescription = m.getRole()
+			role, ecosystemType = m.getEcosystemType()
 			role = "\n\n" + s.Sidebar.StatusHeader.Render("Ecosystem Role") + "\n" + role
-			jobDescription = "\n\n" + s.Sidebar.StatusHeader.Render("Duties") + "\n" + jobDescription
+			ecosystemType = "\n\n" + s.Sidebar.StatusHeader.Render("Type") + "\n" + ecosystemType
 		}
 		if m.form.GetString("domain") != "" {
 			domainInfo = fmt.Sprintf("%s\n%s", domain, eType)
@@ -280,7 +284,7 @@ func (m Model) SideBarInProgressView() string {
 			Render(s.Header.H1Text.Render("Ecosystem Details") + "\n" +
 				domainInfo +
 				role +
-				jobDescription)
+				ecosystemType)
 	}
 
 	body := lipgloss.JoinHorizontal(lipgloss.Top, status)
@@ -289,9 +293,9 @@ func (m Model) SideBarInProgressView() string {
 }
 
 // SideBarCompletedView generates a congratulatory view for the user upon form completion, displaying their new role and description.
-func (m Model) SideBarCompletedView() string {
+func (m *Model) SideBarCompletedView() string {
 	s := m.styles
-	title, role := m.getRole()
+	title, role := m.getEcosystemType()
 	title = s.Header.H2Text.Render(title)
 	var b strings.Builder
 	_, _ = fmt.Fprintf(&b, "Congratulations, you’re Charm’s newest\n%s!\n\n", title)
@@ -309,7 +313,7 @@ func (m Model) SideBarCompletedView() string {
 //}
 
 // appBoundaryView formats and horizontally aligns the provided text based on the model's width and style configurations.
-func (m Model) appBoundaryView(text string) string {
+func (m *Model) appBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
 		lipgloss.Left,
@@ -319,7 +323,7 @@ func (m Model) appBoundaryView(text string) string {
 }
 
 // appErrorBoundaryView renders an error-styled boundary with the given text, formatted to fit within the defined width.
-func (m Model) appErrorBoundaryView(text string) string {
+func (m *Model) appErrorBoundaryView(text string) string {
 	return lipgloss.PlaceHorizontal(
 		m.width,
 		lipgloss.Left,
@@ -329,28 +333,15 @@ func (m Model) appErrorBoundaryView(text string) string {
 	)
 }
 
-// getRole determines the role and its description based on the class and level values retrieved from the form.
-func (m Model) getRole() (string, string) {
-	eType := m.form.GetString("type")
+// getEcosystemType determines the role and its description based on the class and level values retrieved from the form.
+func (m *Model) getEcosystemType() (string, string) {
 	switch m.form.GetString("type") {
 	case "Private":
-		switch eType {
-		case "1":
-			return "Tank Intern", "Assists with tank-related activities. Paid position."
-		case "9999":
-			return "Tank Manager", "Manages tanks and tank-related activities."
-		default:
-			return "Tank", "General tank. Does damage, takes damage. Responsible for tanking."
-		}
+		m.Data.ecosystemType = ecosystemv2alphapb.EcosystemType_ECOSYSTEM_TYPE_PRIVATE
+		return "Private", "An Ecosystem that is private to your company and network. "
 	case "Public":
-		switch eType {
-		case "1":
-			return "DPS Associate", "Finds DPS deals and passes them on to DPS Manager."
-		case "9999":
-			return "DPS Operating Officer", "Oversees all DPS activities."
-		default:
-			return "DPS", "Does damage and ideally does not take damage. Logs hours in JIRA."
-		}
+		m.Data.ecosystemType = ecosystemv2alphapb.EcosystemType_ECOSYSTEM_TYPE_PUBLIC
+		return "Public", "An Ecosystem that is public and allows access to people over the internet"
 	default:
 		return "", ""
 	}

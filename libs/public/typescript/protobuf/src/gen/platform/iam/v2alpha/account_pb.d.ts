@@ -7,6 +7,7 @@ import type { Message } from "@bufbuild/protobuf";
 import type { Credential, Curve } from "../../type/v2/credential_pb";
 import type { File } from "../../type/v2/file_pb";
 import type { SpecResponseContext } from "../../spec/v2/spec_pb";
+import type { EcosystemPeerType } from "../../ecosystem/v2alpha/ecosystem_pb";
 import type { Timestamp } from "@bufbuild/protobuf/wkt";
 
 /**
@@ -136,7 +137,12 @@ export declare type SignAccountRequest = Message<"platform.iam.v2alpha.SignAccou
   name: string;
 
   /**
-   * @generated from field: platform.type.v2.File public_cert = 2;
+   * @generated from field: platform.ecosystem.v2alpha.EcosystemPeerType ecosystem_peer_type = 2;
+   */
+  ecosystemPeerType: EcosystemPeerType;
+
+  /**
+   * @generated from field: platform.type.v2.File public_cert = 3;
    */
   publicCert?: File;
 };

@@ -72,11 +72,19 @@ func NewBaseModel(ctx *context.ProgramContext, options *NewBaseOptions) *BaseMod
 	return m
 }
 
+// InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
+func (m *BaseModel) InitBase() tea.Cmd {
+	return tea.Batch()
+}
+
 // UpdateBase processes incoming messages and updates the BaseModel state, returning the updated model and commands.
 func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
-	var cmds []tea.Cmd
+	var (
+		cmds           []tea.Cmd
+		mainContentCmd tea.Cmd
+		sidebarCmd     tea.Cmd
+	)
 
-	m.Ctx.Logger.Debug("Page UpdateBase", "msg", msg)
 	switch message := msg.(type) {
 	case tea.KeyMsg:
 		m.Ctx.Error = nil
@@ -125,6 +133,14 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 	}
 
 	m.UpdateProgramContext(m.Ctx)
+	_, mainContentCmd = m.CurrentMainContent.Update(msg)
+	_, sidebarCmd = m.CurrentSidebar.Update(msg)
+
+	cmds = append(
+		cmds,
+		mainContentCmd,
+		sidebarCmd,
+	)
 
 	return m, tea.Batch(cmds...)
 }

@@ -12,11 +12,13 @@ import (
 	"strings"
 	"sync"
 
+	"connectrpc.com/connect"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
@@ -54,6 +56,8 @@ type Binding struct {
 
 	aac *AccountAuthorityCache
 	cp  *sdkv2alphalib.CredentialProvider
+
+	// options *caOptions
 }
 
 // Bound is a global Binding instance that holds configuration and state for the Certificate Authority binding.
@@ -181,7 +185,7 @@ func (aac *AccountAuthorityCache) Get(keyType AccountAuthorityKeyType, cp *sdkv2
 		return nil, false, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("ca: cannot create temp directory"), err)
 	}
 
-	cred, err := cp.GetCredential(typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY, "")
+	cred, err := cp.GetCredential(typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY, ecosystem)
 	if err != nil {
 		return nil, false, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("nebula ca: failed to get credential"), err)
 	}
@@ -303,8 +307,8 @@ func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.Creat
 		CreatedAt: now,
 		UpdatedAt: now,
 		Credential: &typev2pb.Credential{
-			// TODO Fix this
-			EcosystemSlug: "oeco",
+			// TODO Fix this. Ensure Validated
+			EcosystemSlug: req.Name,
 			Type:          typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY,
 			Curve:         curve,
 			// Duration:  req.Duration,
@@ -315,8 +319,7 @@ func (b *Binding) GetAccountAuthority(_ context.Context, req *iamv2alphapb.Creat
 	}, nil
 }
 
-// GetPKI creates a new Certificate Authority using the specified request parameters.
-// Returns the created Certificate Authority or an error if the operation fails.
+// GetPKI generates a public-private key pair based on the specified curve in the request and returns the files and possible error.
 func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountRequest) (cert *typev2pb.File, key *typev2pb.File, err error) {
 	nca := b.NebulaCertBinaryPath
 
@@ -369,9 +372,10 @@ func (b *Binding) GetPKI(_ context.Context, req *iamv2alphapb.CreateAccountReque
 	return cfile, kfile, nil
 }
 
-// SignCert creates a new Certificate Authority using the specified request parameters.
-// Returns the created Certificate Authority or an error if the operation fails.
-func (b *Binding) SignCert(_ context.Context, spec *specv2pb.Spec, req *iamv2alphapb.SignAccountRequest) (*typev2pb.Credential, error) {
+// SignCert generates and returns a signed certificate and its QR code using Nebula certificate binary and CA information.
+func (b *Binding) SignCert(_ context.Context, req *iamv2alphapb.SignAccountRequest, opts ...CAOption) (*typev2pb.Credential, error) {
+	options, _ := newCAOptions(opts)
+
 	nca := b.NebulaCertBinaryPath
 
 	tempDir, err := os.MkdirTemp("", "oeco-s-*")
@@ -383,11 +387,11 @@ func (b *Binding) SignCert(_ context.Context, spec *specv2pb.Spec, req *iamv2alp
 	signedcertpath := filepath.Join(tempDir, signedCertName)
 	signedqrpath := filepath.Join(tempDir, signedQrName)
 
-	caCert, _, err := b.aac.Get(Cert, b.cp, spec.Context.EcosystemSlug)
+	caCert, _, err := b.aac.Get(Cert, b.cp, req.Name)
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err)
 	}
-	caKey, _, err := b.aac.Get(Key, b.cp, spec.Context.EcosystemSlug)
+	caKey, _, err := b.aac.Get(Key, b.cp, req.Name)
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err)
 	}
@@ -397,23 +401,23 @@ func (b *Binding) SignCert(_ context.Context, spec *specv2pb.Spec, req *iamv2alp
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to save unsigned cert file temporarily"), err)
 	}
 
-	ip, err := getAnAvailableIPAddress()
+	ip, ipCIDR, err := b.getAnAvailableIPAddress(req, options)
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to get an available IP address"), err)
 	}
 
-	hostname, err := getAvailableHostname()
+	hostname, err := b.getAvailableHostname(req, options)
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to parse a hostname"), err)
 	}
 
-	groups := getAvailableGroups()
+	groups := b.getAvailableGroups(req, options)
 
 	nebula := exec.Command(nca, "sign",
 		"-ca-crt", caCert.path,
 		"-ca-key", caKey.path,
 		"-in-pub", unsignedCertPath,
-		"-ip", ip,
+		"-ip", ipCIDR,
 		"-groups", strings.Join(groups, ","),
 		"-name", hostname,
 		"-out-crt", signedcertpath,
@@ -442,7 +446,7 @@ func (b *Binding) SignCert(_ context.Context, spec *specv2pb.Spec, req *iamv2alp
 	return &typev2pb.Credential{
 		Type:           typev2pb.CredentialType_CREDENTIAL_TYPE_MESH_ACCOUNT,
 		MeshAccountId:  "",
-		EcosystemSlug:  spec.Context.EcosystemSlug,
+		EcosystemSlug:  req.Name,
 		MeshHostname:   hostname,
 		MeshIp:         ip,
 		AaCertX509:     caCert.cred.AaCertX509,
@@ -453,16 +457,82 @@ func (b *Binding) SignCert(_ context.Context, spec *specv2pb.Spec, req *iamv2alp
 	}, nil
 }
 
-func getAvailableGroups() []string {
-	return []string{"connector", "user"}
+func (b *Binding) getAvailableGroups(req *iamv2alphapb.SignAccountRequest, _ *caOptions) []string {
+	switch req.EcosystemPeerType {
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE:
+		return []string{"edge", "host"}
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER:
+		return []string{"multiplexer", "host"}
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_CONNECTOR:
+		return []string{"connector", "host"}
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_HOST:
+		return []string{"service", "host"}
+	default:
+		return []string{"host"}
+	}
 }
 
-func getAvailableHostname() (string, error) {
-	return "test.oeco.mesh", nil
+func (b *Binding) getAvailableHostname(req *iamv2alphapb.SignAccountRequest, _ *caOptions) (string, error) {
+	switch req.EcosystemPeerType {
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE:
+		return fmt.Sprintf("edge.%s.mesh", req.Name), nil
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER:
+		return fmt.Sprintf("api.%s.mesh", req.Name), nil
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_SERVICE_ACCOUNT:
+		return fmt.Sprintf("api.%s.mesh", req.Name), nil
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_CONNECTOR:
+		return fmt.Sprintf("api.%s.mesh", req.Name), nil
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_HOST:
+		return fmt.Sprintf("api.%s.mesh", req.Name), nil
+	default:
+		return "", errors.New("unknown ecosystem peer type")
+	}
 }
 
-func getAnAvailableIPAddress() (string, error) {
-	return "192.168.100.20/24", nil
+func (b *Binding) getAnAvailableIPAddress(req *iamv2alphapb.SignAccountRequest, options *caOptions) (string, string, error) {
+	switch req.EcosystemPeerType {
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE:
+
+		if options.CIDR == nil {
+			return "", "", errors.New("cidr is required; please specify it in the CA option: WithCIDR()")
+		}
+
+		// TODO: Support Multiple Edges
+		ip, ipCIDR, err := options.CIDR.GetNthIP(1)
+		if err != nil {
+			return "", "", err
+		}
+
+		return ip, ipCIDR, nil
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER:
+		if options.CIDR == nil {
+			return "", "", errors.New("cidr is required; please specify it in the CA option: WithCIDR()")
+		}
+
+		// TODO: Support Multiple Multiplexers
+		ip, ipCIDR, err := options.CIDR.GetNthIP(5)
+		if err != nil {
+			return "", "", err
+		}
+
+		return ip, ipCIDR, nil
+	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_SERVICE_ACCOUNT:
+		if options.CIDR == nil {
+			return "", "", errors.New("cidr is required; please specify it in the CA option: WithCIDR()")
+		}
+
+		// TODO: Support Multiple Multiplexers
+		ip, ipCIDR, err := options.CIDR.GetNthIP(5)
+		if err != nil {
+			return "", "", err
+		}
+
+		return ip, ipCIDR, nil
+	default:
+
+		// TODO: Connect to Ecosystem and determine the next free IP
+		return "192.168.100.20", "192.168.100.20/24", nil
+	}
 }
 
 // getFile reads a file and constructs a File object with its metadata and content.
@@ -509,4 +579,74 @@ func sanitizeCertificateInput(input []byte) []byte {
 		input = []byte(strings.ReplaceAll(string(input), char, ""))
 	}
 	return input
+}
+
+// A CAOption configures the certificate authority
+type CAOption interface {
+	apply(*caOptions)
+}
+
+type caOptions struct {
+	CIDR              *sdkv2alphalib.CIDRBlock
+	Spec              *specv2pb.Spec
+	EcosystemPeerType ecosystemv2alphapb.EcosystemPeerType
+}
+
+type optionFunc func(*caOptions)
+
+func (f optionFunc) apply(cfg *caOptions) { f(cfg) }
+
+//nolint:unparam
+func newCAOptions(options []CAOption) (*caOptions, *connect.Error) {
+	// Defaults
+	config := caOptions{}
+
+	for _, opt := range options {
+		opt.apply(&config)
+	}
+
+	if err := config.validate(); err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}
+
+func (c *caOptions) validate() *connect.Error {
+	return nil
+}
+
+// WithOptions composes multiple Options into one.
+func WithOptions(opts ...CAOption) CAOption {
+	return optionFunc(func(cfg *caOptions) {
+		for _, opt := range opts {
+			opt.apply(cfg)
+		}
+	})
+}
+
+// WithSpec sets the Spec field in the caOptions struct using the provided specv2pb.Spec instance.
+func WithSpec(spec *specv2pb.Spec) CAOption {
+	return optionFunc(func(cfg *caOptions) {
+		cfg.Spec = spec
+	})
+}
+
+// WithCIDR sets the CIDR block for the certificate authority configuration.
+func WithCIDR(cidr string) CAOption {
+	return optionFunc(func(cfg *caOptions) {
+		c, err := sdkv2alphalib.NewCIDR(cidr)
+		if err != nil {
+			return
+		}
+
+		cfg.CIDR = c
+	})
+}
+
+// WithEcosystemPeerType sets the EcosystemPeerType field in the caOptions configuration.
+func WithEcosystemPeerType(ecosystemPeerType ecosystemv2alphapb.EcosystemPeerType) CAOption {
+	return optionFunc(func(cfg *caOptions) {
+		cfg.EcosystemPeerType = ecosystemPeerType
+	})
 }

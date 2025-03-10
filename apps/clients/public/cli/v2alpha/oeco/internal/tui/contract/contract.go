@@ -1,6 +1,9 @@
 package contract
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/data"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
+
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 
@@ -70,6 +73,14 @@ type Page interface {
 	tea.Model
 }
 
+// Dashboard represents a configurable and responsive visual Page
+type Dashboard interface {
+	Page
+	GetItemSingularForm() string
+	GetItemPluralForm() string
+	GetTotalCount() *int
+}
+
 // MainContent is an interface that combines Configurable, ContextAware, Responsive, and Displayable behaviors.
 type MainContent interface {
 	Configurable
@@ -102,3 +113,31 @@ type Footer interface {
 
 // Task represents a generic interface for tasks, used as a placeholder for various implementations.
 type Task interface{}
+
+// Table represents a tabular data structure interface for managing and navigating rows within a table.
+// NumRows returns the total number of rows in the table.
+// GetCurrRow retrieves the current row's data in the form of a RowData interface.
+// CurrRow returns the index of the current row.
+// NextRow moves to and returns the index of the next row.
+// PrevRow moves to and returns the index of the previous row.
+// FirstItem returns the index of the first row in the table.
+// LastItem returns the index of the last row in the table.
+// FetchNextPageSectionRows fetches additional rows for the next page/section using a slice of commands.
+// BuildRows constructs and returns all rows in the table as a slice of table.Row.
+// ResetRows clears or resets the existing rows in the table.
+// IsLoading determines if the table is currently in a loading state.
+// SetIsLoading sets the loading state of the table to the given boolean value.
+type Table interface {
+	NumRows() int
+	GetCurrRow() data.RowData
+	CurrRow() int
+	NextRow() int
+	PrevRow() int
+	FirstItem() int
+	LastItem() int
+	FetchNextPageSectionRows() []tea.Cmd
+	BuildRows() []table.Row
+	ResetRows()
+	IsLoading() bool
+	SetIsLoading(val bool)
+}

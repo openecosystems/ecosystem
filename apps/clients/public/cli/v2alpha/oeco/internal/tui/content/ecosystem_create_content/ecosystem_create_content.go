@@ -59,7 +59,12 @@ func NewModel(pctx *context.ProgramContext, form *ecosystemcreateform.Model) *Mo
 
 // Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
 func (m *Model) Init() tea.Cmd {
-	return tea.Batch()
+	var cmds []tea.Cmd
+	cmds = append(cmds,
+		m.InitBase(),
+	)
+
+	return tea.Batch(cmds...)
 }
 
 // Update handles incoming messages to update the model's state and returns the updated model along with a command batch.
@@ -79,8 +84,6 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	v, c := m.Viewport.Update(msg)
 	m.Viewport = &v
 	viewportCmd = c
-
-	m.Ctx.Logger.Debug("Content - Ecosystem Create Content - Update: Set model")
 
 	cmds = append(
 		cmds,

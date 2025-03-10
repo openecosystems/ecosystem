@@ -11,6 +11,11 @@ import (
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
+// TaskExecutor defines an interface for executing tasks within a given ProgramContext and returning a message of type tea.Msg.
+type TaskExecutor interface {
+	Execute(pctx *context.ProgramContext, err error) (tea.Msg, error)
+}
+
 // TaskFinishedMsg represents a message indicating the completion of a task, including task details and an optional error.
 type TaskFinishedMsg struct {
 	Task        Task
@@ -57,6 +62,7 @@ var (
 
 // Task represents a unit of work with its associated metadata and lifecycle states.
 type Task struct {
+	Ctx          *context.ProgramContext
 	ID           string
 	Parallel     bool
 	StartText    string
@@ -65,7 +71,8 @@ type Task struct {
 	Error        error
 	StartTime    time.Time
 	FinishedTime *time.Time
-	Msg          func(pctx *context.ProgramContext, err error) tea.Msg
+	Msg          tea.Msg
+	TaskExecutor TaskExecutor
 	Done         bool
 }
 
@@ -78,6 +85,14 @@ type CmdTask struct {
 // AddTask adds a new task to the program context and updates the task map and task queue in a FIFO manner.
 // If the task has an empty ID, it will not be added. Returns the updated ProgramContext.
 func AddTask(task Task) *sync.Map {
+	if task.Ctx == nil {
+		panic("Please add a Ctx prior to adding a task")
+	}
+
+	if task.TaskExecutor == nil {
+		panic("Please add a Task Executor prior to adding a task")
+	}
+
 	if task.ID == "" {
 		log.Debug("Silently dropping tasks as ID is missing")
 		return &TaskMap
@@ -101,23 +116,7 @@ func AddTask(task Task) *sync.Map {
 func fifoWorker() {
 	for taskID := range fifoTaskChan {
 		if task, ok := TaskMap.Load(taskID); ok {
-			t := task.(Task)
-
-			// RUN INTERFACE METHOD HERE OR FUNCTION
-			// fmt.Println("Processing FIFO:", taskID)
-			time.Sleep(1 * time.Second)
-
-			t.Done = true
-			TaskMap.Store(taskID, t)
-			now := time.Now()
-			t.FinishedTime = &now
-
-			TaskMap.Delete(taskID)
-
-			CompletedTaskCmdsChan <- TaskFinishedMsg{
-				Task:  t,
-				State: TaskFinished,
-			}
+			handleWork(taskID, task)
 		}
 		wg.Done()
 	}
@@ -126,27 +125,35 @@ func fifoWorker() {
 func parallelWorker() {
 	for taskID := range parallelTaskChan {
 		if task, ok := TaskMap.Load(taskID); ok {
-			t := task.(Task)
-
-			// Simulate processing
-			// fmt.Println("Processing Parallel:", taskID)
-			time.Sleep(1 * time.Second)
-
-			// if Error return State Error
-
-			t.Done = true
-			TaskMap.Store(taskID, t)
-			now := time.Now()
-			t.FinishedTime = &now
-
-			TaskMap.Delete(taskID)
-
-			CompletedTaskCmdsChan <- TaskFinishedMsg{
-				Task:  t,
-				State: TaskFinished,
-			}
+			handleWork(taskID, task)
 		}
 		pwg.Done()
+	}
+}
+
+func handleWork(taskID string, task any) {
+	t := task.(Task)
+
+	TaskMap.Store(taskID, t)
+	msg, err := t.TaskExecutor.Execute(t.Ctx, t.Error)
+
+	now := time.Now()
+	t.Msg = msg
+	t.Done = true
+
+	t.FinishedTime = &now
+	TaskMap.Delete(taskID)
+
+	if err != nil {
+		CompletedTaskCmdsChan <- TaskFinishedMsg{
+			Task:  t,
+			State: TaskError,
+		}
+	} else {
+		CompletedTaskCmdsChan <- TaskFinishedMsg{
+			Task:  t,
+			State: TaskFinished,
+		}
 	}
 }
 
