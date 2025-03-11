@@ -59,8 +59,6 @@ func (m *Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 	cmds = append(cmds,
 		m.InitBase(),
-		m.CurrentMainContent.Init(),
-		m.CurrentSidebar.Init(),
 	)
 
 	return tea.Batch(cmds...)
@@ -70,21 +68,15 @@ func (m *Model) Init() tea.Cmd {
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		baseCmd tea.Cmd
-		// mainContentCmd tea.Cmd
-		// sidebarCmd     tea.Cmd
-		cmds []tea.Cmd
+		cmds    []tea.Cmd
 	)
 
 	m.BaseModel, baseCmd = m.UpdateBase(msg)
 	m.UpdateProgramContext(m.Ctx)
-	//_, mainContentCmd = m.CurrentMainContent.Update(msg)
-	//_, sidebarCmd = m.CurrentSidebar.Update(msg)
 
 	cmds = append(
 		cmds,
 		baseCmd,
-		// mainContentCmd,
-		// sidebarCmd,
 	)
 
 	return m, tea.Batch(cmds...)

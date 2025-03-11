@@ -1,6 +1,7 @@
 package pages
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/data"
 	"strconv"
 	"strings"
 
@@ -74,7 +75,13 @@ func NewBaseModel(ctx *context.ProgramContext, options *NewBaseOptions) *BaseMod
 
 // InitBase initializes the BaseModel by batching the execution of the base `init` method and returning a command.
 func (m *BaseModel) InitBase() tea.Cmd {
-	return tea.Batch()
+	var cmds []tea.Cmd
+	cmds = append(cmds,
+		m.CurrentMainContent.Init(),
+		m.CurrentSidebar.Init(),
+	)
+
+	return tea.Batch(cmds...)
 }
 
 // UpdateBase processes incoming messages and updates the BaseModel state, returning the updated model and commands.
@@ -130,6 +137,10 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 		//		m.Footer.SetRightSection(rTask)
 		//		cmds = append(cmds, internalTickCmd)
 		//	}
+	case data.PacketData:
+		m.Ctx.Logger.Debug("22PPPPPPP")
+		//_, currentPageCmd := m.CurrentMainContent.Update(message)
+		//cmds = append(cmds, currentPageCmd)
 	}
 
 	m.UpdateProgramContext(m.Ctx)

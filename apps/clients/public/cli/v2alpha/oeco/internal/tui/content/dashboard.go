@@ -7,12 +7,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
+	packet "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/packet"
 	prompt "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/prompt"
 	search "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/search"
-	table "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
@@ -37,13 +38,14 @@ type DashboardBaseModel struct {
 	IsSearchSupported bool
 	SearchFilters     string
 
-	Table      *table.Model
-	Columns    []table.Column
+	Table      contract.Table
 	TotalCount int
 
 	PromptConfirmationBox     *prompt.Model
 	IsPromptConfirmationShown bool
 	PromptConfirmationAction  string
+
+	IsPacketCapturing bool
 }
 
 // NewDashboardBaseOptions defines options for initializing a dashboard base model, including columns and timestamps.
@@ -57,7 +59,6 @@ type NewDashboardBaseOptions struct {
 
 	SearchFilters string
 
-	Columns     []table.Column
 	LastUpdated time.Time
 	CreatedAt   time.Time
 }
@@ -80,31 +81,31 @@ func NewDashboardBaseModel(ctx *context.ProgramContext, options *NewDashboardBas
 
 		SingularForm: options.Singular,
 		PluralForm:   options.Plural,
-		Columns:      options.Columns,
 		TotalCount:   0,
 
 		PromptConfirmationBox: prompt.NewModel(ctx),
 	}
 
-	t := table.NewModel(
-		*ctx,
-		m.GetDimensions(),
-		options.LastUpdated,
-		options.CreatedAt,
-		m.Columns,
-		nil,
-		m.SingularForm,
-		utils.StringPtr(m.Ctx.Styles.Section.EmptyStateStyle.Render(
-			fmt.Sprintf(
-				"No %s were found that match the given filters",
-				m.PluralForm,
-			),
-		)),
-		"Loading...",
-		false,
+	t := packet.NewModel(
+		ctx,
+		&packet.NewModelOptions{
+			Dimensions:    m.GetDimensions(),
+			LastUpdated:   options.LastUpdated,
+			CreatedAt:     options.CreatedAt,
+			Rows:          nil,
+			ItemTypeLabel: m.SingularForm,
+			EmptyState: utils.StringPtr(m.Ctx.Styles.Section.EmptyStateStyle.Render(
+				fmt.Sprintf(
+					"No %s were found that match the given filters",
+					m.PluralForm,
+				),
+			)),
+			LoadingMessage: "Loading...",
+			IsLoading:      false,
+		},
 	)
 
-	m.Table = &t
+	m.Table = t
 
 	return m
 }
@@ -169,31 +170,6 @@ func (m *DashboardBaseModel) GetTotalCount() *int {
 	}
 	c := m.TotalCount
 	return &c
-}
-
-// CurrRow retrieves the index of the current row selected in the dashboard table.
-func (m *DashboardBaseModel) CurrRow() int {
-	return m.Table.GetCurrItem()
-}
-
-// NextRow advances the current row in the table to the next available row and returns its index.
-func (m *DashboardBaseModel) NextRow() int {
-	return m.Table.NextItem()
-}
-
-// PrevRow moves the current row selection to the previous row in the table and returns the new current row index.
-func (m *DashboardBaseModel) PrevRow() int {
-	return m.Table.PrevItem()
-}
-
-// FirstItem returns the index of the first item in the associated table model.
-func (m *DashboardBaseModel) FirstItem() int {
-	return m.Table.FirstItem()
-}
-
-// LastItem retrieves the index of the last item in the table managed by the DashboardBaseModel.
-func (m *DashboardBaseModel) LastItem() int {
-	return m.Table.LastItem()
 }
 
 // IsSearchFocused returns true if the search bar is currently focused; otherwise, it returns false.
@@ -280,7 +256,7 @@ func (m *DashboardBaseModel) GetFilters() string {
 
 // GetMainContent generates and returns the main content view based on the table state and context dimensions.
 func (m *DashboardBaseModel) GetMainContent() string {
-	if m.Table.Rows == nil {
+	if m.Table.GetRows() == nil {
 		d := m.GetDimensions()
 		return lipgloss.Place(
 			d.Width,
@@ -310,23 +286,6 @@ func (m *DashboardBaseModel) View() string {
 			m.GetMainContent(),
 		),
 	)
-}
-
-// ResetRows clears the table rows, resets page information, and resets the current item in the table.
-func (m *DashboardBaseModel) ResetRows() {
-	m.Table.Rows = nil
-	m.ResetPageInfo()
-	m.Table.ResetCurrItem()
-}
-
-// LastUpdated returns the timestamp indicating the last time the associated table was updated.
-func (m *DashboardBaseModel) LastUpdated() time.Time {
-	return m.Table.LastUpdated()
-}
-
-// CreatedAt returns the timestamp indicating when the dashboard model was created, sourced from the associated table.
-func (m *DashboardBaseModel) CreatedAt() time.Time {
-	return m.Table.CreatedAt()
 }
 
 // UpdateTotalItemsCount updates the total items count in the associated table model with the provided count value.
@@ -378,4 +337,21 @@ func (m *DashboardBaseModel) GetPromptConfirmation() string {
 	}
 
 	return ""
+}
+
+// IsPacketCaptureFocused checks if the packet capture feature is currently in focus, returning true if it is.
+func (m *DashboardBaseModel) IsPacketCaptureFocused() bool {
+	return m.IsPacketCapturing
+}
+
+// SetIsPacketCapturing sets the packet capturing state and adjusts the focus state of the SearchBar accordingly.
+func (m *DashboardBaseModel) SetIsPacketCapturing(val bool) tea.Cmd {
+	m.IsPacketCapturing = val
+	if val {
+		m.SearchBar.Focus()
+		return m.SearchBar.Init()
+	}
+
+	m.SearchBar.Blur()
+	return nil
 }

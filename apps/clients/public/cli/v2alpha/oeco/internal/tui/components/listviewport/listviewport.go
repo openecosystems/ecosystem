@@ -13,7 +13,7 @@ import (
 
 // Model represents the main model structure managing application context, viewport, and item-related information.
 type Model struct {
-	ctx             context.ProgramContext
+	ctx             *context.ProgramContext
 	viewport        viewport.Model
 	topBoundID      int
 	bottomBoundID   int
@@ -28,7 +28,7 @@ type Model struct {
 
 // NewModel initializes and returns a new Model instance with the provided context, dimensions, timestamps, and other parameters.
 func NewModel(
-	ctx context.ProgramContext,
+	ctx *context.ProgramContext,
 	dimensions constants.Dimensions,
 	lastUpdated time.Time,
 	createdAt time.Time,
@@ -153,5 +153,5 @@ func (m *Model) View() string {
 
 // UpdateProgramContext updates the program's context by setting a new ProgramContext instance to the Model.
 func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
-	m.ctx = *ctx
+	m.ctx = ctx
 }

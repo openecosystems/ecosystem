@@ -61,28 +61,26 @@ func NewModel(pctx *context.ProgramContext) contract.Page {
 
 // Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
 func (m *Model) Init() tea.Cmd {
-	return tea.Batch()
+	var cmds []tea.Cmd
+	cmds = append(cmds,
+		m.InitBase(),
+	)
+
+	return tea.Batch(cmds...)
 }
 
 // Update processes the given message, updates the model's components, and returns the updated model and a batch of commands.
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		baseCmd tea.Cmd
-		// mainContentCmd tea.Cmd
-		// sidebarCmd     tea.Cmd
-		cmds []tea.Cmd
+		cmds    []tea.Cmd
 	)
 
 	m.BaseModel, baseCmd = m.UpdateBase(msg)
 	m.UpdateProgramContext(m.Ctx)
-	//_, mainContentCmd = m.CurrentMainContent.Update(msg)
-	//_, sidebarCmd = m.CurrentSidebar.Update(msg)
-
 	cmds = append(
 		cmds,
 		baseCmd,
-		// mainContentCmd,
-		// sidebarCmd,
 	)
 
 	return m, tea.Batch(cmds...)

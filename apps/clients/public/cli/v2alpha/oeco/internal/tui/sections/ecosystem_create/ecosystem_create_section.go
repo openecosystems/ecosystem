@@ -79,35 +79,25 @@ func (m *Model) Init() tea.Cmd {
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		baseCmd tea.Cmd
-		// tabsCmd   tea.Cmd
-		// pageCmd tea.Cmd
-		// footerCmd tea.Cmd
-		cmds []tea.Cmd
+		cmds    []tea.Cmd
 	)
 
 	m.BaseModel, baseCmd = m.UpdateBase(msg)
-	// m.Tabs, tabsCmd = m.Tabs.Update(msg)
 
 	switch page := m.CurrentPage.(type) {
 	case *ecosystemcreatepage.Model:
 		m.Ctx.Logger.Debug("Section: Ecosystem Create: Page Update")
 		m.Ctx.Page = config.EcosystemCreatePage
 		_ = page
-		//_, pageCmd = page.Update(msg)
 	case *ecosystemdashboardpage.Model:
 		m.Ctx.Logger.Debug("Section: Ecosystem Dashboard: Page Update")
 		m.Ctx.Page = config.EcosystemDashboardPage
-		//_, pageCmd = page.Update(msg)
 	}
-	//_, footerCmd = m.Footer.Update(msg)
 	m.UpdateProgramContext(m.Ctx)
 
 	cmds = append(
 		cmds,
 		baseCmd,
-		// tabsCmd,
-		// pageCmd,
-		// footerCmd,
 	)
 
 	return m, tea.Batch(cmds...)

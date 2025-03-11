@@ -1,6 +1,7 @@
 package sections
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/data"
 	"fmt"
 	"strconv"
 	"strings"
@@ -183,6 +184,8 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 		//		m.Footer.SetRightSection(rTask)
 		//		cmds = append(cmds, internalTickCmd)
 		//	}
+	case data.PacketData:
+		m.Ctx.Logger.Debug("PPPPPPP")
 	}
 
 	m.UpdateProgramContext(m.Ctx)

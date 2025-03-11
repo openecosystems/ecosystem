@@ -16,7 +16,7 @@ import (
 
 // Model represents a table-like structure, managing columns, rows, viewport, and loading states for rendering and interaction.
 type Model struct {
-	ctx            context.ProgramContext
+	Ctx            *context.ProgramContext
 	Columns        []Column
 	Rows           []Row
 	EmptyState     *string
@@ -41,7 +41,7 @@ type Row []string
 
 // NewModel initializes and returns a new Model instance with the provided context, dimensions, and data configuration.
 func NewModel(
-	ctx context.ProgramContext,
+	ctx *context.ProgramContext,
 	dimensions constants.Dimensions,
 	lastUpdated time.Time,
 	createdAt time.Time,
@@ -65,7 +65,7 @@ func NewModel(
 	loadingSpinner.Style = lipgloss.NewStyle().Foreground(ctx.Theme.SecondaryText)
 
 	return Model{
-		ctx:            ctx,
+		Ctx:            ctx,
 		Columns:        columns,
 		Rows:           rows,
 		EmptyState:     emptyState,
@@ -85,8 +85,13 @@ func NewModel(
 	}
 }
 
+// Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
+func (m *Model) Init() tea.Cmd {
+	return tea.Batch()
+}
+
 // Update processes an incoming message, updates the model's state, and returns the updated model and a command to execute.
-func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	if m.isLoading {
 		m.loadingSpinner, cmd = m.loadingSpinner.Update(msg)
@@ -163,6 +168,13 @@ func (m *Model) LastItem() int {
 	return currItem
 }
 
+// ResetRows clears the table rows, resets page information, and resets the current item in the table.
+func (m *Model) ResetRows() {
+	m.Rows = nil
+	// m.ResetPageInfo()
+	m.ResetCurrItem()
+}
+
 // cacheColumnWidths calculates and stores the computed widths for visible table columns based on their rendered content.
 func (m *Model) cacheColumnWidths() {
 	columns := m.renderHeaderColumns()
@@ -231,7 +243,7 @@ func (m *Model) renderHeaderColumns() []string {
 		}
 
 		if column.Width != nil {
-			renderedColumns[i] = m.ctx.Styles.Table.TitleCellStyle.
+			renderedColumns[i] = m.Ctx.Styles.Table.TitleCellStyle.
 				Width(*column.Width).
 				MaxWidth(*column.Width).
 				Render(column.Title)
@@ -239,7 +251,7 @@ func (m *Model) renderHeaderColumns() []string {
 			continue
 		}
 
-		cell := m.ctx.Styles.Table.TitleCellStyle.Render(column.Title)
+		cell := m.Ctx.Styles.Table.TitleCellStyle.Render(column.Title)
 		renderedColumns[i] = cell
 		takenWidth += lipgloss.Width(cell)
 	}
@@ -255,7 +267,7 @@ func (m *Model) renderHeaderColumns() []string {
 			continue
 		}
 
-		renderedColumns[i] = m.ctx.Styles.Table.TitleCellStyle.
+		renderedColumns[i] = m.Ctx.Styles.Table.TitleCellStyle.
 			Width(growCellWidth).
 			MaxWidth(growCellWidth).
 			Render(column.Title)
@@ -268,7 +280,7 @@ func (m *Model) renderHeaderColumns() []string {
 func (m *Model) renderHeader() string {
 	headerColumns := m.renderHeaderColumns()
 	header := lipgloss.JoinHorizontal(lipgloss.Top, headerColumns...)
-	return m.ctx.Styles.Table.HeaderStyle.
+	return m.Ctx.Styles.Table.HeaderStyle.
 		Width(m.dimensions.Width).
 		MaxWidth(m.dimensions.Width).
 		Height(theme.TableHeaderHeight).
@@ -304,9 +316,9 @@ func (m *Model) renderRow(rowID int, headerColumns []string) string {
 	var style lipgloss.Style
 
 	if m.rowsViewport.GetCurrItem() == rowID {
-		style = m.ctx.Styles.Table.SelectedCellStyle
+		style = m.Ctx.Styles.Table.SelectedCellStyle
 	} else {
-		style = m.ctx.Styles.Table.CellStyle
+		style = m.Ctx.Styles.Table.CellStyle
 	}
 
 	renderedColumns := make([]string, 0, len(m.Columns))
@@ -319,7 +331,7 @@ func (m *Model) renderRow(rowID int, headerColumns []string) string {
 
 		colWidth := lipgloss.Width(headerColumns[headerColID])
 		colHeight := 1
-		if !m.ctx.Config.Theme.Tui.Table.Compact {
+		if !m.Ctx.Config.Theme.Tui.Table.Compact {
 			colHeight = 2
 		}
 		col := m.Rows[rowID][i]
@@ -334,15 +346,15 @@ func (m *Model) renderRow(rowID int, headerColumns []string) string {
 		headerColID++
 	}
 
-	return m.ctx.Styles.Table.RowStyle.
-		BorderBottom(m.ctx.Config.Theme.Tui.Table.ShowSeparator).
+	return m.Ctx.Styles.Table.RowStyle.
+		BorderBottom(m.Ctx.Config.Theme.Tui.Table.ShowSeparator).
 		MaxWidth(m.dimensions.Width).
 		Render(lipgloss.JoinHorizontal(lipgloss.Top, renderedColumns...))
 }
 
 // UpdateProgramContext updates the program context for the model and propagates it to the rows viewport.
 func (m *Model) UpdateProgramContext(ctx *context.ProgramContext) {
-	m.ctx = *ctx
+	m.Ctx = ctx
 	m.rowsViewport.UpdateProgramContext(ctx)
 }
 
@@ -369,4 +381,24 @@ func (m *Model) UpdateTotalItemsCount(count int) {
 // IsLoading returns a boolean indicating whether the model is currently in a loading state.
 func (m *Model) IsLoading() bool {
 	return m.isLoading
+}
+
+// CurrRow retrieves the index of the current row selected in the dashboard table.
+func (m *Model) CurrRow() int {
+	return m.GetCurrItem()
+}
+
+// NextRow advances the current row in the table to the next available row and returns its index.
+func (m *Model) NextRow() int {
+	return m.NextItem()
+}
+
+// PrevRow moves the current row selection to the previous row in the table and returns the new current row index.
+func (m *Model) PrevRow() int {
+	return m.PrevItem()
+}
+
+// GetRows returns a slice of Row containing the rows stored in the Model instance.
+func (m *Model) GetRows() []Row {
+	return m.Rows
 }

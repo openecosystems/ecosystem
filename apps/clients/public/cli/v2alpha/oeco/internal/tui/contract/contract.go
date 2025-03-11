@@ -1,13 +1,14 @@
 package contract
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/data"
 	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
@@ -112,7 +113,9 @@ type Footer interface {
 }
 
 // Task represents a generic interface for tasks, used as a placeholder for various implementations.
-type Task interface{}
+type Task interface {
+	IsRunning() bool
+}
 
 // Table represents a tabular data structure interface for managing and navigating rows within a table.
 // NumRows returns the total number of rows in the table.
@@ -128,16 +131,22 @@ type Task interface{}
 // IsLoading determines if the table is currently in a loading state.
 // SetIsLoading sets the loading state of the table to the given boolean value.
 type Table interface {
-	NumRows() int
-	GetCurrRow() data.RowData
+	// NumRows() int
+	// GetCurrRow() data.RowData
 	CurrRow() int
 	NextRow() int
 	PrevRow() int
 	FirstItem() int
 	LastItem() int
-	FetchNextPageSectionRows() []tea.Cmd
+	// FetchNextPageSectionRows() []tea.Cmd
 	BuildRows() []table.Row
 	ResetRows()
 	IsLoading() bool
 	SetIsLoading(val bool)
+	SetDimensions(dimensions constants.Dimensions)
+	UpdateProgramContext(ctx *context.ProgramContext)
+	SyncViewPortContent()
+	UpdateTotalItemsCount(count int)
+	GetRows() []table.Row
+	tea.Model
 }
