@@ -54,6 +54,8 @@ func NewModel(ctx *context.ProgramContext) *Model {
 func (m *Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 
+	m.SetIsPacketCapturing(true)
+
 	cmds = append(cmds,
 		m.InitBase(),
 	)
@@ -127,6 +129,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			break
 		}
+	case data.PacketData:
+		m.Table.Update(msg)
 	}
 
 	m.DashboardBaseModel.Viewport.SetContent(m.Table.View())

@@ -72,7 +72,18 @@ func NewModel(ctx *context.ProgramContext, options *NewModelOptions) contract.Ta
 
 // Init initializes the Model and returns a tea.Cmd batch for further processing or updates.
 func (m *Model) Init() tea.Cmd {
-	return tea.Batch()
+	var cmds []tea.Cmd
+
+	packetsCmd, err := data.ListenForPackets("en0", m.PacketChannel)
+	if err != nil {
+		m.Ctx.Logger.Error(err)
+	}
+
+	cmds = append(cmds,
+		packetsCmd,
+		data.WaitForPacket(m.PacketChannel), // Wait for the first packet
+	)
+	return tea.Batch(cmds...)
 }
 
 // Update processes the incoming message, updates the model's state, and returns the updated model along with commands.

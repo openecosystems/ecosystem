@@ -348,10 +348,8 @@ func (m *DashboardBaseModel) IsPacketCaptureFocused() bool {
 func (m *DashboardBaseModel) SetIsPacketCapturing(val bool) tea.Cmd {
 	m.IsPacketCapturing = val
 	if val {
-		m.SearchBar.Focus()
-		return m.SearchBar.Init()
+		return m.Table.Init()
 	}
 
-	m.SearchBar.Blur()
 	return nil
 }
