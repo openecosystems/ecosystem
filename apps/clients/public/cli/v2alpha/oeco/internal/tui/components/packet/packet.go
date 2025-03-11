@@ -17,6 +17,8 @@ import (
 	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
 
+const device = "lo0"
+
 // cellWidth represents the default width for table cells as an integer. It is used to configure column dimensions in tables.
 var cellWidth = 6
 
@@ -76,7 +78,7 @@ func NewModel(ctx *context.ProgramContext, options *NewModelOptions) contract.Ta
 func (m *Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 
-	packetsCmd, err := data.ListenForPackets("en0", m.PacketChannel)
+	packetsCmd, err := data.ListenForPackets(device, m.PacketChannel)
 	if err != nil {
 		m.Ctx.Logger.Error(err)
 	}
@@ -103,7 +105,6 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch message := msg.(type) {
 	case data.PacketData:
-		m.Ctx.Logger.Debug("LLLLLLLLLLContent - Ecosystem Dashboard Content - Update: Packet received")
 		m.Packets = append(m.Packets, message)
 
 		// Keep only the last StreamMaxRecords

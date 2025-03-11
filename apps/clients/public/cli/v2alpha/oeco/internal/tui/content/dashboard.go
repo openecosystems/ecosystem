@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
@@ -14,6 +15,7 @@ import (
 	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
@@ -108,6 +110,41 @@ func NewDashboardBaseModel(ctx *context.ProgramContext, options *NewDashboardBas
 	m.Table = t
 
 	return m
+}
+
+// UpdateDashboardBase updates the BaseModel's program context and dimensions, returning the updated BaseModel and a batch of commands.
+func (m *DashboardBaseModel) UpdateDashboardBase(msg tea.Msg) (*DashboardBaseModel, tea.Cmd) {
+	var (
+		cmd  tea.Cmd
+		cmds []tea.Cmd
+	)
+
+	m.BaseModel, cmd = m.UpdateBase(msg)
+	cmds = append(
+		cmds,
+		cmd,
+	)
+
+	switch message := msg.(type) {
+	case tea.KeyMsg:
+		m.Ctx.Logger.Debug("Key pressed", "key", message.String())
+		m.Ctx.Error = nil
+
+		switch {
+		// case key.Matches(message, keys.Keys.Down):
+		//	prevRow := m.Table.CurrRow()
+		//	nextRow := m.Table.NextRow()
+		//	cmd = m.OnViewedRowChanged()
+		case key.Matches(message, keys.Keys.Search):
+
+			if m.Table != nil {
+				cmd = m.SetIsSearching(true)
+				return m, cmd
+			}
+		}
+	}
+
+	return m, tea.Batch(cmds...)
 }
 
 // GetDimensions calculates and returns the dimensions of the main content area, considering padding and search height.
@@ -276,9 +313,9 @@ func (m *DashboardBaseModel) GetMainContent() string {
 	return m.Table.View()
 }
 
-// View renders the dashboard model's main view, combining the search bar and main content into a vertically joined layout.
-func (m *DashboardBaseModel) View() string {
-	s := m.SearchBar.View(m.Ctx)
+// DashboardBaseView renders the dashboard model's main view, combining the search bar and main content into a vertically joined layout.
+func (m *DashboardBaseModel) DashboardBaseView() string {
+	s := m.SearchBar.View()
 	return m.Ctx.Styles.Section.ContainerStyle.Render(
 		lipgloss.JoinVertical(
 			lipgloss.Left,

@@ -48,8 +48,10 @@ func (m *Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 
 	cmds = append(cmds,
-		m.InitBase(),
-		m.Table.Init(),
+		m.DashboardBaseModel.InitBase(),
+		m.DashboardBaseModel.SearchBar.Init(),
+		m.DashboardBaseModel.Table.Init(),
+		m.DashboardBaseModel.PromptConfirmationBox.Init(),
 	)
 
 	return tea.Batch(cmds...)
@@ -63,20 +65,24 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		viewportCmd tea.Cmd
 	)
 
-	m.BaseModel, baseCmd = m.DashboardBaseModel.UpdateBase(msg)
+	m.DashboardBaseModel, baseCmd = m.DashboardBaseModel.UpdateDashboardBase(msg)
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
 
 		if m.DashboardBaseModel.IsPacketCaptureFocused() {
 			_ = message
+			//switch {
+			//case message.Type == tea.KeyLeft, message.Type == tea.KeyRight:
+			//	m.SetIsPacketCapturing(false)
+			//}
 		}
 
 		if m.DashboardBaseModel.IsSearchFocused() {
 			switch {
 			case message.Type == tea.KeyCtrlC, message.Type == tea.KeyEsc:
-				m.SearchBar.SetValue(m.SearchValue)
-				blinkCmd := m.SetIsSearching(false)
+				m.DashboardBaseModel.SearchBar.SetValue(m.SearchValue)
+				blinkCmd := m.DashboardBaseModel.SetIsSearching(false)
 				return m, blinkCmd
 
 				// case message.Type == tea.KeyEnter:
@@ -89,16 +95,16 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			break
 		}
 
-		if m.IsPromptConfirmationFocused() {
+		if m.DashboardBaseModel.IsPromptConfirmationFocused() {
 			switch {
 			case message.Type == tea.KeyCtrlC, message.Type == tea.KeyEsc:
-				m.PromptConfirmationBox.Reset()
-				baseCmd = m.SetIsPromptConfirmationShown(false)
+				m.DashboardBaseModel.PromptConfirmationBox.Reset()
+				baseCmd = m.DashboardBaseModel.SetIsPromptConfirmationShown(false)
 				return m, baseCmd
 
 			case message.Type == tea.KeyEnter:
-				input := m.PromptConfirmationBox.Value()
-				action := m.GetPromptConfirmationAction()
+				input := m.DashboardBaseModel.PromptConfirmationBox.Value()
+				action := m.DashboardBaseModel.GetPromptConfirmationAction()
 				if input == "Y" || input == "y" {
 					switch action {
 					case "details":
@@ -106,8 +112,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					}
 				}
 
-				m.PromptConfirmationBox.Reset()
-				blinkCmd := m.SetIsPromptConfirmationShown(false)
+				m.DashboardBaseModel.PromptConfirmationBox.Reset()
+				blinkCmd := m.DashboardBaseModel.SetIsPromptConfirmationShown(false)
 
 				return m, tea.Batch(baseCmd, blinkCmd)
 			}
@@ -115,18 +121,14 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	m.DashboardBaseModel.Viewport.SetContent(m.Table.View())
+	m.DashboardBaseModel.Viewport.SetContent(m.DashboardBaseModel.DashboardBaseView())
 	v, c := m.DashboardBaseModel.Viewport.Update(msg)
 	m.DashboardBaseModel.Viewport = &v
 	viewportCmd = c
 
-	search, searchCmd := m.SearchBar.Update(msg)
-	m.SearchBar = search
-
-	prompt, promptCmd := m.PromptConfirmationBox.Update(msg)
-	m.PromptConfirmationBox = prompt
-
-	_, tableCmd := m.Table.Update(msg)
+	_, searchCmd := m.DashboardBaseModel.SearchBar.Update(msg)
+	_, promptCmd := m.DashboardBaseModel.PromptConfirmationBox.Update(msg)
+	_, tableCmd := m.DashboardBaseModel.Table.Update(msg)
 
 	cmds = append(cmds,
 		baseCmd,
@@ -141,14 +143,5 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 // View returns the rendered string representation of the BaseModel by applying contextual styles and joining content vertically.
 func (m *Model) View() string {
-	//s := "\nReal-Time Mesh Packet Analyzer\n" + "---------------------------------\n"
-	//
-	//// Show captured packets
-	//for i, p := range m.Packets {
-	//	s += fmt.Sprintf("%2d: %s -> %s | %s | %d bytes\n",
-	//		i+1, p.SrcIP, p.DstIP, p.Protocol, p.Length)
-	//}
-	//
-	//return s
 	return m.ViewBase()
 }

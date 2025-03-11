@@ -25,11 +25,11 @@ func (k EcosystemKeyMap) Name() KeyBindingType {
 var EcosystemKeys = EcosystemKeyMap{
 	List: key.NewBinding(
 		key.WithKeys("l"),
-		key.WithHelp("l", "list"),
+		key.WithHelp("l", list),
 	),
 	View: key.NewBinding(
 		key.WithKeys("v"),
-		key.WithHelp("v", "view"),
+		key.WithHelp("v", view),
 	),
 	Graph: key.NewBinding(
 		key.WithKeys("g"),
@@ -62,9 +62,9 @@ func rebindEcosystemKeys(keys []config.KeyBinding) error {
 		var k *key.Binding
 
 		switch kb.Builtin {
-		case "list":
+		case list:
 			k = &EcosystemKeys.List
-		case "view":
+		case view:
 			k = &EcosystemKeys.View
 		case "graph":
 			k = &EcosystemKeys.Graph

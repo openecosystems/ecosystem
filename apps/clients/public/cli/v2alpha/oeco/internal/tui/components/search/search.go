@@ -53,7 +53,7 @@ func (m *Model) Init() tea.Cmd {
 }
 
 // Update processes the given message, updates the textInput field, and returns the updated model and any resulting command.
-func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 
 	m.textInput, cmd = m.textInput.Update(msg)
@@ -61,9 +61,9 @@ func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
 }
 
 // View returns a string representation of the model's text input styled with a border and adjusted widths based on context.
-func (m *Model) View(ctx *context.ProgramContext) string {
+func (m *Model) View() string {
 	return lipgloss.NewStyle().
-		Width(ctx.MainContentWidth - 4).
+		Width(m.ctx.MainContentWidth - 4).
 		MaxHeight(3).
 		Border(lipgloss.RoundedBorder()).
 		BorderForeground(m.ctx.Theme.PrimaryBorder).

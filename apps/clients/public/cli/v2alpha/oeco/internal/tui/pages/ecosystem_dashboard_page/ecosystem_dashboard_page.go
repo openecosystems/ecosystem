@@ -97,3 +97,9 @@ func (m *Model) View() string {
 	// s.WriteString("\n")
 	// return s.String()
 }
+
+//func (m *Model) OnViewedRowChanged() tea.Cmd {
+//	cmd := m.CurrentSidebar.SyncSidebar()
+//	m.CurrentSidebar.ScrollToTop()
+//	return cmd
+//}

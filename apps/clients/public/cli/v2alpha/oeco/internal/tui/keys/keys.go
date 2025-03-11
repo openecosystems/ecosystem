@@ -7,6 +7,11 @@ import (
 	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
+const (
+	list = "list"
+	view = "view"
+)
+
 // KeyMap defines a set of key bindings and navigation mappings for user interaction in different application contexts.
 type KeyMap struct {
 	sectionType   config.SectionType
@@ -44,7 +49,12 @@ func (k KeyMap) ShortHelp() []key.Binding {
 // FullHelp returns a two-dimensional slice of key bindings categorized by their context, such as navigation, app, section, and page.
 func (k KeyMap) FullHelp() [][]key.Binding {
 	var sectionKeys []key.Binding
-	if k.sectionType == config.ConnectorSection {
+	switch k.sectionType {
+	case config.OrganizationSection:
+		sectionKeys = OrganizationFullHelp()
+	case config.EcosystemSection:
+		sectionKeys = EcosystemFullHelp()
+	case config.ConnectorSection:
 		sectionKeys = ConnectorFullHelp()
 	}
 
@@ -118,7 +128,7 @@ var Keys = &KeyMap{
 	),
 	OpenGithub: key.NewBinding(
 		key.WithKeys("o"),
-		key.WithHelp("o", "open in GitHub"),
+		key.WithHelp("o", "open in Browser"),
 	),
 	Refresh: key.NewBinding(
 		key.WithKeys("r"),

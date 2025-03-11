@@ -25,11 +25,11 @@ func (k ContextKeyMap) Name() KeyBindingType {
 var ContextKeys = ContextKeyMap{
 	List: key.NewBinding(
 		key.WithKeys("l"),
-		key.WithHelp("l", "list"),
+		key.WithHelp("l", list),
 	),
 	View: key.NewBinding(
 		key.WithKeys("V", " "),
-		key.WithHelp("V/space", "view"),
+		key.WithHelp("V/space", view),
 	),
 	Edit: key.NewBinding(
 		key.WithKeys("e"),
@@ -61,9 +61,9 @@ func rebindContextKeys(keys []config.KeyBinding) error {
 		var k *key.Binding
 
 		switch kb.Builtin {
-		case "list":
+		case list:
 			k = &ContextKeys.List
-		case "view":
+		case view:
 			k = &ContextKeys.View
 		case "edit":
 			k = &ContextKeys.Edit

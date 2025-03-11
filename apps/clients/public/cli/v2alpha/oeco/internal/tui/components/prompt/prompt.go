@@ -27,7 +27,7 @@ func NewModel(ctx *context.ProgramContext) *Model {
 }
 
 // Update handles the update cycle for the Model, updating its prompt state and returning the updated Model and command.
-func (m *Model) Update(msg tea.Msg) (*Model, tea.Cmd) {
+func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	prompt, cmd := m.prompt.Update(msg)
 	m.prompt = &prompt
