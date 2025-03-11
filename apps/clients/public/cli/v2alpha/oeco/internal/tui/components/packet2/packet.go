@@ -6,6 +6,7 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/google/gopacket/pcap"
 )
 
 // Model for Bubble Tea
@@ -70,6 +71,25 @@ func (m model) View() string {
 }
 
 func main() {
+	// List available interfaces
+	interfaces, err := pcap.FindAllDevs()
+	if err != nil {
+	}
+
+	if len(interfaces) == 0 {
+	}
+
+	// Print available interfaces
+	fmt.Println("Available network interfaces:")
+	for _, iface := range interfaces {
+		fmt.Printf("- %s (%s)\n", iface.Name, iface.Description)
+	}
+
+	// Prompt the user to enter the interface name
+	var device string
+	fmt.Print("Enter the interface name to sniff: ")
+	fmt.Scanln(&device)
+
 	// Start the Bubble Tea program
 	p := tea.NewProgram(model{
 		sub:    make(chan data.PacketData),
