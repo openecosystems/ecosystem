@@ -1,7 +1,6 @@
 package pages
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/data"
 	"strconv"
 	"strings"
 
@@ -137,10 +136,6 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 		//		m.Footer.SetRightSection(rTask)
 		//		cmds = append(cmds, internalTickCmd)
 		//	}
-	case data.PacketData:
-		m.Ctx.Logger.Debug("22PPPPPPP")
-		//_, currentPageCmd := m.CurrentMainContent.Update(message)
-		//cmds = append(cmds, currentPageCmd)
 	}
 
 	m.UpdateProgramContext(m.Ctx)

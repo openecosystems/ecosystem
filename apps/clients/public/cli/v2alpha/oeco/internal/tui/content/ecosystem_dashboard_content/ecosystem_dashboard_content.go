@@ -64,15 +64,6 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	)
 
 	m.BaseModel, baseCmd = m.DashboardBaseModel.UpdateBase(msg)
-	//if !m.DashboardBaseModel.IsPacketCaptureFocused() {
-	//	m.Ctx.Logger.Debug("PACKET FOCUS")
-	//	m.SetIsPacketCapturing(true)
-	//	//m.Table.Update(msg)
-	//	//m.Ctx.Logger.Debug("PACKET FOCUS")
-	//	//cmds = append(cmds,
-	//	//	data.WaitForPacket(m.PacketChannel), // Wait for the first packet
-	//	//)
-	//}
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:

@@ -76,8 +76,6 @@ func NewModel(ctx *context.ProgramContext, options *NewModelOptions) contract.Ta
 func (m *Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 
-	m.Ctx.Logger.Debug("AAAAALLLLLLLLLLContent - Ecosystem Dashboard Content - Init: Packets")
-
 	packetsCmd, err := data.ListenForPackets("en0", m.PacketChannel)
 	if err != nil {
 		m.Ctx.Logger.Error(err)
@@ -97,7 +95,6 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		cmds []tea.Cmd
 	)
 
-	m.Ctx.Logger.Debug("BBBBBLLLLLLLLLLContent - Ecosystem Dashboard Content - Update: Packet received", len(m.Packets))
 	_, cmd = m.Model.Update(msg)
 
 	cmds = append(cmds,

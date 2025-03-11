@@ -133,12 +133,14 @@ type Task interface {
 type Table interface {
 	// NumRows() int
 	// GetCurrRow() data.RowData
+
 	CurrRow() int
 	NextRow() int
 	PrevRow() int
 	FirstItem() int
 	LastItem() int
 	// FetchNextPageSectionRows() []tea.Cmd
+
 	BuildRows() []table.Row
 	ResetRows()
 	IsLoading() bool
