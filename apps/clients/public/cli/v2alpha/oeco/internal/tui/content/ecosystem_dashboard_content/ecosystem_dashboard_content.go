@@ -6,7 +6,6 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 
-	data "apps/clients/public/cli/v2alpha/oeco/internal/data"
 	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
@@ -19,10 +18,6 @@ const (
 // Model represents a structure combining a dashboard base model with additional issue data for ecosystems.
 type Model struct {
 	*content.DashboardBaseModel
-
-	Packets []data.PacketData
-
-	PacketChannel chan data.PacketData // Channel to receive packets
 }
 
 // NewModel initializes and returns a new Model with the provided context.
@@ -44,8 +39,6 @@ func NewModel(ctx *context.ProgramContext) *Model {
 			CreatedAt:     time.Now(),
 		},
 	)
-	model.Packets = []data.PacketData{}
-	model.PacketChannel = make(chan data.PacketData)
 
 	return model
 }
@@ -54,10 +47,9 @@ func NewModel(ctx *context.ProgramContext) *Model {
 func (m *Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 
-	m.SetIsPacketCapturing(true)
-
 	cmds = append(cmds,
 		m.InitBase(),
+		m.Table.Init(),
 	)
 
 	return tea.Batch(cmds...)
@@ -72,20 +64,21 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	)
 
 	m.BaseModel, baseCmd = m.DashboardBaseModel.UpdateBase(msg)
+	//if !m.DashboardBaseModel.IsPacketCaptureFocused() {
+	//	m.Ctx.Logger.Debug("PACKET FOCUS")
+	//	m.SetIsPacketCapturing(true)
+	//	//m.Table.Update(msg)
+	//	//m.Ctx.Logger.Debug("PACKET FOCUS")
+	//	//cmds = append(cmds,
+	//	//	data.WaitForPacket(m.PacketChannel), // Wait for the first packet
+	//	//)
+	//}
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
 
 		if m.DashboardBaseModel.IsPacketCaptureFocused() {
-			packetsCmd, err := data.ListenForPackets("en0", m.PacketChannel)
-			if err != nil {
-				m.Ctx.Logger.Error(err)
-			}
-
-			cmds = append(cmds,
-				packetsCmd,
-				data.WaitForPacket(m.PacketChannel), // Wait for the first packet
-			)
+			_ = message
 		}
 
 		if m.DashboardBaseModel.IsSearchFocused() {
@@ -129,20 +122,12 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			break
 		}
-	case data.PacketData:
-		m.Table.Update(msg)
 	}
 
 	m.DashboardBaseModel.Viewport.SetContent(m.Table.View())
 	v, c := m.DashboardBaseModel.Viewport.Update(msg)
 	m.DashboardBaseModel.Viewport = &v
 	viewportCmd = c
-
-	cmds = append(
-		cmds,
-		baseCmd,
-		viewportCmd,
-	)
 
 	search, searchCmd := m.SearchBar.Update(msg)
 	m.SearchBar = search
@@ -151,9 +136,14 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	m.PromptConfirmationBox = prompt
 
 	_, tableCmd := m.Table.Update(msg)
-	// m.Table = t
 
-	cmds = append(cmds, baseCmd, searchCmd, promptCmd, tableCmd)
+	cmds = append(cmds,
+		baseCmd,
+		viewportCmd,
+		searchCmd,
+		promptCmd,
+		tableCmd,
+	)
 
 	return m, tea.Batch(cmds...)
 }
