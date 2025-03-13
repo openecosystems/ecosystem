@@ -28,7 +28,6 @@ use (
 	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
 	./infrastructure/apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
-	./libs/partner/go
 	./libs/partner/go/charmbracelet/v0
 	./libs/partner/go/github/v3
 	./libs/partner/go/model
