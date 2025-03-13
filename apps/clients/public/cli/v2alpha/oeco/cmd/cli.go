@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/apex/log"
-	"github.com/apex/log/handlers/cli"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/muesli/termenv"
 	"github.com/spf13/cobra"
 
-	configurationv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/configuration/v2alpha"
-	connectorv2alphatui "apps/clients/public/cli/v2alpha/oeco/internal/connector/v2alpha"
+	apiv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api"
+	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
+	enclavev2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/enclave"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+	charmbraceletloggerv0 "libs/partner/go/charmbracelet/v0"
+	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
@@ -25,19 +26,23 @@ const (
 	DefaultVersion = "0.0.0"
 )
 
-// context2 holds a secondary context string for the application.
+// ecosystem holds a secondary context string for the application.
 // debug indicates whether debug mode is enabled.
 // version determines if the application should display its version and exit.
 // verboseLog toggles verbose logging mode.
 // logFile specifies the file where logs should be written.
 // quiet suppresses non-essential output.
 var (
-	context2   string
-	debug      bool
-	version    bool
-	verboseLog bool
-	logFile    string
-	quiet      bool
+	ecosystem string
+	debug     bool
+	// version   bool
+	verbose bool
+	// verboseLog bool
+	logFile   string
+	quiet     bool
+	logToFile bool
+
+	configuration *cliv2alphalib.Configuration
 )
 
 // compileTimeVersion stores the version set at the time of compilation.
@@ -55,8 +60,8 @@ var (
 
 // manuallyImplementedSystems is a map of system names to a boolean indicating if the system requires manual command handling.
 var manuallyImplementedSystems = map[string]bool{
-	"cryptography":  true,
-	"configuration": true,
+	"iam":       true,
+	"ecosystem": true,
 }
 
 // AboutPlatformCLI represents metadata about the platform's CLI, including version, commit hash, build date, and builder info.
@@ -71,20 +76,51 @@ type AboutPlatformCLI struct {
 var RootCmd = &cobra.Command{
 	Use:          "oeco",
 	Short:        "Connect to Open Ecosystems",
-	Long:         `Allows you to securely and efficiently interact with Open Economic Systems`,
+	Long:         `Allows you to securely and efficiently interact with Open Economic Systems `,
+	Example:      `oeco --context=my-ecosystem`,
 	Version:      Version,
 	SilenceUsage: true,
-	PersistentPreRun: func(_ *cobra.Command, _ []string) {
-		if debug {
-			log.SetLevel(log.DebugLevel)
-			log.Debug("debug logging enabled")
+	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
+		override := cliv2alphalib.Configuration{
+			App: specv2pb.App{
+				Debug:     debug,
+				Verbose:   verbose,
+				Quiet:     quiet,
+				LogToFile: logToFile,
+			},
 		}
+		_ = charmbraceletloggerv0.Bound.Override(&charmbraceletloggerv0.Configuration{
+			App: specv2pb.App{
+				Debug:     debug,
+				Verbose:   verbose,
+				Quiet:     quiet,
+				LogToFile: logToFile,
+			},
+		})
+		sdkv2alphalib.Merge(&override, configuration)
+		cmd.SetContext(context.WithValue(cmd.Root().Context(), sdkv2alphalib.SettingsContextKey, &override))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.LoggerContextKey, charmbraceletloggerv0.Bound.Logger))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.NebulaCAContextKey, nebulav1ca.Bound))
 	},
 }
 
 // Execute runs the main command-line interface (CLI) program logic, initializing settings, context, and commands.
-func Execute(cli *cliv2alphalib.CLI) {
-	defer cli.GracefulShutdown()
+func Execute() {
+	bounds := []sdkv2alphalib.Binding{
+		&charmbraceletloggerv0.Binding{},
+		//&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
+		//
+		//}},
+		&nebulav1ca.Binding{},
+	}
+
+	c := cliv2alphalib.NewCLI(
+		context.Background(),
+		cliv2alphalib.WithBounds(bounds),
+		cliv2alphalib.WithConfigurationProvider(&cliv2alphalib.Configuration{}),
+	)
+
+	defer c.GracefulShutdown()
 
 	err := validate()
 	if err != nil {
@@ -92,31 +128,11 @@ func Execute(cli *cliv2alphalib.CLI) {
 		return
 	}
 
-	settingsProvider, err := sdkv2alphalib.NewCLISettingsProvider(&sdkv2alphalib.RuntimeConfigurationOverrides{
-		Context:    &context2,
-		Logging:    &debug,
-		Verbose:    &version,
-		VerboseLog: &verboseLog,
-		LogFile:    &logFile,
-		Quiet:      &quiet,
-	})
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	if err2 := settingsProvider.WatchSettings(); err2 != nil {
-		fmt.Println(err2)
-		os.Exit(1)
-	}
-
-	settings := settingsProvider.GetSettings()
+	configuration = c.GetConfiguration()
 
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, sdkv2alphalib.SettingsContextKey, settings)
 	RootCmd.SetContext(ctx)
-
-	AddCommands(settings)
+	AddCommands(c.GetConfiguration())
 
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -125,11 +141,11 @@ func Execute(cli *cliv2alphalib.CLI) {
 }
 
 // AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
-func AddCommands(settings *specv2pb.SpecSettings) {
+func AddCommands(settings *cliv2alphalib.Configuration) {
 	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
 
-	if settings != nil && settings.Systems2 != nil {
-		for _, system := range settings.Systems2 {
+	if settings != nil && settings.Systems != nil {
+		for _, system := range settings.Systems { //nolint:copylocks,govet
 			command, err := cmdv2alphapbcmd.CommandRegistry.GetCommandByFullCommandName(cmdv2alphapbcmd.FullCommandName{
 				Name:    system.Name,
 				Version: system.Version,
@@ -144,21 +160,25 @@ func AddCommands(settings *specv2pb.SpecSettings) {
 				continue
 			}
 
-			RootCmd.AddCommand(command)
+			apiv2alphapbint.APIServiceServiceCmd.AddCommand(command.Commands()...)
 		}
 	}
 
 	// Manually add certain system commands
-	RootCmd.AddCommand(configurationv2alphapbint.SystemCmd)
-	RootCmd.AddCommand(connectorv2alphatui.Cmd)
+	RootCmd.AddCommand(enclavev2alphapbint.EnclaveServiceServiceCmd)
+	RootCmd.AddCommand(apiv2alphapbint.APIServiceServiceCmd)
+	RootCmd.AddCommand(ecosystemv2alphapbint.EcosystemServiceServiceCmd)
+	// RootCmd.AddCommand(connectorv2alphatui.Cmd)
+	// Dash
 }
 
 // init initializes the logging handler, persistent flags, and markdown styling based on terminal background settings.
 func init() {
-	log.SetHandler(cli.Default)
-
-	RootCmd.PersistentFlags().StringVar(&context2, "context", "", "context to use for this call")
+	RootCmd.PersistentFlags().StringVar(&ecosystem, "context", "", "context to use for this call")
 	RootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "enable debug level logging")
+	RootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "enable additional logging")
+	RootCmd.PersistentFlags().BoolVar(&quiet, "quiet", false, "reduces logging output to only essential messages")
+	RootCmd.PersistentFlags().BoolVar(&logToFile, "logToFile", false, "log stdout and stderr to the default log file")
 	RootCmd.PersistentFlags().StringVar(&logFile, "logFile", "", "log File path (if set, logging enabled automatically)")
 
 	// Set bash-completion

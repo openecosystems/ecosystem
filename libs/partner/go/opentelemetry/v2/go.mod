@@ -1,8 +1,8 @@
 module libs/partner/go/opentelemetry/v2
 
-go 1.23
+go 1.23.4
 
-toolchain go1.23.0
+toolchain go1.23.4
 
 require (
 	go.opentelemetry.io/otel v1.31.0

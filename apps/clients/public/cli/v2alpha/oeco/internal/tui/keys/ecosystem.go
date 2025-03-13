@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // EcosystemKeyMap defines key bindings for navigating ecosystem-related commands or actions.
@@ -25,11 +25,11 @@ func (k EcosystemKeyMap) Name() KeyBindingType {
 var EcosystemKeys = EcosystemKeyMap{
 	List: key.NewBinding(
 		key.WithKeys("l"),
-		key.WithHelp("l", "list"),
+		key.WithHelp("l", list),
 	),
 	View: key.NewBinding(
 		key.WithKeys("v"),
-		key.WithHelp("v", "view"),
+		key.WithHelp("v", view),
 	),
 	Graph: key.NewBinding(
 		key.WithKeys("g"),
@@ -62,9 +62,9 @@ func rebindEcosystemKeys(keys []config.KeyBinding) error {
 		var k *key.Binding
 
 		switch kb.Builtin {
-		case "list":
+		case list:
 			k = &EcosystemKeys.List
-		case "view":
+		case view:
 			k = &EcosystemKeys.View
 		case "graph":
 			k = &EcosystemKeys.Graph

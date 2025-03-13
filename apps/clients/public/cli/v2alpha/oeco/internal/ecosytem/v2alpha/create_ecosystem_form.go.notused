@@ -1,0 +1,346 @@
+// Package ecosystemv2alphapbint
+// nolint:unused,revive
+package ecosystemv2alphapbint
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"strings"
+	"time"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/huh"
+	"github.com/charmbracelet/huh/spinner"
+	"github.com/charmbracelet/lipgloss"
+
+	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
+)
+
+const maxWidth = 80
+
+// Styles defines a collection of reusable lipgloss style definitions for various UI components such as Base, HeaderText, Status, etc.
+type Styles struct {
+	Base,
+	HeaderText,
+	Status,
+	StatusHeader,
+	Highlight,
+	ErrorHeaderText,
+	Help lipgloss.Style
+}
+
+// NewStyles initializes and returns a pointer to a Styles struct containing customized lipgloss styles.
+// It sets up styles for Base, HeaderText, Status, StatusHeader, Highlight, ErrorHeaderText, and Help.
+func NewStyles(lg *lipgloss.Renderer) *Styles {
+	s := Styles{}
+	s.Base = lg.NewStyle().
+		Padding(1, 4, 0, 1)
+	s.HeaderText = lg.NewStyle().
+		Foreground(theme.DefaultTheme.PrimaryColor500).
+		Bold(true).
+		Padding(0, 1, 0, 2)
+	s.Status = lg.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		BorderForeground(theme.DefaultTheme.SecondaryBorder).
+		PaddingLeft(1).
+		MarginTop(1)
+	s.StatusHeader = lg.NewStyle().
+		Foreground(theme.DefaultTheme.TertiaryColor500).
+		Bold(true)
+	s.Highlight = lg.NewStyle().
+		Foreground(lipgloss.Color("212"))
+	s.ErrorHeaderText = s.HeaderText.
+		Foreground(theme.DefaultTheme.ErrorColor)
+	s.Help = lg.NewStyle().
+		Foreground(lipgloss.Color("240"))
+	return &s
+}
+
+// state represents an integer-based enumeration to define various states in a model or application logic.
+type state int
+
+// statusNormal represents the default or normal state.
+// stateDone represents the completed or finished state.
+const (
+	statusNormal state = iota
+	stateDone
+)
+
+type CreateEcosystemData struct {
+	Domain        string
+	EcosystemType string
+	CIDR          string
+}
+
+// CreateEcosystemModel represents the main structure containing the state, styles, renderer, form, and width of the application.
+type CreateEcosystemModel struct {
+	Data   CreateEcosystemData
+	state  state
+	lg     *lipgloss.Renderer
+	styles *Styles
+	form   *huh.Form
+	width  int
+}
+
+// NewCreateEcosystemModel creates and initializes a new CreateEcosystemModel instance with default configurations and predefined form settings.
+func NewCreateEcosystemModel(_ *cliv2alphalib.Configuration) *CreateEcosystemModel {
+	m := CreateEcosystemModel{width: maxWidth, state: statusNormal}
+	m.lg = lipgloss.DefaultRenderer()
+	m.styles = NewStyles(m.lg)
+
+	var data CreateEcosystemData
+
+	m.form = huh.NewForm(
+		huh.NewGroup(
+
+			huh.NewInput().
+				Key("domain").
+				Title("Pick a domain name").
+				DescriptionFunc(func() string {
+					if data.Domain == "" {
+						return "For example if you choose 'oeco', your domain name will be 'oeco.mesh'"
+					}
+					return "Your domain name will be: " + data.Domain + ".mesh"
+				}, &data).
+				Suggestions([]string{"For example 'oeco'"}).
+				Prompt("? ").
+				// Validate(isFood).
+				Value(&data.Domain).WithHeight(29),
+
+			huh.NewSelect[string]().
+				Key("type").
+				Options(huh.NewOptions("Private", "Public")...).
+				Title("Choose your ecosystem type").
+				Description("This will impact how people access your ecosystem").
+				Value(&data.EcosystemType),
+
+			huh.NewSelect[string]().
+				Key("cidr").
+				Options(huh.NewOptions("192.168.0.0/16", "172.16.0.0/12", "10.0.0.0/8", "100.64.0.0/10")...).
+				Title("Choose your CIDR block").
+				Description("The range you choose must be part of the RFC 1918 Private Address Space or the RFC 6598 Shared Address Space.").
+				Value(&data.CIDR),
+
+			huh.NewConfirm().
+				Key("done").
+				Title("All done?").
+				Validate(func(v bool) error {
+					if !v {
+						return errors.New("welp, finish up then")
+					}
+					return nil
+				}).
+				Affirmative("Yep").
+				Negative("Wait, no"),
+		),
+	).
+		WithWidth(80).
+		WithShowHelp(false).
+		WithShowErrors(false).
+		WithTheme(theme.FormTheme())
+
+	m.Data = data
+	return &m
+}
+
+// Init initializes the model and sets up the form. Returns an initial command to be executed.
+func (m *CreateEcosystemModel) Init() tea.Cmd {
+	return m.form.Init()
+}
+
+// _min returns the smaller of two integers, x and y. If x is greater than y, it returns y; otherwise, it returns x.
+func _min(x, y int) int {
+	if x > y {
+		return y
+	}
+	return x
+}
+
+// Update processes incoming messages and updates the model's state and commands accordingly.
+// It handles window resize, keyboard input, form updates, and determines when to quit the application.
+// Returns the updated model with a batch of commands to execute next.
+func (m *CreateEcosystemModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = _min(msg.Width, maxWidth) - m.styles.Base.GetHorizontalFrameSize()
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c":
+			// return m, tea.Interrupt
+			return m, tea.Quit
+		case "esc", "q":
+			return m, tea.Quit
+		}
+	}
+
+	var cmds []tea.Cmd
+
+	// Process the form
+	form, cmd := m.form.Update(msg)
+	if f, ok := form.(*huh.Form); ok {
+		m.form = f
+		cmds = append(cmds, cmd)
+	}
+
+	if m.form.State == huh.StateCompleted {
+		// Quit when the form is done.
+		cmds = append(cmds, tea.Quit)
+	}
+
+	return m, tea.Batch(cmds...)
+}
+
+// View generates and returns the string representation of the current UI based on the model's state and data.
+func (m *CreateEcosystemModel) View() string {
+	s := m.styles
+
+	switch m.form.State {
+	case huh.StateCompleted:
+		title, role := m.getRole()
+		title = s.Highlight.Render(title)
+		m.state = stateDone
+		var b strings.Builder
+		_, err := fmt.Fprintf(&b, "Congratulations, you’re Ecosystem configuration is ready to be deployed\n%s!\n\n", title)
+		if err != nil {
+			return ""
+		}
+		_, err = fmt.Fprintf(&b, "Your job description is as follows:\n\n%s\n\nPlease proceed to HR immediately.", role)
+		if err != nil {
+			return ""
+		}
+
+		err = spinner.New().
+			Context(context.Background()).
+			Title("Installing context...").
+			ActionWithErr(func(context.Context) error {
+				time.Sleep(2 * time.Second)
+				return nil
+			}).
+			Accessible(false).
+			Run()
+		if err != nil {
+			fmt.Println(err)
+			// log.Fatal(err)
+		}
+
+		return s.Status.Margin(0, 1).Padding(1, 2).Width(48).Render(b.String()) + "\n\n"
+	default:
+
+		var domain string
+		if m.form.GetString("domain") != "" {
+			domain = "Domain Name: " + m.form.GetString("domain") + ".mesh" +
+				"\n\n" + "Edge Endpoint: edge." + m.form.GetString("domain") + ".mesh" +
+				"\n\n" + "Mesh Endpoint: api." + m.form.GetString("domain") + ".mesh"
+		}
+
+		// Form (left side)
+		v := strings.TrimSuffix(m.form.View(), "\n\n")
+		form := m.lg.NewStyle().Margin(1, 0).Render(v)
+
+		// Status (right side)
+		var status string
+		{
+			var (
+				domainInfo     = "(None)"
+				role           string
+				jobDescription string
+				eType          string
+			)
+
+			if m.form.GetString("type") != "" {
+				eType = "Type: " + m.form.GetString("type")
+				role, jobDescription = m.getRole()
+				role = "\n\n" + s.StatusHeader.Render("Ecosystem Role") + "\n" + role
+				jobDescription = "\n\n" + s.StatusHeader.Render("Duties") + "\n" + jobDescription
+			}
+			if m.form.GetString("domain") != "" {
+				domainInfo = fmt.Sprintf("%s\n%s", domain, eType)
+			}
+
+			const statusWidth = 28
+			statusMarginLeft := m.width - statusWidth - lipgloss.Width(form) - s.Status.GetMarginRight()
+			status = s.Status.
+				Height(lipgloss.Height(form)).
+				Width(statusWidth).
+				MarginLeft(statusMarginLeft).
+				Render(s.StatusHeader.Render("Ecosystem Details") + "\n" +
+					domainInfo +
+					role +
+					jobDescription)
+		}
+
+		errs := m.form.Errors()
+		header := m.appBoundaryView("Create a new Economic System")
+		if len(errs) > 0 {
+			header = m.appErrorBoundaryView(m.errorView())
+		}
+		body := lipgloss.JoinHorizontal(lipgloss.Top, form, status)
+
+		footer := m.appBoundaryView(m.form.Help().ShortHelpView(m.form.KeyBinds()))
+		if len(errs) > 0 {
+			footer = m.appErrorBoundaryView("")
+		}
+
+		return s.Base.Render(header + "\n" + body + "\n\n" + footer)
+	}
+}
+
+// errorView aggregates and returns all error messages from the model's form as a single concatenated string.
+func (m *CreateEcosystemModel) errorView() string {
+	var s string
+	for _, err := range m.form.Errors() {
+		s += err.Error()
+	}
+	return s
+}
+
+// appBoundaryView places horizontally aligned text within the app boundary with custom styles and whitespace characters.
+func (m *CreateEcosystemModel) appBoundaryView(text string) string {
+	return lipgloss.PlaceHorizontal(
+		m.width,
+		lipgloss.Left,
+		m.styles.HeaderText.Render(text),
+		lipgloss.WithWhitespaceChars(""),
+		lipgloss.WithWhitespaceForeground(theme.DefaultTheme.PrimaryColor500),
+	)
+}
+
+// appErrorBoundaryView formats and styles an error header message within a bounded horizontal space using the provided text.
+func (m *CreateEcosystemModel) appErrorBoundaryView(text string) string {
+	return lipgloss.PlaceHorizontal(
+		m.width,
+		lipgloss.Left,
+		m.styles.ErrorHeaderText.Render(text),
+		lipgloss.WithWhitespaceChars("/"),
+		lipgloss.WithWhitespaceForeground(theme.DefaultTheme.ErrorColor),
+	)
+}
+
+// getRole determines the role and its description based on the class and level values retrieved from the form.
+func (m *CreateEcosystemModel) getRole() (string, string) {
+	eType := m.form.GetString("type")
+	switch m.form.GetString("type") {
+	case "Private":
+		switch eType {
+		case "1":
+			return "Tank Intern", "Assists with tank-related activities. Paid position."
+		case "9999":
+			return "Tank Manager", "Manages tanks and tank-related activities."
+		default:
+			return "Tank", "General tank. Does damage, takes damage. Responsible for tanking."
+		}
+	case "Public":
+		switch eType {
+		case "1":
+			return "DPS Associate", "Finds DPS deals and passes them on to DPS Manager."
+		case "9999":
+			return "DPS Operating Officer", "Oversees all DPS activities."
+		default:
+			return "DPS", "Does damage and ideally does not take damage. Logs hours in JIRA."
+		}
+	default:
+		return "", ""
+	}
+}

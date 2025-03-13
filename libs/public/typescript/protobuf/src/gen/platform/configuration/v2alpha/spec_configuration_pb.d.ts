@@ -15,6 +15,7 @@ import type { EncryptionConfiguration } from "../../cryptography/v2alpha/encrypt
 import type { DynamicDnsConfiguration } from "../../dns/v2alpha/dynamic_dns_pb";
 import type { EcosystemConfiguration } from "../../ecosystem/v2alpha/ecosystem_pb";
 import type { EdgeRouterConfiguration } from "../../edge/v2alpha/edge_router_pb";
+import type { AccountConfiguration } from "../../iam/v2alpha/account_pb";
 import type { AccountAuthorityConfiguration } from "../../iam/v2alpha/account_authority_pb";
 import type { CryptographicMeshConfiguration } from "../../mesh/v2alpha/cryptographic_mesh_pb";
 import type { ReferenceConfiguration } from "../../reference/v2alpha/reference_pb";
@@ -75,22 +76,27 @@ export declare type SpecPlatformConfiguration = Message<"platform.configuration.
   edgeRouterConfigurationV2alpha?: EdgeRouterConfiguration;
 
   /**
-   * @generated from field: platform.iam.v2alpha.AccountAuthorityConfiguration account_authority_configuration_v2alpha = 11;
+   * @generated from field: platform.iam.v2alpha.AccountConfiguration account_configuration_v2alpha = 11;
+   */
+  accountConfigurationV2alpha?: AccountConfiguration;
+
+  /**
+   * @generated from field: platform.iam.v2alpha.AccountAuthorityConfiguration account_authority_configuration_v2alpha = 12;
    */
   accountAuthorityConfigurationV2alpha?: AccountAuthorityConfiguration;
 
   /**
-   * @generated from field: platform.mesh.v2alpha.CryptographicMeshConfiguration cryptographic_mesh_configuration_v2alpha = 12;
+   * @generated from field: platform.mesh.v2alpha.CryptographicMeshConfiguration cryptographic_mesh_configuration_v2alpha = 13;
    */
   cryptographicMeshConfigurationV2alpha?: CryptographicMeshConfiguration;
 
   /**
-   * @generated from field: platform.reference.v2alpha.ReferenceConfiguration reference_configuration_v2alpha = 13;
+   * @generated from field: platform.reference.v2alpha.ReferenceConfiguration reference_configuration_v2alpha = 14;
    */
   referenceConfigurationV2alpha?: ReferenceConfiguration;
 
   /**
-   * @generated from field: platform.system.v2alpha.SystemConfiguration system_configuration_v2alpha = 14;
+   * @generated from field: platform.system.v2alpha.SystemConfiguration system_configuration_v2alpha = 15;
    */
   systemConfigurationV2alpha?: SystemConfiguration;
 };

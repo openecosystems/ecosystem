@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/data"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 	"bytes"
 	"fmt"
 	"maps"
@@ -10,6 +8,9 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
+
+	data "apps/clients/public/cli/v2alpha/oeco/internal/data"
+	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 )
 
 // IssueCommandTemplateInput defines the input parameters required to execute an issue command template in a repository context.
@@ -108,7 +109,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //	id := fmt.Sprint(time.Now().Unix())
 //	startCmd := m.ctx.StartTask(
 //		context.Task{
-//			Id:           id,
+//			ID:           id,
 //			StartText:    text,
 //			FinishedText: text,
 //			State:        context.TaskStart,
@@ -116,7 +117,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //
 //	finishCmd := func() tea.Msg {
 //		return constants.TaskFinishedMsg{
-//			TaskId: id,
+//			TaskID: id,
 //		}
 //	}
 //
@@ -127,7 +128,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //	id := fmt.Sprint(time.Now().Unix())
 //	startCmd := m.ctx.StartTask(
 //		context.Task{
-//			Id:           id,
+//			ID:           id,
 //			StartText:    text,
 //			FinishedText: text,
 //			State:        context.TaskStart,
@@ -135,7 +136,7 @@ func (m *Model) executeCustomCommand(_ string) tea.Cmd {
 //
 //	finishCmd := func() tea.Msg {
 //		return constants.TaskFinishedMsg{
-//			TaskId: id,
+//			TaskID: id,
 //			Err:    errors.New(text),
 //		}
 //	}

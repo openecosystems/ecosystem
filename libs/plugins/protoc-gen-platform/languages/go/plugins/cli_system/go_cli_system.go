@@ -6,10 +6,11 @@ import (
 	"strings"
 	"text/template"
 
+	_go "libs/plugins/protoc-gen-platform/languages/go"
+	shared "libs/plugins/protoc-gen-platform/shared"
+
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
-	_go "libs/plugins/protoc-gen-platform/languages/go"
-	"libs/plugins/protoc-gen-platform/shared"
 )
 
 var (
@@ -24,23 +25,29 @@ const (
 	pluginName = "cli-system"
 )
 
+// GoCliSystemModule represents a Protoc plugin module for generating Go CLI system files.
+// It extends pgs.ModuleBase and utilizes a custom PGS context and Go templates for file generation.
 type GoCliSystemModule struct {
 	*pgs.ModuleBase
 	ctx pgsgo.Context
 	Tpl *template.Template
 }
 
+// GoCliSystemPlugin creates and returns a new instance of GoCliSystemModule for use with Protobuf code generation.
 func GoCliSystemPlugin() *GoCliSystemModule {
 	return &GoCliSystemModule{ModuleBase: &pgs.ModuleBase{}}
 }
 
+// InitContext initializes the module's context by setting the base context and initializing the pgsgo context using parameters.
 func (m *GoCliSystemModule) InitContext(c pgs.BuildContext) {
 	m.ModuleBase.InitContext(c)
 	m.ctx = pgsgo.InitContext(c.Parameters())
 }
 
+// Name returns the constructed name of the module composed of the defined language and plugin name constants.
 func (m *GoCliSystemModule) Name() string { return language + "/" + pluginName }
 
+// Execute processes protocol buffer targets, applies filters based on plugin and language parameters, and generates artifacts.
 func (m *GoCliSystemModule) Execute(targets map[string]pgs.File, _ map[string]pgs.Package) []pgs.Artifact {
 	paramLanguage := m.Parameters().Str(shared.LanguageParam)
 	m.Assert(paramLanguage != "", shared.LanguageParamError)
@@ -60,7 +67,7 @@ func (m *GoCliSystemModule) Execute(targets map[string]pgs.File, _ map[string]pg
 
 	// Idempotent looping, use keys for range NOT targets
 	keys := make([]string, 0)
-	for k, _ := range targets {
+	for k := range targets {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
@@ -80,6 +87,10 @@ func (m *GoCliSystemModule) Execute(targets map[string]pgs.File, _ map[string]pg
 	return m.Artifacts()
 }
 
+// GenerateFile generates the output file for the provided proto file using a specified template and settings.
+// It initializes a template with required functions, parses template files, and writes the generated content.
+// The output path is dynamically created based on domain system name and package version.
+// If no valid message is found in the proto file, the method terminates early without generating a file.
 func (m GoCliSystemModule) GenerateFile(file pgs.File) {
 	templateName := "file.go.tmpl"
 	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
@@ -116,7 +127,7 @@ func (m GoCliSystemModule) GenerateFile(file pgs.File) {
 		return
 	}
 
-	//name := m.ctx.OutputPath(file).SetExt(".cmd." + l.FileExtension())
+	// name := m.ctx.OutputPath(file).SetExt(".cmd." + l.FileExtension())
 	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/" + fns.DomainSystemName2(file).LowerCamelCase().String() + ".cmd." + l.FileExtension())
 	m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
 }

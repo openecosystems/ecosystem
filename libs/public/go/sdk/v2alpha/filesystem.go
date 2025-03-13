@@ -23,6 +23,7 @@ type FileSystem struct {
 	RegistryDirectory      string
 	RegistryCacheDirectory string
 	ConfigurationDirectory string
+	ConnectorDirectory     string
 }
 
 // HomeDirectoryName defines the name of the home configuration directory.
@@ -36,18 +37,22 @@ type FileSystem struct {
 // RegistryDirectoryName specifies the directory name for registry-related data.
 // RegistryCacheDirectoryName defines the directory name for registry cache data.
 // ConfigurationDirectoryName specifies the directory name for configuration storage.
+// ConnectorDirectoryName specifies the directory name for connector storage.
 const (
 	HomeDirectoryName          = ".config/oeco"
 	ConfigurationName          = "config"
 	ConfigurationExtension     = "yaml"
 	LogDirectoryName           = "logs"
+	LogExtension               = "log"
 	TmpDirectoryName           = "tmp"
 	ContextDirectoryName       = "context"
+	OecoContextFileName        = "oeco"
 	DefaultContextFileName     = "default"
 	CredentialDirectoryName    = "credentials"
 	RegistryDirectoryName      = "registry"
 	RegistryCacheDirectoryName = "cache"
 	ConfigurationDirectoryName = "configuration"
+	ConnectorDirectoryName     = "connector"
 )
 
 // HomeDirectory defines the default home directory path using getHomeDirectory function.
@@ -57,6 +62,7 @@ const (
 // TmpDirectory defines the path to the temporary directory in the home directory.
 // ContextDirectory defines the path to the context directory in the home directory.
 // CredentialDirectory defines the path to the credential directory in the home directory.
+// ConnectorDirectory defines the path to the connector directory in the home directory.
 // RegistryDirectory defines the path to the registry directory in the home directory.
 // ConfigurationDirectory defines the path to the configuration directory in the home directory.
 // RegistryCacheDirectory defines the path to the registry cache directory in the registry directory.
@@ -72,8 +78,11 @@ var (
 	CredentialDirectory    = filepath.Join(HomeDirectory, CredentialDirectoryName)
 	RegistryDirectory      = filepath.Join(HomeDirectory, RegistryDirectoryName)
 	ConfigurationDirectory = filepath.Join(HomeDirectory, ConfigurationDirectoryName)
+	ConnectorDirectory     = filepath.Join(HomeDirectory, ConnectorDirectoryName)
 	RegistryCacheDirectory = filepath.Join(RegistryDirectory, RegistryCacheDirectoryName)
+	OecoContextFile        = filepath.Join(ContextDirectory, OecoContextFileName)
 	DefaultContextFile     = filepath.Join(ContextDirectory, DefaultContextFileName)
+	OecoLogFile            = filepath.Join(LogDirectory, OecoContextFileName+"."+LogExtension)
 	Filesystem             *FileSystem
 )
 
@@ -92,6 +101,7 @@ func NewFileSystem() *FileSystem {
 		RegistryDirectory:      RegistryDirectory,
 		RegistryCacheDirectory: RegistryCacheDirectory,
 		ConfigurationDirectory: ConfigurationDirectory,
+		ConnectorDirectory:     ConnectorDirectory,
 	}
 
 	if err := filesystem.CreateDirectory(HomeDirectory); err != nil {
@@ -123,7 +133,11 @@ func NewFileSystem() *FileSystem {
 	}
 
 	if err := filesystem.CreateDirectory(ConfigurationDirectory); err != nil {
-		fmt.Println("config directory error: ", err)
+		fmt.Println("configuration directory error: ", err)
+	}
+
+	if err := filesystem.CreateDirectory(ConnectorDirectory); err != nil {
+		fmt.Println("connector directory error: ", err)
 	}
 
 	if err := filesystem.CreateFile(DefaultContextFile); err != nil {

@@ -72,6 +72,8 @@ message ApiOptions {
   ApiType type = 1;
   ApiLifecycle cycle = 2;
   ApiInterfaceType interface = 3;
+  NetworkType network = 4;
+  string shortname = 5;
 }
 
 enum ApiType {

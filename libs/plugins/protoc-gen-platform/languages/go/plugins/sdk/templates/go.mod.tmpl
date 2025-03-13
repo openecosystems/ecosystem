@@ -2,7 +2,7 @@
 // source: {{ .InputPath }}{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $e := entity .File }}{{ $entityName := entityName $e }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
 module libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}
 
-go 1.23
+go 1.23.4
 
 require connectrpc.com/connect v1.17.0
 

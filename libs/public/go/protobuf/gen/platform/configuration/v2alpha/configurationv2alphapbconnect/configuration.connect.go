@@ -62,14 +62,21 @@ const (
 // ConfigurationServiceClient is a client for the
 // platform.configuration.v2alpha.ConfigurationService service.
 type ConfigurationServiceClient interface {
+	// Create a configuration that manages an ecosystem
 	CreateConfiguration(context.Context, *connect.Request[v2alpha.CreateConfigurationRequest]) (*connect.Response[v2alpha.CreateConfigurationResponse], error)
+	// List configurations for this ecosystem
 	ListConfigurations(context.Context, *connect.Request[v2alpha.ListConfigurationsRequest]) (*connect.Response[v2alpha.ListConfigurationsResponse], error)
-	// Get workspace location
+	// Get configuration for an ecosystem
 	GetConfiguration(context.Context, *connect.Request[v2alpha.GetConfigurationRequest]) (*connect.Response[v2alpha.GetConfigurationResponse], error)
+	// Update configuration for an ecosystem
 	UpdateConfiguration(context.Context, *connect.Request[v2alpha.UpdateConfigurationRequest]) (*connect.Response[v2alpha.UpdateConfigurationResponse], error)
+	// Load configuration for an ecosystem
 	LoadConfiguration(context.Context, *connect.Request[v2alpha.LoadConfigurationRequest]) (*connect.Response[v2alpha.LoadConfigurationResponse], error)
+	// Delete configuration for an ecosystem
 	DeleteConfiguration(context.Context, *connect.Request[v2alpha.DeleteConfigurationRequest]) (*connect.Response[v2alpha.DeleteConfigurationResponse], error)
+	// Publish configuration for an ecosystem
 	PublishConfiguration(context.Context, *connect.Request[v2alpha.PublishConfigurationRequest]) (*connect.Response[v2alpha.PublishConfigurationResponse], error)
+	// Archive configuration for an ecosystem
 	ArchiveConfiguration(context.Context, *connect.Request[v2alpha.ArchiveConfigurationRequest]) (*connect.Response[v2alpha.ArchiveConfigurationResponse], error)
 }
 
@@ -196,14 +203,21 @@ func (c *configurationServiceClient) ArchiveConfiguration(ctx context.Context, r
 // ConfigurationServiceHandler is an implementation of the
 // platform.configuration.v2alpha.ConfigurationService service.
 type ConfigurationServiceHandler interface {
+	// Create a configuration that manages an ecosystem
 	CreateConfiguration(context.Context, *connect.Request[v2alpha.CreateConfigurationRequest]) (*connect.Response[v2alpha.CreateConfigurationResponse], error)
+	// List configurations for this ecosystem
 	ListConfigurations(context.Context, *connect.Request[v2alpha.ListConfigurationsRequest]) (*connect.Response[v2alpha.ListConfigurationsResponse], error)
-	// Get workspace location
+	// Get configuration for an ecosystem
 	GetConfiguration(context.Context, *connect.Request[v2alpha.GetConfigurationRequest]) (*connect.Response[v2alpha.GetConfigurationResponse], error)
+	// Update configuration for an ecosystem
 	UpdateConfiguration(context.Context, *connect.Request[v2alpha.UpdateConfigurationRequest]) (*connect.Response[v2alpha.UpdateConfigurationResponse], error)
+	// Load configuration for an ecosystem
 	LoadConfiguration(context.Context, *connect.Request[v2alpha.LoadConfigurationRequest]) (*connect.Response[v2alpha.LoadConfigurationResponse], error)
+	// Delete configuration for an ecosystem
 	DeleteConfiguration(context.Context, *connect.Request[v2alpha.DeleteConfigurationRequest]) (*connect.Response[v2alpha.DeleteConfigurationResponse], error)
+	// Publish configuration for an ecosystem
 	PublishConfiguration(context.Context, *connect.Request[v2alpha.PublishConfigurationRequest]) (*connect.Response[v2alpha.PublishConfigurationResponse], error)
+	// Archive configuration for an ecosystem
 	ArchiveConfiguration(context.Context, *connect.Request[v2alpha.ArchiveConfigurationRequest]) (*connect.Response[v2alpha.ArchiveConfigurationResponse], error)
 }
 

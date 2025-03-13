@@ -38,13 +38,13 @@ services:
       - init
       - memcached
 
-  k6-tracing:
-    image: ghcr.io/grafana/xk6-client-tracing:v0.0.5
-    environment:
-      - ENDPOINT=tempo:4317
-    restart: always
-    depends_on:
-      - tempo
+#  k6-tracing:
+#    image: ghcr.io/grafana/xk6-client-tracing:v0.0.5
+#    environment:
+#      - ENDPOINT=tempo:4317
+#    restart: always
+#    depends_on:
+#      - tempo
 
   prometheus:
     image: prom/prometheus:latest

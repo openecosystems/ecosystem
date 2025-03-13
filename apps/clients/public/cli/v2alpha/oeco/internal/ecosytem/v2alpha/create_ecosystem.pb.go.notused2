@@ -1,0 +1,119 @@
+package ecosystemv2alphapbint
+
+import (
+	"context"
+	"encoding/json"
+	"os"
+
+	"connectrpc.com/connect"
+
+	tea "github.com/charmbracelet/bubbletea"
+	clog "github.com/charmbracelet/log"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
+
+	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api/iam/v2alpha"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
+	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	ecosystemv2alphapbsdk "libs/public/go/sdk/gen/ecosystem/v2alpha"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+)
+
+var (
+	// createEcosystemRequest      string
+	createEcosystemFieldMask    string
+	createEcosystemValidateOnly bool
+)
+
+// CreateEcosystemV2AlphaCmd defines a CLI command named "connector" for interaction, supporting one optional argument and a short description.
+var CreateEcosystemV2AlphaCmd = &cobra.Command{
+	Use:     "create",
+	Short:   "Create an ecosystem",
+	Version: "",
+	// Args:    cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, _ []string) {
+		settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+		log := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*clog.Logger)
+
+		model := NewCreateEcosystemModel(settings)
+
+		defer gracefulShutdown()
+
+		p := tea.NewProgram(
+			model,
+			tea.WithAltScreen(),
+			tea.WithReportFocus(),
+			// tea.WithMouseCellMotion(),
+		)
+
+		if _, err := p.Run(); err != nil {
+			log.Fatal("Failed starting the TUI", err)
+		}
+
+		if model.state == stateDone {
+			log.Info("Form completed!")
+			log.Info("Domain:", model.Data.Domain)
+			log.Info("Type:", model.Data.EcosystemType)
+			log.Info("CIDR:", model.Data.CIDR)
+
+			log.Info("Done!")
+
+			//_r := ecosystemv2alphapb.CreateEcosystemRequest{}
+			//_r.Name = model.Data.Name
+
+			// Example JSON request argument
+			// requestArg := `{"name": "oeco"}`
+
+			// Example JSON request
+			requestValue := `{"name": "123"}`
+
+			err := iamv2alphapbint.CreateAccountV2AlphaCmd.Flags().Set("request", requestValue)
+			if err != nil {
+				log.Error("Error setting flag:", err)
+				return
+			}
+
+			// iamv2alphapbint.CreateAccountV2AlphaCmd.SetArgs([]string{"request", requestArg})
+			iamv2alphapbint.CreateAccountV2AlphaCmd.Run(cmd, []string{})
+
+			// System presents form to User
+			// The User completes form
+			// System creates a new context file: {ecosystem-name}.yaml
+			// System calls create account authority <br/>internally to create a new Account Authority credential: <br/>api.{ecosystem-name}.mesh
+			// System calls create account <br/>internally to create a new Edge Service Account credential: <br/>edge.{ecosystem-name}.mesh. <br/>system assigns a reserved ipaddress
+			// System calls create account <br/>internally to create a new Local Machine Service Account credential: <br/>{sanitized.os.hostname}.{ecosystem-name}.mesh
+			// System calls provision edge <br/>internally to configure Edge: <br/>configurations/edge.{ecosystem-name}.mesh
+			// System calls provision ecosystem <br/>internally to configure ecosystem: <br/>configurations/api.{ecosystem-name}.mesh
+			// User deploys the Ecosystem following installation guide
+
+			_request := `{"name": "123"}`
+
+			_r := ecosystemv2alphapb.CreateEcosystemRequest{}
+			err = protojson.Unmarshal([]byte(_request), &_r)
+			if err != nil {
+				log.Error(err)
+				os.Exit(1)
+			}
+
+			sdkv2alphalib.Overrides.FieldMask = createEcosystemFieldMask
+			sdkv2alphalib.Overrides.ValidateOnly = createEcosystemValidateOnly
+
+			request := connect.NewRequest[ecosystemv2alphapb.CreateEcosystemRequest](&_r)
+			// Add GZIP Support: connect.WithSendGzip(),
+			url := "https://" + settings.Platform.Mesh.Endpoint
+			if settings.Platform.Insecure {
+				url = "http://" + settings.Platform.Mesh.Endpoint
+			}
+			client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+
+			response, err := client.CreateEcosystem(context.Background(), request)
+			if err != nil {
+				log.Error(err)
+				os.Exit(1)
+			}
+
+			val, _ := json.MarshalIndent(&response, "", "    ")
+			log.Info("Response: ", string(val))
+		}
+	},
+}

@@ -6,14 +6,14 @@ import (
 	"strings"
 	"sync"
 
-	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protodesc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/descriptorpb"
+
+	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 // globalMutex is a read-write mutex used to synchronize access to global resources.
@@ -52,7 +52,7 @@ func (s FullSystemName) IsValid() bool {
 
 // RegisterSystems initializes the Systems instance with provided settings and processes system definitions.
 // Returns an error if system registration fails.
-func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
+func (s *Systems) RegisterSystems(provider BaseSpecConfigurationProvider) error {
 	if s == GlobalSystems {
 		globalMutex.Lock()
 		defer globalMutex.Unlock()
@@ -64,7 +64,19 @@ func (s *Systems) RegisterSystems(settingsProvider SpecSettingsProvider) error {
 	}
 
 	s.fileSystem = NewFileSystem()
-	s.settings = settingsProvider.GetSettings()
+
+	bytes, err := provider.GetConfigurationBytes()
+	if err != nil {
+		return nil
+	}
+
+	var settings specv2pb.SpecSettings
+	err = proto.Unmarshal(bytes, &settings)
+	if err != nil {
+		return nil
+	}
+
+	s.settings = &settings
 	if err := s.processSystems(); err != nil {
 		return err
 	}
@@ -88,7 +100,7 @@ func (s *Systems) GetSystemByName(systemName string) (*System, error) {
 
 // processSystems initializes, validates, and registers systems using the provided configuration and dependencies.
 func (s *Systems) processSystems() error {
-	for _, ss := range s.settings.Systems2 {
+	for _, ss := range s.settings.Systems {
 		// Validate system
 
 		//if prev := s.systemsByName[FullSystemName(ss.Name)]; len(prev) > 0 {

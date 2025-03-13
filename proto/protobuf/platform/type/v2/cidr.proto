@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+// Classless Inter-Domain Routing
+message CIDR {
+  string cidr_notation = 1;
+  string first_ip = 2;
+  string subnet_mask = 3;
+  uint32 subnet_bits = 4;
+  uint64 total_ips = 5;
+  uint32 total_bits = 6;
+  repeated string reserved_ips = 7;
+}

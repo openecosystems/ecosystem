@@ -10,6 +10,8 @@ import (
 
   ecosystem "libs/public/go/model/gen/platform/ecosystem/v2alpha"
 
+  account "libs/public/go/model/gen/platform/iam/v2alpha"
+
   account_authority "libs/public/go/model/gen/platform/iam/v2alpha"
 
   system "libs/public/go/model/gen/platform/system/v2alpha"
@@ -23,6 +25,8 @@ var Registry = []sdkv2alphalib.Entity{
 	&certificate.CertificateSpecEntity{},
 
 	&ecosystem.EcosystemSpecEntity{},
+
+	&account.AccountSpecEntity{},
 
 	&account_authority.AccountAuthoritySpecEntity{},
 

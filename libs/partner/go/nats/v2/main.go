@@ -8,12 +8,12 @@ import (
 	"sync"
 	"time"
 
-	nebulav1 "libs/partner/go/nebula/v1"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
-
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
+
+	nebulav1 "libs/partner/go/nebula/v1"
+	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // Binding represents a structure managing NATS connections, JetStream instances, and event stream configurations.
@@ -35,6 +35,7 @@ type Binding struct {
 var (
 	natsOptions []nats.Option
 	// jsOptions   []jetstream.JetStreamOpt
+
 	Bound       *Binding
 	BindingName = "NATS_NODE_BINDING"
 )
@@ -55,9 +56,17 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		var once sync.Once
 		once.Do(
 			func() {
-				switch ResolvedConfiguration.Natsd.Enabled {
+				switch b.configuration.Natsd.Enabled {
 				case true:
-					options := ResolvedConfiguration.Natsd.Options
+					options := b.configuration.Natsd.Options
+
+					// Check if we are running inside the mesh, if so, use the CustomDialer option
+					if b.configuration.Platform.Mesh.Enabled {
+						if !nebulav1.IsBound {
+							fmt.Println("You have enabled the mesh network for Nats traffic, however, you haven't bound Nebula. Please add the Nebula binding.")
+							panic("Missing Nebula binding")
+						}
+					}
 
 					server, err := natsd.NewServer(&options)
 					if err != nil {
@@ -93,9 +102,10 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 					b.JetStream = &js
 
 					Bound = &Binding{
-						server:    server,
-						Nats:      _nats,
-						JetStream: &js,
+						server:        server,
+						Nats:          _nats,
+						JetStream:     &js,
+						configuration: b.configuration,
 					}
 
 					bindings.Registered[b.Name()] = Bound
@@ -106,10 +116,10 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 
 					RegisterEventStreams()
 				case false:
-					servers := strings.Replace(strings.Trim(fmt.Sprint(ResolvedConfiguration.Nats.Options.Servers), "[]"), " ", ",", -1)
+					servers := strings.Replace(strings.Trim(fmt.Sprint(b.configuration.Nats.Options.Servers), "[]"), " ", ",", -1)
 
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
-					if ResolvedConfiguration.Nats.Mesh {
+					if b.configuration.Platform.Mesh.Enabled {
 						if !nebulav1.IsBound {
 							fmt.Println("You have enabled the mesh network for Nats traffic, however, you haven't bound Nebula. Please add the Nebula binding.")
 							panic("Missing Nebula binding")
@@ -139,36 +149,12 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 						Listeners:          b.Listeners,
 						Nats:               _nats,
 						JetStream:          &js,
+						configuration:      b.configuration,
 					}
 
 					bindings.Registered[b.Name()] = Bound
 
 					bindings = b.RegisterSpecListeners(bindings)
-
-					//for _, listener := range b.SpecEventListeners {
-					//	configuration := listener.GetConfiguration()
-					//	if configuration == nil {
-					//		fmt.Println("Please configure the Listener")
-					//		panic("Misconfigured")
-					//	}
-					//
-					//	name := ""
-					//	if configuration.JetstreamConfiguration.Name == "" && configuration.JetstreamConfiguration.Durable == "" {
-					//		fmt.Println("Either the Name or the Durable name is required")
-					//		panic("Misconfigured")
-					//	}
-					//
-					//	if configuration.JetstreamConfiguration.Name != "" {
-					//		name = configuration.JetstreamConfiguration.Durable
-					//	}
-					//
-					//	// Use the durable name if set
-					//	if configuration.JetstreamConfiguration.Durable != "" {
-					//		name = configuration.JetstreamConfiguration.Durable
-					//	}
-					//
-					//	bindings.RegisteredListenableChannels[name] = listener
-					//}
 				}
 			})
 	} else {

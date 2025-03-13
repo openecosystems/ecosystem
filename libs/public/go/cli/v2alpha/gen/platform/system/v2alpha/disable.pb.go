@@ -9,13 +9,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"libs/public/go/sdk/gen/system/v2alpha"
 	"libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
-
-	"github.com/spf13/cobra"
 
 	"libs/public/go/protobuf/gen/platform/system/v2alpha"
 )
@@ -28,12 +27,12 @@ var (
 
 var DisableV2AlphaCmd = &cobra.Command{
 	Use:   "disable",
-	Short: ``,
-	Long: ` Method to Unsubscribe to an event scope
-`,
+	Short: `Method to Unsubscribe to an event scope`,
+	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling disable system")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -45,8 +44,7 @@ var DisableV2AlphaCmd = &cobra.Command{
 		}
 
 		_r := systemv2alphapb.DisableRequest{}
-		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -56,7 +54,13 @@ var DisableV2AlphaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = disableValidateOnly
 
 		request := connect.NewRequest[systemv2alphapb.DisableRequest](&_r)
-		client := *systemv2alphapbsdk.NewSystemServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		// Add GZIP Support: connect.WithSendGzip(),
+		url := "https://" + settings.Platform.Mesh.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Mesh.Endpoint
+		}
+		client := *systemv2alphapbsdk.NewSystemServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+
 		response, err := client.Disable(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

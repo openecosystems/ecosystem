@@ -1,0 +1,75 @@
+app:
+  name: ecosystem-v2alpha
+  version: 'v2.0.0'
+  description: 'Ecosystem Multiplexing Server'
+  environmentName: 'local-1'
+  environmentType: 'local'
+  debug: false
+  verbose: false
+platform:
+  endpoint: localhost:6577
+  insecure: true
+  dnsendpoints:
+    - 45.63.49.173:4242
+  mesh:
+    enabled: true
+    endpoint: 192.168.100.5:6477
+    insecure: true
+    dnsendpoint: 192.168.100.1
+    credential_path: 'oeco'
+  dynamicconfigreload: false
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+opentelemetry:
+  traceProviderEnabled: true
+nats:
+  options:
+    servers:
+      - nats://192.168.100.5:4222
+      #- nats://localhost:4222
+natsd:
+  enabled: true
+  options:
+    serverName: "platform-leaf-node-local"
+    #host: "0.0.0.0"
+    host: "0.0.0.0"
+    port: 4222
+    debug: true
+    leafNode:
+      remotes:
+        - urls:
+            scheme: "tls"
+            host:   "connect.ngs.global"
+          credentials: "/Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds"
+          tLSConfig:
+            insecureSkipVerify: true
+
+eventStreamRegistry:
+  streams:
+    - name: "ecosystem"
+      subjects:
+        - "ecosystem.>"
+    - name: "audit"
+      subjects:
+        - "audit.>"
+    - name: "preferenceCenter"
+      subjects:
+        - "preferenceCenter.>"
+    - name: "configuration"
+      subjects:
+        - "configuration.>"
+    - name: "accountAuthority"
+      subjects:
+        - "accountAuthority.>"
+    - name: "certificate"
+      subjects:
+        - "certificate.>"
+    - name: "decision"
+      subjects:
+        - "decision.>"
+    - name: "account"
+      subjects:
+        - "account.>"
+

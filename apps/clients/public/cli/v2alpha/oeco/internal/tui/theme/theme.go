@@ -9,9 +9,15 @@ import (
 
 // Theme defines a structure containing color configurations using lipgloss.AdaptiveColor for light and dark mode adaptability.
 type Theme struct {
-	PrimaryColor       lipgloss.AdaptiveColor
-	SecondaryColor     lipgloss.AdaptiveColor
-	TertiaryColor      lipgloss.AdaptiveColor
+	PrimaryColor400    lipgloss.CompleteAdaptiveColor
+	PrimaryColor500    lipgloss.CompleteAdaptiveColor
+	PrimaryColor600    lipgloss.CompleteAdaptiveColor
+	SecondaryColor400  lipgloss.CompleteAdaptiveColor
+	SecondaryColor500  lipgloss.CompleteAdaptiveColor
+	SecondaryColor600  lipgloss.CompleteAdaptiveColor
+	TertiaryColor400   lipgloss.CompleteAdaptiveColor
+	TertiaryColor500   lipgloss.CompleteAdaptiveColor
+	TertiaryColor600   lipgloss.CompleteAdaptiveColor
 	CreamColor         lipgloss.AdaptiveColor
 	ErrorColor         lipgloss.AdaptiveColor
 	FocusedForeground  lipgloss.AdaptiveColor
@@ -30,9 +36,22 @@ type Theme struct {
 
 // DefaultTheme defines the default color scheme for the application's UI, using adaptive light and dark mode colors.
 var DefaultTheme = &Theme{
-	PrimaryColor:       lipgloss.AdaptiveColor{Light: "#5A56E0", Dark: "#7571F9"},
-	SecondaryColor:     lipgloss.AdaptiveColor{Light: "#FE5F86", Dark: "#FE5F86"},
-	TertiaryColor:      lipgloss.AdaptiveColor{Light: "#02BA84", Dark: "#02BF87"},
+	PrimaryColor400: lipgloss.CompleteAdaptiveColor{
+		Light: lipgloss.CompleteColor{TrueColor: "#A443F2", ANSI256: "193", ANSI: "11"},
+		Dark:  lipgloss.CompleteColor{TrueColor: "#7B32B5", ANSI256: "163", ANSI: "5"},
+	},
+	PrimaryColor500: lipgloss.CompleteAdaptiveColor{
+		Light: lipgloss.CompleteColor{TrueColor: "#AD46FF", ANSI256: "193", ANSI: "11"},
+		Dark:  lipgloss.CompleteColor{TrueColor: "#AD46FF", ANSI256: "163", ANSI: "5"},
+	},
+	SecondaryColor500: lipgloss.CompleteAdaptiveColor{
+		Light: lipgloss.CompleteColor{TrueColor: "#FE5F86", ANSI256: "193", ANSI: "11"},
+		Dark:  lipgloss.CompleteColor{TrueColor: "#FE5F86", ANSI256: "163", ANSI: "5"},
+	},
+	TertiaryColor500: lipgloss.CompleteAdaptiveColor{
+		Light: lipgloss.CompleteColor{TrueColor: "#02BA84", ANSI256: "193", ANSI: "11"},
+		Dark:  lipgloss.CompleteColor{TrueColor: "#02BF87", ANSI256: "163", ANSI: "5"},
+	},
 	CreamColor:         lipgloss.AdaptiveColor{Light: "#FFFDF5", Dark: "#FFFDF5"},
 	ErrorColor:         lipgloss.AdaptiveColor{Light: "#FF4672", Dark: "#ED567A"},
 	PrimaryBorder:      lipgloss.AdaptiveColor{Light: "013", Dark: "008"},

@@ -41,6 +41,7 @@ const (
 // B3SpanIDKey holds the B3 span identifier.
 // B3SampledKey indicates if the trace is sampled in the B3 context.
 // B3ParentSpanIDKey represents the B3 parent span identifier.
+// EcosystemSlug refers to the sanitized ecosystem slug from the edge cache.
 // OrganizationSlug refers to the sanitized organization slug from the edge cache.
 // WorkspaceSlug refers to the sanitized workspace slug from the edge cache.
 // WorkspaceJurisdictionAreaNetworkKey indicates the workspace jurisdiction area network.
@@ -99,8 +100,10 @@ const (
 	B3SampledKey      = "x-b3-sampled"
 	B3ParentSpanIDKey = "x-b3-parentspanid"
 
+	// EcosystemSlug Spec.Context
 	// OrganizationSlug Spec.Context
 	// Sanitized comes from edge cache
+	EcosystemSlug                       = "x-spec-ecosystem-slug"
 	OrganizationSlug                    = "x-spec-organization-slug"
 	WorkspaceSlug                       = "x-spec-workspace-slug"
 	WorkspaceJurisdictionAreaNetworkKey = "x-spec-workspace-jan"
@@ -226,6 +229,7 @@ func NewFactory(req connect.AnyRequest) Factory {
 
 	// Spec.Context
 	// ===============================
+	ecosystemSlug := h.Get(EcosystemSlug)
 	organizationSlug := h.Get(OrganizationSlug)
 	workspaceSlug := h.Get(WorkspaceSlug)
 
@@ -356,6 +360,7 @@ func NewFactory(req connect.AnyRequest) Factory {
 			TraceFlags:   traceFlags,
 		},
 		Context: &specv2pb.SpecContext{
+			EcosystemSlug:    ecosystemSlug,
 			OrganizationSlug: organizationSlug,
 			WorkspaceSlug:    workspaceSlug,
 			WorkspaceJan:     workspaceJAN,

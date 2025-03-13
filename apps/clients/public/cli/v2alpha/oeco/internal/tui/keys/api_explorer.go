@@ -3,10 +3,10 @@ package keys
 import (
 	"fmt"
 
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
+
+	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // APIExplorerKeyMap represents the key bindings specific to API exploration actions in the application.

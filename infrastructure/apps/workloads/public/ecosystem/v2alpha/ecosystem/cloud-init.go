@@ -80,12 +80,13 @@ write_files:
         name: ecosystem-v2alpha
         environmentName: 'dev-1'
         environmentType: 'development'
-      publicHTTP:
+      mesh:
+        enabled: true
+        host: '192.168.100.5'
+        port: '6477'
+      http:
         host: '0.0.0.0'
         port: '6577'
-      meshHTTP:
-        host: '0.0.0.0'
-        port: '6477'
       zap:
         level: 'debug'
         development: true

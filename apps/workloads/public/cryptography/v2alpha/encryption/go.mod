@@ -1,6 +1,6 @@
 module apps/workloads/public/cryptography/v2alpha/encryption
 
-go 1.23
+go 1.23.4
 
 require (
 	connectrpc.com/connect v1.17.0

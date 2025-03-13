@@ -3,12 +3,14 @@ package shared
 import (
 	"strings"
 
-	pgs "github.com/lyft/protoc-gen-star/v2"
 	options "libs/protobuf/go/protobuf/gen/platform/options/v2"
+
+	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
+// GetSpecCommands retrieves the enum from the file that matches the "SPEC_ENUM_TYPE_COMMANDS" type in its spec options.
+// If no matching enum is found, it returns nil.
 func (fns Functions) GetSpecCommands(file pgs.File) pgs.Enum {
-
 	for _, enum := range file.AllEnums() {
 		var spec options.SpecOptions
 
@@ -23,11 +25,10 @@ func (fns Functions) GetSpecCommands(file pgs.File) pgs.Enum {
 	}
 
 	return nil
-
 }
 
+// GetSpecEvents extracts and returns the first Enum descriptor with a SpecOption of type SPEC_ENUM_TYPE_EVENTS.
 func (fns Functions) GetSpecEvents(file pgs.File) pgs.Enum {
-
 	for _, enum := range file.AllEnums() {
 		var spec options.SpecOptions
 
@@ -42,11 +43,11 @@ func (fns Functions) GetSpecEvents(file pgs.File) pgs.Enum {
 	}
 
 	return nil
-
 }
 
+// GetSpecTopics retrieves the enum with a "SPEC_ENUM_TYPE_TOPICS" type from the provided file's enums.
+// If no such enum is found, it returns nil.
 func (fns Functions) GetSpecTopics(file pgs.File) pgs.Enum {
-
 	for _, enum := range file.AllEnums() {
 		var spec options.SpecOptions
 
@@ -61,17 +62,16 @@ func (fns Functions) GetSpecTopics(file pgs.File) pgs.Enum {
 	}
 
 	return nil
-
 }
 
+// GetSpecEnumSuffix extracts and returns the last part of an EnumValue's name, delimited by underscores.
 func (fns Functions) GetSpecEnumSuffix(enum pgs.EnumValue) pgs.Name {
-
-	var parts = strings.Split(enum.Name().String(), "_")
+	parts := strings.Split(enum.Name().String(), "_")
 
 	return pgs.Name(parts[len(parts)-1])
-
 }
 
+// GetChannelPrefix generates a channel prefix string based on the protobuf package name in lowercase dot notation.
 func (fns Functions) GetChannelPrefix(file pgs.File) string {
 	return file.Package().ProtoName().LowerDotNotation().String()
 }

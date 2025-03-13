@@ -4,5 +4,6 @@ export * as PreferenceCenterV1Beta from './platform/communication/v1beta/prefere
 export * as ConfigurationV2Alpha from './platform/configuration/v2alpha/configuration.pb.spec'
 export * as CertificateV2Alpha from './platform/cryptography/v2alpha/certificate.pb.spec'
 export * as EcosystemV2Alpha from './platform/ecosystem/v2alpha/ecosystem.pb.spec'
+export * as AccountV2Alpha from './platform/iam/v2alpha/account.pb.spec'
 export * as AccountAuthorityV2Alpha from './platform/iam/v2alpha/account_authority.pb.spec'
 export * as SystemV2Alpha from './platform/system/v2alpha/system.pb.spec'

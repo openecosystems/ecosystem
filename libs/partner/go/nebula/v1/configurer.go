@@ -1,13 +1,13 @@
 package nebulav1
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
-
-// ResolvedConfiguration holds the resolved runtime configuration for the Nebula binding.
-var ResolvedConfiguration *Configuration
 
 // Pki represents Public Key Infrastructure details, including CA, certificate, and private key configuration.
 // The `Ca` field specifies the certificate authority information.
@@ -101,11 +101,28 @@ type Conntrack struct {
 	DefaultTimeout string `json:"default_timeout,omitempty" yaml:"default_timeout,omitempty"`
 }
 
+// OutboundRule defines a network rule specifying the port, protocol, and host configuration for outbound traffic.
+type OutboundRule struct {
+	Port  string `json:"port,omitempty" yaml:"port,omitempty"`
+	Proto string `json:"proto,omitempty" yaml:"proto,omitempty"`
+	Host  string `json:"host,omitempty" yaml:"host,omitempty"`
+}
+
 // Outbound represents a collection of outbound rules with port, protocol, and host information.
 type Outbound []struct {
 	Port  string `json:"port,omitempty" yaml:"port,omitempty"`
 	Proto string `json:"proto,omitempty" yaml:"proto,omitempty"`
 	Host  string `json:"host,omitempty" yaml:"host,omitempty"`
+}
+
+// InboundRule represents a network rule defining inbound traffic configurations such as port, protocol, host, and groups.
+type InboundRule struct {
+	Port      string   `json:"port,omitempty" yaml:"port,omitempty"`
+	Proto     string   `json:"proto,omitempty" yaml:"proto,omitempty"`
+	Host      string   `json:"host,omitempty" yaml:"host,omitempty"`
+	Groups    []string `json:"groups,omitempty" yaml:"groups,omitempty"`
+	Group     string   `json:"group,omitempty" yaml:"group,omitempty"`
+	LocalCidr string   `json:"local_cidr,omitempty" yaml:"local_cidr,omitempty"`
 }
 
 // Inbound represents a collection of inbound rules with port, protocol, host, groups, and CIDR configuration options.
@@ -134,16 +151,23 @@ type Nebula struct {
 
 // Configuration defines the configuration structure containing settings for the Nebula network.
 type Configuration struct {
-	Nebula Nebula `json:"nebula" yaml:"nebula"`
+	App      specv2pb.App
+	Platform specv2pb.Platform
+	Nebula   Nebula `json:"nebula" yaml:"nebula"`
 }
 
 // ResolveConfiguration resolves the binding's configuration using the default configuration as a base and assigns it.
-func (b *Binding) ResolveConfiguration() {
+func (b *Binding) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
 	var c Configuration
-	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&c, dc)
+	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	sdkv2alphalib.Resolve(configurer, &c, b.GetDefaultConfiguration())
 	b.configuration = &c
-	ResolvedConfiguration = &c
+
+	return configurer, nil
 }
 
 // ValidateConfiguration validates the configuration of the `Binding` instance.
@@ -153,6 +177,7 @@ func (b *Binding) ValidateConfiguration() error {
 	if b.configuration == nil || b.configuration.Nebula.Pki.Ca == "" {
 		_ = append(errs, errors.New("Nebula.Pki.Ca is required"))
 	}
+
 	// Host: nil,
 	//  Pki: Pki{
 	//    Ca:   "",
@@ -169,8 +194,8 @@ func (b *Binding) ValidateConfiguration() error {
 }
 
 // GetDefaultConfiguration provides the default configuration settings for the Binding instance, returning a Configuration object.
-func (b *Binding) GetDefaultConfiguration() interface{} {
-	return Configuration{
+func (b *Binding) GetDefaultConfiguration() *Configuration {
+	return &Configuration{
 		Nebula: Nebula{
 			Lighthouse: Lighthouse{
 				AmLighthouse: false,
@@ -192,4 +217,30 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 			},
 		},
 	}
+}
+
+// CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
+func (b *Binding) CreateConfiguration() (*Configuration, error) {
+	return nil, nil
+}
+
+// GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
+func (b *Binding) GetConfiguration() *Configuration {
+	return b.configuration
+}
+
+// GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
+func (b *Binding) GetConfigurationBytes() ([]byte, error) {
+	byteArray, err := json.Marshal(*b.GetConfiguration())
+	if err != nil {
+		fmt.Println("Error:", err)
+		return nil, err
+	}
+	return byteArray, nil
+}
+
+// WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
+func (b *Binding) WatchConfigurations(directories ...string) error {
+	fmt.Println("Watch settings ecosystem internal directories:", directories)
+	return nil
 }

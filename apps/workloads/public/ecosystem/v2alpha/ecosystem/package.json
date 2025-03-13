@@ -1,5 +1,5 @@
 {
-    "name": "ecosystem-v2alpha",
+    "name": "ecosystem",
     "version": "0.34.1",
     "description": "Ecosystem Multiplexer",
     "private": true,

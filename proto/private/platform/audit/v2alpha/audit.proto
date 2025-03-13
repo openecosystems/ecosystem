@@ -43,6 +43,7 @@ message AuditConfiguration {
 service AuditService {
   // Method to search for an audit event.
   rpc Search(SearchRequest) returns (SearchResponse) {
+    option (platform.options.v2.api_method) = {shortname: "search"};
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_QUERY_LIST};
     option (google.api.http) = {
       post: "/v2/search"

@@ -45,7 +45,7 @@ var Bounds *Bindings
 
 // RegisterBindings initializes and validates bindings, resolving configurations and handling errors during the process.
 // It returns a populated *Bindings object and updates the global Bounds variable.
-func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
+func RegisterBindings(ctx context.Context, bounds []Binding, opts ...ConfigurationProviderOption) *Bindings {
 	b := make(map[string]Binding)
 	c := make(map[string]Listenable)
 	bindingsInstance := &Bindings{
@@ -55,9 +55,12 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 
 	var errs []error
 	for _, b := range bounds {
-		if c, ok := b.(Configurable); ok {
-			c.ResolveConfiguration()
-			err := c.ValidateConfiguration()
+		if c, ok := b.(BaseSpecConfigurationProvider); ok {
+			_, err := c.ResolveConfiguration(opts...)
+			if err != nil {
+				return nil
+			}
+			err = c.ValidateConfiguration()
 			if err != nil {
 				errs = append(errs, err)
 			}
@@ -74,11 +77,8 @@ func RegisterBindings(ctx context.Context, bounds []Binding) *Bindings {
 		}
 
 		bindingsInstance = b.Bind(ctx, bindingsInstance)
-
-		if ResolvedConfiguration.App.Debug {
-			fmt.Println("Registered Binding: " + b.Name())
-		}
 	}
+
 	Bounds = bindingsInstance
 
 	return bindingsInstance

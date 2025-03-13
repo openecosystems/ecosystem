@@ -35,13 +35,13 @@ func (s FullCommandName) IsValid() bool {
 // TODO: Parse multiple ServiceCommands
 func (c *Commands) RegisterCommands() map[FullCommandName]*cobra.Command {
 	commands := make(map[FullCommandName]*cobra.Command)
+  commands[FullCommandName{Name: "communication", Version: "v1alpha"}] = communicationv1alphapbcmd.SystemCmd
+  commands[FullCommandName{Name: "communication", Version: "v1beta"}] = communicationv1betapbcmd.SystemCmd
   commands[FullCommandName{Name: "configuration", Version: "v2alpha"}] = configurationv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "cryptography", Version: "v2alpha"}] = cryptographyv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "ecosystem", Version: "v2alpha"}] = ecosystemv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "iam", Version: "v2alpha"}] = iamv2alphapbcmd.SystemCmd
   commands[FullCommandName{Name: "system", Version: "v2alpha"}] = systemv2alphapbcmd.SystemCmd
-  commands[FullCommandName{Name: "communication", Version: "v1alpha"}] = communicationv1alphapbcmd.SystemCmd
-  commands[FullCommandName{Name: "communication", Version: "v1beta"}] = communicationv1betapbcmd.SystemCmd
   c.systemsByName = commands
 	return commands
 }

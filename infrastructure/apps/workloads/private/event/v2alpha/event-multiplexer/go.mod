@@ -1,6 +1,6 @@
 module infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer
 
-go 1.23
+go 1.23.4
 
 require (
 	github.com/dirien/pulumi-vultr/sdk/v2 v2.21.1

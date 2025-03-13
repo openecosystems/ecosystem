@@ -4,6 +4,22 @@ import (
 	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
+// GoStringField represents a string type in Go.
+// GoInteger32Field represents a 32-bit integer type in Go.
+// GoInteger64Field represents a 64-bit integer type in Go.
+// GoUnsignedInteger32Field represents a 32-bit unsigned integer type in Go.
+// GoUnsignedInteger64Field represents a 64-bit unsigned integer type in Go.
+// GoFloat64Field represents a 64-bit floating-point type in Go.
+// GoFloat32Field represents a 32-bit floating-point type in Go.
+// GoBooleanField represents a boolean type in Go.
+// GoMapField represents a map type in Go.
+// GoStructField represents a struct type in Go.
+// GoStructPBField represents a Protobuf struct type in Go.
+// GoSliceField represents a slice type in Go.
+// GoBytesField represents a byte slice type in Go.
+// GoEnumField represents an enum type in Go.
+// GoDurationField represents a Protobuf duration type in Go.
+// GoTimestampField represents a Protobuf timestamp type in Go.
 const (
 	GoStringField            = "string"
 	GoInteger32Field         = "int32"
@@ -23,8 +39,8 @@ const (
 	GoTimestampField         = "timestamppb.Timestamp"
 )
 
+// IsGoString checks if the provided pgs.Field has a Go type equivalent to GoStringField and returns true if it does.
 func (fns Functions) IsGoString(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoStringField {
 		return true
 	}
@@ -32,8 +48,8 @@ func (fns Functions) IsGoString(field pgs.Field) bool {
 	return false
 }
 
+// IsGoDuration returns true if the provided field has a Go type of "durationpb.Duration", otherwise returns false.
 func (fns Functions) IsGoDuration(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoDurationField {
 		return true
 	}
@@ -41,8 +57,8 @@ func (fns Functions) IsGoDuration(field pgs.Field) bool {
 	return false
 }
 
+// IsGoTimestamp determines if the provided field is of type GoTimestampField (`timestamppb.Timestamp`).
 func (fns Functions) IsGoTimestamp(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoTimestampField {
 		return true
 	}
@@ -50,8 +66,8 @@ func (fns Functions) IsGoTimestamp(field pgs.Field) bool {
 	return false
 }
 
+// IsGoInteger32 checks if the given field has a Go type of "int32". It returns true if the type matches, otherwise false.
 func (fns Functions) IsGoInteger32(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoInteger32Field {
 		return true
 	}
@@ -59,8 +75,8 @@ func (fns Functions) IsGoInteger32(field pgs.Field) bool {
 	return false
 }
 
+// IsGoUnsignedInteger32 checks if the field has the Go type "uint32" and returns true if so, otherwise false.
 func (fns Functions) IsGoUnsignedInteger32(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoUnsignedInteger32Field {
 		return true
 	}
@@ -68,8 +84,8 @@ func (fns Functions) IsGoUnsignedInteger32(field pgs.Field) bool {
 	return false
 }
 
+// IsGoInteger64 determines if the given field's type is "int64" in Go. Returns true if it matches, otherwise false.
 func (fns Functions) IsGoInteger64(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoInteger64Field {
 		return true
 	}
@@ -77,8 +93,8 @@ func (fns Functions) IsGoInteger64(field pgs.Field) bool {
 	return false
 }
 
+// IsGoUnsignedInteger64 checks if the given field is of type GoUnsignedInteger64Field and returns true if it matches.
 func (fns Functions) IsGoUnsignedInteger64(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoUnsignedInteger64Field {
 		return true
 	}
@@ -86,8 +102,8 @@ func (fns Functions) IsGoUnsignedInteger64(field pgs.Field) bool {
 	return false
 }
 
+// IsGoFloat32 determines whether the specified field has a Go type of float32 and returns true if it matches.
 func (fns Functions) IsGoFloat32(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoFloat32Field {
 		return true
 	}
@@ -95,8 +111,8 @@ func (fns Functions) IsGoFloat32(field pgs.Field) bool {
 	return false
 }
 
+// IsGoFloat64 determines if the provided field has a Go type of "float64".
 func (fns Functions) IsGoFloat64(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoFloat64Field {
 		return true
 	}
@@ -104,8 +120,8 @@ func (fns Functions) IsGoFloat64(field pgs.Field) bool {
 	return false
 }
 
+// IsGoByte checks if the given field's Go type is a byte slice ([]byte). Returns true if it matches, otherwise false.
 func (fns Functions) IsGoByte(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoBytesField {
 		return true
 	}
@@ -113,8 +129,8 @@ func (fns Functions) IsGoByte(field pgs.Field) bool {
 	return false
 }
 
+// IsGoBoolean checks if the given field has a Go type of "bool".
 func (fns Functions) IsGoBoolean(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoBooleanField {
 		return true
 	}
@@ -122,8 +138,8 @@ func (fns Functions) IsGoBoolean(field pgs.Field) bool {
 	return false
 }
 
+// IsGoMap checks if the provided field is of type GoMapField and returns true if it is, otherwise returns false.
 func (fns Functions) IsGoMap(field pgs.Field) bool {
-
 	value := fns.GetGoFieldType(field)
 
 	if value == GoMapField {
@@ -133,8 +149,8 @@ func (fns Functions) IsGoMap(field pgs.Field) bool {
 	return false
 }
 
+// IsGoStruct determines if the provided field is of type Go struct based on its Go field type. Returns true if it is.
 func (fns Functions) IsGoStruct(field pgs.Field) bool {
-
 	value := fns.GetGoFieldType(field)
 
 	if value == GoStructField {
@@ -144,8 +160,8 @@ func (fns Functions) IsGoStruct(field pgs.Field) bool {
 	return false
 }
 
+// IsGoStructPB checks if the given field is of type "structpb" in the generated Go code and returns true if matched.
 func (fns Functions) IsGoStructPB(field pgs.Field) bool {
-
 	value := fns.GetGoFieldType(field)
 
 	if value == GoStructPBField {
@@ -155,8 +171,8 @@ func (fns Functions) IsGoStructPB(field pgs.Field) bool {
 	return false
 }
 
+// GetStructType returns the name of the struct type of the given field. It panics if the field is not a struct.
 func (fns Functions) GetStructType(field pgs.Field) string {
-
 	if !fns.IsGoStruct(field) {
 		panic("Field must be a struct to determine struct type")
 	}
@@ -164,8 +180,8 @@ func (fns Functions) GetStructType(field pgs.Field) string {
 	return field.Type().Embed().Name().String()
 }
 
+// IsGoSlice checks if the given field in the protobuf structure is represented as a Go slice type.
 func (fns Functions) IsGoSlice(field pgs.Field) bool {
-
 	if fns.GetGoFieldType(field) == GoSliceField {
 		return true
 	}
@@ -173,8 +189,10 @@ func (fns Functions) IsGoSlice(field pgs.Field) bool {
 	return false
 }
 
+// GetGoSliceValueType determines the element type of a repeated field and returns its Go representation as a string.
+// If the field is not repeated, the method panics.
+// It handles struct and enum types explicitly by returning their names.
 func (fns Functions) GetGoSliceValueType(field pgs.Field) string {
-
 	if !field.Type().IsRepeated() {
 		panic("Field must be a list to determine list value")
 	}
@@ -188,11 +206,10 @@ func (fns Functions) GetGoSliceValueType(field pgs.Field) string {
 	}
 
 	return value
-
 }
 
+// GetGoMapKeyType returns the Go type of the key for a protobuf map field based on its definition and key type.
 func (fns Functions) GetGoMapKeyType(field pgs.Field) string {
-
 	value := fns.GetGoFieldProtoType(fns.GetGoMapKeyFieldTypeElem(field).ProtoType())
 
 	if value == GoStructField {
@@ -202,9 +219,10 @@ func (fns Functions) GetGoMapKeyType(field pgs.Field) string {
 	}
 
 	return value
-
 }
 
+// GetGoMapKeyFieldTypeElem retrieves the key type of a map field.
+// Panics if the provided field is not of map type.
 func (fns Functions) GetGoMapKeyFieldTypeElem(field pgs.Field) pgs.FieldTypeElem {
 	if !field.Type().IsMap() {
 		panic("Field must be a map to determine map key")
@@ -213,6 +231,7 @@ func (fns Functions) GetGoMapKeyFieldTypeElem(field pgs.Field) pgs.FieldTypeElem
 	return field.Type().Key()
 }
 
+// GetGoMapValueFieldTypeElem returns the element type of a map field's value. Panics if the field is not a map.
 func (fns Functions) GetGoMapValueFieldTypeElem(field pgs.Field) pgs.FieldTypeElem {
 	if !field.Type().IsMap() {
 		panic("Field must be a map to determine map value")
@@ -221,8 +240,9 @@ func (fns Functions) GetGoMapValueFieldTypeElem(field pgs.Field) pgs.FieldTypeEl
 	return field.Type().Element()
 }
 
+// GetGoMapValueType determines the Go type of a map's value from a given protobuf field.
+// It returns the type as a string, including struct or enum names when applicable.
 func (fns Functions) GetGoMapValueType(field pgs.Field) string {
-
 	value := fns.GetGoFieldProtoType(fns.GetGoMapValueFieldTypeElem(field).ProtoType())
 
 	if value == GoStructField {
@@ -232,11 +252,10 @@ func (fns Functions) GetGoMapValueType(field pgs.Field) string {
 	}
 
 	return value
-
 }
 
+// GetGoFieldType determines and returns the Go field type for the provided Protobuf field based on its characteristics.
 func (fns Functions) GetGoFieldType(field pgs.Field) string {
-
 	if field.Type().IsMap() {
 		return GoMapField
 	}
@@ -278,8 +297,8 @@ func (fns Functions) GetGoFieldType(field pgs.Field) string {
 	return fns.GetGoFieldProtoType(field.Type().ProtoType())
 }
 
+// GetGoFieldProtoType maps a protobuf field type to its corresponding Go field type as a string representation.
 func (fns Functions) GetGoFieldProtoType(t pgs.ProtoType) string {
-
 	switch t {
 	case pgs.Int32T, pgs.SInt32, pgs.SFixed32:
 		return GoInteger32Field

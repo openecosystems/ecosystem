@@ -5,15 +5,15 @@ package cryptographyv2alphapbsdk
 
 import (
 	"connectrpc.com/connect"
+
+	nebulav1 "libs/partner/go/nebula/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
-	"net/http"
+	cryptographyv2alphapbconnect "libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 )
 
-func NewEncryptionServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *cryptographyv2alphapbconnect.EncryptionServiceClient {
-
-	//httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-	httpClient := http.DefaultClient
+func NewEncryptionServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *cryptographyv2alphapbconnect.EncryptionServiceClient {
+	nebula := nebulav1.Binding{}
+	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := cryptographyv2alphapbconnect.NewEncryptionServiceClient(httpClient, baseURL, opts...)
 	return &c
 }

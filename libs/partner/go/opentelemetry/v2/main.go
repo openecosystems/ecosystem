@@ -63,14 +63,16 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 		var once sync.Once
 		once.Do(
 			func() {
-				Bound = &Binding{}
+				Bound = &Binding{
+					configuration: b.configuration,
+				}
 
 				// Set up propagator
 				propagator := newPropagator()
 				otel.SetTextMapPropagator(propagator)
 				Bound.Propagator = &propagator
 
-				if ResolvedConfiguration.Opentelemetry.TraceProviderEnabled {
+				if b.configuration.Opentelemetry.TraceProviderEnabled {
 					// Set up trace provider
 					tracerProvider, err := newTraceProvider(ctx)
 					if err != nil {
@@ -82,7 +84,7 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 					Bound.Tracer = &t
 				}
 
-				if ResolvedConfiguration.Opentelemetry.MeterProviderEnabled {
+				if b.configuration.Opentelemetry.MeterProviderEnabled {
 					// Set up meter provider
 					meterProvider, err := newMeterProvider(ctx)
 					if err != nil {
@@ -94,7 +96,7 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 					Bound.Meter = &m
 				}
 
-				if ResolvedConfiguration.Opentelemetry.LoggerProviderEnabled {
+				if b.configuration.Opentelemetry.LoggerProviderEnabled {
 					// Set up logger provider.
 					loggerProvider, err := newLoggerProvider(ctx)
 					if err != nil {
@@ -125,7 +127,7 @@ func (b *Binding) GetBinding() interface{} {
 func (b *Binding) Close() error {
 	var err error
 
-	if ResolvedConfiguration.Opentelemetry.TraceProviderEnabled {
+	if b.configuration.Opentelemetry.TraceProviderEnabled {
 		t := b.TraceProvider.Shutdown(context.Background())
 		if t != nil {
 			err = errors.Join(err, t)
@@ -133,7 +135,7 @@ func (b *Binding) Close() error {
 		fmt.Println("Closing the Open telemetry TraceProvider Binding")
 	}
 
-	if ResolvedConfiguration.Opentelemetry.MeterProviderEnabled {
+	if b.configuration.Opentelemetry.MeterProviderEnabled {
 		m := b.MeterProvider.Shutdown(context.Background())
 		if m != nil {
 			err = errors.Join(err, m)
@@ -141,7 +143,7 @@ func (b *Binding) Close() error {
 		fmt.Println("Closing the Open telemetry MeterProvider Binding")
 	}
 
-	if ResolvedConfiguration.Opentelemetry.LoggerProviderEnabled {
+	if b.configuration.Opentelemetry.LoggerProviderEnabled {
 		l := b.LoggerProvider.Shutdown(context.Background())
 		if l != nil {
 			_ = errors.Join(err, l)

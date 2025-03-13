@@ -2,9 +2,25 @@ package shared
 
 import (
 	"fmt"
+
 	pgs "github.com/lyft/protoc-gen-star/v2"
 )
 
+// StringField represents a string field type.
+// IntegerField represents an integer field type.
+// LongField represents a long field type.
+// DoubleField represents a double field type.
+// FloatField represents a float field type.
+// BooleanField represents a boolean field type.
+// ObjectField represents an object field type.
+// MapField represents a map field type.
+// MapEnumField represents a map enum field type.
+// RepeatedField represents a repeated field type.
+// EnumField represents an enumerated field type.
+// ByteStringField represents a ByteString field type from the protobuf library.
+// DurationField represents a Duration field type from the protobuf library.
+// TimestampField represents a Timestamp field type from the protobuf library.
+// LabelField represents a Label field type from the protobuf library.
 const (
 	StringField     = "String"
 	IntegerField    = "Integer"
@@ -23,8 +39,8 @@ const (
 	LabelField      = "com.google.protobuf.Label"
 )
 
+// IsString determines if the provided field is of type string based on the field's type information.
 func (fns Functions) IsString(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == StringField {
 		return true
 	}
@@ -32,8 +48,8 @@ func (fns Functions) IsString(field pgs.Field) bool {
 	return false
 }
 
+// IsDuration determines if the given field is of type `com.google.protobuf.Duration`. Returns true if it matches.
 func (fns Functions) IsDuration(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == DurationField {
 		return true
 	}
@@ -41,8 +57,8 @@ func (fns Functions) IsDuration(field pgs.Field) bool {
 	return false
 }
 
+// IsTimestamp checks if the given field is of type `com.google.protobuf.Timestamp` and returns a boolean result.
 func (fns Functions) IsTimestamp(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == TimestampField {
 		return true
 	}
@@ -50,8 +66,8 @@ func (fns Functions) IsTimestamp(field pgs.Field) bool {
 	return false
 }
 
+// IsLabel checks if the given field is a repeated field containing an embedded LabelDescriptor type.
 func (fns Functions) IsLabel(field pgs.Field) bool {
-
 	if fns.IsRepeated(field) {
 		if field.Type().Element().IsEmbed() {
 			if field.Type().Element().Embed().Name().String() == "LabelDescriptor" {
@@ -63,8 +79,8 @@ func (fns Functions) IsLabel(field pgs.Field) bool {
 	return false
 }
 
+// IsInteger checks if the given field has a type equivalent to IntegerField and returns true if it does, otherwise false.
 func (fns Functions) IsInteger(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == IntegerField {
 		return true
 	}
@@ -72,8 +88,8 @@ func (fns Functions) IsInteger(field pgs.Field) bool {
 	return false
 }
 
+// IsLong checks if the provided field is of type LongField and returns true if it is, otherwise false.
 func (fns Functions) IsLong(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == LongField {
 		return true
 	}
@@ -81,8 +97,8 @@ func (fns Functions) IsLong(field pgs.Field) bool {
 	return false
 }
 
+// IsDouble checks if the given field has a type matching DoubleField and returns true if it does, false otherwise.
 func (fns Functions) IsDouble(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == DoubleField {
 		return true
 	}
@@ -90,8 +106,8 @@ func (fns Functions) IsDouble(field pgs.Field) bool {
 	return false
 }
 
+// IsFloat checks if the specified field is of type Float and returns true if it is, otherwise returns false.
 func (fns Functions) IsFloat(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == FloatField {
 		return true
 	}
@@ -99,8 +115,8 @@ func (fns Functions) IsFloat(field pgs.Field) bool {
 	return false
 }
 
+// IsByte checks if the provided field is of the type ByteStringField and returns true if it is, otherwise false.
 func (fns Functions) IsByte(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == ByteStringField {
 		return true
 	}
@@ -108,8 +124,8 @@ func (fns Functions) IsByte(field pgs.Field) bool {
 	return false
 }
 
+// IsBoolean determines if the provided protobuf field has a boolean data type. Returns true if the field is of type boolean.
 func (fns Functions) IsBoolean(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == BooleanField {
 		return true
 	}
@@ -117,8 +133,8 @@ func (fns Functions) IsBoolean(field pgs.Field) bool {
 	return false
 }
 
+// IsObject determines if a given field type should be treated as an object by checking against predefined field types.
 func (fns Functions) IsObject(field pgs.Field) bool {
-
 	value := fns.GetFieldType(field)
 
 	if value == ObjectField {
@@ -144,8 +160,8 @@ func (fns Functions) IsObject(field pgs.Field) bool {
 	return false
 }
 
+// IsMap determines whether the provided field is either a MapField or MapEnumField by evaluating its type.
 func (fns Functions) IsMap(field pgs.Field) bool {
-
 	value := fns.GetFieldType(field)
 
 	if value == MapField {
@@ -159,8 +175,8 @@ func (fns Functions) IsMap(field pgs.Field) bool {
 	return false
 }
 
+// IsMapEnum checks if the provided field is of the type MapEnumField and returns true if it matches, otherwise false.
 func (fns Functions) IsMapEnum(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == MapEnumField {
 		return true
 	}
@@ -168,8 +184,8 @@ func (fns Functions) IsMapEnum(field pgs.Field) bool {
 	return false
 }
 
+// IsEnum checks if the provided field is of type Enum and returns true if it is, otherwise returns false.
 func (fns Functions) IsEnum(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == EnumField {
 		return true
 	}
@@ -177,8 +193,8 @@ func (fns Functions) IsEnum(field pgs.Field) bool {
 	return false
 }
 
+// IsRepeated identifies if the given field has a "repeated" label by checking its type against RepeatedField constant.
 func (fns Functions) IsRepeated(field pgs.Field) bool {
-
 	if fns.GetFieldType(field) == RepeatedField {
 		return true
 	}
@@ -186,13 +202,12 @@ func (fns Functions) IsRepeated(field pgs.Field) bool {
 	return false
 }
 
+// GetObjectValueType determines and returns the type of the value in a field, handling embedded, map, enum, and repeated types.
 func (fns Functions) GetObjectValueType(field pgs.Field) string {
-
 	value := fns.GetFieldType(field)
-	//value := fns.GetFieldProtoType(field.Type().ProtoType())
+	// value := fns.GetFieldProtoType(field.Type().ProtoType())
 
 	if value == ObjectField {
-
 		if field.Type().IsEmbed() {
 			if field.Type().Embed().IsMapEntry() {
 				return "Map.Entry"
@@ -208,7 +223,6 @@ func (fns Functions) GetObjectValueType(field pgs.Field) string {
 		if field.Type().IsRepeated() {
 			if field.Type().Element().IsEmbed() {
 				return field.Type().Element().Embed().Name().String()
-
 			}
 		}
 
@@ -216,15 +230,14 @@ func (fns Functions) GetObjectValueType(field pgs.Field) string {
 			return field.Type().Element().Enum().Name().String()
 		}
 
-		//return field.Type().Element().Embed().Name().String()
+		// return field.Type().Element().Embed().Name().String()
 	}
 
 	return value
-
 }
 
+// GetListValueType determines the type of elements within a repeated field and returns it as a string representation.
 func (fns Functions) GetListValueType(field pgs.Field) string {
-
 	if !field.Type().IsRepeated() {
 		panic("Field must be a list to determine list value")
 	}
@@ -242,20 +255,18 @@ func (fns Functions) GetListValueType(field pgs.Field) string {
 	}
 
 	return value
-
 }
 
+// GetMapKeyType returns the proto type of the key for a given map field. Panics if the field is not a map.
 func (fns Functions) GetMapKeyType(field pgs.Field) string {
-
 	if !field.Type().IsMap() {
 		panic("Field must be a map to determine map key")
 	}
 	return fns.GetFieldProtoType(field.Type().Key().ProtoType())
-
 }
 
+// GetMapValueType returns the type of values in the map field as a string. Panics if the provided field is not a map.
 func (fns Functions) GetMapValueType(field pgs.Field) string {
-
 	if !field.Type().IsMap() {
 		panic("Field must be a map to determine map value")
 	}
@@ -273,9 +284,10 @@ func (fns Functions) GetMapValueType(field pgs.Field) string {
 	}
 
 	return value
-
 }
 
+// GetRepeatedFieldType determines the type of a repeated field and returns its name if it is an enum or embedded message.
+// If the field type is not repeated, it returns "not repeated".
 func (fns Functions) GetRepeatedFieldType(fieldType pgs.FieldType) string {
 	if fieldType.IsRepeated() {
 		if fieldType.Element().IsEnum() {
@@ -292,8 +304,8 @@ func (fns Functions) GetRepeatedFieldType(fieldType pgs.FieldType) string {
 	return "not repeated"
 }
 
+// GetFieldType determines the type of a given field and returns its corresponding type as a string.
 func (fns Functions) GetFieldType(field pgs.Field) string {
-
 	if field.Type().IsMap() {
 		if field.Type().Element().ProtoType() == pgs.EnumT {
 			return MapEnumField
@@ -335,6 +347,7 @@ func (fns Functions) GetFieldType(field pgs.Field) string {
 	return fns.GetFieldProtoType(field.Type().ProtoType())
 }
 
+// Unwrap extracts the name of an embedded or enumerated field type or derives the field's proto type as a string.
 func (fns Functions) Unwrap(ft pgs.FieldTypeElem) string {
 	if ft.IsEmbed() {
 		return ft.Embed().Name().String()
@@ -347,8 +360,8 @@ func (fns Functions) Unwrap(ft pgs.FieldTypeElem) string {
 	return fns.GetFieldProtoType(ft.ProtoType())
 }
 
+// FullFieldType determines the full type string of a Protobuf field, including handling for repeated and map fields.
 func (fns Functions) FullFieldType(field pgs.Field) string {
-
 	value := fns.GetFieldType(field)
 
 	if value == RepeatedField {
@@ -368,8 +381,8 @@ func (fns Functions) FullFieldType(field pgs.Field) string {
 	return value
 }
 
+// GetFieldProtoType maps a ProtoType to its corresponding field type as a string representation.
 func (fns Functions) GetFieldProtoType(t pgs.ProtoType) string {
-
 	switch t {
 	case pgs.Int32T, pgs.UInt32T, pgs.SInt32, pgs.Fixed32T, pgs.SFixed32:
 		return IntegerField
@@ -390,8 +403,8 @@ func (fns Functions) GetFieldProtoType(t pgs.ProtoType) string {
 	}
 }
 
+// ShouldAddImport determines whether an import for a specific type should be added based on the provided message and type.
 func (fns Functions) ShouldAddImport(msg pgs.Message, t string) bool {
-
 	//for _, f := range msg.Fields() {
 	//
 	//	if f.Type().IsEmbed() {
@@ -404,9 +417,9 @@ func (fns Functions) ShouldAddImport(msg pgs.Message, t string) bool {
 	//}
 
 	return false
-
 }
 
+// HasField checks if the given message contains a field with the specified name and returns true if it exists, false otherwise.
 func (fns Functions) HasField(msg pgs.Message, name string) bool {
 	for _, f := range msg.Fields() {
 		if f.Name().String() == name {
@@ -416,6 +429,7 @@ func (fns Functions) HasField(msg pgs.Message, name string) bool {
 	return false
 }
 
+// IsFieldType checks if a field in the given message matches the specified name and type.
 func (fns Functions) IsFieldType(msg pgs.Message, fieldName, fieldType string) bool {
 	for _, f := range msg.Fields() {
 		if f.Name().String() == fieldName && f.Descriptor().TypeName != nil {

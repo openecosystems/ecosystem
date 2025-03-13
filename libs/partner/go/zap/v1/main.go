@@ -45,21 +45,18 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 		once.Do(
 			func() {
 				var err error
-				b.Logger, err = ResolvedConfiguration.Zap.Build()
+				b.Logger, err = b.configuration.Zap.Build()
 				if err != nil {
 					fmt.Println(fmt.Errorf("could not build Zap logger: %v", err))
 				}
 
-				defer func(Logger *zap.Logger) {
-					err := Logger.Sync()
-					if err != nil {
-						fmt.Println(fmt.Errorf("could not sync zap logger: %v", err))
-					}
-				}(b.Logger)
+				defer b.Logger.Sync() //nolint:errcheck
 
 				Bound = &Binding{
 					Logger:        b.Logger,
 					SugaredLogger: b.Logger.Sugar(),
+
+					configuration: b.configuration,
 				}
 				bindings.Registered[b.Name()] = Bound
 			})

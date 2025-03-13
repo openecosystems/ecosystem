@@ -5,15 +5,15 @@ package communicationv1betapbsdk
 
 import (
 	"connectrpc.com/connect"
+
+	nebulav1 "libs/partner/go/nebula/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"libs/public/go/protobuf/gen/platform/communication/v1beta/communicationv1betapbconnect"
-	"net/http"
+	communicationv1betapbconnect "libs/public/go/protobuf/gen/platform/communication/v1beta/communicationv1betapbconnect"
 )
 
-func NewPreferenceCenterServiceSpecClient(config *specv2pb.SpecSettings, baseURL string, opts ...connect.ClientOption) *communicationv1betapbconnect.PreferenceCenterServiceClient {
-
-	//httpClient := clientv2alphalib.GetMeshHttpClient(config, baseURL)
-	httpClient := http.DefaultClient
+func NewPreferenceCenterServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *communicationv1betapbconnect.PreferenceCenterServiceClient {
+	nebula := nebulav1.Binding{}
+	httpClient := nebula.GetMeshHTTPClient(config, baseURL)
 	c := communicationv1betapbconnect.NewPreferenceCenterServiceClient(httpClient, baseURL, opts...)
 	return &c
 }

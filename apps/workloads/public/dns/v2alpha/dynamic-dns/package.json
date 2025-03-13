@@ -1,0 +1,7 @@
+{
+    "name": "dns",
+    "version": "0.35.0",
+    "description": "Cryptographic Mesh DNS",
+    "private": true,
+    "license": "Apache-2.0"
+}

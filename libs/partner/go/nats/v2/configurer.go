@@ -1,6 +1,7 @@
 package natsnodev2
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -9,6 +10,8 @@ import (
 	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	"dario.cat/mergo"
+
+	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
@@ -35,7 +38,6 @@ var (
 
 // Nats represents the configuration for NATS connectivity including mesh and specific connection options.
 type Nats struct {
-	Mesh    bool
 	Options nats.Options
 }
 
@@ -54,6 +56,8 @@ type EventStreamRegistry struct {
 
 // Configuration represents the overall settings structure comprising NATS, NATS server options, and stream registry configurations.
 type Configuration struct {
+	App                 specv2pb.App `yaml:"app,omitempty"`
+	Platform            specv2pb.Platform
 	Nats                Nats
 	Natsd               Natsd
 	EventStreamRegistry EventStreamRegistry
@@ -61,11 +65,15 @@ type Configuration struct {
 	err error
 }
 
-// ResolveConfiguration resolves and merges the binding's configuration with default settings, validating streams and settings.
-func (b *Binding) ResolveConfiguration() {
+// ResolveConfiguration resolves the binding's configuration using the default configuration as a base and assigns it.
+func (b *Binding) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
 	var c Configuration
-	dc := b.GetDefaultConfiguration().(Configuration)
-	sdkv2alphalib.Resolve(&c, dc)
+	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	sdkv2alphalib.Resolve(configurer, &c, b.GetDefaultConfiguration())
 	b.configuration = &c
 	ResolvedConfiguration = &c
 
@@ -102,11 +110,13 @@ func (b *Binding) ResolveConfiguration() {
 	c.EventStreamRegistry = EventStreamRegistry{mergedJsc}
 	b.configuration.EventStreamRegistry = EventStreamRegistry{mergedJsc}
 	ResolvedConfiguration.EventStreamRegistry = EventStreamRegistry{mergedJsc}
+
+	return configurer, nil
 }
 
 // ValidateConfiguration checks if NATS and stream configurations are valid, returning an error if validation fails.
 func (b *Binding) ValidateConfiguration() error {
-	if !ResolvedConfiguration.Natsd.Enabled {
+	if !b.configuration.Natsd.Enabled {
 		return nil
 	}
 
@@ -142,14 +152,18 @@ natsd:
 }
 
 // GetDefaultConfiguration returns the default configuration object for the Binding, including NATS and JetStream settings.
-func (b *Binding) GetDefaultConfiguration() interface{} {
-	cfg := sdkv2alphalib.ResolvedConfiguration
+func (b *Binding) GetDefaultConfiguration() *Configuration {
+	// cfg := sdkv2alphalib.ResolvedConfiguration
 
-	return Configuration{
+	return &Configuration{
+		Platform: specv2pb.Platform{
+			Mesh: &specv2pb.Mesh{
+				Enabled: false,
+			},
+		},
 		Nats: Nats{
 			Options: nats.Options{
 				Servers: NatsServers,
-				// TODO: Review how to tie Mesh with this
 				//Dialer: &net.Dialer{
 				//	Timeout:   0,
 				//	Deadline:  time.Time{},
@@ -172,10 +186,10 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 				Host:       NatsdServerHost,
 				Port:       NatsdServerPort,
 				DontListen: false,
-				Trace:      cfg.App.Trace,
-				Debug:      cfg.App.Debug,
-				MaxConn:    -1,
-				MaxSubs:    -1,
+				// Trace:      cfg.App.Verbose,
+				// Debug:      cfg.App.Debug,
+				MaxConn: -1,
+				MaxSubs: -1,
 				LeafNode: natsd.LeafNodeOpts{
 					Remotes: nil,
 				},
@@ -192,4 +206,30 @@ func (b *Binding) GetDefaultConfiguration() interface{} {
 			// Streams: mergedJsc,
 		},
 	}
+}
+
+// CreateConfiguration generates and returns a default or custom configuration for the Binding instance.
+func (b *Binding) CreateConfiguration() (*Configuration, error) {
+	return nil, nil
+}
+
+// GetConfiguration retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
+func (b *Binding) GetConfiguration() *Configuration {
+	return b.configuration
+}
+
+// GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
+func (b *Binding) GetConfigurationBytes() ([]byte, error) {
+	byteArray, err := json.Marshal(*b.GetConfiguration()) //nolint:staticcheck
+	if err != nil {
+		fmt.Println("Error:", err)
+		return nil, err
+	}
+	return byteArray, nil
+}
+
+// WatchConfigurations observes changes in the binding's configuration and updates the internal state accordingly.
+func (b *Binding) WatchConfigurations(directories ...string) error {
+	fmt.Println("Watch settings ecosystem internal directories:", directories)
+	return nil
 }

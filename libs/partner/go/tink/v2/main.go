@@ -62,6 +62,8 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 				Bound = &Binding{
 					KMSClient: client,
 					KEAD:      kekAEAD,
+
+					configuration: b.configuration,
 				}
 				bindings.Registered[b.Name()] = Bound
 			})

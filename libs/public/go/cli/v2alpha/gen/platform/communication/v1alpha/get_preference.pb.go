@@ -9,13 +9,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/spf13/cobra"
+	"google.golang.org/protobuf/encoding/protojson"
+	cliv2alphalib "libs/public/go/cli/v2alpha"
 	"libs/public/go/sdk/gen/communication/v1alpha"
 	"libs/public/go/sdk/v2alpha"
 	"os"
-	"strings"
-
-	"github.com/spf13/cobra"
 
 	"libs/public/go/protobuf/gen/platform/communication/v1alpha"
 )
@@ -28,12 +27,12 @@ var (
 
 var GetPreferenceV1AlphaCmd = &cobra.Command{
 	Use:   "getPreference",
-	Short: ``,
-	Long: ` Get Communication Preferences
-`,
+	Short: `Get Communication Preferences`,
+	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		log.Debug("Calling getPreference preferenceCenter")
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -45,8 +44,7 @@ var GetPreferenceV1AlphaCmd = &cobra.Command{
 		}
 
 		_r := communicationv1alphapb.GetPreferenceRequest{}
-		log.Debug(_r.String())
-		err = jsonpb.Unmarshal(strings.NewReader(_request), &_r)
+		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -56,7 +54,13 @@ var GetPreferenceV1AlphaCmd = &cobra.Command{
 		sdkv2alphalib.Overrides.ValidateOnly = getPreferenceValidateOnly
 
 		request := connect.NewRequest[communicationv1alphapb.GetPreferenceRequest](&_r)
-		client := *communicationv1alphapbsdk.NewPreferenceCenterServiceSpecClient(sdkv2alphalib.Config, sdkv2alphalib.Config.Platform.Endpoint, connect.WithSendGzip(), connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		// Add GZIP Support: connect.WithSendGzip(),
+		url := "https://" + settings.Platform.Mesh.Endpoint
+		if settings.Platform.Insecure {
+			url = "http://" + settings.Platform.Mesh.Endpoint
+		}
+		client := *communicationv1alphapbsdk.NewPreferenceCenterServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+
 		response, err := client.GetPreference(context.Background(), request)
 		if err != nil {
 			fmt.Println(err)

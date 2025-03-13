@@ -51,3 +51,6 @@ sysctl -p -f /etc/sysctl.d/70-disable-ipv6.conf
 
 # Allow UDP on firewall
 ufw allow 4242/udp
+
+
+./nebula-cert sign -name "local-1-mongo-toxonfhir" -ip "192.168.100.20/24" -groups "connectors,ssh"

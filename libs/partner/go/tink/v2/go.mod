@@ -1,8 +1,8 @@
 module libs/partner/go/tink/v2
 
-go 1.23
+go 1.23.4
 
-toolchain go1.23.0
+toolchain go1.23.4
 
 require (
 	github.com/tink-crypto/tink-go-gcpkms/v2 v2.2.0
