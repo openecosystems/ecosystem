@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+enum PeerType {
+  PEER_TYPE_UNSPECIFIED = 0;
+  PEER_TYPE_SERVICE_ACCOUNT = 1;
+  PEER_TYPE_EDGE = 2;
+  PEER_TYPE_MULTIPLEXER = 3;
+  PEER_TYPE_CONNECTOR = 4;
+  PEER_TYPE_HOST = 5;
+}

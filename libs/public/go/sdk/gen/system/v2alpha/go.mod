@@ -2,7 +2,7 @@
 // source: platform/system/v2alpha/system.proto
 module libs/public/go/sdk/gen/system/v2alpha
 
-go 1.23
+go 1.23.4
 
 require connectrpc.com/connect v1.17.0
 

@@ -16,7 +16,7 @@ import (
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapbsdk "libs/public/go/sdk/gen/ecosystem/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 var (

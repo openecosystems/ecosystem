@@ -8,14 +8,13 @@ import (
 	"encoding/json"
 
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
-	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 )
 
 type AccountSpecEntity struct {

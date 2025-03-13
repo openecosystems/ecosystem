@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	natsnodev2 "libs/partner/go/nats/v2"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	zaploggerv1 "libs/partner/go/zap/v1"
@@ -15,7 +16,6 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	iamv2alphapbmodel "libs/public/go/model/gen/platform/iam/v2alpha"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // CreateAccountListener is a struct that listens for create configuration events and processes them.

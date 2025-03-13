@@ -18,9 +18,9 @@ import (
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
-	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 const (
@@ -458,14 +458,14 @@ func (b *Binding) SignCert(_ context.Context, req *iamv2alphapb.SignAccountReque
 }
 
 func (b *Binding) getAvailableGroups(req *iamv2alphapb.SignAccountRequest, _ *caOptions) []string {
-	switch req.EcosystemPeerType {
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE:
+	switch req.PeerType {
+	case typev2pb.PeerType_PEER_TYPE_EDGE:
 		return []string{"edge", "host"}
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER:
+	case typev2pb.PeerType_PEER_TYPE_MULTIPLEXER:
 		return []string{"multiplexer", "host"}
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_CONNECTOR:
+	case typev2pb.PeerType_PEER_TYPE_CONNECTOR:
 		return []string{"connector", "host"}
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_HOST:
+	case typev2pb.PeerType_PEER_TYPE_HOST:
 		return []string{"service", "host"}
 	default:
 		return []string{"host"}
@@ -473,16 +473,16 @@ func (b *Binding) getAvailableGroups(req *iamv2alphapb.SignAccountRequest, _ *ca
 }
 
 func (b *Binding) getAvailableHostname(req *iamv2alphapb.SignAccountRequest, _ *caOptions) (string, error) {
-	switch req.EcosystemPeerType {
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE:
+	switch req.PeerType {
+	case typev2pb.PeerType_PEER_TYPE_EDGE:
 		return fmt.Sprintf("edge.%s.mesh", req.Name), nil
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER:
+	case typev2pb.PeerType_PEER_TYPE_MULTIPLEXER:
 		return fmt.Sprintf("api.%s.mesh", req.Name), nil
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_SERVICE_ACCOUNT:
+	case typev2pb.PeerType_PEER_TYPE_SERVICE_ACCOUNT:
 		return fmt.Sprintf("api.%s.mesh", req.Name), nil
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_CONNECTOR:
+	case typev2pb.PeerType_PEER_TYPE_CONNECTOR:
 		return fmt.Sprintf("api.%s.mesh", req.Name), nil
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_HOST:
+	case typev2pb.PeerType_PEER_TYPE_HOST:
 		return fmt.Sprintf("api.%s.mesh", req.Name), nil
 	default:
 		return "", errors.New("unknown ecosystem peer type")
@@ -490,8 +490,8 @@ func (b *Binding) getAvailableHostname(req *iamv2alphapb.SignAccountRequest, _ *
 }
 
 func (b *Binding) getAnAvailableIPAddress(req *iamv2alphapb.SignAccountRequest, options *caOptions) (string, string, error) {
-	switch req.EcosystemPeerType {
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE:
+	switch req.PeerType {
+	case typev2pb.PeerType_PEER_TYPE_EDGE:
 
 		if options.CIDR == nil {
 			return "", "", errors.New("cidr is required; please specify it in the CA option: WithCIDR()")
@@ -504,7 +504,7 @@ func (b *Binding) getAnAvailableIPAddress(req *iamv2alphapb.SignAccountRequest, 
 		}
 
 		return ip, ipCIDR, nil
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER:
+	case typev2pb.PeerType_PEER_TYPE_MULTIPLEXER:
 		if options.CIDR == nil {
 			return "", "", errors.New("cidr is required; please specify it in the CA option: WithCIDR()")
 		}
@@ -516,7 +516,7 @@ func (b *Binding) getAnAvailableIPAddress(req *iamv2alphapb.SignAccountRequest, 
 		}
 
 		return ip, ipCIDR, nil
-	case ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_SERVICE_ACCOUNT:
+	case typev2pb.PeerType_PEER_TYPE_SERVICE_ACCOUNT:
 		if options.CIDR == nil {
 			return "", "", errors.New("cidr is required; please specify it in the CA option: WithCIDR()")
 		}
@@ -587,9 +587,9 @@ type CAOption interface {
 }
 
 type caOptions struct {
-	CIDR              *sdkv2alphalib.CIDRBlock
-	Spec              *specv2pb.Spec
-	EcosystemPeerType ecosystemv2alphapb.EcosystemPeerType
+	CIDR     *sdkv2alphalib.CIDRBlock
+	Spec     *specv2pb.Spec
+	PeerType typev2pb.PeerType
 }
 
 type optionFunc func(*caOptions)
@@ -644,9 +644,9 @@ func WithCIDR(cidr string) CAOption {
 	})
 }
 
-// WithEcosystemPeerType sets the EcosystemPeerType field in the caOptions configuration.
-func WithEcosystemPeerType(ecosystemPeerType ecosystemv2alphapb.EcosystemPeerType) CAOption {
+// WithPeerType sets the PeerType field in the caOptions configuration.
+func WithPeerType(ecosystemPeerType typev2pb.PeerType) CAOption {
 	return optionFunc(func(cfg *caOptions) {
-		cfg.EcosystemPeerType = ecosystemPeerType
+		cfg.PeerType = ecosystemPeerType
 	})
 }

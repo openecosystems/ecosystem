@@ -13,7 +13,8 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 
 	nebulav1 "libs/partner/go/nebula/v1"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // Binding represents a structure managing NATS connections, JetStream instances, and event stream configurations.

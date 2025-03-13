@@ -13,12 +13,12 @@ import (
 	ecosystemv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	enclavev2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/enclave"
 	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	charmbraceletloggerv0 "libs/partner/go/charmbracelet/v0"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "libs/public/go/cli/v2alpha/gen/platform/cmd"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // DefaultVersion defines the fallback version identifier when no compile-time version is provided.

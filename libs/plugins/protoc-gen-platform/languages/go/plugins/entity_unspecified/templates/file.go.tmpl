@@ -10,7 +10,7 @@ import (
   {{ $i := doesImportPathContainAnyPb . }}
   {{ if not $i }}"google.golang.org/protobuf/types/known/anypb"{{ end }}
   "errors"
-  "libs/public/go/sdk/v2alpha"
+  "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
   "libs/{{ $apiType }}/go/protobuf/gen/{{ $topLevel.LowerCamelCase }}/{{ $system.LowerCamelCase }}/{{ $version }}"
 
   {{ range $key, $value := $imports }}

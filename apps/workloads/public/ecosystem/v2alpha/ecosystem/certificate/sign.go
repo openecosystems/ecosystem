@@ -5,13 +5,13 @@ import (
 
 	"github.com/nats-io/nats.go/jetstream"
 
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	natsnodev2 "libs/partner/go/nats/v2"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	cryptographyv2alphapbmodel "libs/public/go/model/gen/platform/cryptography/v2alpha"
 	cryptographyv2alphapb "libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // SignCertificateListener represents a listener for handling requests to create a account authority.

@@ -13,7 +13,7 @@ package accountauthority
 //	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 //	iamv2alphapbmodel "libs/public/go/model/gen/platform/iam/v2alpha"
 //	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-//	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+//	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 //)
 //
 //// CreateAccountAuthorityListener represents a listener for handling requests to create a account authority.

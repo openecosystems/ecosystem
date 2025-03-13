@@ -9,6 +9,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	natsnodev2 "libs/partner/go/nats/v2"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
@@ -18,7 +19,6 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	configurationv2alphapbmodel "libs/public/go/model/gen/platform/configuration/v2alpha"
 	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // CreateConfigurationListener is a struct that listens for create configuration events and processes them.

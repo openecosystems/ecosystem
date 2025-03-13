@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"os"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 

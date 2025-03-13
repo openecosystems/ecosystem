@@ -10,7 +10,8 @@ import (
 	"gopkg.in/yaml.v2"
 
 	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // Parser is a structure that holds a reference to a FileSystem for interacting with the underlying filesystem.

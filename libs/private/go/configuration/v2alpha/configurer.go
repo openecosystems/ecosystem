@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // ResolvedConfiguration holds the resolved configuration instance for the application, set during runtime resolution.

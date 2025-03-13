@@ -3,7 +3,8 @@ package main
 import (
 	"encoding/base64"
 	"libs/private/go/infrastructure/v2alpha"
-	"libs/public/go/sdk/v2alpha"
+
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"

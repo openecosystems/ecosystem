@@ -15,7 +15,7 @@ import (
   account_authority "libs/public/go/model/gen/platform/iam/v2alpha"
 
   system "libs/public/go/model/gen/platform/system/v2alpha"
-  "libs/public/go/sdk/v2alpha"
+  "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{

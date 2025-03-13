@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )

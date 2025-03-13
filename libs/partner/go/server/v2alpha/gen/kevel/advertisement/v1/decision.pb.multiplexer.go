@@ -6,6 +6,7 @@ package advertisementv1pbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
 	"libs/partner/go/model/gen/kevel/advertisement/v1"
@@ -14,7 +15,6 @@ import (
 	"libs/partner/go/protobuf/gen/kevel/advertisement/v1"
 	"libs/partner/go/protovalidate/v0"
 	"libs/partner/go/zap/v1"
-	"libs/public/go/sdk/v2alpha"
 
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 

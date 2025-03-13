@@ -6,6 +6,7 @@ package cryptographyv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
 	"libs/partner/go/nats/v2"
@@ -14,7 +15,6 @@ import (
 	"libs/partner/go/zap/v1"
 	"libs/public/go/model/gen/platform/cryptography/v2alpha"
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 
 	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
 

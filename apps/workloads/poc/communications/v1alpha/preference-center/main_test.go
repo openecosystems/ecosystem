@@ -4,8 +4,9 @@ import (
 	"libs/partner/go/sendgrid/v3/contacts"
 	"libs/partner/go/sendgrid/v3/lists"
 	"libs/partner/go/zap/v1"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	"testing"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 func TestServer(t *testing.T) {

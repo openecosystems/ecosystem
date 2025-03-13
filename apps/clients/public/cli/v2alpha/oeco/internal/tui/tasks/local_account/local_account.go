@@ -11,7 +11,8 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // LocalAccountMsg represents a command message used for communication or signaling within a program or system.
