@@ -9,3 +9,10 @@ plugins:
       - language=go
       - type=sdk
       - prefix=public
+  - local: protoc-gen-platform
+    out: ./gen/v2alpha/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=multiplexer
+      - prefix=public

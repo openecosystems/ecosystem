@@ -136,7 +136,7 @@ const (
 	Range                         = "Range"
 	Referer                       = "Referer"
 	RetryAfter                    = "Retry-After"
-	Server                        = "Server"
+	ServerHeader                  = "Server"
 	SetCookie                     = "Set-Cookie"
 	StrictTransportSecurity       = "Strict-Transport-Security"
 	TransferEncoding              = "Transfer-Encoding"

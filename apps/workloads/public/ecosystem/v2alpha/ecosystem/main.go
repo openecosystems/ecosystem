@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
@@ -25,10 +26,9 @@ import (
 	ecosystemv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	serverv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha"
-	configurationv2alphapbsrv "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha/gen/platform/configuration/v2alpha"
-	ecosystemv2alphapbsrv "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha/gen/platform/ecosystem/v2alpha"
-	iamv2alphapbsrv "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha/gen/platform/iam/v2alpha"
+	configurationv2alphapbsrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/gen/platform/configuration/v2alpha"
+	ecosystemv2alphapbsrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/gen/platform/ecosystem/v2alpha"
+	iamv2alphapbsrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/gen/platform/iam/v2alpha"
 )
 
 func main() {
@@ -71,17 +71,31 @@ func main() {
 	meshServices = append(meshServices, vanguard.NewService(iamv2alphapbconnect.NewAccountServiceHandler(&iamv2alphapbsrv.AccountServiceHandler{}, interceptors)))
 	meshServices = append(meshServices, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 
-	multiplexedServer := serverv2alphalib.NewServer(
+	c := &internal.Configuration{}
+	_, err := c.ResolveConfiguration()
+	if err != nil {
+		fmt.Println("error resolving configuration: ", err)
+		return
+	}
+	settings := c.GetConfiguration()
+
+	multiplexedServer := sdkv2alphalib.NewServer(
 		context.Background(),
-		serverv2alphalib.WithBounds(bounds),
-		serverv2alphalib.WithPublicServices(publicServices),
-		serverv2alphalib.WithMeshServices(meshServices),
-		serverv2alphalib.WithConfigurationProvider(&internal.Configuration{}),
+		sdkv2alphalib.WithBounds(bounds),
+		sdkv2alphalib.WithPublicServices(publicServices),
+		sdkv2alphalib.WithMeshServices(meshServices),
+		sdkv2alphalib.WithConfigurationProvider(c),
 	)
 
 	//if err := sdkv2alphalib.GlobalSystems.RegisterSystems(provider); err != nil {
 	//	return
 	//}
 
-	multiplexedServer.ListenAndServe()
+	meshEndpoint := settings.Platform.Mesh.GetEndpoint()
+	ln, err3 := nebulav1.Bound.GetMeshListener(meshEndpoint)
+	if err3 != nil {
+		fmt.Println("get socket error: ", err3)
+	}
+
+	multiplexedServer.ListenAndServeWithProvidedSocket(ln)
 }

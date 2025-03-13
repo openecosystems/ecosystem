@@ -64,7 +64,7 @@ type DynamicConnectorHandler interface {
 }
 
 // NewDynamicConnectorHandler creates an HTTP handler that dynamically resolves methods for a given Connector with options.
-func NewDynamicConnectorHandler(c *Connector, opts ...connect.HandlerOption) http.Handler {
+func NewDynamicConnectorHandler(c *Connectable, opts ...connect.HandlerOption) http.Handler {
 	_c := *c
 	_c.MethodsByPath()
 	mpb := _c.MethodsByPath()
