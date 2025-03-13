@@ -7,7 +7,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // Model represents the main state for managing a text input field within the UI, paired with a program context.

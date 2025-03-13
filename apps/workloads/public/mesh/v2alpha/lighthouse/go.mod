@@ -1,4 +1,4 @@
-module apps/workloads/public/mesh/v2alpha/lighthouse
+module github.com/openecosystems/ecosystem/apps/workloads/public/mesh/v2alpha/lighthouse
 
 go 1.23.4
 

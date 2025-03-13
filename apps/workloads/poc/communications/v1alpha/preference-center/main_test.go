@@ -1,10 +1,11 @@
 package main
 
 import (
-	"libs/partner/go/sendgrid/v3/contacts"
-	"libs/partner/go/sendgrid/v3/lists"
-	"libs/partner/go/zap/v1"
 	"testing"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/sendgrid/v3/contacts"
+	"github.com/openecosystems/ecosystem/libs/partner/go/sendgrid/v3/lists"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

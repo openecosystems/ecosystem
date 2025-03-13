@@ -6,9 +6,9 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	"github.com/charmbracelet/lipgloss"
 
-	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	constants "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
 
 // Model represents the main model structure managing application context, viewport, and item-related information.

@@ -1,7 +1,7 @@
 package tasks
 
 import (
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

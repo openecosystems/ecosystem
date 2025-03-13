@@ -1,4 +1,4 @@
-module libs/plugins/gnostic-gen-platform
+module github.com/openecosystems/ecosystem/libs/plugins/gnostic-gen-platform
 
 require (
 	github.com/golang/protobuf v1.5.4

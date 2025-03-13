@@ -1,7 +1,7 @@
 package ontologydefaultsv2alphalib
 
 import (
-	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
+	ontologyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 
 	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 )

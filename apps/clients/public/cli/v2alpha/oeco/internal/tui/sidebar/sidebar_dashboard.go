@@ -1,7 +1,7 @@
 package sidebar
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

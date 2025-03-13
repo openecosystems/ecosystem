@@ -3,7 +3,7 @@ package content
 import (
 	tea "github.com/charmbracelet/bubbletea"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // EmptyModel is a concrete model that embeds BaseModel and implements minimal functionality as a placeholder or default model.

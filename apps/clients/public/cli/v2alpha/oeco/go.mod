@@ -1,4 +1,4 @@
-module apps/clients/public/cli/v2alpha/oeco
+module github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco
 
 go 1.23.4
 

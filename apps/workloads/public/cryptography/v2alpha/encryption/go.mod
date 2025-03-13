@@ -1,4 +1,4 @@
-module apps/workloads/public/cryptography/v2alpha/encryption
+module github.com/openecosystems/ecosystem/apps/workloads/public/cryptography/v2alpha/encryption
 
 go 1.23.4
 

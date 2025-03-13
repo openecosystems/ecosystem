@@ -6,8 +6,8 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 
-	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	content "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // PageType defines the type of page as "dashboard" to differentiate it from other potential page types in the system.

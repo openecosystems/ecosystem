@@ -11,7 +11,7 @@ import (
   {{ if not $i }}"google.golang.org/protobuf/types/known/anypb"{{ end }}
   "errors"
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-  "libs/{{ $apiType }}/go/protobuf/gen/{{ $topLevel.LowerCamelCase }}/{{ $system.LowerCamelCase }}/{{ $version }}"
+  "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/{{ $topLevel.LowerCamelCase }}/{{ $system.LowerCamelCase }}/{{ $version }}"
 
   {{ range $key, $value := $imports }}
   {{ $value }} "{{ $key }}"

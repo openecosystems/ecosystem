@@ -8,7 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // BaseModel represents a foundational structure containing viewport and program context for UI components.

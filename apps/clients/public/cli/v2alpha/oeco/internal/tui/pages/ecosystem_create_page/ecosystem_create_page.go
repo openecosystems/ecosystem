@@ -4,14 +4,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	ecosystemcreateform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	ecosystemcreatecontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/content/ecosystem_create_content"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
-	ecosystemcreatesidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/ecosystem_create_sidebar"
+	ecosystemcreateform "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	ecosystemcreatecontent "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/content/ecosystem_create_content"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	pages "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	ecosystemcreatesidebar "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/ecosystem_create_sidebar"
 )
 
 // ModelConfig represents the configuration structure for initializing and customizing a model instance.

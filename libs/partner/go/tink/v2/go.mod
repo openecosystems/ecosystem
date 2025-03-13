@@ -1,4 +1,4 @@
-module libs/partner/go/tink/v2
+module github.com/openecosystems/ecosystem/libs/partner/go/tink/v2
 
 go 1.23.4
 

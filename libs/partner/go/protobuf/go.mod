@@ -1,4 +1,4 @@
-module libs/partner/go/protobuf
+module github.com/openecosystems/ecosystem/libs/partner/go/protobuf
 
 go 1.23.4
 

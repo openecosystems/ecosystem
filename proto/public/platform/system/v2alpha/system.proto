@@ -24,7 +24,7 @@ option (platform.options.v2.entity) = {
   consistency: ENTITY_CONSISTENCY_EVENTUAL;
 };
 
-option go_package = "libs/public/go/protobuf/gen/platform/system/v2alpha;systemv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/system/v2alpha;systemv2alphapb";
 
 message PublicSystems {
   bool communication = 1;

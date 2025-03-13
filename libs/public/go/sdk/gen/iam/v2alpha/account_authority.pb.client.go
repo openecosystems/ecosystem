@@ -6,9 +6,9 @@ package iamv2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
+	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 )
 
 func NewAccountAuthorityServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *iamv2alphapbconnect.AccountAuthorityServiceClient {

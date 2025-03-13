@@ -9,14 +9,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
+	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
-	"libs/public/go/sdk/gen/communication/v1beta"
 	"os"
 
-	"libs/public/go/protobuf/gen/platform/communication/v1beta"
+	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1beta"
 )
 
 var (

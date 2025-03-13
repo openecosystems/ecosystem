@@ -3,7 +3,7 @@ package sidebar
 import (
 	tea "github.com/charmbracelet/bubbletea"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // EmptyModel represents a specialized type that embeds BaseModel with no additional functionality.

@@ -9,7 +9,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/yaml.v2"
 
-	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

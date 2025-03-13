@@ -6,7 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // OrganizationKeyMap defines key bindings specific to organizational operations or actions in the application.

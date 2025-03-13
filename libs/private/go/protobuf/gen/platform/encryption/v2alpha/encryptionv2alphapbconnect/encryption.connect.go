@@ -5,12 +5,14 @@
 package encryptionv2alphapbconnect
 
 import (
-	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v2alpha "libs/private/go/protobuf/gen/platform/encryption/v2alpha"
 	http "net/http"
 	strings "strings"
+
+	connect "connectrpc.com/connect"
+
+	v2alpha "github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/encryption/v2alpha"
 )
 
 // This is a compile-time assertion to ensure that this generated file and the connect package are

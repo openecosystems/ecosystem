@@ -8,13 +8,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	data "apps/clients/public/cli/v2alpha/oeco/internal/data"
-	table "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	data "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/data"
+	table "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	constants "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
 
 const device = "lo0"

@@ -6,9 +6,9 @@ package auditv2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
+	auditv2alphapbconnect "github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/audit/v2alpha/auditv2alphapbconnect"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	auditv2alphapbconnect "libs/private/go/protobuf/gen/platform/audit/v2alpha/auditv2alphapbconnect"
 )
 
 func NewAuditServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *auditv2alphapbconnect.AuditServiceClient {

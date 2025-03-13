@@ -4,7 +4,7 @@
 package specentities
 import (
 
-  decision "libs/partner/go/model/gen/platform/advertisement/v1"
+  decision "github.com/openecosystems/ecosystem/libs/partner/go/model/gen/platform/advertisement/v1"
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 

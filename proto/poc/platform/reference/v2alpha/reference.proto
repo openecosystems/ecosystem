@@ -23,7 +23,7 @@ option (platform.options.v2.entity) = {
   consistency: ENTITY_CONSISTENCY_EVENTUAL;
 };
 
-option go_package = "libs/poc/go/protobuf/gen/platform/reference/v2alpha;referencev2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/poc/go/protobuf/gen/platform/reference/v2alpha;referencev2alphapb";
 
 message ReferenceConfiguration {
 

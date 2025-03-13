@@ -6,11 +6,12 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/segmentio/ksuid"
 
-	pcontext "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
-	accountauthority "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/account_authority"
-	account "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/local_account"
-	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	pcontext "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	tasks "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
+	accountauthority "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/account_authority"
+	account "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/local_account"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
+	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 )
 
 // CreateEcosystemMsg represents a command message used for communication or signaling within a program or system.
@@ -47,7 +48,7 @@ func (l *CreateEcosystemMsg) Execute(ctx *pcontext.ProgramContext, _ error) (tea
 		TaskExecutor: account.LocalAccountMsg{
 			EcosystemName:     l.Name,
 			CIDR:              l.Cidr,
-			EcosystemPeerType: ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_EDGE,
+			EcosystemPeerType: typev2pb.PeerType_PEER_TYPE_EDGE,
 		},
 		Done: false,
 	})
@@ -63,7 +64,7 @@ func (l *CreateEcosystemMsg) Execute(ctx *pcontext.ProgramContext, _ error) (tea
 		TaskExecutor: account.LocalAccountMsg{
 			EcosystemName:     l.Name,
 			CIDR:              l.Cidr,
-			EcosystemPeerType: ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER,
+			EcosystemPeerType: typev2pb.PeerType_PEER_TYPE_MULTIPLEXER,
 		},
 		Done: false,
 	})
@@ -79,7 +80,7 @@ func (l *CreateEcosystemMsg) Execute(ctx *pcontext.ProgramContext, _ error) (tea
 		TaskExecutor: account.LocalAccountMsg{
 			EcosystemName:     l.Name,
 			CIDR:              l.Cidr,
-			EcosystemPeerType: ecosystemv2alphapb.EcosystemPeerType_ECOSYSTEM_PEER_TYPE_SERVICE_ACCOUNT,
+			EcosystemPeerType: typev2pb.PeerType_PEER_TYPE_SERVICE_ACCOUNT,
 		},
 		Done: false,
 	})

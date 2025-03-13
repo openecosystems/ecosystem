@@ -2,7 +2,7 @@ package main
 
 //
 //import (
-//	"apps/clients/public/cli/v2alpha/oeco/internal/data"
+//	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/data"
 //	"fmt"
 //	"os"
 //

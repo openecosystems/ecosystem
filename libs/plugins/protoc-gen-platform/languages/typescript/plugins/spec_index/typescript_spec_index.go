@@ -8,8 +8,8 @@ import (
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
-	_typescript "libs/plugins/protoc-gen-platform/languages/typescript"
-	"libs/plugins/protoc-gen-platform/shared"
+	_typescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/shared"
 )
 
 //go:embed templates/*.tmpl
@@ -54,7 +54,7 @@ func (m *TypeScriptSpecIndexModule) Execute(targets map[string]pgs.File, _ map[s
 
 	// Idempotent looping, use keys for range NOT targets
 	keys := make([]string, 0)
-	for k, _ := range targets {
+	for k := range targets {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)

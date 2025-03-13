@@ -5,9 +5,9 @@ package {{ package . }}sdk
 import (
     "connectrpc.com/connect"
 
-    nebulav1 "libs/partner/go/nebula/v1"
+    nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
     specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-    {{ package . }}connect "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
+    {{ package . }}connect "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
 )
 
 func New{{ $s.Name }}SpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *{{ package . }}connect.{{ $s.Name }}Client {

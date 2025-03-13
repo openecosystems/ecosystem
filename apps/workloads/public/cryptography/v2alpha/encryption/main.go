@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
-	opentelemetryv2 "libs/partner/go/opentelemetry/v2"
-	tinkv2 "libs/partner/go/tink/v2"
-	zaploggerv1 "libs/partner/go/zap/v1"
-	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
-	serverv2alphalib "libs/public/go/server/v2alpha"
-	cryptographyv2alphasrv "libs/public/go/server/v2alpha/platform/cryptography/v2alpha"
 	"os"
+
+	opentelemetryv2 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	tinkv2 "github.com/openecosystems/ecosystem/libs/partner/go/tink/v2"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
+	serverv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha"
+	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha/platform/cryptography/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 

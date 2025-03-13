@@ -1,4 +1,4 @@
-module libs/plugins/protoc-gen-platform
+module github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform
 
 go 1.23.4
 

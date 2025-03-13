@@ -5,11 +5,11 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	content "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	sidebar "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
 )
 
 // EmptyModelConfig defines the configuration for an empty model, including basic metadata like the title of the page.
@@ -23,7 +23,7 @@ type EmptyModel struct {
 }
 
 // NewEmptyModel creates and initializes an EmptyModel as a Page using a given ProgramContext.
-func NewEmptyModel(ctx *context.ProgramContext) *EmptyModel {
+func NewEmptyModel(ctx *context.ProgramContext) contract.Page {
 	baseModel := NewBaseModel(
 		ctx,
 		&NewBaseOptions{

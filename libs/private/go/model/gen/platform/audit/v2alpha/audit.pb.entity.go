@@ -8,8 +8,8 @@ import (
 	"encoding/json"
 
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/audit/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	"libs/private/go/protobuf/gen/platform/audit/v2alpha"
 
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"

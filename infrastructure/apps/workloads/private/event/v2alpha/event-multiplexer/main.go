@@ -2,7 +2,8 @@ package main
 
 import (
 	"encoding/base64"
-	infrastructurev2alphalib "libs/private/go/infrastructure/v2alpha"
+
+	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/private/go/infrastructure/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 

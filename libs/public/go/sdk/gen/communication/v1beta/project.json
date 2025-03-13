@@ -3,7 +3,7 @@
   "name": "libs-public-go-sdk-communication-v1beta",
   "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/public/go/sdk/gen/communication/v1beta",
+  "sourceRoot": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta",
   "implicitDependencies": [
     "proto"
   ],
@@ -13,21 +13,21 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "go build ./...",
-        "cwd": "libs/public/go/sdk/gen/communication/v1beta"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go test -v ./... -cover -race",
-        "cwd": "libs/public/go/sdk/gen/communication/v1beta"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta"
       }
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go clean",
-        "cwd": "libs/public/go/sdk/gen/communication/v1beta"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta"
       }
     },
     "lint": {
@@ -35,7 +35,7 @@
       "options": {
         "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
-        "cwd": "libs/public/go/sdk/gen/communication/v1beta"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta"
       }
     },
     "format": {
@@ -43,7 +43,7 @@
       "options": {
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
-        "cwd": "libs/public/go/sdk/gen/communication/v1beta"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/communication/v1beta"
       }
     },
     "distribute": {

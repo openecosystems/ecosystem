@@ -6,11 +6,10 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	pcontext "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	nebulav1ca "libs/partner/go/nebula/v1/ca"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
-	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
-	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
+	pcontext "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
@@ -19,7 +18,7 @@ import (
 type LocalAccountMsg struct {
 	EcosystemName     string
 	CIDR              string
-	EcosystemPeerType ecosystemv2alphapb.EcosystemPeerType
+	EcosystemPeerType typev2pb.PeerType
 }
 
 // Execute processes the given ProgramContext and error, returning a command message encapsulated as tea.Msg.
@@ -38,12 +37,12 @@ func (l LocalAccountMsg) Execute(ctx *pcontext.ProgramContext, _ error) (tea.Msg
 	}
 
 	request := iamv2alphapb.SignAccountRequest{
-		Name:              l.EcosystemName,
-		PublicCert:        unsignedCert,
-		EcosystemPeerType: l.EcosystemPeerType,
+		Name:       l.EcosystemName,
+		PublicCert: unsignedCert,
+		PeerType:   l.EcosystemPeerType,
 	}
 
-	c, err := nca.SignCert(context.Background(), &request, nebulav1ca.WithCIDR(l.CIDR), nebulav1ca.WithEcosystemPeerType(l.EcosystemPeerType))
+	c, err := nca.SignCert(context.Background(), &request, nebulav1ca.WithCIDR(l.CIDR), nebulav1ca.WithPeerType(l.EcosystemPeerType))
 	if err != nil {
 		return nil, err
 	}

@@ -27,7 +27,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "libs/public/go/protobuf/gen/platform/iam/v2alpha;iamv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha;iamv2alphapb";
 
 message AccountAuthorityConfiguration {
 

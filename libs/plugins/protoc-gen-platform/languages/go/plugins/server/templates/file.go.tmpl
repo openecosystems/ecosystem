@@ -5,11 +5,11 @@
 package {{ package . }}srv
 import (
   "connectrpc.com/connect"
-  "libs/partner/go/opentelemetry/v2"
-  "libs/partner/go/protovalidate/v0"
+  "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+  "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
   {{- if $s }}
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-  "libs/public/go/server/v2alpha"
+  "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha"
   {{ end -}}
   "go.opentelemetry.io/otel/trace"
   "net/http"

@@ -7,8 +7,8 @@ import (
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
-	"libs/plugins/protoc-gen-platform/definition"
-	"libs/plugins/protoc-gen-platform/shared"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/definition"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/shared"
 )
 
 type LanguageTypescript struct {

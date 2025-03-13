@@ -3,7 +3,7 @@
   "name": "libs-public-go-sdk-system-v2alpha",
   "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/public/go/sdk/gen/system/v2alpha",
+  "sourceRoot": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/system/v2alpha",
   "implicitDependencies": [
     "proto"
   ],
@@ -13,21 +13,21 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "go build ./...",
-        "cwd": "libs/public/go/sdk/gen/system/v2alpha"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/system/v2alpha"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go test -v ./... -cover -race",
-        "cwd": "libs/public/go/sdk/gen/system/v2alpha"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/system/v2alpha"
       }
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go clean",
-        "cwd": "libs/public/go/sdk/gen/system/v2alpha"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/system/v2alpha"
       }
     },
     "lint": {
@@ -35,7 +35,7 @@
       "options": {
         "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
-        "cwd": "libs/public/go/sdk/gen/system/v2alpha"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/system/v2alpha"
       }
     },
     "format": {
@@ -43,7 +43,7 @@
       "options": {
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
-        "cwd": "libs/public/go/sdk/gen/system/v2alpha"
+        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/system/v2alpha"
       }
     },
     "distribute": {

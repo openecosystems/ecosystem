@@ -1,4 +1,4 @@
-module apps/web/poc/i18n/v1alpha
+module github.com/openecosystems/ecosystem/apps/web/poc/i18n/v1alpha
 
 go 1.23.4
 
