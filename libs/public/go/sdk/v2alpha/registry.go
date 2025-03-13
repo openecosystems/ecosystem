@@ -12,8 +12,8 @@ import (
 	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/descriptorpb"
 
-	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 // globalMutex is a read-write mutex used to synchronize access to global resources.

@@ -7,11 +7,12 @@
 package encryptionv2alphapb
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	_ "libs/protobuf/go/protobuf/gen/platform/options/v2"
 	reflect "reflect"
 	sync "sync"
+
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -536,16 +537,18 @@ func file_platform_encryption_v2alpha_encryption_proto_rawDescGZIP() []byte {
 	return file_platform_encryption_v2alpha_encryption_proto_rawDescData
 }
 
-var file_platform_encryption_v2alpha_encryption_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
-var file_platform_encryption_v2alpha_encryption_proto_goTypes = []any{
-	(*EncryptionConfiguration)(nil), // 0: platform.encryption.v2alpha.EncryptionConfiguration
-	(*EncryptionContext)(nil),       // 1: platform.encryption.v2alpha.EncryptionContext
-	(*CipherText)(nil),              // 2: platform.encryption.v2alpha.CipherText
-	(*EncryptRequest)(nil),          // 3: platform.encryption.v2alpha.EncryptRequest
-	(*EncryptResponse)(nil),         // 4: platform.encryption.v2alpha.EncryptResponse
-	(*DecryptRequest)(nil),          // 5: platform.encryption.v2alpha.DecryptRequest
-	(*DecryptResponse)(nil),         // 6: platform.encryption.v2alpha.DecryptResponse
-}
+var (
+	file_platform_encryption_v2alpha_encryption_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+	file_platform_encryption_v2alpha_encryption_proto_goTypes  = []any{
+		(*EncryptionConfiguration)(nil), // 0: platform.encryption.v2alpha.EncryptionConfiguration
+		(*EncryptionContext)(nil),       // 1: platform.encryption.v2alpha.EncryptionContext
+		(*CipherText)(nil),              // 2: platform.encryption.v2alpha.CipherText
+		(*EncryptRequest)(nil),          // 3: platform.encryption.v2alpha.EncryptRequest
+		(*EncryptResponse)(nil),         // 4: platform.encryption.v2alpha.EncryptResponse
+		(*DecryptRequest)(nil),          // 5: platform.encryption.v2alpha.DecryptRequest
+		(*DecryptResponse)(nil),         // 6: platform.encryption.v2alpha.DecryptResponse
+	}
+)
 var file_platform_encryption_v2alpha_encryption_proto_depIdxs = []int32{
 	1, // 0: platform.encryption.v2alpha.CipherText.encryption_context:type_name -> platform.encryption.v2alpha.EncryptionContext
 	2, // 1: platform.encryption.v2alpha.EncryptResponse.cipher_text:type_name -> platform.encryption.v2alpha.CipherText

@@ -9,7 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"

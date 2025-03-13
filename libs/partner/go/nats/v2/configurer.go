@@ -11,7 +11,7 @@ import (
 
 	"dario.cat/mergo"
 
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"

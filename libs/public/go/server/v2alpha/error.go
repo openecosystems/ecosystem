@@ -1,8 +1,8 @@
 package serverv2alphalib
 
 import (
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"connectrpc.com/connect"
 )

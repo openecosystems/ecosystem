@@ -8,12 +8,12 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	natsnodev2 "libs/partner/go/nats/v2"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	zaploggerv1 "libs/partner/go/zap/v1"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	iamv2alphapbmodel "libs/public/go/model/gen/platform/iam/v2alpha"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 )

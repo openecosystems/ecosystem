@@ -16,7 +16,7 @@ import (
   "go.opentelemetry.io/otel/trace"
   "google.golang.org/protobuf/proto"
 
-  "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+  "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
   {{ range $key, $value := $imports }}
   _ "{{ $key }}"
   {{- end }}

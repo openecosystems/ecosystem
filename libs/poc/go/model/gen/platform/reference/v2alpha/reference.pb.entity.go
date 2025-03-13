@@ -12,8 +12,8 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/poc/go/protobuf/gen/platform/reference/v2alpha"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type ReferenceSpecEntity struct {

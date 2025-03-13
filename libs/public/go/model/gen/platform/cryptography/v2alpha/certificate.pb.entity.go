@@ -12,10 +12,10 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 type CertificateSpecEntity struct {

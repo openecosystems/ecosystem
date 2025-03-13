@@ -7,12 +7,12 @@
 package systemv2alphapb
 
 import (
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	v2 "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	_ "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	v2 "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"

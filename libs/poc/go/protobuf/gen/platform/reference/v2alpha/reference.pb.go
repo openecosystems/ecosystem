@@ -7,11 +7,11 @@
 package referencev2alphapb
 
 import (
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	v2 "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	_ "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	v2 "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"

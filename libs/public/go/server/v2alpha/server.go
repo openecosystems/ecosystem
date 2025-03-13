@@ -17,9 +17,10 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+
 	nebulav1 "libs/partner/go/nebula/v1"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"connectrpc.com/connect"
 )

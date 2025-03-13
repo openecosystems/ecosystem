@@ -11,9 +11,9 @@ import (
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 )
 

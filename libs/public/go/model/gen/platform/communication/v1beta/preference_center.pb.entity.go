@@ -12,8 +12,8 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/communication/v1beta"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type PreferenceCenterSpecEntity struct {

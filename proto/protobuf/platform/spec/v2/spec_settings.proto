@@ -8,7 +8,7 @@ import "platform/type/v2/protocol.proto";
 import "platform/type/v2/git_repository.proto";
 import "platform/type/v2/header.proto";
 
-option go_package = "libs/protobuf/go/protobuf/gen/platform/spec/v2;specv2pb";
+option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2;specv2pb";
 
 //
 message SpecSettings {
