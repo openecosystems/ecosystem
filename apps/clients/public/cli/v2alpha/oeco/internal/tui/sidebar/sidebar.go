@@ -1,6 +1,7 @@
 package sidebar
 
 import (
+	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"fmt"
 	"strconv"
 	"strings"
@@ -10,20 +11,25 @@ import (
 	"github.com/charmbracelet/lipgloss"
 
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+
+	"github.com/charmbracelet/bubbles/key"
 )
 
 // BaseModel represents a foundational model for managing UI state, viewport properties, and program context.
 type BaseModel struct {
-	Opened   bool
-	Viewport *viewport.Model
-	Ctx      *context.ProgramContext
+	Ctx        *context.ProgramContext
+	Viewport   *viewport.Model
+	Opened     bool
+	Data       string
+	EmptyState string
 }
 
 // NewBaseOptions represents configuration options for initializing a BaseModel.
 // It includes a viewport model and an opened state.
 type NewBaseOptions struct {
-	Viewport *viewport.Model
-	Opened   bool
+	Viewport   *viewport.Model
+	Opened     bool
+	EmptyState string
 }
 
 // NewBaseModel initializes and returns a new BaseModel instance using the provided ProgramContext and options.
@@ -41,8 +47,19 @@ func (m *BaseModel) InitBase() tea.Cmd {
 }
 
 // UpdateBase updates the BaseModel's context and dimensions, then returns the updated model along with a batched command.
-func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
+func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 	var cmds []tea.Cmd
+
+	switch message := msg.(type) {
+	case tea.KeyMsg:
+		switch {
+		case key.Matches(message, keys.Keys.PageDown):
+			m.Viewport.HalfViewDown()
+
+		case key.Matches(message, keys.Keys.PageUp):
+			m.Viewport.HalfViewUp()
+		}
+	}
 
 	m.UpdateProgramContext(m.Ctx)
 	m.SyncDimensions(m.Ctx)
@@ -55,12 +72,22 @@ func (m *BaseModel) UpdateBase(_ tea.Msg) (*BaseModel, tea.Cmd) {
 
 // ViewBase renders the sidebar layout with the viewport content and a scroll percentage indicator.
 func (m *BaseModel) ViewBase() string {
+	if !m.Opened {
+		return ""
+	}
+
 	height := m.Ctx.PageContentHeight
 	style := m.Ctx.Styles.Sidebar.Root.
 		Height(height).
 		MaxHeight(height).
 		Width(m.Ctx.Config.Defaults.Sidebar.Width).
 		MaxWidth(m.Ctx.Config.Defaults.Sidebar.Width)
+
+	if m.Data == "" {
+		return style.Align(lipgloss.Center).Render(
+			lipgloss.PlaceVertical(height, lipgloss.Center, m.EmptyState),
+		)
+	}
 
 	return style.Render(lipgloss.JoinVertical(
 		lipgloss.Top,
@@ -117,6 +144,8 @@ func (m *BaseModel) UpdateProgramContext(ctx *context.ProgramContext) {
 		return
 	}
 	m.Ctx = ctx
+	m.Viewport.Height = m.Ctx.MainContentHeight - m.Ctx.Styles.Sidebar.PagerHeight
+	m.Viewport.Width = m.GetSidebarContentWidth()
 }
 
 // OnWindowSizeChanged updates the ProgramContext by syncing its dimensions with the provided context.
@@ -135,6 +164,26 @@ func (m *BaseModel) SyncDimensions(ctx *context.ProgramContext) *context.Program
 	m.Viewport.Height = m.Ctx.SidebarContentHeight
 
 	return m.Ctx
+}
+
+// SetContent sets the content of the BaseModel and updates the viewport with the provided string data.
+func (m *BaseModel) SetContent(data string) {
+	m.Data = data
+	m.Viewport.SetContent(data)
+}
+
+// GetSidebarContentWidth calculates the width of the sidebar content by considering padding and border dimensions.
+func (m *BaseModel) GetSidebarContentWidth() int {
+	if m.Ctx.Config == nil {
+		return 0
+	}
+	return m.Ctx.Config.Defaults.Sidebar.Width - 2*m.Ctx.Styles.Sidebar.ContentPadding - m.Ctx.Styles.Sidebar.BorderWidth
+}
+
+// SyncSidebar synchronizes the sidebar state and returns a command for subsequent UI updates.
+func (m *BaseModel) SyncSidebar() tea.Cmd {
+	var cmd tea.Cmd
+	return cmd
 }
 
 // IsOpen returns true if the BaseModel instance is open; otherwise, false.

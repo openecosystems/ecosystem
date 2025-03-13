@@ -11,6 +11,7 @@ import (
 	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
 	ecosystemdashboardsidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/ecosystem_dashboard_sidebar"
+	"github.com/charmbracelet/bubbles/key"
 )
 
 // ModelConfig represents the configuration structure for initializing and customizing a model instance.
@@ -69,10 +70,24 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var (
 		baseCmd tea.Cmd
 		cmds    []tea.Cmd
+		cmd     tea.Cmd
 	)
 
 	m.BaseModel, baseCmd = m.UpdateBase(msg)
 	m.UpdateProgramContext(m.Ctx)
+
+	switch message := msg.(type) {
+	case tea.KeyMsg:
+		m.Ctx.Logger.Debug("Key pressed", "key", message.String())
+		m.Ctx.Error = nil
+
+		switch {
+		case key.Matches(message, keys.Keys.Down):
+			prevRow := m.CurrentMainContent.CurrRow()
+			nextRow := m.Table.NextRow()
+			cmd = m.OnViewedRowChanged()
+		}
+	}
 
 	cmds = append(
 		cmds,
@@ -98,8 +113,8 @@ func (m *Model) View() string {
 	// return s.String()
 }
 
-//func (m *Model) OnViewedRowChanged() tea.Cmd {
-//	cmd := m.CurrentSidebar.SyncSidebar()
-//	m.CurrentSidebar.ScrollToTop()
-//	return cmd
-//}
+func (m *Model) OnViewedRowChanged() tea.Cmd {
+	cmd := m.CurrentSidebar.SyncSidebar()
+	m.CurrentSidebar.ScrollToTop()
+	return cmd
+}

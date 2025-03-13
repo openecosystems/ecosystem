@@ -131,10 +131,6 @@ func (m *DashboardBaseModel) UpdateDashboardBase(msg tea.Msg) (*DashboardBaseMod
 		m.Ctx.Error = nil
 
 		switch {
-		// case key.Matches(message, keys.Keys.Down):
-		//	prevRow := m.Table.CurrRow()
-		//	nextRow := m.Table.NextRow()
-		//	cmd = m.OnViewedRowChanged()
 		case key.Matches(message, keys.Keys.Search):
 
 			if m.Table != nil {

@@ -96,6 +96,10 @@ type Sidebar interface {
 	IsOpen() bool
 	Open()
 	Close()
+	ScrollToTop()
+	ScrollToBottom()
+	SyncSidebar()
+	GetSidebarContentWidth() int
 	Configurable
 	ContextAware
 	Responsive
