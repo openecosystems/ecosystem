@@ -6,7 +6,7 @@ import (
 	"math"
 	"net"
 
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 const (

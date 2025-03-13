@@ -5,7 +5,7 @@ package platform.type.v2;
 import "platform/options/v2/annotations.proto";
 import "google/protobuf/field_mask.proto";
 
-option go_package = "libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
 
 //
 message ResponseMask {

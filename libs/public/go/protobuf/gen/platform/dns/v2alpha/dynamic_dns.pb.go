@@ -7,9 +7,9 @@
 package dnsv2alphapb
 
 import (
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	_ "libs/protobuf/go/protobuf/gen/platform/options/v2"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"

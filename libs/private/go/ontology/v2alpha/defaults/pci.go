@@ -1,8 +1,9 @@
 package ontologydefaultsv2alphalib
 
 import (
-	optionv2pb "libs/protobuf/go/protobuf/gen/platform/options/v2"
 	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
+
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 )
 
 // PCI represents an instance of SpecDataCatalog used for defining and organizing multiple configurations and ontologies.

@@ -16,11 +16,11 @@ import (
 	"libs/public/go/model/gen/platform/configuration/v2alpha"
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 
-	"libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	"github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "google.golang.org/protobuf/types/known/anypb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-	_ "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 
 	"context"

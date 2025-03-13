@@ -3,7 +3,7 @@ package connectorv2alphalib
 import (
 	"fmt"
 
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"connectrpc.com/connect"
 

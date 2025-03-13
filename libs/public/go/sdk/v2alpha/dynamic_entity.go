@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"google.golang.org/protobuf/types/dynamicpb"
 

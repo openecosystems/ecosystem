@@ -11,9 +11,10 @@ import (
 	"go.uber.org/zap"
 	protopb "google.golang.org/protobuf/proto"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	zaploggerv1 "libs/partner/go/zap/v1"
-	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+
+	specproto "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // SpecEventListener is an interface for handling event streaming, listening, and processing for specific configurations.

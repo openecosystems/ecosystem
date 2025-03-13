@@ -3,7 +3,7 @@ package shared
 import (
 	"strings"
 
-	options "libs/protobuf/go/protobuf/gen/platform/options/v2"
+	options "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 )

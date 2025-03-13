@@ -6,7 +6,7 @@ import (
     "connectrpc.com/connect"
 
     nebulav1 "libs/partner/go/nebula/v1"
-    specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+    specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
     {{ package . }}connect "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
 )
 

@@ -7,7 +7,7 @@ import (
 	"errors"
 	"reflect"
 
-	specproto "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specproto "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"

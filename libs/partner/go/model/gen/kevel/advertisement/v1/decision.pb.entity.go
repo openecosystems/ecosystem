@@ -12,7 +12,7 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/partner/go/protobuf/gen/kevel/advertisement/v1"
 
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type DecisionSpecEntity struct {

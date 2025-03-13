@@ -23,8 +23,8 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/proto"
 
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 )
 
 const (

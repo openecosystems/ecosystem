@@ -7,14 +7,14 @@
 package auditv2alphapb
 
 import (
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	v2 "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	v21 "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	_ "libs/protobuf/go/protobuf/gen/platform/options/v2"
-	v2 "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	v21 "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"

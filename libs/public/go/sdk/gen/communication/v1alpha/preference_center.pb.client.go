@@ -6,8 +6,8 @@ package communicationv1alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	nebulav1 "libs/partner/go/nebula/v1"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	communicationv1alphapbconnect "libs/public/go/protobuf/gen/platform/communication/v1alpha/communicationv1alphapbconnect"
 )
 

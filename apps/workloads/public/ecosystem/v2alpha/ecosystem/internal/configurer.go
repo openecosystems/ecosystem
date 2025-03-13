@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

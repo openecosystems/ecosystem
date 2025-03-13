@@ -9,9 +9,9 @@ import (
 	"strings"
 	"syscall"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"connectrpc.com/connect"
 

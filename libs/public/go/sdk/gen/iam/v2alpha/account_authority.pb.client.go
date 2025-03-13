@@ -6,8 +6,8 @@ package iamv2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	nebulav1 "libs/partner/go/nebula/v1"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 )
 

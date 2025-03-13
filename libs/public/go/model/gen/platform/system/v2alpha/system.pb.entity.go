@@ -12,8 +12,8 @@ import (
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/public/go/protobuf/gen/platform/system/v2alpha"
 
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 type SystemSpecEntity struct {

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 
 	"google.golang.org/protobuf/encoding/protojson"
 )
