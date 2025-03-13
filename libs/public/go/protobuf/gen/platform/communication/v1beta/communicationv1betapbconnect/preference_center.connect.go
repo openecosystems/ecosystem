@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1beta "libs/public/go/protobuf/gen/platform/communication/v1beta"
+	v1beta "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1beta"
 	http "net/http"
 	strings "strings"
 )

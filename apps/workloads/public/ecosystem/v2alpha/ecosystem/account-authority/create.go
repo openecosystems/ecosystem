@@ -6,13 +6,13 @@ package accountauthority
 //
 //	"github.com/nats-io/nats.go/jetstream"
 //
-//	natsnodev2 "libs/partner/go/nats/v2"
-//	nebulav1ca "libs/partner/go/nebula/v1/ca"
-//	zaploggerv1 "libs/partner/go/zap/v1"
+//	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+//	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
+//	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 //	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 //	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-//	iamv2alphapbmodel "libs/public/go/model/gen/platform/iam/v2alpha"
-//	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
+//	iamv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
+//	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
 //	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 //)
 //

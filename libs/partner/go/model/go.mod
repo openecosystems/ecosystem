@@ -1,4 +1,4 @@
-module libs/partner/go/model
+module github.com/openecosystems/ecosystem/libs/partner/go/model
 
 go 1.23.4
 

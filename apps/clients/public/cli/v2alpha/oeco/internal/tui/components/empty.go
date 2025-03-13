@@ -4,8 +4,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 )
 
 // EmptyModelConfig defines the configuration for an empty model, including basic metadata like the title of the page.

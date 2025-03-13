@@ -7,7 +7,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
 
-	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
+	tasks "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 )
 
 // EcosystemServiceServiceCmd represents the root command for managing ecosystem-related operations.

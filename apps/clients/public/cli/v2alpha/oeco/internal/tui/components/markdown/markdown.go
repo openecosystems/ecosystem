@@ -1,7 +1,7 @@
 package markdown
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 
 	"github.com/charmbracelet/glamour"
 	"github.com/charmbracelet/glamour/ansi"

@@ -4,9 +4,9 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 
-	ecosystemcreateform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
+	ecosystemcreateform "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	sidebar "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
 )
 
 // Model represents a user interface model combining a sidebar and a form within a program context.

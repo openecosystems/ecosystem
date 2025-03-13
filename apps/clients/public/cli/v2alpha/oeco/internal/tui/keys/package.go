@@ -6,7 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/log"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 )
 
 // PackageKeyMap defines key bindings for operations related to packages such as listing and generating them.

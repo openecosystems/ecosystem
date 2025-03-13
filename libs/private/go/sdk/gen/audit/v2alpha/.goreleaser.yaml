@@ -6,7 +6,7 @@ project_name: libs-private-go-sdk-audit-v2alpha
 
 variables:
   path_to_repo_root: "../../../../../../"
-  path_to_project: "libs/private/go/sdk/gen/audit/v2alpha"
+  path_to_project: "github.com/openecosystems/ecosystem/libs/private/go/sdk/gen/audit/v2alpha"
 
 dist: ./dist/libs/private/go/sdk/gen/audit/v2alpha
 

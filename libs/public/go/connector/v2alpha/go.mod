@@ -1,4 +1,4 @@
-module libs/public/go/connector/v2alpha
+module github.com/openecosystems/ecosystem/libs/public/go/connector/v2alpha
 
 go 1.23.4
 

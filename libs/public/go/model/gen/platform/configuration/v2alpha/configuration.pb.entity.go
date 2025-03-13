@@ -8,13 +8,13 @@ import (
 	"encoding/json"
 
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	ontologyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
-	ontologyv2alphapb "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 )
 
 type ConfigurationSpecEntity struct {

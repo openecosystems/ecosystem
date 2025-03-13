@@ -1,15 +1,15 @@
 package contract
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/table"
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 )
 
 // PageSettings defines the configuration and metadata for a page, including its title, default status, and other settings.

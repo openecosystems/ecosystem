@@ -6,9 +6,9 @@ package referencev2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
+	referencev2alphapbconnect "github.com/openecosystems/ecosystem/libs/poc/go/protobuf/gen/platform/reference/v2alpha/referencev2alphapbconnect"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	referencev2alphapbconnect "libs/poc/go/protobuf/gen/platform/reference/v2alpha/referencev2alphapbconnect"
 )
 
 func NewReferenceServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *referencev2alphapbconnect.ReferenceServiceClient {

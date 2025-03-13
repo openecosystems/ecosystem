@@ -2,12 +2,13 @@ package cli_methods
 
 import (
 	"embed"
-	"libs/plugins/protoc-gen-platform/shared"
 	"sort"
 	"strings"
 	"text/template"
 
-	_go "libs/plugins/protoc-gen-platform/languages/go"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/shared"
+
+	_go "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"

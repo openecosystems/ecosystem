@@ -6,8 +6,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
 )
 
 // Model represents the state and logic for managing pages, context, and the current page within the application.

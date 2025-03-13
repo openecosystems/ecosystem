@@ -1,29 +1,29 @@
 package main
 
 import (
-	"github.com/lyft/protoc-gen-star/v2"
-	"github.com/lyft/protoc-gen-star/v2/lang/go"
+	pgs "github.com/lyft/protoc-gen-star/v2"
+	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
 
 	// Golang Plugins
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_commands"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_methods"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_service"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/cli_system"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/client"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/entity_unspecified"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/listener"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/multiplexer"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/sdk"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/server"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/spec"
-	"libs/plugins/protoc-gen-platform/languages/go/plugins/spec_entities"
-	"libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
-	"libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_commands"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_methods"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_service"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_system"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/client"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/entity_unspecified"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/listener"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/multiplexer"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/sdk"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/server"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/spec"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/spec_entities"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
 
 	// Typescript Plugins
-	"libs/plugins/protoc-gen-platform/languages/typescript/plugins/protobuf_index"
-	"libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
-	"libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec_index"
+	protobufindextypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/protobuf_index"
+	spectypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
+	specindextypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec_index"
 )
 
 func main() {

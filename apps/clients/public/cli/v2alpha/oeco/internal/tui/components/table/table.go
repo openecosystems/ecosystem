@@ -8,10 +8,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	listviewport "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/listviewport"
-	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	listviewport "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/listviewport"
+	constants "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
 // Model represents a table-like structure, managing columns, rows, viewport, and loading states for rendering and interaction.

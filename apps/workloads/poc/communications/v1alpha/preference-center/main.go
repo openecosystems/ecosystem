@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	natsnodev2 "libs/partner/go/nats/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	zaploggerv1 "libs/partner/go/zap/v1"
-	configurationv2alphalib "libs/private/go/configuration/v2alpha"
-	connectorv2alphalib "libs/public/go/connector/v2alpha"
+
+	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
+	connectorv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/connector/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

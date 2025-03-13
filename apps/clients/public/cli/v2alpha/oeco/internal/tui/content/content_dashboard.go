@@ -8,16 +8,16 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	packet "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/packet"
-	prompt "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/prompt"
-	search "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/search"
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	packet "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/packet"
+	prompt "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/prompt"
+	search "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/search"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	constants "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
 
 // DashboardBaseModel represents a data structure used for managing dashboard-related contexts and configurations.

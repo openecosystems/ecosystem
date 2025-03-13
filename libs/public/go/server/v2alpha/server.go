@@ -20,7 +20,7 @@ import (
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
-	nebulav1 "libs/partner/go/nebula/v1"
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 
 	"connectrpc.com/connect"
 )

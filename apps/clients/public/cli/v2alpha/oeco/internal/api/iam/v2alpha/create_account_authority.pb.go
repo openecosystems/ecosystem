@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	"os"
+
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
-	nebulav1ca "libs/partner/go/nebula/v1/ca"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
 
 	"github.com/apex/log"
 	"github.com/spf13/cobra"

@@ -1,4 +1,4 @@
 {{- $e := entity . -}}{{- $s := service . -}}{{ $goPackage := goPackage .File }}{{ $version := getPackageVersionName .File }}{{ $versionLower := getPackageVersion .File }}{{ $systemName := domainSystemName2 .File }}{{ $apiType := getApiOptionsTypeName .File }}
 {{- if $s -}}{{- if $e -}}
-import "libs/{{ $apiType.LowerCamelCase }}/go/cli/v2alpha/gen/platform/{{ $systemName.LowerCamelCase }}/{{ $versionLower }}"
+import "github.com/openecosystems/ecosystem/libs/{{ $apiType.LowerCamelCase }}/go/cli/v2alpha/gen/platform/{{ $systemName.LowerCamelCase }}/{{ $versionLower }}"
 {{ end -}}{{- end -}}

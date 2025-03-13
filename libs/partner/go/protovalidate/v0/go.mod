@@ -1,4 +1,4 @@
-module libs/partner/go/protovalidate/v0
+module github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0
 
 go 1.23.4
 

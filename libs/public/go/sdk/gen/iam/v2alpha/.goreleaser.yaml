@@ -6,7 +6,7 @@ project_name: libs-public-go-sdk-iam-v2alpha
 
 variables:
   path_to_repo_root: "../../../../../../"
-  path_to_project: "libs/public/go/sdk/gen/iam/v2alpha"
+  path_to_project: "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/iam/v2alpha"
 
 dist: ./dist/libs/public/go/sdk/gen/iam/v2alpha
 

@@ -12,7 +12,7 @@ import (
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
 
-	nebulav1 "libs/partner/go/nebula/v1"
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

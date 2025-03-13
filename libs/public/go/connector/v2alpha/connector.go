@@ -15,7 +15,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	v2alpha "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	v2alpha "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 
 	"github.com/slackhq/nebula/service"
 	"google.golang.org/protobuf/reflect/protoreflect"

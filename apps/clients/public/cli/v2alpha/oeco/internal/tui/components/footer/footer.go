@@ -8,11 +8,11 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
-	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	tasks "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
+	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 )
 
 // Model represents the state and behavior of the application UI, managing sections, help views, and user interactions.

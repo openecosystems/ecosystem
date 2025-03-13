@@ -13,7 +13,7 @@ import (
 	connector "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
 	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
+	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 

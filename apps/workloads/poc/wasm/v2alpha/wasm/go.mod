@@ -1,4 +1,4 @@
-module apps/workloads/poc/wasm/v2alpha/wasm
+module github.com/openecosystems/ecosystem/apps/workloads/poc/wasm/v2alpha/wasm
 
 go 1.23.4
 

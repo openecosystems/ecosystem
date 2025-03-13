@@ -1,7 +1,7 @@
 package theme
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/data"
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/data"
 
 	"github.com/charmbracelet/lipgloss"
 )

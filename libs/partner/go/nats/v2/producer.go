@@ -9,7 +9,7 @@ import (
 	"connectrpc.com/connect"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
-	zaploggerv1 "libs/partner/go/zap/v1"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 
 	"github.com/nats-io/nats.go"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"

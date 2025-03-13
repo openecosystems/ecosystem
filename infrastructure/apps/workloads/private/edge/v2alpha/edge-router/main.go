@@ -1,7 +1,7 @@
 package main
 
 import (
-	"libs/private/go/infrastructure/v2alpha"
+	"github.com/openecosystems/ecosystem/libs/private/go/infrastructure/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 

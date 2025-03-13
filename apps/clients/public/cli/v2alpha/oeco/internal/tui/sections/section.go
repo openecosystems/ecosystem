@@ -11,17 +11,18 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	footer "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
-	tabs "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	utils "apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
+	footer "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/footer"
+	tabs "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/tabs"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	constants "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	tasks "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
+
+	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 )
 
 var once sync.Once

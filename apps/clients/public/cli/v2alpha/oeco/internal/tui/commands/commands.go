@@ -9,8 +9,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 
-	data "apps/clients/public/cli/v2alpha/oeco/internal/data"
-	constants "apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
+	data "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/data"
+	constants "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/constants"
 )
 
 // IssueCommandTemplateInput defines the input parameters required to execute an issue command template in a repository context.

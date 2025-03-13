@@ -6,9 +6,9 @@ import (
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 
-	packet "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/packet"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	sidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
+	packet "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/packet"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	sidebar "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar"
 )
 
 // Model represents a user interface model combining a sidebar and a form within a program context.
@@ -82,7 +82,7 @@ func (m *Model) View() string {
 func (m *Model) renderContent() string {
 	s := strings.Builder{}
 
-	s.WriteString(m.renderFullNameAndNumber())
+	// s.WriteString(m.renderFullNameAndNumber())
 	s.WriteString("\n")
 
 	return "INITIAL SIDEBAR"

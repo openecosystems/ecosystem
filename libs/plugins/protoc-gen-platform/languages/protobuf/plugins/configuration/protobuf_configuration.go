@@ -8,8 +8,8 @@ import (
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
-	_protobuf "libs/plugins/protoc-gen-platform/languages/protobuf"
-	"libs/plugins/protoc-gen-platform/shared"
+	_protobuf "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/shared"
 )
 
 var (
@@ -60,7 +60,7 @@ func (m *ProtobufConfigurationModule) Execute(targets map[string]pgs.File, _ map
 
 	// Idempotent looping, use keys for range NOT targets
 	versionedKeys := make(map[string][]string, 0)
-	for k, _ := range targets {
+	for k := range targets {
 		version := fns.GetPackageVersion(targets[k])
 		versionedKeys[version] = append(versionedKeys[version], k)
 	}

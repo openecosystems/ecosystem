@@ -6,22 +6,22 @@ package configurationv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
+	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
-	"libs/partner/go/nats/v2"
-	"libs/partner/go/opentelemetry/v2"
-	"libs/partner/go/protovalidate/v0"
-	"libs/partner/go/zap/v1"
-	"libs/public/go/model/gen/platform/configuration/v2alpha"
-	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 
 	"github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	_ "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 	_ "google.golang.org/protobuf/types/known/anypb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-	_ "libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 
 	"context"
 )

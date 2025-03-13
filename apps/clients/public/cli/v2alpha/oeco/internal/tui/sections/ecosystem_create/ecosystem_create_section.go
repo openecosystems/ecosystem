@@ -4,13 +4,13 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	ecosystemcreatepage "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/ecosystem_create_page"
-	ecosystemdashboardpage "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/ecosystem_dashboard_page"
-	sections "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	ecosystemcreatepage "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/ecosystem_create_page"
+	ecosystemdashboardpage "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/pages/ecosystem_dashboard_page"
+	sections "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sections"
 )
 
 // Model represents the main state containing a base model, key bindings, and tasks for the application.

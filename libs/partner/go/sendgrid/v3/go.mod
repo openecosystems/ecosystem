@@ -1,4 +1,4 @@
-module libs/partner/go/sendgrid/v3
+module github.com/openecosystems/ecosystem/libs/partner/go/sendgrid/v3
 
 go 1.23.4
 

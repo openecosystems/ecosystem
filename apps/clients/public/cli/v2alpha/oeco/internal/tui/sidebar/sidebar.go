@@ -1,16 +1,17 @@
 package sidebar
 
 import (
-	"apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 
 	"github.com/charmbracelet/bubbles/key"
 )
@@ -181,9 +182,8 @@ func (m *BaseModel) GetSidebarContentWidth() int {
 }
 
 // SyncSidebar synchronizes the sidebar state and returns a command for subsequent UI updates.
-func (m *BaseModel) SyncSidebar() tea.Cmd {
-	var cmd tea.Cmd
-	return cmd
+func (m *BaseModel) SyncSidebar() {
+	// var cmd tea.Cmd
 }
 
 // IsOpen returns true if the BaseModel instance is open; otherwise, false.

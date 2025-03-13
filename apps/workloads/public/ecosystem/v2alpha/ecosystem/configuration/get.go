@@ -6,14 +6,14 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 
+	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
+	configurationv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
+	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	natsnodev2 "libs/partner/go/nats/v2"
-	zaploggerv1 "libs/partner/go/zap/v1"
-	configurationv2alphalib "libs/private/go/configuration/v2alpha"
-	configurationv2alphapbmodel "libs/public/go/model/gen/platform/configuration/v2alpha"
-	configurationv2alphapb "libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 )
 
 // GetConfigurationListener represents a listener responsible for handling configuration-related events and requests.

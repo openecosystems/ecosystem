@@ -1,4 +1,4 @@
-module libs/partner/go/charmbracelet/v0
+module github.com/openecosystems/ecosystem/libs/partner/go/charmbracelet/v0
 
 go 1.23.4
 

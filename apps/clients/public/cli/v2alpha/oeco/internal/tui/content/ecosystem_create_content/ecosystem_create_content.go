@@ -5,11 +5,11 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/glamour"
 
-	ecosystemcreateform "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
-	markdown "apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
-	content "apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	ecosystemcreateform "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/form/ecosystem_create_form"
+	markdown "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
+	content "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/content"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 )
 
 var introduction = `

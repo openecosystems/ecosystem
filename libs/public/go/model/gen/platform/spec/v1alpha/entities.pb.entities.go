@@ -4,7 +4,7 @@
 package specentities
 import (
 
-  preference_center "libs/public/go/model/gen/platform/communication/v1alpha"
+  preference_center "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/communication/v1alpha"
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 

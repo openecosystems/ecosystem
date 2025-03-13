@@ -1,4 +1,4 @@
-module libs/private/go/model
+module github.com/openecosystems/ecosystem/libs/private/go/model
 
 go 1.23.4
 

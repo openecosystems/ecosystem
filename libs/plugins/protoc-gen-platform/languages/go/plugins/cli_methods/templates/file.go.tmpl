@@ -14,12 +14,12 @@ import (
     "github.com/apex/log"
     "google.golang.org/protobuf/encoding/protojson"
     "github.com/spf13/cobra"
-    cliv2alphalib "libs/public/go/cli/v2alpha"
+    cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
     "net/http"
-    "libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ else -}}
-    "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
 
 {{ end }}
 

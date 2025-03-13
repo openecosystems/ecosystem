@@ -3,9 +3,10 @@ package context
 import (
 	"github.com/charmbracelet/log"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+
+	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 )
 
 // ProgramContext encapsulates the application UI's state, configuration, and behavior for rendering and interaction.

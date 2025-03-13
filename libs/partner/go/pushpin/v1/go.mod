@@ -1,4 +1,4 @@
-module libs/partner/go/pushpin/v1
+module github.com/openecosystems/ecosystem/libs/partner/go/pushpin/v1
 
 go 1.23.4
 

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"text/template"
 
-	_go "libs/plugins/protoc-gen-platform/languages/go"
-	shared "libs/plugins/protoc-gen-platform/shared"
+	_go "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go"
+	shared "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/shared"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"

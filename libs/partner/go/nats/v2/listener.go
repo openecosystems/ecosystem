@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 	protopb "google.golang.org/protobuf/proto"
 
-	zaploggerv1 "libs/partner/go/zap/v1"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 
 	specproto "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"

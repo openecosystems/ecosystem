@@ -5,13 +5,13 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 
-	data "apps/clients/public/cli/v2alpha/oeco/internal/data"
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	ecosystemcreate "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/ecosystem_create"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	data "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/data"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	ecosystemcreate "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/ecosystem_create"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	cliv2alphalib "libs/public/go/cli/v2alpha"
 )
 
 // Cmd defines a CLI command named "create" for interaction, supporting one optional argument and a short description.

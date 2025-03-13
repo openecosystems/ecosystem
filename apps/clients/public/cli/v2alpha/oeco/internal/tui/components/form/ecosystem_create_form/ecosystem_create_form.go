@@ -11,14 +11,14 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/segmentio/ksuid"
 
-	components "apps/clients/public/cli/v2alpha/oeco/internal/tui/components"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
-	ecosystem "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/ecosystem"
-	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	components "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	tasks "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
+	ecosystem "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks/ecosystem"
+	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 )
 
 // maxWidth defines the maximum allowed width for the application elements, ensuring consistent layout and readability.

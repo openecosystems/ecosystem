@@ -1,4 +1,4 @@
-module apps/workloads/public/ecosystem/v2alpha/ecosystem
+module github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem
 
 go 1.23.4
 

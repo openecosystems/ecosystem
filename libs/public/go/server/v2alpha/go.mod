@@ -1,4 +1,4 @@
-module libs/public/go/server/v2alpha
+module github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha
 
 go 1.23.4
 

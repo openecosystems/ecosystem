@@ -6,9 +6,9 @@ package systemv2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	systemv2alphapbconnect "libs/public/go/protobuf/gen/platform/system/v2alpha/systemv2alphapbconnect"
+	systemv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/system/v2alpha/systemv2alphapbconnect"
 )
 
 func NewSystemServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *systemv2alphapbconnect.SystemServiceClient {

@@ -6,9 +6,9 @@ package cryptographyv2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	cryptographyv2alphapbconnect "libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
+	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 )
 
 func NewEncryptionServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *cryptographyv2alphapbconnect.EncryptionServiceClient {

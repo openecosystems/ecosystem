@@ -3,7 +3,7 @@
   "name": "libs-{{ $apiType }}-go-sdk-{{ $system.LowerCamelCase }}-{{ $version }}",
   "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}",
+  "sourceRoot": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}",
   "implicitDependencies": [
     "proto"
   ],
@@ -13,21 +13,21 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "go build ./...",
-        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+        "cwd": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go test -v ./... -cover -race",
-        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+        "cwd": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go clean",
-        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+        "cwd": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
     "lint": {
@@ -35,7 +35,7 @@
       "options": {
         "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
-        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+        "cwd": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
     "format": {
@@ -43,7 +43,7 @@
       "options": {
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
-        "cwd": "libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
+        "cwd": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}"
       }
     },
     "distribute": {

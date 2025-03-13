@@ -6,9 +6,9 @@ package communicationv1betapbsdk
 import (
 	"connectrpc.com/connect"
 
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	nebulav1 "libs/partner/go/nebula/v1"
-	communicationv1betapbconnect "libs/public/go/protobuf/gen/platform/communication/v1beta/communicationv1betapbconnect"
+	communicationv1betapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1beta/communicationv1betapbconnect"
 )
 
 func NewPreferenceCenterServiceSpecClient(config *specv2pb.Platform, baseURL string, opts ...connect.ClientOption) *communicationv1betapbconnect.PreferenceCenterServiceClient {

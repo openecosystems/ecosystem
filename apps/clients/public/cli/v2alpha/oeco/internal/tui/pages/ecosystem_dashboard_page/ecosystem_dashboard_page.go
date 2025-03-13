@@ -4,14 +4,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	config "apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
-	ecosystemdashboardcontent "apps/clients/public/cli/v2alpha/oeco/internal/tui/content/ecosystem_dashboard_content"
-	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	contract "apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
-	keys "apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
-	pages "apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
-	ecosystemdashboardsidebar "apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/ecosystem_dashboard_sidebar"
 	"github.com/charmbracelet/bubbles/key"
+	config "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/config"
+	ecosystemdashboardcontent "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/content/ecosystem_dashboard_content"
+	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
+	contract "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/contract"
+	keys "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/keys"
+	pages "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/pages"
+	packetssidebar "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sidebar/packets_sidebar"
 )
 
 // ModelConfig represents the configuration structure for initializing and customizing a model instance.
@@ -26,7 +26,7 @@ type Model struct {
 // It sets up a base model, form, main content, and sidebar with dependencies configured from the provided context.
 func NewModel(pctx *context.ProgramContext) contract.Page {
 	m := ecosystemdashboardcontent.NewModel(pctx)
-	s := ecosystemdashboardsidebar.NewModel(pctx)
+	s := packetssidebar.NewModel(pctx)
 
 	baseModel := pages.NewBaseModel(
 		pctx,
@@ -83,8 +83,8 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		switch {
 		case key.Matches(message, keys.Keys.Down):
-			prevRow := m.CurrentMainContent.CurrRow()
-			nextRow := m.Table.NextRow()
+			// prevRow := m.CurrentMainContent.CurrRow()
+			// nextRow := m.Table.NextRow()
 			cmd = m.OnViewedRowChanged()
 		}
 	}
@@ -92,6 +92,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	cmds = append(
 		cmds,
 		baseCmd,
+		cmd,
 	)
 
 	return m, tea.Batch(cmds...)
@@ -113,8 +114,9 @@ func (m *Model) View() string {
 	// return s.String()
 }
 
+// OnViewedRowChanged synchronizes the sidebar and scrolls it to the top whenever the viewed row in the UI changes.
 func (m *Model) OnViewedRowChanged() tea.Cmd {
-	cmd := m.CurrentSidebar.SyncSidebar()
+	m.CurrentSidebar.SyncSidebar()
 	m.CurrentSidebar.ScrollToTop()
-	return cmd
+	return tea.Batch()
 }

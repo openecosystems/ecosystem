@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"sync"
 
+	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	natsnodev2 "libs/partner/go/nats/v2"
 
 	"github.com/nats-io/nats.go/jetstream"
 )

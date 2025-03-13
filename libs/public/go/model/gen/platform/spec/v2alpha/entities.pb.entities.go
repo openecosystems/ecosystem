@@ -4,17 +4,17 @@
 package specentities
 import (
 
-  configuration "libs/public/go/model/gen/platform/configuration/v2alpha"
+  configuration "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
 
-  certificate "libs/public/go/model/gen/platform/cryptography/v2alpha"
+  certificate "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/cryptography/v2alpha"
 
-  ecosystem "libs/public/go/model/gen/platform/ecosystem/v2alpha"
+  ecosystem "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/ecosystem/v2alpha"
 
-  account "libs/public/go/model/gen/platform/iam/v2alpha"
+  account "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
 
-  account_authority "libs/public/go/model/gen/platform/iam/v2alpha"
+  account_authority "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
 
-  system "libs/public/go/model/gen/platform/system/v2alpha"
+  system "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/system/v2alpha"
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
