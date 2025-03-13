@@ -7,8 +7,6 @@ import (
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
-	connectorv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/connector/v2alpha"
-
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -20,7 +18,7 @@ func main() {
 		&configurationv2alphalib.Binding{},
 	}
 
-	connector := connectorv2alphalib.NewConnector(context.Background(), bounds)
+	connector := sdkv2alphalib.NewConnector(context.Background(), bounds)
 	connector.ListenAndProcess()
 
 	//_ = []sdkv2alphalib.Binding{

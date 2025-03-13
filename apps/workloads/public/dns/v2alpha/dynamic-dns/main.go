@@ -6,8 +6,8 @@ import (
 
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
+	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/platform/cryptography/v2alpha"
 	serverv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha"
-	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha/platform/cryptography/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

@@ -37,13 +37,15 @@ type Entity interface {
 	SystemName() string
 }
 
-// Connector defines an interface for managing and resolving methods by their paths.
-type Connector interface {
+// Connectable defines an interface for managing and resolving methods by their paths.
+type Connectable interface {
 	MethodsByPath() map[string]*Method
 }
 
 // Service is an interface that defines a contract for implementing service-related functionalities.
-type Service interface{}
+type Service interface {
+	IsService() bool
+}
 
 // Method defines an interface for describing a method in a protocol with its name, input, output, and schema details.
 type Method interface {
@@ -54,4 +56,6 @@ type Method interface {
 }
 
 // Client represents an abstract interface for defining client-side functionality or behavior.
-type Client interface{}
+type Client interface {
+	IsClient() bool
+}

@@ -214,7 +214,7 @@ func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, err
 		}
 	}
 
-	WithPlatformContext(ctx).apply(cfg)
+	WithConfigurationPlatformContext(ctx).apply(cfg)
 
 	return &Configurer{
 		Filesystem: filesystem,
@@ -526,55 +526,55 @@ type ConfigurationProviderOption interface {
 	apply(*configurationProviderOption)
 }
 
-type optionFunc func(*configurationProviderOption)
+type configurationOptionFunc func(*configurationProviderOption)
 
-func (f optionFunc) apply(cfg *configurationProviderOption) { f(cfg) }
+func (f configurationOptionFunc) apply(cfg *configurationProviderOption) { f(cfg) }
 
 // WithOptions composes multiple Options into one.
 func WithOptions(opts ...ConfigurationProviderOption) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		for _, opt := range opts {
 			opt.apply(cfg)
 		}
 	})
 }
 
-func WithPlatformContext(context string) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
+func WithConfigurationPlatformContext(context string) ConfigurationProviderOption {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.PlatformContext = context
 	})
 }
 
 // WithConfigPathPrefix sets the configuration path in the settings provider options to the given path.
 func WithConfigPathPrefix(prefix string) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.ConfigPathPrefix = prefix
 	})
 }
 
 // WithConfigPath an additional path to look for settings. Can either be relative to the binary or absolute
 func WithConfigPath(path string) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.ConfigPath = path
 	})
 }
 
 func WithWatchSettings(watch bool) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.WatchSettings = watch
 	})
 }
 
 func WithRuntimeOverrides(overrides RuntimeConfigurationOverrides) ConfigurationProviderOption {
 	overrides.Overridden = true
-	return optionFunc(func(cfg *configurationProviderOption) {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.RuntimeConfigurationOverrides = overrides
 	})
 }
 
 // WithConfigurer an additional path to look for settings. Can either be relative to the binary or absolute
 func WithConfigurer(configurer *Configurer) ConfigurationProviderOption {
-	return optionFunc(func(cfg *configurationProviderOption) {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.Configurer = configurer
 	})
 }

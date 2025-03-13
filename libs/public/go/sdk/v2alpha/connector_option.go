@@ -1,4 +1,4 @@
-package connectorv2alphalib
+package sdkv2alphalib
 
 import (
 	"fmt"

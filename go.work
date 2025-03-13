@@ -28,6 +28,13 @@ use (
 	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
 	./infrastructure/apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
+
+	// Partner libraries
+	// ===================================
+	./libs/partner/go/sendgrid/v3
+	./libs/partner/go/server/v2alpha
+	./libs/partner/go/tink/v2
+	./libs/partner/go/zap/v1
 	./libs/partner/go/charmbracelet/v0
 	./libs/partner/go/github/v3
 	./libs/partner/go/model
@@ -37,13 +44,6 @@ use (
 	./libs/partner/go/protobuf
 	./libs/partner/go/protovalidate/v0
 	./libs/partner/go/pushpin/v1
-
-	// Partner libraries
-	// ===================================
-	./libs/partner/go/sendgrid/v3
-	./libs/partner/go/server/v2alpha
-	./libs/partner/go/tink/v2
-	./libs/partner/go/zap/v1
 
 	// Plugin libraries
 	// ===================================
@@ -73,7 +73,6 @@ use (
 	// Public libraries
 	// ===================================
 	./libs/public/go/cli/v2alpha
-	./libs/public/go/connector/v2alpha
 	./libs/public/go/model
 	./libs/public/go/protobuf
 
@@ -87,6 +86,5 @@ use (
 	./libs/public/go/sdk/gen/iam/v2alpha
 	./libs/public/go/sdk/gen/system/v2alpha
 	./libs/public/go/sdk/v2alpha
-	./libs/public/go/server/v2alpha
 
 )
