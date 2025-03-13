@@ -2,7 +2,7 @@
 // source: platform/audit/v2alpha/audit.proto
 module libs/private/go/sdk/gen/audit/v2alpha
 
-go 1.23
+go 1.23.4
 
 require connectrpc.com/connect v1.17.0
 

@@ -396,46 +396,6 @@ export declare type Ecosystem = Message<"platform.ecosystem.v2alpha.Ecosystem"> 
 export declare const EcosystemSchema: GenMessage<Ecosystem>;
 
 /**
- * @generated from enum platform.ecosystem.v2alpha.EcosystemPeerType
- */
-export enum EcosystemPeerType {
-  /**
-   * @generated from enum value: ECOSYSTEM_PEER_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
-
-  /**
-   * @generated from enum value: ECOSYSTEM_PEER_TYPE_SERVICE_ACCOUNT = 1;
-   */
-  SERVICE_ACCOUNT = 1,
-
-  /**
-   * @generated from enum value: ECOSYSTEM_PEER_TYPE_EDGE = 2;
-   */
-  EDGE = 2,
-
-  /**
-   * @generated from enum value: ECOSYSTEM_PEER_TYPE_ECOSYSTEM_MULTIPLEXER = 3;
-   */
-  ECOSYSTEM_MULTIPLEXER = 3,
-
-  /**
-   * @generated from enum value: ECOSYSTEM_PEER_TYPE_CONNECTOR = 4;
-   */
-  CONNECTOR = 4,
-
-  /**
-   * @generated from enum value: ECOSYSTEM_PEER_TYPE_HOST = 5;
-   */
-  HOST = 5,
-}
-
-/**
- * Describes the enum platform.ecosystem.v2alpha.EcosystemPeerType.
- */
-export declare const EcosystemPeerTypeSchema: GenEnum<EcosystemPeerType>;
-
-/**
  * Supported ecosystem type
  *
  * @generated from enum platform.ecosystem.v2alpha.EcosystemType

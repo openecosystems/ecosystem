@@ -9,7 +9,8 @@ import (
 	pcontext "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	nebulav1ca "libs/partner/go/nebula/v1/ca"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // LocalAccountAuthorityMsg represents a command message used for communication or signaling within a program or system.

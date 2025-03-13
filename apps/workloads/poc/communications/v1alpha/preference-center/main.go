@@ -7,7 +7,8 @@ import (
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
 	connectorv2alphalib "libs/public/go/connector/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 func main() {

@@ -8,7 +8,7 @@ import (
 	"os"
 	"sync"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	"github.com/apex/log"
 	"github.com/oapi-codegen/oapi-codegen/v2/pkg/securityprovider"

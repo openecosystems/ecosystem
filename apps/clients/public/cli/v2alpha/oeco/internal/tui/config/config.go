@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // TuiConfigurationFileName defines the default name of the configuration file used for TUI-related settings.

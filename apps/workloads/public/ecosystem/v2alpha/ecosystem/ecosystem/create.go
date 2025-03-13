@@ -9,6 +9,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	natsnodev2 "libs/partner/go/nats/v2"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	configurationv2alphalib "libs/private/go/configuration/v2alpha"
@@ -16,7 +17,6 @@ import (
 	typev2pb "libs/protobuf/go/protobuf/gen/platform/type/v2"
 	ecosystemv2alphapbmodel "libs/public/go/model/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapb "libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // CreateEcosystemListener is a struct that listens for create configuration events and processes them.

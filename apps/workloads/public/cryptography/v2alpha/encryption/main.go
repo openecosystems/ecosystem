@@ -7,10 +7,11 @@ import (
 	tinkv2 "libs/partner/go/tink/v2"
 	zaploggerv1 "libs/partner/go/zap/v1"
 	"libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	serverv2alphalib "libs/public/go/server/v2alpha"
 	cryptographyv2alphasrv "libs/public/go/server/v2alpha/platform/cryptography/v2alpha"
 	"os"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"

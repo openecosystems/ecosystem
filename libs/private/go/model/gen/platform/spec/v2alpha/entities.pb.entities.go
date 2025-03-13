@@ -5,7 +5,7 @@ package specentities
 import (
 
   audit "libs/private/go/model/gen/platform/audit/v2alpha"
-  "libs/public/go/sdk/v2alpha"
+  "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{

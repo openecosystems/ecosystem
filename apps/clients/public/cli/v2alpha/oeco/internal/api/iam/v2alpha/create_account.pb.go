@@ -16,7 +16,8 @@ import (
 	cliv2alphalib "libs/public/go/cli/v2alpha"
 	iamv2alphapb "libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	iamv2alphapbconnect "libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // createAccountRequest stores the request data for creating an account.

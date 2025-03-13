@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // Configuration represents the configuration settings for Opentelemetry providers used in the binding.

@@ -6,15 +6,15 @@ import (
 	"fmt"
 	"time"
 
-	zaploggerv1 "libs/partner/go/zap/v1"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 
 	"connectrpc.com/connect"
 
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
+	zaploggerv1 "libs/partner/go/zap/v1"
 )
 
 // MultiplexCommandSync sends a command synchronously by publishing it to a NATS stream and awaiting a reply.

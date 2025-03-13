@@ -5,9 +5,10 @@ import (
 	"fmt"
 	nebulav1 "libs/partner/go/nebula/v1"
 	cryptographyv2alphapbconnect "libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 	serverv2alphalib "libs/public/go/server/v2alpha"
 	cryptographyv2alphasrv "libs/public/go/server/v2alpha/platform/cryptography/v2alpha"
+
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 func main() {

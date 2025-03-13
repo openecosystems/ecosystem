@@ -5,7 +5,7 @@ package specentities
 import (
 
   reference "libs/poc/go/model/gen/platform/reference/v2alpha"
-  "libs/public/go/sdk/v2alpha"
+  "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{

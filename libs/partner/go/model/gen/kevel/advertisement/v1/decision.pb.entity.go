@@ -8,9 +8,9 @@ import (
 	"encoding/json"
 
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"google.golang.org/protobuf/types/known/anypb"
 	"libs/partner/go/protobuf/gen/kevel/advertisement/v1"
-	"libs/public/go/sdk/v2alpha"
 
 	specv2pb "libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )

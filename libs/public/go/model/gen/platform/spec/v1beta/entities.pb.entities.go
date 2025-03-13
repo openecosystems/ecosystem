@@ -5,7 +5,7 @@ package specentities
 import (
 
   preference_center "libs/public/go/model/gen/platform/communication/v1beta"
-  "libs/public/go/sdk/v2alpha"
+  "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 var Registry = []sdkv2alphalib.Entity{

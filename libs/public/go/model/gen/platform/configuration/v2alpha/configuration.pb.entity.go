@@ -8,8 +8,8 @@ import (
 	"encoding/json"
 
 	"errors"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	"libs/public/go/sdk/v2alpha"
 
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"

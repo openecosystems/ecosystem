@@ -10,8 +10,8 @@ import (
 	context "apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	ecosystemcreate "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/ecosystem_create"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	cliv2alphalib "libs/public/go/cli/v2alpha"
-	sdkv2alphalib "libs/public/go/sdk/v2alpha"
 )
 
 // Cmd defines a CLI command named "create" for interaction, supporting one optional argument and a short description.
