@@ -2,7 +2,7 @@
 
 projectRoot := $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 export projectRoot
-repoRoot := $(abspath ${projectRoot}/../../../../../)
+repoRoot := $(abspath ${projectRoot}/../../../../)
 protoRoot := $(abspath ${repoRoot}/proto)
 version := 1.40.1
 PATH_TO_CHECK_FILE = ${projectRoot}/bin/${version}

@@ -34,16 +34,16 @@ use (
 	./libs/partner/go/sendgrid/v3
 	./libs/partner/go/server/v2alpha
 	./libs/partner/go/tink/v2
-	./libs/partner/go/zap/v1
+	./libs/partner/go/zap
 	./libs/partner/go/charmbracelet/v0
 	./libs/partner/go/github/v3
 	./libs/partner/go/model
 	./libs/partner/go/nats/v2
-	./libs/partner/go/nebula/v1
+	./libs/partner/go/nebula
 	./libs/partner/go/opentelemetry/v2
 	./libs/partner/go/protobuf
 	./libs/partner/go/protovalidate/v0
-	./libs/partner/go/pushpin/v1
+	./libs/partner/go/pushpin
 
 	// Plugin libraries
 	// ===================================
