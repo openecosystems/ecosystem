@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	opentelemetryv1 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
+	opentelemetryv1 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 
 	"connectrpc.com/connect"
 
 	tinkv2 "github.com/openecosystems/ecosystem/libs/partner/go/tink/v2"
-	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 
 	"go.opentelemetry.io/otel/trace"
 )

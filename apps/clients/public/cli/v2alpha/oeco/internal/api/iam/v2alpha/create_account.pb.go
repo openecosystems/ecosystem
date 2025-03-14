@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
 	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"

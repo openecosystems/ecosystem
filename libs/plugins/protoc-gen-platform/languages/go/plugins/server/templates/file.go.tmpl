@@ -5,8 +5,8 @@
 package {{ package . }}srv
 import (
   "connectrpc.com/connect"
-  "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-  "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
+  "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+  "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
   {{- if $s }}
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
   {{ end -}}

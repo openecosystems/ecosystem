@@ -1,4 +1,4 @@
-module github.com/openecosystems/ecosystem/libs/partner/go/zap/v1
+module github.com/openecosystems/ecosystem/libs/partner/go/zap
 
 go 1.23.4
 

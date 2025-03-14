@@ -1,4 +1,4 @@
-module github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1
+module github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry
 
 go 1.23.4
 

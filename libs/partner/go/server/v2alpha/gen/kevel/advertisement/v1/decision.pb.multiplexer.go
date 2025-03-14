@@ -4,14 +4,17 @@
 package advertisementv1pbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
+
+	"connectrpc.com/connect"
+
 	"github.com/openecosystems/ecosystem/libs/partner/go/model/gen/kevel/advertisement/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protobuf/gen/kevel/advertisement/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -19,15 +22,12 @@ import (
 	"github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-
-	"context"
 )
 
 // DecisionServiceHandler is the domain level implementation of the server API for mutations of the DecisionService service
 type DecisionServiceHandler struct{}
 
 func (s *DecisionServiceHandler) GetDecisions(ctx context.Context, req *connect.Request[advertisementv1pb.GetDecisionsRequest]) (*connect.Response[advertisementv1pb.GetDecisionsResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -82,11 +82,9 @@ func (s *DecisionServiceHandler) GetDecisions(ctx context.Context, req *connect.
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) AddCustomProperties(ctx context.Context, req *connect.Request[advertisementv1pb.AddCustomPropertiesRequest]) (*connect.Response[advertisementv1pb.AddCustomPropertiesResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -141,11 +139,9 @@ func (s *DecisionServiceHandler) AddCustomProperties(ctx context.Context, req *c
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) Forget(ctx context.Context, req *connect.Request[advertisementv1pb.ForgetRequest]) (*connect.Response[advertisementv1pb.ForgetResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -200,11 +196,9 @@ func (s *DecisionServiceHandler) Forget(ctx context.Context, req *connect.Reques
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) GdprConsent(ctx context.Context, req *connect.Request[advertisementv1pb.GdprConsentRequest]) (*connect.Response[advertisementv1pb.GdprConsentResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -259,11 +253,9 @@ func (s *DecisionServiceHandler) GdprConsent(ctx context.Context, req *connect.R
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) AddInterests(ctx context.Context, req *connect.Request[advertisementv1pb.AddInterestsRequest]) (*connect.Response[advertisementv1pb.AddInterestsResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -318,11 +310,9 @@ func (s *DecisionServiceHandler) AddInterests(ctx context.Context, req *connect.
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) AddRetargetingSegment(ctx context.Context, req *connect.Request[advertisementv1pb.AddRetargetingSegmentRequest]) (*connect.Response[advertisementv1pb.AddRetargetingSegmentResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -377,11 +367,9 @@ func (s *DecisionServiceHandler) AddRetargetingSegment(ctx context.Context, req 
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) OptOut(ctx context.Context, req *connect.Request[advertisementv1pb.OptOutRequest]) (*connect.Response[advertisementv1pb.OptOutResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -436,11 +424,9 @@ func (s *DecisionServiceHandler) OptOut(ctx context.Context, req *connect.Reques
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) Read(ctx context.Context, req *connect.Request[advertisementv1pb.ReadRequest]) (*connect.Response[advertisementv1pb.ReadResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -495,11 +481,9 @@ func (s *DecisionServiceHandler) Read(ctx context.Context, req *connect.Request[
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) IpOverride(ctx context.Context, req *connect.Request[advertisementv1pb.IpOverrideRequest]) (*connect.Response[advertisementv1pb.IpOverrideResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -554,11 +538,9 @@ func (s *DecisionServiceHandler) IpOverride(ctx context.Context, req *connect.Re
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *DecisionServiceHandler) MatchUser(ctx context.Context, req *connect.Request[advertisementv1pb.MatchUserRequest]) (*connect.Response[advertisementv1pb.MatchUserResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -613,5 +595,4 @@ func (s *DecisionServiceHandler) MatchUser(ctx context.Context, req *connect.Req
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }

@@ -4,12 +4,15 @@
 package systemv2alphapbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+
+	"connectrpc.com/connect"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/system/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/system/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
@@ -20,15 +23,12 @@ import (
 
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-
-	"context"
 )
 
 // SystemServiceHandler is the domain level implementation of the server API for mutations of the SystemService service
 type SystemServiceHandler struct{}
 
 func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[systemv2alphapb.EnableRequest]) (*connect.Response[systemv2alphapb.EnableResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -83,11 +83,9 @@ func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *SystemServiceHandler) Disable(ctx context.Context, req *connect.Request[systemv2alphapb.DisableRequest]) (*connect.Response[systemv2alphapb.DisableResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -142,5 +140,4 @@ func (s *SystemServiceHandler) Disable(ctx context.Context, req *connect.Request
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }

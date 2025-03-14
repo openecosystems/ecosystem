@@ -5,8 +5,8 @@ import (
 
 	"github.com/nats-io/nats.go/jetstream"
 
-	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	cryptographyv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/cryptography/v2alpha"
