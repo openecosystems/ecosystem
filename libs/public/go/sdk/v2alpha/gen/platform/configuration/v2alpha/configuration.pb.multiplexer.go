@@ -4,12 +4,15 @@
 package configurationv2alphapbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+
+	"connectrpc.com/connect"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
@@ -22,15 +25,12 @@ import (
 	_ "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ontology/v2alpha"
 	_ "google.golang.org/protobuf/types/known/anypb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-
-	"context"
 )
 
 // ConfigurationServiceHandler is the domain level implementation of the server API for mutations of the ConfigurationService service
 type ConfigurationServiceHandler struct{}
 
 func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.CreateConfigurationRequest]) (*connect.Response[configurationv2alphapb.CreateConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -85,11 +85,9 @@ func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, r
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.UpdateConfigurationRequest]) (*connect.Response[configurationv2alphapb.UpdateConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -144,11 +142,9 @@ func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, r
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.LoadConfigurationRequest]) (*connect.Response[configurationv2alphapb.LoadConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -203,11 +199,9 @@ func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.DeleteConfigurationRequest]) (*connect.Response[configurationv2alphapb.DeleteConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -262,11 +256,9 @@ func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, r
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.PublishConfigurationRequest]) (*connect.Response[configurationv2alphapb.PublishConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -321,11 +313,9 @@ func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, 
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.ArchiveConfigurationRequest]) (*connect.Response[configurationv2alphapb.ArchiveConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -380,11 +370,9 @@ func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, 
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, req *connect.Request[configurationv2alphapb.ListConfigurationsRequest]) (*connect.Response[configurationv2alphapb.ListConfigurationsResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -439,11 +427,9 @@ func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, re
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.GetConfigurationRequest]) (*connect.Response[configurationv2alphapb.GetConfigurationResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -498,5 +484,4 @@ func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req 
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }

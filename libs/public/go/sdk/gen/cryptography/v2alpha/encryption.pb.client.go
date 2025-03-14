@@ -6,7 +6,7 @@ package cryptographyv2alphapbsdk
 import (
 	"connectrpc.com/connect"
 
-	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
+	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 )

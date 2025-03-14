@@ -4,12 +4,15 @@
 package ecosystemv2alphapbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+
+	"connectrpc.com/connect"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/ecosystem/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
@@ -20,15 +23,12 @@ import (
 
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-
-	"context"
 )
 
 // EcosystemServiceHandler is the domain level implementation of the server API for mutations of the EcosystemService service
 type EcosystemServiceHandler struct{}
 
 func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.CreateEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.CreateEcosystemResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -83,11 +83,9 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.UpdateEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.UpdateEcosystemResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -142,11 +140,9 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.DeleteEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.DeleteEcosystemResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -201,11 +197,9 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *connect.Request[ecosystemv2alphapb.ListEcosystemsRequest]) (*connect.Response[ecosystemv2alphapb.ListEcosystemsResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -260,11 +254,9 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.GetEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.GetEcosystemResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -319,5 +311,4 @@ func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }

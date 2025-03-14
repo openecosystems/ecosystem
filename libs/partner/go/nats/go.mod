@@ -1,4 +1,4 @@
-module github.com/openecosystems/ecosystem/libs/partner/go/nats/v1
+module github.com/openecosystems/ecosystem/libs/partner/go/nats
 
 go 1.23.4
 

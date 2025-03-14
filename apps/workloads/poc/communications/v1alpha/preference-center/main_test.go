@@ -5,7 +5,7 @@ import (
 
 	"github.com/openecosystems/ecosystem/libs/partner/go/sendgrid/v3/contacts"
 	"github.com/openecosystems/ecosystem/libs/partner/go/sendgrid/v3/lists"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )

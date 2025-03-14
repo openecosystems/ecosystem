@@ -5,7 +5,7 @@ package {{ package . }}sdk
 import (
     "connectrpc.com/connect"
 
-    nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
+    nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
     specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
     {{ package . }}connect "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/{{ package . }}connect"
 )

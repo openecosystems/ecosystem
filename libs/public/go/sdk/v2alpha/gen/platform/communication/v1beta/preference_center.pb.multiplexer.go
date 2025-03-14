@@ -4,12 +4,15 @@
 package communicationv1betapbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+
+	"connectrpc.com/connect"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/communication/v1beta"
 	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1beta"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
@@ -20,15 +23,12 @@ import (
 
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-
-	"context"
 )
 
 // PreferenceCenterServiceHandler is the domain level implementation of the server API for mutations of the PreferenceCenterService service
 type PreferenceCenterServiceHandler struct{}
 
 func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Context, req *connect.Request[communicationv1betapb.CreateOrUpdatePreferenceRequest]) (*connect.Response[communicationv1betapb.CreateOrUpdatePreferenceResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -83,11 +83,9 @@ func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Co
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, req *connect.Request[communicationv1betapb.DeletePreferenceRequest]) (*connect.Response[communicationv1betapb.DeletePreferenceResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -142,11 +140,9 @@ func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, r
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req *connect.Request[communicationv1betapb.GetPreferenceRequest]) (*connect.Response[communicationv1betapb.GetPreferenceResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -201,11 +197,9 @@ func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req 
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *PreferenceCenterServiceHandler) GetPreferenceOptions(ctx context.Context, req *connect.Request[communicationv1betapb.GetPreferenceOptionsRequest]) (*connect.Response[communicationv1betapb.GetPreferenceOptionsResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -260,5 +254,4 @@ func (s *PreferenceCenterServiceHandler) GetPreferenceOptions(ctx context.Contex
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }

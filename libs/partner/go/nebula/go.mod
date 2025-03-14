@@ -1,4 +1,4 @@
-module github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1
+module github.com/openecosystems/ecosystem/libs/partner/go/nebula
 
 go 1.23.4
 

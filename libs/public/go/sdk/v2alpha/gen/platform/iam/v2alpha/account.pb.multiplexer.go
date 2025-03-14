@@ -4,12 +4,15 @@
 package iamv2alphapbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+
+	"connectrpc.com/connect"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
@@ -21,15 +24,12 @@ import (
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-
-	"context"
 )
 
 // AccountServiceHandler is the domain level implementation of the server API for mutations of the AccountService service
 type AccountServiceHandler struct{}
 
 func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.Request[iamv2alphapb.CreateAccountRequest]) (*connect.Response[iamv2alphapb.CreateAccountResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -84,11 +84,9 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.Request[iamv2alphapb.VerifyAccountRequest]) (*connect.Response[iamv2alphapb.VerifyAccountResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -143,11 +141,9 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Request[iamv2alphapb.SignAccountRequest]) (*connect.Response[iamv2alphapb.SignAccountResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -202,5 +198,4 @@ func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Re
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }

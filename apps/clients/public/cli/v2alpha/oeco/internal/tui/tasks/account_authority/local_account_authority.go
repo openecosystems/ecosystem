@@ -7,7 +7,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	pcontext "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
 	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"

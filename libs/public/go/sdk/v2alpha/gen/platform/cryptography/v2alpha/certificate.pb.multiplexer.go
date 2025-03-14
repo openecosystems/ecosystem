@@ -4,12 +4,15 @@
 package cryptographyv2alphapbsrv
 
 import (
-	"connectrpc.com/connect"
+	"context"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
-	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
+
+	"connectrpc.com/connect"
+
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
+	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
+	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/cryptography/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
@@ -22,15 +25,12 @@ import (
 	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
-
-	"context"
 )
 
 // CertificateServiceHandler is the domain level implementation of the server API for mutations of the CertificateService service
 type CertificateServiceHandler struct{}
 
 func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.VerifyCertificateRequest]) (*connect.Response[cryptographyv2alphapb.VerifyCertificateResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -85,11 +85,9 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
 
 func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.SignCertificateRequest]) (*connect.Response[cryptographyv2alphapb.SignCertificateResponse], error) {
-
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
@@ -144,5 +142,4 @@ func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *co
 	handlerSpan.End()
 
 	return connect.NewResponse(&dd), nil
-
 }
