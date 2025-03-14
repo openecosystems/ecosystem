@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
@@ -22,17 +22,17 @@ import (
 type CreateAccountListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateAccountListener, including entity, subject, and queue details.
-func (l *CreateAccountListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
+func (l *CreateAccountListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
 	entity := &iamv2alphapbmodel.AccountSpecEntity{}
-	streamType := natsnodev2.InboundStream{}
-	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev2.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
+	streamType := natsnodev1.InboundStream{}
+	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
+	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
-	return &natsnodev2.ListenerConfiguration{
+	return &natsnodev1.ListenerConfiguration{
 		Entity:     &iamv2alphapbmodel.AccountSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
-		StreamType: &natsnodev2.InboundStream{},
+		StreamType: &natsnodev1.InboundStream{},
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
 			Durable:       "iam-createAccount",
 			AckPolicy:     jetstream.AckExplicitPolicy,
@@ -45,11 +45,11 @@ func (l *CreateAccountListener) GetConfiguration() *natsnodev2.ListenerConfigura
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateAccountListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
-func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
+func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev1.ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
 
 	if request.Spec == nil {
@@ -101,5 +101,5 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev2
 	}
 	log.Info("Create Account Response", zap.Any("id", response.Account.Id))
 
-	natsnodev2.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToSyncCommand(ctx, request, &response)
 }

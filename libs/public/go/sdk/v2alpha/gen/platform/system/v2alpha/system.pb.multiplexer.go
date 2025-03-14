@@ -6,8 +6,8 @@ package systemv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/system/v2alpha"
@@ -29,7 +29,7 @@ type SystemServiceHandler struct{}
 
 func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[systemv2alphapb.EnableRequest]) (*connect.Response[systemv2alphapb.EnableResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -61,9 +61,9 @@ func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := systemv2alphapbmodel.SystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   systemv2alphapbmodel.CommandDataSystemTopic,
 		EntityTypeName: entity.TypeName(),
@@ -88,7 +88,7 @@ func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[
 
 func (s *SystemServiceHandler) Disable(ctx context.Context, req *connect.Request[systemv2alphapb.DisableRequest]) (*connect.Response[systemv2alphapb.DisableResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -120,9 +120,9 @@ func (s *SystemServiceHandler) Disable(ctx context.Context, req *connect.Request
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := systemv2alphapbmodel.SystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   systemv2alphapbmodel.CommandDataSystemTopic,
 		EntityTypeName: entity.TypeName(),

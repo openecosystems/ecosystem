@@ -13,10 +13,10 @@ import (
 	ecosystem "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
 	iam "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
 	internal "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/internal"
-	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
-	opentelemetryv2 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	opentelemetryv1 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	advertisementv1pbconnect "github.com/openecosystems/ecosystem/libs/partner/go/protobuf/gen/kevel/advertisement/v1/advertisementv1pbconnect"
 	protovalidatev0 "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	advertisementv1pbsrv "github.com/openecosystems/ecosystem/libs/partner/go/server/v2alpha/gen/kevel/advertisement/v1"
@@ -34,11 +34,11 @@ import (
 func main() {
 	bounds := []sdkv2alphalib.Binding{
 		&protovalidatev0.Binding{},
-		&opentelemetryv2.Binding{},
+		&opentelemetryv1.Binding{},
 		&zaploggerv1.Binding{},
 		&nebulav1ca.Binding{},
 		&nebulav1.Binding{},
-		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
+		&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
 			&ecosystem.CreateEcosystemListener{},
 			&configuration.CreateConfigurationListener{},
 			&configuration.GetConfigurationListener{},

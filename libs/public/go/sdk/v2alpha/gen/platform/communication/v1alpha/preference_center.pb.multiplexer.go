@@ -6,8 +6,8 @@ package communicationv1alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/communication/v1alpha"
@@ -29,7 +29,7 @@ type PreferenceCenterServiceHandler struct{}
 
 func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Context, req *connect.Request[communicationv1alphapb.CreateOrUpdatePreferenceRequest]) (*connect.Response[communicationv1alphapb.CreateOrUpdatePreferenceResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -61,9 +61,9 @@ func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Co
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := communicationv1alphapbmodel.PreferenceCenterSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   communicationv1alphapbmodel.CommandDataPreferenceCenterTopic,
 		EntityTypeName: entity.TypeName(),
@@ -88,7 +88,7 @@ func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Co
 
 func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, req *connect.Request[communicationv1alphapb.DeletePreferenceRequest]) (*connect.Response[communicationv1alphapb.DeletePreferenceResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -120,9 +120,9 @@ func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, r
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := communicationv1alphapbmodel.PreferenceCenterSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   communicationv1alphapbmodel.CommandDataPreferenceCenterTopic,
 		EntityTypeName: entity.TypeName(),
@@ -147,7 +147,7 @@ func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, r
 
 func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req *connect.Request[communicationv1alphapb.GetPreferenceRequest]) (*connect.Response[communicationv1alphapb.GetPreferenceResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -179,9 +179,9 @@ func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req 
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := communicationv1alphapbmodel.PreferenceCenterSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     communicationv1alphapbmodel.EventDataPreferenceCenterTopic,
 		EntityTypeName: entity.TypeName(),
@@ -206,7 +206,7 @@ func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req 
 
 func (s *PreferenceCenterServiceHandler) GetPreferenceOptions(ctx context.Context, req *connect.Request[communicationv1alphapb.GetPreferenceOptionsRequest]) (*connect.Response[communicationv1alphapb.GetPreferenceOptionsResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -238,9 +238,9 @@ func (s *PreferenceCenterServiceHandler) GetPreferenceOptions(ctx context.Contex
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := communicationv1alphapbmodel.PreferenceCenterSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     communicationv1alphapbmodel.EventDataPreferenceCenterTopic,
 		EntityTypeName: entity.TypeName(),

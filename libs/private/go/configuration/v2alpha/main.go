@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	"github.com/nats-io/nats.go/jetstream"
@@ -37,7 +37,7 @@ func (b *Binding) Name() string {
 
 // Validate checks if the Nats Node module is bound, ensuring it is required for the binding to function properly.
 func (b *Binding) Validate(_ context.Context, _ *sdkv2alphalib.Bindings) error {
-	if natsnodev2.Bound == nil {
+	if natsnodev1.Bound == nil {
 		fmt.Println("Please bind the Nats Node module to use this binding")
 		panic("")
 	}
@@ -53,7 +53,7 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2alphalib.Bindings) *s
 			func() {
 				bn := b.configuration.App.EnvironmentName + "-configuration"
 
-				js := *natsnodev2.Bound.JetStream
+				js := *natsnodev1.Bound.JetStream
 				cs, err := js.CreateOrUpdateKeyValue(ctx, jetstream.KeyValueConfig{
 					Bucket:       bn,
 					Description:  "",

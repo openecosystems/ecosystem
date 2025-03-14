@@ -9,7 +9,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
@@ -23,17 +23,17 @@ import (
 type CreateEcosystemListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateEcosystemListener, including entity, subject, and queue details.
-func (l *CreateEcosystemListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
+func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
 	entity := &ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	streamType := natsnodev2.InboundStream{}
-	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev2.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
+	streamType := natsnodev1.InboundStream{}
+	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
+	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
-	return &natsnodev2.ListenerConfiguration{
+	return &natsnodev1.ListenerConfiguration{
 		Entity:     &ecosystemv2alphapbmodel.EcosystemSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
-		StreamType: &natsnodev2.InboundStream{},
+		StreamType: &natsnodev1.InboundStream{},
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
 			Durable:       "ecosystem-createEcosystem",
 			AckPolicy:     jetstream.AckExplicitPolicy,
@@ -46,11 +46,11 @@ func (l *CreateEcosystemListener) GetConfiguration() *natsnodev2.ListenerConfigu
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
-func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
+func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnodev1.ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
 	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 
@@ -98,5 +98,5 @@ func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnode
 	}
 	log.Info("Create Ecosystem Response", zap.Any("id", response.Ecosystem.Id))
 
-	natsnodev2.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToSyncCommand(ctx, request, &response)
 }

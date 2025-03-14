@@ -25,7 +25,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "libs/partner/go/protobuf/gen/kevel/advertisement/v1;advertisementv1pb";
+option go_package = "github.com/openecosystems/ecosystem/libs/partner/go/protobuf/gen/kevel/advertisement/v1;advertisementv1pb";
 
 service DecisionService {
   rpc GetDecisions ( GetDecisionsRequest ) returns ( GetDecisionsResponse ) {

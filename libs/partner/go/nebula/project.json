@@ -1,0 +1,51 @@
+{
+  "name": "libs-partner-go-nebula-v1",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/partner/go/nebula",
+  "implicitDependencies": ["proto", "protoc-gen-platform"],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/libs/partner/go/nebula/ca/bin"
+      ],
+      "options": {
+        "commands": [
+          "make generate"
+        ],
+        "parallel": false,
+        "cwd": "libs/partner/go/nebula"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/partner/go/nebula"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["golangci-lint run ./... --timeout=5m"],
+        "parallel": false,
+        "cwd": "libs/partner/go/nebula"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "libs/partner/go/nebula"
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "visibility:private",
+    "exposure:internal",
+    "language:golang"
+  ]
+}

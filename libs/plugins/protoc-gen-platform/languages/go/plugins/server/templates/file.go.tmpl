@@ -5,11 +5,10 @@
 package {{ package . }}srv
 import (
   "connectrpc.com/connect"
-  "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+  "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
   "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
   {{- if $s }}
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-  "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha"
   {{ end -}}
   "go.opentelemetry.io/otel/trace"
   "net/http"
@@ -51,11 +50,11 @@ type {{ $s.Name }} struct {
 {{ if eq (getCqrsType . ) "stream-server" }}{{ template "query_server_stream_implemented.go.tmpl" . }}{{ else if eq (getCqrsType . ) "stream-bidi" }}{{ template "query_bidi_stream_implemented.go.tmpl" . }}{{ else }}{{ template "query_implemented.go.tmpl" . }}{{ end }}
 {{ end }}
 
-func Register{{ $s.Name }}SpecServer(b []sdkv2alphalib.Binding, path string, handler *http.Handler) *serverv2alphalib.Server {
+func Register{{ $s.Name }}SpecServer(b []sdkv2alphalib.Binding, path string, handler *http.Handler) *sdkv2alphalib.Server {
 
   _b := []sdkv2alphalib.Binding{
     &protovalidatev0.Binding{},
-    &opentelemetryv2.Binding{},
+    &opentelemetryv1.Binding{},
   }
 
   bounds := _b
@@ -64,5 +63,5 @@ func Register{{ $s.Name }}SpecServer(b []sdkv2alphalib.Binding, path string, han
     bounds = append(_b, b...)
   }
 
-	return serverv2alphalib.NewServer(bounds, path, handler)
+	return sdkv2alphalib.NewServer(bounds, path, handler)
 }

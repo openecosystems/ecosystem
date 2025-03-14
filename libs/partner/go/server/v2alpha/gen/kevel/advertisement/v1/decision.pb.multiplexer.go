@@ -7,8 +7,8 @@ import (
 	"connectrpc.com/connect"
 	"errors"
 	"github.com/openecosystems/ecosystem/libs/partner/go/model/gen/kevel/advertisement/v1"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protobuf/gen/kevel/advertisement/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
@@ -28,7 +28,7 @@ type DecisionServiceHandler struct{}
 
 func (s *DecisionServiceHandler) GetDecisions(ctx context.Context, req *connect.Request[advertisementv1pb.GetDecisionsRequest]) (*connect.Response[advertisementv1pb.GetDecisionsResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -60,9 +60,9 @@ func (s *DecisionServiceHandler) GetDecisions(ctx context.Context, req *connect.
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   advertisementv1pbmodel.CommandDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -87,7 +87,7 @@ func (s *DecisionServiceHandler) GetDecisions(ctx context.Context, req *connect.
 
 func (s *DecisionServiceHandler) AddCustomProperties(ctx context.Context, req *connect.Request[advertisementv1pb.AddCustomPropertiesRequest]) (*connect.Response[advertisementv1pb.AddCustomPropertiesResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -119,9 +119,9 @@ func (s *DecisionServiceHandler) AddCustomProperties(ctx context.Context, req *c
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   advertisementv1pbmodel.CommandDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -146,7 +146,7 @@ func (s *DecisionServiceHandler) AddCustomProperties(ctx context.Context, req *c
 
 func (s *DecisionServiceHandler) Forget(ctx context.Context, req *connect.Request[advertisementv1pb.ForgetRequest]) (*connect.Response[advertisementv1pb.ForgetResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -178,9 +178,9 @@ func (s *DecisionServiceHandler) Forget(ctx context.Context, req *connect.Reques
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   advertisementv1pbmodel.CommandDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -205,7 +205,7 @@ func (s *DecisionServiceHandler) Forget(ctx context.Context, req *connect.Reques
 
 func (s *DecisionServiceHandler) GdprConsent(ctx context.Context, req *connect.Request[advertisementv1pb.GdprConsentRequest]) (*connect.Response[advertisementv1pb.GdprConsentResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -237,9 +237,9 @@ func (s *DecisionServiceHandler) GdprConsent(ctx context.Context, req *connect.R
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   advertisementv1pbmodel.CommandDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -264,7 +264,7 @@ func (s *DecisionServiceHandler) GdprConsent(ctx context.Context, req *connect.R
 
 func (s *DecisionServiceHandler) AddInterests(ctx context.Context, req *connect.Request[advertisementv1pb.AddInterestsRequest]) (*connect.Response[advertisementv1pb.AddInterestsResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -296,9 +296,9 @@ func (s *DecisionServiceHandler) AddInterests(ctx context.Context, req *connect.
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     advertisementv1pbmodel.EventDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -323,7 +323,7 @@ func (s *DecisionServiceHandler) AddInterests(ctx context.Context, req *connect.
 
 func (s *DecisionServiceHandler) AddRetargetingSegment(ctx context.Context, req *connect.Request[advertisementv1pb.AddRetargetingSegmentRequest]) (*connect.Response[advertisementv1pb.AddRetargetingSegmentResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -355,9 +355,9 @@ func (s *DecisionServiceHandler) AddRetargetingSegment(ctx context.Context, req 
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     advertisementv1pbmodel.EventDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -382,7 +382,7 @@ func (s *DecisionServiceHandler) AddRetargetingSegment(ctx context.Context, req 
 
 func (s *DecisionServiceHandler) OptOut(ctx context.Context, req *connect.Request[advertisementv1pb.OptOutRequest]) (*connect.Response[advertisementv1pb.OptOutResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -414,9 +414,9 @@ func (s *DecisionServiceHandler) OptOut(ctx context.Context, req *connect.Reques
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     advertisementv1pbmodel.EventDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -441,7 +441,7 @@ func (s *DecisionServiceHandler) OptOut(ctx context.Context, req *connect.Reques
 
 func (s *DecisionServiceHandler) Read(ctx context.Context, req *connect.Request[advertisementv1pb.ReadRequest]) (*connect.Response[advertisementv1pb.ReadResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -473,9 +473,9 @@ func (s *DecisionServiceHandler) Read(ctx context.Context, req *connect.Request[
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     advertisementv1pbmodel.EventDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -500,7 +500,7 @@ func (s *DecisionServiceHandler) Read(ctx context.Context, req *connect.Request[
 
 func (s *DecisionServiceHandler) IpOverride(ctx context.Context, req *connect.Request[advertisementv1pb.IpOverrideRequest]) (*connect.Response[advertisementv1pb.IpOverrideResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -532,9 +532,9 @@ func (s *DecisionServiceHandler) IpOverride(ctx context.Context, req *connect.Re
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     advertisementv1pbmodel.EventDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),
@@ -559,7 +559,7 @@ func (s *DecisionServiceHandler) IpOverride(ctx context.Context, req *connect.Re
 
 func (s *DecisionServiceHandler) MatchUser(ctx context.Context, req *connect.Request[advertisementv1pb.MatchUserRequest]) (*connect.Response[advertisementv1pb.MatchUserResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -591,9 +591,9 @@ func (s *DecisionServiceHandler) MatchUser(ctx context.Context, req *connect.Req
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := advertisementv1pbmodel.DecisionSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     advertisementv1pbmodel.EventDataDecisionTopic,
 		EntityTypeName: entity.TypeName(),

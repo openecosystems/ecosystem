@@ -173,7 +173,7 @@ func (connector *Connector) DynamicUnary(_ context.Context, req *connect.Request
 		},
 	}), nil
 	//
-	//tracer := *opentelemetryv2.Bound.Tracer
+	//tracer := *opentelemetryv1.Bound.Tracer
 	//log := *zaploggerv1.Bound.Logger
 	//
 	//// Get it from the GlobalSystem Registry
@@ -202,9 +202,9 @@ func (connector *Connector) DynamicUnary(_ context.Context, req *connect.Request
 	//handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 	//
 	//entity := DynamicSpecEntity{}
-	//reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	//reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 	//	Request:        req.Msg,
-	//	Stream:         natsnodev2.NewInboundStream(),
+	//	Stream:         natsnodev1.NewInboundStream(),
 	//	CommandName:    "",
 	//	CommandTopic:   EventDataDynamicTopic,
 	//	EntityTypeName: entity.TypeName(),

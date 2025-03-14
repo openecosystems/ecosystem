@@ -1,7 +1,7 @@
 {{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}func (s *{{ $s.Name }}) {{ .Name }}({{ $s.Name }}_{{ .Name }}Server) error {
 ctx := stream.Context()
 
-tracer := *opentelemetryv2.Bound.Tracer
+tracer := *opentelemetryv1.Bound.Tracer
 
 // Executes top level validation, no business domain validation
 validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))

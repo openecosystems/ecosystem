@@ -6,7 +6,7 @@ package accountauthority
 //
 //	"github.com/nats-io/nats.go/jetstream"
 //
-//	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+//	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 //	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
 //	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 //	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
@@ -20,17 +20,17 @@ package accountauthority
 //type CreateAccountAuthorityListener struct{}
 //
 //// GetConfiguration provides the listener configuration for CreateAccountAuthorityListener, including subject, queue, and jetstream settings.
-//func (l *CreateAccountAuthorityListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
+//func (l *CreateAccountAuthorityListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
 //	entity := &iamv2alphapbmodel.AccountAuthoritySpecEntity{}
-//	streamType := natsnodev2.InboundStream{}
-//	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-//	queue := natsnodev2.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
+//	streamType := natsnodev1.InboundStream{}
+//	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
+//	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 //
-//	return &natsnodev2.ListenerConfiguration{
+//	return &natsnodev1.ListenerConfiguration{
 //		Entity:     &iamv2alphapbmodel.AccountAuthoritySpecEntity{},
 //		Subject:    subject,
 //		Queue:      queue,
-//		StreamType: &natsnodev2.InboundStream{},
+//		StreamType: &natsnodev1.InboundStream{},
 //		JetstreamConfiguration: &jetstream.ConsumerConfig{
 //			Durable:       "iam-createAccountAuthority",
 //			AckPolicy:     jetstream.AckExplicitPolicy,
@@ -43,13 +43,13 @@ package accountauthority
 //
 //// Listen synchronously listens for multiplexed spec events and routes them to the associated handler.
 //func (l *CreateAccountAuthorityListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-//	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
+//	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
 //}
 //
 //// Process handles the incoming ListenerMessage, processes the request, and sends an appropriate response back to the client.
 //// It validates the Spec field in the request, extracts the necessary data, retrieves or creates a Account Authority,
 //// and constructs a response to be sent. Logs errors and success for debugging and tracking purposes.
-//func (l *CreateAccountAuthorityListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
+//func (l *CreateAccountAuthorityListener) Process(ctx context.Context, request *natsnodev1.ListenerMessage) {
 //	log := *zaploggerv1.Bound.Logger
 //	nca := *nebulav1ca.Bound
 //
@@ -85,5 +85,5 @@ package accountauthority
 //
 //	log.Info("Created account authority successfully: " + response.AccountAuthority.Id)
 //
-//	natsnodev2.RespondToSyncCommand(ctx, request, &response)
+//	natsnodev1.RespondToSyncCommand(ctx, request, &response)
 //}

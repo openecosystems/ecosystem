@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	opentelemetryv2 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	opentelemetryv1 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
 
 	"connectrpc.com/connect"
@@ -20,7 +20,7 @@ type EncryptionServiceHandler struct{}
 
 // Encrypt handles the encryption of plaintext and associated data, returning an EncryptResponse with the result or an error.
 func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.EncryptRequest]) (*connect.Response[cryptographyv2alphapb.EncryptResponse], error) {
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 	_ = *tinkv2.Bound
 
@@ -41,7 +41,7 @@ func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Req
 
 // Decrypt processes a request to decrypt the provided ciphertext and returns a response containing either plaintext or an error.
 func (s *EncryptionServiceHandler) Decrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.DecryptRequest]) (*connect.Response[cryptographyv2alphapb.DecryptResponse], error) {
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	// log := *zaploggerv1.Bound.Logger
 
 	fmt.Println(req)

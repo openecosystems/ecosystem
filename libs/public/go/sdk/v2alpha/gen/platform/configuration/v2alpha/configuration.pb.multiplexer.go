@@ -6,8 +6,8 @@ package configurationv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
@@ -31,7 +31,7 @@ type ConfigurationServiceHandler struct{}
 
 func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.CreateConfigurationRequest]) (*connect.Response[configurationv2alphapb.CreateConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -63,9 +63,9 @@ func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, r
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   configurationv2alphapbmodel.CommandDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -90,7 +90,7 @@ func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, r
 
 func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.UpdateConfigurationRequest]) (*connect.Response[configurationv2alphapb.UpdateConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -122,9 +122,9 @@ func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, r
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   configurationv2alphapbmodel.CommandDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -149,7 +149,7 @@ func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, r
 
 func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.LoadConfigurationRequest]) (*connect.Response[configurationv2alphapb.LoadConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -181,9 +181,9 @@ func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   configurationv2alphapbmodel.CommandDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -208,7 +208,7 @@ func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req
 
 func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.DeleteConfigurationRequest]) (*connect.Response[configurationv2alphapb.DeleteConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -240,9 +240,9 @@ func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, r
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   configurationv2alphapbmodel.CommandDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -267,7 +267,7 @@ func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, r
 
 func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.PublishConfigurationRequest]) (*connect.Response[configurationv2alphapb.PublishConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -299,9 +299,9 @@ func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, 
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   configurationv2alphapbmodel.CommandDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -326,7 +326,7 @@ func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, 
 
 func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.ArchiveConfigurationRequest]) (*connect.Response[configurationv2alphapb.ArchiveConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -358,9 +358,9 @@ func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, 
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   configurationv2alphapbmodel.CommandDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -385,7 +385,7 @@ func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, 
 
 func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, req *connect.Request[configurationv2alphapb.ListConfigurationsRequest]) (*connect.Response[configurationv2alphapb.ListConfigurationsResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -417,9 +417,9 @@ func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, re
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     configurationv2alphapbmodel.EventDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),
@@ -444,7 +444,7 @@ func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, re
 
 func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req *connect.Request[configurationv2alphapb.GetConfigurationRequest]) (*connect.Response[configurationv2alphapb.GetConfigurationResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -476,9 +476,9 @@ func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req 
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     configurationv2alphapbmodel.EventDataConfigurationTopic,
 		EntityTypeName: entity.TypeName(),

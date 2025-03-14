@@ -9,7 +9,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	configurationdefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha/defaults"
@@ -25,17 +25,17 @@ import (
 type CreateConfigurationListener struct{}
 
 // GetConfiguration returns the ListenerConfiguration for CreateConfigurationListener, defining subject, queue, entity, and stream settings.
-func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerConfiguration {
+func (l *CreateConfigurationListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
 	entity := &configurationv2alphapbmodel.ConfigurationSpecEntity{}
-	streamType := natsnodev2.InboundStream{}
-	subject := natsnodev2.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev2.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
+	streamType := natsnodev1.InboundStream{}
+	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
+	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
-	return &natsnodev2.ListenerConfiguration{
+	return &natsnodev1.ListenerConfiguration{
 		Entity:     &configurationv2alphapbmodel.ConfigurationSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
-		StreamType: &natsnodev2.InboundStream{},
+		StreamType: &natsnodev1.InboundStream{},
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
 			Durable:       "configuration-createConfiguration",
 			AckPolicy:     jetstream.AckExplicitPolicy,
@@ -48,11 +48,11 @@ func (l *CreateConfigurationListener) GetConfiguration() *natsnodev2.ListenerCon
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev2.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
-func (l *CreateConfigurationListener) Process(ctx context.Context, request *natsnodev2.ListenerMessage) {
+func (l *CreateConfigurationListener) Process(ctx context.Context, request *natsnodev1.ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
 	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 
@@ -103,5 +103,5 @@ func (l *CreateConfigurationListener) Process(ctx context.Context, request *nats
 	}
 	log.Info("Create Configuration Response", zap.Any("id", response.Configuration.Id))
 
-	natsnodev2.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToSyncCommand(ctx, request, &response)
 }

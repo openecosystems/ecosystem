@@ -6,8 +6,8 @@ package iamv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
@@ -30,7 +30,7 @@ type AccountServiceHandler struct{}
 
 func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.Request[iamv2alphapb.CreateAccountRequest]) (*connect.Response[iamv2alphapb.CreateAccountResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -62,9 +62,9 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := iamv2alphapbmodel.AccountSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   iamv2alphapbmodel.CommandDataAccountTopic,
 		EntityTypeName: entity.TypeName(),
@@ -89,7 +89,7 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 
 func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.Request[iamv2alphapb.VerifyAccountRequest]) (*connect.Response[iamv2alphapb.VerifyAccountResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -121,9 +121,9 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := iamv2alphapbmodel.AccountSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   iamv2alphapbmodel.CommandDataAccountTopic,
 		EntityTypeName: entity.TypeName(),
@@ -148,7 +148,7 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 
 func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Request[iamv2alphapb.SignAccountRequest]) (*connect.Response[iamv2alphapb.SignAccountResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -180,9 +180,9 @@ func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Re
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := iamv2alphapbmodel.AccountSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   iamv2alphapbmodel.CommandDataAccountTopic,
 		EntityTypeName: entity.TypeName(),
