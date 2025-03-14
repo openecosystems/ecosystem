@@ -73,6 +73,7 @@ use (
 	// Public libraries
 	// ===================================
 	./libs/public/go/cli/v2alpha
+	./libs/public/go/connector/v2alpha
 	./libs/public/go/model
 	./libs/public/go/protobuf
 
@@ -86,5 +87,6 @@ use (
 	./libs/public/go/sdk/gen/iam/v2alpha
 	./libs/public/go/sdk/gen/system/v2alpha
 	./libs/public/go/sdk/v2alpha
+	./libs/public/go/server/v2alpha
 
 )
