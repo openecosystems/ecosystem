@@ -1,6 +1,6 @@
 {{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ package .File }}.{{ .Input.Name }}]) (*connect.Response[{{ package .File }}.{{ .Output.Name }}], error) {
 
-tracer := *opentelemetryv2.Bound.Tracer
+tracer := *opentelemetryv1.Bound.Tracer
 log := *zaploggerv1.Bound.Logger
 
 // Executes top level validation, no business domain validation
@@ -32,9 +32,9 @@ if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 entity := {{ package .File }}model.{{ $entityName.UpperCamelCase }}SpecEntity{}
-reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 Request:        req.Msg,
-Stream:         natsnodev2.NewInboundStream(),
+Stream:         natsnodev1.NewInboundStream(),
 EventName:   "",
 EventTopic:   {{ package .File }}model.EventData{{ $entityName.UpperCamelCase }}Topic,
 EntityTypeName: entity.TypeName(),

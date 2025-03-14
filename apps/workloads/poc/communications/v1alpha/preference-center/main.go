@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	natsnodev2 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
@@ -14,7 +14,7 @@ func main() {
 	bounds := []sdkv2alphalib.Binding{
 		&zaploggerv1.Binding{},
 		&nebulav1.Binding{},
-		&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{}},
+		&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{}},
 		&configurationv2alphalib.Binding{},
 	}
 
@@ -25,7 +25,7 @@ func main() {
 	//  &zaploggerv1.Binding{},
 	//  &sendgridcontactsv3.Binding{},
 	//  &sendgridlistv3.Binding{},
-	//  &natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
+	//  &natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
 	//    //&listener.PreferenceCenterListener{},
 	//  }},
 	//  //&configurationv2alphalib.Binding{},

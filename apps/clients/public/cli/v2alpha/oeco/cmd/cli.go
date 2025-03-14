@@ -13,7 +13,7 @@ import (
 	ecosystemv2alphapbint "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	enclavev2alphapbint "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/enclave"
 	markdown "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
-	charmbraceletloggerv0 "github.com/openecosystems/ecosystem/libs/partner/go/charmbracelet/v0"
+	charmbraceletloggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/charmbracelet/v1"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1/ca"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
@@ -89,7 +89,7 @@ var RootCmd = &cobra.Command{
 				LogToFile: logToFile,
 			},
 		}
-		_ = charmbraceletloggerv0.Bound.Override(&charmbraceletloggerv0.Configuration{
+		_ = charmbraceletloggerv1.Bound.Override(&charmbraceletloggerv1.Configuration{
 			App: specv2pb.App{
 				Debug:     debug,
 				Verbose:   verbose,
@@ -99,7 +99,7 @@ var RootCmd = &cobra.Command{
 		})
 		sdkv2alphalib.Merge(&override, configuration)
 		cmd.SetContext(context.WithValue(cmd.Root().Context(), sdkv2alphalib.SettingsContextKey, &override))
-		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.LoggerContextKey, charmbraceletloggerv0.Bound.Logger))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.LoggerContextKey, charmbraceletloggerv1.Bound.Logger))
 		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.NebulaCAContextKey, nebulav1ca.Bound))
 	},
 }
@@ -107,8 +107,8 @@ var RootCmd = &cobra.Command{
 // Execute runs the main command-line interface (CLI) program logic, initializing settings, context, and commands.
 func Execute() {
 	bounds := []sdkv2alphalib.Binding{
-		&charmbraceletloggerv0.Binding{},
-		//&natsnodev2.Binding{SpecEventListeners: []natsnodev2.SpecEventListener{
+		&charmbraceletloggerv1.Binding{},
+		//&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
 		//
 		//}},
 		&nebulav1ca.Binding{},

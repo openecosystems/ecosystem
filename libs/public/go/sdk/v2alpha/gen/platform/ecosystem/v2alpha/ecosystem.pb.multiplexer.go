@@ -6,8 +6,8 @@ package ecosystemv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/ecosystem/v2alpha"
@@ -29,7 +29,7 @@ type EcosystemServiceHandler struct{}
 
 func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.CreateEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.CreateEcosystemResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -61,9 +61,9 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   ecosystemv2alphapbmodel.CommandDataEcosystemTopic,
 		EntityTypeName: entity.TypeName(),
@@ -88,7 +88,7 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 
 func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.UpdateEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.UpdateEcosystemResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -120,9 +120,9 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   ecosystemv2alphapbmodel.CommandDataEcosystemTopic,
 		EntityTypeName: entity.TypeName(),
@@ -147,7 +147,7 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 
 func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.DeleteEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.DeleteEcosystemResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -179,9 +179,9 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   ecosystemv2alphapbmodel.CommandDataEcosystemTopic,
 		EntityTypeName: entity.TypeName(),
@@ -206,7 +206,7 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 
 func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *connect.Request[ecosystemv2alphapb.ListEcosystemsRequest]) (*connect.Response[ecosystemv2alphapb.ListEcosystemsResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -238,9 +238,9 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     ecosystemv2alphapbmodel.EventDataEcosystemTopic,
 		EntityTypeName: entity.TypeName(),
@@ -265,7 +265,7 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 
 func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect.Request[ecosystemv2alphapb.GetEcosystemRequest]) (*connect.Response[ecosystemv2alphapb.GetEcosystemResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -297,9 +297,9 @@ func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev2.SpecEvent{
+	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		EventName:      "",
 		EventTopic:     ecosystemv2alphapbmodel.EventDataEcosystemTopic,
 		EntityTypeName: entity.TypeName(),

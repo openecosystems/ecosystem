@@ -6,8 +6,8 @@ package cryptographyv2alphapbsrv
 import (
 	"connectrpc.com/connect"
 	"errors"
-	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v2"
-	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v2"
+	"github.com/openecosystems/ecosystem/libs/partner/go/nats/v1"
+	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry/v1"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate/v0"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap/v1"
 	"github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/cryptography/v2alpha"
@@ -31,7 +31,7 @@ type CertificateServiceHandler struct{}
 
 func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.VerifyCertificateRequest]) (*connect.Response[cryptographyv2alphapb.VerifyCertificateResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -63,9 +63,9 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := cryptographyv2alphapbmodel.CertificateSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   cryptographyv2alphapbmodel.CommandDataCertificateTopic,
 		EntityTypeName: entity.TypeName(),
@@ -90,7 +90,7 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 
 func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *connect.Request[cryptographyv2alphapb.SignCertificateRequest]) (*connect.Response[cryptographyv2alphapb.SignCertificateResponse], error) {
 
-	tracer := *opentelemetryv2.Bound.Tracer
+	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 
 	// Executes top level validation, no business domain validation
@@ -122,9 +122,9 @@ func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *co
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	entity := cryptographyv2alphapbmodel.CertificateSpecEntity{}
-	reply, err2 := natsnodev2.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev2.SpecCommand{
+	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev2.NewInboundStream(),
+		Stream:         natsnodev1.NewInboundStream(),
 		CommandName:    "",
 		CommandTopic:   cryptographyv2alphapbmodel.CommandDataCertificateTopic,
 		EntityTypeName: entity.TypeName(),

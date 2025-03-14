@@ -6,10 +6,8 @@ import (
 
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula/v1"
 	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
-	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/platform/cryptography/v2alpha"
-	serverv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/server/v2alpha"
-
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/platform/cryptography/v2alpha"
 )
 
 func main() {
@@ -24,7 +22,7 @@ func main() {
 	}
 
 	path, handler := cryptographyv2alphapbconnect.NewEncryptionServiceHandler(&cryptographyv2alphasrv.EncryptionServiceHandler{})
-	server := serverv2alphalib.NewRawServer(context.Background(), bounds, path, &handler)
+	server := sdkv2alphalib.NewRawServer(context.Background(), bounds, path, &handler)
 
 	server.ListenAndServe()
 }

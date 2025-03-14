@@ -31,18 +31,18 @@ use (
 
 	// Partner libraries
 	// ===================================
-	./libs/partner/go/sendgrid/v3
+	./libs/partner/go/sendgrid
 	./libs/partner/go/server/v2alpha
-	./libs/partner/go/tink/v2
+	./libs/partner/go/tink
 	./libs/partner/go/zap
-	./libs/partner/go/charmbracelet/v0
-	./libs/partner/go/github/v3
+	./libs/partner/go/charmbracelet
+	./libs/partner/go/github
 	./libs/partner/go/model
-	./libs/partner/go/nats/v2
+	./libs/partner/go/nats
 	./libs/partner/go/nebula
-	./libs/partner/go/opentelemetry/v2
+	./libs/partner/go/opentelemetry
 	./libs/partner/go/protobuf
-	./libs/partner/go/protovalidate/v0
+	./libs/partner/go/protovalidate
 	./libs/partner/go/pushpin
 
 	// Plugin libraries

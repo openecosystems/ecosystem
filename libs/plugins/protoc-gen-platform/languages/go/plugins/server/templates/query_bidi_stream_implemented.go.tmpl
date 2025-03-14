@@ -2,7 +2,7 @@
 
 ctx := context.Background();
 
-tracer := *opentelemetryv2.Bound.Tracer
+tracer := *opentelemetryv1.Bound.Tracer
 
 // Executes top level validation, no business domain validation
 validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
