@@ -86,8 +86,18 @@ func NewConfigurer(opts ...ConfigurationProviderOption) (*Configurer, error) {
 		return nil, err
 	}
 
-	sctx.Configurer.SetConfigName(getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
-	sctx.Configurer.SetConfigType(ConfigurationExtension)
+	if sctx.Cfg.ConfigName != "" {
+		sctx.Configurer.SetConfigName(sctx.Cfg.ConfigName)
+	} else {
+		sctx.Configurer.SetConfigName(getConfigFileName(sctx.Cfg.ConfigPathPrefix, sctx.Cfg.PlatformContext))
+	}
+
+	if sctx.Cfg.ConfigExtension != "" {
+		sctx.Configurer.SetConfigType(sctx.Cfg.ConfigExtension)
+	} else {
+		sctx.Configurer.SetConfigType(ConfigurationExtension)
+	}
+
 	if sctx.Cfg.ConfigPath != "" {
 		sctx.Configurer.AddConfigPath(sctx.Cfg.ConfigPath)
 	} else {
@@ -516,6 +526,8 @@ type configurationProviderOption struct {
 	PlatformContext               string
 	ConfigPath                    string
 	ConfigPathPrefix              string
+	ConfigName                    string
+	ConfigExtension               string
 	WatchSettings                 bool
 	RuntimeConfigurationOverrides RuntimeConfigurationOverrides
 	Configurer                    *Configurer
@@ -556,6 +568,20 @@ func WithConfigPathPrefix(prefix string) ConfigurationProviderOption {
 func WithConfigPath(path string) ConfigurationProviderOption {
 	return configurationOptionFunc(func(cfg *configurationProviderOption) {
 		cfg.ConfigPath = path
+	})
+}
+
+func WithConfigName(name string) ConfigurationProviderOption {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
+		cfg.ConfigName = name
+	})
+}
+
+// WithConfigExtension sets the configuration file extension and applies it to the configuration provider options.
+// Do not include a dot/period prefix. For example, yaml is the extension, not .yaml
+func WithConfigExtension(extension string) ConfigurationProviderOption {
+	return configurationOptionFunc(func(cfg *configurationProviderOption) {
+		cfg.ConfigExtension = extension
 	})
 }
 

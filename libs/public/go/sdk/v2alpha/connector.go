@@ -31,17 +31,18 @@ type ConnectorMethod struct {
 
 // Connector represents a structure for managing service bindings, procedures, configuration options, & service handlers.
 type Connector struct {
-	Bindings      *Bindings
-	Bounds        []Binding
-	MeshSocket    *service.Service
-	ProcedureName string
-	Name          string
-	Err           error
-	Schema        protoreflect.ServiceDescriptor
-	Methods       []*ConnectorMethod
-	MethodsByPath map[string]*ConnectorMethod
-	Handler       http.Handler
-	Opts          []ConnectorOption
+	Bindings              *Bindings
+	Bounds                []Binding
+	MeshSocket            *service.Service
+	ProcedureName         string
+	Name                  string
+	Err                   error
+	Schema                protoreflect.ServiceDescriptor
+	Methods               []*ConnectorMethod
+	MethodsByPath         map[string]*ConnectorMethod
+	Handler               http.Handler
+	Opts                  []ConnectorOption
+	ConfigurationProvider *BaseSpecConfigurationProvider
 
 	options *connectorOptions
 	// err     error
@@ -50,28 +51,40 @@ type Connector struct {
 // NewConnector initializes a new Connector instance with the provided context, bindings, and optional configuration options.
 // It resolves and validates the configuration, registers bindings, processes options, and returns the constructed Connector.
 // Panics if configuration resolution or validation fails.
-func NewConnector(ctx context.Context, bounds []Binding, opts ...ConnectorOption) *Connector {
-	//c := Configuration{}
-	//c.ResolveConfiguration()
-	//err := c.ValidateConfiguration()
-	//if err != nil {
-	//	fmt.Println("validate connector configuration error: ", err)
-	//	panic(err)
-	//}
-
-	bindings := RegisterBindings(ctx, bounds)
-
+func NewConnector(ctx context.Context, opts ...ConnectorOption) *Connector {
 	options, err := newConnectorOptions(opts)
 	if err != nil {
 		fmt.Println("new connector options error: ")
 		fmt.Println(err)
 	}
 
-	return &Connector{
-		Bindings: bindings,
-		Bounds:   bounds,
-		options:  options,
+	connector := &Connector{
+		Bounds:  options.Bounds,
+		options: options,
 	}
+
+	provider := options.ConfigurationProvider
+	if provider == nil {
+		panic("configuration provider is nil. Please provide a configuration provider to the server.")
+	}
+
+	connector.ConfigurationProvider = &provider
+	t := options.ConfigurationProvider
+
+	configurer, cerr := t.ResolveConfiguration()
+	if cerr != nil {
+		return nil
+	}
+	cerr = t.ValidateConfiguration()
+	if cerr != nil {
+		fmt.Println(cerr)
+		panic(cerr)
+	}
+
+	bindings := RegisterBindings(ctx, options.Bounds, WithConfigurer(configurer))
+	connector.Bindings = bindings
+
+	return connector
 }
 
 // NewDynamicConnectorWithSchema creates a dynamically configured Connector using the provided schema, bindings, and options.
@@ -281,4 +294,111 @@ func (connector *Connector) ListenAndProcessSpecListenable() chan SpecListenable
 		fmt.Println("Registered Listenable: " + key)
 	}
 	return listenerErr
+}
+
+// descKind returns a string describing the kind of protoreflect.Descriptor instance provided as input.
+func descKind(desc protoreflect.Descriptor) string {
+	switch desc := desc.(type) {
+	case protoreflect.FileDescriptor:
+		return "a file"
+	case protoreflect.MessageDescriptor:
+		return "a message"
+	case protoreflect.FieldDescriptor:
+		if desc.IsExtension() {
+			return "an extension"
+		}
+		return "a field"
+	case protoreflect.OneofDescriptor:
+		return "a oneof"
+	case protoreflect.EnumDescriptor:
+		return "an enum"
+	case protoreflect.EnumValueDescriptor:
+		return "an enum value"
+	case protoreflect.ServiceDescriptor:
+		return "a service"
+	case protoreflect.MethodDescriptor:
+		return "a method"
+	default:
+		return fmt.Sprintf("%T", desc)
+	}
+}
+
+// ConnectorOption defines an interface for applying custom configuration to a connectorOptions object.
+type ConnectorOption interface {
+	apply(*connectorOptions)
+}
+
+// connectorOptions defines the configuration options for a connector, including supported protocols and codecs.
+type connectorOptions struct {
+	Bounds                []Binding
+	ConfigurationProvider BaseSpecConfigurationProvider
+
+	protocols map[typev2pb.Protocol]struct{}
+	// codecNames     map[string]struct{}
+	// preferredCodec string
+}
+
+// connectorOptionFunc is a function type that modifies the settings of a connectorOptions instance.
+type connectorOptionFunc func(*connectorOptions)
+
+// apply applies the connectorOptionFunc to the given connectorOptions.
+func (f connectorOptionFunc) apply(opts *connectorOptions) {
+	f(opts)
+}
+
+// newConnectorOptions creates and configures a new connectorOptions instance using the provided ConnectorOption slice.
+// Returns the configured connectorOptions and an error if validation fails.
+func newConnectorOptions(options []ConnectorOption) (*connectorOptions, *connect.Error) {
+	config := connectorOptions{
+		protocols: nil,
+	}
+
+	for _, opt := range options {
+		opt.apply(&config)
+	}
+
+	if err := config.validate(); err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}
+
+// validate checks the integrity and consistency of the connectorOptions fields.
+// Returns a *connect.Error if validation fails or nil if successful.
+func (c *connectorOptions) validate() *connect.Error {
+	return nil
+}
+
+// WithConnectorOptions composes multiple Options into one.
+func WithConnectorOptions(opts ...ConnectorOption) ConnectorOption {
+	return connectorOptionFunc(func(cfg *connectorOptions) {
+		for _, opt := range opts {
+			opt.apply(cfg)
+		}
+	})
+}
+
+// WithConnectorBounds configures the connector with the specified bounds, overriding the default bindings list in server options.
+func WithConnectorBounds(bounds []Binding) ConnectorOption {
+	return connectorOptionFunc(func(cfg *connectorOptions) {
+		cfg.Bounds = bounds
+	})
+}
+
+// WithConnectorConfigurationProvider sets the SpecConfigurationProvider for the server configuration and applies it as a ServerOption.
+func WithConnectorConfigurationProvider(settings BaseSpecConfigurationProvider) ConnectorOption {
+	return connectorOptionFunc(func(cfg *connectorOptions) {
+		cfg.ConfigurationProvider = settings
+	})
+}
+
+// WithTargetProtocols sets the allowed target protocols for the connector using the provided list of protocols.
+func WithTargetProtocols(protocols ...typev2pb.Protocol) ConnectorOption {
+	return connectorOptionFunc(func(opts *connectorOptions) {
+		opts.protocols = make(map[typev2pb.Protocol]struct{}, len(protocols))
+		for _, p := range protocols {
+			opts.protocols[p] = struct{}{}
+		}
+	})
 }

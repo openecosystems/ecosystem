@@ -125,13 +125,13 @@ func (b *Binding) GetMeshListener(endpoint string) (*net.Listener, error) {
 func (b *Binding) GetMeshHTTPClient(config *specv2pb.Platform, _ string /*url*/) *http.Client {
 	httpClient := http.DefaultClient
 
-	b.cp, _ = sdkv2alphalib.NewCredentialProvider()
-	socket, err := b.ConfigureMeshSocket()
-	if err != nil {
-		fmt.Println("Could not configure mesh socket", err)
-		return nil
-	}
-	b.MeshSocket = socket
+	// b.cp, _ = sdkv2alphalib.NewCredentialProvider()
+	//socket, err := b.ConfigureMeshSocket()
+	//if err != nil {
+	//	fmt.Println("Could not configure mesh socket", err)
+	//	return nil
+	//}
+	//b.MeshSocket = socket
 
 	if config != nil && config.Mesh != nil && config.Mesh.Enabled {
 		httpClient = &http.Client{
@@ -152,10 +152,14 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 	override := ""
 	credentialType := typev2pb.CredentialType_CREDENTIAL_TYPE_MESH_ACCOUNT
 
-	if b.configuration.Platform.Mesh == nil || b.configuration.Platform.Mesh.CredentialPath != "" {
+	if b.configuration.Platform.Mesh != nil && b.configuration.Platform.Mesh.CredentialPath != "" {
 		override = b.configuration.Platform.Mesh.CredentialPath
-		credentialType = typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY
 	}
+
+	//if b.configuration.Platform.Mesh == nil || b.configuration.Platform.Mesh.CredentialPath != "" {
+	//	override = b.configuration.Platform.Mesh.CredentialPath
+	//	credentialType = typev2pb.CredentialType_CREDENTIAL_TYPE_ACCOUNT_AUTHORITY
+	//}
 
 	credential, err := b.cp.GetCredential(credentialType, override)
 	if err != nil {
