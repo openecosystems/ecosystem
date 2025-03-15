@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 
 	"connectrpc.com/connect"
 	"connectrpc.com/otelconnect"
@@ -10,7 +9,6 @@ import (
 
 	certificate "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/certificate"
 	configuration "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
-	ecosystem "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
 	iam "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
 	internal "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/internal"
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
@@ -39,7 +37,7 @@ func main() {
 		&nebulav1ca.Binding{},
 		&nebulav1.Binding{},
 		&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
-			&ecosystem.CreateEcosystemListener{},
+			//&ecosystem.CreateEcosystemListener{},
 			&configuration.CreateConfigurationListener{},
 			&configuration.GetConfigurationListener{},
 			//&accountauthority.CreateAccountAuthorityListener{},
@@ -72,12 +70,12 @@ func main() {
 	meshServices = append(meshServices, vanguard.NewService(advertisementv1pbconnect.NewDecisionServiceHandler(&advertisementv1pbsrv.DecisionServiceHandler{}, interceptors)))
 
 	c := &internal.Configuration{}
-	_, err := c.ResolveConfiguration()
-	if err != nil {
-		fmt.Println("error resolving configuration: ", err)
-		return
-	}
-	settings := c.GetConfiguration()
+	//_, err := c.ResolveConfiguration()
+	//if err != nil {
+	//	fmt.Println("error resolving configuration: ", err)
+	//	return
+	//}
+	//settings := c.GetConfiguration()
 
 	multiplexedServer := sdkv2alphalib.NewServer(
 		context.Background(),
@@ -91,11 +89,12 @@ func main() {
 	//	return
 	//}
 
-	meshEndpoint := settings.Platform.Mesh.GetEndpoint()
-	ln, err3 := nebulav1.Bound.GetMeshListener(meshEndpoint)
-	if err3 != nil {
-		fmt.Println("get socket error: ", err3)
-	}
+	//meshEndpoint := settings.Platform.Mesh.GetEndpoint()
+	//ln, err3 := nebulav1.Bound.GetMeshListener(meshEndpoint)
+	//if err3 != nil {
+	//	fmt.Println("get socket error: ", err3)
+	//}
 
-	multiplexedServer.ListenAndServeWithProvidedSocket(ln)
+	// multiplexedServer.ListenAndServeWithProvidedSocket(ln)
+	multiplexedServer.ListenAndServe()
 }

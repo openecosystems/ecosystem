@@ -1,0 +1,98 @@
+{
+  "name": "apps-connectors-network-account-v1alpha",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/connectors/poc/network-account/v1alpha",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/connectors/poc/network-account/v1alpha/app"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "command": "go build -o ../../../../dist/apps/connectors/poc/network-account/v1alpha/app",
+        "cwd": "apps/connectors/poc/network-account/v1alpha"
+      },
+      "configurations": {
+        "production": {
+          "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../dist/apps/connectors/poc/network-account/v1alpha/app"
+        }
+      },
+      "dependsOn": ["pre-build"]
+    },
+    "pre-build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/apps/connectors/poc/network-account/v1alpha/spec.yaml",
+        "{workspaceRoot}/dist/apps/connectors/poc/network-account/v1alpha/package.json"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p ../../../../../../dist/apps/connectors/poc/network-account/v1alpha",
+          "cp spec.yaml ../../../../../../dist/apps/connectors/poc/network-account/v1alpha",
+          "cp package.json ../../../../../../dist/apps/connectors/poc/network-account/v1alpha"
+        ],
+        "parallel": false,
+        "cwd": "apps/connectors/poc/network-account/v1alpha"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "apps/connectors/poc/network-account/v1alpha"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "apps/connectors/poc/network-account/v1alpha"
+      }
+    },
+    "serve": {
+      "executor": "@nx-go/nx-go:serve",
+      "options": {
+        "cmd": "go",
+        "cwd": "apps/connectors/poc/network-account/v1alpha",
+        "main": "main.go"
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "context": "dist/apps/connectors/poc/network-account/v1alpha",
+        "platforms": ["linux/amd64"],
+        "tags": ["connectors/network-account/v1alpha"]
+      }
+    },
+    "publish": {
+      "executor": "@platform/nx-container:push",
+      "options": {
+        "image": "connectors/network-account/v1alpha",
+        "version": {
+          "path": "apps/connectors/poc/network-account/v1alpha/package.json",
+          "key": "version"
+        },
+        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "apps/connectors/poc/network-account/v1alpha"
+      }
+    }
+  },
+  "tags": [
+    "type:app",
+    "type:connector",
+    "cycle:public",
+    "version:v1alpha",
+    "exposure:external",
+    "language:golang"
+  ]
+}

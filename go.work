@@ -20,7 +20,7 @@ use (
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
-	./apps/connectors/network-account/v1alpha
+	./apps/connectors/poc/network-account/v1alpha
 
 	// Infrastructure
 	// ===================================
@@ -32,10 +32,6 @@ use (
 
 	// Partner libraries
 	// ===================================
-	./libs/partner/go/sendgrid
-	./libs/partner/go/server/v2alpha
-	./libs/partner/go/tink
-	./libs/partner/go/zap
 	./libs/partner/go/charmbracelet
 	./libs/partner/go/github
 	./libs/partner/go/model
@@ -45,6 +41,11 @@ use (
 	./libs/partner/go/protobuf
 	./libs/partner/go/protovalidate
 	./libs/partner/go/pushpin
+	./libs/partner/go/sendgrid
+	./libs/partner/go/server/v2alpha
+	./libs/partner/go/temporal
+	./libs/partner/go/tink
+	./libs/partner/go/zap
 
 	// Plugin libraries
 	// ===================================

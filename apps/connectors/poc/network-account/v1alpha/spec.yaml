@@ -1,0 +1,31 @@
+app:
+  name: network-account-v1alpha
+  version: 'v2.0.0'
+  description: 'Network Account v1alpha'
+  environmentName: 'local-1'
+  environmentType: 'local'
+  debug: false
+  verbose: false
+platform:
+  endpoint: localhost:6577
+  insecure: true
+  dnsendpoints:
+    - 45.63.49.173:4242
+  mesh:
+    enabled: false
+    endpoint: 192.168.100.5:6477
+    insecure: true
+    dnsendpoint: 192.168.100.1
+    credentialpath: 'oeco'
+  dynamicconfigreload: false
+zap:
+  level: 'debug'
+  development: true
+  encoding: 'console'
+opentelemetry:
+  traceProviderEnabled: true
+nats:
+  options:
+    servers:
+      #- nats://192.168.100.5:4222
+      - nats://localhost:4222
