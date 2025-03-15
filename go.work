@@ -20,7 +20,7 @@ use (
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
-	./apps/connectors/network-account/v1alpha
+	./apps/connectors/poc/network-account/v1alpha
 
 	// Infrastructure
 	// ===================================
