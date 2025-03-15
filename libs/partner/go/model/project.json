@@ -7,13 +7,7 @@
     "proto"
   ],
   "targets": {
-    "generate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "libs/partner/go/model"
-      }
-    }
+
   },
   "tags": [
     "type:lib",

@@ -7,8 +7,8 @@ modules:
   - path: public
     name: buf.build/openecosystems/public
   # 30000
-  - path: partner
-    name: buf.build/openecosystems/partner
+#  - path: partner
+#    name: buf.build/openecosystems/partner
   # 40000
   - path: private
     name: buf.build/openecosystems/private

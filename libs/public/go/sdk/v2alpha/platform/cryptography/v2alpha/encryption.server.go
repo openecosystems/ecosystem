@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	opentelemetryv1 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
-	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
 
 	"connectrpc.com/connect"
 

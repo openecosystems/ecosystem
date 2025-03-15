@@ -4,13 +4,7 @@
   "projectType": "proto",
   "sourceRoot": "proto/partner",
   "targets": {
-    "generate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "proto/partner"
-      }
-    }
+
   },
   "tags": []
 }

@@ -1,0 +1,20 @@
+version: v2
+inputs:
+  - directory: ../../../../proto/partner
+plugins:
+#  - local: protoc-gen-platform
+#    out: ./src/gen
+#    opt:
+#      - paths=source_relative
+#      - language=typescript
+#      - type=spec
+#      - prefix=partner
+#    strategy: all
+#  - local: protoc-gen-platform
+#    out: ./src/gen
+#    opt:
+#      - paths=source_relative
+#      - language=typescript
+#      - type=spec-index
+#      - prefix=partner
+#    strategy: all

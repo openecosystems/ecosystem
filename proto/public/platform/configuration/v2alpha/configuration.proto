@@ -29,7 +29,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha;configurationv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha;configurationv2alphapb";
 
 service ConfigurationService {
 

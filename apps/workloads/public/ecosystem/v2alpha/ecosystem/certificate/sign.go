@@ -9,8 +9,7 @@ import (
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	cryptographyv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/cryptography/v2alpha"
-	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
+	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -19,13 +18,13 @@ type SignCertificateListener struct{}
 
 // GetConfiguration provides the listener configuration for SignCertificateListener, including subject, queue, and jetstream settings.
 func (l *SignCertificateListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &cryptographyv2alphapbmodel.CertificateSpecEntity{}
+	entity := &cryptographyv2alphapb.CertificateSpecEntity{}
 	streamType := natsnodev1.InboundStream{}
 	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
 	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
 	return &natsnodev1.ListenerConfiguration{
-		Entity:     &cryptographyv2alphapbmodel.CertificateSpecEntity{},
+		Entity:     &cryptographyv2alphapb.CertificateSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
 		StreamType: &natsnodev1.InboundStream{},

@@ -16,7 +16,7 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"os"
 
-	"github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
 )
 
 var (

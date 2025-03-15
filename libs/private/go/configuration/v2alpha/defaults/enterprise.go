@@ -4,11 +4,11 @@ import (
 	referencev2alphapb "github.com/openecosystems/ecosystem/libs/poc/go/protobuf/gen/platform/reference/v2alpha"
 	auditv2alphapb "github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/audit/v2alpha"
 	edgev2alphapb "github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/edge/v2alpha"
-	communicationv1alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1alpha"
-	v1beta "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1beta"
-	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
-	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha"
-	systemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/system/v2alpha"
+	communicationv1alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1alpha"
+	v1beta "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1beta"
+	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha"
+	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
+	systemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/system/v2alpha"
 )
 
 // DefaultEnterpriseConfiguration defines the default enterprise platform configuration with multiple sub-configurations.

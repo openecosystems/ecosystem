@@ -14,8 +14,7 @@ import (
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	ecosystemv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/ecosystem/v2alpha"
-	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
+	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -24,13 +23,13 @@ type CreateEcosystemListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateEcosystemListener, including entity, subject, and queue details.
 func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &ecosystemv2alphapbmodel.EcosystemSpecEntity{}
+	entity := &ecosystemv2alphapb.EcosystemSpecEntity{}
 	streamType := natsnodev1.InboundStream{}
 	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
 	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
 	return &natsnodev1.ListenerConfiguration{
-		Entity:     &ecosystemv2alphapbmodel.EcosystemSpecEntity{},
+		Entity:     &ecosystemv2alphapb.EcosystemSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
 		StreamType: &natsnodev1.InboundStream{},

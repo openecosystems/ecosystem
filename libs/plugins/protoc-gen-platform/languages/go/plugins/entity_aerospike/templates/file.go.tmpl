@@ -2,7 +2,7 @@
 // source: {{ .File.InputPath }}
 {{ $e := entity .File }}{{ $imports := getAllGoFieldLevelImportPaths .File }}
 
-package {{ package .File }}model
+package {{ package .File }}
 import (
 	"context"
 	"encoding/json"

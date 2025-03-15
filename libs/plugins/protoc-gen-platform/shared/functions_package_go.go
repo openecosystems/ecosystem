@@ -92,9 +92,9 @@ func (fns Functions) GetGoMapValueTypePackage(field pgs.Field) string {
 
 // GetEnumTypePackage retrieves the package name of the Enum type associated with the given field.
 func (fns Functions) GetEnumTypePackage(field pgs.Field) string {
-	_, pkg := fns.GetImportPathAndPackageForAnyEntity(field.Type().Enum())
-	return pkg
-	// return fns.SelectivelyAddPackageName(path, pkg, field)
+	path, pkg := fns.GetImportPathAndPackageForAnyEntity(field.Type().Enum())
+	// return pkg
+	return fns.SelectivelyAddPackageName(path, pkg, field)
 }
 
 // GetStructTypePackage returns the package name of the Go struct type associated with the provided field.
@@ -104,10 +104,10 @@ func (fns Functions) GetStructTypePackage(field pgs.Field) string {
 		panic("Field must be a struct to determine struct type")
 	}
 
-	_, pkg := fns.GetImportPathAndPackageForAnyMessage(field.Type().Embed())
+	path, pkg := fns.GetImportPathAndPackageForAnyMessage(field.Type().Embed())
 
-	return pkg
-	// return fns.SelectivelyAddPackageName(path, pkg, field)
+	// return pkg
+	return fns.SelectivelyAddPackageName(path, pkg, field)
 }
 
 // GetGoSliceValueTypePackage returns the type package for a repeated field's element, panics if the field is not repeated.

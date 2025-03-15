@@ -1,4 +1,4 @@
-{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $e := entity .File }}{{ $entityName := entityName $e }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
+{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
 {
   "name": "sdk-{{ $system.LowerCamelCase }}-{{ $version }}",
   "version": "0.0.0",

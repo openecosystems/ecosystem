@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 

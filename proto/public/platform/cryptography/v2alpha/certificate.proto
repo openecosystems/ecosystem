@@ -27,7 +27,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha;cryptographyv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha;cryptographyv2alphapb";
 
 message CertificateConfiguration {
 

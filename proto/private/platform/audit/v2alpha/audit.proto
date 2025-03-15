@@ -26,7 +26,7 @@ option (platform.options.v2.entity) = {
   consistency: ENTITY_CONSISTENCY_EVENTUAL;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/audit/v2alpha;auditv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/private/go/sdk/gen/platform/audit/v2alpha;auditv2alphapb";
 
 message AuditConfiguration {
   string id = 1 [(platform.options.v2.configuration_field) = {

@@ -9,7 +9,7 @@ import { file_platform_options_v2_annotations } from "../../options/v2/annotatio
  * Describes the file platform/cli/v2alpha/oeco.proto.
  */
 export const file_platform_cli_v2alpha_oeco = /*@__PURE__*/
-  fileDesc("Ch9wbGF0Zm9ybS9jbGkvdjJhbHBoYS9vZWNvLnByb3RvEhRwbGF0Zm9ybS5jbGkudjJhbHBoYSIhChFPZWNvQ29uZmlndXJhdGlvbhIMCgRvZWNvGAEgASgJQoQBWmFnaXRodWIuY29tL29wZW5lY29zeXN0ZW1zL2Vjb3N5c3RlbS9saWJzL3B1YmxpYy9nby9wcm90b2J1Zi9nZW4vcGxhdGZvcm0vY2xpL3YyYWxwaGE7Y2xpdjJhbHBoYXBigsQTAggCgrUYBggDEAEYBpK1GAMKAQOatRgAorUYAggBYgZwcm90bzM", [file_platform_options_v2_annotations]);
+  fileDesc("Ch9wbGF0Zm9ybS9jbGkvdjJhbHBoYS9vZWNvLnByb3RvEhRwbGF0Zm9ybS5jbGkudjJhbHBoYSIhChFPZWNvQ29uZmlndXJhdGlvbhIMCgRvZWNvGAEgASgJQn9aXGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2xpYnMvcHVibGljL2dvL3Nkay9nZW4vcGxhdGZvcm0vY2xpL3YyYWxwaGE7Y2xpdjJhbHBoYXBigsQTAggCgrUYBggDEAEYBpK1GAMKAQOatRgAorUYAggBYgZwcm90bzM", [file_platform_options_v2_annotations]);
 
 /**
  * Describes the message platform.cli.v2alpha.OecoConfiguration.

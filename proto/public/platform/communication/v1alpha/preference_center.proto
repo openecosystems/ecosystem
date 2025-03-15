@@ -25,7 +25,7 @@ option (platform.options.v2.entity) = {
   consistency: ENTITY_CONSISTENCY_EVENTUAL;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/communication/v1alpha;communicationv1alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1alpha;communicationv1alphapb";
 
 message PreferenceCenterConfiguration {
 

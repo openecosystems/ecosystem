@@ -14,13 +14,7 @@
         }
     },
     "targets": {
-        "generate": {
-          "executor": "nx:run-commands",
-          "options": {
-            "command": "buf generate",
-            "cwd": "libs/partner/typescript/model"
-          }
-        },
+
         "build": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],

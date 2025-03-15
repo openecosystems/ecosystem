@@ -1051,6 +1051,7 @@ cloud.google.com/go/workflows v1.12.10 h1:EGJeZmwgE71jxFOI5s9iKST2Bivif3DSzlqVbi
 cloud.google.com/go/workflows v1.12.10/go.mod h1:RcKqCiOmKs8wFUEf3EwWZPH5eHc7Oq0kamIyOUCk0IE=
 cloud.google.com/go/workflows v1.13.1 h1:DkxrZ4HyXvjQLZWsYAUOV1w7d2a43XscM9dmkIGmrDc=
 cloud.google.com/go/workflows v1.13.1/go.mod h1:xNdYtD6Sjoug+khNCAtBMK/rdh8qkjyL6aBas2XlkNc=
+connectrpc.com/connect v1.16.2/go.mod h1:n2kgwskMHXC+lVqb18wngEpF95ldBHXjZYJussz5FRc=
 connectrpc.com/grpchealth v1.3.0 h1:FA3OIwAvuMokQIXQrY5LbIy8IenftksTP/lG4PbYN+E=
 connectrpc.com/grpchealth v1.3.0/go.mod h1:3vpqmX25/ir0gVgW6RdnCPPZRcR6HvqtXX5RNPmDXHM=
 connectrpc.com/grpcreflect v1.2.0 h1:Q6og1S7HinmtbEuBvARLNwYmTbhEGRpHDhqrPNlmK+U=
