@@ -2,7 +2,7 @@
 // source: {{ .File.InputPath }}{{ $e := entity .File }}
 {{ $goPath := goPath .File }}{{ $entityName := entityName $e }}{{ $entityNamePlural := entityNamePlural $e}}{{ $allMethods := allMethods .File }}{{ $s := service . }}{{ $system := domainSystemName2 .File }}
 {{ $leadingComment := serviceLeadingComment . }}{{ $trailingComments := serviceTrailingComment . }}{{ $allLeadingComments := serviceLeadingDetachedComments .}}{{ $version := getPackageVersionName .File }}
-package {{ $goPath }}cmd
+package {{ $goPath }}
 
 import (
   "github.com/spf13/cobra"

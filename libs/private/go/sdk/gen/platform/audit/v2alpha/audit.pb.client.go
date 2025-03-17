@@ -7,7 +7,7 @@ import (
 	"connectrpc.com/connect"
 
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
-	auditv2alphapbconnect "github.com/openecosystems/ecosystem/libs/private/go/protobuf/gen/platform/audit/v2alpha/auditv2alphapbconnect"
+	auditv2alphapbconnect "github.com/openecosystems/ecosystem/libs/private/go/sdk/gen/platform/audit/v2alpha/auditv2alphapbconnect"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 

@@ -73,8 +73,7 @@ use (
 
 	// Public libraries
 	// ===================================
-	./libs/public/go/cli/v2alpha
-	./libs/public/go/model
+
 
 	// SDKs
 	// ===================================
