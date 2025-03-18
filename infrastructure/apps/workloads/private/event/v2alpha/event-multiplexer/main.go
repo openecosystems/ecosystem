@@ -1,9 +1,8 @@
 package main
 
 import (
+	"context"
 	"encoding/base64"
-
-	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/private/go/infrastructure/v2alpha"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
@@ -15,10 +14,10 @@ import (
 func main() {
 	bounds := []sdkv2alphalib.Binding{}
 
-	infrastructure := infrastructurev2alphalib.NewInfrastructure(bounds)
+	infrastructure := sdkv2alphalib.NewInfrastructure(context.Background(), sdkv2alphalib.WithInfrastructureBounds(bounds))
 
 	cnf := infrastructure.Config
-	name := infrastructurev2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
+	name := sdkv2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
 
 	infrastructure.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")

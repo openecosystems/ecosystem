@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/private/go/infrastructure/v2alpha"
+	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 func cloudinit(key, caCrt, hostCrt, hostKey, version string) string {

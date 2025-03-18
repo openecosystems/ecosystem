@@ -11,14 +11,14 @@ import (
 
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
-	configurationdefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha/defaults"
-	ontologydefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/ontology/v2alpha/defaults"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
+	configurationdefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha/defaults"
 	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	ontologydefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/ontology"
 )
 
 // CreateConfigurationListener is a struct that listens for create configuration events and processes them.

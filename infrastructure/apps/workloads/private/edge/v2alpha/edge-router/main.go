@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/openecosystems/ecosystem/libs/private/go/infrastructure/v2alpha"
+	"context"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
@@ -12,10 +12,9 @@ import (
 func main() {
 	bounds := []sdkv2alphalib.Binding{}
 
-	infrastructure := infrastructurev2alphalib.NewInfrastructure(bounds)
+	infrastructure := sdkv2alphalib.NewInfrastructure(context.Background(), sdkv2alphalib.WithInfrastructureBounds(bounds))
 
-	// cnf := infrastructure.Config
-	// name := infrastructurev2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
+	// name := sdkv2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
 
 	// Create Config Store
 	// Create DNS Records

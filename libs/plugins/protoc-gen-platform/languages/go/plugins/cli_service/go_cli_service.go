@@ -15,6 +15,11 @@ import (
 //go:embed templates/*.tmpl
 var templates embed.FS
 
+var (
+	goOutPath = pgs.JoinPaths("platform")
+	outPath   = &goOutPath
+)
+
 const (
 	language   = "go"
 	pluginName = "cli-service"
@@ -110,6 +115,12 @@ func (m GoCliServiceModule) GenerateFile(file pgs.File) {
 		return
 	}
 
-	name := m.ctx.OutputPath(file).SetExt(".cmd." + l.FileExtension())
-	m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
+	system := fns.DomainSystemName2(file).LowerCamelCase().String()
+	version := fns.GetPackageVersion(file)
+	fileName := fns.ProtoName(file)
+	name := outPath.SetExt("/" + system + "/" + version + "/" + system + version + "pbcli" + "/" + fileName + ".cmds.go").String()
+	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
+
+	// name := m.ctx.OutputPath(file).SetExt(".cmd." + l.FileExtension())
+	// m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
 }

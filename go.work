@@ -32,6 +32,7 @@ use (
 
 	// Partner libraries
 	// ===================================
+	./libs/partner/go/configuration/v2alpha
 	./libs/partner/go/charmbracelet
 	./libs/partner/go/github
 	./libs/partner/go/model
@@ -41,7 +42,6 @@ use (
 	./libs/partner/go/protovalidate
 	./libs/partner/go/pushpin
 	./libs/partner/go/sendgrid
-	./libs/partner/go/server/v2alpha
 	./libs/partner/go/temporal
 	./libs/partner/go/tink
 	./libs/partner/go/zap
@@ -50,22 +50,17 @@ use (
 	// ===================================
 	./libs/plugins/gnostic-gen-platform
 	./libs/plugins/protoc-gen-platform
-	./libs/poc/go/model
 
 	// Proof of Concept libraries
 	// ===================================
 	./libs/poc/go/sdk/gen/platform/reference/v2alpha
-	./libs/private/go/configuration/v2alpha
-	./libs/private/go/infrastructure/v2alpha
-	./libs/private/go/model
-	./libs/private/go/ontology/v2alpha
-	//./libs/private/go/sdk/gen/platform/audit/v2alpha
+	./libs/poc/go/model
 
 	// Private libraries
 	// ===================================
-	./libs/private/go/server/v2alpha
 	./libs/private/go/sdk/gen/platform/audit/v2alpha
 	./libs/private/go/sdk/gen/platform/edge/v2alpha
+	./libs/private/go/model
 
 	// Protobuf libraries
 	// ===================================
@@ -73,7 +68,7 @@ use (
 
 	// Public libraries
 	// ===================================
-
+	./libs/public/go/sdk/v2alpha
 
 	// SDKs
 	// ===================================
@@ -88,6 +83,6 @@ use (
 	./libs/public/go/sdk/gen/platform/mesh/v2alpha
 	./libs/public/go/sdk/gen/platform/ontology/v2alpha
 	./libs/public/go/sdk/gen/platform/system/v2alpha
-	./libs/public/go/sdk/v2alpha
+
 
 )

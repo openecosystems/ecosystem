@@ -65,10 +65,6 @@ require (
 	github.com/nbrownus/go-metrics-prometheus v0.0.0-20210712211119-974a6260965f // indirect
 	github.com/oapi-codegen/oapi-codegen/v2 v2.3.0 // indirect
 	github.com/oapi-codegen/runtime v1.1.1 // indirect
-	github.com/openecosystems/ecosystem/libs/poc/go/protobuf v0.0.0-20250314114941-6105506b389b // indirect
-	github.com/openecosystems/ecosystem/libs/private/go/protobuf v0.0.0-20250314114941-6105506b389b // indirect
-	github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf v0.0.0-20250314114941-6105506b389b // indirect
-	github.com/openecosystems/ecosystem/libs/public/go/protobuf v0.0.0-20250314114941-6105506b389b // indirect
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

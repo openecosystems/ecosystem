@@ -2,7 +2,7 @@
 // source: {{ .File.InputPath }}
 {{ $s := service .File }}{{ $version := getPackageVersionName .File }}{{ $versionLower := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}{{ $entityNamePlural := entityNamePlural $e}}{{ $leadingComment := methodLeadingComment . }}{{ $trailingComments := methodTrailingComment . }}{{ $leadingDetachedComments := methodLeadingDetachedComments . }}{{ $methodShortName := getMethodShortName . }}
 
-package {{ goPath .File }}
+package {{ goPath .File }}cli
 
 import (
     "connectrpc.com/connect"
@@ -16,9 +16,11 @@ import (
     "github.com/spf13/cobra"
 {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
     "net/http"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
     "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ else -}}
-
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ end }}
 
 {{ range getImportPackages .File }}
@@ -50,7 +52,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
           _request = "{}"
         }
 
-        _r := {{ .Input.Name.UpperCamelCase }}{}
+        _r := {{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}{}
         err = protojson.Unmarshal([]byte(_request), &_r)
         if err != nil {
           fmt.Println(err)
@@ -60,7 +62,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
         sdkv2alphalib.Overrides.FieldMask = {{ .Name.LowerCamelCase }}FieldMask
         sdkv2alphalib.Overrides.ValidateOnly = {{ .Name.LowerCamelCase }}ValidateOnly
 
-        request := connect.NewRequest[{{ .Input.Name.UpperCamelCase }}](&_r)
+        request := connect.NewRequest[{{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}](&_r)
         // Add GZIP Support: connect.WithSendGzip(),
         {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
         httpClient := http.DefaultClient
@@ -74,7 +76,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
 		if settings.Platform.Insecure {
 			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-        client := *New{{ $entityName.UpperCamelCase }}ServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+        client := *{{ getImportName .Input }}connect.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
         {{ end }}
 
         response, err := client.{{ .Name }}(context.Background(), request)

@@ -1,0 +1,7 @@
+{
+  "name": "analytics-v1alpha-trino",
+  "version": "0.32.0",
+  "description": "Trino Analytics Service",
+  "private": true,
+  "license": "Apache-2.0"
+}

@@ -108,7 +108,12 @@ func (m GoSdkModule) GenerateClientFile(file pgs.File) {
 		return
 	}
 
-	clientFileName := strings.TrimPrefix(m.ctx.OutputPath(file).SetExt(".client.go").String(), "platform/")
+	system := fns.DomainSystemName2(file).LowerCamelCase().String()
+	version := fns.GetPackageVersion(file)
+	fileName := fns.ProtoName(file)
+
+	clientFileName := outPath.SetExt("/" + system + "/" + version + "/" + system + version + "pbconnect" + "/" + fileName + ".client.go").String()
+	// clientFileName := strings.TrimPrefix(m.ctx.OutputPath(file).SetExt(".client.go").String(), "platform/")
 	m.OverwriteGeneratorTemplateFile(clientFileName, m.Tpl, file)
 }
 

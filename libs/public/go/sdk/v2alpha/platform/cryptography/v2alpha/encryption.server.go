@@ -9,7 +9,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	tinkv2 "github.com/openecosystems/ecosystem/libs/partner/go/tink/v2"
+	tinkv2 "github.com/openecosystems/ecosystem/libs/partner/go/tink"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 
 	"go.opentelemetry.io/otel/trace"

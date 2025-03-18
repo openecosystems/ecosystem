@@ -9,9 +9,9 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	ecosystemv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/ecosystem/v2alpha"

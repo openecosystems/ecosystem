@@ -7,23 +7,23 @@ import (
 	"connectrpc.com/otelconnect"
 	"connectrpc.com/vanguard"
 
-	certificate "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/certificate"
-	configuration "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
-	iam "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
+	"github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/configuration"
+	"github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/ecosystem"
+	"github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/iam"
 	internal "github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem/internal"
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
 	opentelemetryv1 "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	protovalidatev0 "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha"
-	configurationv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha/configurationv2alphapbconnect"
 	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
-	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbconnect"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -35,11 +35,11 @@ func main() {
 		&nebulav1ca.Binding{},
 		&nebulav1.Binding{},
 		&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
-			//&ecosystem.CreateEcosystemListener{},
+			&ecosystem.CreateEcosystemListener{},
 			&configuration.CreateConfigurationListener{},
 			&configuration.GetConfigurationListener{},
 			//&accountauthority.CreateAccountAuthorityListener{},
-			&certificate.SignCertificateListener{},
+			//&certificate.SignCertificateListener{},
 			&iam.CreateAccountListener{},
 		}},
 		&configurationv2alphalib.Binding{},
