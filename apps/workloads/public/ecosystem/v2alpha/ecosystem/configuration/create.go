@@ -11,14 +11,14 @@ import (
 
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
-	configurationdefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha/defaults"
-	ontologydefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/ontology/v2alpha/defaults"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	configurationv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
-	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
+	configurationdefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha/defaults"
+	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	ontologydefaultsv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/ontology"
 )
 
 // CreateConfigurationListener is a struct that listens for create configuration events and processes them.
@@ -26,13 +26,13 @@ type CreateConfigurationListener struct{}
 
 // GetConfiguration returns the ListenerConfiguration for CreateConfigurationListener, defining subject, queue, entity, and stream settings.
 func (l *CreateConfigurationListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &configurationv2alphapbmodel.ConfigurationSpecEntity{}
+	entity := &configurationv2alphapb.ConfigurationSpecEntity{}
 	streamType := natsnodev1.InboundStream{}
 	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
 	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
 	return &natsnodev1.ListenerConfiguration{
-		Entity:     &configurationv2alphapbmodel.ConfigurationSpecEntity{},
+		Entity:     &configurationv2alphapb.ConfigurationSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
 		StreamType: &natsnodev1.InboundStream{},

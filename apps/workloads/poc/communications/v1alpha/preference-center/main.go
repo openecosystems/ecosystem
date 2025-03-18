@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 

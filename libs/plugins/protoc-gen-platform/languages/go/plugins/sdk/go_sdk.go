@@ -99,6 +99,7 @@ func (m GoSdkModule) GenerateClientFile(file pgs.File) {
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
 		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -107,7 +108,12 @@ func (m GoSdkModule) GenerateClientFile(file pgs.File) {
 		return
 	}
 
-	clientFileName := strings.TrimPrefix(m.ctx.OutputPath(file).SetExt(".client.go").String(), "platform/")
+	system := fns.DomainSystemName2(file).LowerCamelCase().String()
+	version := fns.GetPackageVersion(file)
+	fileName := fns.ProtoName(file)
+
+	clientFileName := outPath.SetExt("/" + system + "/" + version + "/" + system + version + "pbconnect" + "/" + fileName + ".client.go").String()
+	// clientFileName := strings.TrimPrefix(m.ctx.OutputPath(file).SetExt(".client.go").String(), "platform/")
 	m.OverwriteGeneratorTemplateFile(clientFileName, m.Tpl, file)
 }
 
@@ -133,14 +139,10 @@ func (m GoSdkModule) GenerateProjectJsonFile(file pgs.File) {
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
 		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
 
 	projectJsonFileName := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/project.json").String()
 	m.OverwriteGeneratorTemplateFile(projectJsonFileName, m.Tpl, file)
@@ -168,14 +170,10 @@ func (m GoSdkModule) GeneratePackageJsonFile(file pgs.File) {
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
 		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
 
 	projectJsonFileName := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/package.json").String()
 	m.OverwriteGeneratorTemplateFile(projectJsonFileName, m.Tpl, file)
@@ -203,14 +201,10 @@ func (m GoSdkModule) GenerateGoModFile(file pgs.File) {
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
 		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
 
 	goModFileName := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/go.mod").String()
 	m.OverwriteGeneratorTemplateFile(goModFileName, m.Tpl, file)
@@ -238,14 +232,10 @@ func (m GoSdkModule) GenerateGoReleaserFile(file pgs.File) {
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
 		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
 
 	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/.goreleaser.yaml").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
@@ -273,14 +263,10 @@ func (m GoSdkModule) GenerateReadmeFile(file pgs.File) {
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
 		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
 
 	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/README.md").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)

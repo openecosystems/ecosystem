@@ -2,13 +2,13 @@
 
 
 type {{ $entityName.UpperCamelCase }}SpecEntity struct {
-	{{ $entityName.UpperCamelCase }} *{{ package .File }}.{{ $entityName.UpperCamelCase }}
+	{{ $entityName.UpperCamelCase }} *{{ $entityName.UpperCamelCase }}
 }
 
 func New{{ $entityName.UpperCamelCase }}SpecEntity(specContext *specv2pb.SpecContext) (*{{ $entityName.UpperCamelCase }}SpecEntity, error) {
 
 	return &{{ $entityName.UpperCamelCase }}SpecEntity{
-		{{ $entityName.UpperCamelCase }}: &{{ package .File }}.{{ $entityName.UpperCamelCase }}{
+		{{ $entityName.UpperCamelCase }}: &{{ $entityName.UpperCamelCase }}{
 
 		},
 	}, nil
@@ -16,8 +16,8 @@ func New{{ $entityName.UpperCamelCase }}SpecEntity(specContext *specv2pb.SpecCon
 }
 
 func New{{ $entityName.UpperCamelCase }}SpecEntityFromSpec(ctx context.Context, s *specv2pb.Spec) (*{{ $entityName.UpperCamelCase }}SpecEntity, error) {
-	data := &{{ package .File }}.{{ $entityName.UpperCamelCase }}{}
-	err := sdkv2alphalib.GetDataFromSpec[*{{ package .File }}.{{ $entityName.UpperCamelCase }}](ctx, s, data)
+	data := &{{ $entityName.UpperCamelCase }}{}
+	err := sdkv2alphalib.GetDataFromSpec[*{{ $entityName.UpperCamelCase }}](ctx, s, data)
 	if err != nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(err)
 	}
@@ -27,7 +27,7 @@ func New{{ $entityName.UpperCamelCase }}SpecEntityFromSpec(ctx context.Context, 
 	}, nil
 }
 
-func (entity *{{ $entityName.UpperCamelCase }}SpecEntity) ToProto() (*{{ package .File }}.{{ name . }}, error) {
+func (entity *{{ $entityName.UpperCamelCase }}SpecEntity) ToProto() (*{{ name . }}, error) {
 
 	return entity.{{ $entityName.UpperCamelCase }}, nil
 
@@ -112,13 +112,15 @@ func (entity *{{ $entityName.UpperCamelCase }}SpecEntity) SystemName() string {
 func (entity *{{ $entityName.UpperCamelCase }}SpecEntity) internal() {
 {{ range .Fields }}
   {{- if .Type.IsEnum }}
-    var _ *{{ enumTypePackage . }}.{{ .Type.Enum.Name.UpperCamelCase }}
+	// Enum
+    var _ *{{ enumTypePackage . }}{{ .Type.Enum.Name.UpperCamelCase }}
   {{- else if isMap . }}
     //{{ .Name }}
   {{- else if isStructPB . -}}
     //{{ .Name }}
   {{- else if isStruct . -}}
-    var _ *{{ structTypePackage . }}.{{ structType . }}
+	// Struct
+    var _ *{{ structTypePackage . }}{{ structType . }}
   {{- else if .Type.IsEmbed -}}
     {{ if IsDuration . }}var _ durationpb.Duration{{ end }}
     {{ if IsTimestamp . }}var _ timestamppb.Timestamp{{ end }}

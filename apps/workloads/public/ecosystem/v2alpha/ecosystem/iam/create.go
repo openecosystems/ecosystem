@@ -13,8 +13,7 @@ import (
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	iamv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -23,13 +22,13 @@ type CreateAccountListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateAccountListener, including entity, subject, and queue details.
 func (l *CreateAccountListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &iamv2alphapbmodel.AccountSpecEntity{}
+	entity := &iamv2alphapb.AccountSpecEntity{}
 	streamType := natsnodev1.InboundStream{}
 	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
 	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
 	return &natsnodev1.ListenerConfiguration{
-		Entity:     &iamv2alphapbmodel.AccountSpecEntity{},
+		Entity:     &iamv2alphapb.AccountSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
 		StreamType: &natsnodev1.InboundStream{},

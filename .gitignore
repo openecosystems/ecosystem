@@ -50,6 +50,7 @@ Thumbs.db
 README.local.md
 **/tempo-data/
 **/nats-jetstream-data/
+**/data/
 *.key
 
 

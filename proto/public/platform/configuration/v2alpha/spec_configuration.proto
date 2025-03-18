@@ -5,7 +5,6 @@ package platform.configuration.v2alpha;
 
 import "platform/options/v2/annotations.proto";
 
-import "platform/communication/v1beta/preference_center.proto";
 import "platform/audit/v2alpha/audit.proto";
 import "platform/cli/v2alpha/oeco.proto";
 import "platform/cryptography/v2alpha/certificate.proto";
@@ -18,6 +17,7 @@ import "platform/iam/v2alpha/account_authority.proto";
 import "platform/mesh/v2alpha/cryptographic_mesh.proto";
 import "platform/reference/v2alpha/reference.proto";
 import "platform/system/v2alpha/system.proto";
+import "platform/communication/v1beta/preference_center.proto";
 import "platform/communication/v1alpha/preference_center.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_INTERNET;};
@@ -27,7 +27,7 @@ option (platform.options.v2.api_file) = {
   interface: API_INTERFACE_TYPE_OPERATIONAL;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha;configurationv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha;configurationv2alphapb";
 
 message SpecPlatformConfiguration {
 
@@ -55,7 +55,7 @@ message SpecPlatformConfiguration {
 
     platform.system.v2alpha.SystemConfiguration system_configuration_v2alpha = 13;
 
-    platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 14;
+    platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 14;
 
-    platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 15;
+    platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 15;
 }

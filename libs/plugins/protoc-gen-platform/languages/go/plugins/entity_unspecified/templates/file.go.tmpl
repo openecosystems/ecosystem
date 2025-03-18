@@ -2,7 +2,7 @@
 // source: {{ .File.InputPath }}
 {{ $e := entity .File }}{{ $imports := getAllGoFieldLevelImportPaths .File }}{{ $version := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}{{ $topLevel := getTopLevelFolderFromFile .File }}
 
-package {{ package .File }}model
+package {{ package .File }}
 import (
 	"context"
 	"encoding/json"
@@ -11,7 +11,6 @@ import (
   {{ if not $i }}"google.golang.org/protobuf/types/known/anypb"{{ end }}
   "errors"
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-  "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/{{ $topLevel.LowerCamelCase }}/{{ $system.LowerCamelCase }}/{{ $version }}"
 
   {{ range $key, $value := $imports }}
   {{ $value }} "{{ $key }}"

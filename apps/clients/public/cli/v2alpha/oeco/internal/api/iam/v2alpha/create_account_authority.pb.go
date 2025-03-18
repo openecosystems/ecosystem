@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"

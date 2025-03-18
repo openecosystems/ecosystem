@@ -16,7 +16,6 @@ import (
 	charmbraceletloggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/charmbracelet"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 	cmdv2alphapbcmd "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha/gen/platform/cmd"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
@@ -42,7 +41,7 @@ var (
 	quiet     bool
 	logToFile bool
 
-	configuration *cliv2alphalib.Configuration
+	configuration *sdkv2alphalib.CLIConfiguration
 )
 
 // compileTimeVersion stores the version set at the time of compilation.
@@ -81,7 +80,7 @@ var RootCmd = &cobra.Command{
 	Version:      Version,
 	SilenceUsage: true,
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
-		override := cliv2alphalib.Configuration{
+		override := sdkv2alphalib.CLIConfiguration{
 			App: specv2pb.App{
 				Debug:     debug,
 				Verbose:   verbose,
@@ -114,10 +113,10 @@ func Execute() {
 		&nebulav1ca.Binding{},
 	}
 
-	c := cliv2alphalib.NewCLI(
+	c := sdkv2alphalib.NewCLI(
 		context.Background(),
-		cliv2alphalib.WithBounds(bounds),
-		cliv2alphalib.WithConfigurationProvider(&cliv2alphalib.Configuration{}),
+		sdkv2alphalib.WithCLIBounds(bounds),
+		sdkv2alphalib.WithCLIConfigurationProvider(&sdkv2alphalib.CLIConfiguration{}),
 	)
 
 	defer c.GracefulShutdown()
@@ -141,7 +140,7 @@ func Execute() {
 }
 
 // AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
-func AddCommands(settings *cliv2alphalib.Configuration) {
+func AddCommands(settings *sdkv2alphalib.CLIConfiguration) {
 	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
 
 	if settings != nil && settings.Systems != nil {

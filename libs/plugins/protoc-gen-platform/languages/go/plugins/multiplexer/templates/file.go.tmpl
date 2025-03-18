@@ -2,7 +2,7 @@
 // source: {{ .InputPath }}
 {{ $s := service . }}{{ $q := queries . }}{{ $m := mutations . }}{{ $goPath := goPath . }}{{ $e := entity . }}{{ $imports := getAllGoFieldLevelImportPaths .File }}{{ $system := domainSystemName2 .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $version := getPackageVersion .File }}{{ $topLevel := getTopLevelFolderFromFile .File }}
 
-package {{ package . }}srv
+package {{ package . }}
 import (
   "errors"
   "connectrpc.com/connect"
@@ -10,8 +10,6 @@ import (
   "github.com/openecosystems/ecosystem/libs/partner/go/nats"
   "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
   "github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
-  "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/model/gen/{{ $topLevel.LowerCamelCase }}/{{ $system.LowerCamelCase }}/{{ $version }}"
-  "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/{{ $topLevel.LowerCamelCase }}/{{ $system.LowerCamelCase }}/{{ $version }}"
   {{ if $s }}"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"{{end}}
   "go.opentelemetry.io/otel/trace"
   "google.golang.org/protobuf/proto"

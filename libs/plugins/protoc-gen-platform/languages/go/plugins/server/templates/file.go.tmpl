@@ -2,7 +2,7 @@
 // source: {{ .InputPath }}
 {{ $s := service . }}{{ $q := queries . }}{{ $m := mutations . }}{{ $goPath := goPath . }}{{ $e := entity . }}{{ $imports := getAllGoFieldLevelImportPaths .File }}{{ $system := domainSystemName2 .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $version := getPackageVersion .File }}
 
-package {{ package . }}srv
+package {{ package . }}
 import (
   "connectrpc.com/connect"
   "github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"

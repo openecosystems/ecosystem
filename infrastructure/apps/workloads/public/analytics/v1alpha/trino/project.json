@@ -1,0 +1,72 @@
+{
+  "name": "apps-workloads-public-analytics-v1alpha-trino",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "infrastructure/apps/workloads/public/analytics/v1alpha/trino",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "defaultConfiguration": "production",
+      "options": {
+        "command": "echo 'Trino'",
+        "cwd": "infrastructure/apps/workloads/public/analytics/v1alpha/trino"
+      },
+      "configurations": {
+        "production": {
+          "command": "echo 'Trino'"
+        }
+      },
+      "dependsOn": ["pre-build"]
+    },
+    "pre-build": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/infrastructure/apps/workloads/public/analytics/v1alpha/trino/package.json"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p ../../../../../../dist/infrastructure/apps/workloads/public/analytics/v1alpha/trino",
+          "cp package.json ../../../../../../dist/infrastructure/apps/workloads/public/analytics/v1alpha/trino"
+        ],
+        "parallel": false,
+        "cwd": "infrastructure/apps/workloads/public/analytics/v1alpha/trino"
+      }
+    },
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "context": "dist/infrastructure/apps/workloads/public/analytics/v1alpha/trino",
+        "platforms": ["linux/amd64","linux/arm64"],
+        "tags": ["workloads/public/analytics/v1alpha/trino"]
+      }
+    },
+    "publish": {
+      "executor": "@platform/nx-container:push",
+      "options": {
+        "image": "workloads/public/analytics/v1alpha/trino",
+        "version": {
+          "path": "infrastructure/apps/workloads/public/analytics/v1alpha/trino/package.json",
+          "key": "version"
+        },
+        "registries": ["openecosystems.registry.cpln.io", "ghcr.io/openecosystems"]
+      }
+    },
+    "local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker-compose --profile system-analytics-v1alpha-trino up -d",
+        "cwd": "."
+      },
+      "dependsOn": ["container"]
+    }
+  },
+  "tags": [
+    "type:app",
+    "type:workload",
+    "cycle:public",
+    "system:analytics",
+    "version:v1alpha",
+    "exposure:external",
+    "language:java"
+  ]
+}

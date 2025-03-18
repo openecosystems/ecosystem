@@ -1,7 +1,7 @@
-{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $e := entity .File }}{{ $entityName := entityName $e }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
+{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
 {
   "name": "libs-{{ $apiType }}-go-sdk-{{ $system.LowerCamelCase }}-{{ $version }}",
-  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $version }}",
   "targets": {

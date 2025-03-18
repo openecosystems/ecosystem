@@ -2,7 +2,7 @@
 // source: {{ .File.InputPath }}
 {{ $s := service .File }}{{ $version := getPackageVersionName .File }}{{ $versionLower := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}{{ $entityNamePlural := entityNamePlural $e}}{{ $leadingComment := methodLeadingComment . }}{{ $trailingComments := methodTrailingComment . }}{{ $leadingDetachedComments := methodLeadingDetachedComments . }}{{ $methodShortName := getMethodShortName . }}
 
-package {{ goPath .File }}cmd
+package {{ goPath .File }}cli
 
 import (
     "connectrpc.com/connect"
@@ -14,17 +14,17 @@ import (
     "github.com/apex/log"
     "google.golang.org/protobuf/encoding/protojson"
     "github.com/spf13/cobra"
-    cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
     "net/http"
-    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/protobuf/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ else -}}
-    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
-
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
+    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ end }}
 
 {{ range getImportPackages .File }}
-    "{{ . }}"
+    //"{{ . }}"
 {{ end }}
 )
 
@@ -41,7 +41,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
     Run: func(cmd *cobra.Command, args []string) {
 
         log.Debug("Calling {{ .Name.LowerCamelCase }} {{ $entityName.LowerCamelCase }}")
-        settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+        settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*sdkv2alphalib.CLIConfiguration)
 
         _request, err := cmd.Flags().GetString("request")
         if err != nil {
@@ -52,7 +52,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
           _request = "{}"
         }
 
-        _r := {{ getImportName .Input }}.{{ .Input.Name.UpperCamelCase }}{}
+        _r := {{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}{}
         err = protojson.Unmarshal([]byte(_request), &_r)
         if err != nil {
           fmt.Println(err)
@@ -62,7 +62,7 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
         sdkv2alphalib.Overrides.FieldMask = {{ .Name.LowerCamelCase }}FieldMask
         sdkv2alphalib.Overrides.ValidateOnly = {{ .Name.LowerCamelCase }}ValidateOnly
 
-        request := connect.NewRequest[{{ getImportName .Input }}.{{ .Input.Name.UpperCamelCase }}](&_r)
+        request := connect.NewRequest[{{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}](&_r)
         // Add GZIP Support: connect.WithSendGzip(),
         {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
         httpClient := http.DefaultClient
@@ -70,13 +70,13 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
 		if settings.Platform.Insecure {
 			url = "http://" + settings.Platform.Endpoint
 		}
-        client := {{ getImportName .Input }}connect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+        client := {{ getImportName .Input }}connect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
         {{ else -}}
         url := "https://" + settings.Platform.Mesh.Endpoint
 		if settings.Platform.Insecure {
 			url = "http://" + settings.Platform.Mesh.Endpoint
 		}
-        client := *{{ getImportName .Input }}sdk.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+        client := *{{ getImportName .Input }}connect.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
         {{ end }}
 
         response, err := client.{{ .Name }}(context.Background(), request)

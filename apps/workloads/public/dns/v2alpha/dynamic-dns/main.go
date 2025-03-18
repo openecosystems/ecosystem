@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
-	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
+	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/platform/cryptography/v2alpha"
 )

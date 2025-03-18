@@ -6,13 +6,12 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 
+	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/private/go/configuration/v2alpha"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	configurationv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/configuration/v2alpha"
-	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/configuration/v2alpha"
+	configurationv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -21,13 +20,13 @@ type GetConfigurationListener struct{}
 
 // GetConfiguration creates and returns a ListenerConfiguration for the GetConfigurationListener.
 func (l *GetConfigurationListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &configurationv2alphapbmodel.ConfigurationSpecEntity{}
+	entity := &configurationv2alphapb.ConfigurationSpecEntity{}
 	streamType := natsnodev1.InboundStream{}
 	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.EventTopic())
 	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
 
 	return &natsnodev1.ListenerConfiguration{
-		Entity:     &configurationv2alphapbmodel.ConfigurationSpecEntity{},
+		Entity:     &configurationv2alphapb.ConfigurationSpecEntity{},
 		Subject:    subject,
 		Queue:      queue,
 		StreamType: &natsnodev1.InboundStream{},

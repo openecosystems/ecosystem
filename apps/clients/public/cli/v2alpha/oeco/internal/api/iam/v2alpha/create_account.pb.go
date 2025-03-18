@@ -13,10 +13,10 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
-	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha"
-	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/iam/v2alpha/iamv2alphapbconnect"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
+	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 
+	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -39,7 +39,7 @@ var CreateAccountV2AlphaCmd = &cobra.Command{
 Facilitates creating a PKI certificate and getting it signed by an Ecosystem Account Authority ]`,
 	Run: func(cmd *cobra.Command, _ []string) {
 		log.Debug("Calling createAccount account")
-		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+		settings := cmd.Root().Context().Value(sdkv2alphalib.SettingsContextKey).(*sdkv2alphalib.CLIConfiguration)
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
@@ -74,7 +74,7 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 			url = "http://" + settings.Platform.Endpoint
 		}
 
-		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(internal.NewCLIInterceptor(settings, sdkv2alphalib.Overrides)))
 
 		response, err4 := client.CreateAccount(context.Background(), request)
 		if err4 != nil {

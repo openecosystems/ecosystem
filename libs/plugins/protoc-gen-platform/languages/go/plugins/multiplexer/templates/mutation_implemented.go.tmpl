@@ -1,4 +1,4 @@
-{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ package .File }}.{{ .Input.Name }}]) (*connect.Response[{{ package .File }}.{{ .Output.Name }}], error) {
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ .Input.Name }}]) (*connect.Response[{{ .Output.Name }}], error) {
 
 tracer := *opentelemetryv1.Bound.Tracer
 log := *zaploggerv1.Bound.Logger
@@ -22,7 +22,7 @@ specSpan.End()
 // Validate field mask
 if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
   spec.SpecData.FieldMask.Normalize()
-  if !spec.SpecData.FieldMask.IsValid(&{{ package .File }}.{{ .Output.Name }}{}) {
+  if !spec.SpecData.FieldMask.IsValid(&{{ .Output.Name }}{}) {
   log.Error("Invalid field mask")
   return nil, sdkv2alphalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
   }
@@ -31,12 +31,12 @@ if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 // Distributed Domain Handler
 handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-entity := {{ package .File }}model.{{ $entityName.UpperCamelCase }}SpecEntity{}
+entity := {{ $entityName.UpperCamelCase }}SpecEntity{}
 reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 Request:        req.Msg,
 Stream:         natsnodev1.NewInboundStream(),
 CommandName:   "",
-CommandTopic:   {{ package .File }}model.CommandData{{ $entityName.UpperCamelCase }}Topic,
+CommandTopic:   CommandData{{ $entityName.UpperCamelCase }}Topic,
 EntityTypeName: entity.TypeName(),
 })
 if err2 != nil {
@@ -44,7 +44,7 @@ log.Error(err2.Error())
 return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
 }
 
-var dd {{ package .File }}.{{ .Output.Name }}
+var dd {{ .Output.Name }}
 err3 := proto.Unmarshal(reply.Data, &dd)
 if err3 != nil {
 log.Error(err3.Error())

@@ -10,7 +10,6 @@ import (
 	context "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
 	ecosystemcreate "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/ecosystem_create"
 	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -24,7 +23,7 @@ var Cmd = &cobra.Command{
 
 // createModel initializes an ecosystem model and optionally sets up logging based on the provided command flags.
 func createModel(cmd *cobra.Command) *ecosystemcreate.Model {
-	settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+	settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*sdkv2alphalib.CLIConfiguration)
 	logger := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*log.Logger)
 
 	// c := config.Config{}
