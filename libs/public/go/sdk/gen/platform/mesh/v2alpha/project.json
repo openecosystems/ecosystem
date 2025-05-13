@@ -3,28 +3,28 @@
   "name": "libs-public-go-sdk-mesh-v2alpha",
   "$schema": "../../../../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/mesh/v2alpha",
+  "sourceRoot": "libs/public/go/sdk/gen/platform/mesh/v2alpha",
   "targets": {
 
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go build ./...",
-        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/mesh/v2alpha"
+        "cwd": "libs/public/go/sdk/gen/platform/mesh/v2alpha"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go test -v ./... -cover -race",
-        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/mesh/v2alpha"
+        "cwd": "libs/public/go/sdk/gen/platform/mesh/v2alpha"
       }
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go clean",
-        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/mesh/v2alpha"
+        "cwd": "libs/public/go/sdk/gen/platform/mesh/v2alpha"
       }
     },
     "lint": {
@@ -32,7 +32,7 @@
       "options": {
         "commands": ["golangci-lint run ./... --timeout=5m"],
         "parallel": false,
-        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/mesh/v2alpha"
+        "cwd": "libs/public/go/sdk/gen/platform/mesh/v2alpha"
       }
     },
     "format": {
@@ -40,19 +40,19 @@
       "options": {
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
-        "cwd": "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/mesh/v2alpha"
+        "cwd": "libs/public/go/sdk/gen/platform/mesh/v2alpha"
       }
     },
     "distribute": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/mesh/v2alpha"],
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/platform/mesh/v2alpha"],
       "options": {
         "commands": [
-          "mkdir -p dist/libs/public/go/sdk/gen/mesh/v2alpha",
-          "cp LICENSE.md dist/libs/public/go/sdk/gen/mesh/v2alpha/LICENSE.md",
-          "cp libs/public/go/sdk/gen/mesh/v2alpha/README.md dist/libs/public/go/sdk/gen/mesh/v2alpha/README.md",
-          "goreleaser release --config libs/public/go/sdk/gen/mesh/v2alpha/.goreleaser.yaml --clean"
+          "mkdir -p dist/libs/public/go/sdk/gen/platform/mesh/v2alpha",
+          "cp LICENSE.md dist/libs/public/go/sdk/gen/platform/mesh/v2alpha/LICENSE.md",
+          "cp libs/public/go/sdk/gen/platform/mesh/v2alpha/README.md dist/libs/public/go/sdk/gen/platform/mesh/v2alpha/README.md",
+          "goreleaser release --config libs/public/go/sdk/gen/platform/mesh/v2alpha/.goreleaser.yaml --clean"
         ],
         "parallel": false
       }
@@ -60,13 +60,13 @@
     "snapshot": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/mesh/v2alpha"],
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/platform/mesh/v2alpha"],
       "options": {
         "commands": [
-          "mkdir -p dist/libs/public/go/sdk/gen/mesh/v2alpha",
-          "cp LICENSE.md dist/libs/public/go/sdk/gen/mesh/v2alpha/LICENSE.md",
-          "cp libs/public/go/sdk/gen/mesh/v2alpha/README.md dist/libs/public/go/sdk/gen/mesh/v2alpha/README.md",
-          "goreleaser release --config libs/public/go/sdk/gen/mesh/v2alpha/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+          "mkdir -p dist/libs/public/go/sdk/gen/platform/mesh/v2alpha",
+          "cp LICENSE.md dist/libs/public/go/sdk/gen/platform/mesh/v2alpha/LICENSE.md",
+          "cp libs/public/go/sdk/gen/platform/mesh/v2alpha/README.md dist/libs/public/go/sdk/gen/platform/mesh/v2alpha/README.md",
+          "goreleaser release --config libs/public/go/sdk/gen/platform/mesh/v2alpha/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
         ],
         "parallel": false
       }
@@ -74,13 +74,13 @@
     "nightly": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/mesh/v2alpha"],
+      "outputs": ["{workspaceRoot}/dist/libs/public/go/sdk/gen/platform/mesh/v2alpha"],
       "options": {
         "commands": [
-          "mkdir -p dist/libs/public/go/sdk/gen/mesh/v2alpha",
-          "cp LICENSE.md dist/libs/public/go/sdk/gen/mesh/v2alpha/LICENSE.md",
-          "cp libs/public/go/sdk/gen/mesh/v2alpha/README.md dist/libs/public/go/sdk/gen/mesh/v2alpha/README.md",
-          "goreleaser release --config libs/public/go/sdk/gen/mesh/v2alpha/.goreleaser.yaml --nightly --clean"
+          "mkdir -p dist/libs/public/go/sdk/gen/platform/mesh/v2alpha",
+          "cp LICENSE.md dist/libs/public/go/sdk/gen/platform/mesh/v2alpha/LICENSE.md",
+          "cp libs/public/go/sdk/gen/platform/mesh/v2alpha/README.md dist/libs/public/go/sdk/gen/platform/mesh/v2alpha/README.md",
+          "goreleaser release --config libs/public/go/sdk/gen/platform/mesh/v2alpha/.goreleaser.yaml --nightly --clean"
         ],
         "parallel": false
       }

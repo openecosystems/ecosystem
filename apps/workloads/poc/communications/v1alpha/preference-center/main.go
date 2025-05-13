@@ -18,7 +18,7 @@ func main() {
 		&configurationv2alphalib.Binding{},
 	}
 
-	connector := sdkv2alphalib.NewConnector(context.Background(), bounds)
+	connector := sdkv2alphalib.NewConnector(context.Background(), sdkv2alphalib.WithConnectorBounds(bounds))
 	connector.ListenAndProcess()
 
 	//_ = []sdkv2alphalib.Binding{

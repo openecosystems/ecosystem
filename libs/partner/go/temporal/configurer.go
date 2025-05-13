@@ -1,4 +1,4 @@
-package zaploggerv1
+package temporalv1
 
 import (
 	"encoding/json"

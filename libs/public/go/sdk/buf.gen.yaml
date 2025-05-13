@@ -42,15 +42,22 @@ plugins:
     opt:
       - paths=source_relative
       - language=go
-      - type=cli-service
+      - type=cli-systems
       - prefix=public
   - local: protoc-gen-platform
     out: ./gen
     opt:
       - paths=source_relative
       - language=go
-      - type=cli-commands
+      - type=cli-service
       - prefix=public
+#  - local: protoc-gen-platform
+#    out: ./gen
+#    opt:
+#      - paths=source_relative
+#      - language=go
+#      - type=cli-commands
+#      - prefix=public
     strategy: all
   - local: protoc-gen-platform
     out: ./gen

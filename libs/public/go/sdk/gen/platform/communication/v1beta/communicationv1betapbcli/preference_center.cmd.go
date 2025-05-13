@@ -3,23 +3,6 @@
 
 package communicationv1betapbcli
 
-import (
-	"github.com/spf13/cobra"
-	"os"
-)
-
-var SystemCmd = &cobra.Command{
-	Use:   "communication",
-	Short: `communication system`,
-	Long:  `Interact with the communication system`,
-	Run: func(cmd *cobra.Command, args []string) {
-		if err := cmd.Help(); err != nil {
-			os.Exit(0)
-		}
-		os.Exit(0)
-	},
-}
-
 func init() {
 	SystemCmd.AddCommand(PreferenceCenterServiceServiceCmd)
 }

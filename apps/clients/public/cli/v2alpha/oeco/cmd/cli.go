@@ -16,7 +16,13 @@ import (
 	charmbraceletloggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/charmbracelet"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	cmdv2alphapbcmd "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha/gen/platform/cmd"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1alpha/communicationv1alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1beta/communicationv1betapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha/configurationv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/system/v2alpha/systemv2alphapbcli"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -141,11 +147,20 @@ func Execute() {
 
 // AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
 func AddCommands(settings *sdkv2alphalib.CLIConfiguration) {
-	cmdv2alphapbcmd.CommandRegistry.RegisterCommands()
+	// TODO: Make this dynamic
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "communication", Version: "v1alpha"}, communicationv1alphapbcli.SystemCmd)
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "communication", Version: "v1beta"}, communicationv1betapbcli.SystemCmd)
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "configuration", Version: "v2alpha"}, configurationv2alphapbcli.SystemCmd)
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "cryptography", Version: "v2alpha"}, cryptographyv2alphapbcli.SystemCmd)
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "ecosystem", Version: "v2alpha"}, ecosystemv2alphapbcli.SystemCmd)
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "iam", Version: "v2alpha"}, iamv2alphapbcli.SystemCmd)
+	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "system", Version: "v2alpha"}, systemv2alphapbcli.SystemCmd)
+
+	sdkv2alphalib.CommandRegistry.RegisterCommands()
 
 	if settings != nil && settings.Systems != nil {
 		for _, system := range settings.Systems { //nolint:copylocks,govet
-			command, err := cmdv2alphapbcmd.CommandRegistry.GetCommandByFullCommandName(cmdv2alphapbcmd.FullCommandName{
+			command, err := sdkv2alphalib.CommandRegistry.GetCommandByFullCommandName(sdkv2alphalib.FullCommandName{
 				Name:    system.Name,
 				Version: system.Version,
 			})

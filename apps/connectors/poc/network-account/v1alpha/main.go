@@ -4,7 +4,6 @@ import (
 	"context"
 
 	internal "github.com/openecosystems/ecosystem/apps/connectors/poc/network-account/v1alpha/internal"
-	listeners "github.com/openecosystems/ecosystem/apps/connectors/poc/network-account/v1alpha/listeners"
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
@@ -17,7 +16,7 @@ func main() {
 		&zaploggerv1.Binding{},
 		&nebulav1.Binding{},
 		&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
-			&listeners.CreateEcosystemListener{},
+			//&listeners.CreateEcosystemListener{},
 		}},
 		&configurationv2alphalib.Binding{},
 	}

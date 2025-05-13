@@ -1,4 +1,4 @@
-package cryptographyv2alphasrv
+package main
 
 import (
 	"context"
