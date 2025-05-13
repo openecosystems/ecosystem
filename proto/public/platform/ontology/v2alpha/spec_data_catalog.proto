@@ -44,9 +44,9 @@ message Cli {
 
 message Communication {
 
-    PreferenceCenterV1Beta preference_center_v1beta = 2;
+    PreferenceCenterV1Alpha preference_center_v1alpha = 2;
 
-    PreferenceCenterV1Alpha preference_center_v1alpha = 3;
+    PreferenceCenterV1Beta preference_center_v1beta = 3;
 }
 
 message Configuration {
@@ -197,7 +197,7 @@ message SystemV2Alpha {
 }
 
 
-message PreferenceCenterV1Beta {
+message PreferenceCenterV1Alpha {
     platform.options.v2.ClassificationType id = 1;
   platform.options.v2.ClassificationType created_at = 2;
   platform.options.v2.ClassificationType updated_at = 3;
@@ -218,7 +218,7 @@ message PreferenceCenterV1Beta {
 }
 
 
-message PreferenceCenterV1Alpha {
+message PreferenceCenterV1Beta {
     platform.options.v2.ClassificationType id = 1;
   platform.options.v2.ClassificationType created_at = 2;
   platform.options.v2.ClassificationType updated_at = 3;

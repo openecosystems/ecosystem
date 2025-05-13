@@ -2,27 +2,27 @@ package main
 
 import (
 	"context"
-	"fmt"
 
-	nebulav1 "github.com/openecosystems/ecosystem/libs/partner/go/nebula"
-	cryptographyv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
-	cryptographyv2alphasrv "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha/platform/cryptography/v2alpha"
 )
 
 func main() {
-	bounds := []sdkv2alphalib.Binding{
-		&nebulav1.Binding{},
-	}
+	//bounds := []sdkv2alphalib.Binding{
+	//	&nebulav1.Binding{},
+	//}
+	//
+	//_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
+	//if err != nil {
+	//	fmt.Println("Error:", err)
+	//	return
+	//}
+	//
+	//path, handler := cryptographyv2alphapbconnect.NewEncryptionServiceHandler(&cryptographyv2alphasrv.EncryptionServiceHandler{})
+	//server := sdkv2alphalib.NewRawServer(context.Background(), bounds, path, &handler)
+	//
+	//server.ListenAndServe()
 
-	_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
-	path, handler := cryptographyv2alphapbconnect.NewEncryptionServiceHandler(&cryptographyv2alphasrv.EncryptionServiceHandler{})
-	server := sdkv2alphalib.NewRawServer(context.Background(), bounds, path, &handler)
+	server := sdkv2alphalib.NewServer(context.Background(), nil)
 
 	server.ListenAndServe()
 }

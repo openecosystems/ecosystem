@@ -4,8 +4,19 @@
 {{ $leadingComment := serviceLeadingComment . }}{{ $trailingComments := serviceTrailingComment . }}{{ $allLeadingComments := serviceLeadingDetachedComments .}}{{ $version := getPackageVersionName .File }}
 package {{ $goPath }}cli
 
-func init() {
-	{{- range .File.Services }}
-	SystemCmd.AddCommand({{ .Name.UpperCamelCase }}ServiceCmd)
-	{{ end -}}
+import (
+  "github.com/spf13/cobra"
+  "os"
+)
+
+var SystemCmd = &cobra.Command{
+	Use:   "{{ $system.LowerCamelCase }}",
+	Short: `{{ $system.LowerCamelCase }} system`,
+	Long:  `Interact with the {{ $system.LowerCamelCase }} system`,
+	Run: func(cmd *cobra.Command, args []string) {
+    if err := cmd.Help(); err != nil {
+      os.Exit(0)
+    }
+    os.Exit(0)
+	},
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_methods"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_service"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_system"
+	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_systems"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/client"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/entity_unspecified"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/listener"
@@ -34,6 +35,7 @@ func main() {
 		// Go
 		cli_service.GoCliServicePlugin(),
 		cli_system.GoCliSystemPlugin(),
+		cli_systems.GoCliSystemsPlugin(),
 		cli_commands.GoCliCommandsPlugin(),
 		cli_methods.GoCliMethodsPlugin(),
 		client.GoClientPlugin(),

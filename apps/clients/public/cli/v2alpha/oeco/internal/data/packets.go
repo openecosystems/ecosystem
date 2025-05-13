@@ -5,8 +5,6 @@ import (
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/google/gopacket"
-	"github.com/google/gopacket/pcap"
 )
 
 // PacketData represents the data structure containing information about a specific issue or item in the ecosystem.
@@ -116,38 +114,39 @@ func ListenForPackets(device string, sub chan PacketData) (tea.Cmd, error) {
 	var err error
 
 	return func() tea.Msg {
-		handle, _err := pcap.OpenLive(device, 65536, true, pcap.BlockForever)
-		if _err != nil {
-			err = _err
-		}
-
-		packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
-
-		// Start a goroutine to send packets into the channel
-		go func() {
-			for packet := range packetSource.Packets() {
-				networkLayer := packet.NetworkLayer()
-				if networkLayer == nil {
-					continue
-				}
-
-				src, dst := networkLayer.NetworkFlow().Endpoints()
-				protocol := ""
-				if packet.TransportLayer() != nil {
-					protocol = packet.TransportLayer().LayerType().String()
-				}
-
-				// Send packet data to the channel
-				sub <- PacketData{
-					SrcIP:    src.String(),
-					DstIP:    dst.String(),
-					Protocol: protocol,
-					Length:   len(packet.Data()),
-
-					Title: src.String(),
-				}
-			}
-		}()
+		// TODO: Uncomment and fix this
+		//handle, _err := pcap.OpenLive(device, 65536, true, pcap.BlockForever)
+		//if _err != nil {
+		//	err = _err
+		//}
+		//
+		//packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
+		//
+		//// Start a goroutine to send packets into the channel
+		//go func() {
+		//	for packet := range packetSource.Packets() {
+		//		networkLayer := packet.NetworkLayer()
+		//		if networkLayer == nil {
+		//			continue
+		//		}
+		//
+		//		src, dst := networkLayer.NetworkFlow().Endpoints()
+		//		protocol := ""
+		//		if packet.TransportLayer() != nil {
+		//			protocol = packet.TransportLayer().LayerType().String()
+		//		}
+		//
+		//		// Send packet data to the channel
+		//		sub <- PacketData{
+		//			SrcIP:    src.String(),
+		//			DstIP:    dst.String(),
+		//			Protocol: protocol,
+		//			Length:   len(packet.Data()),
+		//
+		//			Title: src.String(),
+		//		}
+		//	}
+		//}()
 
 		return nil
 	}, err

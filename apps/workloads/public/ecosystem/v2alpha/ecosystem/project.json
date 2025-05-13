@@ -24,13 +24,11 @@
     "pre-build": {
       "executor": "nx:run-commands",
       "outputs": [
-        "{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/spec.yaml",
         "{workspaceRoot}/dist/apps/workloads/public/ecosystem/v2alpha/ecosystem/package.json"
       ],
       "options": {
         "commands": [
           "mkdir -p ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
-          "cp spec.yaml ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
           "cp package.json ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
           "cp .goreleaser.yaml ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem",
           "cp Dockerfile ../../../../../../dist/apps/workloads/public/ecosystem/v2alpha/ecosystem"

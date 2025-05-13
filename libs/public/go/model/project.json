@@ -7,35 +7,35 @@
     "proto"
   ],
   "targets": {
-    "generate": {
+    "generate-not-used": {
       "executor": "nx:run-commands",
       "options": {
         "command": "buf generate",
         "cwd": "libs/public/go/model"
       }
     },
-    "build": {
+    "build-not-used": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go build ./...",
         "cwd": "libs/public/go/model"
       }
     },
-    "test": {
+    "test-not-used": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go test -v ./... -cover -race",
         "cwd": "libs/public/go/model"
       }
     },
-    "clean": {
+    "clean-not-used": {
       "executor": "nx:run-commands",
       "options": {
         "command": "go clean",
         "cwd": "libs/public/go/model"
       }
     },
-    "lint": {
+    "lint-not-used": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["golangci-lint run ./... --timeout=5m"],
@@ -43,7 +43,7 @@
         "cwd": "libs/public/go/model"
       }
     },
-    "format": {
+    "format-not-used": {
       "executor": "nx:run-commands",
       "options": {
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
