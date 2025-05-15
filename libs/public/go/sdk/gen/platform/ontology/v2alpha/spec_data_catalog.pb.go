@@ -270,8 +270,8 @@ func (*Cli) Descriptor() ([]byte, []int) {
 
 type Communication struct {
 	state                   protoimpl.MessageState   `protogen:"open.v1"`
-	PreferenceCenterV1Beta  *PreferenceCenterV1Beta  `protobuf:"bytes,2,opt,name=preference_center_v1beta,json=preferenceCenterV1beta,proto3" json:"preference_center_v1beta,omitempty"`
-	PreferenceCenterV1Alpha *PreferenceCenterV1Alpha `protobuf:"bytes,3,opt,name=preference_center_v1alpha,json=preferenceCenterV1alpha,proto3" json:"preference_center_v1alpha,omitempty"`
+	PreferenceCenterV1Alpha *PreferenceCenterV1Alpha `protobuf:"bytes,2,opt,name=preference_center_v1alpha,json=preferenceCenterV1alpha,proto3" json:"preference_center_v1alpha,omitempty"`
+	PreferenceCenterV1Beta  *PreferenceCenterV1Beta  `protobuf:"bytes,3,opt,name=preference_center_v1beta,json=preferenceCenterV1beta,proto3" json:"preference_center_v1beta,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -306,16 +306,16 @@ func (*Communication) Descriptor() ([]byte, []int) {
 	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *Communication) GetPreferenceCenterV1Beta() *PreferenceCenterV1Beta {
+func (x *Communication) GetPreferenceCenterV1Alpha() *PreferenceCenterV1Alpha {
 	if x != nil {
-		return x.PreferenceCenterV1Beta
+		return x.PreferenceCenterV1Alpha
 	}
 	return nil
 }
 
-func (x *Communication) GetPreferenceCenterV1Alpha() *PreferenceCenterV1Alpha {
+func (x *Communication) GetPreferenceCenterV1Beta() *PreferenceCenterV1Beta {
 	if x != nil {
-		return x.PreferenceCenterV1Alpha
+		return x.PreferenceCenterV1Beta
 	}
 	return nil
 }
@@ -1564,170 +1564,6 @@ func (x *SystemV2Alpha) GetUpdatedAt() v2.ClassificationType {
 	return v2.ClassificationType(0)
 }
 
-type PreferenceCenterV1Beta struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	Id                  v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	CreatedAt           v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt           v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	AnonymousId         v2.ClassificationType  `protobuf:"varint,4,opt,name=anonymous_id,json=anonymousId,proto3,enum=platform.options.v2.ClassificationType" json:"anonymous_id,omitempty"`
-	Email               v2.ClassificationType  `protobuf:"varint,5,opt,name=email,proto3,enum=platform.options.v2.ClassificationType" json:"email,omitempty"`
-	ExternalId          v2.ClassificationType  `protobuf:"varint,6,opt,name=external_id,json=externalId,proto3,enum=platform.options.v2.ClassificationType" json:"external_id,omitempty"`
-	PhoneNumber         v2.ClassificationType  `protobuf:"varint,7,opt,name=phone_number,json=phoneNumber,proto3,enum=platform.options.v2.ClassificationType" json:"phone_number,omitempty"`
-	FirstName           v2.ClassificationType  `protobuf:"varint,8,opt,name=first_name,json=firstName,proto3,enum=platform.options.v2.ClassificationType" json:"first_name,omitempty"`
-	LastName            v2.ClassificationType  `protobuf:"varint,9,opt,name=last_name,json=lastName,proto3,enum=platform.options.v2.ClassificationType" json:"last_name,omitempty"`
-	PostalCode          v2.ClassificationType  `protobuf:"varint,10,opt,name=postal_code,json=postalCode,proto3,enum=platform.options.v2.ClassificationType" json:"postal_code,omitempty"`
-	City                v2.ClassificationType  `protobuf:"varint,11,opt,name=city,proto3,enum=platform.options.v2.ClassificationType" json:"city,omitempty"`
-	StateProvinceRegion v2.ClassificationType  `protobuf:"varint,12,opt,name=state_province_region,json=stateProvinceRegion,proto3,enum=platform.options.v2.ClassificationType" json:"state_province_region,omitempty"`
-	Country             v2.ClassificationType  `protobuf:"varint,13,opt,name=country,proto3,enum=platform.options.v2.ClassificationType" json:"country,omitempty"`
-	ListIds             v2.ClassificationType  `protobuf:"varint,14,opt,name=list_ids,json=listIds,proto3,enum=platform.options.v2.ClassificationType" json:"list_ids,omitempty"`
-	SegmentIds          v2.ClassificationType  `protobuf:"varint,15,opt,name=segment_ids,json=segmentIds,proto3,enum=platform.options.v2.ClassificationType" json:"segment_ids,omitempty"`
-	EmailSubscription   v2.ClassificationType  `protobuf:"varint,16,opt,name=email_subscription,json=emailSubscription,proto3,enum=platform.options.v2.ClassificationType" json:"email_subscription,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
-}
-
-func (x *PreferenceCenterV1Beta) Reset() {
-	*x = PreferenceCenterV1Beta{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PreferenceCenterV1Beta) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PreferenceCenterV1Beta) ProtoMessage() {}
-
-func (x *PreferenceCenterV1Beta) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PreferenceCenterV1Beta.ProtoReflect.Descriptor instead.
-func (*PreferenceCenterV1Beta) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{25}
-}
-
-func (x *PreferenceCenterV1Beta) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetAnonymousId() v2.ClassificationType {
-	if x != nil {
-		return x.AnonymousId
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetEmail() v2.ClassificationType {
-	if x != nil {
-		return x.Email
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetExternalId() v2.ClassificationType {
-	if x != nil {
-		return x.ExternalId
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetPhoneNumber() v2.ClassificationType {
-	if x != nil {
-		return x.PhoneNumber
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetFirstName() v2.ClassificationType {
-	if x != nil {
-		return x.FirstName
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetLastName() v2.ClassificationType {
-	if x != nil {
-		return x.LastName
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetPostalCode() v2.ClassificationType {
-	if x != nil {
-		return x.PostalCode
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetCity() v2.ClassificationType {
-	if x != nil {
-		return x.City
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetStateProvinceRegion() v2.ClassificationType {
-	if x != nil {
-		return x.StateProvinceRegion
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetCountry() v2.ClassificationType {
-	if x != nil {
-		return x.Country
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetListIds() v2.ClassificationType {
-	if x != nil {
-		return x.ListIds
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetSegmentIds() v2.ClassificationType {
-	if x != nil {
-		return x.SegmentIds
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *PreferenceCenterV1Beta) GetEmailSubscription() v2.ClassificationType {
-	if x != nil {
-		return x.EmailSubscription
-	}
-	return v2.ClassificationType(0)
-}
-
 type PreferenceCenterV1Alpha struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Id                  v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
@@ -1752,7 +1588,7 @@ type PreferenceCenterV1Alpha struct {
 
 func (x *PreferenceCenterV1Alpha) Reset() {
 	*x = PreferenceCenterV1Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1764,7 +1600,7 @@ func (x *PreferenceCenterV1Alpha) String() string {
 func (*PreferenceCenterV1Alpha) ProtoMessage() {}
 
 func (x *PreferenceCenterV1Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1777,7 +1613,7 @@ func (x *PreferenceCenterV1Alpha) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PreferenceCenterV1Alpha.ProtoReflect.Descriptor instead.
 func (*PreferenceCenterV1Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{26}
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *PreferenceCenterV1Alpha) GetId() v2.ClassificationType {
@@ -1892,6 +1728,170 @@ func (x *PreferenceCenterV1Alpha) GetEmailSubscription() v2.ClassificationType {
 	return v2.ClassificationType(0)
 }
 
+type PreferenceCenterV1Beta struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Id                  v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	CreatedAt           v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt           v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	AnonymousId         v2.ClassificationType  `protobuf:"varint,4,opt,name=anonymous_id,json=anonymousId,proto3,enum=platform.options.v2.ClassificationType" json:"anonymous_id,omitempty"`
+	Email               v2.ClassificationType  `protobuf:"varint,5,opt,name=email,proto3,enum=platform.options.v2.ClassificationType" json:"email,omitempty"`
+	ExternalId          v2.ClassificationType  `protobuf:"varint,6,opt,name=external_id,json=externalId,proto3,enum=platform.options.v2.ClassificationType" json:"external_id,omitempty"`
+	PhoneNumber         v2.ClassificationType  `protobuf:"varint,7,opt,name=phone_number,json=phoneNumber,proto3,enum=platform.options.v2.ClassificationType" json:"phone_number,omitempty"`
+	FirstName           v2.ClassificationType  `protobuf:"varint,8,opt,name=first_name,json=firstName,proto3,enum=platform.options.v2.ClassificationType" json:"first_name,omitempty"`
+	LastName            v2.ClassificationType  `protobuf:"varint,9,opt,name=last_name,json=lastName,proto3,enum=platform.options.v2.ClassificationType" json:"last_name,omitempty"`
+	PostalCode          v2.ClassificationType  `protobuf:"varint,10,opt,name=postal_code,json=postalCode,proto3,enum=platform.options.v2.ClassificationType" json:"postal_code,omitempty"`
+	City                v2.ClassificationType  `protobuf:"varint,11,opt,name=city,proto3,enum=platform.options.v2.ClassificationType" json:"city,omitempty"`
+	StateProvinceRegion v2.ClassificationType  `protobuf:"varint,12,opt,name=state_province_region,json=stateProvinceRegion,proto3,enum=platform.options.v2.ClassificationType" json:"state_province_region,omitempty"`
+	Country             v2.ClassificationType  `protobuf:"varint,13,opt,name=country,proto3,enum=platform.options.v2.ClassificationType" json:"country,omitempty"`
+	ListIds             v2.ClassificationType  `protobuf:"varint,14,opt,name=list_ids,json=listIds,proto3,enum=platform.options.v2.ClassificationType" json:"list_ids,omitempty"`
+	SegmentIds          v2.ClassificationType  `protobuf:"varint,15,opt,name=segment_ids,json=segmentIds,proto3,enum=platform.options.v2.ClassificationType" json:"segment_ids,omitempty"`
+	EmailSubscription   v2.ClassificationType  `protobuf:"varint,16,opt,name=email_subscription,json=emailSubscription,proto3,enum=platform.options.v2.ClassificationType" json:"email_subscription,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *PreferenceCenterV1Beta) Reset() {
+	*x = PreferenceCenterV1Beta{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PreferenceCenterV1Beta) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PreferenceCenterV1Beta) ProtoMessage() {}
+
+func (x *PreferenceCenterV1Beta) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PreferenceCenterV1Beta.ProtoReflect.Descriptor instead.
+func (*PreferenceCenterV1Beta) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *PreferenceCenterV1Beta) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetAnonymousId() v2.ClassificationType {
+	if x != nil {
+		return x.AnonymousId
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetEmail() v2.ClassificationType {
+	if x != nil {
+		return x.Email
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetExternalId() v2.ClassificationType {
+	if x != nil {
+		return x.ExternalId
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetPhoneNumber() v2.ClassificationType {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetFirstName() v2.ClassificationType {
+	if x != nil {
+		return x.FirstName
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetLastName() v2.ClassificationType {
+	if x != nil {
+		return x.LastName
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetPostalCode() v2.ClassificationType {
+	if x != nil {
+		return x.PostalCode
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetCity() v2.ClassificationType {
+	if x != nil {
+		return x.City
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetStateProvinceRegion() v2.ClassificationType {
+	if x != nil {
+		return x.StateProvinceRegion
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetCountry() v2.ClassificationType {
+	if x != nil {
+		return x.Country
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetListIds() v2.ClassificationType {
+	if x != nil {
+		return x.ListIds
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetSegmentIds() v2.ClassificationType {
+	if x != nil {
+		return x.SegmentIds
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *PreferenceCenterV1Beta) GetEmailSubscription() v2.ClassificationType {
+	if x != nil {
+		return x.EmailSubscription
+	}
+	return v2.ClassificationType(0)
+}
+
 var File_platform_ontology_v2alpha_spec_data_catalog_proto protoreflect.FileDescriptor
 
 const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
@@ -1918,9 +1918,9 @@ const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
 	"\x05Audit\x12L\n" +
 	"\raudit_v2alpha\x18\x01 \x01(\v2'.platform.ontology.v2alpha.AuditV2AlphaR\fauditV2alpha\"\x05\n" +
 	"\x03Cli\"\xec\x01\n" +
-	"\rCommunication\x12k\n" +
-	"\x18preference_center_v1beta\x18\x02 \x01(\v21.platform.ontology.v2alpha.PreferenceCenterV1BetaR\x16preferenceCenterV1beta\x12n\n" +
-	"\x19preference_center_v1alpha\x18\x03 \x01(\v22.platform.ontology.v2alpha.PreferenceCenterV1AlphaR\x17preferenceCenterV1alpha\"u\n" +
+	"\rCommunication\x12n\n" +
+	"\x19preference_center_v1alpha\x18\x02 \x01(\v22.platform.ontology.v2alpha.PreferenceCenterV1AlphaR\x17preferenceCenterV1alpha\x12k\n" +
+	"\x18preference_center_v1beta\x18\x03 \x01(\v21.platform.ontology.v2alpha.PreferenceCenterV1BetaR\x16preferenceCenterV1beta\"u\n" +
 	"\rConfiguration\x12d\n" +
 	"\x15configuration_v2alpha\x18\x04 \x01(\v2/.platform.ontology.v2alpha.ConfigurationV2AlphaR\x14configurationV2alpha\"n\n" +
 	"\fCryptography\x12^\n" +
@@ -2028,8 +2028,8 @@ const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x03 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
 	"\n" +
-	"updated_at\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\"\x9d\t\n" +
-	"\x16PreferenceCenterV1Beta\x127\n" +
+	"updated_at\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\"\x9e\t\n" +
+	"\x17PreferenceCenterV1Alpha\x127\n" +
 	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
 	"\n" +
 	"created_at\x18\x02 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
@@ -2052,8 +2052,8 @@ const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
 	"\blist_ids\x18\x0e \x01(\x0e2'.platform.options.v2.ClassificationTypeR\alistIds\x12H\n" +
 	"\vsegment_ids\x18\x0f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
 	"segmentIds\x12V\n" +
-	"\x12email_subscription\x18\x10 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x11emailSubscription\"\x9e\t\n" +
-	"\x17PreferenceCenterV1Alpha\x127\n" +
+	"\x12email_subscription\x18\x10 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x11emailSubscription\"\x9d\t\n" +
+	"\x16PreferenceCenterV1Beta\x127\n" +
 	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
 	"\n" +
 	"created_at\x18\x02 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
@@ -2117,8 +2117,8 @@ var file_platform_ontology_v2alpha_spec_data_catalog_proto_goTypes = []any{
 	(*AccountAuthorityV2Alpha)(nil), // 22: platform.ontology.v2alpha.AccountAuthorityV2Alpha
 	(*ReferenceV2Alpha)(nil),        // 23: platform.ontology.v2alpha.ReferenceV2Alpha
 	(*SystemV2Alpha)(nil),           // 24: platform.ontology.v2alpha.SystemV2Alpha
-	(*PreferenceCenterV1Beta)(nil),  // 25: platform.ontology.v2alpha.PreferenceCenterV1Beta
-	(*PreferenceCenterV1Alpha)(nil), // 26: platform.ontology.v2alpha.PreferenceCenterV1Alpha
+	(*PreferenceCenterV1Alpha)(nil), // 25: platform.ontology.v2alpha.PreferenceCenterV1Alpha
+	(*PreferenceCenterV1Beta)(nil),  // 26: platform.ontology.v2alpha.PreferenceCenterV1Beta
 	(v2.ClassificationType)(0),      // 27: platform.options.v2.ClassificationType
 }
 var file_platform_ontology_v2alpha_spec_data_catalog_proto_depIdxs = []int32{
@@ -2139,8 +2139,8 @@ var file_platform_ontology_v2alpha_spec_data_catalog_proto_depIdxs = []int32{
 	15,  // 14: platform.ontology.v2alpha.SpecDataCatalog.system:type_name -> platform.ontology.v2alpha.System
 	16,  // 15: platform.ontology.v2alpha.SpecDataCatalog.type:type_name -> platform.ontology.v2alpha.Type
 	17,  // 16: platform.ontology.v2alpha.Audit.audit_v2alpha:type_name -> platform.ontology.v2alpha.AuditV2Alpha
-	25,  // 17: platform.ontology.v2alpha.Communication.preference_center_v1beta:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Beta
-	26,  // 18: platform.ontology.v2alpha.Communication.preference_center_v1alpha:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Alpha
+	25,  // 17: platform.ontology.v2alpha.Communication.preference_center_v1alpha:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Alpha
+	26,  // 18: platform.ontology.v2alpha.Communication.preference_center_v1beta:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Beta
 	18,  // 19: platform.ontology.v2alpha.Configuration.configuration_v2alpha:type_name -> platform.ontology.v2alpha.ConfigurationV2Alpha
 	19,  // 20: platform.ontology.v2alpha.Cryptography.certificate_v2alpha:type_name -> platform.ontology.v2alpha.CertificateV2Alpha
 	20,  // 21: platform.ontology.v2alpha.Ecosystem.ecosystem_v2alpha:type_name -> platform.ontology.v2alpha.EcosystemV2Alpha
@@ -2202,38 +2202,38 @@ var file_platform_ontology_v2alpha_spec_data_catalog_proto_depIdxs = []int32{
 	27,  // 77: platform.ontology.v2alpha.SystemV2Alpha.enabled_at:type_name -> platform.options.v2.ClassificationType
 	27,  // 78: platform.ontology.v2alpha.SystemV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
 	27,  // 79: platform.ontology.v2alpha.SystemV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 80: platform.ontology.v2alpha.PreferenceCenterV1Beta.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 81: platform.ontology.v2alpha.PreferenceCenterV1Beta.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 82: platform.ontology.v2alpha.PreferenceCenterV1Beta.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 83: platform.ontology.v2alpha.PreferenceCenterV1Beta.anonymous_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 84: platform.ontology.v2alpha.PreferenceCenterV1Beta.email:type_name -> platform.options.v2.ClassificationType
-	27,  // 85: platform.ontology.v2alpha.PreferenceCenterV1Beta.external_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 86: platform.ontology.v2alpha.PreferenceCenterV1Beta.phone_number:type_name -> platform.options.v2.ClassificationType
-	27,  // 87: platform.ontology.v2alpha.PreferenceCenterV1Beta.first_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 88: platform.ontology.v2alpha.PreferenceCenterV1Beta.last_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 89: platform.ontology.v2alpha.PreferenceCenterV1Beta.postal_code:type_name -> platform.options.v2.ClassificationType
-	27,  // 90: platform.ontology.v2alpha.PreferenceCenterV1Beta.city:type_name -> platform.options.v2.ClassificationType
-	27,  // 91: platform.ontology.v2alpha.PreferenceCenterV1Beta.state_province_region:type_name -> platform.options.v2.ClassificationType
-	27,  // 92: platform.ontology.v2alpha.PreferenceCenterV1Beta.country:type_name -> platform.options.v2.ClassificationType
-	27,  // 93: platform.ontology.v2alpha.PreferenceCenterV1Beta.list_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 94: platform.ontology.v2alpha.PreferenceCenterV1Beta.segment_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 95: platform.ontology.v2alpha.PreferenceCenterV1Beta.email_subscription:type_name -> platform.options.v2.ClassificationType
-	27,  // 96: platform.ontology.v2alpha.PreferenceCenterV1Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 97: platform.ontology.v2alpha.PreferenceCenterV1Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 98: platform.ontology.v2alpha.PreferenceCenterV1Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 99: platform.ontology.v2alpha.PreferenceCenterV1Alpha.anonymous_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 100: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email:type_name -> platform.options.v2.ClassificationType
-	27,  // 101: platform.ontology.v2alpha.PreferenceCenterV1Alpha.external_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 102: platform.ontology.v2alpha.PreferenceCenterV1Alpha.phone_number:type_name -> platform.options.v2.ClassificationType
-	27,  // 103: platform.ontology.v2alpha.PreferenceCenterV1Alpha.first_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 104: platform.ontology.v2alpha.PreferenceCenterV1Alpha.last_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 105: platform.ontology.v2alpha.PreferenceCenterV1Alpha.postal_code:type_name -> platform.options.v2.ClassificationType
-	27,  // 106: platform.ontology.v2alpha.PreferenceCenterV1Alpha.city:type_name -> platform.options.v2.ClassificationType
-	27,  // 107: platform.ontology.v2alpha.PreferenceCenterV1Alpha.state_province_region:type_name -> platform.options.v2.ClassificationType
-	27,  // 108: platform.ontology.v2alpha.PreferenceCenterV1Alpha.country:type_name -> platform.options.v2.ClassificationType
-	27,  // 109: platform.ontology.v2alpha.PreferenceCenterV1Alpha.list_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 110: platform.ontology.v2alpha.PreferenceCenterV1Alpha.segment_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 111: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email_subscription:type_name -> platform.options.v2.ClassificationType
+	27,  // 80: platform.ontology.v2alpha.PreferenceCenterV1Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 81: platform.ontology.v2alpha.PreferenceCenterV1Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 82: platform.ontology.v2alpha.PreferenceCenterV1Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 83: platform.ontology.v2alpha.PreferenceCenterV1Alpha.anonymous_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 84: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email:type_name -> platform.options.v2.ClassificationType
+	27,  // 85: platform.ontology.v2alpha.PreferenceCenterV1Alpha.external_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 86: platform.ontology.v2alpha.PreferenceCenterV1Alpha.phone_number:type_name -> platform.options.v2.ClassificationType
+	27,  // 87: platform.ontology.v2alpha.PreferenceCenterV1Alpha.first_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 88: platform.ontology.v2alpha.PreferenceCenterV1Alpha.last_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 89: platform.ontology.v2alpha.PreferenceCenterV1Alpha.postal_code:type_name -> platform.options.v2.ClassificationType
+	27,  // 90: platform.ontology.v2alpha.PreferenceCenterV1Alpha.city:type_name -> platform.options.v2.ClassificationType
+	27,  // 91: platform.ontology.v2alpha.PreferenceCenterV1Alpha.state_province_region:type_name -> platform.options.v2.ClassificationType
+	27,  // 92: platform.ontology.v2alpha.PreferenceCenterV1Alpha.country:type_name -> platform.options.v2.ClassificationType
+	27,  // 93: platform.ontology.v2alpha.PreferenceCenterV1Alpha.list_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 94: platform.ontology.v2alpha.PreferenceCenterV1Alpha.segment_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 95: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email_subscription:type_name -> platform.options.v2.ClassificationType
+	27,  // 96: platform.ontology.v2alpha.PreferenceCenterV1Beta.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 97: platform.ontology.v2alpha.PreferenceCenterV1Beta.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 98: platform.ontology.v2alpha.PreferenceCenterV1Beta.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 99: platform.ontology.v2alpha.PreferenceCenterV1Beta.anonymous_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 100: platform.ontology.v2alpha.PreferenceCenterV1Beta.email:type_name -> platform.options.v2.ClassificationType
+	27,  // 101: platform.ontology.v2alpha.PreferenceCenterV1Beta.external_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 102: platform.ontology.v2alpha.PreferenceCenterV1Beta.phone_number:type_name -> platform.options.v2.ClassificationType
+	27,  // 103: platform.ontology.v2alpha.PreferenceCenterV1Beta.first_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 104: platform.ontology.v2alpha.PreferenceCenterV1Beta.last_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 105: platform.ontology.v2alpha.PreferenceCenterV1Beta.postal_code:type_name -> platform.options.v2.ClassificationType
+	27,  // 106: platform.ontology.v2alpha.PreferenceCenterV1Beta.city:type_name -> platform.options.v2.ClassificationType
+	27,  // 107: platform.ontology.v2alpha.PreferenceCenterV1Beta.state_province_region:type_name -> platform.options.v2.ClassificationType
+	27,  // 108: platform.ontology.v2alpha.PreferenceCenterV1Beta.country:type_name -> platform.options.v2.ClassificationType
+	27,  // 109: platform.ontology.v2alpha.PreferenceCenterV1Beta.list_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 110: platform.ontology.v2alpha.PreferenceCenterV1Beta.segment_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 111: platform.ontology.v2alpha.PreferenceCenterV1Beta.email_subscription:type_name -> platform.options.v2.ClassificationType
 	112, // [112:112] is the sub-list for method output_type
 	112, // [112:112] is the sub-list for method input_type
 	112, // [112:112] is the sub-list for extension type_name

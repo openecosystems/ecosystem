@@ -9,13 +9,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/apex/log"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 	"os"
 	//"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
+	//"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
+
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 )
 
 var (
