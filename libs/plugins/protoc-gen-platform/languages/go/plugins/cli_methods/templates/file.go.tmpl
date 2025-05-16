@@ -16,15 +16,12 @@ import (
     "github.com/spf13/cobra"
 {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
     "net/http"
-    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
-    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ else -}}
-    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}"
-    "github.com/openecosystems/ecosystem/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $versionLower }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ end }}
 
 {{ range getImportPackages .File }}
-    //"{{ . }}"
+    "{{ . }}"
+    "{{ . }}/{{ $system.LowerCamelCase }}{{ $versionLower }}pbconnect"
 {{ end }}
 )
 

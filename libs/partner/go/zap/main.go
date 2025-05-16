@@ -17,6 +17,9 @@ type Binding struct {
 	Logger        *zap.Logger
 	SugaredLogger *zap.SugaredLogger
 
+	LoggerWrapper        *ZapLoggerWrapper
+	SugaredLoggerWrapper *ZapSugaredLoggerWrapper
+
 	configuration *Configuration
 }
 
@@ -53,8 +56,10 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2alphalib.Bindings) *sdk
 				defer b.Logger.Sync() //nolint:errcheck
 
 				Bound = &Binding{
-					Logger:        b.Logger,
-					SugaredLogger: b.Logger.Sugar(),
+					Logger:               b.Logger,
+					SugaredLogger:        b.Logger.Sugar(),
+					LoggerWrapper:        NewZapLoggerWrapper(b.Logger),
+					SugaredLoggerWrapper: NewZapSugaredLoggerWrapper(b.Logger.Sugar()),
 
 					configuration: b.configuration,
 				}
@@ -77,4 +82,42 @@ func (b *Binding) GetBinding() interface{} {
 func (b *Binding) Close() error {
 	fmt.Println("Closing the Uber Zap Logger Binding")
 	return nil
+}
+
+// ZapLoggerWrapper wraps a zap.Logger to implement log-compatible interfaces like Printf for structured logging.
+// It provides a convenient way to integrate zap.Logger into libraries expecting standard logging interfaces.
+type ZapLoggerWrapper struct {
+	logger *zap.Logger
+}
+
+// NewZapLoggerWrapper creates and returns a new instance of ZapLoggerWrapper using the provided zap.Logger instance.
+func NewZapLoggerWrapper(z *zap.Logger) *ZapLoggerWrapper {
+	return &ZapLoggerWrapper{
+		logger: z,
+	}
+}
+
+// Printf logs a formatted message at the INFO level using the zap.Logger instance.
+func (z *ZapLoggerWrapper) Printf(format string, v ...any) {
+	msg := fmt.Sprintf(format, v...)
+	z.logger.Info(msg)
+}
+
+// ZapSugaredLoggerWrapper is a wrapper around zap.SugaredLogger to provide custom logging functionalities.
+// It includes methods for structured and formatted logging leveraging the underlying zap.SugaredLogger instance.
+type ZapSugaredLoggerWrapper struct {
+	logger *zap.SugaredLogger
+}
+
+// NewZapSugaredLoggerWrapper initializes and returns a new ZapSugaredLoggerWrapper using the provided SugaredLogger instance.
+func NewZapSugaredLoggerWrapper(z *zap.SugaredLogger) *ZapSugaredLoggerWrapper {
+	return &ZapSugaredLoggerWrapper{
+		logger: z,
+	}
+}
+
+// Printf logs a formatted message at the Info level using the provided format and arguments.
+func (z *ZapSugaredLoggerWrapper) Printf(format string, v ...any) {
+	msg := fmt.Sprintf(format, v...)
+	z.logger.Info(msg)
 }

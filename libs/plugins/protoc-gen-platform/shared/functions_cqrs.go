@@ -139,6 +139,8 @@ func (fns Functions) IsCQRSType(method pgs.Method) string {
 		return "query"
 	case options.CQRSType_CQRS_TYPE_QUERY_GET:
 		return "query"
+	case options.CQRSType_CQRS_TYPE_QUERY_EXISTS:
+		return "query"
 	case options.CQRSType_CQRS_TYPE_QUERY_CLIENT_STREAM:
 		return "query-client-stream"
 	case options.CQRSType_CQRS_TYPE_QUERY_SERVER_STREAM:
@@ -188,6 +190,8 @@ func (fns Functions) GetCQRSType(method pgs.Method) string {
 		return "list"
 	case options.CQRSType_CQRS_TYPE_QUERY_GET:
 		return "get"
+	case options.CQRSType_CQRS_TYPE_QUERY_EXISTS:
+		return "exists"
 	case options.CQRSType_CQRS_TYPE_QUERY_CLIENT_STREAM:
 		return "stream-client"
 	case options.CQRSType_CQRS_TYPE_QUERY_SERVER_STREAM:
@@ -215,6 +219,8 @@ func (fns Functions) ConvertCQRSTypeToString(t options.CQRSType) string {
 	case options.CQRSType_CQRS_TYPE_MUTATION_DELETE:
 		return "Mutation"
 	case options.CQRSType_CQRS_TYPE_QUERY_LIST:
+		fallthrough
+	case options.CQRSType_CQRS_TYPE_QUERY_EXISTS:
 		fallthrough
 	case options.CQRSType_CQRS_TYPE_QUERY_STREAM:
 		fallthrough
