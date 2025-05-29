@@ -13,8 +13,6 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 	"os"
-	//"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
-	//"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"

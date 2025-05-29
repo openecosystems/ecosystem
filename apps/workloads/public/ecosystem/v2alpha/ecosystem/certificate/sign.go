@@ -3,8 +3,6 @@ package certificate
 import (
 	"context"
 
-	"github.com/nats-io/nats.go/jetstream"
-
 	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
@@ -18,29 +16,13 @@ type SignCertificateListener struct{}
 
 // GetConfiguration provides the listener configuration for SignCertificateListener, including subject, queue, and jetstream settings.
 func (l *SignCertificateListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &cryptographyv2alphapb.CertificateSpecEntity{}
-	streamType := natsnodev1.InboundStream{}
-	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
-
-	return &natsnodev1.ListenerConfiguration{
-		Entity:     &cryptographyv2alphapb.CertificateSpecEntity{},
-		Subject:    subject,
-		Queue:      queue,
-		StreamType: &natsnodev1.InboundStream{},
-		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable:       "cryptography-signCertificate",
-			AckPolicy:     jetstream.AckExplicitPolicy,
-			MemoryStorage: false,
-			FilterSubject: "inbound-certificate.data.command",
-			Metadata:      nil,
-		},
-	}
+	handler := cryptographyv2alphapb.CertificateServiceHandler{}
+	return handler.GetSignCertificateConfiguration()
 }
 
 // Listen synchronously listens for multiplexed spec events and routes them to the associated handler.
 func (l *SignCertificateListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles the incoming ListenerMessage, processes the request, and sends an appropriate response back to the client.
@@ -81,5 +63,5 @@ func (l *SignCertificateListener) Process(ctx context.Context, request *natsnode
 
 	// log.Info("Signed certificate successfully: " + response.Certificate.Id)
 
-	natsnodev1.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToMultiplexedRequest(ctx, request, &response)
 }

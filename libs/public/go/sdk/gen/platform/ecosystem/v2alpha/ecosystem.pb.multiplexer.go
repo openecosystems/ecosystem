@@ -6,10 +6,12 @@ package ecosystemv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -24,6 +26,22 @@ import (
 
 // EcosystemServiceHandler is the domain level implementation of the server API for mutations of the EcosystemService service
 type EcosystemServiceHandler struct{}
+
+func (s *EcosystemServiceHandler) GetCreateEcosystemConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &EcosystemSpecEntity{},
+		Procedure:  "CreateEcosystem",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE,
+		Topic:      CommandDataEcosystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "ecosystem-ecosystem-createEcosystem",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *connect.Request[CreateEcosystemRequest]) (*connect.Response[CreateEcosystemResponse], error) {
 
@@ -58,13 +76,14 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := EcosystemSpecEntity{}
+	config := s.GetCreateEcosystemConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataEcosystemTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -82,6 +101,22 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *EcosystemServiceHandler) GetUpdateEcosystemConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &EcosystemSpecEntity{},
+		Procedure:  "UpdateEcosystem",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataEcosystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "ecosystem-ecosystem-updateEcosystem",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *connect.Request[UpdateEcosystemRequest]) (*connect.Response[UpdateEcosystemResponse], error) {
@@ -117,13 +152,14 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := EcosystemSpecEntity{}
+	config := s.GetUpdateEcosystemConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataEcosystemTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -141,6 +177,22 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *EcosystemServiceHandler) GetDeleteEcosystemConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &EcosystemSpecEntity{},
+		Procedure:  "DeleteEcosystem",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_DELETE,
+		Topic:      CommandDataEcosystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "ecosystem-ecosystem-deleteEcosystem",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *connect.Request[DeleteEcosystemRequest]) (*connect.Response[DeleteEcosystemResponse], error) {
@@ -176,13 +228,14 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := EcosystemSpecEntity{}
+	config := s.GetDeleteEcosystemConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataEcosystemTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -200,6 +253,22 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *EcosystemServiceHandler) GetListEcosystemsConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &EcosystemSpecEntity{},
+		Procedure:  "ListEcosystems",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_LIST,
+		Topic:      EventDataEcosystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "ecosystem-ecosystem-listEcosystems",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *connect.Request[ListEcosystemsRequest]) (*connect.Response[ListEcosystemsResponse], error) {
@@ -235,13 +304,14 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := EcosystemSpecEntity{}
+	config := s.GetListEcosystemsConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataEcosystemTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -259,6 +329,22 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *EcosystemServiceHandler) GetGetEcosystemConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &EcosystemSpecEntity{},
+		Procedure:  "GetEcosystem",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET,
+		Topic:      EventDataEcosystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "ecosystem-ecosystem-getEcosystem",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect.Request[GetEcosystemRequest]) (*connect.Response[GetEcosystemResponse], error) {
@@ -294,13 +380,14 @@ func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := EcosystemSpecEntity{}
+	config := s.GetGetEcosystemConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataEcosystemTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

@@ -6,10 +6,12 @@ package iamv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -25,6 +27,22 @@ import (
 
 // AccountServiceHandler is the domain level implementation of the server API for mutations of the AccountService service
 type AccountServiceHandler struct{}
+
+func (s *AccountServiceHandler) GetCreateAccountConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &AccountSpecEntity{},
+		Procedure:  "CreateAccount",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE,
+		Topic:      CommandDataAccountTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "iam-account-createAccount",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.Request[CreateAccountRequest]) (*connect.Response[CreateAccountResponse], error) {
 
@@ -59,13 +77,14 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := AccountSpecEntity{}
+	config := s.GetCreateAccountConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataAccountTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -83,6 +102,22 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *AccountServiceHandler) GetVerifyAccountConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &AccountSpecEntity{},
+		Procedure:  "VerifyAccount",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataAccountTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "iam-account-verifyAccount",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.Request[VerifyAccountRequest]) (*connect.Response[VerifyAccountResponse], error) {
@@ -118,13 +153,14 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := AccountSpecEntity{}
+	config := s.GetVerifyAccountConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataAccountTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -142,6 +178,22 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *AccountServiceHandler) GetSignAccountConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &AccountSpecEntity{},
+		Procedure:  "SignAccount",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataAccountTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "iam-account-signAccount",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Request[SignAccountRequest]) (*connect.Response[SignAccountResponse], error) {
@@ -177,13 +229,14 @@ func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Re
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := AccountSpecEntity{}
+	config := s.GetSignAccountConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataAccountTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

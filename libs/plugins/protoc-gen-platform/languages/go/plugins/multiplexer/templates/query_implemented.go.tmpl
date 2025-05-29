@@ -1,4 +1,21 @@
-{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ .Input.Name }}]) (*connect.Response[{{ .Output.Name }}], error) {
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}{{ $entityName := entityName $e }}{{ $system := domainSystemName2 .File }}
+func (s *{{ $s.Name }}Handler) Get{{ .Name }}Configuration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &{{ $entityName.UpperCamelCase }}SpecEntity{},
+		Procedure:  "{{ .Name }}",
+		CQRS: optionv2pb.CQRSType_{{ getCQRSTypeEnumName .}},
+        Topic:   EventData{{ $entityName.UpperCamelCase }}Topic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "{{ $system.LowerCamelCase }}-{{ $entityName.LowerCamelCase }}-{{ .Name.LowerCamelCase }}",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
+
+func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ .Input.Name }}]) (*connect.Response[{{ .Output.Name }}], error) {
 
 tracer := *opentelemetryv1.Bound.Tracer
 log := *zaploggerv1.Bound.Logger
@@ -31,13 +48,14 @@ if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 // Distributed Domain Handler
 handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-entity := {{ $entityName.UpperCamelCase }}SpecEntity{}
+config := s.Get{{ .Name }}Configuration()
 reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 Request:        req.Msg,
-Stream:         natsnodev1.NewInboundStream(),
+Stream:         config.StreamType,
+Procedure:     config.Procedure,
 EventName:   "",
-EventTopic:   EventData{{ $entityName.UpperCamelCase }}Topic,
-EntityTypeName: entity.TypeName(),
+EventTopic:   config.Topic,
+EntityTypeName: config.Entity.TypeName(),
 })
 if err2 != nil {
 log.Error(err2.Error())

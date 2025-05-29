@@ -203,6 +203,18 @@ func (fns Functions) GetCQRSType(method pgs.Method) string {
 	}
 }
 
+// GetCQRSTypeEnumName determines the CQRS type of a given method based on its CQRS extension options and returns it as a string.
+func (fns Functions) GetCQRSTypeEnumName(method pgs.Method) string {
+	var cqrs options.CQRSOptions
+
+	_, err := method.Extension(options.E_Cqrs, &cqrs)
+	if err != nil {
+		panic(err.Error() + "unable to read method extension from method")
+	}
+
+	return cqrs.Type.String()
+}
+
 // ConvertCQRSTypeToString converts a given CQRSType value to its corresponding string representation such as "Mutation" or "Query".
 func (fns Functions) ConvertCQRSTypeToString(t options.CQRSType) string {
 	switch t {

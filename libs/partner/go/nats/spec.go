@@ -41,6 +41,7 @@ type Type interface {
 type SpecCommand struct {
 	Request        proto.Message
 	Stream         Stream
+	Procedure      string
 	CommandName    string
 	CommandTopic   string
 	EntityTypeName string
@@ -51,6 +52,7 @@ type SpecCommand struct {
 type SpecEvent struct {
 	Request        proto.Message
 	Stream         Stream
+	Procedure      string
 	EventName      string
 	EventTopic     string
 	EntityTypeName string

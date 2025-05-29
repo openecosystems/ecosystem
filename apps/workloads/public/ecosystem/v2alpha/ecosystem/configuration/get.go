@@ -3,7 +3,6 @@ package configuration
 import (
 	"context"
 
-	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 
 	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
@@ -20,33 +19,13 @@ type GetConfigurationListener struct{}
 
 // GetConfiguration creates and returns a ListenerConfiguration for the GetConfigurationListener.
 func (l *GetConfigurationListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &configurationv2alphapb.ConfigurationSpecEntity{}
-	streamType := natsnodev1.InboundStream{}
-	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.EventTopic())
-	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
-
-	return &natsnodev1.ListenerConfiguration{
-		Entity:     &configurationv2alphapb.ConfigurationSpecEntity{},
-		Subject:    subject,
-		Queue:      queue,
-		StreamType: &natsnodev1.InboundStream{},
-		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable: "configuration-getConfiguration",
-			//Durable: natsnodev1.GetListenerGroup(
-			//	&configurationv2alphapb.ConfigurationSpecEntity{},
-			//	&configurationv2alphapb.ConfigurationSpecEntity{},
-			//),
-			AckPolicy:     jetstream.AckExplicitPolicy,
-			MemoryStorage: false,
-			FilterSubject: "inbound-configuration.data.event",
-			Metadata:      nil,
-		},
-	}
+	handler := configurationv2alphapb.ConfigurationServiceHandler{}
+	return handler.GetGetConfigurationConfiguration()
 }
 
 // Listen subscribes the listener to a NATS subject to process multiplexed specification events synchronously.
 func (l *GetConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles incoming listener messages, validates the request, retrieves platform configurations, and sends a response.
@@ -82,5 +61,5 @@ func (l *GetConfigurationListener) Process(ctx context.Context, request *natsnod
 
 	log.Info("Get Configuration Response", zap.Any("response", response))
 
-	natsnodev1.RespondToSyncCommand(ctx, request, response)
+	natsnodev1.RespondToMultiplexedRequest(ctx, request, response)
 }

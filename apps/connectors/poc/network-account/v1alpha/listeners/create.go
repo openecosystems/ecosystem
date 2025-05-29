@@ -16,6 +16,7 @@ import (
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 	ecosystemv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbconnect"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
@@ -24,16 +25,10 @@ type CreateEcosystemListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateEcosystemListener, including entity, subject, and queue details.
 func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &ecosystemv2alphapbmodel.EcosystemSpecEntity{}
-	streamType := natsnodev1.InboundStream{}
-	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
-
 	return &natsnodev1.ListenerConfiguration{
 		Entity:     &ecosystemv2alphapbmodel.EcosystemSpecEntity{},
-		Subject:    subject,
-		Queue:      queue,
 		StreamType: &natsnodev1.InboundStream{},
+		Procedure:  ecosystemv2alphapbconnect.EcosystemServiceCreateEcosystemProcedure,
 		JetstreamConfiguration: &jetstream.ConsumerConfig{
 			Durable:       "ecosystem-createEcosystem",
 			AckPolicy:     jetstream.AckExplicitPolicy,
@@ -46,7 +41,7 @@ func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfigu
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
@@ -98,5 +93,5 @@ func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnode
 	}
 	log.Info("Create Ecosystem Response", zap.Any("id", response.Ecosystem.Id))
 
-	natsnodev1.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToMultiplexedRequest(ctx, request, &response)
 }

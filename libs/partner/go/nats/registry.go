@@ -86,16 +86,16 @@ func GetStreamName(env string, scope string, entityName string) string {
 }
 
 // GetMultiplexedRequestSubjectName generates a subject name by combining the provided scope and subject name with a "req." prefix.
-func GetMultiplexedRequestSubjectName(scope string, subjectName string) string {
-	return "req." + scope + "-" + subjectName
+func GetMultiplexedRequestSubjectName(scope string, subjectName string, procedure string) string {
+	return "req." + scope + "-" + subjectName + "." + procedure
 }
 
 // GetSubjectName generates a subject name by combining the provided scope and subject name with a hyphen separator.
-func GetSubjectName(scope string, subjectName string) string {
-	return scope + "-" + subjectName
+func GetSubjectName(scope string, subjectName string, procedure string) string {
+	return scope + "-" + subjectName + "." + procedure
 }
 
 // GetQueueGroupName generates a queue group name by combining the given scope and entityName with a predefined prefix "req.".
-func GetQueueGroupName(scope string, entityName string) string {
-	return "req." + scope + "-" + entityName
+func GetQueueGroupName(scope string, entityName string, procedure string) string {
+	return "req." + scope + "-" + entityName + "." + procedure
 }

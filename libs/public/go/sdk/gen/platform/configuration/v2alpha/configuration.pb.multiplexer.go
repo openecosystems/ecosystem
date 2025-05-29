@@ -6,10 +6,12 @@ package configurationv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -26,6 +28,22 @@ import (
 
 // ConfigurationServiceHandler is the domain level implementation of the server API for mutations of the ConfigurationService service
 type ConfigurationServiceHandler struct{}
+
+func (s *ConfigurationServiceHandler) GetCreateConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "CreateConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE,
+		Topic:      CommandDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-createConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, req *connect.Request[CreateConfigurationRequest]) (*connect.Response[CreateConfigurationResponse], error) {
 
@@ -60,13 +78,14 @@ func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, r
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetCreateConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -84,6 +103,22 @@ func (s *ConfigurationServiceHandler) CreateConfiguration(ctx context.Context, r
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetUpdateConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "UpdateConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-updateConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, req *connect.Request[UpdateConfigurationRequest]) (*connect.Response[UpdateConfigurationResponse], error) {
@@ -119,13 +154,14 @@ func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, r
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetUpdateConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -143,6 +179,22 @@ func (s *ConfigurationServiceHandler) UpdateConfiguration(ctx context.Context, r
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetLoadConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "LoadConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-loadConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req *connect.Request[LoadConfigurationRequest]) (*connect.Response[LoadConfigurationResponse], error) {
@@ -178,13 +230,14 @@ func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetLoadConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -202,6 +255,22 @@ func (s *ConfigurationServiceHandler) LoadConfiguration(ctx context.Context, req
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetDeleteConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "DeleteConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_DELETE,
+		Topic:      CommandDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-deleteConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, req *connect.Request[DeleteConfigurationRequest]) (*connect.Response[DeleteConfigurationResponse], error) {
@@ -237,13 +306,14 @@ func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, r
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetDeleteConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -261,6 +331,22 @@ func (s *ConfigurationServiceHandler) DeleteConfiguration(ctx context.Context, r
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetPublishConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "PublishConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-publishConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, req *connect.Request[PublishConfigurationRequest]) (*connect.Response[PublishConfigurationResponse], error) {
@@ -296,13 +382,14 @@ func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, 
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetPublishConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -320,6 +407,22 @@ func (s *ConfigurationServiceHandler) PublishConfiguration(ctx context.Context, 
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetArchiveConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "ArchiveConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-archiveConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, req *connect.Request[ArchiveConfigurationRequest]) (*connect.Response[ArchiveConfigurationResponse], error) {
@@ -355,13 +458,14 @@ func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, 
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetArchiveConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -379,6 +483,22 @@ func (s *ConfigurationServiceHandler) ArchiveConfiguration(ctx context.Context, 
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetListConfigurationsConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "ListConfigurations",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_LIST,
+		Topic:      EventDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-listConfigurations",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, req *connect.Request[ListConfigurationsRequest]) (*connect.Response[ListConfigurationsResponse], error) {
@@ -414,13 +534,14 @@ func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, re
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetListConfigurationsConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -438,6 +559,22 @@ func (s *ConfigurationServiceHandler) ListConfigurations(ctx context.Context, re
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *ConfigurationServiceHandler) GetGetConfigurationConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &ConfigurationSpecEntity{},
+		Procedure:  "GetConfiguration",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET,
+		Topic:      EventDataConfigurationTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "configuration-configuration-getConfiguration",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req *connect.Request[GetConfigurationRequest]) (*connect.Response[GetConfigurationResponse], error) {
@@ -473,13 +610,14 @@ func (s *ConfigurationServiceHandler) GetConfiguration(ctx context.Context, req 
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := ConfigurationSpecEntity{}
+	config := s.GetGetConfigurationConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataConfigurationTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
