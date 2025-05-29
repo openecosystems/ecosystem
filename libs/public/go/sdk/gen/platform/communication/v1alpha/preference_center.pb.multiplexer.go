@@ -6,10 +6,12 @@ package communicationv1alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -24,6 +26,22 @@ import (
 
 // PreferenceCenterServiceHandler is the domain level implementation of the server API for mutations of the PreferenceCenterService service
 type PreferenceCenterServiceHandler struct{}
+
+func (s *PreferenceCenterServiceHandler) GetCreateOrUpdatePreferenceConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &PreferenceCenterSpecEntity{},
+		Procedure:  "CreateOrUpdatePreference",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE,
+		Topic:      CommandDataPreferenceCenterTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "communication-preferenceCenter-createOrUpdatePreference",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Context, req *connect.Request[CreateOrUpdatePreferenceRequest]) (*connect.Response[CreateOrUpdatePreferenceResponse], error) {
 
@@ -58,13 +76,14 @@ func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Co
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := PreferenceCenterSpecEntity{}
+	config := s.GetCreateOrUpdatePreferenceConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataPreferenceCenterTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -82,6 +101,22 @@ func (s *PreferenceCenterServiceHandler) CreateOrUpdatePreference(ctx context.Co
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *PreferenceCenterServiceHandler) GetDeletePreferenceConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &PreferenceCenterSpecEntity{},
+		Procedure:  "DeletePreference",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_DELETE,
+		Topic:      CommandDataPreferenceCenterTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "communication-preferenceCenter-deletePreference",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, req *connect.Request[DeletePreferenceRequest]) (*connect.Response[DeletePreferenceResponse], error) {
@@ -117,13 +152,14 @@ func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, r
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := PreferenceCenterSpecEntity{}
+	config := s.GetDeletePreferenceConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataPreferenceCenterTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -141,6 +177,22 @@ func (s *PreferenceCenterServiceHandler) DeletePreference(ctx context.Context, r
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *PreferenceCenterServiceHandler) GetGetPreferenceConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &PreferenceCenterSpecEntity{},
+		Procedure:  "GetPreference",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET,
+		Topic:      EventDataPreferenceCenterTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "communication-preferenceCenter-getPreference",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req *connect.Request[GetPreferenceRequest]) (*connect.Response[GetPreferenceResponse], error) {
@@ -176,13 +228,14 @@ func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req 
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := PreferenceCenterSpecEntity{}
+	config := s.GetGetPreferenceConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataPreferenceCenterTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -200,6 +253,22 @@ func (s *PreferenceCenterServiceHandler) GetPreference(ctx context.Context, req 
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *PreferenceCenterServiceHandler) GetGetPreferenceOptionsConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &PreferenceCenterSpecEntity{},
+		Procedure:  "GetPreferenceOptions",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET,
+		Topic:      EventDataPreferenceCenterTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "communication-preferenceCenter-getPreferenceOptions",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *PreferenceCenterServiceHandler) GetPreferenceOptions(ctx context.Context, req *connect.Request[GetPreferenceOptionsRequest]) (*connect.Response[GetPreferenceOptionsResponse], error) {
@@ -235,13 +304,14 @@ func (s *PreferenceCenterServiceHandler) GetPreferenceOptions(ctx context.Contex
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := PreferenceCenterSpecEntity{}
+	config := s.GetGetPreferenceOptionsConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataPreferenceCenterTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

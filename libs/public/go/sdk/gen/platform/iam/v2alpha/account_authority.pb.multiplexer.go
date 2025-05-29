@@ -6,10 +6,12 @@ package iamv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -25,6 +27,22 @@ import (
 
 // AccountAuthorityServiceHandler is the domain level implementation of the server API for mutations of the AccountAuthorityService service
 type AccountAuthorityServiceHandler struct{}
+
+func (s *AccountAuthorityServiceHandler) GetCreateAccountAuthorityConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &AccountAuthoritySpecEntity{},
+		Procedure:  "CreateAccountAuthority",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE,
+		Topic:      CommandDataAccountAuthorityTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "iam-accountAuthority-createAccountAuthority",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *AccountAuthorityServiceHandler) CreateAccountAuthority(ctx context.Context, req *connect.Request[CreateAccountAuthorityRequest]) (*connect.Response[CreateAccountAuthorityResponse], error) {
 
@@ -59,13 +77,14 @@ func (s *AccountAuthorityServiceHandler) CreateAccountAuthority(ctx context.Cont
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := AccountAuthoritySpecEntity{}
+	config := s.GetCreateAccountAuthorityConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataAccountAuthorityTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

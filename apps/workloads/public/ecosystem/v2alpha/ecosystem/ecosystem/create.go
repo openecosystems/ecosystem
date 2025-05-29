@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -23,29 +22,13 @@ type CreateEcosystemListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateEcosystemListener, including entity, subject, and queue details.
 func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &ecosystemv2alphapb.EcosystemSpecEntity{}
-	streamType := natsnodev1.InboundStream{}
-	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
-
-	return &natsnodev1.ListenerConfiguration{
-		Entity:     &ecosystemv2alphapb.EcosystemSpecEntity{},
-		Subject:    subject,
-		Queue:      queue,
-		StreamType: &natsnodev1.InboundStream{},
-		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable:       "ecosystem-createEcosystem",
-			AckPolicy:     jetstream.AckExplicitPolicy,
-			MemoryStorage: false,
-			FilterSubject: "inbound-ecosystem.data.command",
-			Metadata:      nil,
-		},
-	}
+	handler := ecosystemv2alphapb.EcosystemServiceHandler{}
+	return handler.GetCreateEcosystemConfiguration()
 }
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
@@ -97,5 +80,5 @@ func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnode
 	}
 	log.Info("Create Ecosystem Response", zap.Any("id", response.Ecosystem.Id))
 
-	natsnodev1.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToMultiplexedRequest(ctx, request, &response)
 }

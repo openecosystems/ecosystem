@@ -6,10 +6,12 @@ package systemv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -24,6 +26,22 @@ import (
 
 // SystemServiceHandler is the domain level implementation of the server API for mutations of the SystemService service
 type SystemServiceHandler struct{}
+
+func (s *SystemServiceHandler) GetEnableConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &SystemSpecEntity{},
+		Procedure:  "Enable",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE,
+		Topic:      CommandDataSystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "system-system-enable",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[EnableRequest]) (*connect.Response[EnableResponse], error) {
 
@@ -58,13 +76,14 @@ func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := SystemSpecEntity{}
+	config := s.GetEnableConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataSystemTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -82,6 +101,22 @@ func (s *SystemServiceHandler) Enable(ctx context.Context, req *connect.Request[
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *SystemServiceHandler) GetDisableConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &SystemSpecEntity{},
+		Procedure:  "Disable",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_DELETE,
+		Topic:      CommandDataSystemTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "system-system-disable",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *SystemServiceHandler) Disable(ctx context.Context, req *connect.Request[DisableRequest]) (*connect.Response[DisableResponse], error) {
@@ -117,13 +152,14 @@ func (s *SystemServiceHandler) Disable(ctx context.Context, req *connect.Request
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := SystemSpecEntity{}
+	config := s.GetDisableConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataSystemTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

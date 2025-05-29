@@ -35,7 +35,7 @@ type Server struct {
 	ServicePath             string
 	PublicServiceHandler    *vanguard.Transcoder
 	MeshServiceHandler      *vanguard.Transcoder
-	RawServiceHandler       *http.Handler
+	RawServiceHandler       *http.ServeMux
 	ConfigurationProvider   *BaseSpecConfigurationProvider
 	NetListener             *net.Listener
 
@@ -109,7 +109,8 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 	if options.RawServerOptions != nil {
 		rawOptions := options.RawServerOptions
-		server.RawServiceHandler = options.RawServerOptions.Handler
+		server.RawServiceHandler = rawOptions.Handler
+
 		httpServer := &http2.Server{
 			IdleTimeout:      15 * time.Second,
 			WriteByteTimeout: 10 * time.Second,
@@ -121,7 +122,6 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 		}
 
 		server.ServicePath = rawOptions.Path
-		server.RawServiceHandler = rawOptions.Handler
 		server.PublicConnectHTTPServer = httpServer
 	}
 
@@ -218,19 +218,21 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 	if server.PublicHTTPServerHandler != nil {
 		publicMux = server.PublicHTTPServerHandler
 	}
+
 	server.PublicHTTPServerHandler = publicMux
-	publicMux.Handle("/", server.PublicServiceHandler)
+	if server.RawServiceHandler != nil {
+		publicMux.Handle(server.ServicePath, server.RawServiceHandler)
+	} else {
+		publicMux.Handle("/", server.PublicServiceHandler)
+	}
 
 	meshMux := http.NewServeMux()
 	if server.MeshHTTPServerHandler != nil {
 		meshMux = server.MeshHTTPServerHandler
 	}
+
 	server.MeshHTTPServerHandler = meshMux
-	if server.RawServiceHandler != nil {
-		meshMux.Handle(server.ServicePath, *server.RawServiceHandler)
-	} else {
-		meshMux.Handle("/", server.MeshServiceHandler)
-	}
+	meshMux.Handle("/", server.MeshServiceHandler)
 
 	publicHTTPServer := &http.Server{
 		Addr: publicEndpoint,
@@ -252,19 +254,25 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 
 	_httpServerErr := make(chan error)
 
-	go func() {
-		_httpServerErr <- publicHTTPServer.ListenAndServe()
-	}()
-	fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
+	if server.PublicConnectHTTPServer != nil {
+		go func() {
+			_httpServerErr <- publicHTTPServer.ListenAndServe()
+		}()
+		fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
+	}
 
-	go func() {
-		if ln != nil {
-			_httpServerErr <- meshHTTPServer.Serve(*ln)
-		} else {
-			_httpServerErr <- meshHTTPServer.ListenAndServe()
+	if server.MeshConnectHTTPServer != nil {
+		if settings.Platform.Mesh.Enabled {
+			go func() {
+				if ln != nil {
+					_httpServerErr <- meshHTTPServer.Serve(*ln)
+				} else {
+					_httpServerErr <- meshHTTPServer.ListenAndServe()
+				}
+			}()
+			fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Mesh.Endpoint)
 		}
-	}()
-	fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Mesh.Endpoint)
+	}
 
 	return _httpServerErr
 }
@@ -291,7 +299,7 @@ type ServerOption interface {
 // RawServerOptions defines options for setting up a raw HTTP server, including the server's path and its handler.
 type RawServerOptions struct {
 	Path    string
-	Handler *http.Handler
+	Handler *http.ServeMux
 }
 
 type serverOptions struct {

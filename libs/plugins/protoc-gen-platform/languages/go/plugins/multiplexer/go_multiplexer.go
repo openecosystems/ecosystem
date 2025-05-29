@@ -106,6 +106,7 @@ func (m GoServerModule) GenerateFile(file pgs.File) {
 		"getApiOptionsTypeName":         fns.GetApiOptionsTypeName,
 		"domainSystemName2":             fns.DomainSystemName2,
 		"getTopLevelFolderFromFile":     fns.GetTopLevelFolderFromFile,
+		"getCQRSTypeEnumName":           fns.GetCQRSTypeEnumName,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl

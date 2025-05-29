@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
@@ -22,29 +21,13 @@ type CreateAccountListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateAccountListener, including entity, subject, and queue details.
 func (l *CreateAccountListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &iamv2alphapb.AccountSpecEntity{}
-	streamType := natsnodev1.InboundStream{}
-	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
-
-	return &natsnodev1.ListenerConfiguration{
-		Entity:     &iamv2alphapb.AccountSpecEntity{},
-		Subject:    subject,
-		Queue:      queue,
-		StreamType: &natsnodev1.InboundStream{},
-		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable:       "iam-createAccount",
-			AckPolicy:     jetstream.AckExplicitPolicy,
-			MemoryStorage: false,
-			FilterSubject: "inbound-iam.data.command",
-			Metadata:      nil,
-		},
-	}
+	handler := iamv2alphapb.AccountAuthorityServiceHandler{}
+	return handler.GetCreateAccountAuthorityConfiguration()
 }
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateAccountListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
@@ -61,7 +44,6 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev1
 		return
 	}
 
-	fmt.Println("REEEEEUUUUUU", req) //nolint:copylocks
 	if req.Name == "" {
 		fmt.Println("Name is required")
 		return
@@ -100,5 +82,5 @@ func (l *CreateAccountListener) Process(ctx context.Context, request *natsnodev1
 	}
 	log.Info("Create Account Response", zap.Any("id", response.Account.Id))
 
-	natsnodev1.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToMultiplexedRequest(ctx, request, &response)
 }

@@ -6,10 +6,12 @@ package auditv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -26,6 +28,22 @@ import (
 
 // AuditServiceHandler is the domain level implementation of the server API for mutations of the AuditService service
 type AuditServiceHandler struct{}
+
+func (s *AuditServiceHandler) GetSearchConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &AuditSpecEntity{},
+		Procedure:  "Search",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_QUERY_LIST,
+		Topic:      EventDataAuditTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "audit-audit-search",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *AuditServiceHandler) Search(ctx context.Context, req *connect.Request[SearchRequest]) (*connect.Response[SearchResponse], error) {
 
@@ -60,13 +78,14 @@ func (s *AuditServiceHandler) Search(ctx context.Context, req *connect.Request[S
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := AuditSpecEntity{}
+	config := s.GetSearchConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		EventName:      "",
-		EventTopic:     EventDataAuditTopic,
-		EntityTypeName: entity.TypeName(),
+		EventTopic:     config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

@@ -14,8 +14,6 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
 	"os"
-	//"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
-	//"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbconnect"

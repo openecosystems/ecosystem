@@ -12,6 +12,7 @@ import (
 	protopb "google.golang.org/protobuf/proto"
 
 	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	specproto "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
@@ -28,8 +29,9 @@ type SpecEventListener interface {
 type ListenerConfiguration struct {
 	StreamType             Stream
 	Entity                 sdkv2alphalib.Entity
-	Subject                string
-	Queue                  string
+	Procedure              string
+	Topic                  string
+	CQRS                   optionv2pb.CQRSType
 	JetstreamConfiguration *jetstream.ConsumerConfig
 }
 
@@ -49,17 +51,58 @@ type ListenerErr struct {
 	Subscription *nats.Subscription
 }
 
-// ListenForMultiplexedSpecEventsSync subscribes to a NATS subject to process multiplexed spec events synchronously.
-func ListenForMultiplexedSpecEventsSync(_ context.Context, listener SpecEventListener) {
+// ListenForMultiplexedRequests subscribes to a NATS subject to process multiplexed spec events synchronously.
+func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener) {
 	configuration := listener.GetConfiguration()
 
-	if configuration == nil || configuration.Subject == "" || configuration.Queue == "" {
-		fmt.Println("Configuration is missing. Subject and Queue are required when configuring a SpecListener")
+	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil || configuration.Entity == nil {
+		fmt.Println("Configuration is missing. Entity, Procedure, StreamType are required when configuring a SpecListener")
 		panic("Configuration is missing")
 	}
 
 	n := Bound.Nats
-	_, err := n.QueueSubscribe(configuration.Subject, configuration.Queue, func(msg *nats.Msg) {
+	subject := ""
+
+	switch configuration.CQRS {
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CLIENT_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_SERVER_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_BIDI_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_DELETE:
+		subject = GetMultiplexedRequestSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.CommandTopic(), configuration.Procedure)
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_LIST:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_EXISTS:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_CLIENT_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_SERVER_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_BIDI_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET:
+		subject = GetMultiplexedRequestSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.EventTopic(), configuration.Procedure)
+	case optionv2pb.CQRSType_CQRS_TYPE_NONE:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_UNSPECIFIED:
+		fallthrough
+	default:
+		panic("Cannot start queue subscriber without a proper CQRS type")
+	}
+
+	queue := GetQueueGroupName(configuration.StreamType.StreamPrefix(), configuration.Entity.TypeName(), configuration.Procedure)
+
+	fmt.Println("Listening for multiplexed spec events on subject: " + subject)
+
+	_, err := n.QueueSubscribe(subject, queue, func(msg *nats.Msg) {
 		messageCtx, message, _ := convertNatsToListenerMessage(configuration, msg)
 		listener.Process(messageCtx, &message)
 	})
@@ -69,8 +112,8 @@ func ListenForMultiplexedSpecEventsSync(_ context.Context, listener SpecEventLis
 	}
 }
 
-// RespondToSyncCommand processes an inbound request, modifies the provided message, and sends a response through NATS.
-func RespondToSyncCommand(_ context.Context, request *ListenerMessage, m protopb.Message) {
+// RespondToMultiplexedRequest processes an inbound request, modifies the provided message, and sends a response through NATS.
+func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m protopb.Message) {
 	log := *zaploggerv1.Bound.Logger
 	js := *Bound.JetStream
 	nm := *request.NatsMessage
@@ -84,7 +127,42 @@ func RespondToSyncCommand(_ context.Context, request *ListenerMessage, m protopb
 
 	configuration := request.ListenerConfiguration
 
-	subject := GetSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.CommandTopic())
+	subject := ""
+
+	switch configuration.CQRS {
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CREATE:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_CLIENT_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_SERVER_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_BIDI_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_MUTATION_DELETE:
+		subject = GetSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.CommandTopic(), configuration.Procedure)
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_LIST:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_EXISTS:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_CLIENT_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_SERVER_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_BIDI_STREAM:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET:
+		subject = GetSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.EventTopic(), configuration.Procedure)
+	case optionv2pb.CQRSType_CQRS_TYPE_NONE:
+		fallthrough
+	case optionv2pb.CQRSType_CQRS_TYPE_UNSPECIFIED:
+		fallthrough
+	default:
+		log.Error("Cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad.")
+	}
 
 	go func() {
 		_, err2 := js.Publish(context.Background(), subject, specBytes)

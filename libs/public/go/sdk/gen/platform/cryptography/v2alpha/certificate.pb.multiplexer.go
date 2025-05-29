@@ -6,10 +6,12 @@ package cryptographyv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
 	"github.com/openecosystems/ecosystem/libs/partner/go/protovalidate"
 	"github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -26,6 +28,22 @@ import (
 
 // CertificateServiceHandler is the domain level implementation of the server API for mutations of the CertificateService service
 type CertificateServiceHandler struct{}
+
+func (s *CertificateServiceHandler) GetVerifyCertificateConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &CertificateSpecEntity{},
+		Procedure:  "VerifyCertificate",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataCertificateTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "cryptography-certificate-verifyCertificate",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
+}
 
 func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *connect.Request[VerifyCertificateRequest]) (*connect.Response[VerifyCertificateResponse], error) {
 
@@ -60,13 +78,14 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := CertificateSpecEntity{}
+	config := s.GetVerifyCertificateConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataCertificateTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())
@@ -84,6 +103,22 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 
 	return connect.NewResponse(&dd), nil
 
+}
+
+func (s *CertificateServiceHandler) GetSignCertificateConfiguration() *natsnodev1.ListenerConfiguration {
+
+	return &natsnodev1.ListenerConfiguration{
+		Entity:     &CertificateSpecEntity{},
+		Procedure:  "SignCertificate",
+		CQRS:       optionv2pb.CQRSType_CQRS_TYPE_MUTATION_UPDATE,
+		Topic:      CommandDataCertificateTopic,
+		StreamType: natsnodev1.NewInboundStream(),
+		JetstreamConfiguration: &jetstream.ConsumerConfig{
+			Durable:       "cryptography-certificate-signCertificate",
+			AckPolicy:     jetstream.AckExplicitPolicy,
+			MemoryStorage: false,
+		},
+	}
 }
 
 func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *connect.Request[SignCertificateRequest]) (*connect.Response[SignCertificateResponse], error) {
@@ -119,13 +154,14 @@ func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *co
 	// Distributed Domain Handler
 	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-	entity := CertificateSpecEntity{}
+	config := s.GetSignCertificateConfiguration()
 	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
-		Stream:         natsnodev1.NewInboundStream(),
+		Stream:         config.StreamType,
+		Procedure:      config.Procedure,
 		CommandName:    "",
-		CommandTopic:   CommandDataCertificateTopic,
-		EntityTypeName: entity.TypeName(),
+		CommandTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
 	})
 	if err2 != nil {
 		log.Error(err2.Error())

@@ -51,7 +51,7 @@ func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, comm
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not marshall spec"))
 	}
 
-	subject := GetMultiplexedRequestSubjectName(command.Stream.StreamPrefix(), command.CommandTopic)
+	subject := GetMultiplexedRequestSubjectName(command.Stream.StreamPrefix(), command.CommandTopic, command.Procedure)
 
 	log.Debug("Publishing on " + subject)
 
@@ -94,7 +94,7 @@ func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event 
 
 	// Encrypt here
 
-	subject := GetMultiplexedRequestSubjectName(event.Stream.StreamPrefix(), event.EventTopic)
+	subject := GetMultiplexedRequestSubjectName(event.Stream.StreamPrefix(), event.EventTopic, event.Procedure)
 
 	log.Debug("Publishing on " + subject)
 

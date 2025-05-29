@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -26,29 +25,13 @@ type CreateConfigurationListener struct{}
 
 // GetConfiguration returns the ListenerConfiguration for CreateConfigurationListener, defining subject, queue, entity, and stream settings.
 func (l *CreateConfigurationListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
-	entity := &configurationv2alphapb.ConfigurationSpecEntity{}
-	streamType := natsnodev1.InboundStream{}
-	subject := natsnodev1.GetMultiplexedRequestSubjectName(streamType.StreamPrefix(), entity.CommandTopic())
-	queue := natsnodev1.GetQueueGroupName(streamType.StreamPrefix(), entity.TypeName())
-
-	return &natsnodev1.ListenerConfiguration{
-		Entity:     &configurationv2alphapb.ConfigurationSpecEntity{},
-		Subject:    subject,
-		Queue:      queue,
-		StreamType: &natsnodev1.InboundStream{},
-		JetstreamConfiguration: &jetstream.ConsumerConfig{
-			Durable:       "configuration-createConfiguration",
-			AckPolicy:     jetstream.AckExplicitPolicy,
-			MemoryStorage: false,
-			FilterSubject: "inbound-configuration.data.command",
-			Metadata:      nil,
-		},
-	}
+	handler := configurationv2alphapb.ConfigurationServiceHandler{}
+	return handler.GetCreateConfigurationConfiguration()
 }
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
 func (l *CreateConfigurationListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
-	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
+	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
@@ -103,5 +86,5 @@ func (l *CreateConfigurationListener) Process(ctx context.Context, request *nats
 	}
 	log.Info("Create Configuration Response", zap.Any("id", response.Configuration.Id))
 
-	natsnodev1.RespondToSyncCommand(ctx, request, &response)
+	natsnodev1.RespondToMultiplexedRequest(ctx, request, &response)
 }
