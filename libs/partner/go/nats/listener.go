@@ -29,6 +29,7 @@ type SpecEventListener interface {
 type ListenerConfiguration struct {
 	StreamType             Stream
 	Entity                 sdkv2alphalib.Entity
+	TypeName               string
 	Procedure              string
 	Topic                  string
 	CQRS                   optionv2pb.CQRSType
@@ -184,6 +185,59 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m 
 	}
 }
 
+// ListenForJetStreamEvents subscribes to a Jetstream subject.
+func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEventListener) {
+	configuration := listener.GetConfiguration()
+
+	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil {
+		fmt.Println("Configuration is missing. Procedure, StreamType are required when configuring a SpecListener")
+		panic("Configuration is missing")
+	}
+
+	log := *zaploggerv1.Bound.Logger
+	js := *Bound.JetStream
+	streamName := GetStreamName(env, configuration.StreamType.StreamPrefix(), configuration.TypeName)
+
+	stream, err := js.Stream(ctx, streamName)
+	if err != nil {
+		fmt.Println("Could not find stream: "+streamName, err)
+		return
+	}
+
+	c, err := stream.CreateOrUpdateConsumer(ctx, *configuration.JetstreamConfiguration)
+	if err != nil {
+		log.Error("Error creating consumer", zap.Error(err))
+		panic("Cannot start consumer")
+	}
+
+	// TODO: This must be closed
+	_, err = c.Consume(func(msg jetstream.Msg) {
+		messageCtx, message, _ := convertJetstreamToListenerMessage(configuration, &msg)
+		listener.Process(messageCtx, &message)
+	}, jetstream.ConsumeErrHandler(func(_ jetstream.ConsumeContext, err error) {
+		fmt.Println(err)
+	}))
+	if err != nil {
+		log.Fatal("consume error", zap.Error(err))
+	}
+
+	fmt.Println("Listening for stream spec events on subject: " + streamName)
+
+	//
+}
+
+// RespondToJetstreamEvent processes an inbound request, modifies the provided message, and sends a response through NATS.
+func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
+	log := *zaploggerv1.Bound.Logger
+	jm := *request.Message
+
+	err4 := jm.Ack()
+	if err4 != nil {
+		log.Error("Error acknowledging message", zap.Error(err4))
+		return
+	}
+}
+
 // convertNatsToListenerMessage transforms a NATS message into a ListenerMessage while setting up the required context.
 // It unmarshals data from the NATS message into a Spec object and attaches it to the ListenerMessage.
 // Returns a context, ListenerMessage populated with details from the input, and an error if unmarshalling fails.
@@ -205,6 +259,27 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 		Spec:                  s,
 		Subscription:          nil,
 		NatsMessage:           &m,
+		ListenerConfiguration: config,
+	}, nil
+}
+
+func convertJetstreamToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg) (context.Context, ListenerMessage, error) {
+	ctx := context.Background()
+
+	s := &specproto.Spec{}
+	m := *msg
+	err := protopb.Unmarshal(m.Data(), s)
+	if err != nil {
+		fmt.Println(sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec")))
+		return ctx, ListenerMessage{}, err
+	}
+
+	// ctx = interceptor.DecorateContextWithSpec(ctx, *s)
+
+	return ctx, ListenerMessage{
+		Spec:                  s,
+		Subscription:          nil,
+		Message:               &m,
 		ListenerConfiguration: config,
 	}, nil
 }

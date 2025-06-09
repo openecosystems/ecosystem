@@ -32,6 +32,22 @@ export declare type NetworkOptions = Message<"platform.options.v2.NetworkOptions
 export declare const NetworkOptionsSchema: GenMessage<NetworkOptions>;
 
 /**
+ * @generated from message platform.options.v2.SystemOptions
+ */
+export declare type SystemOptions = Message<"platform.options.v2.SystemOptions"> & {
+  /**
+   * @generated from field: bool enabled_by_default = 1;
+   */
+  enabledByDefault: boolean;
+};
+
+/**
+ * Describes the message platform.options.v2.SystemOptions.
+ * Use `create(SystemOptionsSchema)` to create a new message.
+ */
+export declare const SystemOptionsSchema: GenMessage<SystemOptions>;
+
+/**
  * @generated from message platform.options.v2.ApiOptions
  */
 export declare type ApiOptions = Message<"platform.options.v2.ApiOptions"> & {
@@ -59,6 +75,11 @@ export declare type ApiOptions = Message<"platform.options.v2.ApiOptions"> & {
    * @generated from field: string shortname = 5;
    */
   shortname: string;
+
+  /**
+   * @generated from field: bool versionable = 6;
+   */
+  versionable: boolean;
 };
 
 /**
@@ -1123,6 +1144,11 @@ export enum AuthRole {
   UNSPECIFIED = 0,
 
   /**
+   * @generated from enum value: AUTH_ROLE_ANONYMOUS = 1;
+   */
+  ANONYMOUS = 1,
+
+  /**
    * @generated from enum value: AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100;
    */
   PLATFORM_SUPER_ADMIN = 100,
@@ -1574,6 +1600,11 @@ export declare const configuration: GenExtension<FileOptions, ConfigurationOptio
  * @generated from extension: bool has_multiple_implementations = 50005;
  */
 export declare const has_multiple_implementations: GenExtension<FileOptions, boolean>;
+
+/**
+ * @generated from extension: platform.options.v2.SystemOptions system = 500006;
+ */
+export declare const system: GenExtension<FileOptions, SystemOptions>;
 
 /**
  * @generated from extension: platform.options.v2.ApiOptions api_service = 50010;

@@ -844,726 +844,6 @@ func (*Type) Descriptor() ([]byte, []int) {
 	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{16}
 }
 
-type AuditV2Alpha struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	Entry         v2.ClassificationType  `protobuf:"varint,4,opt,name=entry,proto3,enum=platform.options.v2.ClassificationType" json:"entry,omitempty"`
-	Jurisdiction  v2.ClassificationType  `protobuf:"varint,5,opt,name=jurisdiction,proto3,enum=platform.options.v2.ClassificationType" json:"jurisdiction,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AuditV2Alpha) Reset() {
-	*x = AuditV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AuditV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AuditV2Alpha) ProtoMessage() {}
-
-func (x *AuditV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AuditV2Alpha.ProtoReflect.Descriptor instead.
-func (*AuditV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *AuditV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AuditV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AuditV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AuditV2Alpha) GetEntry() v2.ClassificationType {
-	if x != nil {
-		return x.Entry
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AuditV2Alpha) GetJurisdiction() v2.ClassificationType {
-	if x != nil {
-		return x.Jurisdiction
-	}
-	return v2.ClassificationType(0)
-}
-
-type ConfigurationV2Alpha struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Id                      v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	OrganizationSlug        v2.ClassificationType  `protobuf:"varint,2,opt,name=organization_slug,json=organizationSlug,proto3,enum=platform.options.v2.ClassificationType" json:"organization_slug,omitempty"`
-	WorkspaceSlug           v2.ClassificationType  `protobuf:"varint,3,opt,name=workspace_slug,json=workspaceSlug,proto3,enum=platform.options.v2.ClassificationType" json:"workspace_slug,omitempty"`
-	CreatedAt               v2.ClassificationType  `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt               v2.ClassificationType  `protobuf:"varint,5,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	SourceId                v2.ClassificationType  `protobuf:"varint,6,opt,name=source_id,json=sourceId,proto3,enum=platform.options.v2.ClassificationType" json:"source_id,omitempty"`
-	Type                    v2.ClassificationType  `protobuf:"varint,7,opt,name=type,proto3,enum=platform.options.v2.ClassificationType" json:"type,omitempty"`
-	Status                  v2.ClassificationType  `protobuf:"varint,8,opt,name=status,proto3,enum=platform.options.v2.ClassificationType" json:"status,omitempty"`
-	StatusDetails           v2.ClassificationType  `protobuf:"varint,9,opt,name=status_details,json=statusDetails,proto3,enum=platform.options.v2.ClassificationType" json:"status_details,omitempty"`
-	ParentId                v2.ClassificationType  `protobuf:"varint,10,opt,name=parent_id,json=parentId,proto3,enum=platform.options.v2.ClassificationType" json:"parent_id,omitempty"`
-	DataCatalog             v2.ClassificationType  `protobuf:"varint,13,opt,name=data_catalog,json=dataCatalog,proto3,enum=platform.options.v2.ClassificationType" json:"data_catalog,omitempty"`
-	ClinicalCatalog         v2.ClassificationType  `protobuf:"varint,14,opt,name=clinical_catalog,json=clinicalCatalog,proto3,enum=platform.options.v2.ClassificationType" json:"clinical_catalog,omitempty"`
-	PlatformConfiguration   v2.ClassificationType  `protobuf:"varint,15,opt,name=platform_configuration,json=platformConfiguration,proto3,enum=platform.options.v2.ClassificationType" json:"platform_configuration,omitempty"`
-	PlatformConfigurations  v2.ClassificationType  `protobuf:"varint,16,opt,name=platform_configurations,json=platformConfigurations,proto3,enum=platform.options.v2.ClassificationType" json:"platform_configurations,omitempty"`
-	SolutionConfigurations  v2.ClassificationType  `protobuf:"varint,17,opt,name=solution_configurations,json=solutionConfigurations,proto3,enum=platform.options.v2.ClassificationType" json:"solution_configurations,omitempty"`
-	ConnectorConfigurations v2.ClassificationType  `protobuf:"varint,18,opt,name=connector_configurations,json=connectorConfigurations,proto3,enum=platform.options.v2.ClassificationType" json:"connector_configurations,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
-}
-
-func (x *ConfigurationV2Alpha) Reset() {
-	*x = ConfigurationV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ConfigurationV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ConfigurationV2Alpha) ProtoMessage() {}
-
-func (x *ConfigurationV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[18]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ConfigurationV2Alpha.ProtoReflect.Descriptor instead.
-func (*ConfigurationV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{18}
-}
-
-func (x *ConfigurationV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetOrganizationSlug() v2.ClassificationType {
-	if x != nil {
-		return x.OrganizationSlug
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetWorkspaceSlug() v2.ClassificationType {
-	if x != nil {
-		return x.WorkspaceSlug
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetSourceId() v2.ClassificationType {
-	if x != nil {
-		return x.SourceId
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetType() v2.ClassificationType {
-	if x != nil {
-		return x.Type
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetStatus() v2.ClassificationType {
-	if x != nil {
-		return x.Status
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetStatusDetails() v2.ClassificationType {
-	if x != nil {
-		return x.StatusDetails
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetParentId() v2.ClassificationType {
-	if x != nil {
-		return x.ParentId
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetDataCatalog() v2.ClassificationType {
-	if x != nil {
-		return x.DataCatalog
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetClinicalCatalog() v2.ClassificationType {
-	if x != nil {
-		return x.ClinicalCatalog
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetPlatformConfiguration() v2.ClassificationType {
-	if x != nil {
-		return x.PlatformConfiguration
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetPlatformConfigurations() v2.ClassificationType {
-	if x != nil {
-		return x.PlatformConfigurations
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetSolutionConfigurations() v2.ClassificationType {
-	if x != nil {
-		return x.SolutionConfigurations
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ConfigurationV2Alpha) GetConnectorConfigurations() v2.ClassificationType {
-	if x != nil {
-		return x.ConnectorConfigurations
-	}
-	return v2.ClassificationType(0)
-}
-
-type CertificateV2Alpha struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	Name          v2.ClassificationType  `protobuf:"varint,4,opt,name=name,proto3,enum=platform.options.v2.ClassificationType" json:"name,omitempty"`
-	Duration      v2.ClassificationType  `protobuf:"varint,6,opt,name=duration,proto3,enum=platform.options.v2.ClassificationType" json:"duration,omitempty"`
-	Certificate   v2.ClassificationType  `protobuf:"varint,7,opt,name=certificate,proto3,enum=platform.options.v2.ClassificationType" json:"certificate,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CertificateV2Alpha) Reset() {
-	*x = CertificateV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CertificateV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CertificateV2Alpha) ProtoMessage() {}
-
-func (x *CertificateV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CertificateV2Alpha.ProtoReflect.Descriptor instead.
-func (*CertificateV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *CertificateV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *CertificateV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *CertificateV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *CertificateV2Alpha) GetName() v2.ClassificationType {
-	if x != nil {
-		return x.Name
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *CertificateV2Alpha) GetDuration() v2.ClassificationType {
-	if x != nil {
-		return x.Duration
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *CertificateV2Alpha) GetCertificate() v2.ClassificationType {
-	if x != nil {
-		return x.Certificate
-	}
-	return v2.ClassificationType(0)
-}
-
-type EcosystemV2Alpha struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	Id               v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	Slug             v2.ClassificationType  `protobuf:"varint,2,opt,name=slug,proto3,enum=platform.options.v2.ClassificationType" json:"slug,omitempty"`
-	CreatedAt        v2.ClassificationType  `protobuf:"varint,3,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt        v2.ClassificationType  `protobuf:"varint,4,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	SourceId         v2.ClassificationType  `protobuf:"varint,5,opt,name=source_id,json=sourceId,proto3,enum=platform.options.v2.ClassificationType" json:"source_id,omitempty"`
-	Type             v2.ClassificationType  `protobuf:"varint,6,opt,name=type,proto3,enum=platform.options.v2.ClassificationType" json:"type,omitempty"`
-	Status           v2.ClassificationType  `protobuf:"varint,7,opt,name=status,proto3,enum=platform.options.v2.ClassificationType" json:"status,omitempty"`
-	StatusDetails    v2.ClassificationType  `protobuf:"varint,8,opt,name=status_details,json=statusDetails,proto3,enum=platform.options.v2.ClassificationType" json:"status_details,omitempty"`
-	Name             v2.ClassificationType  `protobuf:"varint,9,opt,name=name,proto3,enum=platform.options.v2.ClassificationType" json:"name,omitempty"`
-	ShortDescription v2.ClassificationType  `protobuf:"varint,10,opt,name=short_description,json=shortDescription,proto3,enum=platform.options.v2.ClassificationType" json:"short_description,omitempty"`
-	Description      v2.ClassificationType  `protobuf:"varint,11,opt,name=description,proto3,enum=platform.options.v2.ClassificationType" json:"description,omitempty"`
-	Cidr             v2.ClassificationType  `protobuf:"varint,12,opt,name=cidr,proto3,enum=platform.options.v2.ClassificationType" json:"cidr,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *EcosystemV2Alpha) Reset() {
-	*x = EcosystemV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *EcosystemV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EcosystemV2Alpha) ProtoMessage() {}
-
-func (x *EcosystemV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EcosystemV2Alpha.ProtoReflect.Descriptor instead.
-func (*EcosystemV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *EcosystemV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetSlug() v2.ClassificationType {
-	if x != nil {
-		return x.Slug
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetSourceId() v2.ClassificationType {
-	if x != nil {
-		return x.SourceId
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetType() v2.ClassificationType {
-	if x != nil {
-		return x.Type
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetStatus() v2.ClassificationType {
-	if x != nil {
-		return x.Status
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetStatusDetails() v2.ClassificationType {
-	if x != nil {
-		return x.StatusDetails
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetName() v2.ClassificationType {
-	if x != nil {
-		return x.Name
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetShortDescription() v2.ClassificationType {
-	if x != nil {
-		return x.ShortDescription
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetDescription() v2.ClassificationType {
-	if x != nil {
-		return x.Description
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *EcosystemV2Alpha) GetCidr() v2.ClassificationType {
-	if x != nil {
-		return x.Cidr
-	}
-	return v2.ClassificationType(0)
-}
-
-type AccountV2Alpha struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	Credential    v2.ClassificationType  `protobuf:"varint,4,opt,name=credential,proto3,enum=platform.options.v2.ClassificationType" json:"credential,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AccountV2Alpha) Reset() {
-	*x = AccountV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AccountV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AccountV2Alpha) ProtoMessage() {}
-
-func (x *AccountV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AccountV2Alpha.ProtoReflect.Descriptor instead.
-func (*AccountV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *AccountV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AccountV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AccountV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AccountV2Alpha) GetCredential() v2.ClassificationType {
-	if x != nil {
-		return x.Credential
-	}
-	return v2.ClassificationType(0)
-}
-
-type AccountAuthorityV2Alpha struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	Credential    v2.ClassificationType  `protobuf:"varint,4,opt,name=credential,proto3,enum=platform.options.v2.ClassificationType" json:"credential,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AccountAuthorityV2Alpha) Reset() {
-	*x = AccountAuthorityV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AccountAuthorityV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AccountAuthorityV2Alpha) ProtoMessage() {}
-
-func (x *AccountAuthorityV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AccountAuthorityV2Alpha.ProtoReflect.Descriptor instead.
-func (*AccountAuthorityV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *AccountAuthorityV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AccountAuthorityV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AccountAuthorityV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *AccountAuthorityV2Alpha) GetCredential() v2.ClassificationType {
-	if x != nil {
-		return x.Credential
-	}
-	return v2.ClassificationType(0)
-}
-
-type ReferenceV2Alpha struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ReferenceV2Alpha) Reset() {
-	*x = ReferenceV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ReferenceV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ReferenceV2Alpha) ProtoMessage() {}
-
-func (x *ReferenceV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ReferenceV2Alpha.ProtoReflect.Descriptor instead.
-func (*ReferenceV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *ReferenceV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ReferenceV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *ReferenceV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-type SystemV2Alpha struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
-	EnabledAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=enabled_at,json=enabledAt,proto3,enum=platform.options.v2.ClassificationType" json:"enabled_at,omitempty"`
-	CreatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
-	UpdatedAt     v2.ClassificationType  `protobuf:"varint,4,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SystemV2Alpha) Reset() {
-	*x = SystemV2Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SystemV2Alpha) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SystemV2Alpha) ProtoMessage() {}
-
-func (x *SystemV2Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SystemV2Alpha.ProtoReflect.Descriptor instead.
-func (*SystemV2Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *SystemV2Alpha) GetId() v2.ClassificationType {
-	if x != nil {
-		return x.Id
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *SystemV2Alpha) GetEnabledAt() v2.ClassificationType {
-	if x != nil {
-		return x.EnabledAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *SystemV2Alpha) GetCreatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
-func (x *SystemV2Alpha) GetUpdatedAt() v2.ClassificationType {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return v2.ClassificationType(0)
-}
-
 type PreferenceCenterV1Alpha struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Id                  v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
@@ -1588,7 +868,7 @@ type PreferenceCenterV1Alpha struct {
 
 func (x *PreferenceCenterV1Alpha) Reset() {
 	*x = PreferenceCenterV1Alpha{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1600,7 +880,7 @@ func (x *PreferenceCenterV1Alpha) String() string {
 func (*PreferenceCenterV1Alpha) ProtoMessage() {}
 
 func (x *PreferenceCenterV1Alpha) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1613,7 +893,7 @@ func (x *PreferenceCenterV1Alpha) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PreferenceCenterV1Alpha.ProtoReflect.Descriptor instead.
 func (*PreferenceCenterV1Alpha) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{25}
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *PreferenceCenterV1Alpha) GetId() v2.ClassificationType {
@@ -1752,7 +1032,7 @@ type PreferenceCenterV1Beta struct {
 
 func (x *PreferenceCenterV1Beta) Reset() {
 	*x = PreferenceCenterV1Beta{}
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1764,7 +1044,7 @@ func (x *PreferenceCenterV1Beta) String() string {
 func (*PreferenceCenterV1Beta) ProtoMessage() {}
 
 func (x *PreferenceCenterV1Beta) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1777,7 +1057,7 @@ func (x *PreferenceCenterV1Beta) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PreferenceCenterV1Beta.ProtoReflect.Descriptor instead.
 func (*PreferenceCenterV1Beta) Descriptor() ([]byte, []int) {
-	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{26}
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *PreferenceCenterV1Beta) GetId() v2.ClassificationType {
@@ -1892,6 +1172,726 @@ func (x *PreferenceCenterV1Beta) GetEmailSubscription() v2.ClassificationType {
 	return v2.ClassificationType(0)
 }
 
+type AuditV2Alpha struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	Entry         v2.ClassificationType  `protobuf:"varint,4,opt,name=entry,proto3,enum=platform.options.v2.ClassificationType" json:"entry,omitempty"`
+	Jurisdiction  v2.ClassificationType  `protobuf:"varint,5,opt,name=jurisdiction,proto3,enum=platform.options.v2.ClassificationType" json:"jurisdiction,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AuditV2Alpha) Reset() {
+	*x = AuditV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AuditV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AuditV2Alpha) ProtoMessage() {}
+
+func (x *AuditV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AuditV2Alpha.ProtoReflect.Descriptor instead.
+func (*AuditV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *AuditV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AuditV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AuditV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AuditV2Alpha) GetEntry() v2.ClassificationType {
+	if x != nil {
+		return x.Entry
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AuditV2Alpha) GetJurisdiction() v2.ClassificationType {
+	if x != nil {
+		return x.Jurisdiction
+	}
+	return v2.ClassificationType(0)
+}
+
+type ConfigurationV2Alpha struct {
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	Id                      v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	OrganizationSlug        v2.ClassificationType  `protobuf:"varint,2,opt,name=organization_slug,json=organizationSlug,proto3,enum=platform.options.v2.ClassificationType" json:"organization_slug,omitempty"`
+	WorkspaceSlug           v2.ClassificationType  `protobuf:"varint,3,opt,name=workspace_slug,json=workspaceSlug,proto3,enum=platform.options.v2.ClassificationType" json:"workspace_slug,omitempty"`
+	CreatedAt               v2.ClassificationType  `protobuf:"varint,4,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt               v2.ClassificationType  `protobuf:"varint,5,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	SourceId                v2.ClassificationType  `protobuf:"varint,6,opt,name=source_id,json=sourceId,proto3,enum=platform.options.v2.ClassificationType" json:"source_id,omitempty"`
+	Type                    v2.ClassificationType  `protobuf:"varint,7,opt,name=type,proto3,enum=platform.options.v2.ClassificationType" json:"type,omitempty"`
+	Status                  v2.ClassificationType  `protobuf:"varint,8,opt,name=status,proto3,enum=platform.options.v2.ClassificationType" json:"status,omitempty"`
+	StatusDetails           v2.ClassificationType  `protobuf:"varint,9,opt,name=status_details,json=statusDetails,proto3,enum=platform.options.v2.ClassificationType" json:"status_details,omitempty"`
+	ParentId                v2.ClassificationType  `protobuf:"varint,10,opt,name=parent_id,json=parentId,proto3,enum=platform.options.v2.ClassificationType" json:"parent_id,omitempty"`
+	DataCatalog             v2.ClassificationType  `protobuf:"varint,13,opt,name=data_catalog,json=dataCatalog,proto3,enum=platform.options.v2.ClassificationType" json:"data_catalog,omitempty"`
+	ClinicalCatalog         v2.ClassificationType  `protobuf:"varint,14,opt,name=clinical_catalog,json=clinicalCatalog,proto3,enum=platform.options.v2.ClassificationType" json:"clinical_catalog,omitempty"`
+	PlatformConfiguration   v2.ClassificationType  `protobuf:"varint,15,opt,name=platform_configuration,json=platformConfiguration,proto3,enum=platform.options.v2.ClassificationType" json:"platform_configuration,omitempty"`
+	PlatformConfigurations  v2.ClassificationType  `protobuf:"varint,16,opt,name=platform_configurations,json=platformConfigurations,proto3,enum=platform.options.v2.ClassificationType" json:"platform_configurations,omitempty"`
+	SolutionConfigurations  v2.ClassificationType  `protobuf:"varint,17,opt,name=solution_configurations,json=solutionConfigurations,proto3,enum=platform.options.v2.ClassificationType" json:"solution_configurations,omitempty"`
+	ConnectorConfigurations v2.ClassificationType  `protobuf:"varint,18,opt,name=connector_configurations,json=connectorConfigurations,proto3,enum=platform.options.v2.ClassificationType" json:"connector_configurations,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *ConfigurationV2Alpha) Reset() {
+	*x = ConfigurationV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ConfigurationV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ConfigurationV2Alpha) ProtoMessage() {}
+
+func (x *ConfigurationV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ConfigurationV2Alpha.ProtoReflect.Descriptor instead.
+func (*ConfigurationV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ConfigurationV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetOrganizationSlug() v2.ClassificationType {
+	if x != nil {
+		return x.OrganizationSlug
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetWorkspaceSlug() v2.ClassificationType {
+	if x != nil {
+		return x.WorkspaceSlug
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetSourceId() v2.ClassificationType {
+	if x != nil {
+		return x.SourceId
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetType() v2.ClassificationType {
+	if x != nil {
+		return x.Type
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetStatus() v2.ClassificationType {
+	if x != nil {
+		return x.Status
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetStatusDetails() v2.ClassificationType {
+	if x != nil {
+		return x.StatusDetails
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetParentId() v2.ClassificationType {
+	if x != nil {
+		return x.ParentId
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetDataCatalog() v2.ClassificationType {
+	if x != nil {
+		return x.DataCatalog
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetClinicalCatalog() v2.ClassificationType {
+	if x != nil {
+		return x.ClinicalCatalog
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetPlatformConfiguration() v2.ClassificationType {
+	if x != nil {
+		return x.PlatformConfiguration
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetPlatformConfigurations() v2.ClassificationType {
+	if x != nil {
+		return x.PlatformConfigurations
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetSolutionConfigurations() v2.ClassificationType {
+	if x != nil {
+		return x.SolutionConfigurations
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ConfigurationV2Alpha) GetConnectorConfigurations() v2.ClassificationType {
+	if x != nil {
+		return x.ConnectorConfigurations
+	}
+	return v2.ClassificationType(0)
+}
+
+type CertificateV2Alpha struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	Name          v2.ClassificationType  `protobuf:"varint,4,opt,name=name,proto3,enum=platform.options.v2.ClassificationType" json:"name,omitempty"`
+	Duration      v2.ClassificationType  `protobuf:"varint,6,opt,name=duration,proto3,enum=platform.options.v2.ClassificationType" json:"duration,omitempty"`
+	Certificate   v2.ClassificationType  `protobuf:"varint,7,opt,name=certificate,proto3,enum=platform.options.v2.ClassificationType" json:"certificate,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CertificateV2Alpha) Reset() {
+	*x = CertificateV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CertificateV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CertificateV2Alpha) ProtoMessage() {}
+
+func (x *CertificateV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CertificateV2Alpha.ProtoReflect.Descriptor instead.
+func (*CertificateV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *CertificateV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *CertificateV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *CertificateV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *CertificateV2Alpha) GetName() v2.ClassificationType {
+	if x != nil {
+		return x.Name
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *CertificateV2Alpha) GetDuration() v2.ClassificationType {
+	if x != nil {
+		return x.Duration
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *CertificateV2Alpha) GetCertificate() v2.ClassificationType {
+	if x != nil {
+		return x.Certificate
+	}
+	return v2.ClassificationType(0)
+}
+
+type EcosystemV2Alpha struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	Slug             v2.ClassificationType  `protobuf:"varint,2,opt,name=slug,proto3,enum=platform.options.v2.ClassificationType" json:"slug,omitempty"`
+	CreatedAt        v2.ClassificationType  `protobuf:"varint,3,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt        v2.ClassificationType  `protobuf:"varint,4,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	SourceId         v2.ClassificationType  `protobuf:"varint,5,opt,name=source_id,json=sourceId,proto3,enum=platform.options.v2.ClassificationType" json:"source_id,omitempty"`
+	Type             v2.ClassificationType  `protobuf:"varint,6,opt,name=type,proto3,enum=platform.options.v2.ClassificationType" json:"type,omitempty"`
+	Status           v2.ClassificationType  `protobuf:"varint,7,opt,name=status,proto3,enum=platform.options.v2.ClassificationType" json:"status,omitempty"`
+	StatusDetails    v2.ClassificationType  `protobuf:"varint,8,opt,name=status_details,json=statusDetails,proto3,enum=platform.options.v2.ClassificationType" json:"status_details,omitempty"`
+	Name             v2.ClassificationType  `protobuf:"varint,9,opt,name=name,proto3,enum=platform.options.v2.ClassificationType" json:"name,omitempty"`
+	ShortDescription v2.ClassificationType  `protobuf:"varint,10,opt,name=short_description,json=shortDescription,proto3,enum=platform.options.v2.ClassificationType" json:"short_description,omitempty"`
+	Description      v2.ClassificationType  `protobuf:"varint,11,opt,name=description,proto3,enum=platform.options.v2.ClassificationType" json:"description,omitempty"`
+	Cidr             v2.ClassificationType  `protobuf:"varint,12,opt,name=cidr,proto3,enum=platform.options.v2.ClassificationType" json:"cidr,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *EcosystemV2Alpha) Reset() {
+	*x = EcosystemV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EcosystemV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EcosystemV2Alpha) ProtoMessage() {}
+
+func (x *EcosystemV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EcosystemV2Alpha.ProtoReflect.Descriptor instead.
+func (*EcosystemV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *EcosystemV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetSlug() v2.ClassificationType {
+	if x != nil {
+		return x.Slug
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetSourceId() v2.ClassificationType {
+	if x != nil {
+		return x.SourceId
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetType() v2.ClassificationType {
+	if x != nil {
+		return x.Type
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetStatus() v2.ClassificationType {
+	if x != nil {
+		return x.Status
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetStatusDetails() v2.ClassificationType {
+	if x != nil {
+		return x.StatusDetails
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetName() v2.ClassificationType {
+	if x != nil {
+		return x.Name
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetShortDescription() v2.ClassificationType {
+	if x != nil {
+		return x.ShortDescription
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetDescription() v2.ClassificationType {
+	if x != nil {
+		return x.Description
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *EcosystemV2Alpha) GetCidr() v2.ClassificationType {
+	if x != nil {
+		return x.Cidr
+	}
+	return v2.ClassificationType(0)
+}
+
+type AccountV2Alpha struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	Credential    v2.ClassificationType  `protobuf:"varint,4,opt,name=credential,proto3,enum=platform.options.v2.ClassificationType" json:"credential,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountV2Alpha) Reset() {
+	*x = AccountV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountV2Alpha) ProtoMessage() {}
+
+func (x *AccountV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountV2Alpha.ProtoReflect.Descriptor instead.
+func (*AccountV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *AccountV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AccountV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AccountV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AccountV2Alpha) GetCredential() v2.ClassificationType {
+	if x != nil {
+		return x.Credential
+	}
+	return v2.ClassificationType(0)
+}
+
+type AccountAuthorityV2Alpha struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	Credential    v2.ClassificationType  `protobuf:"varint,4,opt,name=credential,proto3,enum=platform.options.v2.ClassificationType" json:"credential,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountAuthorityV2Alpha) Reset() {
+	*x = AccountAuthorityV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountAuthorityV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountAuthorityV2Alpha) ProtoMessage() {}
+
+func (x *AccountAuthorityV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountAuthorityV2Alpha.ProtoReflect.Descriptor instead.
+func (*AccountAuthorityV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *AccountAuthorityV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AccountAuthorityV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AccountAuthorityV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *AccountAuthorityV2Alpha) GetCredential() v2.ClassificationType {
+	if x != nil {
+		return x.Credential
+	}
+	return v2.ClassificationType(0)
+}
+
+type ReferenceV2Alpha struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	CreatedAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReferenceV2Alpha) Reset() {
+	*x = ReferenceV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReferenceV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReferenceV2Alpha) ProtoMessage() {}
+
+func (x *ReferenceV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReferenceV2Alpha.ProtoReflect.Descriptor instead.
+func (*ReferenceV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ReferenceV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ReferenceV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *ReferenceV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+type SystemV2Alpha struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            v2.ClassificationType  `protobuf:"varint,1,opt,name=id,proto3,enum=platform.options.v2.ClassificationType" json:"id,omitempty"`
+	EnabledAt     v2.ClassificationType  `protobuf:"varint,2,opt,name=enabled_at,json=enabledAt,proto3,enum=platform.options.v2.ClassificationType" json:"enabled_at,omitempty"`
+	CreatedAt     v2.ClassificationType  `protobuf:"varint,3,opt,name=created_at,json=createdAt,proto3,enum=platform.options.v2.ClassificationType" json:"created_at,omitempty"`
+	UpdatedAt     v2.ClassificationType  `protobuf:"varint,4,opt,name=updated_at,json=updatedAt,proto3,enum=platform.options.v2.ClassificationType" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SystemV2Alpha) Reset() {
+	*x = SystemV2Alpha{}
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SystemV2Alpha) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SystemV2Alpha) ProtoMessage() {}
+
+func (x *SystemV2Alpha) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_ontology_v2alpha_spec_data_catalog_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SystemV2Alpha.ProtoReflect.Descriptor instead.
+func (*SystemV2Alpha) Descriptor() ([]byte, []int) {
+	return file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *SystemV2Alpha) GetId() v2.ClassificationType {
+	if x != nil {
+		return x.Id
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *SystemV2Alpha) GetEnabledAt() v2.ClassificationType {
+	if x != nil {
+		return x.EnabledAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *SystemV2Alpha) GetCreatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
+func (x *SystemV2Alpha) GetUpdatedAt() v2.ClassificationType {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return v2.ClassificationType(0)
+}
+
 var File_platform_ontology_v2alpha_spec_data_catalog_proto protoreflect.FileDescriptor
 
 const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
@@ -1942,7 +1942,55 @@ const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
 	"\x06System\x12O\n" +
 	"\x0esystem_v2alpha\x18\n" +
 	" \x01(\v2(.platform.ontology.v2alpha.SystemV2AlphaR\rsystemV2alpha\"\x06\n" +
-	"\x04Type\"\xe3\x02\n" +
+	"\x04Type\"\x9e\t\n" +
+	"\x17PreferenceCenterV1Alpha\x127\n" +
+	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
+	"\n" +
+	"created_at\x18\x02 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
+	"\n" +
+	"updated_at\x18\x03 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\x12J\n" +
+	"\fanonymous_id\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vanonymousId\x12=\n" +
+	"\x05email\x18\x05 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x05email\x12H\n" +
+	"\vexternal_id\x18\x06 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
+	"externalId\x12J\n" +
+	"\fphone_number\x18\a \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vphoneNumber\x12F\n" +
+	"\n" +
+	"first_name\x18\b \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tfirstName\x12D\n" +
+	"\tlast_name\x18\t \x01(\x0e2'.platform.options.v2.ClassificationTypeR\blastName\x12H\n" +
+	"\vpostal_code\x18\n" +
+	" \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
+	"postalCode\x12;\n" +
+	"\x04city\x18\v \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x04city\x12[\n" +
+	"\x15state_province_region\x18\f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x13stateProvinceRegion\x12A\n" +
+	"\acountry\x18\r \x01(\x0e2'.platform.options.v2.ClassificationTypeR\acountry\x12B\n" +
+	"\blist_ids\x18\x0e \x01(\x0e2'.platform.options.v2.ClassificationTypeR\alistIds\x12H\n" +
+	"\vsegment_ids\x18\x0f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
+	"segmentIds\x12V\n" +
+	"\x12email_subscription\x18\x10 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x11emailSubscription\"\x9d\t\n" +
+	"\x16PreferenceCenterV1Beta\x127\n" +
+	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
+	"\n" +
+	"created_at\x18\x02 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
+	"\n" +
+	"updated_at\x18\x03 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\x12J\n" +
+	"\fanonymous_id\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vanonymousId\x12=\n" +
+	"\x05email\x18\x05 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x05email\x12H\n" +
+	"\vexternal_id\x18\x06 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
+	"externalId\x12J\n" +
+	"\fphone_number\x18\a \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vphoneNumber\x12F\n" +
+	"\n" +
+	"first_name\x18\b \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tfirstName\x12D\n" +
+	"\tlast_name\x18\t \x01(\x0e2'.platform.options.v2.ClassificationTypeR\blastName\x12H\n" +
+	"\vpostal_code\x18\n" +
+	" \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
+	"postalCode\x12;\n" +
+	"\x04city\x18\v \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x04city\x12[\n" +
+	"\x15state_province_region\x18\f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x13stateProvinceRegion\x12A\n" +
+	"\acountry\x18\r \x01(\x0e2'.platform.options.v2.ClassificationTypeR\acountry\x12B\n" +
+	"\blist_ids\x18\x0e \x01(\x0e2'.platform.options.v2.ClassificationTypeR\alistIds\x12H\n" +
+	"\vsegment_ids\x18\x0f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
+	"segmentIds\x12V\n" +
+	"\x12email_subscription\x18\x10 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x11emailSubscription\"\xe3\x02\n" +
 	"\fAuditV2Alpha\x127\n" +
 	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
 	"\n" +
@@ -2028,55 +2076,7 @@ const file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x03 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
 	"\n" +
-	"updated_at\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\"\x9e\t\n" +
-	"\x17PreferenceCenterV1Alpha\x127\n" +
-	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
-	"\n" +
-	"created_at\x18\x02 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
-	"\n" +
-	"updated_at\x18\x03 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\x12J\n" +
-	"\fanonymous_id\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vanonymousId\x12=\n" +
-	"\x05email\x18\x05 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x05email\x12H\n" +
-	"\vexternal_id\x18\x06 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
-	"externalId\x12J\n" +
-	"\fphone_number\x18\a \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vphoneNumber\x12F\n" +
-	"\n" +
-	"first_name\x18\b \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tfirstName\x12D\n" +
-	"\tlast_name\x18\t \x01(\x0e2'.platform.options.v2.ClassificationTypeR\blastName\x12H\n" +
-	"\vpostal_code\x18\n" +
-	" \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
-	"postalCode\x12;\n" +
-	"\x04city\x18\v \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x04city\x12[\n" +
-	"\x15state_province_region\x18\f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x13stateProvinceRegion\x12A\n" +
-	"\acountry\x18\r \x01(\x0e2'.platform.options.v2.ClassificationTypeR\acountry\x12B\n" +
-	"\blist_ids\x18\x0e \x01(\x0e2'.platform.options.v2.ClassificationTypeR\alistIds\x12H\n" +
-	"\vsegment_ids\x18\x0f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
-	"segmentIds\x12V\n" +
-	"\x12email_subscription\x18\x10 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x11emailSubscription\"\x9d\t\n" +
-	"\x16PreferenceCenterV1Beta\x127\n" +
-	"\x02id\x18\x01 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x02id\x12F\n" +
-	"\n" +
-	"created_at\x18\x02 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tcreatedAt\x12F\n" +
-	"\n" +
-	"updated_at\x18\x03 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAt\x12J\n" +
-	"\fanonymous_id\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vanonymousId\x12=\n" +
-	"\x05email\x18\x05 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x05email\x12H\n" +
-	"\vexternal_id\x18\x06 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
-	"externalId\x12J\n" +
-	"\fphone_number\x18\a \x01(\x0e2'.platform.options.v2.ClassificationTypeR\vphoneNumber\x12F\n" +
-	"\n" +
-	"first_name\x18\b \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tfirstName\x12D\n" +
-	"\tlast_name\x18\t \x01(\x0e2'.platform.options.v2.ClassificationTypeR\blastName\x12H\n" +
-	"\vpostal_code\x18\n" +
-	" \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
-	"postalCode\x12;\n" +
-	"\x04city\x18\v \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x04city\x12[\n" +
-	"\x15state_province_region\x18\f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x13stateProvinceRegion\x12A\n" +
-	"\acountry\x18\r \x01(\x0e2'.platform.options.v2.ClassificationTypeR\acountry\x12B\n" +
-	"\blist_ids\x18\x0e \x01(\x0e2'.platform.options.v2.ClassificationTypeR\alistIds\x12H\n" +
-	"\vsegment_ids\x18\x0f \x01(\x0e2'.platform.options.v2.ClassificationTypeR\n" +
-	"segmentIds\x12V\n" +
-	"\x12email_subscription\x18\x10 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\x11emailSubscriptionBx\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x03\x10\x01\x18\x02Zfgithub.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ontology/v2alpha;ontologyv2alphapbb\x06proto3"
+	"updated_at\x18\x04 \x01(\x0e2'.platform.options.v2.ClassificationTypeR\tupdatedAtBx\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x03\x10\x01\x18\x02Zfgithub.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ontology/v2alpha;ontologyv2alphapbb\x06proto3"
 
 var (
 	file_platform_ontology_v2alpha_spec_data_catalog_proto_rawDescOnce sync.Once
@@ -2109,16 +2109,16 @@ var file_platform_ontology_v2alpha_spec_data_catalog_proto_goTypes = []any{
 	(*Spec)(nil),                    // 14: platform.ontology.v2alpha.Spec
 	(*System)(nil),                  // 15: platform.ontology.v2alpha.System
 	(*Type)(nil),                    // 16: platform.ontology.v2alpha.Type
-	(*AuditV2Alpha)(nil),            // 17: platform.ontology.v2alpha.AuditV2Alpha
-	(*ConfigurationV2Alpha)(nil),    // 18: platform.ontology.v2alpha.ConfigurationV2Alpha
-	(*CertificateV2Alpha)(nil),      // 19: platform.ontology.v2alpha.CertificateV2Alpha
-	(*EcosystemV2Alpha)(nil),        // 20: platform.ontology.v2alpha.EcosystemV2Alpha
-	(*AccountV2Alpha)(nil),          // 21: platform.ontology.v2alpha.AccountV2Alpha
-	(*AccountAuthorityV2Alpha)(nil), // 22: platform.ontology.v2alpha.AccountAuthorityV2Alpha
-	(*ReferenceV2Alpha)(nil),        // 23: platform.ontology.v2alpha.ReferenceV2Alpha
-	(*SystemV2Alpha)(nil),           // 24: platform.ontology.v2alpha.SystemV2Alpha
-	(*PreferenceCenterV1Alpha)(nil), // 25: platform.ontology.v2alpha.PreferenceCenterV1Alpha
-	(*PreferenceCenterV1Beta)(nil),  // 26: platform.ontology.v2alpha.PreferenceCenterV1Beta
+	(*PreferenceCenterV1Alpha)(nil), // 17: platform.ontology.v2alpha.PreferenceCenterV1Alpha
+	(*PreferenceCenterV1Beta)(nil),  // 18: platform.ontology.v2alpha.PreferenceCenterV1Beta
+	(*AuditV2Alpha)(nil),            // 19: platform.ontology.v2alpha.AuditV2Alpha
+	(*ConfigurationV2Alpha)(nil),    // 20: platform.ontology.v2alpha.ConfigurationV2Alpha
+	(*CertificateV2Alpha)(nil),      // 21: platform.ontology.v2alpha.CertificateV2Alpha
+	(*EcosystemV2Alpha)(nil),        // 22: platform.ontology.v2alpha.EcosystemV2Alpha
+	(*AccountV2Alpha)(nil),          // 23: platform.ontology.v2alpha.AccountV2Alpha
+	(*AccountAuthorityV2Alpha)(nil), // 24: platform.ontology.v2alpha.AccountAuthorityV2Alpha
+	(*ReferenceV2Alpha)(nil),        // 25: platform.ontology.v2alpha.ReferenceV2Alpha
+	(*SystemV2Alpha)(nil),           // 26: platform.ontology.v2alpha.SystemV2Alpha
 	(v2.ClassificationType)(0),      // 27: platform.options.v2.ClassificationType
 }
 var file_platform_ontology_v2alpha_spec_data_catalog_proto_depIdxs = []int32{
@@ -2138,102 +2138,102 @@ var file_platform_ontology_v2alpha_spec_data_catalog_proto_depIdxs = []int32{
 	14,  // 13: platform.ontology.v2alpha.SpecDataCatalog.spec:type_name -> platform.ontology.v2alpha.Spec
 	15,  // 14: platform.ontology.v2alpha.SpecDataCatalog.system:type_name -> platform.ontology.v2alpha.System
 	16,  // 15: platform.ontology.v2alpha.SpecDataCatalog.type:type_name -> platform.ontology.v2alpha.Type
-	17,  // 16: platform.ontology.v2alpha.Audit.audit_v2alpha:type_name -> platform.ontology.v2alpha.AuditV2Alpha
-	25,  // 17: platform.ontology.v2alpha.Communication.preference_center_v1alpha:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Alpha
-	26,  // 18: platform.ontology.v2alpha.Communication.preference_center_v1beta:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Beta
-	18,  // 19: platform.ontology.v2alpha.Configuration.configuration_v2alpha:type_name -> platform.ontology.v2alpha.ConfigurationV2Alpha
-	19,  // 20: platform.ontology.v2alpha.Cryptography.certificate_v2alpha:type_name -> platform.ontology.v2alpha.CertificateV2Alpha
-	20,  // 21: platform.ontology.v2alpha.Ecosystem.ecosystem_v2alpha:type_name -> platform.ontology.v2alpha.EcosystemV2Alpha
-	21,  // 22: platform.ontology.v2alpha.Iam.account_v2alpha:type_name -> platform.ontology.v2alpha.AccountV2Alpha
-	22,  // 23: platform.ontology.v2alpha.Iam.account_authority_v2alpha:type_name -> platform.ontology.v2alpha.AccountAuthorityV2Alpha
-	23,  // 24: platform.ontology.v2alpha.Reference.reference_v2alpha:type_name -> platform.ontology.v2alpha.ReferenceV2Alpha
-	24,  // 25: platform.ontology.v2alpha.System.system_v2alpha:type_name -> platform.ontology.v2alpha.SystemV2Alpha
-	27,  // 26: platform.ontology.v2alpha.AuditV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 27: platform.ontology.v2alpha.AuditV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 28: platform.ontology.v2alpha.AuditV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 29: platform.ontology.v2alpha.AuditV2Alpha.entry:type_name -> platform.options.v2.ClassificationType
-	27,  // 30: platform.ontology.v2alpha.AuditV2Alpha.jurisdiction:type_name -> platform.options.v2.ClassificationType
-	27,  // 31: platform.ontology.v2alpha.ConfigurationV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 32: platform.ontology.v2alpha.ConfigurationV2Alpha.organization_slug:type_name -> platform.options.v2.ClassificationType
-	27,  // 33: platform.ontology.v2alpha.ConfigurationV2Alpha.workspace_slug:type_name -> platform.options.v2.ClassificationType
-	27,  // 34: platform.ontology.v2alpha.ConfigurationV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 35: platform.ontology.v2alpha.ConfigurationV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 36: platform.ontology.v2alpha.ConfigurationV2Alpha.source_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 37: platform.ontology.v2alpha.ConfigurationV2Alpha.type:type_name -> platform.options.v2.ClassificationType
-	27,  // 38: platform.ontology.v2alpha.ConfigurationV2Alpha.status:type_name -> platform.options.v2.ClassificationType
-	27,  // 39: platform.ontology.v2alpha.ConfigurationV2Alpha.status_details:type_name -> platform.options.v2.ClassificationType
-	27,  // 40: platform.ontology.v2alpha.ConfigurationV2Alpha.parent_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 41: platform.ontology.v2alpha.ConfigurationV2Alpha.data_catalog:type_name -> platform.options.v2.ClassificationType
-	27,  // 42: platform.ontology.v2alpha.ConfigurationV2Alpha.clinical_catalog:type_name -> platform.options.v2.ClassificationType
-	27,  // 43: platform.ontology.v2alpha.ConfigurationV2Alpha.platform_configuration:type_name -> platform.options.v2.ClassificationType
-	27,  // 44: platform.ontology.v2alpha.ConfigurationV2Alpha.platform_configurations:type_name -> platform.options.v2.ClassificationType
-	27,  // 45: platform.ontology.v2alpha.ConfigurationV2Alpha.solution_configurations:type_name -> platform.options.v2.ClassificationType
-	27,  // 46: platform.ontology.v2alpha.ConfigurationV2Alpha.connector_configurations:type_name -> platform.options.v2.ClassificationType
-	27,  // 47: platform.ontology.v2alpha.CertificateV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 48: platform.ontology.v2alpha.CertificateV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 49: platform.ontology.v2alpha.CertificateV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 50: platform.ontology.v2alpha.CertificateV2Alpha.name:type_name -> platform.options.v2.ClassificationType
-	27,  // 51: platform.ontology.v2alpha.CertificateV2Alpha.duration:type_name -> platform.options.v2.ClassificationType
-	27,  // 52: platform.ontology.v2alpha.CertificateV2Alpha.certificate:type_name -> platform.options.v2.ClassificationType
-	27,  // 53: platform.ontology.v2alpha.EcosystemV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 54: platform.ontology.v2alpha.EcosystemV2Alpha.slug:type_name -> platform.options.v2.ClassificationType
-	27,  // 55: platform.ontology.v2alpha.EcosystemV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 56: platform.ontology.v2alpha.EcosystemV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 57: platform.ontology.v2alpha.EcosystemV2Alpha.source_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 58: platform.ontology.v2alpha.EcosystemV2Alpha.type:type_name -> platform.options.v2.ClassificationType
-	27,  // 59: platform.ontology.v2alpha.EcosystemV2Alpha.status:type_name -> platform.options.v2.ClassificationType
-	27,  // 60: platform.ontology.v2alpha.EcosystemV2Alpha.status_details:type_name -> platform.options.v2.ClassificationType
-	27,  // 61: platform.ontology.v2alpha.EcosystemV2Alpha.name:type_name -> platform.options.v2.ClassificationType
-	27,  // 62: platform.ontology.v2alpha.EcosystemV2Alpha.short_description:type_name -> platform.options.v2.ClassificationType
-	27,  // 63: platform.ontology.v2alpha.EcosystemV2Alpha.description:type_name -> platform.options.v2.ClassificationType
-	27,  // 64: platform.ontology.v2alpha.EcosystemV2Alpha.cidr:type_name -> platform.options.v2.ClassificationType
-	27,  // 65: platform.ontology.v2alpha.AccountV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 66: platform.ontology.v2alpha.AccountV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 67: platform.ontology.v2alpha.AccountV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 68: platform.ontology.v2alpha.AccountV2Alpha.credential:type_name -> platform.options.v2.ClassificationType
-	27,  // 69: platform.ontology.v2alpha.AccountAuthorityV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 70: platform.ontology.v2alpha.AccountAuthorityV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 71: platform.ontology.v2alpha.AccountAuthorityV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 72: platform.ontology.v2alpha.AccountAuthorityV2Alpha.credential:type_name -> platform.options.v2.ClassificationType
-	27,  // 73: platform.ontology.v2alpha.ReferenceV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 74: platform.ontology.v2alpha.ReferenceV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 75: platform.ontology.v2alpha.ReferenceV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 76: platform.ontology.v2alpha.SystemV2Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 77: platform.ontology.v2alpha.SystemV2Alpha.enabled_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 78: platform.ontology.v2alpha.SystemV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 79: platform.ontology.v2alpha.SystemV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 80: platform.ontology.v2alpha.PreferenceCenterV1Alpha.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 81: platform.ontology.v2alpha.PreferenceCenterV1Alpha.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 82: platform.ontology.v2alpha.PreferenceCenterV1Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 83: platform.ontology.v2alpha.PreferenceCenterV1Alpha.anonymous_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 84: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email:type_name -> platform.options.v2.ClassificationType
-	27,  // 85: platform.ontology.v2alpha.PreferenceCenterV1Alpha.external_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 86: platform.ontology.v2alpha.PreferenceCenterV1Alpha.phone_number:type_name -> platform.options.v2.ClassificationType
-	27,  // 87: platform.ontology.v2alpha.PreferenceCenterV1Alpha.first_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 88: platform.ontology.v2alpha.PreferenceCenterV1Alpha.last_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 89: platform.ontology.v2alpha.PreferenceCenterV1Alpha.postal_code:type_name -> platform.options.v2.ClassificationType
-	27,  // 90: platform.ontology.v2alpha.PreferenceCenterV1Alpha.city:type_name -> platform.options.v2.ClassificationType
-	27,  // 91: platform.ontology.v2alpha.PreferenceCenterV1Alpha.state_province_region:type_name -> platform.options.v2.ClassificationType
-	27,  // 92: platform.ontology.v2alpha.PreferenceCenterV1Alpha.country:type_name -> platform.options.v2.ClassificationType
-	27,  // 93: platform.ontology.v2alpha.PreferenceCenterV1Alpha.list_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 94: platform.ontology.v2alpha.PreferenceCenterV1Alpha.segment_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 95: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email_subscription:type_name -> platform.options.v2.ClassificationType
-	27,  // 96: platform.ontology.v2alpha.PreferenceCenterV1Beta.id:type_name -> platform.options.v2.ClassificationType
-	27,  // 97: platform.ontology.v2alpha.PreferenceCenterV1Beta.created_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 98: platform.ontology.v2alpha.PreferenceCenterV1Beta.updated_at:type_name -> platform.options.v2.ClassificationType
-	27,  // 99: platform.ontology.v2alpha.PreferenceCenterV1Beta.anonymous_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 100: platform.ontology.v2alpha.PreferenceCenterV1Beta.email:type_name -> platform.options.v2.ClassificationType
-	27,  // 101: platform.ontology.v2alpha.PreferenceCenterV1Beta.external_id:type_name -> platform.options.v2.ClassificationType
-	27,  // 102: platform.ontology.v2alpha.PreferenceCenterV1Beta.phone_number:type_name -> platform.options.v2.ClassificationType
-	27,  // 103: platform.ontology.v2alpha.PreferenceCenterV1Beta.first_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 104: platform.ontology.v2alpha.PreferenceCenterV1Beta.last_name:type_name -> platform.options.v2.ClassificationType
-	27,  // 105: platform.ontology.v2alpha.PreferenceCenterV1Beta.postal_code:type_name -> platform.options.v2.ClassificationType
-	27,  // 106: platform.ontology.v2alpha.PreferenceCenterV1Beta.city:type_name -> platform.options.v2.ClassificationType
-	27,  // 107: platform.ontology.v2alpha.PreferenceCenterV1Beta.state_province_region:type_name -> platform.options.v2.ClassificationType
-	27,  // 108: platform.ontology.v2alpha.PreferenceCenterV1Beta.country:type_name -> platform.options.v2.ClassificationType
-	27,  // 109: platform.ontology.v2alpha.PreferenceCenterV1Beta.list_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 110: platform.ontology.v2alpha.PreferenceCenterV1Beta.segment_ids:type_name -> platform.options.v2.ClassificationType
-	27,  // 111: platform.ontology.v2alpha.PreferenceCenterV1Beta.email_subscription:type_name -> platform.options.v2.ClassificationType
+	19,  // 16: platform.ontology.v2alpha.Audit.audit_v2alpha:type_name -> platform.ontology.v2alpha.AuditV2Alpha
+	17,  // 17: platform.ontology.v2alpha.Communication.preference_center_v1alpha:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Alpha
+	18,  // 18: platform.ontology.v2alpha.Communication.preference_center_v1beta:type_name -> platform.ontology.v2alpha.PreferenceCenterV1Beta
+	20,  // 19: platform.ontology.v2alpha.Configuration.configuration_v2alpha:type_name -> platform.ontology.v2alpha.ConfigurationV2Alpha
+	21,  // 20: platform.ontology.v2alpha.Cryptography.certificate_v2alpha:type_name -> platform.ontology.v2alpha.CertificateV2Alpha
+	22,  // 21: platform.ontology.v2alpha.Ecosystem.ecosystem_v2alpha:type_name -> platform.ontology.v2alpha.EcosystemV2Alpha
+	23,  // 22: platform.ontology.v2alpha.Iam.account_v2alpha:type_name -> platform.ontology.v2alpha.AccountV2Alpha
+	24,  // 23: platform.ontology.v2alpha.Iam.account_authority_v2alpha:type_name -> platform.ontology.v2alpha.AccountAuthorityV2Alpha
+	25,  // 24: platform.ontology.v2alpha.Reference.reference_v2alpha:type_name -> platform.ontology.v2alpha.ReferenceV2Alpha
+	26,  // 25: platform.ontology.v2alpha.System.system_v2alpha:type_name -> platform.ontology.v2alpha.SystemV2Alpha
+	27,  // 26: platform.ontology.v2alpha.PreferenceCenterV1Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 27: platform.ontology.v2alpha.PreferenceCenterV1Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 28: platform.ontology.v2alpha.PreferenceCenterV1Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 29: platform.ontology.v2alpha.PreferenceCenterV1Alpha.anonymous_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 30: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email:type_name -> platform.options.v2.ClassificationType
+	27,  // 31: platform.ontology.v2alpha.PreferenceCenterV1Alpha.external_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 32: platform.ontology.v2alpha.PreferenceCenterV1Alpha.phone_number:type_name -> platform.options.v2.ClassificationType
+	27,  // 33: platform.ontology.v2alpha.PreferenceCenterV1Alpha.first_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 34: platform.ontology.v2alpha.PreferenceCenterV1Alpha.last_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 35: platform.ontology.v2alpha.PreferenceCenterV1Alpha.postal_code:type_name -> platform.options.v2.ClassificationType
+	27,  // 36: platform.ontology.v2alpha.PreferenceCenterV1Alpha.city:type_name -> platform.options.v2.ClassificationType
+	27,  // 37: platform.ontology.v2alpha.PreferenceCenterV1Alpha.state_province_region:type_name -> platform.options.v2.ClassificationType
+	27,  // 38: platform.ontology.v2alpha.PreferenceCenterV1Alpha.country:type_name -> platform.options.v2.ClassificationType
+	27,  // 39: platform.ontology.v2alpha.PreferenceCenterV1Alpha.list_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 40: platform.ontology.v2alpha.PreferenceCenterV1Alpha.segment_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 41: platform.ontology.v2alpha.PreferenceCenterV1Alpha.email_subscription:type_name -> platform.options.v2.ClassificationType
+	27,  // 42: platform.ontology.v2alpha.PreferenceCenterV1Beta.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 43: platform.ontology.v2alpha.PreferenceCenterV1Beta.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 44: platform.ontology.v2alpha.PreferenceCenterV1Beta.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 45: platform.ontology.v2alpha.PreferenceCenterV1Beta.anonymous_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 46: platform.ontology.v2alpha.PreferenceCenterV1Beta.email:type_name -> platform.options.v2.ClassificationType
+	27,  // 47: platform.ontology.v2alpha.PreferenceCenterV1Beta.external_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 48: platform.ontology.v2alpha.PreferenceCenterV1Beta.phone_number:type_name -> platform.options.v2.ClassificationType
+	27,  // 49: platform.ontology.v2alpha.PreferenceCenterV1Beta.first_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 50: platform.ontology.v2alpha.PreferenceCenterV1Beta.last_name:type_name -> platform.options.v2.ClassificationType
+	27,  // 51: platform.ontology.v2alpha.PreferenceCenterV1Beta.postal_code:type_name -> platform.options.v2.ClassificationType
+	27,  // 52: platform.ontology.v2alpha.PreferenceCenterV1Beta.city:type_name -> platform.options.v2.ClassificationType
+	27,  // 53: platform.ontology.v2alpha.PreferenceCenterV1Beta.state_province_region:type_name -> platform.options.v2.ClassificationType
+	27,  // 54: platform.ontology.v2alpha.PreferenceCenterV1Beta.country:type_name -> platform.options.v2.ClassificationType
+	27,  // 55: platform.ontology.v2alpha.PreferenceCenterV1Beta.list_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 56: platform.ontology.v2alpha.PreferenceCenterV1Beta.segment_ids:type_name -> platform.options.v2.ClassificationType
+	27,  // 57: platform.ontology.v2alpha.PreferenceCenterV1Beta.email_subscription:type_name -> platform.options.v2.ClassificationType
+	27,  // 58: platform.ontology.v2alpha.AuditV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 59: platform.ontology.v2alpha.AuditV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 60: platform.ontology.v2alpha.AuditV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 61: platform.ontology.v2alpha.AuditV2Alpha.entry:type_name -> platform.options.v2.ClassificationType
+	27,  // 62: platform.ontology.v2alpha.AuditV2Alpha.jurisdiction:type_name -> platform.options.v2.ClassificationType
+	27,  // 63: platform.ontology.v2alpha.ConfigurationV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 64: platform.ontology.v2alpha.ConfigurationV2Alpha.organization_slug:type_name -> platform.options.v2.ClassificationType
+	27,  // 65: platform.ontology.v2alpha.ConfigurationV2Alpha.workspace_slug:type_name -> platform.options.v2.ClassificationType
+	27,  // 66: platform.ontology.v2alpha.ConfigurationV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 67: platform.ontology.v2alpha.ConfigurationV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 68: platform.ontology.v2alpha.ConfigurationV2Alpha.source_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 69: platform.ontology.v2alpha.ConfigurationV2Alpha.type:type_name -> platform.options.v2.ClassificationType
+	27,  // 70: platform.ontology.v2alpha.ConfigurationV2Alpha.status:type_name -> platform.options.v2.ClassificationType
+	27,  // 71: platform.ontology.v2alpha.ConfigurationV2Alpha.status_details:type_name -> platform.options.v2.ClassificationType
+	27,  // 72: platform.ontology.v2alpha.ConfigurationV2Alpha.parent_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 73: platform.ontology.v2alpha.ConfigurationV2Alpha.data_catalog:type_name -> platform.options.v2.ClassificationType
+	27,  // 74: platform.ontology.v2alpha.ConfigurationV2Alpha.clinical_catalog:type_name -> platform.options.v2.ClassificationType
+	27,  // 75: platform.ontology.v2alpha.ConfigurationV2Alpha.platform_configuration:type_name -> platform.options.v2.ClassificationType
+	27,  // 76: platform.ontology.v2alpha.ConfigurationV2Alpha.platform_configurations:type_name -> platform.options.v2.ClassificationType
+	27,  // 77: platform.ontology.v2alpha.ConfigurationV2Alpha.solution_configurations:type_name -> platform.options.v2.ClassificationType
+	27,  // 78: platform.ontology.v2alpha.ConfigurationV2Alpha.connector_configurations:type_name -> platform.options.v2.ClassificationType
+	27,  // 79: platform.ontology.v2alpha.CertificateV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 80: platform.ontology.v2alpha.CertificateV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 81: platform.ontology.v2alpha.CertificateV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 82: platform.ontology.v2alpha.CertificateV2Alpha.name:type_name -> platform.options.v2.ClassificationType
+	27,  // 83: platform.ontology.v2alpha.CertificateV2Alpha.duration:type_name -> platform.options.v2.ClassificationType
+	27,  // 84: platform.ontology.v2alpha.CertificateV2Alpha.certificate:type_name -> platform.options.v2.ClassificationType
+	27,  // 85: platform.ontology.v2alpha.EcosystemV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 86: platform.ontology.v2alpha.EcosystemV2Alpha.slug:type_name -> platform.options.v2.ClassificationType
+	27,  // 87: platform.ontology.v2alpha.EcosystemV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 88: platform.ontology.v2alpha.EcosystemV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 89: platform.ontology.v2alpha.EcosystemV2Alpha.source_id:type_name -> platform.options.v2.ClassificationType
+	27,  // 90: platform.ontology.v2alpha.EcosystemV2Alpha.type:type_name -> platform.options.v2.ClassificationType
+	27,  // 91: platform.ontology.v2alpha.EcosystemV2Alpha.status:type_name -> platform.options.v2.ClassificationType
+	27,  // 92: platform.ontology.v2alpha.EcosystemV2Alpha.status_details:type_name -> platform.options.v2.ClassificationType
+	27,  // 93: platform.ontology.v2alpha.EcosystemV2Alpha.name:type_name -> platform.options.v2.ClassificationType
+	27,  // 94: platform.ontology.v2alpha.EcosystemV2Alpha.short_description:type_name -> platform.options.v2.ClassificationType
+	27,  // 95: platform.ontology.v2alpha.EcosystemV2Alpha.description:type_name -> platform.options.v2.ClassificationType
+	27,  // 96: platform.ontology.v2alpha.EcosystemV2Alpha.cidr:type_name -> platform.options.v2.ClassificationType
+	27,  // 97: platform.ontology.v2alpha.AccountV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 98: platform.ontology.v2alpha.AccountV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 99: platform.ontology.v2alpha.AccountV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 100: platform.ontology.v2alpha.AccountV2Alpha.credential:type_name -> platform.options.v2.ClassificationType
+	27,  // 101: platform.ontology.v2alpha.AccountAuthorityV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 102: platform.ontology.v2alpha.AccountAuthorityV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 103: platform.ontology.v2alpha.AccountAuthorityV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 104: platform.ontology.v2alpha.AccountAuthorityV2Alpha.credential:type_name -> platform.options.v2.ClassificationType
+	27,  // 105: platform.ontology.v2alpha.ReferenceV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 106: platform.ontology.v2alpha.ReferenceV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 107: platform.ontology.v2alpha.ReferenceV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 108: platform.ontology.v2alpha.SystemV2Alpha.id:type_name -> platform.options.v2.ClassificationType
+	27,  // 109: platform.ontology.v2alpha.SystemV2Alpha.enabled_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 110: platform.ontology.v2alpha.SystemV2Alpha.created_at:type_name -> platform.options.v2.ClassificationType
+	27,  // 111: platform.ontology.v2alpha.SystemV2Alpha.updated_at:type_name -> platform.options.v2.ClassificationType
 	112, // [112:112] is the sub-list for method output_type
 	112, // [112:112] is the sub-list for method input_type
 	112, // [112:112] is the sub-list for extension type_name

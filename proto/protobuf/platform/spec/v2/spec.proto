@@ -170,6 +170,9 @@ message SpecContext {
   string ecosystem_slug = 1;
 
   // The organization associated with this context.
+  string organization_id = 49;
+
+  // The organization associated with this context.
   string organization_slug = 50;
 
   // The workspace associated with this context.
@@ -264,6 +267,8 @@ message SpecPrincipal {
 
   // The connection id used to authenticate
   string connection_id = 5;
+
+  repeated platform.options.v2.AuthRole auth_roles = 6;
 
 }
 

@@ -14,6 +14,7 @@ import (
 
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
+	optionv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -89,6 +90,7 @@ const (
 	PrincipalEmailKey = "x-spec-principal-email"
 	PrincipalTypeKey  = "x-spec-principal-type"
 	ConnectionIdKey   = "x-spec-connection-id"
+	RolesKey          = "x-spec-roles"
 
 	// RequestIdKey Spec.SpanContext
 	// Not sanitized and allowed from the client
@@ -104,6 +106,7 @@ const (
 	// OrganizationSlug Spec.Context
 	// Sanitized comes from edge cache
 	EcosystemSlug                       = "x-spec-ecosystem-slug"
+	OrganizationID                      = "x-spec-organization-id"
 	OrganizationSlug                    = "x-spec-organization-slug"
 	WorkspaceSlug                       = "x-spec-workspace-slug"
 	WorkspaceJurisdictionAreaNetworkKey = "x-spec-workspace-jan"
@@ -220,6 +223,27 @@ func NewFactory(req connect.AnyRequest) Factory {
 	principalEmail := h.Get(PrincipalEmailKey)
 	connectionId := h.Get(ConnectionIdKey)
 
+	_roles := h.Values(RolesKey)
+	var roles []optionv2pb.AuthRole
+	for _, role := range _roles {
+		var r optionv2pb.AuthRole
+		switch role {
+		case "AUTH_ROLE_ANONYMOUS":
+			r = optionv2pb.AuthRole_AUTH_ROLE_ANONYMOUS
+		case "AUTH_ROLE_PLATFORM_SUPER_ADMIN":
+			r = optionv2pb.AuthRole_AUTH_ROLE_PLATFORM_SUPER_ADMIN
+		case "AUTH_ROLE_PLATFORM_ADMIN":
+			r = optionv2pb.AuthRole_AUTH_ROLE_PLATFORM_ADMIN
+		case "AUTH_ROLE_ORGANIZATION_ADMIN":
+			r = optionv2pb.AuthRole_AUTH_ROLE_ORGANIZATION_ADMIN
+		case "AUTH_ROLE_ORGANIZATION_USER":
+			r = optionv2pb.AuthRole_AUTH_ROLE_ORGANIZATION_USER
+		default:
+		}
+
+		roles = append(roles, r)
+	}
+
 	// Span.Context
 	// ===============================
 	traceId := h.Get(B3TraceIDKey)
@@ -230,6 +254,7 @@ func NewFactory(req connect.AnyRequest) Factory {
 	// Spec.Context
 	// ===============================
 	ecosystemSlug := h.Get(EcosystemSlug)
+	organizationID := h.Get(OrganizationID)
 	organizationSlug := h.Get(OrganizationSlug)
 	workspaceSlug := h.Get(WorkspaceSlug)
 
@@ -352,6 +377,7 @@ func NewFactory(req connect.AnyRequest) Factory {
 			PrincipalId:    principalId,
 			PrincipalEmail: principalEmail,
 			ConnectionId:   connectionId,
+			AuthRoles:      roles,
 		},
 		SpanContext: &specv2pb.SpanContext{
 			TraceId:      traceId,
@@ -361,6 +387,7 @@ func NewFactory(req connect.AnyRequest) Factory {
 		},
 		Context: &specv2pb.SpecContext{
 			EcosystemSlug:    ecosystemSlug,
+			OrganizationId:   organizationID,
 			OrganizationSlug: organizationSlug,
 			WorkspaceSlug:    workspaceSlug,
 			WorkspaceJan:     workspaceJAN,

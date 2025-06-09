@@ -14,6 +14,7 @@ extend google.protobuf.FileOptions {
   GraphqlOptions graphql = 50003;
   ConfigurationOptions configuration = 50004;
   bool has_multiple_implementations = 50005;
+  SystemOptions system = 500006;
 }
 
 extend google.protobuf.ServiceOptions {
@@ -68,12 +69,18 @@ enum NetworkType {
   NETWORK_TYPE_OVERLAY = 3; // Mesh Overlay network, internally managed proxy and/or VPN
 }
 
+message SystemOptions {
+  bool enabled_by_default = 1;
+}
+
 message ApiOptions {
   ApiType type = 1;
   ApiLifecycle cycle = 2;
   ApiInterfaceType interface = 3;
   NetworkType network = 4;
   string shortname = 5;
+  bool versionable = 6;
+
 }
 
 enum ApiType {
@@ -231,6 +238,8 @@ enum CQRSType {
 
 enum AuthRole {
   AUTH_ROLE_UNSPECIFIED = 0;
+
+  AUTH_ROLE_ANONYMOUS = 1;
 
   AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100 [(auth_role) = {
     role_type: AUTH_ROLE_TYPE_PLATFORM

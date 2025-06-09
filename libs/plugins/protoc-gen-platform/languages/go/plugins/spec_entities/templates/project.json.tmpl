@@ -1,0 +1,98 @@
+{{ $s := service . }}{{ $version := getPackageVersion .File }}{{ $apiType := getApiOptionsTypeName .File }}{{ $system := domainSystemName2 .File }}
+{
+  "name": "libs-spec-entities-{{ $version }}",
+  "$schema": "../../../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}",
+  "targets": {
+
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build ./...",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["golangci-lint run ./... --timeout=5m"],
+        "parallel": false,
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"
+      }
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}",
+          "cp LICENSE.md dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/LICENSE.md",
+          "cp libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/README.md dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/README.md",
+          "goreleaser release --config libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}",
+          "cp LICENSE.md dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/LICENSE.md",
+          "cp libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/README.md dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/README.md",
+          "goreleaser release --config libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}",
+          "cp LICENSE.md dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/LICENSE.md",
+          "cp libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/README.md dist/libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/README.md",
+          "goreleaser release --config libs/{{ $apiType }}/go/sdk/gen/platform/{{ $system.LowerCamelCase }}/{{ $version }}/.goreleaser.yaml --nightly --clean"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:{{ $apiType }}",
+    "language:golang",
+    "type:sdk",
+    "system:{{ $system.LowerCamelCase }}",
+    "version:{{ $version }}",
+    "exposure:external"
+  ]
+}

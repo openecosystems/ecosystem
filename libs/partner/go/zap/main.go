@@ -103,6 +103,26 @@ func (z *ZapLoggerWrapper) Printf(format string, v ...any) {
 	z.logger.Info(msg)
 }
 
+// Debug logs a debug-level message with key-value pairs for structured logging using a sugared logger.
+func (z *ZapLoggerWrapper) Debug(msg string, keyvals ...interface{}) {
+	z.logger.Sugar().Debugw(msg, keyvals...)
+}
+
+// Info logs an informational message with structured key-value pair fields using the SugaredLogger.
+func (z *ZapLoggerWrapper) Info(msg string, keyvals ...interface{}) {
+	z.logger.Sugar().Infow(msg, keyvals...)
+}
+
+// Warn logs a warning-level message with optional structured key-value pairs using the sugared logger.
+func (z *ZapLoggerWrapper) Warn(msg string, keyvals ...interface{}) {
+	z.logger.Sugar().Warnw(msg, keyvals...)
+}
+
+// Error logs an error message with optional key-value pairs using the SugaredLogger for structured logging.
+func (z *ZapLoggerWrapper) Error(msg string, keyvals ...interface{}) {
+	z.logger.Sugar().Errorw(msg, keyvals...)
+}
+
 // ZapSugaredLoggerWrapper is a wrapper around zap.SugaredLogger to provide custom logging functionalities.
 // It includes methods for structured and formatted logging leveraging the underlying zap.SugaredLogger instance.
 type ZapSugaredLoggerWrapper struct {
@@ -120,4 +140,24 @@ func NewZapSugaredLoggerWrapper(z *zap.SugaredLogger) *ZapSugaredLoggerWrapper {
 func (z *ZapSugaredLoggerWrapper) Printf(format string, v ...any) {
 	msg := fmt.Sprintf(format, v...)
 	z.logger.Info(msg)
+}
+
+// Debug logs a debug-level message with key-value pairs for structured logging using a sugared logger.
+func (z *ZapSugaredLoggerWrapper) Debug(msg string, keyvals ...interface{}) {
+	z.logger.Debugw(msg, keyvals...)
+}
+
+// Info logs an informational message with structured key-value pair fields using the SugaredLogger.
+func (z *ZapSugaredLoggerWrapper) Info(msg string, keyvals ...interface{}) {
+	z.logger.Infow(msg, keyvals...)
+}
+
+// Warn logs a warning-level message with optional structured key-value pairs using the sugared logger.
+func (z *ZapSugaredLoggerWrapper) Warn(msg string, keyvals ...interface{}) {
+	z.logger.Warnw(msg, keyvals...)
+}
+
+// Error logs an error message with optional key-value pairs using the SugaredLogger for structured logging.
+func (z *ZapSugaredLoggerWrapper) Error(msg string, keyvals ...interface{}) {
+	z.logger.Errorw(msg, keyvals...)
 }

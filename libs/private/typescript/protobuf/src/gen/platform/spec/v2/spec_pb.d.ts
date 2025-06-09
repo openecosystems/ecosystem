@@ -6,6 +6,7 @@ import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1"
 import type { Message } from "@bufbuild/protobuf";
 import type { Jurisdiction } from "../../type/v2/jurisdiction_pb";
 import type { Any, FieldMask, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { AuthRole } from "../../options/v2/annotations_pb";
 import type { RequestValidation, ResponseValidation } from "../../type/v2/validation_pb";
 import type { ResponseMask } from "../../type/v2/mask_pb";
 
@@ -219,6 +220,13 @@ export declare type SpecContext = Message<"platform.spec.v2.SpecContext"> & {
   /**
    * The organization associated with this context.
    *
+   * @generated from field: string organization_id = 49;
+   */
+  organizationId: string;
+
+  /**
+   * The organization associated with this context.
+   *
    * @generated from field: string organization_slug = 50;
    */
   organizationSlug: string;
@@ -393,6 +401,11 @@ export declare type SpecPrincipal = Message<"platform.spec.v2.SpecPrincipal"> & 
    * @generated from field: string connection_id = 5;
    */
   connectionId: string;
+
+  /**
+   * @generated from field: repeated platform.options.v2.AuthRole auth_roles = 6;
+   */
+  authRoles: AuthRole[];
 };
 
 /**

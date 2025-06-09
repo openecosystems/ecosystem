@@ -165,6 +165,16 @@ func (m *GoSpecEntitiesModule) Execute(targets map[string]pgs.File, _ map[string
 		}
 	}
 
+	for _, keys := range versionedKeys {
+		for _, k := range keys {
+			t := targets[k]
+			m.GenerateProjectJsonFile(t)
+			m.GeneratePackageJsonFile(t)
+			m.GenerateGoModFile(t)
+			break
+		}
+	}
+
 	return m.Artifacts()
 }
 
@@ -200,6 +210,7 @@ func (m GoSpecEntitiesModule) GeneratePartialImportOpen(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getImportPackageEntity":      fns.GetImportPackageEntity,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/"+templateName))
 	m.Tpl = tpl
@@ -227,6 +238,7 @@ func (m GoSpecEntitiesModule) GeneratePartialImport(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getImportPackageEntity":      fns.GetImportPackageEntity,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/"+templateName))
 	m.Tpl = tpl
@@ -251,6 +263,7 @@ func (m GoSpecEntitiesModule) GeneratePartialImportClose(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getImportPackageEntity":      fns.GetImportPackageEntity,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/"+templateName))
 	m.Tpl = tpl
@@ -275,6 +288,7 @@ func (m GoSpecEntitiesModule) GeneratePartialFileBody(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getImportPackageEntity":      fns.GetImportPackageEntity,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/"+templateName))
 	m.Tpl = tpl
@@ -299,10 +313,104 @@ func (m GoSpecEntitiesModule) GeneratePartialFileBodyClose(file pgs.File) {
 		"getPackageVersion":           fns.GetPackageVersion,
 		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
 		"domainSystemName2":           fns.DomainSystemName2,
+		"getImportPackageEntity":      fns.GetImportPackageEntity,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/"+templateName))
 	m.Tpl = tpl
 
 	name := outPath.SetExt("/" + fns.GetPackageVersion(file) + "/entities.pb.entities." + l.FileExtension())
 	m.AddGeneratorTemplateAppend(name.String(), m.Tpl, file)
+}
+
+func (m GoSpecEntitiesModule) GenerateGoModFile(file pgs.File) {
+	templateName := "go.mod.tmpl"
+	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
+	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
+
+	tpl := l.Template()
+	tpl.Funcs(map[string]interface{}{
+		"getGithubRepositoryConstant": fns.GetGithubRepositoryConstant,
+		"service":                     fns.Service,
+		"getRoutineMessage":           fns.GetRoutineMessage,
+		"getRoutineMessageFieldName":  fns.GetRoutineMessageFieldName,
+		"parentService":               fns.ParentService,
+		"queries":                     fns.QueryMethods,
+		"mutations":                   fns.MutationMethods,
+		"getRoutines":                 fns.GetRoutines,
+		"getImportPackages":           fns.GetGoImportPackagesServer,
+		"goPackageOverwrite":          fns.GoPackageOverwrite,
+		"goPackageRemote":             fns.GetRemoteProtoGoPathFromFile,
+		"getPackageVersion":           fns.GetPackageVersion,
+		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
+		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
+	})
+	template.Must(tpl.ParseFS(templates, "templates/*"))
+	m.Tpl = tpl
+
+	name := outPath.SetExt("/" + fns.GetPackageVersion(file) + "/go.mod")
+	m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
+}
+
+func (m GoSpecEntitiesModule) GenerateProjectJsonFile(file pgs.File) {
+	templateName := "project.json.tmpl"
+	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
+	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
+
+	tpl := l.Template()
+	tpl.Funcs(map[string]interface{}{
+		"getGithubRepositoryConstant": fns.GetGithubRepositoryConstant,
+		"service":                     fns.Service,
+		"getRoutineMessage":           fns.GetRoutineMessage,
+		"getRoutineMessageFieldName":  fns.GetRoutineMessageFieldName,
+		"parentService":               fns.ParentService,
+		"queries":                     fns.QueryMethods,
+		"mutations":                   fns.MutationMethods,
+		"getRoutines":                 fns.GetRoutines,
+		"getImportPackages":           fns.GetGoImportPackagesServer,
+		"goPackageOverwrite":          fns.GoPackageOverwrite,
+		"goPackageRemote":             fns.GetRemoteProtoGoPathFromFile,
+		"getPackageVersion":           fns.GetPackageVersion,
+		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
+		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
+	})
+	template.Must(tpl.ParseFS(templates, "templates/*"))
+	m.Tpl = tpl
+
+	name := outPath.SetExt("/" + fns.GetPackageVersion(file) + "/project.json")
+	m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
+}
+
+func (m GoSpecEntitiesModule) GeneratePackageJsonFile(file pgs.File) {
+	templateName := "package.json.tmpl"
+	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
+	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
+
+	tpl := l.Template()
+	tpl.Funcs(map[string]interface{}{
+		"getGithubRepositoryConstant": fns.GetGithubRepositoryConstant,
+		"service":                     fns.Service,
+		"getRoutineMessage":           fns.GetRoutineMessage,
+		"getRoutineMessageFieldName":  fns.GetRoutineMessageFieldName,
+		"parentService":               fns.ParentService,
+		"queries":                     fns.QueryMethods,
+		"mutations":                   fns.MutationMethods,
+		"getRoutines":                 fns.GetRoutines,
+		"getImportPackages":           fns.GetGoImportPackagesServer,
+		"goPackageOverwrite":          fns.GoPackageOverwrite,
+		"goPackageRemote":             fns.GetRemoteProtoGoPathFromFile,
+		"getPackageVersion":           fns.GetPackageVersion,
+		"getApiOptionsTypeName":       fns.GetApiOptionsTypeName,
+		"domainSystemName2":           fns.DomainSystemName2,
+		"getApiOptionsNetwork":        fns.GetApiOptionsNetwork,
+		"goPackage":                   fns.GoPackage,
+	})
+	template.Must(tpl.ParseFS(templates, "templates/*"))
+	m.Tpl = tpl
+
+	name := outPath.SetExt("/" + fns.GetPackageVersion(file) + "/package.json")
+	m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
 }
