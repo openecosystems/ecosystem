@@ -6,8 +6,8 @@
 
 import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
 import type { Message } from "@bufbuild/protobuf";
-import type { PreferenceCenterConfiguration } from "../../communication/v1alpha/preference_center_pb";
-import type { PreferenceCenterConfiguration as PreferenceCenterConfiguration$1 } from "../../communication/v1beta/preference_center_pb";
+import type { PreferenceCenterConfiguration } from "../../communication/v1beta/preference_center_pb";
+import type { PreferenceCenterConfiguration as PreferenceCenterConfiguration$1 } from "../../communication/v1alpha/preference_center_pb";
 import type { AuditConfiguration } from "../../audit/v2alpha/audit_pb";
 import type { OecoConfiguration } from "../../cli/v2alpha/oeco_pb";
 import type { CertificateConfiguration } from "../../cryptography/v2alpha/certificate_pb";
@@ -31,14 +31,14 @@ export declare const file_platform_configuration_v2alpha_spec_configuration: Gen
  */
 export declare type SpecPlatformConfiguration = Message<"platform.configuration.v2alpha.SpecPlatformConfiguration"> & {
   /**
-   * @generated from field: platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 2;
+   * @generated from field: platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 2;
    */
-  preferenceCenterConfigurationV1alpha?: PreferenceCenterConfiguration;
+  preferenceCenterConfigurationV1beta?: PreferenceCenterConfiguration;
 
   /**
-   * @generated from field: platform.communication.v1beta.PreferenceCenterConfiguration preference_center_configuration_v1beta = 3;
+   * @generated from field: platform.communication.v1alpha.PreferenceCenterConfiguration preference_center_configuration_v1alpha = 3;
    */
-  preferenceCenterConfigurationV1beta?: PreferenceCenterConfiguration$1;
+  preferenceCenterConfigurationV1alpha?: PreferenceCenterConfiguration$1;
 
   /**
    * @generated from field: platform.audit.v2alpha.AuditConfiguration audit_configuration_v2alpha = 4;

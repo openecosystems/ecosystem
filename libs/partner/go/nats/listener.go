@@ -44,6 +44,7 @@ type ListenerMessage struct {
 	Message               *jetstream.Msg
 	NatsMessage           *nats.Msg
 	ListenerConfiguration *ListenerConfiguration
+	EventResponseChannel  string
 }
 
 // ListenerErr represents an error encountered by a listener, including the related subscription for context.
@@ -85,11 +86,12 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 		fallthrough
 	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_CLIENT_STREAM:
 		fallthrough
-	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_SERVER_STREAM:
-		fallthrough
 	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_BIDI_STREAM:
 		fallthrough
 	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_GET:
+		subject = GetMultiplexedRequestSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.EventTopic(), configuration.Procedure)
+	case optionv2pb.CQRSType_CQRS_TYPE_QUERY_SERVER_STREAM:
+		// subject = GetMultiplexedRequestSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.EventTopic(), configuration.Procedure+".>")
 		subject = GetMultiplexedRequestSubjectName(configuration.StreamType.StreamPrefix(), configuration.Entity.EventTopic(), configuration.Procedure)
 	case optionv2pb.CQRSType_CQRS_TYPE_NONE:
 		fallthrough
@@ -255,11 +257,19 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 
 	// ctx = interceptor.DecorateContextWithSpec(ctx, *s)
 
+	responseSubject := GetStreamResponseSubjectName(
+		config.StreamType.StreamPrefix(),
+		config.Topic,
+		config.Procedure,
+		s.MessageId,
+	)
+
 	return ctx, ListenerMessage{
 		Spec:                  s,
 		Subscription:          nil,
 		NatsMessage:           &m,
 		ListenerConfiguration: config,
+		EventResponseChannel:  responseSubject,
 	}, nil
 }
 

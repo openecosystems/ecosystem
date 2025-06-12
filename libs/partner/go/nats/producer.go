@@ -7,17 +7,17 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
-	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-
-	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-
 	"github.com/nats-io/nats.go"
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
+
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 )
 
 // MultiplexCommandSync sends a command synchronously by publishing it to a NATS stream and awaiting a reply.
+// Uses Nats Publish and Subscribe Pattern
 func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {
 	if command == nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecCommand object is required"))
@@ -60,7 +60,7 @@ func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, comm
 	reply, err := n.RequestMsg(&nats.Msg{
 		Subject: subject,
 		Data:    specBytes,
-	}, 4*time.Second)
+	}, 10*time.Second)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -69,6 +69,7 @@ func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, comm
 }
 
 // MultiplexEventSync sends an event to a multiplexed stream and waits for the response or error within the specified timeout.
+// Uses Nats Publish and Subscribe Pattern
 func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event *SpecEvent) (*nats.Msg, error) {
 	if event == nil {
 		return nil, sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecEvent object is required"))
@@ -103,10 +104,75 @@ func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event 
 	reply, err := n.RequestMsg(&nats.Msg{
 		Subject: subject,
 		Data:    specBytes,
-	}, 4*time.Second)
+	}, 10*time.Second)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	return reply, err
+}
+
+// MultiplexEventStreamSync sends an event to a multiplexed stream and waits for the response or error within the specified timeout.
+// Uses Nats Sync Publish for streaming
+func MultiplexEventStreamSync[T any](ctx context.Context, s *specv2pb.Spec, event *SpecStreamEvent, nats *nats.Conn, stream *connect.ServerStream[T], convert func(*nats.Msg) (*T, error)) error {
+	if event == nil {
+		return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecEvent object is required"))
+	}
+
+	log := *zaploggerv1.Bound.Logger
+
+	s.SpecEvent = event.EventName
+	s.SpecType = event.EntityTypeName
+
+	data, err := anypb.New(event.Request)
+	if err != nil {
+		log.Error(err.Error())
+		return connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	}
+
+	s.Data = data
+
+	subject := GetMultiplexedRequestSubjectName(event.Stream.StreamPrefix(), event.EventTopic, event.Procedure)
+	responseSubject := GetStreamResponseSubjectName(event.Stream.StreamPrefix(), event.EventTopic, event.Procedure, s.MessageId)
+
+	specBytes, err := proto.Marshal(s)
+	if err != nil {
+		return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not marshall spec"))
+	}
+
+	// Encrypt here
+
+	log.Debug("Publishing on " + subject)
+	if err = nats.Publish(subject, specBytes); err != nil {
+		return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to publish")).WithInternalErrorDetail(err)
+	}
+
+	// Subscribe to streamed results
+	log.Debug("Waiting on results from " + responseSubject)
+	sub, err := nats.SubscribeSync(responseSubject)
+	if err != nil {
+		return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not subscribe stream sync to nats")).WithInternalErrorDetail(err)
+	}
+
+	defer sub.Unsubscribe()
+
+	for {
+		msg, err1 := sub.NextMsgWithContext(ctx)
+		if err1 != nil {
+			if errors.Is(err1, context.Canceled) {
+				return nil
+			}
+			return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not process additional events")).WithInternalErrorDetail(err1)
+		}
+
+		converted, err1 := convert(msg)
+		if err1 != nil {
+			return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not convert event")).WithInternalErrorDetail(err1)
+		}
+
+		err1 = stream.Send(converted)
+		if err != nil {
+			return sdkv2alphalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not stream event")).WithInternalErrorDetail(err1)
+		}
+	}
 }

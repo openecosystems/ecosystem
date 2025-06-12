@@ -339,97 +339,6 @@ export declare type Type = Message<"platform.ontology.v2alpha.Type"> & {
 export declare const TypeSchema: GenMessage<Type>;
 
 /**
- * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Alpha
- */
-export declare type PreferenceCenterV1Alpha = Message<"platform.ontology.v2alpha.PreferenceCenterV1Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType anonymous_id = 4;
-   */
-  anonymousId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType email = 5;
-   */
-  email: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType external_id = 6;
-   */
-  externalId: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType phone_number = 7;
-   */
-  phoneNumber: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType first_name = 8;
-   */
-  firstName: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType last_name = 9;
-   */
-  lastName: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType postal_code = 10;
-   */
-  postalCode: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType city = 11;
-   */
-  city: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType state_province_region = 12;
-   */
-  stateProvinceRegion: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType country = 13;
-   */
-  country: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType list_ids = 14;
-   */
-  listIds: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType segment_ids = 15;
-   */
-  segmentIds: ClassificationType;
-
-  /**
-   * @generated from field: platform.options.v2.ClassificationType email_subscription = 16;
-   */
-  emailSubscription: ClassificationType;
-};
-
-/**
- * Describes the message platform.ontology.v2alpha.PreferenceCenterV1Alpha.
- * Use `create(PreferenceCenterV1AlphaSchema)` to create a new message.
- */
-export declare const PreferenceCenterV1AlphaSchema: GenMessage<PreferenceCenterV1Alpha>;
-
-/**
  * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Beta
  */
 export declare type PreferenceCenterV1Beta = Message<"platform.ontology.v2alpha.PreferenceCenterV1Beta"> & {
@@ -703,52 +612,57 @@ export declare type EcosystemV2Alpha = Message<"platform.ontology.v2alpha.Ecosys
   slug: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 3;
+   * @generated from field: platform.options.v2.ClassificationType organization_id = 3;
+   */
+  organizationId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType created_at = 4;
    */
   createdAt: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 4;
+   * @generated from field: platform.options.v2.ClassificationType updated_at = 5;
    */
   updatedAt: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType source_id = 5;
+   * @generated from field: platform.options.v2.ClassificationType source_id = 6;
    */
   sourceId: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType type = 6;
+   * @generated from field: platform.options.v2.ClassificationType type = 7;
    */
   type: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType status = 7;
+   * @generated from field: platform.options.v2.ClassificationType status = 8;
    */
   status: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType status_details = 8;
+   * @generated from field: platform.options.v2.ClassificationType status_details = 9;
    */
   statusDetails: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType name = 9;
+   * @generated from field: platform.options.v2.ClassificationType name = 10;
    */
   name: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType short_description = 10;
+   * @generated from field: platform.options.v2.ClassificationType short_description = 11;
    */
   shortDescription: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType description = 11;
+   * @generated from field: platform.options.v2.ClassificationType description = 12;
    */
   description: ClassificationType;
 
   /**
-   * @generated from field: platform.options.v2.ClassificationType cidr = 12;
+   * @generated from field: platform.options.v2.ClassificationType cidr = 13;
    */
   cidr: ClassificationType;
 };
@@ -877,4 +791,95 @@ export declare type SystemV2Alpha = Message<"platform.ontology.v2alpha.SystemV2A
  * Use `create(SystemV2AlphaSchema)` to create a new message.
  */
 export declare const SystemV2AlphaSchema: GenMessage<SystemV2Alpha>;
+
+/**
+ * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Alpha
+ */
+export declare type PreferenceCenterV1Alpha = Message<"platform.ontology.v2alpha.PreferenceCenterV1Alpha"> & {
+  /**
+   * @generated from field: platform.options.v2.ClassificationType id = 1;
+   */
+  id: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+   */
+  createdAt: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+   */
+  updatedAt: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType anonymous_id = 4;
+   */
+  anonymousId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType email = 5;
+   */
+  email: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType external_id = 6;
+   */
+  externalId: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType phone_number = 7;
+   */
+  phoneNumber: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType first_name = 8;
+   */
+  firstName: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType last_name = 9;
+   */
+  lastName: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType postal_code = 10;
+   */
+  postalCode: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType city = 11;
+   */
+  city: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType state_province_region = 12;
+   */
+  stateProvinceRegion: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType country = 13;
+   */
+  country: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType list_ids = 14;
+   */
+  listIds: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType segment_ids = 15;
+   */
+  segmentIds: ClassificationType;
+
+  /**
+   * @generated from field: platform.options.v2.ClassificationType email_subscription = 16;
+   */
+  emailSubscription: ClassificationType;
+};
+
+/**
+ * Describes the message platform.ontology.v2alpha.PreferenceCenterV1Alpha.
+ * Use `create(PreferenceCenterV1AlphaSchema)` to create a new message.
+ */
+export declare const PreferenceCenterV1AlphaSchema: GenMessage<PreferenceCenterV1Alpha>;
 

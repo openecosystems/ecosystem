@@ -9,7 +9,8 @@
       "options": {
         "command": "buf generate",
         "cwd": "proto/private"
-      }
+      },
+      "cache": false
     }
   },
   "tags": []

@@ -38,8 +38,8 @@ const (
 
 type SpecPlatformConfiguration struct {
 	state                                 protoimpl.MessageState                   `protogen:"open.v1"`
-	PreferenceCenterConfigurationV1Alpha  *v1alpha.PreferenceCenterConfiguration   `protobuf:"bytes,2,opt,name=preference_center_configuration_v1alpha,json=preferenceCenterConfigurationV1alpha,proto3" json:"preference_center_configuration_v1alpha,omitempty"`
-	PreferenceCenterConfigurationV1Beta   *v1beta.PreferenceCenterConfiguration    `protobuf:"bytes,3,opt,name=preference_center_configuration_v1beta,json=preferenceCenterConfigurationV1beta,proto3" json:"preference_center_configuration_v1beta,omitempty"`
+	PreferenceCenterConfigurationV1Beta   *v1beta.PreferenceCenterConfiguration    `protobuf:"bytes,2,opt,name=preference_center_configuration_v1beta,json=preferenceCenterConfigurationV1beta,proto3" json:"preference_center_configuration_v1beta,omitempty"`
+	PreferenceCenterConfigurationV1Alpha  *v1alpha.PreferenceCenterConfiguration   `protobuf:"bytes,3,opt,name=preference_center_configuration_v1alpha,json=preferenceCenterConfigurationV1alpha,proto3" json:"preference_center_configuration_v1alpha,omitempty"`
 	AuditConfigurationV2Alpha             *v2alpha.AuditConfiguration              `protobuf:"bytes,4,opt,name=audit_configuration_v2alpha,json=auditConfigurationV2alpha,proto3" json:"audit_configuration_v2alpha,omitempty"`
 	OecoConfigurationV2Alpha              *v2alpha1.OecoConfiguration              `protobuf:"bytes,5,opt,name=oeco_configuration_v2alpha,json=oecoConfigurationV2alpha,proto3" json:"oeco_configuration_v2alpha,omitempty"`
 	CertificateConfigurationV2Alpha       *v2alpha2.CertificateConfiguration       `protobuf:"bytes,6,opt,name=certificate_configuration_v2alpha,json=certificateConfigurationV2alpha,proto3" json:"certificate_configuration_v2alpha,omitempty"`
@@ -86,16 +86,16 @@ func (*SpecPlatformConfiguration) Descriptor() ([]byte, []int) {
 	return file_platform_configuration_v2alpha_spec_configuration_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Alpha() *v1alpha.PreferenceCenterConfiguration {
+func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Beta() *v1beta.PreferenceCenterConfiguration {
 	if x != nil {
-		return x.PreferenceCenterConfigurationV1Alpha
+		return x.PreferenceCenterConfigurationV1Beta
 	}
 	return nil
 }
 
-func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Beta() *v1beta.PreferenceCenterConfiguration {
+func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Alpha() *v1alpha.PreferenceCenterConfiguration {
 	if x != nil {
-		return x.PreferenceCenterConfigurationV1Beta
+		return x.PreferenceCenterConfigurationV1Alpha
 	}
 	return nil
 }
@@ -188,10 +188,10 @@ var File_platform_configuration_v2alpha_spec_configuration_proto protoreflect.Fi
 
 const file_platform_configuration_v2alpha_spec_configuration_proto_rawDesc = "" +
 	"\n" +
-	"7platform/configuration/v2alpha/spec_configuration.proto\x12\x1eplatform.configuration.v2alpha\x1a%platform/options/v2/annotations.proto\x1a\"platform/audit/v2alpha/audit.proto\x1a\x1fplatform/cli/v2alpha/oeco.proto\x1a/platform/cryptography/v2alpha/certificate.proto\x1a.platform/cryptography/v2alpha/encryption.proto\x1a&platform/dns/v2alpha/dynamic_dns.proto\x1a*platform/ecosystem/v2alpha/ecosystem.proto\x1a'platform/edge/v2alpha/edge_router.proto\x1a\"platform/iam/v2alpha/account.proto\x1a,platform/iam/v2alpha/account_authority.proto\x1a.platform/mesh/v2alpha/cryptographic_mesh.proto\x1a*platform/reference/v2alpha/reference.proto\x1a$platform/system/v2alpha/system.proto\x1a6platform/communication/v1alpha/preference_center.proto\x1a5platform/communication/v1beta/preference_center.proto\"\x8d\x0e\n" +
-	"\x19SpecPlatformConfiguration\x12\x94\x01\n" +
-	"'preference_center_configuration_v1alpha\x18\x02 \x01(\v2=.platform.communication.v1alpha.PreferenceCenterConfigurationR$preferenceCenterConfigurationV1alpha\x12\x91\x01\n" +
-	"&preference_center_configuration_v1beta\x18\x03 \x01(\v2<.platform.communication.v1beta.PreferenceCenterConfigurationR#preferenceCenterConfigurationV1beta\x12j\n" +
+	"7platform/configuration/v2alpha/spec_configuration.proto\x12\x1eplatform.configuration.v2alpha\x1a%platform/options/v2/annotations.proto\x1a\"platform/audit/v2alpha/audit.proto\x1a\x1fplatform/cli/v2alpha/oeco.proto\x1a/platform/cryptography/v2alpha/certificate.proto\x1a.platform/cryptography/v2alpha/encryption.proto\x1a&platform/dns/v2alpha/dynamic_dns.proto\x1a*platform/ecosystem/v2alpha/ecosystem.proto\x1a'platform/edge/v2alpha/edge_router.proto\x1a\"platform/iam/v2alpha/account.proto\x1a,platform/iam/v2alpha/account_authority.proto\x1a.platform/mesh/v2alpha/cryptographic_mesh.proto\x1a*platform/reference/v2alpha/reference.proto\x1a$platform/system/v2alpha/system.proto\x1a5platform/communication/v1beta/preference_center.proto\x1a6platform/communication/v1alpha/preference_center.proto\"\x8d\x0e\n" +
+	"\x19SpecPlatformConfiguration\x12\x91\x01\n" +
+	"&preference_center_configuration_v1beta\x18\x02 \x01(\v2<.platform.communication.v1beta.PreferenceCenterConfigurationR#preferenceCenterConfigurationV1beta\x12\x94\x01\n" +
+	"'preference_center_configuration_v1alpha\x18\x03 \x01(\v2=.platform.communication.v1alpha.PreferenceCenterConfigurationR$preferenceCenterConfigurationV1alpha\x12j\n" +
 	"\x1baudit_configuration_v2alpha\x18\x04 \x01(\v2*.platform.audit.v2alpha.AuditConfigurationR\x19auditConfigurationV2alpha\x12e\n" +
 	"\x1aoeco_configuration_v2alpha\x18\x05 \x01(\v2'.platform.cli.v2alpha.OecoConfigurationR\x18oecoConfigurationV2alpha\x12\x83\x01\n" +
 	"!certificate_configuration_v2alpha\x18\x06 \x01(\v27.platform.cryptography.v2alpha.CertificateConfigurationR\x1fcertificateConfigurationV2alpha\x12\x80\x01\n" +
@@ -221,8 +221,8 @@ func file_platform_configuration_v2alpha_spec_configuration_proto_rawDescGZIP() 
 var file_platform_configuration_v2alpha_spec_configuration_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_platform_configuration_v2alpha_spec_configuration_proto_goTypes = []any{
 	(*SpecPlatformConfiguration)(nil),               // 0: platform.configuration.v2alpha.SpecPlatformConfiguration
-	(*v1alpha.PreferenceCenterConfiguration)(nil),   // 1: platform.communication.v1alpha.PreferenceCenterConfiguration
-	(*v1beta.PreferenceCenterConfiguration)(nil),    // 2: platform.communication.v1beta.PreferenceCenterConfiguration
+	(*v1beta.PreferenceCenterConfiguration)(nil),    // 1: platform.communication.v1beta.PreferenceCenterConfiguration
+	(*v1alpha.PreferenceCenterConfiguration)(nil),   // 2: platform.communication.v1alpha.PreferenceCenterConfiguration
 	(*v2alpha.AuditConfiguration)(nil),              // 3: platform.audit.v2alpha.AuditConfiguration
 	(*v2alpha1.OecoConfiguration)(nil),              // 4: platform.cli.v2alpha.OecoConfiguration
 	(*v2alpha2.CertificateConfiguration)(nil),       // 5: platform.cryptography.v2alpha.CertificateConfiguration
@@ -237,8 +237,8 @@ var file_platform_configuration_v2alpha_spec_configuration_proto_goTypes = []any
 	(*v2alpha9.SystemConfiguration)(nil),            // 14: platform.system.v2alpha.SystemConfiguration
 }
 var file_platform_configuration_v2alpha_spec_configuration_proto_depIdxs = []int32{
-	1,  // 0: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1alpha:type_name -> platform.communication.v1alpha.PreferenceCenterConfiguration
-	2,  // 1: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1beta:type_name -> platform.communication.v1beta.PreferenceCenterConfiguration
+	1,  // 0: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1beta:type_name -> platform.communication.v1beta.PreferenceCenterConfiguration
+	2,  // 1: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1alpha:type_name -> platform.communication.v1alpha.PreferenceCenterConfiguration
 	3,  // 2: platform.configuration.v2alpha.SpecPlatformConfiguration.audit_configuration_v2alpha:type_name -> platform.audit.v2alpha.AuditConfiguration
 	4,  // 3: platform.configuration.v2alpha.SpecPlatformConfiguration.oeco_configuration_v2alpha:type_name -> platform.cli.v2alpha.OecoConfiguration
 	5,  // 4: platform.configuration.v2alpha.SpecPlatformConfiguration.certificate_configuration_v2alpha:type_name -> platform.cryptography.v2alpha.CertificateConfiguration

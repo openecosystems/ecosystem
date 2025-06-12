@@ -350,9 +350,10 @@ func (x *EcosystemConfiguration) GetClosed() bool {
 
 // Supported fields to create a ecosystem
 type CreateEcosystemRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	// Globally unique slug for this ecosystem
-	Slug string `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
+	Slug string `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
 	// What type of ecosystem is this?
 	Type EcosystemType `protobuf:"varint,3,opt,name=type,proto3,enum=platform.ecosystem.v2alpha.EcosystemType" json:"type,omitempty"`
 	Name string        `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
@@ -393,6 +394,13 @@ func (x *CreateEcosystemRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CreateEcosystemRequest.ProtoReflect.Descriptor instead.
 func (*CreateEcosystemRequest) Descriptor() ([]byte, []int) {
 	return file_platform_ecosystem_v2alpha_ecosystem_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *CreateEcosystemRequest) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
+	}
+	return ""
 }
 
 func (x *CreateEcosystemRequest) GetSlug() string {
@@ -441,7 +449,10 @@ type CreateEcosystemResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The response context
 	SpecContext *v2.SpecResponseContext `protobuf:"bytes,1,opt,name=spec_context,json=specContext,proto3" json:"spec_context,omitempty"`
-	Ecosystem     *Ecosystem `protobuf:"bytes,2,opt,name=ecosystem,proto3" json:"ecosystem,omitempty"`
+	// REMOVE THIS
+	Ecosystem *Ecosystem `protobuf:"bytes,2,opt,name=ecosystem,proto3" json:"ecosystem,omitempty"`
+	TestEcosystem *Ecosystem `protobuf:"bytes,3,opt,name=test_ecosystem,json=testEcosystem,proto3" json:"test_ecosystem,omitempty"`
+	LiveEcosystem *Ecosystem `protobuf:"bytes,4,opt,name=live_ecosystem,json=liveEcosystem,proto3" json:"live_ecosystem,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -486,6 +497,20 @@ func (x *CreateEcosystemResponse) GetSpecContext() *v2.SpecResponseContext {
 func (x *CreateEcosystemResponse) GetEcosystem() *Ecosystem {
 	if x != nil {
 		return x.Ecosystem
+	}
+	return nil
+}
+
+func (x *CreateEcosystemResponse) GetTestEcosystem() *Ecosystem {
+	if x != nil {
+		return x.TestEcosystem
+	}
+	return nil
+}
+
+func (x *CreateEcosystemResponse) GetLiveEcosystem() *Ecosystem {
+	if x != nil {
+		return x.LiveEcosystem
 	}
 	return nil
 }
@@ -983,17 +1008,18 @@ func (x *DeleteEcosystemResponse) GetEcosystem() *Ecosystem {
 type Ecosystem struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Slug string `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
-	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	SourceId string `protobuf:"bytes,5,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
-	Type EcosystemType `protobuf:"varint,6,opt,name=type,proto3,enum=platform.ecosystem.v2alpha.EcosystemType" json:"type,omitempty"`
-	Status EcosystemStatus `protobuf:"varint,7,opt,name=status,proto3,enum=platform.ecosystem.v2alpha.EcosystemStatus" json:"status,omitempty"`
-	StatusDetails string `protobuf:"bytes,8,opt,name=status_details,json=statusDetails,proto3" json:"status_details,omitempty"`
-	Name string `protobuf:"bytes,9,opt,name=name,proto3" json:"name,omitempty"`
-	ShortDescription string `protobuf:"bytes,10,opt,name=short_description,json=shortDescription,proto3" json:"short_description,omitempty"`
-	Description   string `protobuf:"bytes,11,opt,name=description,proto3" json:"description,omitempty"`
-	Cidr          string `protobuf:"bytes,12,opt,name=cidr,proto3" json:"cidr,omitempty"`
+	Slug           string `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
+	OrganizationId string `protobuf:"bytes,3,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	SourceId string `protobuf:"bytes,6,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`
+	Type EcosystemType `protobuf:"varint,7,opt,name=type,proto3,enum=platform.ecosystem.v2alpha.EcosystemType" json:"type,omitempty"`
+	Status EcosystemStatus `protobuf:"varint,8,opt,name=status,proto3,enum=platform.ecosystem.v2alpha.EcosystemStatus" json:"status,omitempty"`
+	StatusDetails string `protobuf:"bytes,9,opt,name=status_details,json=statusDetails,proto3" json:"status_details,omitempty"`
+	Name string `protobuf:"bytes,10,opt,name=name,proto3" json:"name,omitempty"`
+	ShortDescription string `protobuf:"bytes,11,opt,name=short_description,json=shortDescription,proto3" json:"short_description,omitempty"`
+	Description   string `protobuf:"bytes,12,opt,name=description,proto3" json:"description,omitempty"`
+	Cidr          string `protobuf:"bytes,13,opt,name=cidr,proto3" json:"cidr,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1038,6 +1064,13 @@ func (x *Ecosystem) GetId() string {
 func (x *Ecosystem) GetSlug() string {
 	if x != nil {
 		return x.Slug
+	}
+	return ""
+}
+
+func (x *Ecosystem) GetOrganizationId() string {
+	if x != nil {
+		return x.OrganizationId
 	}
 	return ""
 }
@@ -1119,9 +1152,10 @@ const file_platform_ecosystem_v2alpha_ecosystem_proto_rawDesc = "" +
 	"*platform/ecosystem/v2alpha/ecosystem.proto\x12\x1aplatform.ecosystem.v2alpha\x1a%platform/options/v2/annotations.proto\x1a\x1bplatform/spec/v2/spec.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bbuf/validate/validate.proto\"b\n" +
 	"\x16EcosystemConfiguration\x12H\n" +
 	"\x06closed\x18\x01 \x01(\bB0ҷ\x18,\n" +
-	"*\x1a&Is this ecosystem open to connections?(\x01R\x06closed\"\xbe\x03\n" +
-	"\x16CreateEcosystemRequest\x12\x96\x01\n" +
-	"\x04slug\x18\x01 \x01(\tB\x81\x01\xbaH~\xba\x01{\n" +
+	"*\x1a&Is this ecosystem open to connections?(\x01R\x06closed\"\xe7\x03\n" +
+	"\x16CreateEcosystemRequest\x12'\n" +
+	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x96\x01\n" +
+	"\x04slug\x18\x02 \x01(\tB\x81\x01\xbaH~\xba\x01{\n" +
 	"\vslug_format\x12Gslug must be 3 - 24 characters long and only contain letters and digits\x1a#this.matches('^[A-Za-z0-9]{3,24}$')R\x04slug\x12=\n" +
 	"\x04type\x18\x03 \x01(\x0e2).platform.ecosystem.v2alpha.EcosystemTypeR\x04type\x12\x1d\n" +
 	"\x04name\x18\x04 \x01(\tB\t\xbaH\x06r\x04\x10\x03\x18\x10R\x04name\x127\n" +
@@ -1130,10 +1164,12 @@ const file_platform_ecosystem_v2alpha_ecosystem_proto_rawDesc = "" +
 	"\vdescription\x18\x06 \x01(\tB\n" +
 	"\xbaH\ar\x05\x10\x05\x18\x80\bR\vdescription\x12>\n" +
 	"\x04cidr\x18\a \x01(\tB*\xbaH'\xba\x01$\n" +
-	"\fvalid_prefix\x12\x01.\x1a\x11this.isIpPrefix()R\x04cidr:\x06\xfa\xb6\x18\x02\b\x01\"\xb0\x01\n" +
+	"\fvalid_prefix\x12\x01.\x1a\x11this.isIpPrefix()R\x04cidr:\x06\xfa\xb6\x18\x02\b\x01\"\xcc\x02\n" +
 	"\x17CreateEcosystemResponse\x12H\n" +
 	"\fspec_context\x18\x01 \x01(\v2%.platform.spec.v2.SpecResponseContextR\vspecContext\x12C\n" +
-	"\tecosystem\x18\x02 \x01(\v2%.platform.ecosystem.v2alpha.EcosystemR\tecosystem:\x06\xfa\xb6\x18\x02\b\x02\"\xb6\x01\n" +
+	"\tecosystem\x18\x02 \x01(\v2%.platform.ecosystem.v2alpha.EcosystemR\tecosystem\x12L\n" +
+	"\x0etest_ecosystem\x18\x03 \x01(\v2%.platform.ecosystem.v2alpha.EcosystemR\rtestEcosystem\x12L\n" +
+	"\x0elive_ecosystem\x18\x04 \x01(\v2%.platform.ecosystem.v2alpha.EcosystemR\rliveEcosystem:\x06\xfa\xb6\x18\x02\b\x02\"\xb6\x01\n" +
 	"\x13GetEcosystemRequest\x12\x96\x01\n" +
 	"\x04slug\x18\x01 \x01(\tB\x81\x01\xbaH~\xba\x01{\n" +
 	"\vslug_format\x12Gslug must be 3 - 24 characters long and only contain letters and digits\x1a#this.matches('^[A-Za-z0-9]{3,24}$')R\x04slug:\x06\xfa\xb6\x18\x02\b\x01\"\xad\x01\n" +
@@ -1171,23 +1207,24 @@ const file_platform_ecosystem_v2alpha_ecosystem_proto_rawDesc = "" +
 	"\vslug_format\x12Gslug must be 3 - 24 characters long and only contain letters and digits\x1a#this.matches('^[A-Za-z0-9]{3,24}$')R\x04slug:\x06\xfa\xb6\x18\x02\b\x01\"\xb0\x01\n" +
 	"\x17DeleteEcosystemResponse\x12H\n" +
 	"\fspec_context\x18\x01 \x01(\v2%.platform.spec.v2.SpecResponseContextR\vspecContext\x12C\n" +
-	"\tecosystem\x18\x02 \x01(\v2%.platform.ecosystem.v2alpha.EcosystemR\tecosystem:\x06\xfa\xb6\x18\x02\b\x02\"\xf4\x03\n" +
+	"\tecosystem\x18\x02 \x01(\v2%.platform.ecosystem.v2alpha.EcosystemR\tecosystem:\x06\xfa\xb6\x18\x02\b\x02\"\x9d\x04\n" +
 	"\tEcosystem\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
-	"\x04slug\x18\x02 \x01(\tB\x06ʷ\x18\x02\b\x01R\x04slug\x129\n" +
+	"\x04slug\x18\x02 \x01(\tB\x06ʷ\x18\x02\b\x01R\x04slug\x12'\n" +
+	"\x0forganization_id\x18\x03 \x01(\tR\x0eorganizationId\x129\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1b\n" +
-	"\tsource_id\x18\x05 \x01(\tR\bsourceId\x12=\n" +
-	"\x04type\x18\x06 \x01(\x0e2).platform.ecosystem.v2alpha.EcosystemTypeR\x04type\x12C\n" +
-	"\x06status\x18\a \x01(\x0e2+.platform.ecosystem.v2alpha.EcosystemStatusR\x06status\x12%\n" +
-	"\x0estatus_details\x18\b \x01(\tR\rstatusDetails\x12\x12\n" +
-	"\x04name\x18\t \x01(\tR\x04name\x12+\n" +
-	"\x11short_description\x18\n" +
-	" \x01(\tR\x10shortDescription\x12 \n" +
-	"\vdescription\x18\v \x01(\tR\vdescription\x12\x12\n" +
-	"\x04cidr\x18\f \x01(\tR\x04cidr:\x06\xfa\xb6\x18\x02\b\x02*\x82\x01\n" +
+	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1b\n" +
+	"\tsource_id\x18\x06 \x01(\tR\bsourceId\x12=\n" +
+	"\x04type\x18\a \x01(\x0e2).platform.ecosystem.v2alpha.EcosystemTypeR\x04type\x12C\n" +
+	"\x06status\x18\b \x01(\x0e2+.platform.ecosystem.v2alpha.EcosystemStatusR\x06status\x12%\n" +
+	"\x0estatus_details\x18\t \x01(\tR\rstatusDetails\x12\x12\n" +
+	"\x04name\x18\n" +
+	" \x01(\tR\x04name\x12+\n" +
+	"\x11short_description\x18\v \x01(\tR\x10shortDescription\x12 \n" +
+	"\vdescription\x18\f \x01(\tR\vdescription\x12\x12\n" +
+	"\x04cidr\x18\r \x01(\tR\x04cidr:\x06\xfa\xb6\x18\x02\b\x02*\x82\x01\n" +
 	"\rEcosystemType\x12\x1e\n" +
 	"\x1aECOSYSTEM_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15ECOSYSTEM_TYPE_PUBLIC\x10\x01\x12\x1a\n" +
@@ -1217,14 +1254,21 @@ const file_platform_ecosystem_v2alpha_ecosystem_proto_rawDesc = "" +
 	"\x18ECOSYSTEM_EVENTS_CREATED\x10\x01\x1a\x06\xe2\xb8\x18\x02\b\x01\x12\x1c\n" +
 	"\x18ECOSYSTEM_EVENTS_UPDATED\x10\x02\x12\x1c\n" +
 	"\x18ECOSYSTEM_EVENTS_DELETED\x10\x03\x12\x1c\n" +
-	"\x18ECOSYSTEM_EVENTS_ERRORED\x10\x04\x1a\x06\x92\xb8\x18\x02\b\x042\xfd\x06\n" +
-	"\x10EcosystemService\x12\xab\x01\n" +
-	"\x0fCreateEcosystem\x122.platform.ecosystem.v2alpha.CreateEcosystemRequest\x1a3.platform.ecosystem.v2alpha.CreateEcosystemResponse\"/\xa2\xb6\x18\b*\x06create\xaa\xb6\x18\x02\b\x02\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v2alpha/ecosystem\x12\xa3\x01\n" +
-	"\x0eListEcosystems\x121.platform.ecosystem.v2alpha.ListEcosystemsRequest\x1a2.platform.ecosystem.v2alpha.ListEcosystemsResponse\"*\xa2\xb6\x18\x06*\x04list\xaa\xb6\x18\x02\b\b\x82\xd3\xe4\x93\x02\x14\x12\x12/v2alpha/ecosystem\x12\xa3\x01\n" +
-	"\fGetEcosystem\x12/.platform.ecosystem.v2alpha.GetEcosystemRequest\x1a0.platform.ecosystem.v2alpha.GetEcosystemResponse\"0\xa2\xb6\x18\x05*\x03get\xaa\xb6\x18\x02\b\n" +
-	"\x82\xd3\xe4\x93\x02\x1b\x12\x19/v2alpha/ecosystem/{slug}\x12\xb2\x01\n" +
-	"\x0fUpdateEcosystem\x122.platform.ecosystem.v2alpha.UpdateEcosystemRequest\x1a3.platform.ecosystem.v2alpha.UpdateEcosystemResponse\"6\xa2\xb6\x18\b*\x06update\xaa\xb6\x18\x02\b\x03\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/v2alpha/ecosystem/{slug}\x12\xaf\x01\n" +
-	"\x0fDeleteEcosystem\x122.platform.ecosystem.v2alpha.DeleteEcosystemRequest\x1a3.platform.ecosystem.v2alpha.DeleteEcosystemResponse\"3\xa2\xb6\x18\b*\x06delete\xaa\xb6\x18\x02\b\x04\x82\xd3\xe4\x93\x02\x1b*\x19/v2alpha/ecosystem/{slug}\x1a\bҵ\x18\x04\b\x03\x10\x01B\xaf\x01\x82\xc4\x13\x02\b\x03\x82\xb5\x18\x06\b\x03\x10\x01\x18\x02\x8a\xb5\x18 \n" +
+	"\x18ECOSYSTEM_EVENTS_ERRORED\x10\x04\x1a\x06\x92\xb8\x18\x02\b\x042\xdc\a\n" +
+	"\x10EcosystemService\x12\xbf\x01\n" +
+	"\x0fCreateEcosystem\x122.platform.ecosystem.v2alpha.CreateEcosystemRequest\x1a3.platform.ecosystem.v2alpha.CreateEcosystemResponse\"C\xa2\xb6\x18\f\b\x03\x10\x012\x06create\xaa\xb6\x18\x02\b\x02\xb2\xb6\x18\f\n" +
+	"\x06create\x12\x02\xcb\x01\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v2alpha/ecosystem\x12\xb5\x01\n" +
+	"\x0eListEcosystems\x121.platform.ecosystem.v2alpha.ListEcosystemsRequest\x1a2.platform.ecosystem.v2alpha.ListEcosystemsResponse\"<\xa2\xb6\x18\n" +
+	"\b\x03\x10\x012\x04list\xaa\xb6\x18\x02\b\b\xb2\xb6\x18\n" +
+	"\n" +
+	"\x04list\x12\x02\xcd\x01\x82\xd3\xe4\x93\x02\x14\x12\x12/v2alpha/ecosystem\x12\xb4\x01\n" +
+	"\fGetEcosystem\x12/.platform.ecosystem.v2alpha.GetEcosystemRequest\x1a0.platform.ecosystem.v2alpha.GetEcosystemResponse\"A\xa2\xb6\x18\t\b\x03\x10\x012\x03get\xaa\xb6\x18\x02\b\n" +
+	"\xb2\xb6\x18\t\n" +
+	"\x03get\x12\x02\xcd\x01\x82\xd3\xe4\x93\x02\x1b\x12\x19/v2alpha/ecosystem/{slug}\x12\xc6\x01\n" +
+	"\x0fUpdateEcosystem\x122.platform.ecosystem.v2alpha.UpdateEcosystemRequest\x1a3.platform.ecosystem.v2alpha.UpdateEcosystemResponse\"J\xa2\xb6\x18\f\b\x03\x10\x012\x06update\xaa\xb6\x18\x02\b\x03\xb2\xb6\x18\f\n" +
+	"\x06update\x12\x02\xcd\x01\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/v2alpha/ecosystem/{slug}\x12\xc3\x01\n" +
+	"\x0fDeleteEcosystem\x122.platform.ecosystem.v2alpha.DeleteEcosystemRequest\x1a3.platform.ecosystem.v2alpha.DeleteEcosystemResponse\"G\xa2\xb6\x18\f\b\x03\x10\x012\x06delete\xaa\xb6\x18\x02\b\x04\xb2\xb6\x18\f\n" +
+	"\x06delete\x12\x02\xcb\x01\x82\xd3\xe4\x93\x02\x1b*\x19/v2alpha/ecosystem/{slug}\x1a\bҵ\x18\x04\b\x03\x10\x01B\xaf\x01\x82\xc4\x13\x02\b\x03\x82\xb5\x18\x06\b\x03\x10\x01\x18\x02\x8a\xb5\x18 \n" +
 	"\tecosystem\x12\n" +
 	"ecosystems\"\x03jan(\x028\x01\x92\xb5\x18\x03\n" +
 	"\x01\x03\x9a\xb5\x18\x00\xa2\xb5\x18\x02\b\x01Zhgithub.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha;ecosystemv2alphapbb\x06proto3"
@@ -1269,33 +1313,35 @@ var file_platform_ecosystem_v2alpha_ecosystem_proto_depIdxs = []int32{
 	0,  // 0: platform.ecosystem.v2alpha.CreateEcosystemRequest.type:type_name -> platform.ecosystem.v2alpha.EcosystemType
 	18, // 1: platform.ecosystem.v2alpha.CreateEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
 	17, // 2: platform.ecosystem.v2alpha.CreateEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
-	18, // 3: platform.ecosystem.v2alpha.GetEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
-	17, // 4: platform.ecosystem.v2alpha.GetEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
-	18, // 5: platform.ecosystem.v2alpha.ListEcosystemsResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
-	17, // 6: platform.ecosystem.v2alpha.ListEcosystemsResponse.ecosystems:type_name -> platform.ecosystem.v2alpha.Ecosystem
-	18, // 7: platform.ecosystem.v2alpha.UpdateEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
-	17, // 8: platform.ecosystem.v2alpha.UpdateEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
-	18, // 9: platform.ecosystem.v2alpha.DeleteEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
-	17, // 10: platform.ecosystem.v2alpha.DeleteEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
-	19, // 11: platform.ecosystem.v2alpha.Ecosystem.created_at:type_name -> google.protobuf.Timestamp
-	19, // 12: platform.ecosystem.v2alpha.Ecosystem.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 13: platform.ecosystem.v2alpha.Ecosystem.type:type_name -> platform.ecosystem.v2alpha.EcosystemType
-	1,  // 14: platform.ecosystem.v2alpha.Ecosystem.status:type_name -> platform.ecosystem.v2alpha.EcosystemStatus
-	6,  // 15: platform.ecosystem.v2alpha.EcosystemService.CreateEcosystem:input_type -> platform.ecosystem.v2alpha.CreateEcosystemRequest
-	10, // 16: platform.ecosystem.v2alpha.EcosystemService.ListEcosystems:input_type -> platform.ecosystem.v2alpha.ListEcosystemsRequest
-	8,  // 17: platform.ecosystem.v2alpha.EcosystemService.GetEcosystem:input_type -> platform.ecosystem.v2alpha.GetEcosystemRequest
-	13, // 18: platform.ecosystem.v2alpha.EcosystemService.UpdateEcosystem:input_type -> platform.ecosystem.v2alpha.UpdateEcosystemRequest
-	15, // 19: platform.ecosystem.v2alpha.EcosystemService.DeleteEcosystem:input_type -> platform.ecosystem.v2alpha.DeleteEcosystemRequest
-	7,  // 20: platform.ecosystem.v2alpha.EcosystemService.CreateEcosystem:output_type -> platform.ecosystem.v2alpha.CreateEcosystemResponse
-	11, // 21: platform.ecosystem.v2alpha.EcosystemService.ListEcosystems:output_type -> platform.ecosystem.v2alpha.ListEcosystemsResponse
-	9,  // 22: platform.ecosystem.v2alpha.EcosystemService.GetEcosystem:output_type -> platform.ecosystem.v2alpha.GetEcosystemResponse
-	14, // 23: platform.ecosystem.v2alpha.EcosystemService.UpdateEcosystem:output_type -> platform.ecosystem.v2alpha.UpdateEcosystemResponse
-	16, // 24: platform.ecosystem.v2alpha.EcosystemService.DeleteEcosystem:output_type -> platform.ecosystem.v2alpha.DeleteEcosystemResponse
-	20, // [20:25] is the sub-list for method output_type
-	15, // [15:20] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	17, // 3: platform.ecosystem.v2alpha.CreateEcosystemResponse.test_ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
+	17, // 4: platform.ecosystem.v2alpha.CreateEcosystemResponse.live_ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
+	18, // 5: platform.ecosystem.v2alpha.GetEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
+	17, // 6: platform.ecosystem.v2alpha.GetEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
+	18, // 7: platform.ecosystem.v2alpha.ListEcosystemsResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
+	17, // 8: platform.ecosystem.v2alpha.ListEcosystemsResponse.ecosystems:type_name -> platform.ecosystem.v2alpha.Ecosystem
+	18, // 9: platform.ecosystem.v2alpha.UpdateEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
+	17, // 10: platform.ecosystem.v2alpha.UpdateEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
+	18, // 11: platform.ecosystem.v2alpha.DeleteEcosystemResponse.spec_context:type_name -> platform.spec.v2.SpecResponseContext
+	17, // 12: platform.ecosystem.v2alpha.DeleteEcosystemResponse.ecosystem:type_name -> platform.ecosystem.v2alpha.Ecosystem
+	19, // 13: platform.ecosystem.v2alpha.Ecosystem.created_at:type_name -> google.protobuf.Timestamp
+	19, // 14: platform.ecosystem.v2alpha.Ecosystem.updated_at:type_name -> google.protobuf.Timestamp
+	0,  // 15: platform.ecosystem.v2alpha.Ecosystem.type:type_name -> platform.ecosystem.v2alpha.EcosystemType
+	1,  // 16: platform.ecosystem.v2alpha.Ecosystem.status:type_name -> platform.ecosystem.v2alpha.EcosystemStatus
+	6,  // 17: platform.ecosystem.v2alpha.EcosystemService.CreateEcosystem:input_type -> platform.ecosystem.v2alpha.CreateEcosystemRequest
+	10, // 18: platform.ecosystem.v2alpha.EcosystemService.ListEcosystems:input_type -> platform.ecosystem.v2alpha.ListEcosystemsRequest
+	8,  // 19: platform.ecosystem.v2alpha.EcosystemService.GetEcosystem:input_type -> platform.ecosystem.v2alpha.GetEcosystemRequest
+	13, // 20: platform.ecosystem.v2alpha.EcosystemService.UpdateEcosystem:input_type -> platform.ecosystem.v2alpha.UpdateEcosystemRequest
+	15, // 21: platform.ecosystem.v2alpha.EcosystemService.DeleteEcosystem:input_type -> platform.ecosystem.v2alpha.DeleteEcosystemRequest
+	7,  // 22: platform.ecosystem.v2alpha.EcosystemService.CreateEcosystem:output_type -> platform.ecosystem.v2alpha.CreateEcosystemResponse
+	11, // 23: platform.ecosystem.v2alpha.EcosystemService.ListEcosystems:output_type -> platform.ecosystem.v2alpha.ListEcosystemsResponse
+	9,  // 24: platform.ecosystem.v2alpha.EcosystemService.GetEcosystem:output_type -> platform.ecosystem.v2alpha.GetEcosystemResponse
+	14, // 25: platform.ecosystem.v2alpha.EcosystemService.UpdateEcosystem:output_type -> platform.ecosystem.v2alpha.UpdateEcosystemResponse
+	16, // 26: platform.ecosystem.v2alpha.EcosystemService.DeleteEcosystem:output_type -> platform.ecosystem.v2alpha.DeleteEcosystemResponse
+	22, // [22:27] is the sub-list for method output_type
+	17, // [17:22] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_platform_ecosystem_v2alpha_ecosystem_proto_init() }

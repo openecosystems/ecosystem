@@ -10,7 +10,8 @@
       "options": {
         "command": "buf generate",
         "cwd": "proto"
-      }
+      },
+      "cache": false
     },
     "breaking": {
       "executor": "nx:run-commands",

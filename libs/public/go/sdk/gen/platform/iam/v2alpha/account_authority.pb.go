@@ -494,7 +494,7 @@ const file_platform_iam_v2alpha_account_authority_proto_rawDesc = "" +
 	"$ACCOUNT_AUTHORITY_EVENTS_UNSPECIFIED\x10\x00\x12@\n" +
 	"2ACCOUNT_AUTHORITY_EVENTS_CREATED_ACCOUNT_AUTHORITY\x10\x01\x1a\b\xe2\xb8\x18\x04\b\x01\x18\x01\x1a\x06\x92\xb8\x18\x02\b\x042\xd4\x01\n" +
 	"\x17AccountAuthorityService\x12\xb8\x01\n" +
-	"\x16CreateAccountAuthority\x123.platform.iam.v2alpha.CreateAccountAuthorityRequest\x1a4.platform.iam.v2alpha.CreateAccountAuthorityResponse\"3\xa2\xb6\x18\b*\x06create\xaa\xb6\x18\x02\b\x02\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v2alpha/iam/aa/createB\xb6\x01\x82\xc4\x13\x02\b\x01\x82\xb5\x18\x06\b\x03\x10\x01\x18\x06\x8a\xb5\x181\n" +
+	"\x16CreateAccountAuthority\x123.platform.iam.v2alpha.CreateAccountAuthorityRequest\x1a4.platform.iam.v2alpha.CreateAccountAuthorityResponse\"3\xa2\xb6\x18\b2\x06create\xaa\xb6\x18\x02\b\x02\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v2alpha/iam/aa/createB\xb6\x01\x82\xc4\x13\x02\b\x01\x82\xb5\x18\x06\b\x03\x10\x01\x18\x06\x8a\xb5\x181\n" +
 	"\x11account_authority\x12\x13account_authorities\"\x03jan(\x028\x01\x92\xb5\x18\x03\n" +
 	"\x01\x03\x9a\xb5\x18\x02\b\x01\xa2\xb5\x18\x02\b\x01Z\\github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha;iamv2alphapbb\x06proto3"
 

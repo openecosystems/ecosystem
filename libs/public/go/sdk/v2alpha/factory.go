@@ -3,14 +3,13 @@ package sdkv2alphalib
 
 import (
 	"fmt"
+	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-
-	"connectrpc.com/connect"
 
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
@@ -168,8 +167,7 @@ type Factory struct {
 // NewFactory creates and initializes a new Factory instance using the provided `connect.AnyRequest`.
 // It extracts headers, processes key metadata, and constructs a structured `specv2pb.Spec` object.
 // Returns a Factory containing the built `specv2pb.Spec` and a map of parsed headers.
-func NewFactory(req connect.AnyRequest) Factory {
-	h := req.Header()
+func NewFactory(h http.Header, procedure string) Factory {
 	headers := make(map[string]string, len(h))
 	for k, v := range h {
 		if len(v) > 0 {
@@ -197,7 +195,7 @@ func NewFactory(req connect.AnyRequest) Factory {
 	// Completed at is provided upstream by the implementing service/turbine
 	completedAt := &timestamppb.Timestamp{Seconds: 0, Nanos: 0}
 
-	fmt.Println(req.Spec().Procedure)
+	fmt.Println("Handling: " + procedure)
 	specType := ""
 
 	// Spec.SpecPrincipal

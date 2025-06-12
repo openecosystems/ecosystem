@@ -167,7 +167,14 @@ message SpecContext {
   };
 
   // The ecosystem associated with this context.
-  string ecosystem_slug = 1;
+  string ecosystem_id = 1;
+
+  // The ecosystem associated with this context.
+  string ecosystem_slug = 2;
+
+  // The ecosystem jan associated with this context.
+  // Right now this is an enumeration with a finite number of items.
+  platform.type.v2.Jurisdiction ecosystem_jan = 3;
 
   // The organization associated with this context.
   string organization_id = 49;
@@ -182,7 +189,7 @@ message SpecContext {
   // Right now this is an enumeration with a finite number of items.
   // That is incorrect. This should be a string instead.
   // See `2023-09-14 - Docs Sync` in sf-docs-internal.
-  platform.type.v2.Jurisdiction workspace_jan = 2;
+  platform.type.v2.Jurisdiction workspace_jan = 52;
 
   // The ip address of the requester. MUST meet RFC 791 or
   string ip = 5;
@@ -246,7 +253,7 @@ message SpecRoutineContext {
   //The routine associated with this spec event
   string routine_id = 1;
 
-  map<string, google.protobuf.Any> routine_data = 2;
+  map<string, google.protobuf.Any> routine_data = 3;
 }
 
 message SpecPrincipal {

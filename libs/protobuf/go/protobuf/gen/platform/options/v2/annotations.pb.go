@@ -1136,55 +1136,55 @@ func (SpecEnumType) EnumDescriptor() ([]byte, []int) {
 	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{16}
 }
 
-type EventScope int32
+type SpecRequestScope int32
 
 const (
-	EventScope_EVENT_SCOPE_UNSPECIFIED  EventScope = 0
-	EventScope_EVENT_SCOPE_USER         EventScope = 1
-	EventScope_EVENT_SCOPE_WORKSPACE    EventScope = 2
-	EventScope_EVENT_SCOPE_ORGANIZATION EventScope = 3
+	SpecRequestScope_SPEC_REQUEST_SCOPE_UNSPECIFIED  SpecRequestScope = 0
+	SpecRequestScope_SPEC_REQUEST_SCOPE_USER         SpecRequestScope = 1
+	SpecRequestScope_SPEC_REQUEST_SCOPE_ECOSYSTEM    SpecRequestScope = 2
+	SpecRequestScope_SPEC_REQUEST_SCOPE_ORGANIZATION SpecRequestScope = 3
 )
 
-// Enum value maps for EventScope.
+// Enum value maps for SpecRequestScope.
 var (
-	EventScope_name = map[int32]string{
-		0: "EVENT_SCOPE_UNSPECIFIED",
-		1: "EVENT_SCOPE_USER",
-		2: "EVENT_SCOPE_WORKSPACE",
-		3: "EVENT_SCOPE_ORGANIZATION",
+	SpecRequestScope_name = map[int32]string{
+		0: "SPEC_REQUEST_SCOPE_UNSPECIFIED",
+		1: "SPEC_REQUEST_SCOPE_USER",
+		2: "SPEC_REQUEST_SCOPE_ECOSYSTEM",
+		3: "SPEC_REQUEST_SCOPE_ORGANIZATION",
 	}
-	EventScope_value = map[string]int32{
-		"EVENT_SCOPE_UNSPECIFIED":  0,
-		"EVENT_SCOPE_USER":         1,
-		"EVENT_SCOPE_WORKSPACE":    2,
-		"EVENT_SCOPE_ORGANIZATION": 3,
+	SpecRequestScope_value = map[string]int32{
+		"SPEC_REQUEST_SCOPE_UNSPECIFIED":  0,
+		"SPEC_REQUEST_SCOPE_USER":         1,
+		"SPEC_REQUEST_SCOPE_ECOSYSTEM":    2,
+		"SPEC_REQUEST_SCOPE_ORGANIZATION": 3,
 	}
 )
 
-func (x EventScope) Enum() *EventScope {
-	p := new(EventScope)
+func (x SpecRequestScope) Enum() *SpecRequestScope {
+	p := new(SpecRequestScope)
 	*p = x
 	return p
 }
 
-func (x EventScope) String() string {
+func (x SpecRequestScope) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (EventScope) Descriptor() protoreflect.EnumDescriptor {
+func (SpecRequestScope) Descriptor() protoreflect.EnumDescriptor {
 	return file_platform_options_v2_annotations_proto_enumTypes[17].Descriptor()
 }
 
-func (EventScope) Type() protoreflect.EnumType {
+func (SpecRequestScope) Type() protoreflect.EnumType {
 	return &file_platform_options_v2_annotations_proto_enumTypes[17]
 }
 
-func (x EventScope) Number() protoreflect.EnumNumber {
+func (x SpecRequestScope) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use EventScope.Descriptor instead.
-func (EventScope) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use SpecRequestScope.Descriptor instead.
+func (SpecRequestScope) EnumDescriptor() ([]byte, []int) {
 	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{17}
 }
 
@@ -1297,10 +1297,10 @@ func (x *NetworkOptions) GetType() NetworkType {
 }
 
 type SystemOptions struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	EnabledByDefault bool                   `protobuf:"varint,1,opt,name=enabled_by_default,json=enabledByDefault,proto3" json:"enabled_by_default,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	PlatformSystem bool                   `protobuf:"varint,1,opt,name=platform_system,json=platformSystem,proto3" json:"platform_system,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *SystemOptions) Reset() {
@@ -1333,9 +1333,9 @@ func (*SystemOptions) Descriptor() ([]byte, []int) {
 	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *SystemOptions) GetEnabledByDefault() bool {
+func (x *SystemOptions) GetPlatformSystem() bool {
 	if x != nil {
-		return x.EnabledByDefault
+		return x.PlatformSystem
 	}
 	return false
 }
@@ -1346,8 +1346,9 @@ type ApiOptions struct {
 	Cycle         ApiLifecycle           `protobuf:"varint,2,opt,name=cycle,proto3,enum=platform.options.v2.ApiLifecycle" json:"cycle,omitempty"`
 	Interface     ApiInterfaceType       `protobuf:"varint,3,opt,name=interface,proto3,enum=platform.options.v2.ApiInterfaceType" json:"interface,omitempty"`
 	Network       NetworkType            `protobuf:"varint,4,opt,name=network,proto3,enum=platform.options.v2.NetworkType" json:"network,omitempty"`
-	Shortname     string                 `protobuf:"bytes,5,opt,name=shortname,proto3" json:"shortname,omitempty"`
-	Versionable   bool                   `protobuf:"varint,6,opt,name=versionable,proto3" json:"versionable,omitempty"`
+	Scope         SpecRequestScope       `protobuf:"varint,5,opt,name=scope,proto3,enum=platform.options.v2.SpecRequestScope" json:"scope,omitempty"`
+	Shortname     string                 `protobuf:"bytes,6,opt,name=shortname,proto3" json:"shortname,omitempty"`
+	Versionable   bool                   `protobuf:"varint,7,opt,name=versionable,proto3" json:"versionable,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1408,6 +1409,13 @@ func (x *ApiOptions) GetNetwork() NetworkType {
 		return x.Network
 	}
 	return NetworkType_NETWORK_TYPE_UNSPECIFIED
+}
+
+func (x *ApiOptions) GetScope() SpecRequestScope {
+	if x != nil {
+		return x.Scope
+	}
+	return SpecRequestScope_SPEC_REQUEST_SCOPE_UNSPECIFIED
 }
 
 func (x *ApiOptions) GetShortname() string {
@@ -2523,50 +2531,6 @@ func (x *BillingOptions) GetMetered() bool {
 	return false
 }
 
-type EventScopeOptions struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Scopes        []EventScope           `protobuf:"varint,1,rep,packed,name=scopes,proto3,enum=platform.options.v2.EventScope" json:"scopes,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *EventScopeOptions) Reset() {
-	*x = EventScopeOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *EventScopeOptions) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EventScopeOptions) ProtoMessage() {}
-
-func (x *EventScopeOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[24]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EventScopeOptions.ProtoReflect.Descriptor instead.
-func (*EventScopeOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{24}
-}
-
-func (x *EventScopeOptions) GetScopes() []EventScope {
-	if x != nil {
-		return x.Scopes
-	}
-	return nil
-}
-
 type EventOptions struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Versionable   bool                   `protobuf:"varint,1,opt,name=versionable,proto3" json:"versionable,omitempty"`
@@ -2576,7 +2540,7 @@ type EventOptions struct {
 
 func (x *EventOptions) Reset() {
 	*x = EventOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[25]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2588,7 +2552,7 @@ func (x *EventOptions) String() string {
 func (*EventOptions) ProtoMessage() {}
 
 func (x *EventOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[25]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2601,7 +2565,7 @@ func (x *EventOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EventOptions.ProtoReflect.Descriptor instead.
 func (*EventOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{25}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *EventOptions) GetVersionable() bool {
@@ -2620,7 +2584,7 @@ type AuthRoleOptions struct {
 
 func (x *AuthRoleOptions) Reset() {
 	*x = AuthRoleOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[26]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2632,7 +2596,7 @@ func (x *AuthRoleOptions) String() string {
 func (*AuthRoleOptions) ProtoMessage() {}
 
 func (x *AuthRoleOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[26]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2645,7 +2609,7 @@ func (x *AuthRoleOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthRoleOptions.ProtoReflect.Descriptor instead.
 func (*AuthRoleOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{26}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *AuthRoleOptions) GetRoleType() AuthRoleType {
@@ -2664,7 +2628,7 @@ type RoutineOptions struct {
 
 func (x *RoutineOptions) Reset() {
 	*x = RoutineOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[27]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2676,7 +2640,7 @@ func (x *RoutineOptions) String() string {
 func (*RoutineOptions) ProtoMessage() {}
 
 func (x *RoutineOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[27]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2689,7 +2653,7 @@ func (x *RoutineOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RoutineOptions.ProtoReflect.Descriptor instead.
 func (*RoutineOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{27}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *RoutineOptions) GetListener() string {
@@ -2902,14 +2866,6 @@ var file_platform_options_v2_annotations_proto_extTypes = []protoimpl.ExtensionI
 	},
 	{
 		ExtendedType:  (*descriptorpb.EnumValueOptions)(nil),
-		ExtensionType: (*EventScopeOptions)(nil),
-		Field:         50061,
-		Name:          "platform.options.v2.event_scope",
-		Tag:           "bytes,50061,opt,name=event_scope",
-		Filename:      "platform/options/v2/annotations.proto",
-	},
-	{
-		ExtendedType:  (*descriptorpb.EnumValueOptions)(nil),
 		ExtensionType: (*AuthRoleOptions)(nil),
 		Field:         50062,
 		Name:          "platform.options.v2.auth_role",
@@ -3002,12 +2958,10 @@ var (
 var (
 	// optional platform.options.v2.BillingOptions billing = 50060;
 	E_Billing = &file_platform_options_v2_annotations_proto_extTypes[24]
-	// optional platform.options.v2.EventScopeOptions event_scope = 50061;
-	E_EventScope = &file_platform_options_v2_annotations_proto_extTypes[25]
 	// optional platform.options.v2.AuthRoleOptions auth_role = 50062;
-	E_AuthRole = &file_platform_options_v2_annotations_proto_extTypes[26]
+	E_AuthRole = &file_platform_options_v2_annotations_proto_extTypes[25]
 	// optional platform.options.v2.EventOptions event = 50063;
-	E_Event = &file_platform_options_v2_annotations_proto_extTypes[27]
+	E_Event = &file_platform_options_v2_annotations_proto_extTypes[26]
 )
 
 var File_platform_options_v2_annotations_proto protoreflect.FileDescriptor
@@ -3016,17 +2970,18 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\n" +
 	"%platform/options/v2/annotations.proto\x12\x13platform.options.v2\x1a google/protobuf/descriptor.proto\"F\n" +
 	"\x0eNetworkOptions\x124\n" +
-	"\x04type\x18\x01 \x01(\x0e2 .platform.options.v2.NetworkTypeR\x04type\"=\n" +
-	"\rSystemOptions\x12,\n" +
-	"\x12enabled_by_default\x18\x01 \x01(\bR\x10enabledByDefault\"\xb8\x02\n" +
+	"\x04type\x18\x01 \x01(\x0e2 .platform.options.v2.NetworkTypeR\x04type\"8\n" +
+	"\rSystemOptions\x12'\n" +
+	"\x0fplatform_system\x18\x01 \x01(\bR\x0eplatformSystem\"\xf5\x02\n" +
 	"\n" +
 	"ApiOptions\x120\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x1c.platform.options.v2.ApiTypeR\x04type\x127\n" +
 	"\x05cycle\x18\x02 \x01(\x0e2!.platform.options.v2.ApiLifecycleR\x05cycle\x12C\n" +
 	"\tinterface\x18\x03 \x01(\x0e2%.platform.options.v2.ApiInterfaceTypeR\tinterface\x12:\n" +
-	"\anetwork\x18\x04 \x01(\x0e2 .platform.options.v2.NetworkTypeR\anetwork\x12\x1c\n" +
-	"\tshortname\x18\x05 \x01(\tR\tshortname\x12 \n" +
-	"\vversionable\x18\x06 \x01(\bR\vversionable\"\xcf\x02\n" +
+	"\anetwork\x18\x04 \x01(\x0e2 .platform.options.v2.NetworkTypeR\anetwork\x12;\n" +
+	"\x05scope\x18\x05 \x01(\x0e2%.platform.options.v2.SpecRequestScopeR\x05scope\x12\x1c\n" +
+	"\tshortname\x18\x06 \x01(\tR\tshortname\x12 \n" +
+	"\vversionable\x18\a \x01(\bR\vversionable\"\xcf\x02\n" +
 	"\rEntityOptions\x12\x16\n" +
 	"\x06entity\x18\x01 \x01(\tR\x06entity\x12#\n" +
 	"\rentity_plural\x18\x02 \x01(\tR\fentityPlural\x123\n" +
@@ -3100,9 +3055,7 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x0eBillingOptions\x12\x1a\n" +
 	"\bbillable\x18\x01 \x01(\bR\bbillable\x12)\n" +
 	"\x10partner_billable\x18\x02 \x01(\bR\x0fpartnerBillable\x12\x18\n" +
-	"\ametered\x18\x03 \x01(\bR\ametered\"L\n" +
-	"\x11EventScopeOptions\x127\n" +
-	"\x06scopes\x18\x01 \x03(\x0e2\x1f.platform.options.v2.EventScopeR\x06scopes\"0\n" +
+	"\ametered\x18\x03 \x01(\bR\ametered\"0\n" +
 	"\fEventOptions\x12 \n" +
 	"\vversionable\x18\x01 \x01(\bR\vversionable\"Q\n" +
 	"\x0fAuthRoleOptions\x12>\n" +
@@ -3258,13 +3211,12 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x15SPEC_ENUM_TYPE_TOPICS\x10\x02\x12\x1b\n" +
 	"\x17SPEC_ENUM_TYPE_COMMANDS\x10\x03\x12\x19\n" +
 	"\x15SPEC_ENUM_TYPE_EVENTS\x10\x04\x12$\n" +
-	" SPEC_ENUM_TYPE_ROUTINE_LISTENERS\x10\x05*x\n" +
-	"\n" +
-	"EventScope\x12\x1b\n" +
-	"\x17EVENT_SCOPE_UNSPECIFIED\x10\x00\x12\x14\n" +
-	"\x10EVENT_SCOPE_USER\x10\x01\x12\x19\n" +
-	"\x15EVENT_SCOPE_WORKSPACE\x10\x02\x12\x1c\n" +
-	"\x18EVENT_SCOPE_ORGANIZATION\x10\x03:f\n" +
+	" SPEC_ENUM_TYPE_ROUTINE_LISTENERS\x10\x05*\x9a\x01\n" +
+	"\x10SpecRequestScope\x12\"\n" +
+	"\x1eSPEC_REQUEST_SCOPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\x17SPEC_REQUEST_SCOPE_USER\x10\x01\x12 \n" +
+	"\x1cSPEC_REQUEST_SCOPE_ECOSYSTEM\x10\x02\x12#\n" +
+	"\x1fSPEC_REQUEST_SCOPE_ORGANIZATION\x10\x03:f\n" +
 	"\fnetwork_file\x12\x1c.google.protobuf.FileOptions\x18\xc0\xb8\x02 \x01(\v2#.platform.options.v2.NetworkOptionsR\vnetworkFile:Z\n" +
 	"\bapi_file\x12\x1c.google.protobuf.FileOptions\x18І\x03 \x01(\v2\x1f.platform.options.v2.ApiOptionsR\aapiFile:Z\n" +
 	"\x06entity\x12\x1c.google.protobuf.FileOptions\x18ц\x03 \x01(\v2\".platform.options.v2.EntityOptionsR\x06entity:`\n" +
@@ -3294,9 +3246,7 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x13configuration_field\x12\x1d.google.protobuf.FieldOptions\x18\xfa\x86\x03 \x01(\v2..platform.options.v2.ConfigurationFieldOptionsR\x12configurationField:d\n" +
 	"\tsynthetic\x12\x1d.google.protobuf.FieldOptions\x18\xfb\x86\x03 \x01(\v2%.platform.options.v2.SyntheticOptionsR\tsynthetic:T\n" +
 	"\x04spec\x12\x1c.google.protobuf.EnumOptions\x18\x82\x87\x03 \x01(\v2 .platform.options.v2.SpecOptionsR\x04spec:b\n" +
-	"\abilling\x12!.google.protobuf.EnumValueOptions\x18\x8c\x87\x03 \x01(\v2#.platform.options.v2.BillingOptionsR\abilling:l\n" +
-	"\vevent_scope\x12!.google.protobuf.EnumValueOptions\x18\x8d\x87\x03 \x01(\v2&.platform.options.v2.EventScopeOptionsR\n" +
-	"eventScope:f\n" +
+	"\abilling\x12!.google.protobuf.EnumValueOptions\x18\x8c\x87\x03 \x01(\v2#.platform.options.v2.BillingOptionsR\abilling:f\n" +
 	"\tauth_role\x12!.google.protobuf.EnumValueOptions\x18\x8e\x87\x03 \x01(\v2$.platform.options.v2.AuthRoleOptionsR\bauthRole:\\\n" +
 	"\x05event\x12!.google.protobuf.EnumValueOptions\x18\x8f\x87\x03 \x01(\v2!.platform.options.v2.EventOptionsR\x05eventBbZ`github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2;optionv2pbb\x06proto3"
 
@@ -3313,7 +3263,7 @@ func file_platform_options_v2_annotations_proto_rawDescGZIP() []byte {
 }
 
 var file_platform_options_v2_annotations_proto_enumTypes = make([]protoimpl.EnumInfo, 19)
-var file_platform_options_v2_annotations_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_platform_options_v2_annotations_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_platform_options_v2_annotations_proto_goTypes = []any{
 	(NetworkType)(0),        // 0: platform.options.v2.NetworkType
 	(ApiType)(0),            // 1: platform.options.v2.ApiType
@@ -3332,7 +3282,7 @@ var file_platform_options_v2_annotations_proto_goTypes = []any{
 	(SyntheticType)(0),      // 14: platform.options.v2.SyntheticType
 	(ClassificationType)(0), // 15: platform.options.v2.ClassificationType
 	(SpecEnumType)(0),       // 16: platform.options.v2.SpecEnumType
-	(EventScope)(0),         // 17: platform.options.v2.EventScope
+	(SpecRequestScope)(0),   // 17: platform.options.v2.SpecRequestScope
 	(SpecConfiguration_SpecConfigurationType)(0), // 18: platform.options.v2.SpecConfiguration.SpecConfigurationType
 	(*NetworkOptions)(nil),                       // 19: platform.options.v2.NetworkOptions
 	(*SystemOptions)(nil),                        // 20: platform.options.v2.SystemOptions
@@ -3358,17 +3308,16 @@ var file_platform_options_v2_annotations_proto_goTypes = []any{
 	(*Classification)(nil),                       // 40: platform.options.v2.Classification
 	(*SpecOptions)(nil),                          // 41: platform.options.v2.SpecOptions
 	(*BillingOptions)(nil),                       // 42: platform.options.v2.BillingOptions
-	(*EventScopeOptions)(nil),                    // 43: platform.options.v2.EventScopeOptions
-	(*EventOptions)(nil),                         // 44: platform.options.v2.EventOptions
-	(*AuthRoleOptions)(nil),                      // 45: platform.options.v2.AuthRoleOptions
-	(*RoutineOptions)(nil),                       // 46: platform.options.v2.RoutineOptions
-	(*descriptorpb.FileOptions)(nil),             // 47: google.protobuf.FileOptions
-	(*descriptorpb.ServiceOptions)(nil),          // 48: google.protobuf.ServiceOptions
-	(*descriptorpb.MethodOptions)(nil),           // 49: google.protobuf.MethodOptions
-	(*descriptorpb.MessageOptions)(nil),          // 50: google.protobuf.MessageOptions
-	(*descriptorpb.FieldOptions)(nil),            // 51: google.protobuf.FieldOptions
-	(*descriptorpb.EnumOptions)(nil),             // 52: google.protobuf.EnumOptions
-	(*descriptorpb.EnumValueOptions)(nil),        // 53: google.protobuf.EnumValueOptions
+	(*EventOptions)(nil),                         // 43: platform.options.v2.EventOptions
+	(*AuthRoleOptions)(nil),                      // 44: platform.options.v2.AuthRoleOptions
+	(*RoutineOptions)(nil),                       // 45: platform.options.v2.RoutineOptions
+	(*descriptorpb.FileOptions)(nil),             // 46: google.protobuf.FileOptions
+	(*descriptorpb.ServiceOptions)(nil),          // 47: google.protobuf.ServiceOptions
+	(*descriptorpb.MethodOptions)(nil),           // 48: google.protobuf.MethodOptions
+	(*descriptorpb.MessageOptions)(nil),          // 49: google.protobuf.MessageOptions
+	(*descriptorpb.FieldOptions)(nil),            // 50: google.protobuf.FieldOptions
+	(*descriptorpb.EnumOptions)(nil),             // 51: google.protobuf.EnumOptions
+	(*descriptorpb.EnumValueOptions)(nil),        // 52: google.protobuf.EnumValueOptions
 }
 var file_platform_options_v2_annotations_proto_depIdxs = []int32{
 	0,  // 0: platform.options.v2.NetworkOptions.type:type_name -> platform.options.v2.NetworkType
@@ -3376,84 +3325,82 @@ var file_platform_options_v2_annotations_proto_depIdxs = []int32{
 	3,  // 2: platform.options.v2.ApiOptions.cycle:type_name -> platform.options.v2.ApiLifecycle
 	2,  // 3: platform.options.v2.ApiOptions.interface:type_name -> platform.options.v2.ApiInterfaceType
 	0,  // 4: platform.options.v2.ApiOptions.network:type_name -> platform.options.v2.NetworkType
-	4,  // 5: platform.options.v2.EntityOptions.type:type_name -> platform.options.v2.EntityType
-	5,  // 6: platform.options.v2.EntityOptions.consistency:type_name -> platform.options.v2.EntityConsistency
-	6,  // 7: platform.options.v2.EntityOptions.hierarchy:type_name -> platform.options.v2.EntityHierarchy
-	7,  // 8: platform.options.v2.LanguageOptions.languages:type_name -> platform.options.v2.LanguageType
-	27, // 9: platform.options.v2.ProxyOptions.authorization:type_name -> platform.options.v2.AuthorizationFilter
-	28, // 10: platform.options.v2.ProxyOptions.consent:type_name -> platform.options.v2.ConsentFilter
-	26, // 11: platform.options.v2.ProxyOptions.rate_limit:type_name -> platform.options.v2.RateLimitFilter
-	8,  // 12: platform.options.v2.ConnectorOptions.type:type_name -> platform.options.v2.ConnectorType
-	10, // 13: platform.options.v2.CQRSOptions.type:type_name -> platform.options.v2.CQRSType
-	11, // 14: platform.options.v2.PermissionOptions.roles:type_name -> platform.options.v2.AuthRole
-	12, // 15: platform.options.v2.GraphOptions.type:type_name -> platform.options.v2.GraphType
-	13, // 16: platform.options.v2.EntityFieldOptions.behavior:type_name -> platform.options.v2.FieldBehavior
-	18, // 17: platform.options.v2.SpecConfiguration.type:type_name -> platform.options.v2.SpecConfiguration.SpecConfigurationType
-	36, // 18: platform.options.v2.ConfigurationFieldOptions.configuration:type_name -> platform.options.v2.SpecConfiguration
-	14, // 19: platform.options.v2.SyntheticOptions.type:type_name -> platform.options.v2.SyntheticType
-	15, // 20: platform.options.v2.Classification.type:type_name -> platform.options.v2.ClassificationType
-	16, // 21: platform.options.v2.SpecOptions.type:type_name -> platform.options.v2.SpecEnumType
-	17, // 22: platform.options.v2.EventScopeOptions.scopes:type_name -> platform.options.v2.EventScope
+	17, // 5: platform.options.v2.ApiOptions.scope:type_name -> platform.options.v2.SpecRequestScope
+	4,  // 6: platform.options.v2.EntityOptions.type:type_name -> platform.options.v2.EntityType
+	5,  // 7: platform.options.v2.EntityOptions.consistency:type_name -> platform.options.v2.EntityConsistency
+	6,  // 8: platform.options.v2.EntityOptions.hierarchy:type_name -> platform.options.v2.EntityHierarchy
+	7,  // 9: platform.options.v2.LanguageOptions.languages:type_name -> platform.options.v2.LanguageType
+	27, // 10: platform.options.v2.ProxyOptions.authorization:type_name -> platform.options.v2.AuthorizationFilter
+	28, // 11: platform.options.v2.ProxyOptions.consent:type_name -> platform.options.v2.ConsentFilter
+	26, // 12: platform.options.v2.ProxyOptions.rate_limit:type_name -> platform.options.v2.RateLimitFilter
+	8,  // 13: platform.options.v2.ConnectorOptions.type:type_name -> platform.options.v2.ConnectorType
+	10, // 14: platform.options.v2.CQRSOptions.type:type_name -> platform.options.v2.CQRSType
+	11, // 15: platform.options.v2.PermissionOptions.roles:type_name -> platform.options.v2.AuthRole
+	12, // 16: platform.options.v2.GraphOptions.type:type_name -> platform.options.v2.GraphType
+	13, // 17: platform.options.v2.EntityFieldOptions.behavior:type_name -> platform.options.v2.FieldBehavior
+	18, // 18: platform.options.v2.SpecConfiguration.type:type_name -> platform.options.v2.SpecConfiguration.SpecConfigurationType
+	36, // 19: platform.options.v2.ConfigurationFieldOptions.configuration:type_name -> platform.options.v2.SpecConfiguration
+	14, // 20: platform.options.v2.SyntheticOptions.type:type_name -> platform.options.v2.SyntheticType
+	15, // 21: platform.options.v2.Classification.type:type_name -> platform.options.v2.ClassificationType
+	16, // 22: platform.options.v2.SpecOptions.type:type_name -> platform.options.v2.SpecEnumType
 	9,  // 23: platform.options.v2.AuthRoleOptions.role_type:type_name -> platform.options.v2.AuthRoleType
-	47, // 24: platform.options.v2.network_file:extendee -> google.protobuf.FileOptions
-	47, // 25: platform.options.v2.api_file:extendee -> google.protobuf.FileOptions
-	47, // 26: platform.options.v2.entity:extendee -> google.protobuf.FileOptions
-	47, // 27: platform.options.v2.language:extendee -> google.protobuf.FileOptions
-	47, // 28: platform.options.v2.graphql:extendee -> google.protobuf.FileOptions
-	47, // 29: platform.options.v2.configuration:extendee -> google.protobuf.FileOptions
-	47, // 30: platform.options.v2.has_multiple_implementations:extendee -> google.protobuf.FileOptions
-	47, // 31: platform.options.v2.system:extendee -> google.protobuf.FileOptions
-	48, // 32: platform.options.v2.api_service:extendee -> google.protobuf.ServiceOptions
-	48, // 33: platform.options.v2.service:extendee -> google.protobuf.ServiceOptions
-	48, // 34: platform.options.v2.proxy:extendee -> google.protobuf.ServiceOptions
-	48, // 35: platform.options.v2.connector:extendee -> google.protobuf.ServiceOptions
-	49, // 36: platform.options.v2.api_method:extendee -> google.protobuf.MethodOptions
-	49, // 37: platform.options.v2.cqrs:extendee -> google.protobuf.MethodOptions
-	49, // 38: platform.options.v2.permission:extendee -> google.protobuf.MethodOptions
-	49, // 39: platform.options.v2.rate:extendee -> google.protobuf.MethodOptions
-	50, // 40: platform.options.v2.api_message:extendee -> google.protobuf.MessageOptions
-	50, // 41: platform.options.v2.graph:extendee -> google.protobuf.MessageOptions
-	50, // 42: platform.options.v2.routine:extendee -> google.protobuf.MessageOptions
-	51, // 43: platform.options.v2.api_field:extendee -> google.protobuf.FieldOptions
-	51, // 44: platform.options.v2.entity_field:extendee -> google.protobuf.FieldOptions
-	51, // 45: platform.options.v2.configuration_field:extendee -> google.protobuf.FieldOptions
-	51, // 46: platform.options.v2.synthetic:extendee -> google.protobuf.FieldOptions
-	52, // 47: platform.options.v2.spec:extendee -> google.protobuf.EnumOptions
-	53, // 48: platform.options.v2.billing:extendee -> google.protobuf.EnumValueOptions
-	53, // 49: platform.options.v2.event_scope:extendee -> google.protobuf.EnumValueOptions
-	53, // 50: platform.options.v2.auth_role:extendee -> google.protobuf.EnumValueOptions
-	53, // 51: platform.options.v2.event:extendee -> google.protobuf.EnumValueOptions
-	19, // 52: platform.options.v2.network_file:type_name -> platform.options.v2.NetworkOptions
-	21, // 53: platform.options.v2.api_file:type_name -> platform.options.v2.ApiOptions
-	22, // 54: platform.options.v2.entity:type_name -> platform.options.v2.EntityOptions
-	23, // 55: platform.options.v2.language:type_name -> platform.options.v2.LanguageOptions
-	24, // 56: platform.options.v2.graphql:type_name -> platform.options.v2.GraphqlOptions
-	37, // 57: platform.options.v2.configuration:type_name -> platform.options.v2.ConfigurationOptions
-	20, // 58: platform.options.v2.system:type_name -> platform.options.v2.SystemOptions
-	21, // 59: platform.options.v2.api_service:type_name -> platform.options.v2.ApiOptions
-	25, // 60: platform.options.v2.service:type_name -> platform.options.v2.SpecServiceOptions
-	29, // 61: platform.options.v2.proxy:type_name -> platform.options.v2.ProxyOptions
-	30, // 62: platform.options.v2.connector:type_name -> platform.options.v2.ConnectorOptions
-	21, // 63: platform.options.v2.api_method:type_name -> platform.options.v2.ApiOptions
-	31, // 64: platform.options.v2.cqrs:type_name -> platform.options.v2.CQRSOptions
-	33, // 65: platform.options.v2.permission:type_name -> platform.options.v2.PermissionOptions
-	32, // 66: platform.options.v2.rate:type_name -> platform.options.v2.RateLimitOptions
-	21, // 67: platform.options.v2.api_message:type_name -> platform.options.v2.ApiOptions
-	34, // 68: platform.options.v2.graph:type_name -> platform.options.v2.GraphOptions
-	46, // 69: platform.options.v2.routine:type_name -> platform.options.v2.RoutineOptions
-	21, // 70: platform.options.v2.api_field:type_name -> platform.options.v2.ApiOptions
-	35, // 71: platform.options.v2.entity_field:type_name -> platform.options.v2.EntityFieldOptions
-	38, // 72: platform.options.v2.configuration_field:type_name -> platform.options.v2.ConfigurationFieldOptions
-	39, // 73: platform.options.v2.synthetic:type_name -> platform.options.v2.SyntheticOptions
-	41, // 74: platform.options.v2.spec:type_name -> platform.options.v2.SpecOptions
-	42, // 75: platform.options.v2.billing:type_name -> platform.options.v2.BillingOptions
-	43, // 76: platform.options.v2.event_scope:type_name -> platform.options.v2.EventScopeOptions
-	45, // 77: platform.options.v2.auth_role:type_name -> platform.options.v2.AuthRoleOptions
-	44, // 78: platform.options.v2.event:type_name -> platform.options.v2.EventOptions
-	79, // [79:79] is the sub-list for method output_type
-	79, // [79:79] is the sub-list for method input_type
-	52, // [52:79] is the sub-list for extension type_name
-	24, // [24:52] is the sub-list for extension extendee
+	46, // 24: platform.options.v2.network_file:extendee -> google.protobuf.FileOptions
+	46, // 25: platform.options.v2.api_file:extendee -> google.protobuf.FileOptions
+	46, // 26: platform.options.v2.entity:extendee -> google.protobuf.FileOptions
+	46, // 27: platform.options.v2.language:extendee -> google.protobuf.FileOptions
+	46, // 28: platform.options.v2.graphql:extendee -> google.protobuf.FileOptions
+	46, // 29: platform.options.v2.configuration:extendee -> google.protobuf.FileOptions
+	46, // 30: platform.options.v2.has_multiple_implementations:extendee -> google.protobuf.FileOptions
+	46, // 31: platform.options.v2.system:extendee -> google.protobuf.FileOptions
+	47, // 32: platform.options.v2.api_service:extendee -> google.protobuf.ServiceOptions
+	47, // 33: platform.options.v2.service:extendee -> google.protobuf.ServiceOptions
+	47, // 34: platform.options.v2.proxy:extendee -> google.protobuf.ServiceOptions
+	47, // 35: platform.options.v2.connector:extendee -> google.protobuf.ServiceOptions
+	48, // 36: platform.options.v2.api_method:extendee -> google.protobuf.MethodOptions
+	48, // 37: platform.options.v2.cqrs:extendee -> google.protobuf.MethodOptions
+	48, // 38: platform.options.v2.permission:extendee -> google.protobuf.MethodOptions
+	48, // 39: platform.options.v2.rate:extendee -> google.protobuf.MethodOptions
+	49, // 40: platform.options.v2.api_message:extendee -> google.protobuf.MessageOptions
+	49, // 41: platform.options.v2.graph:extendee -> google.protobuf.MessageOptions
+	49, // 42: platform.options.v2.routine:extendee -> google.protobuf.MessageOptions
+	50, // 43: platform.options.v2.api_field:extendee -> google.protobuf.FieldOptions
+	50, // 44: platform.options.v2.entity_field:extendee -> google.protobuf.FieldOptions
+	50, // 45: platform.options.v2.configuration_field:extendee -> google.protobuf.FieldOptions
+	50, // 46: platform.options.v2.synthetic:extendee -> google.protobuf.FieldOptions
+	51, // 47: platform.options.v2.spec:extendee -> google.protobuf.EnumOptions
+	52, // 48: platform.options.v2.billing:extendee -> google.protobuf.EnumValueOptions
+	52, // 49: platform.options.v2.auth_role:extendee -> google.protobuf.EnumValueOptions
+	52, // 50: platform.options.v2.event:extendee -> google.protobuf.EnumValueOptions
+	19, // 51: platform.options.v2.network_file:type_name -> platform.options.v2.NetworkOptions
+	21, // 52: platform.options.v2.api_file:type_name -> platform.options.v2.ApiOptions
+	22, // 53: platform.options.v2.entity:type_name -> platform.options.v2.EntityOptions
+	23, // 54: platform.options.v2.language:type_name -> platform.options.v2.LanguageOptions
+	24, // 55: platform.options.v2.graphql:type_name -> platform.options.v2.GraphqlOptions
+	37, // 56: platform.options.v2.configuration:type_name -> platform.options.v2.ConfigurationOptions
+	20, // 57: platform.options.v2.system:type_name -> platform.options.v2.SystemOptions
+	21, // 58: platform.options.v2.api_service:type_name -> platform.options.v2.ApiOptions
+	25, // 59: platform.options.v2.service:type_name -> platform.options.v2.SpecServiceOptions
+	29, // 60: platform.options.v2.proxy:type_name -> platform.options.v2.ProxyOptions
+	30, // 61: platform.options.v2.connector:type_name -> platform.options.v2.ConnectorOptions
+	21, // 62: platform.options.v2.api_method:type_name -> platform.options.v2.ApiOptions
+	31, // 63: platform.options.v2.cqrs:type_name -> platform.options.v2.CQRSOptions
+	33, // 64: platform.options.v2.permission:type_name -> platform.options.v2.PermissionOptions
+	32, // 65: platform.options.v2.rate:type_name -> platform.options.v2.RateLimitOptions
+	21, // 66: platform.options.v2.api_message:type_name -> platform.options.v2.ApiOptions
+	34, // 67: platform.options.v2.graph:type_name -> platform.options.v2.GraphOptions
+	45, // 68: platform.options.v2.routine:type_name -> platform.options.v2.RoutineOptions
+	21, // 69: platform.options.v2.api_field:type_name -> platform.options.v2.ApiOptions
+	35, // 70: platform.options.v2.entity_field:type_name -> platform.options.v2.EntityFieldOptions
+	38, // 71: platform.options.v2.configuration_field:type_name -> platform.options.v2.ConfigurationFieldOptions
+	39, // 72: platform.options.v2.synthetic:type_name -> platform.options.v2.SyntheticOptions
+	41, // 73: platform.options.v2.spec:type_name -> platform.options.v2.SpecOptions
+	42, // 74: platform.options.v2.billing:type_name -> platform.options.v2.BillingOptions
+	44, // 75: platform.options.v2.auth_role:type_name -> platform.options.v2.AuthRoleOptions
+	43, // 76: platform.options.v2.event:type_name -> platform.options.v2.EventOptions
+	77, // [77:77] is the sub-list for method output_type
+	77, // [77:77] is the sub-list for method input_type
+	51, // [51:77] is the sub-list for extension type_name
+	24, // [24:51] is the sub-list for extension extendee
 	0,  // [0:24] is the sub-list for field type_name
 }
 
@@ -3468,8 +3415,8 @@ func file_platform_options_v2_annotations_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_platform_options_v2_annotations_proto_rawDesc), len(file_platform_options_v2_annotations_proto_rawDesc)),
 			NumEnums:      19,
-			NumMessages:   28,
-			NumExtensions: 28,
+			NumMessages:   27,
+			NumExtensions: 27,
 			NumServices:   0,
 		},
 		GoTypes:           file_platform_options_v2_annotations_proto_goTypes,

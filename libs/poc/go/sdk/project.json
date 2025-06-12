@@ -10,7 +10,8 @@
       "options": {
         "command": "buf generate",
         "cwd": "libs/poc/go/sdk"
-      }
+      },
+      "cache": false
     }
   },
   "tags": [
