@@ -7,8 +7,9 @@ import (
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
-	"github.com/bufbuild/protovalidate-go"
-	bufcel "github.com/bufbuild/protovalidate-go/cel"
+	"buf.build/go/protovalidate"
+	bufcel "buf.build/go/protovalidate/cel"
+
 	"github.com/google/cel-go/cel"
 )
 
