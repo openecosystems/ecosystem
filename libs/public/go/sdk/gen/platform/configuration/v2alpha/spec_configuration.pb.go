@@ -38,20 +38,20 @@ const (
 
 type SpecPlatformConfiguration struct {
 	state                                 protoimpl.MessageState                   `protogen:"open.v1"`
-	PreferenceCenterConfigurationV1Beta   *v1beta.PreferenceCenterConfiguration    `protobuf:"bytes,2,opt,name=preference_center_configuration_v1beta,json=preferenceCenterConfigurationV1beta,proto3" json:"preference_center_configuration_v1beta,omitempty"`
-	PreferenceCenterConfigurationV1Alpha  *v1alpha.PreferenceCenterConfiguration   `protobuf:"bytes,3,opt,name=preference_center_configuration_v1alpha,json=preferenceCenterConfigurationV1alpha,proto3" json:"preference_center_configuration_v1alpha,omitempty"`
-	AuditConfigurationV2Alpha             *v2alpha.AuditConfiguration              `protobuf:"bytes,4,opt,name=audit_configuration_v2alpha,json=auditConfigurationV2alpha,proto3" json:"audit_configuration_v2alpha,omitempty"`
-	OecoConfigurationV2Alpha              *v2alpha1.OecoConfiguration              `protobuf:"bytes,5,opt,name=oeco_configuration_v2alpha,json=oecoConfigurationV2alpha,proto3" json:"oeco_configuration_v2alpha,omitempty"`
-	CertificateConfigurationV2Alpha       *v2alpha2.CertificateConfiguration       `protobuf:"bytes,6,opt,name=certificate_configuration_v2alpha,json=certificateConfigurationV2alpha,proto3" json:"certificate_configuration_v2alpha,omitempty"`
-	EncryptionConfigurationV2Alpha        *v2alpha2.EncryptionConfiguration        `protobuf:"bytes,7,opt,name=encryption_configuration_v2alpha,json=encryptionConfigurationV2alpha,proto3" json:"encryption_configuration_v2alpha,omitempty"`
-	DynamicDnsConfigurationV2Alpha        *v2alpha3.DynamicDnsConfiguration        `protobuf:"bytes,8,opt,name=dynamic_dns_configuration_v2alpha,json=dynamicDnsConfigurationV2alpha,proto3" json:"dynamic_dns_configuration_v2alpha,omitempty"`
-	EcosystemConfigurationV2Alpha         *v2alpha4.EcosystemConfiguration         `protobuf:"bytes,9,opt,name=ecosystem_configuration_v2alpha,json=ecosystemConfigurationV2alpha,proto3" json:"ecosystem_configuration_v2alpha,omitempty"`
-	EdgeRouterConfigurationV2Alpha        *v2alpha5.EdgeRouterConfiguration        `protobuf:"bytes,10,opt,name=edge_router_configuration_v2alpha,json=edgeRouterConfigurationV2alpha,proto3" json:"edge_router_configuration_v2alpha,omitempty"`
-	AccountConfigurationV2Alpha           *v2alpha6.AccountConfiguration           `protobuf:"bytes,11,opt,name=account_configuration_v2alpha,json=accountConfigurationV2alpha,proto3" json:"account_configuration_v2alpha,omitempty"`
-	AccountAuthorityConfigurationV2Alpha  *v2alpha6.AccountAuthorityConfiguration  `protobuf:"bytes,12,opt,name=account_authority_configuration_v2alpha,json=accountAuthorityConfigurationV2alpha,proto3" json:"account_authority_configuration_v2alpha,omitempty"`
-	CryptographicMeshConfigurationV2Alpha *v2alpha7.CryptographicMeshConfiguration `protobuf:"bytes,13,opt,name=cryptographic_mesh_configuration_v2alpha,json=cryptographicMeshConfigurationV2alpha,proto3" json:"cryptographic_mesh_configuration_v2alpha,omitempty"`
-	ReferenceConfigurationV2Alpha         *v2alpha8.ReferenceConfiguration         `protobuf:"bytes,14,opt,name=reference_configuration_v2alpha,json=referenceConfigurationV2alpha,proto3" json:"reference_configuration_v2alpha,omitempty"`
-	SystemConfigurationV2Alpha            *v2alpha9.SystemConfiguration            `protobuf:"bytes,15,opt,name=system_configuration_v2alpha,json=systemConfigurationV2alpha,proto3" json:"system_configuration_v2alpha,omitempty"`
+	AuditConfigurationV2Alpha             *v2alpha.AuditConfiguration              `protobuf:"bytes,2,opt,name=audit_configuration_v2alpha,json=auditConfigurationV2alpha,proto3" json:"audit_configuration_v2alpha,omitempty"`
+	OecoConfigurationV2Alpha              *v2alpha1.OecoConfiguration              `protobuf:"bytes,3,opt,name=oeco_configuration_v2alpha,json=oecoConfigurationV2alpha,proto3" json:"oeco_configuration_v2alpha,omitempty"`
+	CertificateConfigurationV2Alpha       *v2alpha2.CertificateConfiguration       `protobuf:"bytes,4,opt,name=certificate_configuration_v2alpha,json=certificateConfigurationV2alpha,proto3" json:"certificate_configuration_v2alpha,omitempty"`
+	EncryptionConfigurationV2Alpha        *v2alpha2.EncryptionConfiguration        `protobuf:"bytes,5,opt,name=encryption_configuration_v2alpha,json=encryptionConfigurationV2alpha,proto3" json:"encryption_configuration_v2alpha,omitempty"`
+	DynamicDnsConfigurationV2Alpha        *v2alpha3.DynamicDnsConfiguration        `protobuf:"bytes,6,opt,name=dynamic_dns_configuration_v2alpha,json=dynamicDnsConfigurationV2alpha,proto3" json:"dynamic_dns_configuration_v2alpha,omitempty"`
+	EcosystemConfigurationV2Alpha         *v2alpha4.EcosystemConfiguration         `protobuf:"bytes,7,opt,name=ecosystem_configuration_v2alpha,json=ecosystemConfigurationV2alpha,proto3" json:"ecosystem_configuration_v2alpha,omitempty"`
+	EdgeRouterConfigurationV2Alpha        *v2alpha5.EdgeRouterConfiguration        `protobuf:"bytes,8,opt,name=edge_router_configuration_v2alpha,json=edgeRouterConfigurationV2alpha,proto3" json:"edge_router_configuration_v2alpha,omitempty"`
+	AccountConfigurationV2Alpha           *v2alpha6.AccountConfiguration           `protobuf:"bytes,9,opt,name=account_configuration_v2alpha,json=accountConfigurationV2alpha,proto3" json:"account_configuration_v2alpha,omitempty"`
+	AccountAuthorityConfigurationV2Alpha  *v2alpha6.AccountAuthorityConfiguration  `protobuf:"bytes,10,opt,name=account_authority_configuration_v2alpha,json=accountAuthorityConfigurationV2alpha,proto3" json:"account_authority_configuration_v2alpha,omitempty"`
+	CryptographicMeshConfigurationV2Alpha *v2alpha7.CryptographicMeshConfiguration `protobuf:"bytes,11,opt,name=cryptographic_mesh_configuration_v2alpha,json=cryptographicMeshConfigurationV2alpha,proto3" json:"cryptographic_mesh_configuration_v2alpha,omitempty"`
+	ReferenceConfigurationV2Alpha         *v2alpha8.ReferenceConfiguration         `protobuf:"bytes,12,opt,name=reference_configuration_v2alpha,json=referenceConfigurationV2alpha,proto3" json:"reference_configuration_v2alpha,omitempty"`
+	SystemConfigurationV2Alpha            *v2alpha9.SystemConfiguration            `protobuf:"bytes,13,opt,name=system_configuration_v2alpha,json=systemConfigurationV2alpha,proto3" json:"system_configuration_v2alpha,omitempty"`
+	PreferenceCenterConfigurationV1Alpha  *v1alpha.PreferenceCenterConfiguration   `protobuf:"bytes,14,opt,name=preference_center_configuration_v1alpha,json=preferenceCenterConfigurationV1alpha,proto3" json:"preference_center_configuration_v1alpha,omitempty"`
+	PreferenceCenterConfigurationV1Beta   *v1beta.PreferenceCenterConfiguration    `protobuf:"bytes,15,opt,name=preference_center_configuration_v1beta,json=preferenceCenterConfigurationV1beta,proto3" json:"preference_center_configuration_v1beta,omitempty"`
 	unknownFields                         protoimpl.UnknownFields
 	sizeCache                             protoimpl.SizeCache
 }
@@ -84,20 +84,6 @@ func (x *SpecPlatformConfiguration) ProtoReflect() protoreflect.Message {
 // Deprecated: Use SpecPlatformConfiguration.ProtoReflect.Descriptor instead.
 func (*SpecPlatformConfiguration) Descriptor() ([]byte, []int) {
 	return file_platform_configuration_v2alpha_spec_configuration_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Beta() *v1beta.PreferenceCenterConfiguration {
-	if x != nil {
-		return x.PreferenceCenterConfigurationV1Beta
-	}
-	return nil
-}
-
-func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Alpha() *v1alpha.PreferenceCenterConfiguration {
-	if x != nil {
-		return x.PreferenceCenterConfigurationV1Alpha
-	}
-	return nil
 }
 
 func (x *SpecPlatformConfiguration) GetAuditConfigurationV2Alpha() *v2alpha.AuditConfiguration {
@@ -184,27 +170,41 @@ func (x *SpecPlatformConfiguration) GetSystemConfigurationV2Alpha() *v2alpha9.Sy
 	return nil
 }
 
+func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Alpha() *v1alpha.PreferenceCenterConfiguration {
+	if x != nil {
+		return x.PreferenceCenterConfigurationV1Alpha
+	}
+	return nil
+}
+
+func (x *SpecPlatformConfiguration) GetPreferenceCenterConfigurationV1Beta() *v1beta.PreferenceCenterConfiguration {
+	if x != nil {
+		return x.PreferenceCenterConfigurationV1Beta
+	}
+	return nil
+}
+
 var File_platform_configuration_v2alpha_spec_configuration_proto protoreflect.FileDescriptor
 
 const file_platform_configuration_v2alpha_spec_configuration_proto_rawDesc = "" +
 	"\n" +
-	"7platform/configuration/v2alpha/spec_configuration.proto\x12\x1eplatform.configuration.v2alpha\x1a%platform/options/v2/annotations.proto\x1a\"platform/audit/v2alpha/audit.proto\x1a\x1fplatform/cli/v2alpha/oeco.proto\x1a/platform/cryptography/v2alpha/certificate.proto\x1a.platform/cryptography/v2alpha/encryption.proto\x1a&platform/dns/v2alpha/dynamic_dns.proto\x1a*platform/ecosystem/v2alpha/ecosystem.proto\x1a'platform/edge/v2alpha/edge_router.proto\x1a\"platform/iam/v2alpha/account.proto\x1a,platform/iam/v2alpha/account_authority.proto\x1a.platform/mesh/v2alpha/cryptographic_mesh.proto\x1a*platform/reference/v2alpha/reference.proto\x1a$platform/system/v2alpha/system.proto\x1a5platform/communication/v1beta/preference_center.proto\x1a6platform/communication/v1alpha/preference_center.proto\"\x8d\x0e\n" +
-	"\x19SpecPlatformConfiguration\x12\x91\x01\n" +
-	"&preference_center_configuration_v1beta\x18\x02 \x01(\v2<.platform.communication.v1beta.PreferenceCenterConfigurationR#preferenceCenterConfigurationV1beta\x12\x94\x01\n" +
-	"'preference_center_configuration_v1alpha\x18\x03 \x01(\v2=.platform.communication.v1alpha.PreferenceCenterConfigurationR$preferenceCenterConfigurationV1alpha\x12j\n" +
-	"\x1baudit_configuration_v2alpha\x18\x04 \x01(\v2*.platform.audit.v2alpha.AuditConfigurationR\x19auditConfigurationV2alpha\x12e\n" +
-	"\x1aoeco_configuration_v2alpha\x18\x05 \x01(\v2'.platform.cli.v2alpha.OecoConfigurationR\x18oecoConfigurationV2alpha\x12\x83\x01\n" +
-	"!certificate_configuration_v2alpha\x18\x06 \x01(\v27.platform.cryptography.v2alpha.CertificateConfigurationR\x1fcertificateConfigurationV2alpha\x12\x80\x01\n" +
-	" encryption_configuration_v2alpha\x18\a \x01(\v26.platform.cryptography.v2alpha.EncryptionConfigurationR\x1eencryptionConfigurationV2alpha\x12x\n" +
-	"!dynamic_dns_configuration_v2alpha\x18\b \x01(\v2-.platform.dns.v2alpha.DynamicDnsConfigurationR\x1edynamicDnsConfigurationV2alpha\x12z\n" +
-	"\x1fecosystem_configuration_v2alpha\x18\t \x01(\v22.platform.ecosystem.v2alpha.EcosystemConfigurationR\x1decosystemConfigurationV2alpha\x12y\n" +
-	"!edge_router_configuration_v2alpha\x18\n" +
-	" \x01(\v2..platform.edge.v2alpha.EdgeRouterConfigurationR\x1eedgeRouterConfigurationV2alpha\x12n\n" +
-	"\x1daccount_configuration_v2alpha\x18\v \x01(\v2*.platform.iam.v2alpha.AccountConfigurationR\x1baccountConfigurationV2alpha\x12\x8a\x01\n" +
-	"'account_authority_configuration_v2alpha\x18\f \x01(\v23.platform.iam.v2alpha.AccountAuthorityConfigurationR$accountAuthorityConfigurationV2alpha\x12\x8e\x01\n" +
-	"(cryptographic_mesh_configuration_v2alpha\x18\r \x01(\v25.platform.mesh.v2alpha.CryptographicMeshConfigurationR%cryptographicMeshConfigurationV2alpha\x12z\n" +
-	"\x1freference_configuration_v2alpha\x18\x0e \x01(\v22.platform.reference.v2alpha.ReferenceConfigurationR\x1dreferenceConfigurationV2alpha\x12n\n" +
-	"\x1csystem_configuration_v2alpha\x18\x0f \x01(\v2,.platform.system.v2alpha.SystemConfigurationR\x1asystemConfigurationV2alphaB\x82\x01\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x03\x10\x01\x18\x02Zpgithub.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha;configurationv2alphapbb\x06proto3"
+	"7platform/configuration/v2alpha/spec_configuration.proto\x12\x1eplatform.configuration.v2alpha\x1a%platform/options/v2/annotations.proto\x1a5platform/communication/v1beta/preference_center.proto\x1a\"platform/audit/v2alpha/audit.proto\x1a\x1fplatform/cli/v2alpha/oeco.proto\x1a/platform/cryptography/v2alpha/certificate.proto\x1a.platform/cryptography/v2alpha/encryption.proto\x1a&platform/dns/v2alpha/dynamic_dns.proto\x1a*platform/ecosystem/v2alpha/ecosystem.proto\x1a'platform/edge/v2alpha/edge_router.proto\x1a\"platform/iam/v2alpha/account.proto\x1a,platform/iam/v2alpha/account_authority.proto\x1a.platform/mesh/v2alpha/cryptographic_mesh.proto\x1a*platform/reference/v2alpha/reference.proto\x1a$platform/system/v2alpha/system.proto\x1a6platform/communication/v1alpha/preference_center.proto\"\x8d\x0e\n" +
+	"\x19SpecPlatformConfiguration\x12j\n" +
+	"\x1baudit_configuration_v2alpha\x18\x02 \x01(\v2*.platform.audit.v2alpha.AuditConfigurationR\x19auditConfigurationV2alpha\x12e\n" +
+	"\x1aoeco_configuration_v2alpha\x18\x03 \x01(\v2'.platform.cli.v2alpha.OecoConfigurationR\x18oecoConfigurationV2alpha\x12\x83\x01\n" +
+	"!certificate_configuration_v2alpha\x18\x04 \x01(\v27.platform.cryptography.v2alpha.CertificateConfigurationR\x1fcertificateConfigurationV2alpha\x12\x80\x01\n" +
+	" encryption_configuration_v2alpha\x18\x05 \x01(\v26.platform.cryptography.v2alpha.EncryptionConfigurationR\x1eencryptionConfigurationV2alpha\x12x\n" +
+	"!dynamic_dns_configuration_v2alpha\x18\x06 \x01(\v2-.platform.dns.v2alpha.DynamicDnsConfigurationR\x1edynamicDnsConfigurationV2alpha\x12z\n" +
+	"\x1fecosystem_configuration_v2alpha\x18\a \x01(\v22.platform.ecosystem.v2alpha.EcosystemConfigurationR\x1decosystemConfigurationV2alpha\x12y\n" +
+	"!edge_router_configuration_v2alpha\x18\b \x01(\v2..platform.edge.v2alpha.EdgeRouterConfigurationR\x1eedgeRouterConfigurationV2alpha\x12n\n" +
+	"\x1daccount_configuration_v2alpha\x18\t \x01(\v2*.platform.iam.v2alpha.AccountConfigurationR\x1baccountConfigurationV2alpha\x12\x8a\x01\n" +
+	"'account_authority_configuration_v2alpha\x18\n" +
+	" \x01(\v23.platform.iam.v2alpha.AccountAuthorityConfigurationR$accountAuthorityConfigurationV2alpha\x12\x8e\x01\n" +
+	"(cryptographic_mesh_configuration_v2alpha\x18\v \x01(\v25.platform.mesh.v2alpha.CryptographicMeshConfigurationR%cryptographicMeshConfigurationV2alpha\x12z\n" +
+	"\x1freference_configuration_v2alpha\x18\f \x01(\v22.platform.reference.v2alpha.ReferenceConfigurationR\x1dreferenceConfigurationV2alpha\x12n\n" +
+	"\x1csystem_configuration_v2alpha\x18\r \x01(\v2,.platform.system.v2alpha.SystemConfigurationR\x1asystemConfigurationV2alpha\x12\x94\x01\n" +
+	"'preference_center_configuration_v1alpha\x18\x0e \x01(\v2=.platform.communication.v1alpha.PreferenceCenterConfigurationR$preferenceCenterConfigurationV1alpha\x12\x91\x01\n" +
+	"&preference_center_configuration_v1beta\x18\x0f \x01(\v2<.platform.communication.v1beta.PreferenceCenterConfigurationR#preferenceCenterConfigurationV1betaB\x82\x01\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x03\x10\x01\x18\x02Zpgithub.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha;configurationv2alphapbb\x06proto3"
 
 var (
 	file_platform_configuration_v2alpha_spec_configuration_proto_rawDescOnce sync.Once
@@ -221,36 +221,36 @@ func file_platform_configuration_v2alpha_spec_configuration_proto_rawDescGZIP() 
 var file_platform_configuration_v2alpha_spec_configuration_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_platform_configuration_v2alpha_spec_configuration_proto_goTypes = []any{
 	(*SpecPlatformConfiguration)(nil),               // 0: platform.configuration.v2alpha.SpecPlatformConfiguration
-	(*v1beta.PreferenceCenterConfiguration)(nil),    // 1: platform.communication.v1beta.PreferenceCenterConfiguration
-	(*v1alpha.PreferenceCenterConfiguration)(nil),   // 2: platform.communication.v1alpha.PreferenceCenterConfiguration
-	(*v2alpha.AuditConfiguration)(nil),              // 3: platform.audit.v2alpha.AuditConfiguration
-	(*v2alpha1.OecoConfiguration)(nil),              // 4: platform.cli.v2alpha.OecoConfiguration
-	(*v2alpha2.CertificateConfiguration)(nil),       // 5: platform.cryptography.v2alpha.CertificateConfiguration
-	(*v2alpha2.EncryptionConfiguration)(nil),        // 6: platform.cryptography.v2alpha.EncryptionConfiguration
-	(*v2alpha3.DynamicDnsConfiguration)(nil),        // 7: platform.dns.v2alpha.DynamicDnsConfiguration
-	(*v2alpha4.EcosystemConfiguration)(nil),         // 8: platform.ecosystem.v2alpha.EcosystemConfiguration
-	(*v2alpha5.EdgeRouterConfiguration)(nil),        // 9: platform.edge.v2alpha.EdgeRouterConfiguration
-	(*v2alpha6.AccountConfiguration)(nil),           // 10: platform.iam.v2alpha.AccountConfiguration
-	(*v2alpha6.AccountAuthorityConfiguration)(nil),  // 11: platform.iam.v2alpha.AccountAuthorityConfiguration
-	(*v2alpha7.CryptographicMeshConfiguration)(nil), // 12: platform.mesh.v2alpha.CryptographicMeshConfiguration
-	(*v2alpha8.ReferenceConfiguration)(nil),         // 13: platform.reference.v2alpha.ReferenceConfiguration
-	(*v2alpha9.SystemConfiguration)(nil),            // 14: platform.system.v2alpha.SystemConfiguration
+	(*v2alpha.AuditConfiguration)(nil),              // 1: platform.audit.v2alpha.AuditConfiguration
+	(*v2alpha1.OecoConfiguration)(nil),              // 2: platform.cli.v2alpha.OecoConfiguration
+	(*v2alpha2.CertificateConfiguration)(nil),       // 3: platform.cryptography.v2alpha.CertificateConfiguration
+	(*v2alpha2.EncryptionConfiguration)(nil),        // 4: platform.cryptography.v2alpha.EncryptionConfiguration
+	(*v2alpha3.DynamicDnsConfiguration)(nil),        // 5: platform.dns.v2alpha.DynamicDnsConfiguration
+	(*v2alpha4.EcosystemConfiguration)(nil),         // 6: platform.ecosystem.v2alpha.EcosystemConfiguration
+	(*v2alpha5.EdgeRouterConfiguration)(nil),        // 7: platform.edge.v2alpha.EdgeRouterConfiguration
+	(*v2alpha6.AccountConfiguration)(nil),           // 8: platform.iam.v2alpha.AccountConfiguration
+	(*v2alpha6.AccountAuthorityConfiguration)(nil),  // 9: platform.iam.v2alpha.AccountAuthorityConfiguration
+	(*v2alpha7.CryptographicMeshConfiguration)(nil), // 10: platform.mesh.v2alpha.CryptographicMeshConfiguration
+	(*v2alpha8.ReferenceConfiguration)(nil),         // 11: platform.reference.v2alpha.ReferenceConfiguration
+	(*v2alpha9.SystemConfiguration)(nil),            // 12: platform.system.v2alpha.SystemConfiguration
+	(*v1alpha.PreferenceCenterConfiguration)(nil),   // 13: platform.communication.v1alpha.PreferenceCenterConfiguration
+	(*v1beta.PreferenceCenterConfiguration)(nil),    // 14: platform.communication.v1beta.PreferenceCenterConfiguration
 }
 var file_platform_configuration_v2alpha_spec_configuration_proto_depIdxs = []int32{
-	1,  // 0: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1beta:type_name -> platform.communication.v1beta.PreferenceCenterConfiguration
-	2,  // 1: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1alpha:type_name -> platform.communication.v1alpha.PreferenceCenterConfiguration
-	3,  // 2: platform.configuration.v2alpha.SpecPlatformConfiguration.audit_configuration_v2alpha:type_name -> platform.audit.v2alpha.AuditConfiguration
-	4,  // 3: platform.configuration.v2alpha.SpecPlatformConfiguration.oeco_configuration_v2alpha:type_name -> platform.cli.v2alpha.OecoConfiguration
-	5,  // 4: platform.configuration.v2alpha.SpecPlatformConfiguration.certificate_configuration_v2alpha:type_name -> platform.cryptography.v2alpha.CertificateConfiguration
-	6,  // 5: platform.configuration.v2alpha.SpecPlatformConfiguration.encryption_configuration_v2alpha:type_name -> platform.cryptography.v2alpha.EncryptionConfiguration
-	7,  // 6: platform.configuration.v2alpha.SpecPlatformConfiguration.dynamic_dns_configuration_v2alpha:type_name -> platform.dns.v2alpha.DynamicDnsConfiguration
-	8,  // 7: platform.configuration.v2alpha.SpecPlatformConfiguration.ecosystem_configuration_v2alpha:type_name -> platform.ecosystem.v2alpha.EcosystemConfiguration
-	9,  // 8: platform.configuration.v2alpha.SpecPlatformConfiguration.edge_router_configuration_v2alpha:type_name -> platform.edge.v2alpha.EdgeRouterConfiguration
-	10, // 9: platform.configuration.v2alpha.SpecPlatformConfiguration.account_configuration_v2alpha:type_name -> platform.iam.v2alpha.AccountConfiguration
-	11, // 10: platform.configuration.v2alpha.SpecPlatformConfiguration.account_authority_configuration_v2alpha:type_name -> platform.iam.v2alpha.AccountAuthorityConfiguration
-	12, // 11: platform.configuration.v2alpha.SpecPlatformConfiguration.cryptographic_mesh_configuration_v2alpha:type_name -> platform.mesh.v2alpha.CryptographicMeshConfiguration
-	13, // 12: platform.configuration.v2alpha.SpecPlatformConfiguration.reference_configuration_v2alpha:type_name -> platform.reference.v2alpha.ReferenceConfiguration
-	14, // 13: platform.configuration.v2alpha.SpecPlatformConfiguration.system_configuration_v2alpha:type_name -> platform.system.v2alpha.SystemConfiguration
+	1,  // 0: platform.configuration.v2alpha.SpecPlatformConfiguration.audit_configuration_v2alpha:type_name -> platform.audit.v2alpha.AuditConfiguration
+	2,  // 1: platform.configuration.v2alpha.SpecPlatformConfiguration.oeco_configuration_v2alpha:type_name -> platform.cli.v2alpha.OecoConfiguration
+	3,  // 2: platform.configuration.v2alpha.SpecPlatformConfiguration.certificate_configuration_v2alpha:type_name -> platform.cryptography.v2alpha.CertificateConfiguration
+	4,  // 3: platform.configuration.v2alpha.SpecPlatformConfiguration.encryption_configuration_v2alpha:type_name -> platform.cryptography.v2alpha.EncryptionConfiguration
+	5,  // 4: platform.configuration.v2alpha.SpecPlatformConfiguration.dynamic_dns_configuration_v2alpha:type_name -> platform.dns.v2alpha.DynamicDnsConfiguration
+	6,  // 5: platform.configuration.v2alpha.SpecPlatformConfiguration.ecosystem_configuration_v2alpha:type_name -> platform.ecosystem.v2alpha.EcosystemConfiguration
+	7,  // 6: platform.configuration.v2alpha.SpecPlatformConfiguration.edge_router_configuration_v2alpha:type_name -> platform.edge.v2alpha.EdgeRouterConfiguration
+	8,  // 7: platform.configuration.v2alpha.SpecPlatformConfiguration.account_configuration_v2alpha:type_name -> platform.iam.v2alpha.AccountConfiguration
+	9,  // 8: platform.configuration.v2alpha.SpecPlatformConfiguration.account_authority_configuration_v2alpha:type_name -> platform.iam.v2alpha.AccountAuthorityConfiguration
+	10, // 9: platform.configuration.v2alpha.SpecPlatformConfiguration.cryptographic_mesh_configuration_v2alpha:type_name -> platform.mesh.v2alpha.CryptographicMeshConfiguration
+	11, // 10: platform.configuration.v2alpha.SpecPlatformConfiguration.reference_configuration_v2alpha:type_name -> platform.reference.v2alpha.ReferenceConfiguration
+	12, // 11: platform.configuration.v2alpha.SpecPlatformConfiguration.system_configuration_v2alpha:type_name -> platform.system.v2alpha.SystemConfiguration
+	13, // 12: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1alpha:type_name -> platform.communication.v1alpha.PreferenceCenterConfiguration
+	14, // 13: platform.configuration.v2alpha.SpecPlatformConfiguration.preference_center_configuration_v1beta:type_name -> platform.communication.v1beta.PreferenceCenterConfiguration
 	14, // [14:14] is the sub-list for method output_type
 	14, // [14:14] is the sub-list for method input_type
 	14, // [14:14] is the sub-list for extension type_name

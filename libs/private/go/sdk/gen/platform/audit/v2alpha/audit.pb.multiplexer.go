@@ -6,6 +6,7 @@ package auditv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+
 	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/libs/partner/go/nats"
 	"github.com/openecosystems/ecosystem/libs/partner/go/opentelemetry"
