@@ -14,6 +14,7 @@ extend google.protobuf.FileOptions {
   GraphqlOptions graphql = 50003;
   ConfigurationOptions configuration = 50004;
   bool has_multiple_implementations = 50005;
+  SystemOptions system = 500006;
 }
 
 extend google.protobuf.ServiceOptions {
@@ -49,7 +50,6 @@ extend google.protobuf.EnumOptions {
 
 extend google.protobuf.EnumValueOptions {
   BillingOptions billing = 50060;
-  EventScopeOptions event_scope = 50061;
   AuthRoleOptions auth_role = 50062;
   EventOptions event = 50063;
 }
@@ -68,12 +68,19 @@ enum NetworkType {
   NETWORK_TYPE_OVERLAY = 3; // Mesh Overlay network, internally managed proxy and/or VPN
 }
 
+message SystemOptions {
+  bool platform_system = 1;
+}
+
 message ApiOptions {
   ApiType type = 1;
   ApiLifecycle cycle = 2;
   ApiInterfaceType interface = 3;
   NetworkType network = 4;
-  string shortname = 5;
+  SpecRequestScope scope = 5;
+  string shortname = 6;
+  bool versionable = 7;
+
 }
 
 enum ApiType {
@@ -231,6 +238,8 @@ enum CQRSType {
 
 enum AuthRole {
   AUTH_ROLE_UNSPECIFIED = 0;
+
+  AUTH_ROLE_ANONYMOUS = 1;
 
   AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100 [(auth_role) = {
     role_type: AUTH_ROLE_TYPE_PLATFORM
@@ -504,15 +513,11 @@ message BillingOptions {
   bool metered = 3;
 }
 
-enum EventScope {
-  EVENT_SCOPE_UNSPECIFIED = 0;
-  EVENT_SCOPE_USER = 1;
-  EVENT_SCOPE_WORKSPACE = 2;
-  EVENT_SCOPE_ORGANIZATION = 3;
-}
-
-message EventScopeOptions {
-  repeated EventScope scopes = 1;
+enum SpecRequestScope {
+  SPEC_REQUEST_SCOPE_UNSPECIFIED = 0;
+  SPEC_REQUEST_SCOPE_USER = 1;
+  SPEC_REQUEST_SCOPE_ECOSYSTEM = 2;
+  SPEC_REQUEST_SCOPE_ORGANIZATION = 3;
 }
 
 message EventOptions {

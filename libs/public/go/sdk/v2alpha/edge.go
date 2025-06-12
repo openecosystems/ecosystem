@@ -36,9 +36,6 @@ func edgeRouter(next http.Handler) http.Handler {
 
 		// Sanitize Methods
 
-		// Sanitize request headers
-		// sanitizeRequestHeaders(r)
-
 		// Before sanitization
 		//println("Before sanitization:")
 		//for k, v := range r.Header {
@@ -54,9 +51,8 @@ func edgeRouter(next http.Handler) http.Handler {
 		//	println(k, ":", v[0])
 		//}
 
-		// sanitizeRequestHeaders(r)
-		// Sanitize Query Strings
-		// Normalize Request
+		// TODO: Sanitize Query Strings
+		// TODO: Normalize Request
 
 		// Call the next handler
 		next.ServeHTTP(w, r)
@@ -139,9 +135,9 @@ var allowedRequestHeaders = map[string]struct{}{
 	XSpecOsName:                     {},
 	XSpecOsVersion:                  {},
 	XSpecEcosystem:                  {},
-	XSpecOrganization:               {},
-	XSpecWorkspace:                  {},
-	XSpecWorkspaceJan:               {},
+	// XSpecOrganization:               {},
+	// XSpecWorkspace:                  {},
+	// XSpecWorkspaceJan:               {},
 }
 
 func sanitizeRequestHeaders(req *http.Request) {

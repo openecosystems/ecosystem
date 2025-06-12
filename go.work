@@ -42,7 +42,6 @@ use (
 	./libs/partner/go/protovalidate
 	./libs/partner/go/pushpin
 	./libs/partner/go/sendgrid
-	./libs/partner/go/temporal
 	./libs/partner/go/tink
 	./libs/partner/go/zap
 

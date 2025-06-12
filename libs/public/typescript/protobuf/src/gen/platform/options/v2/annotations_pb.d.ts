@@ -32,6 +32,22 @@ export declare type NetworkOptions = Message<"platform.options.v2.NetworkOptions
 export declare const NetworkOptionsSchema: GenMessage<NetworkOptions>;
 
 /**
+ * @generated from message platform.options.v2.SystemOptions
+ */
+export declare type SystemOptions = Message<"platform.options.v2.SystemOptions"> & {
+  /**
+   * @generated from field: bool platform_system = 1;
+   */
+  platformSystem: boolean;
+};
+
+/**
+ * Describes the message platform.options.v2.SystemOptions.
+ * Use `create(SystemOptionsSchema)` to create a new message.
+ */
+export declare const SystemOptionsSchema: GenMessage<SystemOptions>;
+
+/**
  * @generated from message platform.options.v2.ApiOptions
  */
 export declare type ApiOptions = Message<"platform.options.v2.ApiOptions"> & {
@@ -56,9 +72,19 @@ export declare type ApiOptions = Message<"platform.options.v2.ApiOptions"> & {
   network: NetworkType;
 
   /**
-   * @generated from field: string shortname = 5;
+   * @generated from field: platform.options.v2.SpecRequestScope scope = 5;
+   */
+  scope: SpecRequestScope;
+
+  /**
+   * @generated from field: string shortname = 6;
    */
   shortname: string;
+
+  /**
+   * @generated from field: bool versionable = 7;
+   */
+  versionable: boolean;
 };
 
 /**
@@ -567,22 +593,6 @@ export declare type BillingOptions = Message<"platform.options.v2.BillingOptions
  * Use `create(BillingOptionsSchema)` to create a new message.
  */
 export declare const BillingOptionsSchema: GenMessage<BillingOptions>;
-
-/**
- * @generated from message platform.options.v2.EventScopeOptions
- */
-export declare type EventScopeOptions = Message<"platform.options.v2.EventScopeOptions"> & {
-  /**
-   * @generated from field: repeated platform.options.v2.EventScope scopes = 1;
-   */
-  scopes: EventScope[];
-};
-
-/**
- * Describes the message platform.options.v2.EventScopeOptions.
- * Use `create(EventScopeOptionsSchema)` to create a new message.
- */
-export declare const EventScopeOptionsSchema: GenMessage<EventScopeOptions>;
 
 /**
  * @generated from message platform.options.v2.EventOptions
@@ -1123,6 +1133,11 @@ export enum AuthRole {
   UNSPECIFIED = 0,
 
   /**
+   * @generated from enum value: AUTH_ROLE_ANONYMOUS = 1;
+   */
+  ANONYMOUS = 1,
+
+  /**
    * @generated from enum value: AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100;
    */
   PLATFORM_SUPER_ADMIN = 100,
@@ -1511,34 +1526,34 @@ export enum SpecEnumType {
 export declare const SpecEnumTypeSchema: GenEnum<SpecEnumType>;
 
 /**
- * @generated from enum platform.options.v2.EventScope
+ * @generated from enum platform.options.v2.SpecRequestScope
  */
-export enum EventScope {
+export enum SpecRequestScope {
   /**
-   * @generated from enum value: EVENT_SCOPE_UNSPECIFIED = 0;
+   * @generated from enum value: SPEC_REQUEST_SCOPE_UNSPECIFIED = 0;
    */
   UNSPECIFIED = 0,
 
   /**
-   * @generated from enum value: EVENT_SCOPE_USER = 1;
+   * @generated from enum value: SPEC_REQUEST_SCOPE_USER = 1;
    */
   USER = 1,
 
   /**
-   * @generated from enum value: EVENT_SCOPE_WORKSPACE = 2;
+   * @generated from enum value: SPEC_REQUEST_SCOPE_ECOSYSTEM = 2;
    */
-  WORKSPACE = 2,
+  ECOSYSTEM = 2,
 
   /**
-   * @generated from enum value: EVENT_SCOPE_ORGANIZATION = 3;
+   * @generated from enum value: SPEC_REQUEST_SCOPE_ORGANIZATION = 3;
    */
   ORGANIZATION = 3,
 }
 
 /**
- * Describes the enum platform.options.v2.EventScope.
+ * Describes the enum platform.options.v2.SpecRequestScope.
  */
-export declare const EventScopeSchema: GenEnum<EventScope>;
+export declare const SpecRequestScopeSchema: GenEnum<SpecRequestScope>;
 
 /**
  * @generated from extension: platform.options.v2.NetworkOptions network_file = 40000;
@@ -1574,6 +1589,11 @@ export declare const configuration: GenExtension<FileOptions, ConfigurationOptio
  * @generated from extension: bool has_multiple_implementations = 50005;
  */
 export declare const has_multiple_implementations: GenExtension<FileOptions, boolean>;
+
+/**
+ * @generated from extension: platform.options.v2.SystemOptions system = 500006;
+ */
+export declare const system: GenExtension<FileOptions, SystemOptions>;
 
 /**
  * @generated from extension: platform.options.v2.ApiOptions api_service = 50010;
@@ -1659,11 +1679,6 @@ export declare const spec: GenExtension<EnumOptions, SpecOptions>;
  * @generated from extension: platform.options.v2.BillingOptions billing = 50060;
  */
 export declare const billing: GenExtension<EnumValueOptions, BillingOptions>;
-
-/**
- * @generated from extension: platform.options.v2.EventScopeOptions event_scope = 50061;
- */
-export declare const event_scope: GenExtension<EnumValueOptions, EventScopeOptions>;
 
 /**
  * @generated from extension: platform.options.v2.AuthRoleOptions auth_role = 50062;

@@ -6,6 +6,7 @@ import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1"
 import type { Message } from "@bufbuild/protobuf";
 import type { Jurisdiction } from "../../type/v2/jurisdiction_pb";
 import type { Any, FieldMask, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { AuthRole } from "../../options/v2/annotations_pb";
 import type { RequestValidation, ResponseValidation } from "../../type/v2/validation_pb";
 import type { ResponseMask } from "../../type/v2/mask_pb";
 
@@ -212,9 +213,31 @@ export declare type SpecContext = Message<"platform.spec.v2.SpecContext"> & {
   /**
    * The ecosystem associated with this context.
    *
-   * @generated from field: string ecosystem_slug = 1;
+   * @generated from field: string ecosystem_id = 1;
+   */
+  ecosystemId: string;
+
+  /**
+   * The ecosystem associated with this context.
+   *
+   * @generated from field: string ecosystem_slug = 2;
    */
   ecosystemSlug: string;
+
+  /**
+   * The ecosystem jan associated with this context.
+   * Right now this is an enumeration with a finite number of items.
+   *
+   * @generated from field: platform.type.v2.Jurisdiction ecosystem_jan = 3;
+   */
+  ecosystemJan: Jurisdiction;
+
+  /**
+   * The organization associated with this context.
+   *
+   * @generated from field: string organization_id = 49;
+   */
+  organizationId: string;
 
   /**
    * The organization associated with this context.
@@ -236,7 +259,7 @@ export declare type SpecContext = Message<"platform.spec.v2.SpecContext"> & {
    * That is incorrect. This should be a string instead.
    * See `2023-09-14 - Docs Sync` in sf-docs-internal.
    *
-   * @generated from field: platform.type.v2.Jurisdiction workspace_jan = 2;
+   * @generated from field: platform.type.v2.Jurisdiction workspace_jan = 52;
    */
   workspaceJan: Jurisdiction;
 
@@ -350,7 +373,7 @@ export declare type SpecRoutineContext = Message<"platform.spec.v2.SpecRoutineCo
   routineId: string;
 
   /**
-   * @generated from field: map<string, google.protobuf.Any> routine_data = 2;
+   * @generated from field: map<string, google.protobuf.Any> routine_data = 3;
    */
   routineData: { [key: string]: Any };
 };
@@ -393,6 +416,11 @@ export declare type SpecPrincipal = Message<"platform.spec.v2.SpecPrincipal"> & 
    * @generated from field: string connection_id = 5;
    */
   connectionId: string;
+
+  /**
+   * @generated from field: repeated platform.options.v2.AuthRole auth_roles = 6;
+   */
+  authRoles: AuthRole[];
 };
 
 /**

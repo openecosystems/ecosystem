@@ -2,20 +2,45 @@ package sdkv2alphalib
 
 import (
 	"context"
+	"net/http"
 	"strconv"
 
 	"connectrpc.com/connect"
+
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // SpecInterceptor represents a structure that contains the platform specification defined by specv2pb.Spec.
-type SpecInterceptor struct {
-	// spec specv2pb.Spec // The Platform Spec
+type SpecInterceptor struct{}
+
+func NewSpecInterceptor() *SpecInterceptor {
+	return &SpecInterceptor{}
+}
+
+func (i *SpecInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
+	return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+		ctx = DecorateContext(ctx, req.Header(), req.Spec().Procedure)
+		return next(ctx, req)
+	}
+}
+
+func (*SpecInterceptor) WrapStreamingClient(next connect.StreamingClientFunc) connect.StreamingClientFunc {
+	return func(ctx context.Context, spec connect.Spec) connect.StreamingClientConn {
+		conn := next(ctx, spec)
+		return conn
+	}
+}
+
+func (i *SpecInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
+	return func(ctx context.Context, conn connect.StreamingHandlerConn) error {
+		ctx = DecorateContext(ctx, conn.RequestHeader(), conn.Spec().Procedure)
+		return next(ctx, conn)
+	}
 }
 
 // DecorateContext adds a "spec" value to the provided context based on the information extracted from the given request.
-func DecorateContext(ctx context.Context, req connect.AnyRequest) context.Context {
-	factory := NewFactory(req)
+func DecorateContext(ctx context.Context, h http.Header, procedure string) context.Context {
+	factory := NewFactory(h, procedure)
 	s := factory.Spec
 
 	ctx = context.WithValue(ctx, SpecContextKey, s)
@@ -23,16 +48,16 @@ func DecorateContext(ctx context.Context, req connect.AnyRequest) context.Contex
 	return ctx
 }
 
-// NewSpecInterceptor creates a unary interceptor that decorates the context with a specification derived from the request.
-func NewSpecInterceptor() connect.UnaryInterceptorFunc {
-	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
-		return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
-			ctx = DecorateContext(ctx, req)
-			return next(ctx, req)
-		}
-	}
-	return interceptor
-}
+//// NewSpecInterceptor creates a unary interceptor that decorates the context with a specification derived from the request.
+//func NewSpecInterceptor() connect.UnaryInterceptorFunc {
+//	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
+//		return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+//			ctx = DecorateContext(ctx, req)
+//			return next(ctx, req)
+//		}
+//	}
+//	return interceptor
+//}
 
 // DecorateCLIRequest modifies request headers with metadata values like timestamps, device details, configuration, and API context.
 func DecorateCLIRequest(_ context.Context, req connect.AnyRequest, settings *CLIConfiguration, overrides *RuntimeConfigurationOverrides) {

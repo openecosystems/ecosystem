@@ -3,17 +3,20 @@ package sdkv2alphalib
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"encoding/gob"
 	"errors"
+	"fmt"
 	"reflect"
-
-	specproto "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
+	"google.golang.org/protobuf/reflect/protoregistry"
 	"google.golang.org/protobuf/types/known/anypb"
 	"gopkg.in/yaml.v3"
+
+	specproto "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 )
 
 // GetDataFromSpec extracts and unmarshals the data field of a Spec object into a provided ProtoMessage instance.
@@ -147,4 +150,44 @@ func StructToByteArray(data interface{}) ([]byte, error) {
 	enc := gob.NewEncoder(&buf)
 	err := enc.Encode(data)
 	return buf.Bytes(), err
+}
+
+func GetProtoMessageFromTypeURL(typeURL string) (proto.Message, error) {
+	msgType, err := protoregistry.GlobalTypes.FindMessageByURL(typeURL)
+	if err != nil {
+		return nil, err
+	}
+
+	msg := msgType.New().Interface()
+	return msg, nil
+}
+
+// GetProtoMessageFromAny convert Any to specific message type for serialization
+func GetProtoMessageFromAny(any *anypb.Any) (proto.Message, error) {
+	msg, err := GetProtoMessageFromTypeURL(any.TypeUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	if !any.MessageIs(msg) {
+		return nil, fmt.Errorf("any message is not %s", msg.ProtoReflect().Descriptor().FullName())
+	}
+
+	if err := any.UnmarshalTo(msg); err != nil {
+		return nil, err
+	}
+
+	return msg, nil
+}
+
+// CalculateSpecHash Calculate a SHA-1 hash based on the JSON serialized data
+func CalculateSpecHash(spec *specproto.Spec) (string, error) {
+	jsonBytes, err := protojson.Marshal(spec.Data)
+	if err != nil {
+		return "", err
+	}
+
+	hash := sha256.Sum256(jsonBytes)
+
+	return string(hash[:]), nil
 }

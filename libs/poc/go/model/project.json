@@ -12,7 +12,8 @@
       "options": {
         "command": "buf generate",
         "cwd": "libs/poc/go/model"
-      }
+      },
+      "cache": false
     },
     "build": {
       "executor": "nx:run-commands",

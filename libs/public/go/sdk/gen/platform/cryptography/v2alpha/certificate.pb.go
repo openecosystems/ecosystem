@@ -548,8 +548,8 @@ const file_platform_cryptography_v2alpha_certificate_proto_rawDesc = "" +
 	"'CERTIFICATE_EVENTS_VERIFIED_CERTIFICATE\x10\x01\x12)\n" +
 	"%CERTIFICATE_EVENTS_SIGNED_CERTIFICATE\x10\x02\x1a\x06\x92\xb8\x18\x02\b\x042\xaa\x03\n" +
 	"\x12CertificateService\x12\xcd\x01\n" +
-	"\x11VerifyCertificate\x127.platform.cryptography.v2alpha.VerifyCertificateRequest\x1a8.platform.cryptography.v2alpha.VerifyCertificateResponse\"E\xa2\xb6\x18\b*\x06verify\xaa\xb6\x18\x02\b\x03\x82\xd3\xe4\x93\x02-:\x01*\"(/v2alpha/cryptography/certificate/verify\x12\xc3\x01\n" +
-	"\x0fSignCertificate\x125.platform.cryptography.v2alpha.SignCertificateRequest\x1a6.platform.cryptography.v2alpha.SignCertificateResponse\"A\xa2\xb6\x18\x06*\x04sign\xaa\xb6\x18\x02\b\x03\x82\xd3\xe4\x93\x02+:\x01*\"&/v2alpha/cryptography/certificate/signB\xbb\x01\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x03\x10\x01\x18\x06\x8a\xb5\x18$\n" +
+	"\x11VerifyCertificate\x127.platform.cryptography.v2alpha.VerifyCertificateRequest\x1a8.platform.cryptography.v2alpha.VerifyCertificateResponse\"E\xa2\xb6\x18\b2\x06verify\xaa\xb6\x18\x02\b\x03\x82\xd3\xe4\x93\x02-:\x01*\"(/v2alpha/cryptography/certificate/verify\x12\xc3\x01\n" +
+	"\x0fSignCertificate\x125.platform.cryptography.v2alpha.SignCertificateRequest\x1a6.platform.cryptography.v2alpha.SignCertificateResponse\"A\xa2\xb6\x18\x062\x04sign\xaa\xb6\x18\x02\b\x03\x82\xd3\xe4\x93\x02+:\x01*\"&/v2alpha/cryptography/certificate/signB\xbb\x01\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x03\x10\x01\x18\x06\x8a\xb5\x18$\n" +
 	"\vcertificate\x12\fcertificates\"\x03jan(\x028\x01\x92\xb5\x18\x03\n" +
 	"\x01\x03\x9a\xb5\x18\x02\b\x01\xa2\xb5\x18\x02\b\x01Zngithub.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha;cryptographyv2alphapbb\x06proto3"
 

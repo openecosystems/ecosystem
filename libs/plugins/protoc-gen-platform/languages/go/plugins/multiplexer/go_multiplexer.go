@@ -90,6 +90,7 @@ func (m GoServerModule) GenerateFile(file pgs.File) {
 		"parentService":                 fns.ParentService,
 		"queries":                       fns.QueryMethods,
 		"mutations":                     fns.MutationMethods,
+		"streams":                       fns.StreamingMethods,
 		"getCqrsType":                   fns.GetCQRSType,
 		"goPath":                        fns.GoPath,
 		"goPackage":                     fns.GoPackage,

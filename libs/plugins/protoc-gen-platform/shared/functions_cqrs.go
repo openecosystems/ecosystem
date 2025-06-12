@@ -91,6 +91,25 @@ func (fns Functions) MutationMethods(file pgs.File) []pgs.Method {
 	return mutationMethods
 }
 
+// StreamingMethods extracts and returns methods that are classified as "mutation" based on their CQRS type from the provided file.
+func (fns Functions) StreamingMethods(file pgs.File) []pgs.Method {
+	var methods []pgs.Method
+	for _, service := range file.Services() {
+		methods = service.Methods()
+		break
+	}
+
+	var mutationMethods []pgs.Method
+
+	for _, method := range methods {
+		if strings.Contains(fns.IsCQRSType(method), "stream") {
+			mutationMethods = append(mutationMethods, method)
+		}
+	}
+
+	return mutationMethods
+}
+
 // IsMethodMutation determines if the given method is a mutation based on its CQRS type prefix.
 func (fns Functions) IsMethodMutation(method pgs.Method) bool {
 	if strings.HasPrefix(fns.IsCQRSType(method), "mutation") {

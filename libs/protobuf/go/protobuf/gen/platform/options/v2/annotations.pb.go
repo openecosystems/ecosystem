@@ -685,6 +685,7 @@ type AuthRole int32
 
 const (
 	AuthRole_AUTH_ROLE_UNSPECIFIED                 AuthRole = 0
+	AuthRole_AUTH_ROLE_ANONYMOUS                   AuthRole = 1
 	AuthRole_AUTH_ROLE_PLATFORM_SUPER_ADMIN        AuthRole = 100
 	AuthRole_AUTH_ROLE_PLATFORM_CLINICAL_ADMIN     AuthRole = 101
 	AuthRole_AUTH_ROLE_PLATFORM_BILLING_ADMIN      AuthRole = 102
@@ -717,6 +718,7 @@ const (
 var (
 	AuthRole_name = map[int32]string{
 		0:   "AUTH_ROLE_UNSPECIFIED",
+		1:   "AUTH_ROLE_ANONYMOUS",
 		100: "AUTH_ROLE_PLATFORM_SUPER_ADMIN",
 		101: "AUTH_ROLE_PLATFORM_CLINICAL_ADMIN",
 		102: "AUTH_ROLE_PLATFORM_BILLING_ADMIN",
@@ -745,6 +747,7 @@ var (
 	}
 	AuthRole_value = map[string]int32{
 		"AUTH_ROLE_UNSPECIFIED":                 0,
+		"AUTH_ROLE_ANONYMOUS":                   1,
 		"AUTH_ROLE_PLATFORM_SUPER_ADMIN":        100,
 		"AUTH_ROLE_PLATFORM_CLINICAL_ADMIN":     101,
 		"AUTH_ROLE_PLATFORM_BILLING_ADMIN":      102,
@@ -1133,55 +1136,55 @@ func (SpecEnumType) EnumDescriptor() ([]byte, []int) {
 	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{16}
 }
 
-type EventScope int32
+type SpecRequestScope int32
 
 const (
-	EventScope_EVENT_SCOPE_UNSPECIFIED  EventScope = 0
-	EventScope_EVENT_SCOPE_USER         EventScope = 1
-	EventScope_EVENT_SCOPE_WORKSPACE    EventScope = 2
-	EventScope_EVENT_SCOPE_ORGANIZATION EventScope = 3
+	SpecRequestScope_SPEC_REQUEST_SCOPE_UNSPECIFIED  SpecRequestScope = 0
+	SpecRequestScope_SPEC_REQUEST_SCOPE_USER         SpecRequestScope = 1
+	SpecRequestScope_SPEC_REQUEST_SCOPE_ECOSYSTEM    SpecRequestScope = 2
+	SpecRequestScope_SPEC_REQUEST_SCOPE_ORGANIZATION SpecRequestScope = 3
 )
 
-// Enum value maps for EventScope.
+// Enum value maps for SpecRequestScope.
 var (
-	EventScope_name = map[int32]string{
-		0: "EVENT_SCOPE_UNSPECIFIED",
-		1: "EVENT_SCOPE_USER",
-		2: "EVENT_SCOPE_WORKSPACE",
-		3: "EVENT_SCOPE_ORGANIZATION",
+	SpecRequestScope_name = map[int32]string{
+		0: "SPEC_REQUEST_SCOPE_UNSPECIFIED",
+		1: "SPEC_REQUEST_SCOPE_USER",
+		2: "SPEC_REQUEST_SCOPE_ECOSYSTEM",
+		3: "SPEC_REQUEST_SCOPE_ORGANIZATION",
 	}
-	EventScope_value = map[string]int32{
-		"EVENT_SCOPE_UNSPECIFIED":  0,
-		"EVENT_SCOPE_USER":         1,
-		"EVENT_SCOPE_WORKSPACE":    2,
-		"EVENT_SCOPE_ORGANIZATION": 3,
+	SpecRequestScope_value = map[string]int32{
+		"SPEC_REQUEST_SCOPE_UNSPECIFIED":  0,
+		"SPEC_REQUEST_SCOPE_USER":         1,
+		"SPEC_REQUEST_SCOPE_ECOSYSTEM":    2,
+		"SPEC_REQUEST_SCOPE_ORGANIZATION": 3,
 	}
 )
 
-func (x EventScope) Enum() *EventScope {
-	p := new(EventScope)
+func (x SpecRequestScope) Enum() *SpecRequestScope {
+	p := new(SpecRequestScope)
 	*p = x
 	return p
 }
 
-func (x EventScope) String() string {
+func (x SpecRequestScope) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (EventScope) Descriptor() protoreflect.EnumDescriptor {
+func (SpecRequestScope) Descriptor() protoreflect.EnumDescriptor {
 	return file_platform_options_v2_annotations_proto_enumTypes[17].Descriptor()
 }
 
-func (EventScope) Type() protoreflect.EnumType {
+func (SpecRequestScope) Type() protoreflect.EnumType {
 	return &file_platform_options_v2_annotations_proto_enumTypes[17]
 }
 
-func (x EventScope) Number() protoreflect.EnumNumber {
+func (x SpecRequestScope) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use EventScope.Descriptor instead.
-func (EventScope) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use SpecRequestScope.Descriptor instead.
+func (SpecRequestScope) EnumDescriptor() ([]byte, []int) {
 	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{17}
 }
 
@@ -1243,7 +1246,7 @@ func (x SpecConfiguration_SpecConfigurationType) Number() protoreflect.EnumNumbe
 
 // Deprecated: Use SpecConfiguration_SpecConfigurationType.Descriptor instead.
 func (SpecConfiguration_SpecConfigurationType) EnumDescriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{16, 0}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{17, 0}
 }
 
 // ===========================================
@@ -1293,20 +1296,66 @@ func (x *NetworkOptions) GetType() NetworkType {
 	return NetworkType_NETWORK_TYPE_UNSPECIFIED
 }
 
+type SystemOptions struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	PlatformSystem bool                   `protobuf:"varint,1,opt,name=platform_system,json=platformSystem,proto3" json:"platform_system,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *SystemOptions) Reset() {
+	*x = SystemOptions{}
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SystemOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SystemOptions) ProtoMessage() {}
+
+func (x *SystemOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SystemOptions.ProtoReflect.Descriptor instead.
+func (*SystemOptions) Descriptor() ([]byte, []int) {
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *SystemOptions) GetPlatformSystem() bool {
+	if x != nil {
+		return x.PlatformSystem
+	}
+	return false
+}
+
 type ApiOptions struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Type          ApiType                `protobuf:"varint,1,opt,name=type,proto3,enum=platform.options.v2.ApiType" json:"type,omitempty"`
 	Cycle         ApiLifecycle           `protobuf:"varint,2,opt,name=cycle,proto3,enum=platform.options.v2.ApiLifecycle" json:"cycle,omitempty"`
 	Interface     ApiInterfaceType       `protobuf:"varint,3,opt,name=interface,proto3,enum=platform.options.v2.ApiInterfaceType" json:"interface,omitempty"`
 	Network       NetworkType            `protobuf:"varint,4,opt,name=network,proto3,enum=platform.options.v2.NetworkType" json:"network,omitempty"`
-	Shortname     string                 `protobuf:"bytes,5,opt,name=shortname,proto3" json:"shortname,omitempty"`
+	Scope         SpecRequestScope       `protobuf:"varint,5,opt,name=scope,proto3,enum=platform.options.v2.SpecRequestScope" json:"scope,omitempty"`
+	Shortname     string                 `protobuf:"bytes,6,opt,name=shortname,proto3" json:"shortname,omitempty"`
+	Versionable   bool                   `protobuf:"varint,7,opt,name=versionable,proto3" json:"versionable,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ApiOptions) Reset() {
 	*x = ApiOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[1]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1318,7 +1367,7 @@ func (x *ApiOptions) String() string {
 func (*ApiOptions) ProtoMessage() {}
 
 func (x *ApiOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[1]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1331,7 +1380,7 @@ func (x *ApiOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApiOptions.ProtoReflect.Descriptor instead.
 func (*ApiOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{1}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ApiOptions) GetType() ApiType {
@@ -1362,11 +1411,25 @@ func (x *ApiOptions) GetNetwork() NetworkType {
 	return NetworkType_NETWORK_TYPE_UNSPECIFIED
 }
 
+func (x *ApiOptions) GetScope() SpecRequestScope {
+	if x != nil {
+		return x.Scope
+	}
+	return SpecRequestScope_SPEC_REQUEST_SCOPE_UNSPECIFIED
+}
+
 func (x *ApiOptions) GetShortname() string {
 	if x != nil {
 		return x.Shortname
 	}
 	return ""
+}
+
+func (x *ApiOptions) GetVersionable() bool {
+	if x != nil {
+		return x.Versionable
+	}
+	return false
 }
 
 type EntityOptions struct {
@@ -1384,7 +1447,7 @@ type EntityOptions struct {
 
 func (x *EntityOptions) Reset() {
 	*x = EntityOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[2]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1396,7 +1459,7 @@ func (x *EntityOptions) String() string {
 func (*EntityOptions) ProtoMessage() {}
 
 func (x *EntityOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[2]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1409,7 +1472,7 @@ func (x *EntityOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntityOptions.ProtoReflect.Descriptor instead.
 func (*EntityOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{2}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *EntityOptions) GetEntity() string {
@@ -1470,7 +1533,7 @@ type LanguageOptions struct {
 
 func (x *LanguageOptions) Reset() {
 	*x = LanguageOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[3]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1482,7 +1545,7 @@ func (x *LanguageOptions) String() string {
 func (*LanguageOptions) ProtoMessage() {}
 
 func (x *LanguageOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[3]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1495,7 +1558,7 @@ func (x *LanguageOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LanguageOptions.ProtoReflect.Descriptor instead.
 func (*LanguageOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{3}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *LanguageOptions) GetLanguages() []LanguageType {
@@ -1514,7 +1577,7 @@ type GraphqlOptions struct {
 
 func (x *GraphqlOptions) Reset() {
 	*x = GraphqlOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[4]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1526,7 +1589,7 @@ func (x *GraphqlOptions) String() string {
 func (*GraphqlOptions) ProtoMessage() {}
 
 func (x *GraphqlOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[4]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1539,7 +1602,7 @@ func (x *GraphqlOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphqlOptions.ProtoReflect.Descriptor instead.
 func (*GraphqlOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{4}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GraphqlOptions) GetEnabled() bool {
@@ -1559,7 +1622,7 @@ type SpecServiceOptions struct {
 
 func (x *SpecServiceOptions) Reset() {
 	*x = SpecServiceOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[5]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1571,7 +1634,7 @@ func (x *SpecServiceOptions) String() string {
 func (*SpecServiceOptions) ProtoMessage() {}
 
 func (x *SpecServiceOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[5]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1584,7 +1647,7 @@ func (x *SpecServiceOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpecServiceOptions.ProtoReflect.Descriptor instead.
 func (*SpecServiceOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{5}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SpecServiceOptions) GetGrpcPort() int32 {
@@ -1611,7 +1674,7 @@ type RateLimitFilter struct {
 
 func (x *RateLimitFilter) Reset() {
 	*x = RateLimitFilter{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[6]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1623,7 +1686,7 @@ func (x *RateLimitFilter) String() string {
 func (*RateLimitFilter) ProtoMessage() {}
 
 func (x *RateLimitFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[6]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1636,7 +1699,7 @@ func (x *RateLimitFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RateLimitFilter.ProtoReflect.Descriptor instead.
 func (*RateLimitFilter) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{6}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *RateLimitFilter) GetEnabled() bool {
@@ -1662,7 +1725,7 @@ type AuthorizationFilter struct {
 
 func (x *AuthorizationFilter) Reset() {
 	*x = AuthorizationFilter{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[7]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1674,7 +1737,7 @@ func (x *AuthorizationFilter) String() string {
 func (*AuthorizationFilter) ProtoMessage() {}
 
 func (x *AuthorizationFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[7]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1687,7 +1750,7 @@ func (x *AuthorizationFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthorizationFilter.ProtoReflect.Descriptor instead.
 func (*AuthorizationFilter) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{7}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *AuthorizationFilter) GetEnabled() bool {
@@ -1706,7 +1769,7 @@ type ConsentFilter struct {
 
 func (x *ConsentFilter) Reset() {
 	*x = ConsentFilter{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[8]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1718,7 +1781,7 @@ func (x *ConsentFilter) String() string {
 func (*ConsentFilter) ProtoMessage() {}
 
 func (x *ConsentFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[8]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1731,7 +1794,7 @@ func (x *ConsentFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsentFilter.ProtoReflect.Descriptor instead.
 func (*ConsentFilter) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{8}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ConsentFilter) GetEnabled() bool {
@@ -1752,7 +1815,7 @@ type ProxyOptions struct {
 
 func (x *ProxyOptions) Reset() {
 	*x = ProxyOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[9]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1764,7 +1827,7 @@ func (x *ProxyOptions) String() string {
 func (*ProxyOptions) ProtoMessage() {}
 
 func (x *ProxyOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[9]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1777,7 +1840,7 @@ func (x *ProxyOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProxyOptions.ProtoReflect.Descriptor instead.
 func (*ProxyOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{9}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ProxyOptions) GetAuthorization() *AuthorizationFilter {
@@ -1810,7 +1873,7 @@ type ConnectorOptions struct {
 
 func (x *ConnectorOptions) Reset() {
 	*x = ConnectorOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[10]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1822,7 +1885,7 @@ func (x *ConnectorOptions) String() string {
 func (*ConnectorOptions) ProtoMessage() {}
 
 func (x *ConnectorOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[10]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1835,7 +1898,7 @@ func (x *ConnectorOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConnectorOptions.ProtoReflect.Descriptor instead.
 func (*ConnectorOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{10}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ConnectorOptions) GetType() ConnectorType {
@@ -1854,7 +1917,7 @@ type CQRSOptions struct {
 
 func (x *CQRSOptions) Reset() {
 	*x = CQRSOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[11]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1866,7 +1929,7 @@ func (x *CQRSOptions) String() string {
 func (*CQRSOptions) ProtoMessage() {}
 
 func (x *CQRSOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[11]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1879,7 +1942,7 @@ func (x *CQRSOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CQRSOptions.ProtoReflect.Descriptor instead.
 func (*CQRSOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{11}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CQRSOptions) GetType() CQRSType {
@@ -1898,7 +1961,7 @@ type RateLimitOptions struct {
 
 func (x *RateLimitOptions) Reset() {
 	*x = RateLimitOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[12]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1910,7 +1973,7 @@ func (x *RateLimitOptions) String() string {
 func (*RateLimitOptions) ProtoMessage() {}
 
 func (x *RateLimitOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[12]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1923,7 +1986,7 @@ func (x *RateLimitOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RateLimitOptions.ProtoReflect.Descriptor instead.
 func (*RateLimitOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{12}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *RateLimitOptions) GetLimit() bool {
@@ -1943,7 +2006,7 @@ type PermissionOptions struct {
 
 func (x *PermissionOptions) Reset() {
 	*x = PermissionOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[13]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1955,7 +2018,7 @@ func (x *PermissionOptions) String() string {
 func (*PermissionOptions) ProtoMessage() {}
 
 func (x *PermissionOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[13]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1968,7 +2031,7 @@ func (x *PermissionOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PermissionOptions.ProtoReflect.Descriptor instead.
 func (*PermissionOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{13}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *PermissionOptions) GetPermission() string {
@@ -1994,7 +2057,7 @@ type GraphOptions struct {
 
 func (x *GraphOptions) Reset() {
 	*x = GraphOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[14]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2006,7 +2069,7 @@ func (x *GraphOptions) String() string {
 func (*GraphOptions) ProtoMessage() {}
 
 func (x *GraphOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[14]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2019,7 +2082,7 @@ func (x *GraphOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphOptions.ProtoReflect.Descriptor instead.
 func (*GraphOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{14}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GraphOptions) GetType() GraphType {
@@ -2040,7 +2103,7 @@ type EntityFieldOptions struct {
 
 func (x *EntityFieldOptions) Reset() {
 	*x = EntityFieldOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[15]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2052,7 +2115,7 @@ func (x *EntityFieldOptions) String() string {
 func (*EntityFieldOptions) ProtoMessage() {}
 
 func (x *EntityFieldOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[15]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2065,7 +2128,7 @@ func (x *EntityFieldOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntityFieldOptions.ProtoReflect.Descriptor instead.
 func (*EntityFieldOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{15}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *EntityFieldOptions) GetKey() bool {
@@ -2107,7 +2170,7 @@ type SpecConfiguration struct {
 
 func (x *SpecConfiguration) Reset() {
 	*x = SpecConfiguration{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[16]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2119,7 +2182,7 @@ func (x *SpecConfiguration) String() string {
 func (*SpecConfiguration) ProtoMessage() {}
 
 func (x *SpecConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[16]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2132,7 +2195,7 @@ func (x *SpecConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpecConfiguration.ProtoReflect.Descriptor instead.
 func (*SpecConfiguration) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{16}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *SpecConfiguration) GetKey() string {
@@ -2180,7 +2243,7 @@ type ConfigurationOptions struct {
 
 func (x *ConfigurationOptions) Reset() {
 	*x = ConfigurationOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[17]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2192,7 +2255,7 @@ func (x *ConfigurationOptions) String() string {
 func (*ConfigurationOptions) ProtoMessage() {}
 
 func (x *ConfigurationOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[17]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2205,7 +2268,7 @@ func (x *ConfigurationOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigurationOptions.ProtoReflect.Descriptor instead.
 func (*ConfigurationOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{17}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ConfigurationOptions) GetEnabled() bool {
@@ -2231,7 +2294,7 @@ type ConfigurationFieldOptions struct {
 
 func (x *ConfigurationFieldOptions) Reset() {
 	*x = ConfigurationFieldOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[18]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2243,7 +2306,7 @@ func (x *ConfigurationFieldOptions) String() string {
 func (*ConfigurationFieldOptions) ProtoMessage() {}
 
 func (x *ConfigurationFieldOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[18]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2256,7 +2319,7 @@ func (x *ConfigurationFieldOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigurationFieldOptions.ProtoReflect.Descriptor instead.
 func (*ConfigurationFieldOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{18}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ConfigurationFieldOptions) GetConfiguration() *SpecConfiguration {
@@ -2276,7 +2339,7 @@ type SyntheticOptions struct {
 
 func (x *SyntheticOptions) Reset() {
 	*x = SyntheticOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[19]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2288,7 +2351,7 @@ func (x *SyntheticOptions) String() string {
 func (*SyntheticOptions) ProtoMessage() {}
 
 func (x *SyntheticOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[19]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2301,7 +2364,7 @@ func (x *SyntheticOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyntheticOptions.ProtoReflect.Descriptor instead.
 func (*SyntheticOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{19}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *SyntheticOptions) GetDictionaryKey() string {
@@ -2329,7 +2392,7 @@ type Classification struct {
 
 func (x *Classification) Reset() {
 	*x = Classification{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[20]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2341,7 +2404,7 @@ func (x *Classification) String() string {
 func (*Classification) ProtoMessage() {}
 
 func (x *Classification) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[20]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2354,7 +2417,7 @@ func (x *Classification) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Classification.ProtoReflect.Descriptor instead.
 func (*Classification) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{20}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *Classification) GetType() ClassificationType {
@@ -2373,7 +2436,7 @@ type SpecOptions struct {
 
 func (x *SpecOptions) Reset() {
 	*x = SpecOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[21]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2385,7 +2448,7 @@ func (x *SpecOptions) String() string {
 func (*SpecOptions) ProtoMessage() {}
 
 func (x *SpecOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[21]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2398,7 +2461,7 @@ func (x *SpecOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpecOptions.ProtoReflect.Descriptor instead.
 func (*SpecOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{21}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *SpecOptions) GetType() SpecEnumType {
@@ -2419,7 +2482,7 @@ type BillingOptions struct {
 
 func (x *BillingOptions) Reset() {
 	*x = BillingOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[22]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2431,7 +2494,7 @@ func (x *BillingOptions) String() string {
 func (*BillingOptions) ProtoMessage() {}
 
 func (x *BillingOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[22]
+	mi := &file_platform_options_v2_annotations_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2444,7 +2507,7 @@ func (x *BillingOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BillingOptions.ProtoReflect.Descriptor instead.
 func (*BillingOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{22}
+	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *BillingOptions) GetBillable() bool {
@@ -2466,50 +2529,6 @@ func (x *BillingOptions) GetMetered() bool {
 		return x.Metered
 	}
 	return false
-}
-
-type EventScopeOptions struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Scopes        []EventScope           `protobuf:"varint,1,rep,packed,name=scopes,proto3,enum=platform.options.v2.EventScope" json:"scopes,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *EventScopeOptions) Reset() {
-	*x = EventScopeOptions{}
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *EventScopeOptions) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EventScopeOptions) ProtoMessage() {}
-
-func (x *EventScopeOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_platform_options_v2_annotations_proto_msgTypes[23]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EventScopeOptions.ProtoReflect.Descriptor instead.
-func (*EventScopeOptions) Descriptor() ([]byte, []int) {
-	return file_platform_options_v2_annotations_proto_rawDescGZIP(), []int{23}
-}
-
-func (x *EventScopeOptions) GetScopes() []EventScope {
-	if x != nil {
-		return x.Scopes
-	}
-	return nil
 }
 
 type EventOptions struct {
@@ -2702,6 +2721,14 @@ var file_platform_options_v2_annotations_proto_extTypes = []protoimpl.ExtensionI
 		Filename:      "platform/options/v2/annotations.proto",
 	},
 	{
+		ExtendedType:  (*descriptorpb.FileOptions)(nil),
+		ExtensionType: (*SystemOptions)(nil),
+		Field:         500006,
+		Name:          "platform.options.v2.system",
+		Tag:           "bytes,500006,opt,name=system",
+		Filename:      "platform/options/v2/annotations.proto",
+	},
+	{
 		ExtendedType:  (*descriptorpb.ServiceOptions)(nil),
 		ExtensionType: (*ApiOptions)(nil),
 		Field:         50010,
@@ -2839,14 +2866,6 @@ var file_platform_options_v2_annotations_proto_extTypes = []protoimpl.ExtensionI
 	},
 	{
 		ExtendedType:  (*descriptorpb.EnumValueOptions)(nil),
-		ExtensionType: (*EventScopeOptions)(nil),
-		Field:         50061,
-		Name:          "platform.options.v2.event_scope",
-		Tag:           "bytes,50061,opt,name=event_scope",
-		Filename:      "platform/options/v2/annotations.proto",
-	},
-	{
-		ExtendedType:  (*descriptorpb.EnumValueOptions)(nil),
 		ExtensionType: (*AuthRoleOptions)(nil),
 		Field:         50062,
 		Name:          "platform.options.v2.auth_role",
@@ -2879,66 +2898,66 @@ var (
 	E_Configuration = &file_platform_options_v2_annotations_proto_extTypes[5]
 	// optional bool has_multiple_implementations = 50005;
 	E_HasMultipleImplementations = &file_platform_options_v2_annotations_proto_extTypes[6]
+	// optional platform.options.v2.SystemOptions system = 500006;
+	E_System = &file_platform_options_v2_annotations_proto_extTypes[7]
 )
 
 // Extension fields to descriptorpb.ServiceOptions.
 var (
 	// optional platform.options.v2.ApiOptions api_service = 50010;
-	E_ApiService = &file_platform_options_v2_annotations_proto_extTypes[7]
+	E_ApiService = &file_platform_options_v2_annotations_proto_extTypes[8]
 	// optional platform.options.v2.SpecServiceOptions service = 50011;
-	E_Service = &file_platform_options_v2_annotations_proto_extTypes[8]
+	E_Service = &file_platform_options_v2_annotations_proto_extTypes[9]
 	// optional platform.options.v2.ProxyOptions proxy = 50012;
-	E_Proxy = &file_platform_options_v2_annotations_proto_extTypes[9]
+	E_Proxy = &file_platform_options_v2_annotations_proto_extTypes[10]
 	// optional platform.options.v2.ConnectorOptions connector = 50013;
-	E_Connector = &file_platform_options_v2_annotations_proto_extTypes[10]
+	E_Connector = &file_platform_options_v2_annotations_proto_extTypes[11]
 )
 
 // Extension fields to descriptorpb.MethodOptions.
 var (
 	// optional platform.options.v2.ApiOptions api_method = 50020;
-	E_ApiMethod = &file_platform_options_v2_annotations_proto_extTypes[11]
+	E_ApiMethod = &file_platform_options_v2_annotations_proto_extTypes[12]
 	// optional platform.options.v2.CQRSOptions cqrs = 50021;
-	E_Cqrs = &file_platform_options_v2_annotations_proto_extTypes[12]
+	E_Cqrs = &file_platform_options_v2_annotations_proto_extTypes[13]
 	// optional platform.options.v2.PermissionOptions permission = 50022;
-	E_Permission = &file_platform_options_v2_annotations_proto_extTypes[13]
+	E_Permission = &file_platform_options_v2_annotations_proto_extTypes[14]
 	// optional platform.options.v2.RateLimitOptions rate = 50023;
-	E_Rate = &file_platform_options_v2_annotations_proto_extTypes[14]
+	E_Rate = &file_platform_options_v2_annotations_proto_extTypes[15]
 )
 
 // Extension fields to descriptorpb.MessageOptions.
 var (
 	// optional platform.options.v2.ApiOptions api_message = 50030;
-	E_ApiMessage = &file_platform_options_v2_annotations_proto_extTypes[15]
+	E_ApiMessage = &file_platform_options_v2_annotations_proto_extTypes[16]
 	// optional platform.options.v2.GraphOptions graph = 50031;
-	E_Graph = &file_platform_options_v2_annotations_proto_extTypes[16]
+	E_Graph = &file_platform_options_v2_annotations_proto_extTypes[17]
 	// optional platform.options.v2.RoutineOptions routine = 50032;
-	E_Routine = &file_platform_options_v2_annotations_proto_extTypes[17]
+	E_Routine = &file_platform_options_v2_annotations_proto_extTypes[18]
 )
 
 // Extension fields to descriptorpb.FieldOptions.
 var (
 	// optional platform.options.v2.ApiOptions api_field = 50040;
-	E_ApiField = &file_platform_options_v2_annotations_proto_extTypes[18]
+	E_ApiField = &file_platform_options_v2_annotations_proto_extTypes[19]
 	// optional platform.options.v2.EntityFieldOptions entity_field = 50041;
-	E_EntityField = &file_platform_options_v2_annotations_proto_extTypes[19]
+	E_EntityField = &file_platform_options_v2_annotations_proto_extTypes[20]
 	// optional platform.options.v2.ConfigurationFieldOptions configuration_field = 50042;
-	E_ConfigurationField = &file_platform_options_v2_annotations_proto_extTypes[20]
+	E_ConfigurationField = &file_platform_options_v2_annotations_proto_extTypes[21]
 	// optional platform.options.v2.SyntheticOptions synthetic = 50043;
-	E_Synthetic = &file_platform_options_v2_annotations_proto_extTypes[21]
+	E_Synthetic = &file_platform_options_v2_annotations_proto_extTypes[22]
 )
 
 // Extension fields to descriptorpb.EnumOptions.
 var (
 	// optional platform.options.v2.SpecOptions spec = 50050;
-	E_Spec = &file_platform_options_v2_annotations_proto_extTypes[22]
+	E_Spec = &file_platform_options_v2_annotations_proto_extTypes[23]
 )
 
 // Extension fields to descriptorpb.EnumValueOptions.
 var (
 	// optional platform.options.v2.BillingOptions billing = 50060;
-	E_Billing = &file_platform_options_v2_annotations_proto_extTypes[23]
-	// optional platform.options.v2.EventScopeOptions event_scope = 50061;
-	E_EventScope = &file_platform_options_v2_annotations_proto_extTypes[24]
+	E_Billing = &file_platform_options_v2_annotations_proto_extTypes[24]
 	// optional platform.options.v2.AuthRoleOptions auth_role = 50062;
 	E_AuthRole = &file_platform_options_v2_annotations_proto_extTypes[25]
 	// optional platform.options.v2.EventOptions event = 50063;
@@ -2951,14 +2970,18 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\n" +
 	"%platform/options/v2/annotations.proto\x12\x13platform.options.v2\x1a google/protobuf/descriptor.proto\"F\n" +
 	"\x0eNetworkOptions\x124\n" +
-	"\x04type\x18\x01 \x01(\x0e2 .platform.options.v2.NetworkTypeR\x04type\"\x96\x02\n" +
+	"\x04type\x18\x01 \x01(\x0e2 .platform.options.v2.NetworkTypeR\x04type\"8\n" +
+	"\rSystemOptions\x12'\n" +
+	"\x0fplatform_system\x18\x01 \x01(\bR\x0eplatformSystem\"\xf5\x02\n" +
 	"\n" +
 	"ApiOptions\x120\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x1c.platform.options.v2.ApiTypeR\x04type\x127\n" +
 	"\x05cycle\x18\x02 \x01(\x0e2!.platform.options.v2.ApiLifecycleR\x05cycle\x12C\n" +
 	"\tinterface\x18\x03 \x01(\x0e2%.platform.options.v2.ApiInterfaceTypeR\tinterface\x12:\n" +
-	"\anetwork\x18\x04 \x01(\x0e2 .platform.options.v2.NetworkTypeR\anetwork\x12\x1c\n" +
-	"\tshortname\x18\x05 \x01(\tR\tshortname\"\xcf\x02\n" +
+	"\anetwork\x18\x04 \x01(\x0e2 .platform.options.v2.NetworkTypeR\anetwork\x12;\n" +
+	"\x05scope\x18\x05 \x01(\x0e2%.platform.options.v2.SpecRequestScopeR\x05scope\x12\x1c\n" +
+	"\tshortname\x18\x06 \x01(\tR\tshortname\x12 \n" +
+	"\vversionable\x18\a \x01(\bR\vversionable\"\xcf\x02\n" +
 	"\rEntityOptions\x12\x16\n" +
 	"\x06entity\x18\x01 \x01(\tR\x06entity\x12#\n" +
 	"\rentity_plural\x18\x02 \x01(\tR\fentityPlural\x123\n" +
@@ -3032,9 +3055,7 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x0eBillingOptions\x12\x1a\n" +
 	"\bbillable\x18\x01 \x01(\bR\bbillable\x12)\n" +
 	"\x10partner_billable\x18\x02 \x01(\bR\x0fpartnerBillable\x12\x18\n" +
-	"\ametered\x18\x03 \x01(\bR\ametered\"L\n" +
-	"\x11EventScopeOptions\x127\n" +
-	"\x06scopes\x18\x01 \x03(\x0e2\x1f.platform.options.v2.EventScopeR\x06scopes\"0\n" +
+	"\ametered\x18\x03 \x01(\bR\ametered\"0\n" +
 	"\fEventOptions\x12 \n" +
 	"\vversionable\x18\x01 \x01(\bR\vversionable\"Q\n" +
 	"\x0fAuthRoleOptions\x12>\n" +
@@ -3127,9 +3148,10 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x1dCQRS_TYPE_QUERY_CLIENT_STREAM\x10\f\x12!\n" +
 	"\x1dCQRS_TYPE_QUERY_SERVER_STREAM\x10\r\x12\x1f\n" +
 	"\x1bCQRS_TYPE_QUERY_BIDI_STREAM\x10\x0e\x12\x1a\n" +
-	"\x16CQRS_TYPE_QUERY_EXISTS\x10\x0f*\xd5\b\n" +
+	"\x16CQRS_TYPE_QUERY_EXISTS\x10\x0f*\xee\b\n" +
 	"\bAuthRole\x12\x19\n" +
-	"\x15AUTH_ROLE_UNSPECIFIED\x10\x00\x12*\n" +
+	"\x15AUTH_ROLE_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13AUTH_ROLE_ANONYMOUS\x10\x01\x12*\n" +
 	"\x1eAUTH_ROLE_PLATFORM_SUPER_ADMIN\x10d\x1a\x06\xf2\xb8\x18\x02\b\x01\x12-\n" +
 	"!AUTH_ROLE_PLATFORM_CLINICAL_ADMIN\x10e\x1a\x06\xf2\xb8\x18\x02\b\x01\x12,\n" +
 	" AUTH_ROLE_PLATFORM_BILLING_ADMIN\x10f\x1a\x06\xf2\xb8\x18\x02\b\x01\x12$\n" +
@@ -3189,20 +3211,20 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x15SPEC_ENUM_TYPE_TOPICS\x10\x02\x12\x1b\n" +
 	"\x17SPEC_ENUM_TYPE_COMMANDS\x10\x03\x12\x19\n" +
 	"\x15SPEC_ENUM_TYPE_EVENTS\x10\x04\x12$\n" +
-	" SPEC_ENUM_TYPE_ROUTINE_LISTENERS\x10\x05*x\n" +
-	"\n" +
-	"EventScope\x12\x1b\n" +
-	"\x17EVENT_SCOPE_UNSPECIFIED\x10\x00\x12\x14\n" +
-	"\x10EVENT_SCOPE_USER\x10\x01\x12\x19\n" +
-	"\x15EVENT_SCOPE_WORKSPACE\x10\x02\x12\x1c\n" +
-	"\x18EVENT_SCOPE_ORGANIZATION\x10\x03:f\n" +
+	" SPEC_ENUM_TYPE_ROUTINE_LISTENERS\x10\x05*\x9a\x01\n" +
+	"\x10SpecRequestScope\x12\"\n" +
+	"\x1eSPEC_REQUEST_SCOPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\x17SPEC_REQUEST_SCOPE_USER\x10\x01\x12 \n" +
+	"\x1cSPEC_REQUEST_SCOPE_ECOSYSTEM\x10\x02\x12#\n" +
+	"\x1fSPEC_REQUEST_SCOPE_ORGANIZATION\x10\x03:f\n" +
 	"\fnetwork_file\x12\x1c.google.protobuf.FileOptions\x18\xc0\xb8\x02 \x01(\v2#.platform.options.v2.NetworkOptionsR\vnetworkFile:Z\n" +
 	"\bapi_file\x12\x1c.google.protobuf.FileOptions\x18І\x03 \x01(\v2\x1f.platform.options.v2.ApiOptionsR\aapiFile:Z\n" +
 	"\x06entity\x12\x1c.google.protobuf.FileOptions\x18ц\x03 \x01(\v2\".platform.options.v2.EntityOptionsR\x06entity:`\n" +
 	"\blanguage\x12\x1c.google.protobuf.FileOptions\x18҆\x03 \x01(\v2$.platform.options.v2.LanguageOptionsR\blanguage:]\n" +
 	"\agraphql\x12\x1c.google.protobuf.FileOptions\x18ӆ\x03 \x01(\v2#.platform.options.v2.GraphqlOptionsR\agraphql:o\n" +
 	"\rconfiguration\x12\x1c.google.protobuf.FileOptions\x18Ԇ\x03 \x01(\v2).platform.options.v2.ConfigurationOptionsR\rconfiguration:`\n" +
-	"\x1chas_multiple_implementations\x12\x1c.google.protobuf.FileOptions\x18Ն\x03 \x01(\bR\x1ahasMultipleImplementations:c\n" +
+	"\x1chas_multiple_implementations\x12\x1c.google.protobuf.FileOptions\x18Ն\x03 \x01(\bR\x1ahasMultipleImplementations:Z\n" +
+	"\x06system\x12\x1c.google.protobuf.FileOptions\x18\xa6\xc2\x1e \x01(\v2\".platform.options.v2.SystemOptionsR\x06system:c\n" +
 	"\vapi_service\x12\x1f.google.protobuf.ServiceOptions\x18چ\x03 \x01(\v2\x1f.platform.options.v2.ApiOptionsR\n" +
 	"apiService:d\n" +
 	"\aservice\x12\x1f.google.protobuf.ServiceOptions\x18ۆ\x03 \x01(\v2'.platform.options.v2.SpecServiceOptionsR\aservice:Z\n" +
@@ -3224,9 +3246,7 @@ const file_platform_options_v2_annotations_proto_rawDesc = "" +
 	"\x13configuration_field\x12\x1d.google.protobuf.FieldOptions\x18\xfa\x86\x03 \x01(\v2..platform.options.v2.ConfigurationFieldOptionsR\x12configurationField:d\n" +
 	"\tsynthetic\x12\x1d.google.protobuf.FieldOptions\x18\xfb\x86\x03 \x01(\v2%.platform.options.v2.SyntheticOptionsR\tsynthetic:T\n" +
 	"\x04spec\x12\x1c.google.protobuf.EnumOptions\x18\x82\x87\x03 \x01(\v2 .platform.options.v2.SpecOptionsR\x04spec:b\n" +
-	"\abilling\x12!.google.protobuf.EnumValueOptions\x18\x8c\x87\x03 \x01(\v2#.platform.options.v2.BillingOptionsR\abilling:l\n" +
-	"\vevent_scope\x12!.google.protobuf.EnumValueOptions\x18\x8d\x87\x03 \x01(\v2&.platform.options.v2.EventScopeOptionsR\n" +
-	"eventScope:f\n" +
+	"\abilling\x12!.google.protobuf.EnumValueOptions\x18\x8c\x87\x03 \x01(\v2#.platform.options.v2.BillingOptionsR\abilling:f\n" +
 	"\tauth_role\x12!.google.protobuf.EnumValueOptions\x18\x8e\x87\x03 \x01(\v2$.platform.options.v2.AuthRoleOptionsR\bauthRole:\\\n" +
 	"\x05event\x12!.google.protobuf.EnumValueOptions\x18\x8f\x87\x03 \x01(\v2!.platform.options.v2.EventOptionsR\x05eventBbZ`github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2;optionv2pbb\x06proto3"
 
@@ -3262,32 +3282,32 @@ var file_platform_options_v2_annotations_proto_goTypes = []any{
 	(SyntheticType)(0),      // 14: platform.options.v2.SyntheticType
 	(ClassificationType)(0), // 15: platform.options.v2.ClassificationType
 	(SpecEnumType)(0),       // 16: platform.options.v2.SpecEnumType
-	(EventScope)(0),         // 17: platform.options.v2.EventScope
+	(SpecRequestScope)(0),   // 17: platform.options.v2.SpecRequestScope
 	(SpecConfiguration_SpecConfigurationType)(0), // 18: platform.options.v2.SpecConfiguration.SpecConfigurationType
 	(*NetworkOptions)(nil),                       // 19: platform.options.v2.NetworkOptions
-	(*ApiOptions)(nil),                           // 20: platform.options.v2.ApiOptions
-	(*EntityOptions)(nil),                        // 21: platform.options.v2.EntityOptions
-	(*LanguageOptions)(nil),                      // 22: platform.options.v2.LanguageOptions
-	(*GraphqlOptions)(nil),                       // 23: platform.options.v2.GraphqlOptions
-	(*SpecServiceOptions)(nil),                   // 24: platform.options.v2.SpecServiceOptions
-	(*RateLimitFilter)(nil),                      // 25: platform.options.v2.RateLimitFilter
-	(*AuthorizationFilter)(nil),                  // 26: platform.options.v2.AuthorizationFilter
-	(*ConsentFilter)(nil),                        // 27: platform.options.v2.ConsentFilter
-	(*ProxyOptions)(nil),                         // 28: platform.options.v2.ProxyOptions
-	(*ConnectorOptions)(nil),                     // 29: platform.options.v2.ConnectorOptions
-	(*CQRSOptions)(nil),                          // 30: platform.options.v2.CQRSOptions
-	(*RateLimitOptions)(nil),                     // 31: platform.options.v2.RateLimitOptions
-	(*PermissionOptions)(nil),                    // 32: platform.options.v2.PermissionOptions
-	(*GraphOptions)(nil),                         // 33: platform.options.v2.GraphOptions
-	(*EntityFieldOptions)(nil),                   // 34: platform.options.v2.EntityFieldOptions
-	(*SpecConfiguration)(nil),                    // 35: platform.options.v2.SpecConfiguration
-	(*ConfigurationOptions)(nil),                 // 36: platform.options.v2.ConfigurationOptions
-	(*ConfigurationFieldOptions)(nil),            // 37: platform.options.v2.ConfigurationFieldOptions
-	(*SyntheticOptions)(nil),                     // 38: platform.options.v2.SyntheticOptions
-	(*Classification)(nil),                       // 39: platform.options.v2.Classification
-	(*SpecOptions)(nil),                          // 40: platform.options.v2.SpecOptions
-	(*BillingOptions)(nil),                       // 41: platform.options.v2.BillingOptions
-	(*EventScopeOptions)(nil),                    // 42: platform.options.v2.EventScopeOptions
+	(*SystemOptions)(nil),                        // 20: platform.options.v2.SystemOptions
+	(*ApiOptions)(nil),                           // 21: platform.options.v2.ApiOptions
+	(*EntityOptions)(nil),                        // 22: platform.options.v2.EntityOptions
+	(*LanguageOptions)(nil),                      // 23: platform.options.v2.LanguageOptions
+	(*GraphqlOptions)(nil),                       // 24: platform.options.v2.GraphqlOptions
+	(*SpecServiceOptions)(nil),                   // 25: platform.options.v2.SpecServiceOptions
+	(*RateLimitFilter)(nil),                      // 26: platform.options.v2.RateLimitFilter
+	(*AuthorizationFilter)(nil),                  // 27: platform.options.v2.AuthorizationFilter
+	(*ConsentFilter)(nil),                        // 28: platform.options.v2.ConsentFilter
+	(*ProxyOptions)(nil),                         // 29: platform.options.v2.ProxyOptions
+	(*ConnectorOptions)(nil),                     // 30: platform.options.v2.ConnectorOptions
+	(*CQRSOptions)(nil),                          // 31: platform.options.v2.CQRSOptions
+	(*RateLimitOptions)(nil),                     // 32: platform.options.v2.RateLimitOptions
+	(*PermissionOptions)(nil),                    // 33: platform.options.v2.PermissionOptions
+	(*GraphOptions)(nil),                         // 34: platform.options.v2.GraphOptions
+	(*EntityFieldOptions)(nil),                   // 35: platform.options.v2.EntityFieldOptions
+	(*SpecConfiguration)(nil),                    // 36: platform.options.v2.SpecConfiguration
+	(*ConfigurationOptions)(nil),                 // 37: platform.options.v2.ConfigurationOptions
+	(*ConfigurationFieldOptions)(nil),            // 38: platform.options.v2.ConfigurationFieldOptions
+	(*SyntheticOptions)(nil),                     // 39: platform.options.v2.SyntheticOptions
+	(*Classification)(nil),                       // 40: platform.options.v2.Classification
+	(*SpecOptions)(nil),                          // 41: platform.options.v2.SpecOptions
+	(*BillingOptions)(nil),                       // 42: platform.options.v2.BillingOptions
 	(*EventOptions)(nil),                         // 43: platform.options.v2.EventOptions
 	(*AuthRoleOptions)(nil),                      // 44: platform.options.v2.AuthRoleOptions
 	(*RoutineOptions)(nil),                       // 45: platform.options.v2.RoutineOptions
@@ -3305,24 +3325,24 @@ var file_platform_options_v2_annotations_proto_depIdxs = []int32{
 	3,  // 2: platform.options.v2.ApiOptions.cycle:type_name -> platform.options.v2.ApiLifecycle
 	2,  // 3: platform.options.v2.ApiOptions.interface:type_name -> platform.options.v2.ApiInterfaceType
 	0,  // 4: platform.options.v2.ApiOptions.network:type_name -> platform.options.v2.NetworkType
-	4,  // 5: platform.options.v2.EntityOptions.type:type_name -> platform.options.v2.EntityType
-	5,  // 6: platform.options.v2.EntityOptions.consistency:type_name -> platform.options.v2.EntityConsistency
-	6,  // 7: platform.options.v2.EntityOptions.hierarchy:type_name -> platform.options.v2.EntityHierarchy
-	7,  // 8: platform.options.v2.LanguageOptions.languages:type_name -> platform.options.v2.LanguageType
-	26, // 9: platform.options.v2.ProxyOptions.authorization:type_name -> platform.options.v2.AuthorizationFilter
-	27, // 10: platform.options.v2.ProxyOptions.consent:type_name -> platform.options.v2.ConsentFilter
-	25, // 11: platform.options.v2.ProxyOptions.rate_limit:type_name -> platform.options.v2.RateLimitFilter
-	8,  // 12: platform.options.v2.ConnectorOptions.type:type_name -> platform.options.v2.ConnectorType
-	10, // 13: platform.options.v2.CQRSOptions.type:type_name -> platform.options.v2.CQRSType
-	11, // 14: platform.options.v2.PermissionOptions.roles:type_name -> platform.options.v2.AuthRole
-	12, // 15: platform.options.v2.GraphOptions.type:type_name -> platform.options.v2.GraphType
-	13, // 16: platform.options.v2.EntityFieldOptions.behavior:type_name -> platform.options.v2.FieldBehavior
-	18, // 17: platform.options.v2.SpecConfiguration.type:type_name -> platform.options.v2.SpecConfiguration.SpecConfigurationType
-	35, // 18: platform.options.v2.ConfigurationFieldOptions.configuration:type_name -> platform.options.v2.SpecConfiguration
-	14, // 19: platform.options.v2.SyntheticOptions.type:type_name -> platform.options.v2.SyntheticType
-	15, // 20: platform.options.v2.Classification.type:type_name -> platform.options.v2.ClassificationType
-	16, // 21: platform.options.v2.SpecOptions.type:type_name -> platform.options.v2.SpecEnumType
-	17, // 22: platform.options.v2.EventScopeOptions.scopes:type_name -> platform.options.v2.EventScope
+	17, // 5: platform.options.v2.ApiOptions.scope:type_name -> platform.options.v2.SpecRequestScope
+	4,  // 6: platform.options.v2.EntityOptions.type:type_name -> platform.options.v2.EntityType
+	5,  // 7: platform.options.v2.EntityOptions.consistency:type_name -> platform.options.v2.EntityConsistency
+	6,  // 8: platform.options.v2.EntityOptions.hierarchy:type_name -> platform.options.v2.EntityHierarchy
+	7,  // 9: platform.options.v2.LanguageOptions.languages:type_name -> platform.options.v2.LanguageType
+	27, // 10: platform.options.v2.ProxyOptions.authorization:type_name -> platform.options.v2.AuthorizationFilter
+	28, // 11: platform.options.v2.ProxyOptions.consent:type_name -> platform.options.v2.ConsentFilter
+	26, // 12: platform.options.v2.ProxyOptions.rate_limit:type_name -> platform.options.v2.RateLimitFilter
+	8,  // 13: platform.options.v2.ConnectorOptions.type:type_name -> platform.options.v2.ConnectorType
+	10, // 14: platform.options.v2.CQRSOptions.type:type_name -> platform.options.v2.CQRSType
+	11, // 15: platform.options.v2.PermissionOptions.roles:type_name -> platform.options.v2.AuthRole
+	12, // 16: platform.options.v2.GraphOptions.type:type_name -> platform.options.v2.GraphType
+	13, // 17: platform.options.v2.EntityFieldOptions.behavior:type_name -> platform.options.v2.FieldBehavior
+	18, // 18: platform.options.v2.SpecConfiguration.type:type_name -> platform.options.v2.SpecConfiguration.SpecConfigurationType
+	36, // 19: platform.options.v2.ConfigurationFieldOptions.configuration:type_name -> platform.options.v2.SpecConfiguration
+	14, // 20: platform.options.v2.SyntheticOptions.type:type_name -> platform.options.v2.SyntheticType
+	15, // 21: platform.options.v2.Classification.type:type_name -> platform.options.v2.ClassificationType
+	16, // 22: platform.options.v2.SpecOptions.type:type_name -> platform.options.v2.SpecEnumType
 	9,  // 23: platform.options.v2.AuthRoleOptions.role_type:type_name -> platform.options.v2.AuthRoleType
 	46, // 24: platform.options.v2.network_file:extendee -> google.protobuf.FileOptions
 	46, // 25: platform.options.v2.api_file:extendee -> google.protobuf.FileOptions
@@ -3331,50 +3351,50 @@ var file_platform_options_v2_annotations_proto_depIdxs = []int32{
 	46, // 28: platform.options.v2.graphql:extendee -> google.protobuf.FileOptions
 	46, // 29: platform.options.v2.configuration:extendee -> google.protobuf.FileOptions
 	46, // 30: platform.options.v2.has_multiple_implementations:extendee -> google.protobuf.FileOptions
-	47, // 31: platform.options.v2.api_service:extendee -> google.protobuf.ServiceOptions
-	47, // 32: platform.options.v2.service:extendee -> google.protobuf.ServiceOptions
-	47, // 33: platform.options.v2.proxy:extendee -> google.protobuf.ServiceOptions
-	47, // 34: platform.options.v2.connector:extendee -> google.protobuf.ServiceOptions
-	48, // 35: platform.options.v2.api_method:extendee -> google.protobuf.MethodOptions
-	48, // 36: platform.options.v2.cqrs:extendee -> google.protobuf.MethodOptions
-	48, // 37: platform.options.v2.permission:extendee -> google.protobuf.MethodOptions
-	48, // 38: platform.options.v2.rate:extendee -> google.protobuf.MethodOptions
-	49, // 39: platform.options.v2.api_message:extendee -> google.protobuf.MessageOptions
-	49, // 40: platform.options.v2.graph:extendee -> google.protobuf.MessageOptions
-	49, // 41: platform.options.v2.routine:extendee -> google.protobuf.MessageOptions
-	50, // 42: platform.options.v2.api_field:extendee -> google.protobuf.FieldOptions
-	50, // 43: platform.options.v2.entity_field:extendee -> google.protobuf.FieldOptions
-	50, // 44: platform.options.v2.configuration_field:extendee -> google.protobuf.FieldOptions
-	50, // 45: platform.options.v2.synthetic:extendee -> google.protobuf.FieldOptions
-	51, // 46: platform.options.v2.spec:extendee -> google.protobuf.EnumOptions
-	52, // 47: platform.options.v2.billing:extendee -> google.protobuf.EnumValueOptions
-	52, // 48: platform.options.v2.event_scope:extendee -> google.protobuf.EnumValueOptions
+	46, // 31: platform.options.v2.system:extendee -> google.protobuf.FileOptions
+	47, // 32: platform.options.v2.api_service:extendee -> google.protobuf.ServiceOptions
+	47, // 33: platform.options.v2.service:extendee -> google.protobuf.ServiceOptions
+	47, // 34: platform.options.v2.proxy:extendee -> google.protobuf.ServiceOptions
+	47, // 35: platform.options.v2.connector:extendee -> google.protobuf.ServiceOptions
+	48, // 36: platform.options.v2.api_method:extendee -> google.protobuf.MethodOptions
+	48, // 37: platform.options.v2.cqrs:extendee -> google.protobuf.MethodOptions
+	48, // 38: platform.options.v2.permission:extendee -> google.protobuf.MethodOptions
+	48, // 39: platform.options.v2.rate:extendee -> google.protobuf.MethodOptions
+	49, // 40: platform.options.v2.api_message:extendee -> google.protobuf.MessageOptions
+	49, // 41: platform.options.v2.graph:extendee -> google.protobuf.MessageOptions
+	49, // 42: platform.options.v2.routine:extendee -> google.protobuf.MessageOptions
+	50, // 43: platform.options.v2.api_field:extendee -> google.protobuf.FieldOptions
+	50, // 44: platform.options.v2.entity_field:extendee -> google.protobuf.FieldOptions
+	50, // 45: platform.options.v2.configuration_field:extendee -> google.protobuf.FieldOptions
+	50, // 46: platform.options.v2.synthetic:extendee -> google.protobuf.FieldOptions
+	51, // 47: platform.options.v2.spec:extendee -> google.protobuf.EnumOptions
+	52, // 48: platform.options.v2.billing:extendee -> google.protobuf.EnumValueOptions
 	52, // 49: platform.options.v2.auth_role:extendee -> google.protobuf.EnumValueOptions
 	52, // 50: platform.options.v2.event:extendee -> google.protobuf.EnumValueOptions
 	19, // 51: platform.options.v2.network_file:type_name -> platform.options.v2.NetworkOptions
-	20, // 52: platform.options.v2.api_file:type_name -> platform.options.v2.ApiOptions
-	21, // 53: platform.options.v2.entity:type_name -> platform.options.v2.EntityOptions
-	22, // 54: platform.options.v2.language:type_name -> platform.options.v2.LanguageOptions
-	23, // 55: platform.options.v2.graphql:type_name -> platform.options.v2.GraphqlOptions
-	36, // 56: platform.options.v2.configuration:type_name -> platform.options.v2.ConfigurationOptions
-	20, // 57: platform.options.v2.api_service:type_name -> platform.options.v2.ApiOptions
-	24, // 58: platform.options.v2.service:type_name -> platform.options.v2.SpecServiceOptions
-	28, // 59: platform.options.v2.proxy:type_name -> platform.options.v2.ProxyOptions
-	29, // 60: platform.options.v2.connector:type_name -> platform.options.v2.ConnectorOptions
-	20, // 61: platform.options.v2.api_method:type_name -> platform.options.v2.ApiOptions
-	30, // 62: platform.options.v2.cqrs:type_name -> platform.options.v2.CQRSOptions
-	32, // 63: platform.options.v2.permission:type_name -> platform.options.v2.PermissionOptions
-	31, // 64: platform.options.v2.rate:type_name -> platform.options.v2.RateLimitOptions
-	20, // 65: platform.options.v2.api_message:type_name -> platform.options.v2.ApiOptions
-	33, // 66: platform.options.v2.graph:type_name -> platform.options.v2.GraphOptions
-	45, // 67: platform.options.v2.routine:type_name -> platform.options.v2.RoutineOptions
-	20, // 68: platform.options.v2.api_field:type_name -> platform.options.v2.ApiOptions
-	34, // 69: platform.options.v2.entity_field:type_name -> platform.options.v2.EntityFieldOptions
-	37, // 70: platform.options.v2.configuration_field:type_name -> platform.options.v2.ConfigurationFieldOptions
-	38, // 71: platform.options.v2.synthetic:type_name -> platform.options.v2.SyntheticOptions
-	40, // 72: platform.options.v2.spec:type_name -> platform.options.v2.SpecOptions
-	41, // 73: platform.options.v2.billing:type_name -> platform.options.v2.BillingOptions
-	42, // 74: platform.options.v2.event_scope:type_name -> platform.options.v2.EventScopeOptions
+	21, // 52: platform.options.v2.api_file:type_name -> platform.options.v2.ApiOptions
+	22, // 53: platform.options.v2.entity:type_name -> platform.options.v2.EntityOptions
+	23, // 54: platform.options.v2.language:type_name -> platform.options.v2.LanguageOptions
+	24, // 55: platform.options.v2.graphql:type_name -> platform.options.v2.GraphqlOptions
+	37, // 56: platform.options.v2.configuration:type_name -> platform.options.v2.ConfigurationOptions
+	20, // 57: platform.options.v2.system:type_name -> platform.options.v2.SystemOptions
+	21, // 58: platform.options.v2.api_service:type_name -> platform.options.v2.ApiOptions
+	25, // 59: platform.options.v2.service:type_name -> platform.options.v2.SpecServiceOptions
+	29, // 60: platform.options.v2.proxy:type_name -> platform.options.v2.ProxyOptions
+	30, // 61: platform.options.v2.connector:type_name -> platform.options.v2.ConnectorOptions
+	21, // 62: platform.options.v2.api_method:type_name -> platform.options.v2.ApiOptions
+	31, // 63: platform.options.v2.cqrs:type_name -> platform.options.v2.CQRSOptions
+	33, // 64: platform.options.v2.permission:type_name -> platform.options.v2.PermissionOptions
+	32, // 65: platform.options.v2.rate:type_name -> platform.options.v2.RateLimitOptions
+	21, // 66: platform.options.v2.api_message:type_name -> platform.options.v2.ApiOptions
+	34, // 67: platform.options.v2.graph:type_name -> platform.options.v2.GraphOptions
+	45, // 68: platform.options.v2.routine:type_name -> platform.options.v2.RoutineOptions
+	21, // 69: platform.options.v2.api_field:type_name -> platform.options.v2.ApiOptions
+	35, // 70: platform.options.v2.entity_field:type_name -> platform.options.v2.EntityFieldOptions
+	38, // 71: platform.options.v2.configuration_field:type_name -> platform.options.v2.ConfigurationFieldOptions
+	39, // 72: platform.options.v2.synthetic:type_name -> platform.options.v2.SyntheticOptions
+	41, // 73: platform.options.v2.spec:type_name -> platform.options.v2.SpecOptions
+	42, // 74: platform.options.v2.billing:type_name -> platform.options.v2.BillingOptions
 	44, // 75: platform.options.v2.auth_role:type_name -> platform.options.v2.AuthRoleOptions
 	43, // 76: platform.options.v2.event:type_name -> platform.options.v2.EventOptions
 	77, // [77:77] is the sub-list for method output_type

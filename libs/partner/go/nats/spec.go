@@ -57,6 +57,15 @@ type SpecEvent struct {
 	EventTopic     string
 	EntityTypeName string
 }
+type SpecStreamEvent struct {
+	Request        proto.Message
+	Stream         Stream
+	Procedure      string
+	EventName      string
+	EventTopic     string
+	EntityTypeName string
+	// EventResponseTopic string
+}
 
 // GetListenerGroup generates a unique listener group identifier by combining the type names of the source and sink.
 func GetListenerGroup(source Type, sink Type) string {

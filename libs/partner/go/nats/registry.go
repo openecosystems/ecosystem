@@ -95,6 +95,11 @@ func GetSubjectName(scope string, subjectName string, procedure string) string {
 	return scope + "-" + subjectName + "." + procedure
 }
 
+// GetStreamResponseSubjectName generates a subject name by combining the provided scope and subject name with a hyphen separator.
+func GetStreamResponseSubjectName(scope string, subjectName string, procedure string, messageID string) string {
+	return scope + "-" + subjectName + "." + procedure + "." + messageID
+}
+
 // GetQueueGroupName generates a queue group name by combining the given scope and entityName with a predefined prefix "req.".
 func GetQueueGroupName(scope string, entityName string, procedure string) string {
 	return "req." + scope + "-" + entityName + "." + procedure

@@ -35,9 +35,14 @@ export declare const EcosystemConfigurationSchema: GenMessage<EcosystemConfigura
  */
 export declare type CreateEcosystemRequest = Message<"platform.ecosystem.v2alpha.CreateEcosystemRequest"> & {
   /**
+   * @generated from field: string organization_id = 1;
+   */
+  organizationId: string;
+
+  /**
    * Globally unique slug for this ecosystem
    *
-   * @generated from field: string slug = 1;
+   * @generated from field: string slug = 2;
    */
   slug: string;
 
@@ -91,9 +96,21 @@ export declare type CreateEcosystemResponse = Message<"platform.ecosystem.v2alph
   specContext?: SpecResponseContext;
 
   /**
+   * REMOVE THIS
+   *
    * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
    */
   ecosystem?: Ecosystem;
+
+  /**
+   * @generated from field: platform.ecosystem.v2alpha.Ecosystem test_ecosystem = 3;
+   */
+  testEcosystem?: Ecosystem;
+
+  /**
+   * @generated from field: platform.ecosystem.v2alpha.Ecosystem live_ecosystem = 4;
+   */
+  liveEcosystem?: Ecosystem;
 };
 
 /**
@@ -339,52 +356,57 @@ export declare type Ecosystem = Message<"platform.ecosystem.v2alpha.Ecosystem"> 
   slug: string;
 
   /**
-   * @generated from field: google.protobuf.Timestamp created_at = 3;
+   * @generated from field: string organization_id = 3;
+   */
+  organizationId: string;
+
+  /**
+   * @generated from field: google.protobuf.Timestamp created_at = 4;
    */
   createdAt?: Timestamp;
 
   /**
-   * @generated from field: google.protobuf.Timestamp updated_at = 4;
+   * @generated from field: google.protobuf.Timestamp updated_at = 5;
    */
   updatedAt?: Timestamp;
 
   /**
-   * @generated from field: string source_id = 5;
+   * @generated from field: string source_id = 6;
    */
   sourceId: string;
 
   /**
-   * @generated from field: platform.ecosystem.v2alpha.EcosystemType type = 6;
+   * @generated from field: platform.ecosystem.v2alpha.EcosystemType type = 7;
    */
   type: EcosystemType;
 
   /**
-   * @generated from field: platform.ecosystem.v2alpha.EcosystemStatus status = 7;
+   * @generated from field: platform.ecosystem.v2alpha.EcosystemStatus status = 8;
    */
   status: EcosystemStatus;
 
   /**
-   * @generated from field: string status_details = 8;
+   * @generated from field: string status_details = 9;
    */
   statusDetails: string;
 
   /**
-   * @generated from field: string name = 9;
+   * @generated from field: string name = 10;
    */
   name: string;
 
   /**
-   * @generated from field: string short_description = 10;
+   * @generated from field: string short_description = 11;
    */
   shortDescription: string;
 
   /**
-   * @generated from field: string description = 11;
+   * @generated from field: string description = 12;
    */
   description: string;
 
   /**
-   * @generated from field: string cidr = 12;
+   * @generated from field: string cidr = 13;
    */
   cidr: string;
 };
