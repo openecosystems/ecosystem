@@ -3,7 +3,7 @@ module github.com/openecosystems/ecosystem/libs/partner/go/protovalidate
 go 1.23.4
 
 require (
-	buf.build/go/protovalidate v0.13.0
+	buf.build/go/protovalidate v0.13.1
 	github.com/google/cel-go v0.25.0
 	github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha v0.0.0-20250612111543-f0c52f6dc5e9
 )

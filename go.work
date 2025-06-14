@@ -83,5 +83,8 @@ use (
 	./libs/public/go/sdk/gen/platform/ontology/v2alpha
 	./libs/public/go/sdk/gen/platform/system/v2alpha
 
+	// An implicit dependency reies on github.com/bufbuild/protovalidate-go which is incorrect
+	// Remove this once that is resolved.
+	//replace github.com/bufbuild/protovalidate-go => buf.build/go/protovalidate v0.13.0
 
 )
