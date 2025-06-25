@@ -2,6 +2,7 @@ package cli_methods
 
 import (
 	"embed"
+	"path/filepath"
 	"sort"
 	"strings"
 	"text/template"
@@ -18,7 +19,7 @@ import (
 var templates embed.FS
 
 var (
-	goOutPath = pgs.JoinPaths("platform")
+	goOutPath = pgs.JoinPaths()
 	outPath   = &goOutPath
 )
 
@@ -125,7 +126,10 @@ func (m GoCliMethodsModule) GenerateFile(file pgs.File) {
 			version := fns.GetPackageVersion(file)
 			methodName := method.Name().LowerSnakeCase().String()
 
-			name := outPath.SetExt("/" + system + "/" + version + "/" + system + version + "pbcli" + "/" + methodName + ".cmd.go").String()
+			fullPath := file.InputPath().String()
+			dirPath := filepath.Dir(fullPath)
+
+			name := outPath.SetExt("/" + dirPath + "/" + system + version + "pbcli" + "/" + methodName + ".cmd.go").String()
 			m.OverwriteGeneratorTemplateFile(name, m.Tpl, method)
 
 			// name := m.ctx.OutputPath(file).SetBase(method.Name().LowerSnakeCase().String()).SetExt(".pb." + l.FileExtension())

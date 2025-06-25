@@ -15,6 +15,7 @@ import (
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/listener"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/multiplexer"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/sdk"
+	sdkconnector "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/sdk_connector"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/server"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/spec"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/spec_entities"
@@ -46,6 +47,7 @@ func main() {
 		spec.GoSpecPlugin(),
 		spec_entities.GoSpecEntitiesPlugin(),
 		sdk.GoSdkPlugin(),
+		sdkconnector.GoSdkConnectorPlugin(),
 
 		// Typescript
 		spectypescript.TypeScriptSpecPlugin(),

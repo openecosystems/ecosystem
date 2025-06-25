@@ -2,6 +2,7 @@ package cli_systems
 
 import (
 	"embed"
+	"path/filepath"
 	"sort"
 	"strings"
 	"text/template"
@@ -16,7 +17,7 @@ import (
 var (
 	//go:embed templates/*.tmpl
 	templates embed.FS
-	goOutPath = pgs.JoinPaths("platform")
+	goOutPath = pgs.JoinPaths("")
 	outPath   = &goOutPath
 )
 
@@ -129,6 +130,9 @@ func (m GoCliSystemsModule) GenerateFile(file pgs.File) {
 
 	system := fns.DomainSystemName2(file).LowerCamelCase().String()
 	version := fns.GetPackageVersion(file)
-	name := outPath.SetExt("/" + system + "/" + version + "/" + system + version + "pbcli" + "/" + "systems.cmd.go").String()
+	fullPath := file.InputPath().String()
+	dirPath := filepath.Dir(fullPath)
+
+	name := outPath.SetExt("/" + dirPath + "/" + system + version + "pbcli" + "/" + "systems.cmd.go").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
 }

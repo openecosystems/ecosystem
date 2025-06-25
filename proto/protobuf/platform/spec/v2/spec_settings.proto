@@ -48,7 +48,8 @@ message Platform {
   bool insecure = 2;
   repeated string dns_endpoints = 3;
   bool dynamic_config_reload = 4;
-  Mesh mesh = 5;
+  string api_key = 5;
+  Mesh mesh = 6;
 }
 
 message Mesh {

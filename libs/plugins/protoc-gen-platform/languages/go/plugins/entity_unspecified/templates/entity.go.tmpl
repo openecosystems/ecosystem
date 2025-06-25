@@ -115,7 +115,10 @@ func (entity *{{ $entityName.UpperCamelCase }}SpecEntity) internal() {
 	// Enum
     var _ *{{ enumTypePackage . }}{{ .Type.Enum.Name.UpperCamelCase }}
   {{- else if isMap . }}
-    //{{ .Name }}
+	  //{{ .Name }}
+  {{- else if .Type.IsRepeated }}
+    //Repeated {{ .Name }}
+	var _ {{ sliceValueTypePackage . }}{{ sliceValueType . }}
   {{- else if isStructPB . -}}
     //{{ .Name }}
   {{- else if isStruct . -}}

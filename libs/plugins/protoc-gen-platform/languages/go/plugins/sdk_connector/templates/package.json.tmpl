@@ -1,0 +1,7 @@
+{{ $s := service .PgsFile }}{{ $version := getPackageVersion .PgsFile.File }}{{ $apiType := getApiOptionsTypeName .PgsFile.File }}{{ $system := domainSystemName2 .PgsFile.File }}
+{
+  "name": "{{ $system.LowerCamelCase }}-{{ $version }}-go-sdk",
+  "version": "0.0.0",
+  "description": "{{ $system.UpperCamelCase }} SDK version {{ $version }}",
+  "license": "Apache-2.0"
+}
