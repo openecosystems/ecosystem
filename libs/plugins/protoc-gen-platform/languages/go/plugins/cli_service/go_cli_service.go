@@ -2,6 +2,7 @@ package cli_service
 
 import (
 	"embed"
+	"path/filepath"
 	"sort"
 	"strings"
 	"text/template"
@@ -16,7 +17,7 @@ import (
 var templates embed.FS
 
 var (
-	goOutPath = pgs.JoinPaths("platform")
+	goOutPath = pgs.JoinPaths()
 	outPath   = &goOutPath
 )
 
@@ -118,9 +119,9 @@ func (m GoCliServiceModule) GenerateFile(file pgs.File) {
 	system := fns.DomainSystemName2(file).LowerCamelCase().String()
 	version := fns.GetPackageVersion(file)
 	fileName := fns.ProtoName(file)
-	name := outPath.SetExt("/" + system + "/" + version + "/" + system + version + "pbcli" + "/" + fileName + ".cmds.go").String()
-	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
+	fullPath := file.InputPath().String()
+	dirPath := filepath.Dir(fullPath)
 
-	// name := m.ctx.OutputPath(file).SetExt(".cmd." + l.FileExtension())
-	// m.OverwriteGeneratorTemplateFile(name.String(), m.Tpl, file)
+	name := outPath.SetExt("/" + dirPath + "/" + system + version + "pbcli" + "/" + fileName + ".cmds.go").String()
+	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
 }

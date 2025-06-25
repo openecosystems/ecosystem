@@ -326,6 +326,7 @@ type PackageJson struct {
 // If the environment variable is present, its value is used to update the corresponding Viper configuration field.
 func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 	envVar := strcase.ToScreamingSnake(strcase.ToLowerCamel(strings.ReplaceAll(yaml, ".", "_")))
+	fmt.Println("SETTING AN ENV VARIABLE: ", envVar)
 	if envPrefix != "" {
 		envVar = envPrefix + "_" + envVar
 	}

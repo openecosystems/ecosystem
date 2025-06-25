@@ -2,9 +2,40 @@ syntax = "proto3";
 
 package platform.type.v2;
 
+import "platform/options/v2/annotations.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+
+// Supported connector types
+enum ConnectorType {
+  CONNECTOR_TYPE_UNSPECIFIED = 0;
+  CONNECTOR_TYPE_PLATFORM = 1;
+  CONNECTOR_TYPE_SOURCE = 2;
+  CONNECTOR_TYPE_DESTINATION = 3;
+}
 
 message Connector {
 
+  string id = 1;
+  string name = 2;
+  string short_description = 3;
+  string description = 4;
+
+  //
+  google.protobuf.Timestamp created_at = 5 [(platform.options.v2.entity_field) = {behavior: FIELD_BEHAVIOR_OUTPUT_ONLY}];
+
+  //
+  google.protobuf.Timestamp updated_at = 6 [(platform.options.v2.entity_field) = {behavior: FIELD_BEHAVIOR_OUTPUT_ONLY}];
+
+  //
+  string version = 7 [(platform.options.v2.entity_field) = {behavior: FIELD_BEHAVIOR_IMMUTABLE}];
+
+  //
+  repeated ConnectorType types = 8;
+
+
+  map <string, google.protobuf.Any> configurations = 9;
 
 }

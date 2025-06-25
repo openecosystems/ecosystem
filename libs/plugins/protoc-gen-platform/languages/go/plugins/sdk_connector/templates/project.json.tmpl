@@ -1,0 +1,98 @@
+{{ $s := service .PgsFile }}{{ $version := getPackageVersion .PgsFile.File }}{{ $apiType := getApiOptionsTypeName .PgsFile.File }}{{ $system := domainSystemName2 .PgsFile.File }}
+{
+  "name": "{{ $system.LowerCamelCase }}-{{ $version }}-go-sdk",
+  "$schema": "{{ .CDToRootFolder }}node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "{{ .RelativePath }}",
+  "targets": {
+
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build ./...",
+        "cwd": "{{ .RelativePath }}"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "{{ .RelativePath }}"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "{{ .RelativePath }}"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["golangci-lint run ./... --timeout=5m"],
+        "parallel": false,
+        "cwd": "{{ .RelativePath }}"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "{{ .RelativePath }}"
+      }
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/{{ .RelativePath }}"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{{ .RelativePath }}",
+          "cp LICENSE.md dist/{{ .RelativePath }}/LICENSE.md",
+          "cp {{ .RelativePath }}/README.md dist/{{ .RelativePath }}/README.md",
+          "goreleaser release --config {{ .RelativePath }}/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    },
+    "snapshot": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/{{ .RelativePath }}"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{{ .RelativePath }}",
+          "cp LICENSE.md dist/{{ .RelativePath }}/LICENSE.md",
+          "cp {{ .RelativePath }}/README.md dist/{{ .RelativePath }}/README.md",
+          "goreleaser release --config {{ .RelativePath }}/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+        ],
+        "parallel": false
+      }
+    },
+    "nightly": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/dist/{{ .RelativePath }}"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{{ .RelativePath }}",
+          "cp LICENSE.md dist/{{ .RelativePath }}/LICENSE.md",
+          "cp {{ .RelativePath }}/README.md dist/{{ .RelativePath }}/README.md",
+          "goreleaser release --config {{ .RelativePath }}/.goreleaser.yaml --nightly --clean"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:{{ $apiType }}",
+    "language:golang",
+    "type:sdk",
+    "system:{{ $system.LowerCamelCase }}",
+    "version:{{ $version }}",
+    "exposure:external"
+  ]
+}
