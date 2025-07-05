@@ -113,20 +113,20 @@ func (entity *{{ $entityName.UpperCamelCase }}SpecEntity) internal() {
 {{ range .Fields }}
   {{- if .Type.IsEnum }}
 	// Enum
-    var _ *{{ enumTypePackage . }}{{ .Type.Enum.Name.UpperCamelCase }}
+    //var _ *{{ enumTypePackage . }}{{ .Type.Enum.Name.UpperCamelCase }}
   {{- else if isMap . }}
 	  //{{ .Name }}
   {{- else if .Type.IsRepeated }}
     //Repeated {{ .Name }}
-	var _ {{ sliceValueTypePackage . }}{{ sliceValueType . }}
+	//var _ {{ sliceValueTypePackage . }}{{ sliceValueType . }}
   {{- else if isStructPB . -}}
     //{{ .Name }}
   {{- else if isStruct . -}}
 	// Struct
-    var _ *{{ structTypePackage . }}{{ structType . }}
+    //var _ *{{ structTypePackage . }}{{ structType . }}
   {{- else if .Type.IsEmbed -}}
-    {{ if IsDuration . }}var _ durationpb.Duration{{ end }}
-    {{ if IsTimestamp . }}var _ timestamppb.Timestamp{{ end }}
+    //{{ if IsDuration . }}var _ durationpb.Duration{{ end }}
+    //{{ if IsTimestamp . }}var _ timestamppb.Timestamp{{ end }}
     //{{ .Name }}
   {{ end }}
 {{ end -}}

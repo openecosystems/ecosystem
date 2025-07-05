@@ -56,7 +56,8 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 	provider := options.ConfigurationProvider
 	if provider == nil {
-		panic("configuration provider is nil. Please provide a configuration provider to the server.")
+		fmt.Println("configuration provider is nil. Please provide a configuration provider to the server.")
+		os.Exit(1)
 	}
 
 	server.ConfigurationProvider = &provider
@@ -64,12 +65,13 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 	configurer, err := t.ResolveConfiguration()
 	if err != nil {
-		return nil
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	err = t.ValidateConfiguration()
 	if err != nil {
 		fmt.Println(err)
-		panic(err)
+		os.Exit(1)
 	}
 
 	bindings := RegisterBindings(ctx, options.Bounds, WithConfigurer(configurer))
@@ -166,13 +168,7 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 	case err := <-httpServerErr:
 		fmt.Println(ErrServerInternal.WithInternalErrorDetail(err, errors.New("received an httpServerError")).Error())
 	case <-serverQuit:
-		fmt.Printf("Stopping edged gracefully. Draining connections for up to %v seconds", 30)
-		fmt.Println()
-
-		_, cancel := context.WithTimeout(context.Background(), 30)
-		defer cancel()
-
-		ShutdownBindings(server.Bindings)
+		server.Shutdown()
 	}
 }
 
@@ -289,6 +285,17 @@ func (server *Server) ListenAndServeSpecListenable() chan SpecListenableErr {
 		fmt.Println("Registered Embedded Connector: " + key)
 	}
 	return listenerErr
+}
+
+// Shutdown gracefully stopping the connector
+func (server *Server) Shutdown() {
+	fmt.Printf("Stopping server gracefully. Draining connections for up to %v seconds", 30)
+	fmt.Println()
+
+	_, cancel := context.WithTimeout(context.Background(), 30)
+	defer cancel()
+
+	ShutdownBindings(server.Bindings)
 }
 
 // A ServerOption configures a [Server].

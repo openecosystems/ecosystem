@@ -326,7 +326,6 @@ type PackageJson struct {
 // If the environment variable is present, its value is used to update the corresponding Viper configuration field.
 func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 	envVar := strcase.ToScreamingSnake(strcase.ToLowerCamel(strings.ReplaceAll(yaml, ".", "_")))
-	fmt.Println("SETTING AN ENV VARIABLE: ", envVar)
 	if envPrefix != "" {
 		envVar = envPrefix + "_" + envVar
 	}
@@ -334,7 +333,7 @@ func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 	// fmt.Println(envVar + "=")
 	val, present := os.LookupEnv(envVar)
 	if present {
-		fmt.Printf("Setting %s from %s to %s\n", yaml, envVar, val)
+		// fmt.Printf("Setting %s from %s to %s\n", yaml, envVar, val)
 		configurer.Set(yaml, val)
 	}
 }
@@ -344,6 +343,7 @@ func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 func importEnvironmentVariables(configurer *viper.Viper, iface interface{}, envPrefix string, prefix string) {
 	// https://github.com/spf13/viper/issues/188#issuecomment-399884438
 	ifv := reflect.ValueOf(iface)
+
 	// Check if it's a pointer and dereference it
 	if ifv.Kind() == reflect.Ptr {
 		ifv = ifv.Elem()
@@ -357,13 +357,24 @@ func importEnvironmentVariables(configurer *viper.Viper, iface interface{}, envP
 
 	ift := reflect.TypeOf(iface)
 	// Ensure it's a struct before calling NumField
+
+	// Check if it's a pointer and dereference it
+	if ift.Kind() == reflect.Ptr {
+		ift = ift.Elem()
+	}
+
 	if ift.Kind() != reflect.Struct {
 		log.Debugf("Expected struct, got %v", ift.Kind())
 		return
 	}
+
 	for i := 0; i < ift.NumField(); i++ {
 		v := ifv.Field(i)
 		t := ift.Field(i)
+		// Skip unexported fields
+		if !t.IsExported() {
+			continue
+		}
 
 		fieldName := t.Name
 		tagValue, ok := t.Tag.Lookup("mapstructure")
@@ -445,7 +456,7 @@ func StringExpandEnv() mapstructure.DecodeHookFuncKind {
 }
 
 // Resolve reads configuration, unmarshals it into the destination, validates required fields, and merges with the source structure.
-func Resolve(_configurer *Configurer, dst, src interface{}) {
+func Resolve(_configurer *Configurer, destinationConfiguration, defaultConfiguration interface{}) {
 	if _configurer == nil {
 		panic("ConfigurationProvider is nil")
 	}
@@ -456,13 +467,28 @@ func Resolve(_configurer *Configurer, dst, src interface{}) {
 	if err != nil {
 		var configFileNotFoundError viper.ConfigFileNotFoundError
 		if errors.As(err, &configFileNotFoundError) {
-			fmt.Println("No spec configuration found.")
+			fmt.Println("No spec configuration found. Falling back to defaults.")
+		} else {
+			panic(fmt.Errorf("error reading config: %w", err))
 		}
 	}
 
-	importEnvironmentVariables(configurer, dst, "", "")
+	if defaultConfiguration != nil {
+		err = mergo.Merge(destinationConfiguration, defaultConfiguration, mergo.WithOverride)
+		if err != nil {
+			fmt.Println("Error merging settings configuration:", err)
+		}
+	} else {
+		fmt.Println("No default configuration provided")
+	}
 
-	err = configurer.Unmarshal(dst, viper.DecodeHook(
+	if err = mergo.Merge(destinationConfiguration, defaultConfiguration); err != nil {
+		fmt.Println("Error merging settings configuration:", err)
+	}
+
+	importEnvironmentVariables(configurer, destinationConfiguration, "", "")
+
+	err = configurer.Unmarshal(destinationConfiguration, viper.DecodeHook(
 		mapstructure.ComposeDecodeHookFunc(
 			mapstructure.StringToTimeDurationHookFunc(),
 			mapstructure.StringToSliceHookFunc(","),
@@ -475,12 +501,8 @@ func Resolve(_configurer *Configurer, dst, src interface{}) {
 	}
 
 	validate := validator.New()
-	if err = validate.Struct(dst); err != nil {
+	if err = validate.Struct(destinationConfiguration); err != nil {
 		fmt.Println("Missing required attributes", err)
-	}
-
-	if err = mergo.Merge(dst, src); err != nil {
-		fmt.Println("Error merging settings configuration:", err)
 	}
 }
 

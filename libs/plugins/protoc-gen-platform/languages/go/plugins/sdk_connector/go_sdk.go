@@ -103,8 +103,8 @@ func (m *GoSdkConnectorModule) Execute(targets map[string]pgs.File, _ map[string
 			RelativePath:     strings.TrimPrefix(fns.GoPackage(t), m.Parameters().Str(gitHubRepository)+"/"),
 		}
 		m.GenerateClientFile(t)
-		m.GenerateProjectJsonFile(t)
-		m.GeneratePackageJsonFile(t)
+		// m.GenerateProjectJsonFile(t)
+		// m.GeneratePackageJsonFile(t)
 		m.GenerateGoModFile(t)
 		m.GenerateGoReleaserFile(t)
 		m.GenerateReadmeFile(t)
@@ -283,7 +283,7 @@ func (m GoSdkConnectorModule) GenerateGoReleaserFile(file pgs.File) {
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
-	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerSnakeCase().String() + "/" + fns.GetPackageVersion(file) + "/.goreleaser.yaml").String()
+	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerSnakeCase().String() + "/" + fns.GetPackageVersion(file) + "/.goreleaser.sdk.yaml").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, m.data)
 }
 

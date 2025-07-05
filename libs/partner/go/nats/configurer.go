@@ -122,14 +122,14 @@ func (b *Binding) ValidateConfiguration() error {
 
 	if len(b.configuration.Natsd.Options.LeafNode.Remotes) == 0 {
 		errs = append(errs, errors.New(`missing leaf node remotes configuration. An example is:
-natsd:
-  options:
-    leafNode:
-      remotes:
-        - urls:
-            scheme: "tls"
-            host:   "connect.ngs.global"
-          credentials: "./example.creds"`))
+	natsd:
+	 options:
+	   leafNode:
+	     remotes:
+	       - urls:
+	           scheme: "tls"
+	           host:   "connect.ngs.global"
+	         credentials: "./example.creds"`))
 	}
 
 	for i, s := range b.configuration.EventStreamRegistry.Streams {
@@ -162,6 +162,7 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 		Nats: Nats{
 			Options: nats.Options{
 				Servers: NatsServers,
+				//TLSConfig: &tls.Config{},
 				//Dialer: &net.Dialer{
 				//	Timeout:   0,
 				//	Deadline:  time.Time{},
@@ -184,7 +185,7 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 				Host:       NatsdServerHost,
 				Port:       NatsdServerPort,
 				DontListen: false,
-				// Trace:      cfg.App.Verbose,
+				// Trace:      true,
 				// Debug:      cfg.App.Debug,
 				MaxConn: -1,
 				MaxSubs: -1,
@@ -198,6 +199,7 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 				DisableJetStreamBanner: true,
 				// TLSConfig:              &tls.Config{},
 				// AllowNonTLS:            true,
+				// TLSHandshakeFirst:      true,
 			},
 		},
 		EventStreamRegistry: EventStreamRegistry{

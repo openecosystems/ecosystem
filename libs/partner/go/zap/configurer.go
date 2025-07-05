@@ -1,13 +1,13 @@
 package zaploggerv1
 
 import (
-	"encoding/json"
 	"fmt"
 
 	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"gopkg.in/yaml.v3"
 )
 
 // Configuration holds the settings for initializing a zap-based logging framework with custom configuration options.
@@ -78,7 +78,7 @@ func (b *Binding) GetConfiguration() *Configuration {
 
 // GetConfigurationBytes retrieves the configuration of the binding instance. Returns the configuration as an *Configuration.
 func (b *Binding) GetConfigurationBytes() ([]byte, error) {
-	byteArray, err := json.Marshal(*b.GetConfiguration()) //nolint:staticcheck
+	byteArray, err := yaml.Marshal(b.GetConfiguration())
 	if err != nil {
 		fmt.Println("Error:", err)
 		return nil, err

@@ -33,18 +33,6 @@ func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.Configuration
 	}
 
 	sdkv2alphalib.Resolve(configurer, &config, c.GetDefaultConfiguration())
-	name, version, err := sdkv2alphalib.ImportPackageJson()
-	if err != nil {
-		return nil, err
-	}
-
-	if config.App.Name == "" {
-		config.App.Name = name
-	}
-
-	if config.App.Version == "" {
-		config.App.Version = version
-	}
 
 	ResolvedConfiguration = &config
 	config.configuration = &config

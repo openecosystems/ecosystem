@@ -3,7 +3,6 @@ package sdkv2alphalib
 import (
 	"errors"
 	"fmt"
-	"math"
 	"net"
 
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
@@ -44,14 +43,14 @@ func NewCIDR(cidr string) (*CIDRBlock, error) {
 	}
 
 	// Prevent G115: integer overflow conversion int -> uint32 (gosec)
-	if ones < 0 || ones > math.MaxUint32 {
+	if ones < 0 {
 		fmt.Println("Error: ones value is out of uint32 range")
 		return nil, errors.New("error: ones value is out of uint32 range")
 	}
 	subnetBits := uint32(ones)
 
 	// Prevent G115: integer overflow conversion int -> uint32 (gosec)
-	if bits < 0 || bits > math.MaxUint32 {
+	if bits < 0 {
 		fmt.Println("Error: bits value is out of uint32 range")
 		return nil, errors.New("error: bits value is out of uint32 range")
 	}

@@ -269,13 +269,7 @@ func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
 			fmt.Println(ErrServerInternal.WithInternalErrorDetail(err.Error))
 		}
 	case <-connectorQuit:
-		fmt.Printf("Stopping connector gracefully. Draining connections for up to %v seconds", 30)
-		fmt.Println()
-
-		_, cancel := context.WithTimeout(context.Background(), 30)
-		defer cancel()
-
-		ShutdownBindings(connector.Bindings)
+		connector.Shutdown()
 	}
 }
 
@@ -291,6 +285,17 @@ func (connector *Connector) ListenAndProcessSpecListenable() chan SpecListenable
 		fmt.Println("Registered Listenable: " + key)
 	}
 	return listenerErr
+}
+
+// Shutdown gracefully stopping the connector
+func (connector *Connector) Shutdown() {
+	fmt.Printf("Stopping connector gracefully. Draining connections for up to %v seconds", 30)
+	fmt.Println()
+
+	_, cancel := context.WithTimeout(context.Background(), 30)
+	defer cancel()
+
+	ShutdownBindings(connector.Bindings)
 }
 
 // descKind returns a string describing the kind of protoreflect.Descriptor instance provided as input.

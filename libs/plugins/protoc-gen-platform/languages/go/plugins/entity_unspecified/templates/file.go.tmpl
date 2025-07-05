@@ -11,9 +11,10 @@ import (
   {{ if not $i }}"google.golang.org/protobuf/types/known/anypb"{{ end }}
   "errors"
   "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+  specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
   {{ range $key, $value := $imports }}
-  {{ $value }} "{{ $key }}"
+  //{{ $value }} "{{ $key }}"
   {{- end }}
 )
 

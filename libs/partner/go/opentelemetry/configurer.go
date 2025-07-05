@@ -9,11 +9,13 @@ import (
 
 // Configuration represents the configuration settings for Opentelemetry providers used in the binding.
 type Configuration struct {
-	Opentelemetry struct {
-		TraceProviderEnabled  bool
-		MeterProviderEnabled  bool
-		LoggerProviderEnabled bool
-	}
+	Opentelemetry Opentelemetry
+}
+
+type Opentelemetry struct {
+	TraceProviderEnabled  bool
+	MeterProviderEnabled  bool
+	LoggerProviderEnabled bool
 }
 
 // ResolveConfiguration resolves and merges the default and user-provided configurations for the Binding instance.

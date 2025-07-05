@@ -7,8 +7,11 @@
 package typev2pb
 
 import (
+	_ "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,10 +24,72 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Supported connector types
+type ConnectorType int32
+
+const (
+	ConnectorType_CONNECTOR_TYPE_UNSPECIFIED ConnectorType = 0
+	ConnectorType_CONNECTOR_TYPE_PLATFORM    ConnectorType = 1
+	ConnectorType_CONNECTOR_TYPE_SOURCE      ConnectorType = 2
+	ConnectorType_CONNECTOR_TYPE_DESTINATION ConnectorType = 3
+)
+
+// Enum value maps for ConnectorType.
+var (
+	ConnectorType_name = map[int32]string{
+		0: "CONNECTOR_TYPE_UNSPECIFIED",
+		1: "CONNECTOR_TYPE_PLATFORM",
+		2: "CONNECTOR_TYPE_SOURCE",
+		3: "CONNECTOR_TYPE_DESTINATION",
+	}
+	ConnectorType_value = map[string]int32{
+		"CONNECTOR_TYPE_UNSPECIFIED": 0,
+		"CONNECTOR_TYPE_PLATFORM":    1,
+		"CONNECTOR_TYPE_SOURCE":      2,
+		"CONNECTOR_TYPE_DESTINATION": 3,
+	}
+)
+
+func (x ConnectorType) Enum() *ConnectorType {
+	p := new(ConnectorType)
+	*p = x
+	return p
+}
+
+func (x ConnectorType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ConnectorType) Descriptor() protoreflect.EnumDescriptor {
+	return file_platform_type_v2_connector_proto_enumTypes[0].Descriptor()
+}
+
+func (ConnectorType) Type() protoreflect.EnumType {
+	return &file_platform_type_v2_connector_proto_enumTypes[0]
+}
+
+func (x ConnectorType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ConnectorType.Descriptor instead.
+func (ConnectorType) EnumDescriptor() ([]byte, []int) {
+	return file_platform_type_v2_connector_proto_rawDescGZIP(), []int{0}
+}
+
 type Connector struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name             string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ShortDescription string                 `protobuf:"bytes,3,opt,name=short_description,json=shortDescription,proto3" json:"short_description,omitempty"`
+	Description      string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Version string `protobuf:"bytes,7,opt,name=version,proto3" json:"version,omitempty"`
+	Types          []ConnectorType       `protobuf:"varint,8,rep,packed,name=types,proto3,enum=platform.type.v2.ConnectorType" json:"types,omitempty"`
+	Configurations map[string]*anypb.Any `protobuf:"bytes,9,rep,name=configurations,proto3" json:"configurations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *Connector) Reset() {
@@ -57,12 +122,94 @@ func (*Connector) Descriptor() ([]byte, []int) {
 	return file_platform_type_v2_connector_proto_rawDescGZIP(), []int{0}
 }
 
+func (x *Connector) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Connector) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Connector) GetShortDescription() string {
+	if x != nil {
+		return x.ShortDescription
+	}
+	return ""
+}
+
+func (x *Connector) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *Connector) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *Connector) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+func (x *Connector) GetVersion() string {
+	if x != nil {
+		return x.Version
+	}
+	return ""
+}
+
+func (x *Connector) GetTypes() []ConnectorType {
+	if x != nil {
+		return x.Types
+	}
+	return nil
+}
+
+func (x *Connector) GetConfigurations() map[string]*anypb.Any {
+	if x != nil {
+		return x.Configurations
+	}
+	return nil
+}
+
 var File_platform_type_v2_connector_proto protoreflect.FileDescriptor
 
 const file_platform_type_v2_connector_proto_rawDesc = "" +
 	"\n" +
-	" platform/type/v2/connector.proto\x12\x10platform.type.v2\"\v\n" +
-	"\tConnectorB]Z[github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pbb\x06proto3"
+	" platform/type/v2/connector.proto\x12\x10platform.type.v2\x1a%platform/options/v2/annotations.proto\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x92\x04\n" +
+	"\tConnector\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12+\n" +
+	"\x11short_description\x18\x03 \x01(\tR\x10shortDescription\x12 \n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12B\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\aʷ\x18\x03\x12\x01\x03R\tcreatedAt\x12B\n" +
+	"\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampB\aʷ\x18\x03\x12\x01\x03R\tupdatedAt\x12!\n" +
+	"\aversion\x18\a \x01(\tB\aʷ\x18\x03\x12\x01\x05R\aversion\x125\n" +
+	"\x05types\x18\b \x03(\x0e2\x1f.platform.type.v2.ConnectorTypeR\x05types\x12W\n" +
+	"\x0econfigurations\x18\t \x03(\v2/.platform.type.v2.Connector.ConfigurationsEntryR\x0econfigurations\x1aW\n" +
+	"\x13ConfigurationsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12*\n" +
+	"\x05value\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\x05value:\x028\x01*\x87\x01\n" +
+	"\rConnectorType\x12\x1e\n" +
+	"\x1aCONNECTOR_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\x17CONNECTOR_TYPE_PLATFORM\x10\x01\x12\x19\n" +
+	"\x15CONNECTOR_TYPE_SOURCE\x10\x02\x12\x1e\n" +
+	"\x1aCONNECTOR_TYPE_DESTINATION\x10\x03B]Z[github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pbb\x06proto3"
 
 var (
 	file_platform_type_v2_connector_proto_rawDescOnce sync.Once
@@ -76,16 +223,26 @@ func file_platform_type_v2_connector_proto_rawDescGZIP() []byte {
 	return file_platform_type_v2_connector_proto_rawDescData
 }
 
-var file_platform_type_v2_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_platform_type_v2_connector_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_platform_type_v2_connector_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_platform_type_v2_connector_proto_goTypes = []any{
-	(*Connector)(nil), // 0: platform.type.v2.Connector
+	(ConnectorType)(0),            // 0: platform.type.v2.ConnectorType
+	(*Connector)(nil),             // 1: platform.type.v2.Connector
+	nil,                           // 2: platform.type.v2.Connector.ConfigurationsEntry
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
+	(*anypb.Any)(nil),             // 4: google.protobuf.Any
 }
 var file_platform_type_v2_connector_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	3, // 0: platform.type.v2.Connector.created_at:type_name -> google.protobuf.Timestamp
+	3, // 1: platform.type.v2.Connector.updated_at:type_name -> google.protobuf.Timestamp
+	0, // 2: platform.type.v2.Connector.types:type_name -> platform.type.v2.ConnectorType
+	2, // 3: platform.type.v2.Connector.configurations:type_name -> platform.type.v2.Connector.ConfigurationsEntry
+	4, // 4: platform.type.v2.Connector.ConfigurationsEntry.value:type_name -> google.protobuf.Any
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_platform_type_v2_connector_proto_init() }
@@ -98,13 +255,14 @@ func file_platform_type_v2_connector_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_platform_type_v2_connector_proto_rawDesc), len(file_platform_type_v2_connector_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   1,
+			NumEnums:      1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_platform_type_v2_connector_proto_goTypes,
 		DependencyIndexes: file_platform_type_v2_connector_proto_depIdxs,
+		EnumInfos:         file_platform_type_v2_connector_proto_enumTypes,
 		MessageInfos:      file_platform_type_v2_connector_proto_msgTypes,
 	}.Build()
 	File_platform_type_v2_connector_proto = out.File
