@@ -1,3 +1,13 @@
+## 0.2.0 (2025-07-19)
+
+### 🚀 Features
+
+- promoting the sdk to v2beta; upgrading libraries ([dd59aaa](https://github.com/openecosystems/ecosystem/commit/dd59aaa))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.1.0 (2025-07-19)
 
 ### 🚀 Features

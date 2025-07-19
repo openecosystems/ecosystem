@@ -1,6 +1,6 @@
 {
     "name": "go-protobuf-sdk-v2beta",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Go Protobuf SDK v2beta",
     "private": true,
     "license": "Apache-2.0"
