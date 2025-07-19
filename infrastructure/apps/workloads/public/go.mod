@@ -1,10 +1,10 @@
-module infrastructure/apps/workloads/private/edge/v2alpha/edge-router
+module infrastructure/apps/workloads/public
 
 go 1.23.4
 
 require (
+	github.com/dirien/pulumi-vultr/sdk/v2 v2.21.1
 	github.com/pulumi/pulumi/sdk/v3 v3.137.0
-	github.com/pulumi/pulumi-fastly/sdk/v8 v8.12.2
 )
 
 require (

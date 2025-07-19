@@ -7,7 +7,7 @@
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "buf generate",
+        "command": "buf generate-disabled",
         "cwd": "proto/private"
       },
       "cache": false

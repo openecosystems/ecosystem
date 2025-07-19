@@ -1,10 +1,10 @@
-module infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer
+module infrastructure/apps/workloads/private
 
 go 1.23.4
 
 require (
-	github.com/dirien/pulumi-vultr/sdk/v2 v2.21.1
 	github.com/pulumi/pulumi/sdk/v3 v3.137.0
+	github.com/pulumi/pulumi-fastly/sdk/v8 v8.12.2
 )
 
 require (

@@ -1,9 +1,9 @@
-package main
+package ecosystem
 
 import (
 	"fmt"
 
-	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 func cloudinit(key, caCrt, hostCrt, hostKey, version string) string {

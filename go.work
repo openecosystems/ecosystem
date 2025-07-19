@@ -10,23 +10,20 @@ use (
 	// Web
 	// ===================================
 	./apps/web/public/docs/v2alpha
-	./apps/workloads/poc/i18n/v1alpha
-	./apps/workloads/poc/wasm/v2alpha/wasm
-	./apps/workloads/public/cryptography/v2alpha/encryption
-	./apps/workloads/public/dns/v2alpha/dynamic-dns
 
 	// Services
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
+	./apps/workloads/poc/i18n/v1alpha
+	./apps/workloads/poc/wasm/v2alpha/wasm
+	./apps/workloads/public/cryptography/v2alpha/encryption
+	./apps/workloads/public/dns/v2alpha/dynamic-dns
 
 	// Infrastructure
 	// ===================================
-	./infrastructure/apps/workloads/private/edge/v2alpha/edge-router
-	./infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer
-	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
-	./infrastructure/apps/workloads/public/ecosystem/v2alpha/ecosystem
-	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
+	./infrastructure/apps/workloads/private
+	./infrastructure/apps/workloads/public
 
 	// Plugin libraries
 	// ===================================
@@ -36,12 +33,9 @@ use (
 	// Proof of Concept libraries
 	// ===================================
 	./libs/poc/go/sdk/gen/platform/reference/v2alpha
-	./libs/poc/go/model
 
 	// Private libraries
 	// ===================================
-	./libs/private/go/sdk/gen/platform/edge/v2alpha
-	./libs/private/go/model
 
 	// Protobuf libraries
 	// ===================================
@@ -50,9 +44,5 @@ use (
 	// Public libraries
 	// ===================================
 	./libs/public/go/sdk/v2beta
-
-	// An implicit dependency reies on github.com/bufbuild/protovalidate-go which is incorrect
-	// Remove this once that is resolved.
-	//replace github.com/bufbuild/protovalidate-go => buf.build/go/protovalidate v0.13.0
 
 )
