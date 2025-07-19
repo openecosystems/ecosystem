@@ -1,3 +1,13 @@
+## 0.8.0 (2025-07-19)
+
+### 🚀 Features
+
+- preparing for release ([cee6f53](https://github.com/openecosystems/ecosystem/commit/cee6f53))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.7.0 (2025-07-19)
 
 ### 🚀 Features
