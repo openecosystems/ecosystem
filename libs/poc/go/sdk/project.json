@@ -8,7 +8,7 @@
     "generate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "buf generate",
+        "command": "buf generate-disabled",
         "cwd": "libs/poc/go/sdk"
       },
       "cache": false

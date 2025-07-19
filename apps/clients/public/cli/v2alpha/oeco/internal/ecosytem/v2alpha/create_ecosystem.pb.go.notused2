@@ -13,7 +13,7 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 
 	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api/iam/v2alpha"
-	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
 	ecosystemv2alphapbsdk "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/ecosystem/v2alpha"
 	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
@@ -32,7 +32,7 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 	Version: "",
 	// Args:    cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, _ []string) {
-		settings := cmd.Context().Value(sdkv2betalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+		settings := cmd.Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.Configuration)
 		log := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*clog.Logger)
 
 		model := NewCreateEcosystemModel(settings)
@@ -104,7 +104,7 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 			if settings.Platform.Insecure {
 				url = "http://" + settings.Platform.Mesh.Endpoint
 			}
-			client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(cliv2alphalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
+			client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
 
 			response, err := client.CreateEcosystem(context.Background(), request)
 			if err != nil {

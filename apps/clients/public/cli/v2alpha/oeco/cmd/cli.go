@@ -17,10 +17,6 @@ import (
 	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 	charmbraceletloggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/charmbracelet"
 	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/cryptography/v2alpha/cryptographyv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha/iamv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/system/v2alpha/systemv2alphapbcli"
 )
 
 // DefaultVersion defines the fallback version identifier when no compile-time version is provided.
@@ -145,13 +141,9 @@ func Execute() {
 // AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
 func AddCommands(settings *sdkv2betalib.CLIConfiguration) {
 	// TODO: Make this dynamic
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "communication", Version: "v1alpha"}, communicationv1alphapbcli.SystemCmd)
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "communication", Version: "v1beta"}, communicationv1betapbcli.SystemCmd)
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "configuration", Version: "v2alpha"}, configurationv2alphapbcli.SystemCmd)
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "cryptography", Version: "v2alpha"}, cryptographyv2alphapbcli.SystemCmd)
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "ecosystem", Version: "v2alpha"}, ecosystemv2alphapbcli.SystemCmd)
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "iam", Version: "v2alpha"}, iamv2alphapbcli.SystemCmd)
-	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "system", Version: "v2alpha"}, systemv2alphapbcli.SystemCmd)
+	// sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "cryptography", Version: "v2alpha"}, cryptographyv2alphapbcli.SystemCmd)
+	// sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "ecosystem", Version: "v2alpha"}, ecosystemv2alphapbcli.SystemCmd)
+	// sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "iam", Version: "v2alpha"}, iamv2alphapbcli.SystemCmd)
 
 	sdkv2betalib.CommandRegistry.RegisterCommands()
 

@@ -16,7 +16,6 @@ import (
 	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
 	iamv2alphapbconnect "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 
-	"github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal"
 	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
@@ -74,7 +73,7 @@ Facilitates creating a PKI certificate and getting it signed by an Ecosystem Acc
 			url = "http://" + settings.Platform.Endpoint
 		}
 
-		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(internal.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
+		client := iamv2alphapbconnect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
 
 		response, err4 := client.CreateAccount(context.Background(), request)
 		if err4 != nil {

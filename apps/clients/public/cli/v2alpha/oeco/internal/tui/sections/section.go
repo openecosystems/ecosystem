@@ -22,7 +22,7 @@ import (
 	theme "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 
-	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 var once sync.Once
@@ -47,7 +47,7 @@ type NewBaseOptions struct {
 	Plural        string
 	Pages         []contract.Page
 	CurrentPageID int
-	Settings      *cliv2alphalib.CLIConfiguration
+	Settings      *sdkv2betalib.CLIConfiguration
 }
 
 // NewBaseModel creates and initializes a new BaseModel instance with the provided context and options.

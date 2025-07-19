@@ -10,15 +10,15 @@ use (
 	// Web
 	// ===================================
 	./apps/web/public/docs/v2alpha
+	./apps/workloads/poc/i18n/v1alpha
+	./apps/workloads/poc/wasm/v2alpha/wasm
+	./apps/workloads/public/cryptography/v2alpha/encryption
+	./apps/workloads/public/dns/v2alpha/dynamic-dns
 
 	// Services
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
-	./apps/workloads/poc/i18n/v1alpha
-	./apps/workloads/poc/wasm/v2alpha/wasm
-	./apps/workloads/public/cryptography/v2alpha/encryption
-	./apps/workloads/public/dns/v2alpha/dynamic-dns
 
 	// Infrastructure
 	// ===================================
@@ -32,7 +32,6 @@ use (
 
 	// Proof of Concept libraries
 	// ===================================
-	./libs/poc/go/sdk/gen/platform/reference/v2alpha
 
 	// Private libraries
 	// ===================================

@@ -1,6 +1,12 @@
-package main
+package multiplexer
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+
+	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
 
 func EventInfrastructure(ctx *pulumi.Context) error {
 	cfg := config.New(ctx, "")
@@ -9,6 +15,8 @@ func EventInfrastructure(ctx *pulumi.Context) error {
 	caCrt := cfg.Require("caCrt")
 	hostCrt := cfg.Require("hostCrt")
 	hostKey := cfg.Require("hostKey")
+
+	name := "multiplexer"
 
 	script, err := vultr.NewStartupScript(ctx, name, &vultr.StartupScriptArgs{
 		Name:   pulumi.String(name + "-startup-script"),
