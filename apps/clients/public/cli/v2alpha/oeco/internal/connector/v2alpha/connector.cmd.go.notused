@@ -13,8 +13,8 @@ import (
 	connector "apps/clients/public/cli/v2alpha/oeco/internal/tui/sections/connector"
 	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/cli/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 )
 
 // Cmd defines a CLI command named "connector" for interaction, supporting one optional argument and a short description.

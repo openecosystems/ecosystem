@@ -11,7 +11,7 @@ import (
 
 	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 )
 
 // Parser is a structure that holds a reference to a FileSystem for interacting with the underlying filesystem.

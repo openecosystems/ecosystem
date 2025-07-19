@@ -1,10 +1,6 @@
 package main
 
 import (
-	"context"
-
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
-
 	"github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )

@@ -1,7 +1,7 @@
 package enclavev2alphapbint
 
 import (
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 
 	clog "github.com/charmbracelet/log"
 	"github.com/spf13/cobra"

@@ -1,3 +1,3 @@
 # To snapshot
 
-nx run go-protobuf-sdk-v2beta:snapshot
+nx run-many -t snapshot --projects=tag:type:sdk

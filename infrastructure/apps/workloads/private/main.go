@@ -3,10 +3,9 @@ package main
 import (
 	"context"
 
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	multiplexer "infrastructure/apps/workloads/private/event/v2alpha/event-multiplexer"
 
-	"github.com/pulumi/pulumi-fastly/sdk/v8/go/fastly"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 )
 
 func main() {
@@ -20,5 +19,5 @@ func main() {
 	// Create DNS Records
 	// Create
 
-	infrastructure.Run(edge)
+	infrastructure.Run(multiplexer.EventInfrastructure)
 }

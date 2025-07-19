@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"os"
 
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
+	iamv2alphapb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/iam/v2alpha"
 
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
+	nebulav1ca "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nebula/ca"
 
 	"github.com/apex/log"
 	"github.com/spf13/cobra"

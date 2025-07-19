@@ -13,10 +13,10 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 
 	iamv2alphapbint "apps/clients/public/cli/v2alpha/oeco/internal/api/iam/v2alpha"
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
-	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/protobuf/gen/platform/ecosystem/v2alpha"
-	ecosystemv2alphapbsdk "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/ecosystem/v2alpha"
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/cli/v2alpha"
+	ecosystemv2alphapb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/protobuf/gen/platform/ecosystem/v2alpha"
+	ecosystemv2alphapbsdk "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/ecosystem/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 )
 
 var (

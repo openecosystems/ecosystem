@@ -36,12 +36,8 @@ use (
 	// Private libraries
 	// ===================================
 
-	// Protobuf libraries
-	// ===================================
-	./libs/protobuf/go/sdk/v2beta
-
 	// Public libraries
 	// ===================================
-	./libs/public/go/sdk/v2beta
+	./go/oeco-sdk/v2beta
 
 )

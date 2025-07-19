@@ -1,0 +1,82 @@
+version: v2
+inputs:
+  - directory: ../../proto/public
+  - directory: ../../proto/protobuf
+plugins:
+
+####
+#### v2beta Generation
+####
+  - local: protoc-gen-platform
+    out: ./v2beta/gen/platform
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=sdk-v2beta
+      - prefix=public
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=multiplexer-v2beta
+      - prefix=public
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=entity-unspecified-v2beta
+      - prefix=public
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=spec-v2beta
+      - prefix=public
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=cli-system-v2beta
+      - prefix=public
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=cli-systems-v2beta
+      - prefix=public
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=cli-service-v2beta
+      - prefix=public
+    #  - local: protoc-gen-platform
+    #    out: ./gen
+    #    opt:
+    #      - paths=source_relative
+    #      - language=go
+    #      - type=cli-commands-v2beta
+    #      - prefix=public
+    strategy: all
+  - local: protoc-gen-platform
+    out: ./v2beta/gen
+    opt:
+      - paths=source_relative
+      - language=go
+      - type=cli-methods-v2beta
+      - prefix=public
+  - remote: buf.build/protocolbuffers/go
+    out: ./v2beta/gen
+    opt: paths=source_relative
+  #  - remote: buf.build/grpc/go
+  #    out: ./gen
+  #    opt: paths=source_relative
+  - remote: buf.build/connectrpc/go
+    out: ./v2beta/gen
+    opt: paths=source_relative

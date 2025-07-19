@@ -7,11 +7,11 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	pcontext "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
+	nebulav1ca "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nebula/ca"
+	iamv2alphapb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/iam/v2alpha"
+	typev2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2"
 
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 )
 
 // LocalAccountMsg represents a command message used for communication or signaling within a program or system.

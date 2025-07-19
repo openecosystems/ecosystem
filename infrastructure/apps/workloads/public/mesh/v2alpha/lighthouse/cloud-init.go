@@ -3,7 +3,7 @@ package lighthouse
 import (
 	"fmt"
 
-	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 )
 
 func cloudinit(key, caCrt, hostCrt, hostKey, version string) string {

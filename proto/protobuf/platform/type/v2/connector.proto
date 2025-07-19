@@ -6,7 +6,7 @@ import "platform/options/v2/annotations.proto";
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2;typev2pb";
+option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pb";
 
 // Supported connector types
 enum ConnectorType {

@@ -6,14 +6,14 @@ package accountauthority
 //
 //	"github.com/nats-io/nats.go/jetstream"
 //
-//	natsnodev1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nats"
-//	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
-//	zaploggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/zap"
-//	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2"
-//	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
-//	iamv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
-//	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
-//	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+//	natsnodev1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nats"
+//	nebulav1ca "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nebula/ca"
+//	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
+//	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+//	typev2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2"
+//	iamv2alphapbmodel "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/model/gen/platform/iam/v2alpha"
+//	iamv2alphapb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/iam/v2alpha"
+//	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 //)
 //
 //// CreateAccountAuthorityListener represents a listener for handling requests to create a account authority.
