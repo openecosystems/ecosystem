@@ -116,7 +116,7 @@
     },
     "defaultProject": "proto",
     "plugins": [
-        "@nx-go/nx-go",
+        "@platform/nx-goreleaser-sdk",
         {
             "plugin": "@nx/eslint/plugin",
             "options": {

@@ -1,5 +1,5 @@
 {
-  "name": "sdk-v2beta",
+  "name": "go-sdk-v2beta",
   "version": "0.6.0",
   "description": "SDK version v2beta",
   "license": "Apache-2.0"
