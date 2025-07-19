@@ -65,7 +65,7 @@ export const createNodes = [
                         cwd: projectRoot,
                     },
                 },
-                distribute: {
+                "nx-release-publish": {
                     executor: 'nx:run-commands',
                     dependsOn: ['build'],
                     outputs: [`{workspaceRoot}/dist/${projectRoot}`],
