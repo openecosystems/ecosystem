@@ -11,7 +11,7 @@ git push --follow-tags
 
 # Step 3: Run GoReleaser
 # Ensure Git is not in a "dirty" state
-nx run go-protobuf-sdk-v2beta:distribute
+nx run go-protobuf-sdk-v2beta:release
 
 
 nx release --first-release -p go-protobuf-sdk-v2beta
