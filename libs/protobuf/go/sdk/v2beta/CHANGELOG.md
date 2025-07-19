@@ -1,3 +1,14 @@
+## 0.4.0 (2025-07-19)
+
+### 🚀 Features
+
+- preparing for release ([a9eed5f](https://github.com/openecosystems/ecosystem/commit/a9eed5f))
+- OECO Cleanup 28 ([#60](https://github.com/openecosystems/ecosystem/pull/60))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.3.0 (2025-07-19)
 
 ### 🚀 Features
