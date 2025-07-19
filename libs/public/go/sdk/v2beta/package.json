@@ -2,5 +2,6 @@
     "name": "go-sdk-v2beta",
     "version": "0.7.0",
     "description": "SDK version v2beta",
+    "private": true,
     "license": "Apache-2.0"
 }
