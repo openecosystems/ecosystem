@@ -38,7 +38,7 @@ use (
 
 	// Protobuf libraries
 	// ===================================
-	./libs/protobuf/go/protobuf
+	./libs/protobuf/go/sdk/v2beta
 
 	// Public libraries
 	// ===================================

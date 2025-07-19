@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2"
 )
 
 // GithubRegistryName defines the base name of the GitHub registry for the company.

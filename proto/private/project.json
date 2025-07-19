@@ -4,10 +4,10 @@
   "projectType": "proto",
   "sourceRoot": "proto/private",
   "targets": {
-    "generate": {
+    "generate-disabled": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "buf generate-disabled",
+        "command": "buf generate",
         "cwd": "proto/private"
       },
       "cache": false

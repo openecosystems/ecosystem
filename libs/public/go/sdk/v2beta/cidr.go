@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 
-	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
 )
 
 const (

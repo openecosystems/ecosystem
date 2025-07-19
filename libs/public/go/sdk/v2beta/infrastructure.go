@@ -7,7 +7,7 @@ import (
 	"unicode/utf8"
 
 	"connectrpc.com/connect"
-	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 

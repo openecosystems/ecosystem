@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2"
 )
 
 // CLI represents the core structure for managing CLI operations, bindings, and their configuration.

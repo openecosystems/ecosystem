@@ -1,7 +1,7 @@
 package natsnodev1
 
 import (
-	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
 
 	"github.com/nats-io/nats.go"
 )

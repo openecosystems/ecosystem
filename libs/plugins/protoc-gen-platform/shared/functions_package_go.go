@@ -329,7 +329,7 @@ func (fns Functions) GetGoImportPackages(file pgs.File) []string {
 
 	packages := make([]string, 0, len(packageSet))
 	for k := range packageSet {
-		if strings.Contains(k, "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2") ||
+		if strings.Contains(k, "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2") ||
 			strings.Contains(k, "jeannotcompany/public/grpc/go/platform") ||
 			strings.Contains(k, "jeannotcompany/poc/grpc/go/platform") ||
 			strings.Contains(k, "jeannotcompany/partner/grpc/go/platform") ||
@@ -378,7 +378,7 @@ func (fns Functions) getGoImportPackages(file pgs.File, packageOverwrite string,
 
 	packages := make([]string, 0, len(packageSet))
 	for k := range packageSet {
-		if strings.Contains(k, "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2") ||
+		if strings.Contains(k, "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2") ||
 			strings.Contains(k, "jeannotcompany/public/grpc/go/platform") ||
 			strings.Contains(k, "jeannotcompany/poc/grpc/go/platform") ||
 			strings.Contains(k, "jeannotcompany/partner/grpc/go/platform") ||

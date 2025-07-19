@@ -12,7 +12,7 @@ import (
 	"github.com/nats-io/nats.go/jetstream"
 
 	natsd "github.com/nats-io/nats-server/v2/server"
-	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2"
 	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 

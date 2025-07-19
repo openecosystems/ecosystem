@@ -8,7 +8,7 @@ import (
 
 	"connectrpc.com/connect"
 
-	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2"
 	nebulav1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula"
 )
 

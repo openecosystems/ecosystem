@@ -5,10 +5,10 @@
   "sourceRoot": "libs/private/go/sdk",
   "implicitDependencies": ["proto", "protoc-gen-platform"],
   "targets": {
-    "generate": {
+    "generate-disabled": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "buf generate-disabled",
+        "command": "buf generate",
         "cwd": "libs/private/go/sdk"
       },
       "cache": false
