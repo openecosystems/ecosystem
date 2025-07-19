@@ -1,3 +1,14 @@
+## 0.11.0 (2025-07-19)
+
+### 🚀 Features
+
+- collapsing GO SDK for easier imports ([841ee0f](https://github.com/openecosystems/ecosystem/commit/841ee0f))
+- Oeco cleanup 29 ([#61](https://github.com/openecosystems/ecosystem/pull/61))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.10.0 (2025-07-19)
 
 ### 🚀 Features
