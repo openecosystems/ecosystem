@@ -3,6 +3,9 @@
 nx release --first-release -p go-protobuf-sdk-v2beta --dry-run
 
 
+# Prerequisites
+- Ensure Git is not in a "dirty" state
+
 # Step 1: Run NX to Tag and version
 nx release --first-release -p go-protobuf-sdk-v2beta
 
@@ -10,7 +13,6 @@ nx release --first-release -p go-protobuf-sdk-v2beta
 git push --follow-tags
 
 # Step 3: Run GoReleaser
-# Ensure Git is not in a "dirty" state
 nx run go-protobuf-sdk-v2beta:release
 
 
