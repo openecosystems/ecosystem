@@ -7,11 +7,11 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	pcontext "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
-	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 // LocalAccountMsg represents a command message used for communication or signaling within a program or system.
@@ -49,7 +49,7 @@ func (l LocalAccountMsg) Execute(ctx *pcontext.ProgramContext, _ error) (tea.Msg
 
 	c.PrivateKey = string(key.GetContent())
 
-	provider, err := sdkv2alphalib.NewCredentialProvider()
+	provider, err := sdkv2betalib.NewCredentialProvider()
 	if err != nil {
 		return nil, err
 	}

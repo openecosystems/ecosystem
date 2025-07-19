@@ -4,21 +4,21 @@ import (
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
 
-	// Golang Plugins
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_commands"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_methods"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_service"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_system"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/cli_systems"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/client"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/entity_unspecified"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/listener"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/multiplexer"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/sdk"
-	sdkconnector "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/sdk_connector"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/server"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/spec"
-	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/spec_entities"
+	// Go Plugins v2beta
+	clicommandsv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_commands"
+	climethodsv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_methods"
+	cliservicev2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_service"
+	clisystemv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_system"
+	clisystemsv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_systems"
+	entityunspecifiedv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/entity_unspecified"
+	listenerv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/listener"
+	multiplexerv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/multiplexer"
+	sdkv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/sdk"
+	sdkconnectorv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/sdk_connector"
+	serverv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/server"
+	specv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/spec"
+
+	// Protobuf Plugins
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
 
@@ -33,21 +33,19 @@ func main() {
 		pgs.DebugEnv("DEBUG"),
 	).RegisterModule(
 
-		// Go
-		cli_service.GoCliServicePlugin(),
-		cli_system.GoCliSystemPlugin(),
-		cli_systems.GoCliSystemsPlugin(),
-		cli_commands.GoCliCommandsPlugin(),
-		cli_methods.GoCliMethodsPlugin(),
-		client.GoClientPlugin(),
-		entity_unspecified.GoEntityUnspecifiedPlugin(),
-		listener.GoListenerPlugin(),
-		server.GoServerPlugin(),
-		multiplexer.GoMultiplexerPlugin(),
-		spec.GoSpecPlugin(),
-		spec_entities.GoSpecEntitiesPlugin(),
-		sdk.GoSdkPlugin(),
-		sdkconnector.GoSdkConnectorPlugin(),
+		// Go v2beta
+		cliservicev2beta.GoCliServicePlugin(),
+		clisystemv2beta.GoCliSystemPlugin(),
+		clisystemsv2beta.GoCliSystemsPlugin(),
+		clicommandsv2beta.GoCliCommandsPlugin(),
+		climethodsv2beta.GoCliMethodsPlugin(),
+		entityunspecifiedv2beta.GoEntityUnspecifiedPlugin(),
+		listenerv2beta.GoListenerPlugin(),
+		serverv2beta.GoServerPlugin(),
+		multiplexerv2beta.GoMultiplexerPlugin(),
+		specv2beta.GoSpecPlugin(),
+		sdkv2beta.GoSdkPlugin(),
+		sdkconnectorv2beta.GoSdkConnectorPlugin(),
 
 		// Typescript
 		spectypescript.TypeScriptSpecPlugin(),

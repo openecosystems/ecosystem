@@ -1,0 +1,65 @@
+{
+  "name": "go-protobuf-sdk-v2beta",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/protobuf/go/sdk/v2beta",
+  "implicitDependencies": ["proto", "protoc-gen-platform"],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build ./...",
+        "cwd": "libs/protobuf/go/sdk/v2beta"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/protobuf/go/sdk/v2beta"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "libs/protobuf/go/sdk/v2beta"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["golangci-lint run ./... --timeout=5m"],
+        "parallel": false,
+        "cwd": "libs/protobuf/go/sdk/v2beta"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "libs/protobuf/go/sdk/v2beta"
+      }
+    },
+    "distribute": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/libs/protobuf/go/sdk/v2beta"],
+      "options": {
+        "commands": [
+          "goreleaser release --config libs/protobuf/go/sdk/v2beta/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:public",
+    "language:golang",
+    "type:sdk",
+    "version:v2beta",
+    "exposure:external"
+  ]
+}

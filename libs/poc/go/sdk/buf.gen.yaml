@@ -7,28 +7,28 @@ plugins:
     opt:
       - paths=source_relative
       - language=go
-      - type=sdk
+      - type=sdk-v2beta
       - prefix=poc
   - local: protoc-gen-platform
     out: ./gen
     opt:
       - paths=source_relative
       - language=go
-      - type=multiplexer
+      - type=multiplexer-v2beta
       - prefix=poc
   - local: protoc-gen-platform
     out: ./gen
     opt:
       - paths=source_relative
       - language=go
-      - type=entity-unspecified
+      - type=entity-unspecified-v2beta
       - prefix=poc
   - local: protoc-gen-platform
     out: ./gen
     opt:
       - paths=source_relative
       - language=go
-      - type=spec
+      - type=spec-v2beta
       - prefix=poc
   - remote: buf.build/protocolbuffers/go
     out: ./gen

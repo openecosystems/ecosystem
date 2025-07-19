@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 // TuiConfigurationFileName defines the default name of the configuration file used for TUI-related settings.
@@ -17,7 +17,7 @@ const (
 // TuiConfigurationFile represents the full file path of the TUI configuration file within the configuration directory.
 var (
 	validate             *validator.Validate
-	TuiConfigurationFile = filepath.Join(sdkv2alphalib.ConfigurationDirectory, TuiConfigurationFileName)
+	TuiConfigurationFile = filepath.Join(sdkv2betalib.ConfigurationDirectory, TuiConfigurationFileName)
 )
 
 // SectionType represents the type of a section, used to categorize and organize content or configurations.

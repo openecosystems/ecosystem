@@ -15,14 +15,14 @@
         }
     },
     "targets": {
-        "generate": {
+        "generate-disabled": {
           "executor": "nx:run-commands",
           "options": {
             "command": "buf generate",
             "cwd": "libs/private/typescript/protobuf"
           }
         },
-        "build": {
+        "build-disabled": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {

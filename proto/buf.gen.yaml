@@ -2,18 +2,18 @@ version: v2
 inputs:
   - directory: ./
 plugins:
-  - local: protoc-gen-platform
-    out: .
-    opt:
-      - paths=source_relative
-      - language=protobuf
-      - type=configuration
-    strategy: all
-  - local: protoc-gen-platform
-    out: .
-    opt:
-      - paths=source_relative
-      - language=protobuf
-      - type=data-catalog
-      - prefix=public
-    strategy: all
+#  - local: protoc-gen-platform
+#    out: .
+#    opt:
+#      - paths=source_relative
+#      - language=protobuf
+#      - type=configuration
+#    strategy: all
+#  - local: protoc-gen-platform
+#    out: .
+#    opt:
+#      - paths=source_relative
+#      - language=protobuf
+#      - type=data-catalog
+#      - prefix=public
+#    strategy: all

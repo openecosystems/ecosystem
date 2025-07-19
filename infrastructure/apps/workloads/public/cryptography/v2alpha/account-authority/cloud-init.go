@@ -1,15 +1,15 @@
-package main
+package cryptography
 
 import (
 	"fmt"
 
-	infrastructurev2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 func cloudinit(key, caCrt, hostCrt, hostKey, version string) string {
-	_caCrt := infrastructurev2alphalib.WriteIndentedMultilineText(caCrt)
-	_hostCrt := infrastructurev2alphalib.WriteIndentedMultilineText(hostCrt)
-	_hostKey := infrastructurev2alphalib.WriteIndentedMultilineText(hostKey)
+	_caCrt := sdkv2betalib.WriteIndentedMultilineText(caCrt)
+	_hostCrt := sdkv2betalib.WriteIndentedMultilineText(hostCrt)
+	_hostKey := sdkv2betalib.WriteIndentedMultilineText(hostKey)
 
 	return fmt.Sprintf(
 		`#cloud-config

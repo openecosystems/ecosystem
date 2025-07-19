@@ -30,8 +30,12 @@ message ReferenceConfiguration {
 }
 
 service ReferenceService {
-  rpc Unary(UnaryRequest) returns (UnaryResponse) {}
-  rpc ServerStreaming(ServerStreamingRequest) returns (stream ServerStreamingResponse) {}
+  rpc Unary(UnaryRequest) returns (UnaryResponse) {
+    option (platform.options.v2.permission) = { permission: "unary", roles: [AUTH_ROLE_PLATFORM_ADMIN] };
+  }
+  rpc ServerStreaming(ServerStreamingRequest) returns (stream ServerStreamingResponse) {
+    option (platform.options.v2.permission) = { permission: "server-streaming", roles: [AUTH_ROLE_PLATFORM_ADMIN] };
+  }
 }
 
 

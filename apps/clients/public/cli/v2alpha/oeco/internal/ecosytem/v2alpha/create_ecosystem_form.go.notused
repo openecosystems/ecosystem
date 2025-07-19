@@ -15,7 +15,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
-	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
 )
 
 const maxWidth = 80
@@ -85,7 +85,7 @@ type CreateEcosystemModel struct {
 }
 
 // NewCreateEcosystemModel creates and initializes a new CreateEcosystemModel instance with default configurations and predefined form settings.
-func NewCreateEcosystemModel(_ *cliv2alphalib.Configuration) *CreateEcosystemModel {
+func NewCreateEcosystemModel(_ *sdkv2betalib.Configuration) *CreateEcosystemModel {
 	m := CreateEcosystemModel{width: maxWidth, state: statusNormal}
 	m.lg = lipgloss.DefaultRenderer()
 	m.styles = NewStyles(m.lg)

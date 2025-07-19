@@ -7,10 +7,10 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	pcontext "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/context"
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 // LocalAccountAuthorityMsg represents a command message used for communication or signaling within a program or system.
@@ -38,7 +38,7 @@ func (l LocalAccountAuthorityMsg) Execute(ctx *pcontext.ProgramContext, _ error)
 		AccountAuthority: ca,
 	}
 
-	provider, err := sdkv2alphalib.NewCredentialProvider()
+	provider, err := sdkv2betalib.NewCredentialProvider()
 	if err != nil {
 		return nil, err
 	}

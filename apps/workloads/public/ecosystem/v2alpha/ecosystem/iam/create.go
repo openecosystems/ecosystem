@@ -7,13 +7,13 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
-	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
-	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2"
+	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nats"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/zap"
+	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
 )
 
 // CreateAccountListener is a struct that listens for create configuration events and processes them.
@@ -26,7 +26,7 @@ func (l *CreateAccountListener) GetConfiguration() *natsnodev1.ListenerConfigura
 }
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
-func (l *CreateAccountListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+func (l *CreateAccountListener) Listen(ctx context.Context, _ chan sdkv2betalib.SpecListenableErr) {
 	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 

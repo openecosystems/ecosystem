@@ -11,12 +11,12 @@ import (
 
 	utils "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/utils"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 // Parser is a structure that holds a reference to a FileSystem for interacting with the underlying filesystem.
 type Parser struct {
-	Filesystem *sdkv2alphalib.FileSystem
+	Filesystem *sdkv2betalib.FileSystem
 }
 
 // getDefaultConfig returns a Config object initialized with the default configuration settings for the application.
@@ -102,13 +102,13 @@ func (parser Parser) getDefaultConfigFileOrCreateIfMissing() (string, error) {
 
 	exists, err1 := fs.Exists(TuiConfigurationFile)
 	if err1 != nil {
-		return "", configError{parser: parser, configDir: sdkv2alphalib.ConfigurationDirectory, err: err1}
+		return "", configError{parser: parser, configDir: sdkv2betalib.ConfigurationDirectory, err: err1}
 	}
 
 	if !exists {
 		err2 := fs.CreateFile(TuiConfigurationFile)
 		if err2 != nil {
-			return "", configError{parser: parser, configDir: sdkv2alphalib.ConfigurationDirectory, err: err2}
+			return "", configError{parser: parser, configDir: sdkv2betalib.ConfigurationDirectory, err: err2}
 		}
 
 		defaultConfig := parser.getDefaultConfig()
@@ -116,7 +116,7 @@ func (parser Parser) getDefaultConfigFileOrCreateIfMissing() (string, error) {
 
 		err3 := fs.WriteFile(TuiConfigurationFile, y, os.ModePerm)
 		if err3 != nil {
-			return "", configError{parser: parser, configDir: sdkv2alphalib.ConfigurationDirectory, err: err3}
+			return "", configError{parser: parser, configDir: sdkv2betalib.ConfigurationDirectory, err: err3}
 		}
 	}
 
@@ -155,7 +155,7 @@ func initParser() Parser {
 	})
 
 	return Parser{
-		Filesystem: sdkv2alphalib.NewFileSystem(),
+		Filesystem: sdkv2betalib.NewFileSystem(),
 	}
 }
 

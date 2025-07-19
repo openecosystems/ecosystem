@@ -1,7 +1,7 @@
 package shared
 
 import (
-	options "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	options "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/options/v2"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 )

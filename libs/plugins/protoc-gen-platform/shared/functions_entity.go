@@ -1,7 +1,7 @@
 package shared
 
 import (
-	options "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/options/v2"
+	options "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/options/v2"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 )
@@ -160,7 +160,7 @@ func (fns Functions) IsWorkspaceEntityHierarchy(msg pgs.Message) bool {
 		panic(err.Error() + "unable to read extension from proto")
 	}
 
-	if entity.Hierarchy == options.EntityHierarchy_ENTITY_HIERARCHY_WORKSPACE {
+	if entity.Hierarchy == options.EntityHierarchy_ENTITY_HIERARCHY_ECOSYSTEM {
 		return true
 	}
 

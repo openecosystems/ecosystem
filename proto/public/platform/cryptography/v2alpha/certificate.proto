@@ -27,7 +27,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha;cryptographyv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/cryptography/v2alpha;cryptographyv2alphapb";
 
 message CertificateConfiguration {
 
@@ -41,6 +41,7 @@ service CertificateService {
   rpc VerifyCertificate(VerifyCertificateRequest) returns (VerifyCertificateResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
     option (platform.options.v2.api_method) = {shortname: "verify"};
+    option (platform.options.v2.permission) = { permission: "verify", roles: [AUTH_ROLE_ORGANIZATION_USER] };
     option (google.api.http) = {
       post: "/v2alpha/cryptography/certificate/verify"
       body: "*"
@@ -51,6 +52,7 @@ service CertificateService {
   rpc SignCertificate(SignCertificateRequest) returns (SignCertificateResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
     option (platform.options.v2.api_method) = {shortname: "sign"};
+    option (platform.options.v2.permission) = { permission: "sign", roles: [AUTH_ROLE_ORGANIZATION_USER] };
     option (google.api.http) = {
       post: "/v2alpha/cryptography/certificate/sign"
       body: "*"

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2;typev2pb";
+
+message SemanticVersion {
+  // Major version: incremented for breaking changes.
+  uint64 major = 1;
+
+  // Minor version: incremented for new backward-compatible features.
+  uint64 minor = 2;
+
+  // Patch version: incremented for backward-compatible bug fixes.
+  uint64 patch = 3;
+
+  // Optional prerelease identifier, e.g., "alpha.1", "beta", "rc.1"
+  string prerelease = 4;
+
+  // Optional build metadata, e.g., "build.1234"
+  string build = 5;
+}

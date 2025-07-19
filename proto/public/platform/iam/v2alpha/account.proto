@@ -30,7 +30,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha;iamv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha;iamv2alphapb";
 
 message AccountConfiguration {
   
@@ -48,6 +48,7 @@ service AccountService {
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
     option (platform.options.v2.api_method) = {shortname: "create", network: NETWORK_TYPE_INTERNET};
+    option (platform.options.v2.permission) = { permission: "create", roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
     option (google.api.http) = {
       post: "/v2alpha/iam/a"
       body: "*"
@@ -60,6 +61,7 @@ service AccountService {
   rpc VerifyAccount(VerifyAccountRequest) returns (VerifyAccountResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
     option (platform.options.v2.api_method) = {shortname: "verify", network: NETWORK_TYPE_INTERNET};
+    option (platform.options.v2.permission) = { permission: "verify", roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
     option (google.api.http) = {
       post: "/v2alpha/iam/a/verify"
       body: "*"
@@ -72,6 +74,7 @@ service AccountService {
   rpc SignAccount(SignAccountRequest) returns (SignAccountResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_UPDATE};
     option (platform.options.v2.api_method) = {shortname: "sign"};
+    option (platform.options.v2.permission) = { permission: "sign", roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
     option (google.api.http) = {
       post: "/v2alpha/iam/a/sign"
       body: "*"

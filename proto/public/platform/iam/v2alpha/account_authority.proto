@@ -27,7 +27,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha;iamv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha;iamv2alphapb";
 
 message AccountAuthorityConfiguration {
 
@@ -43,6 +43,7 @@ service AccountAuthorityService {
   rpc CreateAccountAuthority(CreateAccountAuthorityRequest) returns (CreateAccountAuthorityResponse) {
     option (platform.options.v2.cqrs) = {type: CQRS_TYPE_MUTATION_CREATE};
     option (platform.options.v2.api_method) = {shortname: "create"};
+    option (platform.options.v2.permission) = { permission: "create", roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
     option (google.api.http) = {
       post: "/v2alpha/iam/aa/create"
       body: "*"

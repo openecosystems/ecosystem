@@ -15,7 +15,7 @@
         }
     },
     "targets": {
-        "generate": {
+        "generate-disabled": {
           "executor": "nx:run-commands",
           "options": {
             "command": "buf generate",

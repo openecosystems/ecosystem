@@ -4,7 +4,7 @@ package platform.type.v2;
 
 import "platform/options/v2/annotations.proto";
 
-option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2;typev2pb";
+option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/type/v2;typev2pb";
 
 // A description of a label.
 message LabelDescriptor {
