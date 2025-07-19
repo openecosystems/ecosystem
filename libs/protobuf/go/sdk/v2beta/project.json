@@ -42,7 +42,7 @@
         "cwd": "libs/protobuf/go/sdk/v2beta"
       }
     },
-    "release": {
+    "distribute": {
       "executor": "nx:run-commands",
       "dependsOn": ["build"],
       "outputs": ["{workspaceRoot}/libs/protobuf/go/sdk/v2beta"],

@@ -13,7 +13,7 @@ nx release --first-release -p go-protobuf-sdk-v2beta
 git push --follow-tags
 
 # Step 3: Run GoReleaser
-nx run go-protobuf-sdk-v2beta:release
+nx run go-protobuf-sdk-v2beta:distribute
 
 
 nx release --first-release -p go-protobuf-sdk-v2beta
