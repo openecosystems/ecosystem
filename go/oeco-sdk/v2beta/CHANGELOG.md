@@ -1,3 +1,13 @@
+## 0.13.0 (2025-07-19)
+
+### 🚀 Features
+
+- collapsing GO SDK for easier imports ([d1bfb11](https://github.com/openecosystems/ecosystem/commit/d1bfb11))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.12.0 (2025-07-19)
 
 ### 🚀 Features
