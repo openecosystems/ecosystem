@@ -152,6 +152,7 @@ func StructToByteArray(data interface{}) ([]byte, error) {
 	return buf.Bytes(), err
 }
 
+// GetProtoMessageFromTypeURL get proto from type URL
 func GetProtoMessageFromTypeURL(typeURL string) (proto.Message, error) {
 	msgType, err := protoregistry.GlobalTypes.FindMessageByURL(typeURL)
 	if err != nil {
