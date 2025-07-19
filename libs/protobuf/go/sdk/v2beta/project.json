@@ -1,5 +1,5 @@
 {
-  "name": "libs-protobuf-go-sdk-v2beta",
+  "name": "go-protobuf-sdk-v2beta",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "libs/protobuf/go/sdk/v2beta",
@@ -40,6 +40,17 @@
         "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
         "parallel": false,
         "cwd": "libs/protobuf/go/sdk/v2beta"
+      }
+    },
+    "release": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "outputs": ["{workspaceRoot}/libs/protobuf/go/sdk/v2beta"],
+      "options": {
+        "commands": [
+          "goreleaser release --config libs/protobuf/go/sdk/v2beta/.goreleaser.yaml --clean"
+        ],
+        "parallel": false
       }
     }
   },
