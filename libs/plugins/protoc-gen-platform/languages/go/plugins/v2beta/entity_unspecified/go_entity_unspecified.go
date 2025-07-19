@@ -12,7 +12,7 @@ import (
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 	pgsgo "github.com/lyft/protoc-gen-star/v2/lang/go"
-	options "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/options/v2"
+	options "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
 )
 
 //go:embed templates/*.tmpl

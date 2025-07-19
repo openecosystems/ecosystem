@@ -25,7 +25,8 @@
             "@openecosystems/protobuf-poc": ["libs/poc/typescript/protobuf/src/index.ts"],
             "@openecosystems/protobuf-private": ["libs/private/typescript/protobuf/src/index.ts"],
             "@openecosystems/protobuf-public": ["libs/public/typescript/protobuf/src/index.ts"],
-            "@openecosystems/sdkv2alpha": ["libs/public/typescript/sdk/v2alpha/src/index.ts"]
+            "@openecosystems/sdkv2alpha": ["libs/public/typescript/sdk/v2alpha/src/index.ts"],
+            "@platform/nx-goreleaser-sdk": ["libs/plugins/nx-goreleaser-sdk/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

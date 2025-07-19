@@ -1624,11 +1624,6 @@ github.com/opencontainers/selinux v1.8.0/go.mod h1:RScLhm78qiWa2gbVCcGkC7tCGdgk3
 github.com/opencontainers/selinux v1.8.2/go.mod h1:MUIHuUEvKB1wtJjQdOyYRgOnLD2xAPP8dBsCoU0KuF8=
 github.com/opencontainers/selinux v1.10.1 h1:09LIPVRP3uuZGQvgR+SgMSNBd1Eb3vlRbGqQpoHsF8w=
 github.com/opencontainers/selinux v1.10.1/go.mod h1:2i0OySw99QjzBBQByd1Gr9gSjvuho1lHsJxIJ3gGbJI=
-github.com/openecosystems/ecosystem/libs/partner/go/nebula v0.0.0-20250612111543-f0c52f6dc5e9/go.mod h1:Vn6E0IHV8R2wyBdpTLS7fsWYC4meMu7phjLuigGUVHw=
-github.com/openecosystems/ecosystem/libs/partner/go/protovalidate v0.0.0-20250612111543-f0c52f6dc5e9/go.mod h1:kPQIQW8hgrRDgLKPCGStsb/89gGb6bVHfd46+USOl2c=
-github.com/openecosystems/ecosystem/libs/public/go/model v0.0.0-20250314114941-6105506b389b h1:BohVddzQWN1FQ0lC7VhcOCgfODGQ7N6L4ALMIrjsUDI=
-github.com/openecosystems/ecosystem/libs/public/go/model v0.0.0-20250314114941-6105506b389b/go.mod h1:bHtTG219JhZ0VMRfzL9asZbLgJ2M87a9G4O2Rh0kuX8=
-github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ontology/v2alpha v0.0.0-20250612111543-f0c52f6dc5e9/go.mod h1:OQzbAikdsP/TnzAcMYLGqp1FlK/P9Nr19Pd2BcnIiME=
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=
 github.com/pelletier/go-toml v1.8.1/go.mod h1:T2/BmBdy8dvIRq1a/8aqjN41wvWlN4lrapLU/GW4pbc=
 github.com/pelletier/go-toml v1.9.5 h1:4yBQzkHv+7BHq2PQUZF3Mx0IYxG7LsP222s7Agd3ve8=

@@ -28,7 +28,7 @@ option (platform.options.v2.entity) = {
   versionable: true;
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/ecosystem/v2alpha;ecosystemv2alphapb";
+option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/ecosystem/v2alpha;ecosystemv2alphapb";
 
 service EcosystemService {
   option (platform.options.v2.api_service) = {

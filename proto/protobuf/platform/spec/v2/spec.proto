@@ -14,7 +14,7 @@ option (platform.options.v2.graphql) = {
   enabled: true
 };
 
-option go_package = "github.com/openecosystems/ecosystem/libs/protobuf/go/sdk/v2beta/gen/platform/spec/v2;specv2pb";
+option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2;specv2pb";
 
 enum SpecEventType {
   SPEC_EVENT_TYPE_UNSPECIFIED = 0;

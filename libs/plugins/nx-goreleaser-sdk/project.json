@@ -1,0 +1,41 @@
+{
+    "name": "nx-goreleaser-sdk",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/plugins/nx-goreleaser-sdk/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/plugins/nx-goreleaser-sdk",
+                "main": "libs/plugins/nx-goreleaser-sdk/src/index.ts",
+                "tsConfig": "libs/plugins/nx-goreleaser-sdk/tsconfig.lib.json",
+                "assets": [
+                    "libs/plugins/nx-goreleaser-sdk/*.md",
+                    {
+                        "input": "./libs/plugins/nx-goreleaser-sdk/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/plugins/nx-goreleaser-sdk/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./libs/plugins/nx-goreleaser-sdk",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./libs/plugins/nx-goreleaser-sdk",
+                        "glob": "executors.json",
+                        "output": "."
+                    }
+                ]
+            }
+        }
+    }
+}
