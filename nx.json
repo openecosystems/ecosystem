@@ -198,7 +198,7 @@
                         "createRelease": "github"
                     }
                 },
-                "releaseTagPattern": "{projectName}/{version}"
+                "releaseTagPattern": "{projectRoot}/v{version}"
             },
 
             "workloads-public": {
