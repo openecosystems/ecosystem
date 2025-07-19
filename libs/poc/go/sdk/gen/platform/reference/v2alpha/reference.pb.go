@@ -528,10 +528,13 @@ const file_platform_reference_v2alpha_reference_proto_rawDesc = "" +
 	"\x11ReferenceCommands\x12\"\n" +
 	"\x1eREFERENCE_COMMANDS_UNSPECIFIED\x10\x00\x1a\x06\x92\xb8\x18\x02\b\x03*;\n" +
 	"\x0fReferenceEvents\x12 \n" +
-	"\x1cREFERENCE_EVENTS_UNSPECIFIED\x10\x00\x1a\x06\x92\xb8\x18\x02\b\x042\xf2\x01\n" +
-	"\x10ReferenceService\x12^\n" +
-	"\x05Unary\x12(.platform.reference.v2alpha.UnaryRequest\x1a).platform.reference.v2alpha.UnaryResponse\"\x00\x12~\n" +
-	"\x0fServerStreaming\x122.platform.reference.v2alpha.ServerStreamingRequest\x1a3.platform.reference.v2alpha.ServerStreamingResponse\"\x000\x01B\xae\x01\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x04\x10\x01\x18\x02\x8a\xb5\x18\x1e\n" +
+	"\x1cREFERENCE_EVENTS_UNSPECIFIED\x10\x00\x1a\x06\x92\xb8\x18\x02\b\x042\x9a\x02\n" +
+	"\x10ReferenceService\x12l\n" +
+	"\x05Unary\x12(.platform.reference.v2alpha.UnaryRequest\x1a).platform.reference.v2alpha.UnaryResponse\"\x0e\xb2\xb6\x18\n" +
+	"\n" +
+	"\x05unary\x12\x01g\x12\x97\x01\n" +
+	"\x0fServerStreaming\x122.platform.reference.v2alpha.ServerStreamingRequest\x1a3.platform.reference.v2alpha.ServerStreamingResponse\"\x19\xb2\xb6\x18\x15\n" +
+	"\x10server-streaming\x12\x01g0\x01B\xae\x01\x82\xc4\x13\x02\b\x02\x82\xb5\x18\x06\b\x04\x10\x01\x18\x02\x8a\xb5\x18\x1e\n" +
 	"\treference\x12\n" +
 	"references\"\x03jan(\x02\x92\xb5\x18\x05\n" +
 	"\x03\x02\x03\x06\x9a\xb5\x18\x02\b\x01\xa2\xb5\x18\x02\b\x01Zegithub.com/openecosystems/ecosystem/libs/poc/go/sdk/gen/platform/reference/v2alpha;referencev2alphapbb\x06proto3"

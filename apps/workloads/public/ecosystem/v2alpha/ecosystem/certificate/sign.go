@@ -3,12 +3,12 @@ package certificate
 import (
 	"context"
 
-	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
-	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha"
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nats"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/zap"
+	cryptographyv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/cryptography/v2alpha"
 )
 
 // SignCertificateListener represents a listener for handling requests to create a account authority.
@@ -21,7 +21,7 @@ func (l *SignCertificateListener) GetConfiguration() *natsnodev1.ListenerConfigu
 }
 
 // Listen synchronously listens for multiplexed spec events and routes them to the associated handler.
-func (l *SignCertificateListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+func (l *SignCertificateListener) Listen(ctx context.Context, _ chan sdkv2betalib.SpecListenableErr) {
 	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 

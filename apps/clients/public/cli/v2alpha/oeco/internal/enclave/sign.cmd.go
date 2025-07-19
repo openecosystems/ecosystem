@@ -1,7 +1,7 @@
 package enclavev2alphapbint
 
 import (
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 
 	clog "github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
@@ -13,7 +13,7 @@ var SignEnclaveV2AlphaCmd = &cobra.Command{
 	Short: `Sign a certificate in the Enclave`,
 	Long:  `[Sign a certificate in the Enclave]`,
 	Run: func(cmd *cobra.Command, _ []string) {
-		log := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*clog.Logger)
+		log := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*clog.Logger)
 		log.Info("Sign Enclave")
 	},
 }

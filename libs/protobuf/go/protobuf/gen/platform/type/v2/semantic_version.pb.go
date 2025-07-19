@@ -24,11 +24,11 @@ const (
 type SemanticVersion struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Major version: incremented for breaking changes.
-	Major uint32 `protobuf:"varint,1,opt,name=major,proto3" json:"major,omitempty"`
+	Major uint64 `protobuf:"varint,1,opt,name=major,proto3" json:"major,omitempty"`
 	// Minor version: incremented for new backward-compatible features.
-	Minor uint32 `protobuf:"varint,2,opt,name=minor,proto3" json:"minor,omitempty"`
+	Minor uint64 `protobuf:"varint,2,opt,name=minor,proto3" json:"minor,omitempty"`
 	// Patch version: incremented for backward-compatible bug fixes.
-	Patch uint32 `protobuf:"varint,3,opt,name=patch,proto3" json:"patch,omitempty"`
+	Patch uint64 `protobuf:"varint,3,opt,name=patch,proto3" json:"patch,omitempty"`
 	// Optional prerelease identifier, e.g., "alpha.1", "beta", "rc.1"
 	Prerelease string `protobuf:"bytes,4,opt,name=prerelease,proto3" json:"prerelease,omitempty"`
 	// Optional build metadata, e.g., "build.1234"
@@ -67,21 +67,21 @@ func (*SemanticVersion) Descriptor() ([]byte, []int) {
 	return file_platform_type_v2_semantic_version_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SemanticVersion) GetMajor() uint32 {
+func (x *SemanticVersion) GetMajor() uint64 {
 	if x != nil {
 		return x.Major
 	}
 	return 0
 }
 
-func (x *SemanticVersion) GetMinor() uint32 {
+func (x *SemanticVersion) GetMinor() uint64 {
 	if x != nil {
 		return x.Minor
 	}
 	return 0
 }
 
-func (x *SemanticVersion) GetPatch() uint32 {
+func (x *SemanticVersion) GetPatch() uint64 {
 	if x != nil {
 		return x.Patch
 	}
@@ -108,9 +108,9 @@ const file_platform_type_v2_semantic_version_proto_rawDesc = "" +
 	"\n" +
 	"'platform/type/v2/semantic_version.proto\x12\x10platform.type.v2\"\x89\x01\n" +
 	"\x0fSemanticVersion\x12\x14\n" +
-	"\x05major\x18\x01 \x01(\rR\x05major\x12\x14\n" +
-	"\x05minor\x18\x02 \x01(\rR\x05minor\x12\x14\n" +
-	"\x05patch\x18\x03 \x01(\rR\x05patch\x12\x1e\n" +
+	"\x05major\x18\x01 \x01(\x04R\x05major\x12\x14\n" +
+	"\x05minor\x18\x02 \x01(\x04R\x05minor\x12\x14\n" +
+	"\x05patch\x18\x03 \x01(\x04R\x05patch\x12\x1e\n" +
 	"\n" +
 	"prerelease\x18\x04 \x01(\tR\n" +
 	"prerelease\x12\x14\n" +

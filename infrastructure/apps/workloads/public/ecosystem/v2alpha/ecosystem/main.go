@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 
 	"github.com/dirien/pulumi-vultr/sdk/v2/go/vultr"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
@@ -12,12 +12,12 @@ import (
 )
 
 func main() {
-	bounds := []sdkv2alphalib.Binding{}
+	bounds := []sdkv2betalib.Binding{}
 
-	infrastructure := sdkv2alphalib.NewInfrastructure(context.Background(), sdkv2alphalib.WithInfrastructureBounds(bounds))
+	infrastructure := sdkv2betalib.NewInfrastructure(context.Background(), sdkv2betalib.WithInfrastructureBounds(bounds))
 
 	cnf := infrastructure.Config
-	name := sdkv2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
+	name := sdkv2betalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
 
 	infrastructure.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")

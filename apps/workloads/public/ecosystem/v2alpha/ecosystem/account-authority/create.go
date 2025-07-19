@@ -6,14 +6,14 @@ package accountauthority
 //
 //	"github.com/nats-io/nats.go/jetstream"
 //
-//	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
-//	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
-//	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
+//	natsnodev1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nats"
+//	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
+//	zaploggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/zap"
 //	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 //	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
 //	iamv2alphapbmodel "github.com/openecosystems/ecosystem/libs/public/go/model/gen/platform/iam/v2alpha"
-//	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha"
-//	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+//	iamv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha"
+//	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 //)
 //
 //// CreateAccountAuthorityListener represents a listener for handling requests to create a account authority.
@@ -42,7 +42,7 @@ package accountauthority
 //}
 //
 //// Listen synchronously listens for multiplexed spec events and routes them to the associated handler.
-//func (l *CreateAccountAuthorityListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+//func (l *CreateAccountAuthorityListener) Listen(ctx context.Context, _ chan sdkv2betalib.SpecListenableErr) {
 //	natsnodev1.ListenForMultiplexedSpecEventsSync(ctx, l)
 //}
 //

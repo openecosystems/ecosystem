@@ -160,7 +160,7 @@ func (fns Functions) IsWorkspaceEntityHierarchy(msg pgs.Message) bool {
 		panic(err.Error() + "unable to read extension from proto")
 	}
 
-	if entity.Hierarchy == options.EntityHierarchy_ENTITY_HIERARCHY_WORKSPACE {
+	if entity.Hierarchy == options.EntityHierarchy_ENTITY_HIERARCHY_ECOSYSTEM {
 		return true
 	}
 

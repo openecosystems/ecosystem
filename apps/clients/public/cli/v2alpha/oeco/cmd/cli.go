@@ -13,17 +13,14 @@ import (
 	ecosystemv2alphapbint "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/ecosytem/v2alpha"
 	enclavev2alphapbint "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/enclave"
 	markdown "github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco/internal/tui/components/markdown"
-	charmbraceletloggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/charmbracelet"
-	nebulav1ca "github.com/openecosystems/ecosystem/libs/partner/go/nebula/ca"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1alpha/communicationv1alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/communication/v1beta/communicationv1betapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/configuration/v2alpha/configurationv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/cryptography/v2alpha/cryptographyv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/iam/v2alpha/iamv2alphapbcli"
-	"github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/system/v2alpha/systemv2alphapbcli"
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	charmbraceletloggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/charmbracelet"
+	nebulav1ca "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nebula/ca"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/cryptography/v2alpha/cryptographyv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/ecosystem/v2alpha/ecosystemv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/iam/v2alpha/iamv2alphapbcli"
+	"github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/system/v2alpha/systemv2alphapbcli"
 )
 
 // DefaultVersion defines the fallback version identifier when no compile-time version is provided.
@@ -47,7 +44,7 @@ var (
 	quiet     bool
 	logToFile bool
 
-	configuration *sdkv2alphalib.CLIConfiguration
+	configuration *sdkv2betalib.CLIConfiguration
 )
 
 // compileTimeVersion stores the version set at the time of compilation.
@@ -86,7 +83,7 @@ var RootCmd = &cobra.Command{
 	Version:      Version,
 	SilenceUsage: true,
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
-		override := sdkv2alphalib.CLIConfiguration{
+		override := sdkv2betalib.CLIConfiguration{
 			App: specv2pb.App{
 				Debug:     debug,
 				Verbose:   verbose,
@@ -102,16 +99,16 @@ var RootCmd = &cobra.Command{
 				LogToFile: logToFile,
 			},
 		})
-		sdkv2alphalib.Merge(&override, configuration)
-		cmd.SetContext(context.WithValue(cmd.Root().Context(), sdkv2alphalib.SettingsContextKey, &override))
-		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.LoggerContextKey, charmbraceletloggerv1.Bound.Logger))
-		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2alphalib.NebulaCAContextKey, nebulav1ca.Bound))
+		sdkv2betalib.Merge(&override, configuration)
+		cmd.SetContext(context.WithValue(cmd.Root().Context(), sdkv2betalib.SettingsContextKey, &override))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2betalib.LoggerContextKey, charmbraceletloggerv1.Bound.Logger))
+		cmd.SetContext(context.WithValue(cmd.Context(), sdkv2betalib.NebulaCAContextKey, nebulav1ca.Bound))
 	},
 }
 
 // Execute runs the main command-line interface (CLI) program logic, initializing settings, context, and commands.
 func Execute() {
-	bounds := []sdkv2alphalib.Binding{
+	bounds := []sdkv2betalib.Binding{
 		&charmbraceletloggerv1.Binding{},
 		//&natsnodev1.Binding{SpecEventListeners: []natsnodev1.SpecEventListener{
 		//
@@ -119,10 +116,10 @@ func Execute() {
 		&nebulav1ca.Binding{},
 	}
 
-	c := sdkv2alphalib.NewCLI(
+	c := sdkv2betalib.NewCLI(
 		context.Background(),
-		sdkv2alphalib.WithCLIBounds(bounds),
-		sdkv2alphalib.WithCLIConfigurationProvider(&sdkv2alphalib.CLIConfiguration{}),
+		sdkv2betalib.WithCLIBounds(bounds),
+		sdkv2betalib.WithCLIConfigurationProvider(&sdkv2betalib.CLIConfiguration{}),
 	)
 
 	defer c.GracefulShutdown()
@@ -146,21 +143,21 @@ func Execute() {
 }
 
 // AddCommands registers and adds commands to the RootCmd based on the provided SpecSettings.
-func AddCommands(settings *sdkv2alphalib.CLIConfiguration) {
+func AddCommands(settings *sdkv2betalib.CLIConfiguration) {
 	// TODO: Make this dynamic
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "communication", Version: "v1alpha"}, communicationv1alphapbcli.SystemCmd)
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "communication", Version: "v1beta"}, communicationv1betapbcli.SystemCmd)
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "configuration", Version: "v2alpha"}, configurationv2alphapbcli.SystemCmd)
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "cryptography", Version: "v2alpha"}, cryptographyv2alphapbcli.SystemCmd)
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "ecosystem", Version: "v2alpha"}, ecosystemv2alphapbcli.SystemCmd)
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "iam", Version: "v2alpha"}, iamv2alphapbcli.SystemCmd)
-	sdkv2alphalib.CommandRegistry.RegisterCommand(sdkv2alphalib.FullCommandName{Name: "system", Version: "v2alpha"}, systemv2alphapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "communication", Version: "v1alpha"}, communicationv1alphapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "communication", Version: "v1beta"}, communicationv1betapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "configuration", Version: "v2alpha"}, configurationv2alphapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "cryptography", Version: "v2alpha"}, cryptographyv2alphapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "ecosystem", Version: "v2alpha"}, ecosystemv2alphapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "iam", Version: "v2alpha"}, iamv2alphapbcli.SystemCmd)
+	sdkv2betalib.CommandRegistry.RegisterCommand(sdkv2betalib.FullCommandName{Name: "system", Version: "v2alpha"}, systemv2alphapbcli.SystemCmd)
 
-	sdkv2alphalib.CommandRegistry.RegisterCommands()
+	sdkv2betalib.CommandRegistry.RegisterCommands()
 
 	if settings != nil && settings.Systems != nil {
 		for _, system := range settings.Systems { //nolint:copylocks,govet
-			command, err := sdkv2alphalib.CommandRegistry.GetCommandByFullCommandName(sdkv2alphalib.FullCommandName{
+			command, err := sdkv2betalib.CommandRegistry.GetCommandByFullCommandName(sdkv2betalib.FullCommandName{
 				Name:    system.Name,
 				Version: system.Version,
 			})

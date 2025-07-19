@@ -2,7 +2,7 @@ module github.com/openecosystems/ecosystem/apps/workloads/public/mesh/v2alpha/li
 
 go 1.23.4
 
-require github.com/slackhq/nebula v1.9.5
+require github.com/slackhq/nebula v1.9.6
 
 require (
 	dario.cat/mergo v1.0.0 // indirect

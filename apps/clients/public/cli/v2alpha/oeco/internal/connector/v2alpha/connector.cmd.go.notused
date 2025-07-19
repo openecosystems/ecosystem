@@ -14,7 +14,7 @@ import (
 	tasks "apps/clients/public/cli/v2alpha/oeco/internal/tui/tasks"
 	theme "apps/clients/public/cli/v2alpha/oeco/internal/tui/theme"
 	cliv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/cli/v2alpha"
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 // Cmd defines a CLI command named "connector" for interaction, supporting one optional argument and a short description.
@@ -27,8 +27,8 @@ var Cmd = &cobra.Command{
 
 // createModel initializes a connector model and optionally sets up logging based on the provided command flags.
 func createModel(cmd *cobra.Command) connector.Model {
-	settings := cmd.Context().Value(sdkv2alphalib.SettingsContextKey).(*cliv2alphalib.Configuration)
-	logger := cmd.Context().Value(sdkv2alphalib.LoggerContextKey).(*log.Logger)
+	settings := cmd.Context().Value(sdkv2betalib.SettingsContextKey).(*cliv2alphalib.Configuration)
+	logger := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*log.Logger)
 
 	c := config.Config{}
 	t := theme.ParseTheme(&c)

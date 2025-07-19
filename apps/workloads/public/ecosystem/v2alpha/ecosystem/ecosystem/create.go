@@ -2,19 +2,16 @@ package ecosystem
 
 import (
 	"context"
-	"fmt"
 
 	"go.uber.org/zap"
-	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	configurationv2alphalib "github.com/openecosystems/ecosystem/libs/partner/go/configuration/v2alpha"
-	natsnodev1 "github.com/openecosystems/ecosystem/libs/partner/go/nats"
-	zaploggerv1 "github.com/openecosystems/ecosystem/libs/partner/go/zap"
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/type/v2"
-	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/gen/platform/ecosystem/v2alpha"
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
+	natsnodev1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/nats"
+	zaploggerv1 "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/bindings/zap"
+	ecosystemv2alphapb "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta/gen/platform/ecosystem/v2alpha"
 )
 
 // CreateEcosystemListener is a struct that listens for create configuration events and processes them.
@@ -27,14 +24,13 @@ func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfigu
 }
 
 // Listen starts the listener to process multiplexed spec events synchronously based on the provided context and configuration.
-func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2alphalib.SpecListenableErr) {
+func (l *CreateEcosystemListener) Listen(ctx context.Context, _ chan sdkv2betalib.SpecListenableErr) {
 	natsnodev1.ListenForMultiplexedRequests(ctx, l)
 }
 
 // Process handles incoming listener messages to create and store a configuration, ensuring required fields are validated.
 func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnodev1.ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
-	acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
 
 	if request.Spec == nil {
 		return
@@ -53,18 +49,6 @@ func (l *CreateEcosystemListener) Process(ctx context.Context, request *natsnode
 		Type:          ecosystemv2alphapb.EcosystemType_ECOSYSTEM_TYPE_PUBLIC,
 		Status:        ecosystemv2alphapb.EcosystemStatus_ECOSYSTEM_STATUS_ACTIVE,
 		StatusDetails: "",
-	}
-
-	b, err := proto.Marshal(&conf)
-	if err != nil {
-		log.Error(err.Error())
-		return
-	}
-
-	err2 := acc.SavePlatformConfiguration(ctx, request.Spec.Context.WorkspaceSlug, b)
-	if err2 != nil {
-		fmt.Println(err2)
-		return
 	}
 
 	response := ecosystemv2alphapb.CreateEcosystemResponse{

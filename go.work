@@ -10,7 +10,6 @@ use (
 	// Web
 	// ===================================
 	./apps/web/public/docs/v2alpha
-	./apps/workloads/poc/communications/v1alpha/preference-center
 	./apps/workloads/poc/i18n/v1alpha
 	./apps/workloads/poc/wasm/v2alpha/wasm
 	./apps/workloads/public/cryptography/v2alpha/encryption
@@ -20,7 +19,6 @@ use (
 	// ===================================
 	./apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./apps/workloads/public/mesh/v2alpha/lighthouse
-	./apps/connectors/poc/network-account/v1alpha
 
 	// Infrastructure
 	// ===================================
@@ -29,21 +27,6 @@ use (
 	./infrastructure/apps/workloads/public/cryptography/v2alpha/account-authority
 	./infrastructure/apps/workloads/public/ecosystem/v2alpha/ecosystem
 	./infrastructure/apps/workloads/public/mesh/v2alpha/lighthouse
-
-	// Partner libraries
-	// ===================================
-	./libs/partner/go/configuration/v2alpha
-	./libs/partner/go/charmbracelet
-	./libs/partner/go/github
-	./libs/partner/go/model
-	./libs/partner/go/nats
-	./libs/partner/go/nebula
-	./libs/partner/go/opentelemetry
-	./libs/partner/go/protovalidate
-	./libs/partner/go/pushpin
-	./libs/partner/go/sendgrid
-	./libs/partner/go/tink
-	./libs/partner/go/zap
 
 	// Plugin libraries
 	// ===================================
@@ -57,7 +40,6 @@ use (
 
 	// Private libraries
 	// ===================================
-	./libs/private/go/sdk/gen/platform/audit/v2alpha
 	./libs/private/go/sdk/gen/platform/edge/v2alpha
 	./libs/private/go/model
 
@@ -67,21 +49,7 @@ use (
 
 	// Public libraries
 	// ===================================
-	./libs/public/go/sdk/v2alpha
-
-	// SDKs
-	// ===================================
-	./libs/public/go/sdk/gen/platform/cli/v2alpha
-	./libs/public/go/sdk/gen/platform/communication/v1alpha
-	./libs/public/go/sdk/gen/platform/communication/v1beta
-	./libs/public/go/sdk/gen/platform/configuration/v2alpha
-	./libs/public/go/sdk/gen/platform/cryptography/v2alpha
-	./libs/public/go/sdk/gen/platform/dns/v2alpha
-	./libs/public/go/sdk/gen/platform/ecosystem/v2alpha
-	./libs/public/go/sdk/gen/platform/iam/v2alpha
-	./libs/public/go/sdk/gen/platform/mesh/v2alpha
-	./libs/public/go/sdk/gen/platform/ontology/v2alpha
-	./libs/public/go/sdk/gen/platform/system/v2alpha
+	./libs/public/go/sdk/v2beta
 
 	// An implicit dependency reies on github.com/bufbuild/protovalidate-go which is incorrect
 	// Remove this once that is resolved.

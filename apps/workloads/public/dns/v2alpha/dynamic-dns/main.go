@@ -3,26 +3,26 @@ package main
 import (
 	"context"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 func main() {
-	//bounds := []sdkv2alphalib.Binding{
+	//bounds := []sdkv2betalib.Binding{
 	//	&nebulav1.Binding{},
 	//}
 	//
-	//_, err := sdkv2alphalib.NewSpecYamlSettingsProvider()
+	//_, err := sdkv2betalib.NewSpecYamlSettingsProvider()
 	//if err != nil {
 	//	fmt.Println("Error:", err)
 	//	return
 	//}
 	//
 	//path, handler := cryptographyv2alphapbconnect.NewEncryptionServiceHandler(&cryptographyv2alphasrv.EncryptionServiceHandler{})
-	//server := sdkv2alphalib.NewRawServer(context.Background(), bounds, path, &handler)
+	//server := sdkv2betalib.NewRawServer(context.Background(), bounds, path, &handler)
 	//
 	//server.ListenAndServe()
 
-	server := sdkv2alphalib.NewServer(context.Background(), nil)
+	server := sdkv2betalib.NewServer(context.Background(), nil)
 
 	server.ListenAndServe()
 }

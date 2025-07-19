@@ -6,7 +6,7 @@ import (
 
 	specv2pb "github.com/openecosystems/ecosystem/libs/protobuf/go/protobuf/gen/platform/spec/v2"
 
-	sdkv2alphalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2alpha"
+	sdkv2betalib "github.com/openecosystems/ecosystem/libs/public/go/sdk/v2beta"
 )
 
 // ResolvedConfiguration stores the resolved and finalized configuration for the application.
@@ -23,16 +23,16 @@ type Configuration struct {
 }
 
 // ResolveConfiguration merges and resolves the environment and default configuration settings into a unified structure.
-func (c *Configuration) ResolveConfiguration(opts ...sdkv2alphalib.ConfigurationProviderOption) (*sdkv2alphalib.Configurer, error) {
+func (c *Configuration) ResolveConfiguration(opts ...sdkv2betalib.ConfigurationProviderOption) (*sdkv2betalib.Configurer, error) {
 	var config Configuration
 
-	opts = append(opts, sdkv2alphalib.WithConfigPathPrefix(sdkv2alphalib.ApiPrefixConfiguration) /*sdkv2alphalib.WithRuntimeOverrides()*/)
-	configurer, err := sdkv2alphalib.NewConfigurer(opts...)
+	opts = append(opts, sdkv2betalib.WithConfigPathPrefix(sdkv2betalib.ApiPrefixConfiguration) /*sdkv2betalib.WithRuntimeOverrides()*/)
+	configurer, err := sdkv2betalib.NewConfigurer(opts...)
 	if err != nil {
 		return nil, err
 	}
 
-	sdkv2alphalib.Resolve(configurer, &config, c.GetDefaultConfiguration())
+	sdkv2betalib.Resolve(configurer, &config, c.GetDefaultConfiguration())
 
 	ResolvedConfiguration = &config
 	config.configuration = &config

@@ -1,7 +1,0 @@
-{
-  "name": "workloads-poc-communications-v1alpha-preference-center",
-  "version": "0.32.0",
-  "description": "Preference Center service",
-  "private": true,
-  "license": "Apache-2.0"
-}

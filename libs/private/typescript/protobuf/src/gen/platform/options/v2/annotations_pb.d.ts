@@ -898,9 +898,9 @@ export enum EntityHierarchy {
   ORGANIZATION = 2,
 
   /**
-   * @generated from enum value: ENTITY_HIERARCHY_WORKSPACE = 3;
+   * @generated from enum value: ENTITY_HIERARCHY_ECOSYSTEM = 3;
    */
-  WORKSPACE = 3,
+  ECOSYSTEM = 3,
 }
 
 /**
@@ -1018,9 +1018,9 @@ export enum AuthRoleType {
   ORGANIZATION = 2,
 
   /**
-   * @generated from enum value: AUTH_ROLE_TYPE_WORKSPACE = 3;
+   * @generated from enum value: AUTH_ROLE_TYPE_ECOSYSTEM = 3;
    */
-  WORKSPACE = 3,
+  ECOSYSTEM = 3,
 
   /**
    * @generated from enum value: AUTH_ROLE_TYPE_CONNECTED_TEST = 4;
@@ -1208,39 +1208,39 @@ export enum AuthRole {
   ORGANIZATION_VIEWER = 206,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_SUPER_ADMIN = 300;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_SUPER_ADMIN = 300;
    */
-  WORKSPACE_SUPER_ADMIN = 300,
+  ECOSYSTEM_SUPER_ADMIN = 300,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_CLINICAL_ADMIN = 301;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_CLINICAL_ADMIN = 301;
    */
-  WORKSPACE_CLINICAL_ADMIN = 301,
+  ECOSYSTEM_CLINICAL_ADMIN = 301,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_BILLING_ADMIN = 302;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_BILLING_ADMIN = 302;
    */
-  WORKSPACE_BILLING_ADMIN = 302,
+  ECOSYSTEM_BILLING_ADMIN = 302,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_ADMIN = 303;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_ADMIN = 303;
    */
-  WORKSPACE_ADMIN = 303,
+  ECOSYSTEM_ADMIN = 303,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_MANAGER = 304;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_MANAGER = 304;
    */
-  WORKSPACE_MANAGER = 304,
+  ECOSYSTEM_MANAGER = 304,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_USER = 305;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_USER = 305;
    */
-  WORKSPACE_USER = 305,
+  ECOSYSTEM_USER = 305,
 
   /**
-   * @generated from enum value: AUTH_ROLE_WORKSPACE_VIEWER = 306;
+   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_VIEWER = 306;
    */
-  WORKSPACE_VIEWER = 306,
+  ECOSYSTEM_VIEWER = 306,
 
   /**
    * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PATIENT = 15;

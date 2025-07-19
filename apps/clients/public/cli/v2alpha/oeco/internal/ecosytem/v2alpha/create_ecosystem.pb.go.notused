@@ -54,16 +54,16 @@ var CreateEcosystemV2AlphaCmd = &cobra.Command{
 		//	os.Exit(1)
 		//}
 		//
-		//sdkv2alphalib.Overrides.FieldMask = createEcosystemFieldMask
-		//sdkv2alphalib.Overrides.ValidateOnly = createEcosystemValidateOnly
+		//sdkv2betalib.Overrides.FieldMask = createEcosystemFieldMask
+		//sdkv2betalib.Overrides.ValidateOnly = createEcosystemValidateOnly
 		//
 		//request := connect.NewRequest[ecosystemv2alphapb.CreateEcosystemRequest](&_r)
 		//// Add GZIP Support: connect.WithSendGzip(),
-		//url := "https://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
-		//if sdkv2alphalib.Config.Platform.Insecure {
-		//	url = "http://" + sdkv2alphalib.Config.Platform.Mesh.Endpoint
+		//url := "https://" + sdkv2betalib.Config.Platform.Mesh.Endpoint
+		//if sdkv2betalib.Config.Platform.Insecure {
+		//	url = "http://" + sdkv2betalib.Config.Platform.Mesh.Endpoint
 		//}
-		//client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2alphalib.Config, url, connect.WithInterceptors(sdkv2alphalib.NewCLIInterceptor(sdkv2alphalib.Config, sdkv2alphalib.Overrides)))
+		//client := *ecosystemv2alphapbsdk.NewEcosystemServiceSpecClient(sdkv2betalib.Config, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(sdkv2betalib.Config, sdkv2betalib.Overrides)))
 		//
 		//response, err := client.CreateEcosystem(context.Background(), request)
 		//if err != nil {

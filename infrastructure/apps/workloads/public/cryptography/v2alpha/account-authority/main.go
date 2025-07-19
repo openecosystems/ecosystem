@@ -12,11 +12,11 @@ import (
 )
 
 func main() {
-	bounds := []sdkv2alphalib.Binding{}
+	bounds := []sdkv2betalib.Binding{}
 
-	infrastructure := sdkv2alphalib.NewInfrastructure(context.Background(), sdkv2alphalib.WithInfrastructureBounds(bounds))
+	infrastructure := sdkv2betalib.NewInfrastructure(context.Background(), sdkv2betalib.WithInfrastructureBounds(bounds))
 	cnf := infrastructure.Config
-	name := sdkv2alphalib.infrastructurev2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
+	name := sdkv2betalib.infrastructurev2alphalib.ShortenString(cnf.App.EnvironmentName+"-"+cnf.App.Name, 63)
 
 	infrastructure.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")

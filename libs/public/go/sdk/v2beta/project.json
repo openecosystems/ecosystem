@@ -1,0 +1,56 @@
+{
+  "name": "libs-public-go-sdk-v2beta",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/public/go/sdk/v2beta",
+  "implicitDependencies": [
+    "proto"
+  ],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build ./...",
+        "cwd": "libs/public/go/sdk/v2beta"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test -v ./... -cover -race",
+        "cwd": "libs/public/go/sdk/v2beta"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go clean",
+        "cwd": "libs/public/go/sdk/v2beta"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["golangci-lint run ./... --timeout=5m"],
+        "parallel": false,
+        "cwd": "libs/public/go/sdk/v2beta"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+        "parallel": false,
+        "cwd": "libs/public/go/sdk/v2beta"
+      }
+    }
+  },
+  "tags": [
+    "type:lib",
+    "cycle:public",
+    "language:golang",
+    "type:sdk",
+    "version:v2beta",
+    "exposure:external"
+  ]
+}

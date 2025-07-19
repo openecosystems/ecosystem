@@ -2,8 +2,6 @@ module github.com/openecosystems/ecosystem/apps/workloads/public/dns/v2alpha/dyn
 
 go 1.23.4
 
-require github.com/slackhq/nebula v1.9.5
-
 require (
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be // indirect

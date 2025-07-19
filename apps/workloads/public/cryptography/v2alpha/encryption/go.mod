@@ -4,7 +4,6 @@ go 1.23.4
 
 require (
 	connectrpc.com/connect v1.17.0
-	connectrpc.com/otelconnect v0.7.1
 )
 
 require (

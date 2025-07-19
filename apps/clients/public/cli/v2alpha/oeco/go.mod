@@ -10,14 +10,11 @@ require (
 	github.com/charmbracelet/bubbletea v1.3.3
 	github.com/charmbracelet/glamour v0.6.0
 	github.com/charmbracelet/huh v0.6.0
-	github.com/charmbracelet/huh/spinner v0.0.0-20250213143221-71c9d72e6770
 	github.com/charmbracelet/lipgloss v1.0.0
 	github.com/charmbracelet/log v0.3.1
 	github.com/go-playground/validator/v10 v10.23.0
-	github.com/google/gopacket v1.1.19
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/muesli/termenv v0.15.3-0.20240618155329-98d742f6907a
-	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/protobuf v1.36.1
 	gopkg.in/yaml.v2 v2.2.8

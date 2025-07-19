@@ -1,0 +1,50 @@
+{{ $s := parentService . }}{{ $goPath := goPath .File }}{{ $e := parentEntity . }}func (s *{{ $s.Name }}) {{ .Name }}(stream {{ $s.Name }}_{{ .Name }}Server) error {
+
+ctx := context.Background();
+
+tracer := *opentelemetryv1.Bound.Tracer
+
+// Executes top level validation, no business domain validation
+validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+v := *protovalidatev0.Bound.Validator
+if err := v.Validate(req.Msg); err != nil {
+  return nil, specerror.NewSpecError(ctx, connect.CodeFailedPrecondition, specerror.SpecPreconditionFailedError(), "Validation errors")
+}
+validationSpan.End()
+
+// Spec Propogation
+specCtx, specSpan := tracer.Start(validationCtx, "spec-propogation", trace.WithSpanKind(trace.SpanKindInternal))
+spec, ok := ctx.Value("spec").(specv2pb.Spec)
+{{ if hasField .Output "spec_context" }}
+//if req.SpecContext == nil {
+//return errors.NewSpecError(ctx, errors.SpecInternalError(), "Spec Context not set")
+//}
+//server.UpdateSpecFromContext(&spec,*req.SpecContext)
+{{end}}
+if !ok {
+  return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+}
+specSpan.End()
+
+
+// Executes domain level validation, handle invariants (Things that must be true for this to be successful)
+invariantCtx, invariantValidationSpan := tracer.Start(specCtx, "invariant-validation", trace.WithSpanKind(trace.SpanKindInternal))
+_, err := s.QueryHandler.Validate{{ .Name }}Invariants(&spec, nil)
+if err != nil {
+  return err
+}
+
+{{ if hasField .Output "spec_context" }}
+if spec.Context.Validation.ValidateOnly == true {
+  return nil
+}
+{{end}}
+invariantValidationSpan.End()
+
+// Domain Handler
+handlerCtx, handlerSpan := tracer.Start(invariantCtx, "domain-handler", trace.WithSpanKind(trace.SpanKindInternal))
+e := s.QueryHandler.{{ .Name }}Handler(&spec, nil, stream)
+handlerSpan.End()
+
+return e
+}
