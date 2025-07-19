@@ -15,3 +15,20 @@ git push --follow-tags
 # Step 3: Run GoReleaser
 nx run go-protobuf-sdk-v2beta:distribute
 
+
+
+# 0. Fail if working directory is dirty
+git diff --exit-code || (echo "Uncommitted changes. Aborting." && exit 1)
+
+# 1. Bump version & tag (writes to go.mod, CHANGELOG, etc.)
+nx release -p go-protobuf-sdk-v2beta --yes
+
+# 2. Commit and push changes and tag
+git push origin HEAD --follow-tags
+
+# 3. Checkout the tag (ensure GoReleaser sees the correct commit)
+TAG=$(git describe --tags --abbrev=0)
+git checkout $TAG
+
+# 4. Run GoReleaser from the tagged commit
+nx run go-protobuf-sdk-v2beta:distribute
