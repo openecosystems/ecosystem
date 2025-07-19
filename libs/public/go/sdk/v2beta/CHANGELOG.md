@@ -1,3 +1,13 @@
+## 0.9.0 (2025-07-19)
+
+### 🚀 Features
+
+- preparing for release ([f01c37b](https://github.com/openecosystems/ecosystem/commit/f01c37b))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.8.0 (2025-07-19)
 
 ### 🚀 Features
