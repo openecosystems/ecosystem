@@ -54,6 +54,7 @@ launch-templates:
 #          echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
 #          echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
 
+
 #      - name: Debug
 #        script: |
 #          echo $PATH
