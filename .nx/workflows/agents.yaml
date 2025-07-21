@@ -94,10 +94,10 @@ launch-templates:
 #          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
 #          chmod +x go/bin/protoc-gen-grpc-java
 
-      - name: Install Binary Cache (if needed)
-        script: |
-          cd libs/partner/go/nebula/v1
-          make generate
+#      - name: Install Binary Cache (if needed)
+#        script: |
+#          cd go/oeco-sdk/bindings/nebula
+#          make generate
 
       - name: Git Config
         script: |
