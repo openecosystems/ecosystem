@@ -1,9 +1,9 @@
 name: build
 
 on:
-  push:
-    branches-ignore:
-      - main
+#  push:
+#    branches-ignore:
+#      - main
 
   pull_request:
     types: [opened, reopened, synchronize]
