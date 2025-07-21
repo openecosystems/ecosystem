@@ -97,7 +97,7 @@ jobs:
 
       - name: Run NX
         #run: pnpm exec nx affected -t lint build --exclude="apps-clients-public-cli-v2alpha-oeco" --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
-        run: pnpm exec nx affected -t build --projects=tag:type:sdk --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
+        run: pnpm exec nx affected -t build --exclude='*,!tag:type:sdk' --base=${{ env.NX_BASE }} --head=${{ env.NX_HEAD }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GORELEASER_KEY: ${{ secrets.goreleaser_key }}
