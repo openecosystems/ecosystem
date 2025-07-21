@@ -6,12 +6,6 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "target": "generate",
-          "projects": ["libs-partner-go-nebula-v1"]
-        }
-      ],
       "outputs": [
         "{workspaceRoot}/dist/apps/clients/public/cli/v2alpha/oeco"
       ],
