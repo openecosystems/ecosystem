@@ -46,7 +46,7 @@ launch-templates:
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
           brew install buf golangci-lint
-          brew install --cask goreleaser-pro
+          brew install --cask goreleaser/tap/goreleaser-pro
           echo "PATH=$PATH:/home/workflows/go/bin" >> $NX_CLOUD_ENV
 #          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
 #          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
