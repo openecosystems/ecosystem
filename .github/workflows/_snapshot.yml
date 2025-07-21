@@ -104,4 +104,4 @@ jobs:
       - name: Run NX
         id: nx
         run: |
-          pnpm exec nx run-many -t nightly -p apps-workloads-private-event-v2alpha-event-multiplexer apps-workloads-public-mesh-v2alpha-lighthouse
+          pnpm exec nx run-many -t nightly

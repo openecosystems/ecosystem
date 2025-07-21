@@ -2,12 +2,12 @@ name: cd-dev-1
 on:
   push:
     branches:
-      - main
+      - main-disabled
     paths:
       - 'infrastructure/env/dev-1.properties'
   pull_request:
     branches:
-      - main
+      - main-disabled
     paths:
       - 'infrastructure/env/dev-1.properties'
 

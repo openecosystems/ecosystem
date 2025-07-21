@@ -107,12 +107,22 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 
 	_, err := n.QueueSubscribe(subject, queue, func(msg *nats.Msg) {
 		messageCtx, message, _ := convertNatsToListenerMessage(configuration, msg)
+
+		// The Processor is responsible for replying to the Reply subject and responding with any errors
 		listener.Process(messageCtx, &message)
 	})
 	if err != nil {
 		fmt.Println("Found error in queue subscribing to nats subject: " + err.Error())
 		panic("Cannot start queue subscriber")
 	}
+}
+
+func RespondWithError(_ context.Context, request *ListenerMessage, err error) {
+	nm := *request.NatsMessage
+
+	errResp := []byte(fmt.Sprintf(`{"error":"%s"}`, err.Error()))
+	nm.Respond(errResp)
+	return
 }
 
 // RespondToMultiplexedRequest processes an inbound request, modifies the provided message, and sends a response through NATS.
@@ -177,12 +187,15 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m 
 	marshal, err3 := protopb.Marshal(m)
 	if err3 != nil {
 		fmt.Println("Cannot marshal Message", zap.Error(err3))
+
+		// TODO: Respond with failure here
 		return
 	}
 
 	err4 := nm.Respond(marshal)
 	if err4 != nil {
 		log.Error("Error acknowledging message", zap.Error(err4))
+		// TODO: Respond with failure here
 		return
 	}
 }

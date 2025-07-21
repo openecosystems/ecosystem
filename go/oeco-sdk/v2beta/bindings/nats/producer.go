@@ -57,12 +57,17 @@ func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, comm
 
 	n := b.Nats
 
+	// When a Listener responds to a request/reply subject, it should always respond
+	// with a special type that stores both the Data and the Error
 	reply, err := n.RequestMsg(&nats.Msg{
 		Subject: subject,
 		Data:    specBytes,
 	}, 10*time.Second)
+	// Here we deserialize the SpecData/SpecError object
+	// If an .Error !=nil, then we repond with a Connect ErrorDetail and respond to the multiplexer
 	if err != nil {
-		fmt.Println(err)
+		log.Error(err.Error())
+		return nil, err
 	}
 
 	return reply, err

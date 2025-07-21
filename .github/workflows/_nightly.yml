@@ -104,5 +104,5 @@ jobs:
       - name: Run NX
         id: nx
         run: |
-          pnpm exec nx run-many -t nightly -p ecosystem-v2alpha lighthouse-v2alpha
+          pnpm exec nx run-many -t nightly
 

@@ -10,7 +10,7 @@ variables:
 dist: ./dist/go/oeco-sdk/v2beta
 
 monorepo:
-  tag_prefix: "oeco-sdk-v2beta/"
+  tag_prefix: "go/oeco-sdk/v2beta/"
   dir: go/oeco-sdk/v2beta
 
 includes:
@@ -21,7 +21,7 @@ includes:
 
 nightly:
   version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "oeco-sdk-v2beta/devel"
+  tag_name: "go/oeco-sdk/v2beta/devel"
   publish_release: true
   keep_single_release: true
   #

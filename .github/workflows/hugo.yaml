@@ -4,7 +4,7 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches:
-      - main
+      - main-disabled
     paths:
       - 'apps/web/public/docs/v2alpha/**'
 
