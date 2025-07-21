@@ -1,5 +1,9 @@
 # Prerequisites
 - Ensure Git is not in a "dirty" state
+- Ensure all of the protos have been published if changed
+  - cd proto
+  - buf registry login buf.build 
+  - buf push
 
 # Initial Release
 nx release --first-release -p oeco-sdk-v2beta --dry-run
