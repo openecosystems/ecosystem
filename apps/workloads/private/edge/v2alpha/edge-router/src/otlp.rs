@@ -374,7 +374,7 @@ pub mod status {
         /// have completed successfully.
         Ok = 1,
         /// The Span contains an error.
-        Error = 2,
+        SpecError = 2,
     }
     impl StatusCode {
         /// String value of the enum field names used in the ProtoBuf definition.
@@ -385,7 +385,7 @@ pub mod status {
             match self {
                 StatusCode::Unset => "STATUS_CODE_UNSET",
                 StatusCode::Ok => "STATUS_CODE_OK",
-                StatusCode::Error => "STATUS_CODE_ERROR",
+                StatusCode::SpecError => "STATUS_CODE_ERROR",
             }
         }
         /// Creates an enum from field names used in the ProtoBuf definition.
@@ -393,7 +393,7 @@ pub mod status {
             match value {
                 "STATUS_CODE_UNSET" => Some(Self::Unset),
                 "STATUS_CODE_OK" => Some(Self::Ok),
-                "STATUS_CODE_ERROR" => Some(Self::Error),
+                "STATUS_CODE_ERROR" => Some(Self::SpecError),
                 _ => None,
             }
         }

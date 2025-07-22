@@ -162,8 +162,8 @@ func (m *BaseModel) UpdateBase(msg tea.Msg) (*BaseModel, tea.Cmd) {
 		//m.CurrentPage.Update(message)
 
 		m.Ctx.Logger.Debug("Section: Task finished", "id", message.Task.ID)
-		//if message.Task.Error != nil {
-		//	m.Ctx.Logger.Error("Task finished with error", "id", message.Task.ID, "err", message.Task.Error)
+		//if message.Task.SpecError != nil {
+		//	m.Ctx.Logger.SpecError("Task finished with error", "id", message.Task.ID, "err", message.Task.SpecError)
 		//}
 		//clr := tea.Tick(2*time.Second, func(_ time.Time) tea.Msg {
 		//	return tasks.ClearTaskMsg{TaskID: message.Task.ID, Task: message.Task}

@@ -1,5 +1,5 @@
 use fastly::http::StatusCode;
-use fastly::{Error, Request, Response};
+use fastly::{SpecError, Request, Response};
 
 mod fanout_util;
 
@@ -43,7 +43,7 @@ fn is_tls(req: &Request) -> bool {
     req.get_url().scheme().eq_ignore_ascii_case("https")
 }
 
-fn main() -> Result<(), Error> {
+fn main() -> Result<(), SpecError> {
     // Log service version
     println!(
         "FASTLY_SERVICE_VERSION: {}",

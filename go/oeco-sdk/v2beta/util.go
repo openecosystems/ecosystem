@@ -40,7 +40,7 @@ func GetDataFromSpec[D protoreflect.ProtoMessage](_ context.Context, s *specprot
 		RecursionLimit: 0,
 	})
 	if err != nil {
-		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "failed to unmarshal data: "+err.Error())
+		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "failed to unmarshal data: "+err.SpecError())
 		return ErrServerInternal.WithInternalErrorDetail(err)
 	}
 	return nil

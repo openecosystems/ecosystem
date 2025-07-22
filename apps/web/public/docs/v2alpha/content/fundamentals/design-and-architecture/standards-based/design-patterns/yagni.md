@@ -18,6 +18,6 @@ links_to:
 
 # You Ain't Gonna Need It (YAGNI)
 
-`YAGNI` is a [Design Pattern](/fundamentals/glossary/design-pattern). As humans we want to make this as versatile as we possibly can to accommodate for things that we potentially need in the future, most of which we end up not needing. The result is a system that is overly [Complex](/fundamentals/glossary/complexity), hard to maintain, less [Performant](/fundamentals/glossary/performance) and Error Prone.
+`YAGNI` is a [Design Pattern](/fundamentals/glossary/design-pattern). As humans we want to make this as versatile as we possibly can to accommodate for things that we potentially need in the future, most of which we end up not needing. The result is a system that is overly [Complex](/fundamentals/glossary/complexity), hard to maintain, less [Performant](/fundamentals/glossary/performance) and SpecError Prone.
 
 If you are not absolutely sure you are going to need a feature, don't build it.

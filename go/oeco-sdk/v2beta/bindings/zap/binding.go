@@ -7,6 +7,7 @@ import (
 
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 
+	apexlog "github.com/apex/log"
 	"go.uber.org/zap"
 )
 
@@ -63,6 +64,9 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 
 					configuration: b.configuration,
 				}
+
+				// Bridge the early Apex log outputs to use Zap
+				apexlog.SetHandler(&ZapHandler{z: b.Logger})
 				bindings.Registered[b.Name()] = Bound
 			})
 	} else {

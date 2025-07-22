@@ -44,21 +44,21 @@ func NewCIDR(cidr string) (*CIDRBlock, error) {
 
 	// Prevent G115: integer overflow conversion int -> uint32 (gosec)
 	if ones < 0 {
-		fmt.Println("Error: ones value is out of uint32 range")
+		fmt.Println("SpecError: ones value is out of uint32 range")
 		return nil, errors.New("error: ones value is out of uint32 range")
 	}
 	subnetBits := uint32(ones) //nolint:gosec
 
 	// Prevent G115: integer overflow conversion int -> uint32 (gosec)
 	if bits < 0 {
-		fmt.Println("Error: bits value is out of uint32 range")
+		fmt.Println("SpecError: bits value is out of uint32 range")
 		return nil, errors.New("error: bits value is out of uint32 range")
 	}
 	totalBits := uint32(bits) //nolint:gosec
 
 	// Prevent G115: integer overflow conversion int -> uint64 (gosec)
 	if totalIPs < 0 {
-		fmt.Println("Error: totalIPs is negative, cannot convert to uint64")
+		fmt.Println("SpecError: totalIPs is negative, cannot convert to uint64")
 		return nil, errors.New("error: totalIPs is negative, cannot convert to uint64")
 	}
 	totalIps := uint64(totalIPs) // Safe conversion

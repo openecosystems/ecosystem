@@ -73,7 +73,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch message := msg.(type) {
 	case tea.KeyMsg:
-		m.Ctx.Error = nil
+		m.Ctx.SpecError = nil
 
 		switch {
 		case key.Matches(message, keys.Keys.Up):

@@ -50,4 +50,4 @@ All transactions are tightly observed, governed, audited, rate-limited, inspecte
 
 ### Transaction Deadlines
 
-### Transaction Error Handling
+### Transaction SpecError Handling

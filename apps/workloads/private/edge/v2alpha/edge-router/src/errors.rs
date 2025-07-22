@@ -1,4 +1,4 @@
-use fastly::{Error, Response};
+use fastly::{SpecError, Response};
 use fastly::http::{StatusCode, Version};
 use fastly::http::header::CONTENT_TYPE;
 use crate::headers;
@@ -33,7 +33,7 @@ pub(crate) fn create_error(err: &String) -> ErrorResponse {
     }
 }
 
-pub(crate) fn fail(err: String, protocol: &Protocol) -> Result<Response, Error> {
+pub(crate) fn fail(err: String, protocol: &Protocol) -> Result<Response, SpecError> {
     let error = create_error(&err);
 
     let response = match protocol.spec_protocol {
@@ -87,7 +87,7 @@ pub(crate) fn fail(err: String, protocol: &Protocol) -> Result<Response, Error> 
 
 }
 
-pub(crate) fn misdirected(err: String, protocol: &Protocol) -> Result<Response, Error> {
+pub(crate) fn misdirected(err: String, protocol: &Protocol) -> Result<Response, SpecError> {
     let error = create_error(&err);
 
     let response = match protocol.spec_protocol {
@@ -142,7 +142,7 @@ pub(crate) fn misdirected(err: String, protocol: &Protocol) -> Result<Response, 
 
 }
 
-pub(crate) fn precondition(err: String, protocol: &Protocol) -> Result<Response, Error> {
+pub(crate) fn precondition(err: String, protocol: &Protocol) -> Result<Response, SpecError> {
     let error = create_error(&err);
 
     let response = match protocol.spec_protocol {

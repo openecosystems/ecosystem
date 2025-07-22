@@ -1,5 +1,5 @@
 use std::vec::Vec;
-use fastly::{Error, Request, Response};
+use fastly::{SpecError, Request, Response};
 
 pub(crate) static ALLOWED_REQUEST_QUERY_PARAMETERS: [&str; 5] =
 [
@@ -48,7 +48,7 @@ fn filter_except(qs: Vec<(String, String)>) -> Vec<(String, String)> {
 
 
 
-// fn main22(mut req: Request) -> Result<Response, Error>  {
+// fn main22(mut req: Request) -> Result<Response, SpecError>  {
 //     let qs: Vec<(String, String)> = req.get_query().unwrap();
 //     // Query strings parameters to keep.
 //     let keep = vec!["query", "page", "foo"];

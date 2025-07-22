@@ -14,6 +14,7 @@ import (
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+	"go.uber.org/zap"
 )
 
 // MultiplexCommandSync sends a command synchronously by publishing it to a NATS stream and awaiting a reply.
@@ -58,17 +59,41 @@ func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, comm
 	n := b.Nats
 
 	// When a Listener responds to a request/reply subject, it should always respond
-	// with a special type that stores both the Data and the Error
+	// with a special type that stores both the Data and the SpecError
 	reply, err := n.RequestMsg(&nats.Msg{
 		Subject: subject,
 		Data:    specBytes,
 	}, 10*time.Second)
-	// Here we deserialize the SpecData/SpecError object
-	// If an .Error !=nil, then we repond with a Connect ErrorDetail and respond to the multiplexer
 	if err != nil {
+		switch {
+		case errors.Is(err, nats.ErrTimeout):
+			return nil, ErrTimeout
+		case errors.Is(err, nats.ErrNoResponders):
+			// no responders
+			return nil, ErrNoResponders
+		case errors.Is(err, nats.ErrConnectionClosed):
+			// NATS connection was closed
+		case errors.Is(err, nats.ErrBadSubscription):
+			// something wrong with the sub
+		default:
+			// unknown or generic error
+			log.Error("Unhandled NATS error", zap.Error(err))
+		}
 		log.Error(err.Error())
 		return nil, err
 	}
+
+	// Here we deserialize the SpecData/SpecErrorable object
+	// If an .SpecError !=nil, then we repond with a Connect ErrorDetail and respond to the multiplexer
+	//if reply != nil && reply.Data != nil {
+	//	var myStruct NatsSpecWrapper
+	//	if err := proto.Unmarshal(reply.Data, &myStruct); err != nil {
+	//		// Not a valid MyProtoMessage
+	//		log.Printf("Unmarshal failed: %v", err)
+	//	} else {
+	//		// Success - bytes represent a MyProtoMessage
+	//	}
+	//}
 
 	return reply, err
 }

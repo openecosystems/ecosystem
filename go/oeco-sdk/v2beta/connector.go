@@ -220,14 +220,14 @@ func NewDynamicConnectorWithSchema(ctx context.Context, service protoreflect.Ser
 //	//	EntityTypeName: entity.TypeName(),
 //	//})
 //	//if err2 != nil {
-//	//	log.Error(err2.Error())
+//	//	log.SpecError(err2.SpecError())
 //	//	return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
 //	//}
 //	//
 //	//var dd v2alpha.CreateConfigurationResponse
 //	//err3 := proto.Unmarshal(reply.Data, &dd)
 //	//if err3 != nil {
-//	//	log.Error(err3.Error())
+//	//	log.SpecError(err3.SpecError())
 //	//	return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
 //	//}
 //	//

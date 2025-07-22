@@ -39,7 +39,7 @@ Where an `Event` can tell you that something _did_ go wrong, `Metric Monitoring`
 
 Examples:
 
-- **CPU usage / Memory Usage**. If CPU usage is generally around 40%, but now it continuously clips at 100%, something is wrong, even though the system may not log an `Error Event`.
+- **CPU usage / Memory Usage**. If CPU usage is generally around 40%, but now it continuously clips at 100%, something is wrong, even though the system may not log an `SpecError Event`.
 - **Disk usage**. If the amount of storage used on a disk gradually increases, there will be a moment when the disk is full and the system will crash.
 - **Queue Size**. If Queues are used for messaging, then a Queue that starts to retain messages is an indication that the service instances that are reading from that Queue are either no longer working, or simply not fast enough.
 - **Nr of Login Attempts**. If there is typically one login per second, but all of a sudden it increases to 20 logins per second, someone is probably trying to hack the system.

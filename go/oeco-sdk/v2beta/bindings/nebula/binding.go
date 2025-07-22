@@ -106,13 +106,13 @@ func (b *Binding) GetMeshListener(endpoint string) (*net.Listener, error) {
 	if IsBound {
 		_, port, err := net.SplitHostPort(endpoint)
 		if err != nil {
-			fmt.Println("Error:", err)
+			fmt.Println("SpecError:", err)
 			return nil, err
 		}
 
 		ln, err := b.MeshSocket.Listen("tcp", ":"+port)
 		if err != nil {
-			fmt.Println("Error listening:", err)
+			fmt.Println("SpecError listening:", err)
 		}
 
 		return &ln, nil
@@ -176,12 +176,12 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 		_udpPort := ""
 		udpHost, _udpPort, err = net.SplitHostPort(b.configuration.Platform.Mesh.UdpEndpoint)
 		if err != nil {
-			fmt.Println("Error:", err)
+			fmt.Println("SpecError:", err)
 			return nil, fmt.Errorf("invalid UDP endpoint: %s, %s", b.configuration.Platform.Mesh.UdpEndpoint, err)
 		}
 		udpPort, err = strconv.Atoi(_udpPort)
 		if err != nil {
-			fmt.Println("Error:", err)
+			fmt.Println("SpecError:", err)
 			return nil, fmt.Errorf("cannot convert UDP port to string: %s, %s", b.configuration.Platform.Mesh.UdpEndpoint, err)
 		}
 	}
@@ -272,7 +272,7 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 
 	configBytes, err := yaml.Marshal(nebulaC)
 	if err != nil {
-		fmt.Printf("Error resolving Nebula configuration: %v\n", err)
+		fmt.Printf("SpecError resolving Nebula configuration: %v\n", err)
 		fmt.Println(err.Error())
 	}
 
@@ -283,7 +283,7 @@ func (b *Binding) ConfigureMeshSocket() (*service.Service, error) {
 
 	svc, err := service.New(&cfg)
 	if err != nil {
-		fmt.Printf("Error creating service: %v\n", err)
+		fmt.Printf("SpecError creating service: %v\n", err)
 		fmt.Println(err.Error())
 	}
 

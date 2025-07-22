@@ -199,7 +199,7 @@ func (aac *AccountAuthorityCache) Get(keyType AccountAuthorityKeyType, cp *sdkv2
 		err = os.WriteFile(path, []byte(cred.AaPrivateKey), 0o600)
 	}
 	if err != nil {
-		return nil, false, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(fmt.Errorf("ca: Error writing file %s: ", path), err)
+		return nil, false, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(fmt.Errorf("ca: SpecError writing file %s: ", path), err)
 	}
 
 	store := &CredStore{
@@ -221,7 +221,7 @@ func (aac *AccountAuthorityCache) Close() {
 		// Attempt to remove the file
 		err := os.Remove(path)
 		if err != nil {
-			fmt.Printf("Error deleting file %s: %v\n", path, err)
+			fmt.Printf("SpecError deleting file %s: %v\n", path, err)
 		} else {
 			fmt.Printf("Deleted file: %s\n", path)
 		}

@@ -173,7 +173,7 @@ const (
 // DNT represents the DNT (Do Not Track) HTTP header name.
 // ExpectCT represents the Expect-CT HTTP header name.
 // FrontEndHttps represents the Front-End-Https HTTP header name.
-// NEL represents the NEL (Network Error Logging) HTTP header name.
+// NEL represents the NEL (Network SpecError Logging) HTTP header name.
 // PermissionsPolicy represents the Permissions-Policy HTTP header name.
 // ProxyConnection represents the Proxy-Connection HTTP header name.
 // Refresh represents the Refresh HTTP header name.

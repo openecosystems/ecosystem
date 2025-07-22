@@ -14,7 +14,7 @@ mod ingress;
 mod protocol;
 mod normalize;
 
-use fastly::{Error, Request, Response};
+use fastly::{SpecError, Request, Response};
 use std::string::ToString;
 use std::{time::{SystemTime, UNIX_EPOCH}};
 use std::io::{ErrorKind, Read};
@@ -23,7 +23,7 @@ use log_fastly::Logger;
 /// If `main` returns an error, a 500 error response will be delivered to the client.
 
 #[fastly::main]
-fn main(mut req: Request) -> Result<Response, Error> {
+fn main(mut req: Request) -> Result<Response, SpecError> {
 
     let start_time = SystemTime::now().duration_since(UNIX_EPOCH)
         .unwrap_or_default()

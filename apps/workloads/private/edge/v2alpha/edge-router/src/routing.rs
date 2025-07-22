@@ -16,7 +16,7 @@ pub(crate) fn extract_workspace_routing_rules(api_key: &str, service_id: &str) -
 
     let _routing_rules_config_store = ConfigStore::try_open(&store);
     if _routing_rules_config_store.is_err() {
-        println!("Error {}", _routing_rules_config_store.err().unwrap().to_string());
+        println!("SpecError {}", _routing_rules_config_store.err().unwrap().to_string());
         println!("Routing Rules Store could not be opened: {}", store);
         return None
     }
@@ -25,7 +25,7 @@ pub(crate) fn extract_workspace_routing_rules(api_key: &str, service_id: &str) -
 
     let _routing_rule = routing_rules_config_store.try_get(api_key);
     if _routing_rule.is_err() {
-        println!("Error {}", _routing_rule.err().unwrap().to_string());
+        println!("SpecError {}", _routing_rule.err().unwrap().to_string());
         println!("Could not find {} in the routing rules store", api_key);
         return None
     }

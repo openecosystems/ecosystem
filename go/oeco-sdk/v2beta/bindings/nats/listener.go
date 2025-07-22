@@ -14,7 +14,7 @@ import (
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
 	optionv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
-	specproto "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 )
 
 // SpecEventListener is an interface for handling event streaming, listening, and processing for specific configurations.
@@ -38,8 +38,8 @@ type ListenerConfiguration struct {
 
 // ListenerMessage represents a message delivered to a consumer along with its associated metadata and configuration.
 type ListenerMessage struct {
-	SpecKey               *specproto.SpecKey
-	Spec                  *specproto.Spec
+	SpecKey               *specv2pb.SpecKey
+	Spec                  *specv2pb.Spec
 	Subscription          *jetstream.Consumer
 	Message               *jetstream.Msg
 	NatsMessage           *nats.Msg
@@ -184,6 +184,17 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m 
 		}
 	}()
 
+	//a, err := anypb.New(m)
+	//if err != nil {
+	//	log.SpecError(err.SpecError())
+	//}
+
+	//wrapper := NatsSpecWrapper{
+	//	SpecData: &specv2pb.SpecData{
+	//		Data:          a,
+	//	},
+	//}
+
 	marshal, err3 := protopb.Marshal(m)
 	if err3 != nil {
 		fmt.Println("Cannot marshal Message", zap.Error(err3))
@@ -194,7 +205,7 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m 
 
 	err4 := nm.Respond(marshal)
 	if err4 != nil {
-		log.Error("Error acknowledging message", zap.Error(err4))
+		log.Error("SpecError acknowledging message", zap.Error(err4))
 		// TODO: Respond with failure here
 		return
 	}
@@ -221,7 +232,7 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 
 	c, err := stream.CreateOrUpdateConsumer(ctx, *configuration.JetstreamConfiguration)
 	if err != nil {
-		log.Error("Error creating consumer", zap.Error(err))
+		log.Error("SpecError creating consumer", zap.Error(err))
 		panic("Cannot start consumer")
 	}
 
@@ -248,7 +259,7 @@ func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
 
 	err4 := jm.Ack()
 	if err4 != nil {
-		log.Error("Error acknowledging message", zap.Error(err4))
+		log.Error("SpecError acknowledging message", zap.Error(err4))
 		return
 	}
 }
@@ -261,7 +272,7 @@ func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
 func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) (context.Context, ListenerMessage, error) {
 	ctx := context.Background()
 
-	s := &specproto.Spec{}
+	s := &specv2pb.Spec{}
 	m := *msg
 	err := protopb.Unmarshal(m.Data, s)
 	if err != nil {
@@ -289,7 +300,7 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 func convertJetstreamToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg) (context.Context, ListenerMessage, error) {
 	ctx := context.Background()
 
-	s := &specproto.Spec{}
+	s := &specv2pb.Spec{}
 	m := *msg
 	err := protopb.Unmarshal(m.Data(), s)
 	if err != nil {

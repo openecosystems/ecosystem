@@ -9,7 +9,7 @@ import (
 )
 
 // ErrFailedToRunCommand represents a custom error indicating a failure to execute a command, typically due to internal issues.
-var ErrFailedToRunCommand sdkv2betalib.SpecError = &sdkv2betalib.Error{SpecApiErr: &sdkv2betalib.SpecAPIError{Error: *sdkv2betalib.NewConnectError(connect.CodeInternal, &FailedToRunCommandErrorDetail, "Error on our side with nebula")}}
+var ErrFailedToRunCommand sdkv2betalib.SpecErrorable = sdkv2betalib.NewSpecError(connect.CodeInternal, "SpecError on our side with nebula")
 
 // FailedToRunCommandErrorDetail is a predefined SpecErrorDetail indicating an internal error during command execution.
 var FailedToRunCommandErrorDetail typev2pb.SpecErrorDetail = typev2pb.SpecErrorDetail{UserMessage: "Looks like there is an error on our side. We have reported it to the team."}

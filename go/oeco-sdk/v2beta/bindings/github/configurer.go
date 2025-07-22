@@ -48,7 +48,7 @@ func (b *Binding) GetConfiguration() *Configuration {
 func (b *Binding) GetConfigurationBytes() ([]byte, error) {
 	byteArray, err := json.Marshal(*b.GetConfiguration()) //nolint:staticcheck
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("SpecError:", err)
 		return nil, err
 	}
 	return byteArray, nil
