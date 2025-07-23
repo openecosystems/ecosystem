@@ -14,40 +14,39 @@ func (s *{{ $s.Name }}Handler) Get{{ .Name }}Configuration() *natsnodev1.Listene
 		},
 	}
 }
+{{ $methodDashCaseName := dashCase .Name }}
 
 func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ .Input.Name }}], stream *connect.ServerStream[{{ .Output.Name }}]) error {
 
     tracer := *opentelemetryv1.Bound.Tracer
-    log := *zaploggerv1.Bound.Logger
     n := natsnodev1.Bound.Nats
 
+    parentSpanCtx := trace.SpanContextFromContext(ctx)
+    ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
+
+	spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
+	if !ok {
+		return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
+
     // Executes top level validation, no business domain validation
-    validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+    validationCtx, validationSpan := tracer.Start(ctx, "{{ $methodDashCaseName }}-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
     v := *protovalidatev0.Bound.Validator
     if err := v.Validate(req.Msg); err != nil {
         return sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
     }
     validationSpan.End()
 
-    // Spec Propagation
-    specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-    spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
-    if !ok {
-        return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
-    }
-    specSpan.End()
-
     // Validate field mask
     if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
       spec.SpecData.FieldMask.Normalize()
       if !spec.SpecData.FieldMask.IsValid(&{{ .Output.Name }}{}) {
-      log.Error("Invalid field mask")
       return sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
       }
     }
 
     // Distributed Domain Handler
-    handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+    handlerCtx, handlerSpan := tracer.Start(validationCtx, "{{ $methodDashCaseName }}-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
     defer handlerSpan.End()
 
     config := s.Get{{ .Name }}Configuration()
@@ -60,11 +59,25 @@ func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Req
 		EntityTypeName: config.Entity.TypeName(),
 	}, n, stream, func(m *nats.Msg) (*{{ .Output.Name }}, error) {
 
-		var resp {{ .Output.Name }}
-		if err := proto.Unmarshal(m.Data, &resp); err != nil {
-            return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("failed to unmarshal event to {{ .Output.Name }}:")).WithInternalErrorDetail(err)
-		}
+        var s2 specv2pb.Spec
+        err := proto.Unmarshal(m.Data, &s2)
+        if err != nil {
+            return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+        }
 
-		return &resp, nil
+        if s2.SpecError != nil {
+            return nil, sdkv2betalib.NewSpecErrorFromStatus(s2.SpecError)
+        }
+
+        if s2.SpecData == nil || s2.SpecData.Data == nil {
+            return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("The response did not contain any spec data response. Investigate. Bug."))
+        }
+
+        var response {{ .Output.Name }}
+        if err = anypb.UnmarshalTo(s2.SpecData.Data, &response, proto.UnmarshalOptions{}); err != nil {
+            return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+        }
+
+		return &response, nil
 	})
 }

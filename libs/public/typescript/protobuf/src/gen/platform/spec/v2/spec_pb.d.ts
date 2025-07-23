@@ -6,6 +6,7 @@ import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1"
 import type { Message } from "@bufbuild/protobuf";
 import type { Jurisdiction } from "../../type/v2/jurisdiction_pb";
 import type { Any, FieldMask, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { Status } from "../../../google/rpc/status_pb";
 import type { AuthRole } from "../../options/v2/annotations_pb";
 import type { RequestValidation, ResponseValidation } from "../../type/v2/validation_pb";
 import type { ResponseMask } from "../../type/v2/mask_pb";
@@ -142,6 +143,11 @@ export declare type Spec = Message<"platform.spec.v2.Spec"> & {
    * @generated from field: platform.spec.v2.SpecData spec_data = 14;
    */
   specData?: SpecData;
+
+  /**
+   * @generated from field: google.rpc.Status spec_error = 15;
+   */
+  specError?: Status;
 };
 
 /**
@@ -758,6 +764,18 @@ export declare type SpecResponseContext = Message<"platform.spec.v2.SpecResponse
  * Use `create(SpecResponseContextSchema)` to create a new message.
  */
 export declare const SpecResponseContextSchema: GenMessage<SpecResponseContext>;
+
+/**
+ * @generated from message platform.spec.v2.SpecWrapper
+ */
+export declare type SpecWrapper = Message<"platform.spec.v2.SpecWrapper"> & {
+};
+
+/**
+ * Describes the message platform.spec.v2.SpecWrapper.
+ * Use `create(SpecWrapperSchema)` to create a new message.
+ */
+export declare const SpecWrapperSchema: GenMessage<SpecWrapper>;
 
 /**
  * @generated from enum platform.spec.v2.SpecEventType

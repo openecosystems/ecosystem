@@ -2,6 +2,9 @@
 package sdkv2betalib
 
 import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -13,8 +16,10 @@ import (
 
 	"google.golang.org/protobuf/types/known/fieldmaskpb"
 
+	apexlog "github.com/apex/log"
 	optionv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
 	"github.com/segmentio/ksuid"
+	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -167,7 +172,7 @@ type Factory struct {
 // NewFactory creates and initializes a new Factory instance using the provided `connect.AnyRequest`.
 // It extracts headers, processes key metadata, and constructs a structured `specv2pb.Spec` object.
 // Returns a Factory containing the built `specv2pb.Spec` and a map of parsed headers.
-func NewFactory(h http.Header, procedure string) Factory {
+func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 	headers := make(map[string]string, len(h))
 	for k, v := range h {
 		if len(v) > 0 {
@@ -248,6 +253,23 @@ func NewFactory(h http.Header, procedure string) Factory {
 	spanId := h.Get(B3SpanIDKey)
 	parentSpanId := h.Get(B3ParentSpanIDKey)
 	traceFlags := h.Get(B3DebugFlagKey)
+	spanCtx := trace.SpanContextFromContext(ctx)
+	if spanCtx.HasTraceID() {
+		traceId = spanCtx.TraceID().String()
+	}
+	if spanCtx.HasSpanID() {
+		spanId = spanCtx.SpanID().String()
+	}
+
+	if traceId == "" {
+		traceId = GenerateTraceID()
+	}
+	if spanId == "" {
+		spanId = GenerateSpanID()
+	}
+	if traceFlags == "" {
+		traceFlags = fmt.Sprintf("%02x", trace.TraceFlags(0x00))
+	}
 
 	// Spec.Context
 	// ===============================
@@ -443,4 +465,22 @@ func NewFactory(h http.Header, procedure string) Factory {
 		Spec:    &s,
 		Headers: headers,
 	}
+}
+
+// GenerateTraceID generate a trace id
+func GenerateTraceID() string {
+	var tid [16]byte
+	if _, err := rand.Read(tid[:]); err != nil {
+		apexlog.Error("failed to generate trace ID: " + err.Error())
+	}
+	return hex.EncodeToString(tid[:])
+}
+
+// GenerateSpanID generate a span ID
+func GenerateSpanID() string {
+	var sid [8]byte
+	if _, err := rand.Read(sid[:]); err != nil {
+		apexlog.Error("failed to generate span ID: " + err.Error())
+	}
+	return hex.EncodeToString(sid[:])
 }

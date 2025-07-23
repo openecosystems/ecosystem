@@ -9,6 +9,7 @@ import "platform/type/v2/jurisdiction.proto";
 import "platform/type/v2/validation.proto";
 import "platform/type/v2/mask.proto";
 import "google/protobuf/field_mask.proto";
+import "google/rpc/status.proto";
 
 option (platform.options.v2.graphql) = {
   enabled: true
@@ -122,6 +123,8 @@ message Spec {
   google.protobuf.Any data = 13;
 
   SpecData spec_data = 14;
+
+  google.rpc.Status spec_error = 15;
 }
 
 //
@@ -447,4 +450,8 @@ message SpecResponseContext {
   platform.type.v2.Jurisdiction workspace_jan = 52;
 
   string routine_id = 53;
+}
+
+message SpecWrapper {
+
 }

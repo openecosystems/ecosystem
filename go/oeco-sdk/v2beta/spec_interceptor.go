@@ -60,7 +60,7 @@ func (i *SpecInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFunc
 
 // DecorateContext adds a "spec" value to the provided context based on the information extracted from the given request.
 func DecorateContext(ctx context.Context, h http.Header, procedure string) context.Context {
-	factory := NewFactory(h, procedure)
+	factory := NewFactory(ctx, h, procedure)
 	s := factory.Spec
 
 	ctx = context.WithValue(ctx, SpecContextKey, s)
@@ -76,9 +76,11 @@ func (i *SpecInterceptor) HumanizeResponse(ctx context.Context, err error) conne
 	val := ctx.Value(SpecContextKey)
 	spec, ok := val.(*specv2pb.Spec)
 	if ok {
-		requestInfo = &errdetails.RequestInfo{
-			RequestId:   spec.GetMessageId(),
-			ServingData: "",
+		if spec != nil && spec.GetSpanContext() != nil && spec.GetSpanContext().GetTraceId() != "" {
+			requestInfo = &errdetails.RequestInfo{
+				RequestId:   spec.GetSpanContext().GetTraceId(),
+				ServingData: "build: ; version: v2.0",
+			}
 		}
 	}
 

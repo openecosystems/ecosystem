@@ -5,16 +5,18 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/mennanov/fmutils"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
 	"go.uber.org/zap"
 	protopb "google.golang.org/protobuf/proto"
 
+	apexlog "github.com/apex/log"
+	"github.com/mennanov/fmutils"
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
 	optionv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+	"go.opentelemetry.io/otel/trace"
 )
 
 // SpecEventListener is an interface for handling event streaming, listening, and processing for specific configurations.
@@ -54,7 +56,7 @@ type ListenerErr struct {
 }
 
 // ListenForMultiplexedRequests subscribes to a NATS subject to process multiplexed spec events synchronously.
-func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener) {
+func ListenForMultiplexedRequests(ctx context.Context, listener SpecEventListener) {
 	configuration := listener.GetConfiguration()
 
 	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil || configuration.Entity == nil {
@@ -109,7 +111,7 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 		messageCtx, message, _ := convertNatsToListenerMessage(configuration, msg)
 
 		// The Processor is responsible for replying to the Reply subject and responding with any errors
-		listener.Process(messageCtx, &message)
+		listener.Process(messageCtx, message)
 	})
 	if err != nil {
 		fmt.Println("Found error in queue subscribing to nats subject: " + err.Error())
@@ -117,24 +119,25 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 	}
 }
 
-func RespondWithError(_ context.Context, request *ListenerMessage, err error) {
-	nm := *request.NatsMessage
-
-	errResp := []byte(fmt.Sprintf(`{"error":"%s"}`, err.Error()))
-	nm.Respond(errResp)
-	return
-}
-
 // RespondToMultiplexedRequest processes an inbound request, modifies the provided message, and sends a response through NATS.
-func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m protopb.Message) {
-	log := *zaploggerv1.Bound.Logger
+func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage) {
 	js := *Bound.JetStream
 	nm := *request.NatsMessage
 
-	fmutils.Filter(m, request.Spec.SpecData.FieldMask.GetPaths())
+	if request.Spec == nil {
+		spec := specv2pb.Spec{SpecError: sdkv2betalib.ErrServerInternal.ToStatus()}
+		respond(&nm, &spec)
+		return
+	}
+
+	if request.Spec.SpecData != nil && request.Spec.SpecData.Data != nil {
+		fmutils.Filter(request.Spec.SpecData.Data, request.Spec.SpecData.FieldMask.GetPaths())
+	}
 
 	specBytes, err := protopb.Marshal(request.Spec)
 	if err != nil {
+		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err).ToStatus()
+		respond(&nm, request.Spec)
 		return
 	}
 
@@ -174,40 +177,49 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage, m 
 	case optionv2pb.CQRSType_CQRS_TYPE_UNSPECIFIED:
 		fallthrough
 	default:
-		log.Error("Cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad.")
+		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad.")).ToStatus()
+		respond(&nm, request.Spec)
+		return
 	}
 
 	go func() {
-		_, err2 := js.Publish(context.Background(), subject, specBytes)
-		if err2 != nil {
-			log.Error("Found error when publishing", zap.Error(err2))
+		_, err = js.Publish(context.Background(), subject, specBytes)
+		if err != nil {
+			request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Found error when publishing"), err).ToStatus()
+			respond(&nm, request.Spec)
+			return
 		}
 	}()
 
-	//a, err := anypb.New(m)
-	//if err != nil {
-	//	log.SpecError(err.SpecError())
-	//}
+	respond(&nm, request.Spec)
+}
 
-	//wrapper := NatsSpecWrapper{
-	//	SpecData: &specv2pb.SpecData{
-	//		Data:          a,
-	//	},
-	//}
-
-	marshal, err3 := protopb.Marshal(m)
-	if err3 != nil {
-		fmt.Println("Cannot marshal Message", zap.Error(err3))
-
-		// TODO: Respond with failure here
+// respond reply to a NATS request
+func respond(msg *nats.Msg, spec *specv2pb.Spec) {
+	if msg == nil {
+		apexlog.Warn("Received nil message, ignoring")
 		return
 	}
 
-	err4 := nm.Respond(marshal)
-	if err4 != nil {
-		log.Error("SpecError acknowledging message", zap.Error(err4))
-		// TODO: Respond with failure here
-		return
+	if spec == nil {
+		e := sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("the spec is nil: ")).ToStatus()
+		spec = &specv2pb.Spec{
+			SpecError: e,
+		}
+	}
+
+	marshal, err := protopb.Marshal(spec)
+	if err != nil {
+		apexlog.Error(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("cannot marshal spec: "), err).Error())
+		err = msg.Respond(nil)
+		if err != nil {
+			apexlog.Error(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
+		}
+	}
+
+	err = msg.Respond(marshal)
+	if err != nil {
+		apexlog.Error(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
 	}
 }
 
@@ -216,7 +228,7 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 	configuration := listener.GetConfiguration()
 
 	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil {
-		fmt.Println("Configuration is missing. Procedure, StreamType are required when configuring a SpecListener")
+		apexlog.Error("Configuration is missing. Procedure, StreamType are required when configuring a SpecListener")
 		panic("Configuration is missing")
 	}
 
@@ -226,7 +238,7 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 
 	stream, err := js.Stream(ctx, streamName)
 	if err != nil {
-		fmt.Println("Could not find stream: "+streamName, err)
+		apexlog.Error("Could not find stream: " + streamName + err.Error())
 		return
 	}
 
@@ -239,7 +251,7 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 	// TODO: This must be closed
 	_, err = c.Consume(func(msg jetstream.Msg) {
 		messageCtx, message, _ := convertJetstreamToListenerMessage(configuration, &msg)
-		listener.Process(messageCtx, &message)
+		listener.Process(messageCtx, message)
 	}, jetstream.ConsumeErrHandler(func(_ jetstream.ConsumeContext, err error) {
 		fmt.Println(err)
 	}))
@@ -247,7 +259,7 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 		log.Fatal("consume error", zap.Error(err))
 	}
 
-	fmt.Println("Listening for stream spec events on subject: " + streamName)
+	apexlog.Info("Listening for stream spec events on subject: " + streamName)
 
 	//
 }
@@ -269,17 +281,18 @@ func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
 // Returns a context, ListenerMessage populated with details from the input, and an error if unmarshalling fails.
 //
 //nolint:unparam
-func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) (context.Context, ListenerMessage, error) {
+func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) (context.Context, *ListenerMessage, sdkv2betalib.SpecErrorable) {
+	// Start with a new ctx here because it must remain transaction safe
 	ctx := context.Background()
-
 	s := &specv2pb.Spec{}
 	m := *msg
 	err := protopb.Unmarshal(m.Data, s)
 	if err != nil {
-		fmt.Println(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec")))
+		return ctx, nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec"), err)
 	}
 
-	// ctx = interceptor.DecorateContextWithSpec(ctx, *s)
+	parentSpanCtx := convertSpecSpanContextToContext(s)
+	ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
 
 	responseSubject := GetStreamResponseSubjectName(
 		config.StreamType.StreamPrefix(),
@@ -288,7 +301,7 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 		s.MessageId,
 	)
 
-	return ctx, ListenerMessage{
+	return ctx, &ListenerMessage{
 		Spec:                  s,
 		Subscription:          nil,
 		NatsMessage:           &m,
@@ -297,23 +310,39 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 	}, nil
 }
 
-func convertJetstreamToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg) (context.Context, ListenerMessage, error) {
+func convertJetstreamToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg) (context.Context, *ListenerMessage, sdkv2betalib.SpecErrorable) {
+	// Start with a new ctx here because it must remain transaction safe
 	ctx := context.Background()
-
 	s := &specv2pb.Spec{}
 	m := *msg
 	err := protopb.Unmarshal(m.Data(), s)
 	if err != nil {
-		fmt.Println(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec")))
-		return ctx, ListenerMessage{}, err
+		return ctx, nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec"), err)
 	}
 
-	// ctx = interceptor.DecorateContextWithSpec(ctx, *s)
+	parentSpanCtx := convertSpecSpanContextToContext(s)
+	ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
 
-	return ctx, ListenerMessage{
+	return ctx, &ListenerMessage{
 		Spec:                  s,
 		Subscription:          nil,
 		Message:               &m,
 		ListenerConfiguration: config,
 	}, nil
+}
+
+func convertSpecSpanContextToContext(spec *specv2pb.Spec) trace.SpanContext {
+	if spec == nil || spec.SpanContext == nil {
+		return trace.SpanContext{}
+	}
+
+	traceID, err := trace.TraceIDFromHex(spec.SpanContext.TraceId)
+	if err != nil {
+		return trace.SpanContext{}
+	}
+
+	return trace.NewSpanContext(trace.SpanContextConfig{
+		TraceID: traceID,
+		Remote:  true,
+	})
 }

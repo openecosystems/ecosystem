@@ -9,6 +9,7 @@ package specv2pb
 import (
 	v21 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
 	v2 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2"
+	status "google.golang.org/genproto/googleapis/rpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
@@ -256,8 +257,9 @@ type Spec struct {
 	SpanContext *SpanContext `protobuf:"bytes,10,opt,name=span_context,json=spanContext,proto3" json:"span_context,omitempty"`
 	Context *SpecContext `protobuf:"bytes,11,opt,name=context,proto3" json:"context,omitempty"`
 	RoutineContext *SpecRoutineContext `protobuf:"bytes,12,opt,name=routine_context,json=routineContext,proto3" json:"routine_context,omitempty"`
-	Data          *anypb.Any `protobuf:"bytes,13,opt,name=data,proto3" json:"data,omitempty"`
-	SpecData      *SpecData  `protobuf:"bytes,14,opt,name=spec_data,json=specData,proto3" json:"spec_data,omitempty"`
+	Data          *anypb.Any     `protobuf:"bytes,13,opt,name=data,proto3" json:"data,omitempty"`
+	SpecData      *SpecData      `protobuf:"bytes,14,opt,name=spec_data,json=specData,proto3" json:"spec_data,omitempty"`
+	SpecError     *status.Status `protobuf:"bytes,15,opt,name=spec_error,json=specError,proto3" json:"spec_error,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -386,6 +388,13 @@ func (x *Spec) GetData() *anypb.Any {
 func (x *Spec) GetSpecData() *SpecData {
 	if x != nil {
 		return x.SpecData
+	}
+	return nil
+}
+
+func (x *Spec) GetSpecError() *status.Status {
+	if x != nil {
+		return x.SpecError
 	}
 	return nil
 }
@@ -1536,17 +1545,53 @@ func (x *SpecResponseContext) GetRoutineId() string {
 	return ""
 }
 
+type SpecWrapper struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SpecWrapper) Reset() {
+	*x = SpecWrapper{}
+	mi := &file_platform_spec_v2_spec_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpecWrapper) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpecWrapper) ProtoMessage() {}
+
+func (x *SpecWrapper) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_spec_v2_spec_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpecWrapper.ProtoReflect.Descriptor instead.
+func (*SpecWrapper) Descriptor() ([]byte, []int) {
+	return file_platform_spec_v2_spec_proto_rawDescGZIP(), []int{16}
+}
+
 var File_platform_spec_v2_spec_proto protoreflect.FileDescriptor
 
 const file_platform_spec_v2_spec_proto_rawDesc = "" +
 	"\n" +
-	"\x1bplatform/spec/v2/spec.proto\x12\x10platform.spec.v2\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%platform/options/v2/annotations.proto\x1a#platform/type/v2/jurisdiction.proto\x1a!platform/type/v2/validation.proto\x1a\x1bplatform/type/v2/mask.proto\x1a google/protobuf/field_mask.proto\"\xd7\x01\n" +
+	"\x1bplatform/spec/v2/spec.proto\x12\x10platform.spec.v2\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a%platform/options/v2/annotations.proto\x1a#platform/type/v2/jurisdiction.proto\x1a!platform/type/v2/validation.proto\x1a\x1bplatform/type/v2/mask.proto\x1a google/protobuf/field_mask.proto\x1a\x17google/rpc/status.proto\"\xd7\x01\n" +
 	"\aSpecKey\x12+\n" +
 	"\x11organization_slug\x18\x02 \x01(\tR\x10organizationSlug\x12%\n" +
 	"\x0eworkspace_slug\x18\x03 \x01(\tR\rworkspaceSlug\x12C\n" +
 	"\rworkspace_jan\x18\x04 \x01(\x0e2\x1e.platform.type.v2.JurisdictionR\fworkspaceJan\x12\x1b\n" +
 	"\tspec_type\x18\x05 \x01(\tR\bspecType\x12\x0e\n" +
-	"\x02id\x18\x06 \x01(\tR\x02id:\x06\xfa\xb6\x18\x02\b\x01\"\xf2\x05\n" +
+	"\x02id\x18\x06 \x01(\tR\x02id:\x06\xfa\xb6\x18\x02\b\x01\"\xa5\x06\n" +
 	"\x04Spec\x12!\n" +
 	"\fspec_version\x18\x01 \x01(\tR\vspecVersion\x12\x1d\n" +
 	"\n" +
@@ -1565,7 +1610,9 @@ const file_platform_spec_v2_spec_proto_rawDesc = "" +
 	"\acontext\x18\v \x01(\v2\x1d.platform.spec.v2.SpecContextR\acontext\x12M\n" +
 	"\x0froutine_context\x18\f \x01(\v2$.platform.spec.v2.SpecRoutineContextR\x0eroutineContext\x12(\n" +
 	"\x04data\x18\r \x01(\v2\x14.google.protobuf.AnyR\x04data\x127\n" +
-	"\tspec_data\x18\x0e \x01(\v2\x1a.platform.spec.v2.SpecDataR\bspecData:\x06\xfa\xb6\x18\x02\b\x01\"\xb6\x03\n" +
+	"\tspec_data\x18\x0e \x01(\v2\x1a.platform.spec.v2.SpecDataR\bspecData\x121\n" +
+	"\n" +
+	"spec_error\x18\x0f \x01(\v2\x12.google.rpc.StatusR\tspecError:\x06\xfa\xb6\x18\x02\b\x01\"\xb6\x03\n" +
 	"\n" +
 	"SpecPublic\x12!\n" +
 	"\fspec_version\x18\x01 \x01(\tR\vspecVersion\x12\x1d\n" +
@@ -1672,7 +1719,8 @@ const file_platform_spec_v2_spec_proto_rawDesc = "" +
 	"\x0eworkspace_slug\x183 \x01(\tR\rworkspaceSlug\x12C\n" +
 	"\rworkspace_jan\x184 \x01(\x0e2\x1e.platform.type.v2.JurisdictionR\fworkspaceJan\x12\x1d\n" +
 	"\n" +
-	"routine_id\x185 \x01(\tR\troutineId:\x06\xfa\xb6\x18\x02\b\x02*\xa0\x02\n" +
+	"routine_id\x185 \x01(\tR\troutineId:\x06\xfa\xb6\x18\x02\b\x02\"\r\n" +
+	"\vSpecWrapper*\xa0\x02\n" +
 	"\rSpecEventType\x12\x1f\n" +
 	"\x1bSPEC_EVENT_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17SPEC_EVENT_TYPE_COMMAND\x10\x01\x12\x19\n" +
@@ -1704,7 +1752,7 @@ func file_platform_spec_v2_spec_proto_rawDescGZIP() []byte {
 }
 
 var file_platform_spec_v2_spec_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_platform_spec_v2_spec_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_platform_spec_v2_spec_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_platform_spec_v2_spec_proto_goTypes = []any{
 	(SpecEventType)(0),            // 0: platform.spec.v2.SpecEventType
 	(SpecPrincipalType)(0),        // 1: platform.spec.v2.SpecPrincipalType
@@ -1724,57 +1772,60 @@ var file_platform_spec_v2_spec_proto_goTypes = []any{
 	(*SpecData)(nil),              // 15: platform.spec.v2.SpecData
 	(*SpecRequestContext)(nil),    // 16: platform.spec.v2.SpecRequestContext
 	(*SpecResponseContext)(nil),   // 17: platform.spec.v2.SpecResponseContext
-	nil,                           // 18: platform.spec.v2.SpecRoutineContext.RoutineDataEntry
-	(v2.Jurisdiction)(0),          // 19: platform.type.v2.Jurisdiction
-	(*timestamppb.Timestamp)(nil), // 20: google.protobuf.Timestamp
-	(*anypb.Any)(nil),             // 21: google.protobuf.Any
-	(v21.AuthRole)(0),             // 22: platform.options.v2.AuthRole
-	(*fieldmaskpb.FieldMask)(nil), // 23: google.protobuf.FieldMask
-	(*v2.RequestValidation)(nil),  // 24: platform.type.v2.RequestValidation
-	(*v2.ResponseValidation)(nil), // 25: platform.type.v2.ResponseValidation
-	(*v2.ResponseMask)(nil),       // 26: platform.type.v2.ResponseMask
+	(*SpecWrapper)(nil),           // 18: platform.spec.v2.SpecWrapper
+	nil,                           // 19: platform.spec.v2.SpecRoutineContext.RoutineDataEntry
+	(v2.Jurisdiction)(0),          // 20: platform.type.v2.Jurisdiction
+	(*timestamppb.Timestamp)(nil), // 21: google.protobuf.Timestamp
+	(*anypb.Any)(nil),             // 22: google.protobuf.Any
+	(*status.Status)(nil),         // 23: google.rpc.Status
+	(v21.AuthRole)(0),             // 24: platform.options.v2.AuthRole
+	(*fieldmaskpb.FieldMask)(nil), // 25: google.protobuf.FieldMask
+	(*v2.RequestValidation)(nil),  // 26: platform.type.v2.RequestValidation
+	(*v2.ResponseValidation)(nil), // 27: platform.type.v2.ResponseValidation
+	(*v2.ResponseMask)(nil),       // 28: platform.type.v2.ResponseMask
 }
 var file_platform_spec_v2_spec_proto_depIdxs = []int32{
-	19, // 0: platform.spec.v2.SpecKey.workspace_jan:type_name -> platform.type.v2.Jurisdiction
-	20, // 1: platform.spec.v2.Spec.sent_at:type_name -> google.protobuf.Timestamp
-	20, // 2: platform.spec.v2.Spec.received_at:type_name -> google.protobuf.Timestamp
-	20, // 3: platform.spec.v2.Spec.completed_at:type_name -> google.protobuf.Timestamp
+	20, // 0: platform.spec.v2.SpecKey.workspace_jan:type_name -> platform.type.v2.Jurisdiction
+	21, // 1: platform.spec.v2.Spec.sent_at:type_name -> google.protobuf.Timestamp
+	21, // 2: platform.spec.v2.Spec.received_at:type_name -> google.protobuf.Timestamp
+	21, // 3: platform.spec.v2.Spec.completed_at:type_name -> google.protobuf.Timestamp
 	0,  // 4: platform.spec.v2.Spec.spec_event_type:type_name -> platform.spec.v2.SpecEventType
 	8,  // 5: platform.spec.v2.Spec.principal:type_name -> platform.spec.v2.SpecPrincipal
 	6,  // 6: platform.spec.v2.Spec.span_context:type_name -> platform.spec.v2.SpanContext
 	5,  // 7: platform.spec.v2.Spec.context:type_name -> platform.spec.v2.SpecContext
 	7,  // 8: platform.spec.v2.Spec.routine_context:type_name -> platform.spec.v2.SpecRoutineContext
-	21, // 9: platform.spec.v2.Spec.data:type_name -> google.protobuf.Any
+	22, // 9: platform.spec.v2.Spec.data:type_name -> google.protobuf.Any
 	15, // 10: platform.spec.v2.Spec.spec_data:type_name -> platform.spec.v2.SpecData
-	20, // 11: platform.spec.v2.SpecPublic.sent_at:type_name -> google.protobuf.Timestamp
-	20, // 12: platform.spec.v2.SpecPublic.received_at:type_name -> google.protobuf.Timestamp
-	20, // 13: platform.spec.v2.SpecPublic.completed_at:type_name -> google.protobuf.Timestamp
-	0,  // 14: platform.spec.v2.SpecPublic.spec_event_type:type_name -> platform.spec.v2.SpecEventType
-	21, // 15: platform.spec.v2.SpecPublic.data:type_name -> google.protobuf.Any
-	19, // 16: platform.spec.v2.SpecContext.ecosystem_jan:type_name -> platform.type.v2.Jurisdiction
-	19, // 17: platform.spec.v2.SpecContext.workspace_jan:type_name -> platform.type.v2.Jurisdiction
-	9,  // 18: platform.spec.v2.SpecContext.validation:type_name -> platform.spec.v2.SpecValidation
-	10, // 19: platform.spec.v2.SpecContext.producer:type_name -> platform.spec.v2.SpecProducer
-	11, // 20: platform.spec.v2.SpecContext.device:type_name -> platform.spec.v2.SpecDevice
-	12, // 21: platform.spec.v2.SpecContext.location:type_name -> platform.spec.v2.SpecLocation
-	13, // 22: platform.spec.v2.SpecContext.network:type_name -> platform.spec.v2.SpecNetwork
-	14, // 23: platform.spec.v2.SpecContext.os:type_name -> platform.spec.v2.SpecOS
-	18, // 24: platform.spec.v2.SpecRoutineContext.routine_data:type_name -> platform.spec.v2.SpecRoutineContext.RoutineDataEntry
-	1,  // 25: platform.spec.v2.SpecPrincipal.type:type_name -> platform.spec.v2.SpecPrincipalType
-	22, // 26: platform.spec.v2.SpecPrincipal.auth_roles:type_name -> platform.options.v2.AuthRole
-	21, // 27: platform.spec.v2.SpecData.configuration:type_name -> google.protobuf.Any
-	21, // 28: platform.spec.v2.SpecData.data:type_name -> google.protobuf.Any
-	23, // 29: platform.spec.v2.SpecData.field_mask:type_name -> google.protobuf.FieldMask
-	24, // 30: platform.spec.v2.SpecRequestContext.request_validation:type_name -> platform.type.v2.RequestValidation
-	25, // 31: platform.spec.v2.SpecResponseContext.response_validation:type_name -> platform.type.v2.ResponseValidation
-	26, // 32: platform.spec.v2.SpecResponseContext.response_mask:type_name -> platform.type.v2.ResponseMask
-	19, // 33: platform.spec.v2.SpecResponseContext.workspace_jan:type_name -> platform.type.v2.Jurisdiction
-	21, // 34: platform.spec.v2.SpecRoutineContext.RoutineDataEntry.value:type_name -> google.protobuf.Any
-	35, // [35:35] is the sub-list for method output_type
-	35, // [35:35] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	23, // 11: platform.spec.v2.Spec.spec_error:type_name -> google.rpc.Status
+	21, // 12: platform.spec.v2.SpecPublic.sent_at:type_name -> google.protobuf.Timestamp
+	21, // 13: platform.spec.v2.SpecPublic.received_at:type_name -> google.protobuf.Timestamp
+	21, // 14: platform.spec.v2.SpecPublic.completed_at:type_name -> google.protobuf.Timestamp
+	0,  // 15: platform.spec.v2.SpecPublic.spec_event_type:type_name -> platform.spec.v2.SpecEventType
+	22, // 16: platform.spec.v2.SpecPublic.data:type_name -> google.protobuf.Any
+	20, // 17: platform.spec.v2.SpecContext.ecosystem_jan:type_name -> platform.type.v2.Jurisdiction
+	20, // 18: platform.spec.v2.SpecContext.workspace_jan:type_name -> platform.type.v2.Jurisdiction
+	9,  // 19: platform.spec.v2.SpecContext.validation:type_name -> platform.spec.v2.SpecValidation
+	10, // 20: platform.spec.v2.SpecContext.producer:type_name -> platform.spec.v2.SpecProducer
+	11, // 21: platform.spec.v2.SpecContext.device:type_name -> platform.spec.v2.SpecDevice
+	12, // 22: platform.spec.v2.SpecContext.location:type_name -> platform.spec.v2.SpecLocation
+	13, // 23: platform.spec.v2.SpecContext.network:type_name -> platform.spec.v2.SpecNetwork
+	14, // 24: platform.spec.v2.SpecContext.os:type_name -> platform.spec.v2.SpecOS
+	19, // 25: platform.spec.v2.SpecRoutineContext.routine_data:type_name -> platform.spec.v2.SpecRoutineContext.RoutineDataEntry
+	1,  // 26: platform.spec.v2.SpecPrincipal.type:type_name -> platform.spec.v2.SpecPrincipalType
+	24, // 27: platform.spec.v2.SpecPrincipal.auth_roles:type_name -> platform.options.v2.AuthRole
+	22, // 28: platform.spec.v2.SpecData.configuration:type_name -> google.protobuf.Any
+	22, // 29: platform.spec.v2.SpecData.data:type_name -> google.protobuf.Any
+	25, // 30: platform.spec.v2.SpecData.field_mask:type_name -> google.protobuf.FieldMask
+	26, // 31: platform.spec.v2.SpecRequestContext.request_validation:type_name -> platform.type.v2.RequestValidation
+	27, // 32: platform.spec.v2.SpecResponseContext.response_validation:type_name -> platform.type.v2.ResponseValidation
+	28, // 33: platform.spec.v2.SpecResponseContext.response_mask:type_name -> platform.type.v2.ResponseMask
+	20, // 34: platform.spec.v2.SpecResponseContext.workspace_jan:type_name -> platform.type.v2.Jurisdiction
+	22, // 35: platform.spec.v2.SpecRoutineContext.RoutineDataEntry.value:type_name -> google.protobuf.Any
+	36, // [36:36] is the sub-list for method output_type
+	36, // [36:36] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_platform_spec_v2_spec_proto_init() }
@@ -1788,7 +1839,7 @@ func file_platform_spec_v2_spec_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_platform_spec_v2_spec_proto_rawDesc), len(file_platform_spec_v2_spec_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   17,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

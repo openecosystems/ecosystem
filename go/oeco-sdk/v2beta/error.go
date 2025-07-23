@@ -10,6 +10,9 @@ import (
 	"connectrpc.com/connect"
 	apexlog "github.com/apex/log"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
+
+	"google.golang.org/genproto/googleapis/rpc/status"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 // Using guidance from: https://google.aip.dev/193
@@ -31,9 +34,13 @@ type (
 		WithHelp(help *errdetails.Help) SpecError
 		WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecError
 		WithInternalErrorDetail(errs ...error) SpecError
+		// WithDebugDetail(ctx context.Context, spec *specv2pb.Spec, errs ...error) SpecError
+		ToStatus() *status.Status
+		ToConnectError() *connect.Error
 		error
 	}
 
+	// SpecError the main Error type
 	SpecError struct {
 		ConnectErr connect.Error
 
@@ -60,11 +67,33 @@ func NewSpecError(code connect.Code, message string) SpecError {
 	return ee
 }
 
+func NewSpecErrorFromStatus(status *status.Status) SpecError {
+	if status == nil {
+		return ErrServerInternal.WithInternalErrorDetail(errors.New("status is nil when attempting to create a new spec error"))
+	}
+	ee := SpecError{
+		ConnectErr: *connect.NewError(connect.Code(status.Code), errors.New(status.Message)),
+	}
+
+	if status.Details != nil {
+		for _, detail := range status.Details {
+			d, err := connect.NewErrorDetail(detail)
+			if err != nil {
+				apexlog.Error("Could not parse the error detail from that status: " + detail.TypeUrl)
+				continue
+			}
+			ee.ConnectErr.AddDetail(d)
+		}
+	}
+
+	return ee
+}
+
 // WithRequestInfo with request information
 func (se SpecError) WithRequestInfo(info *errdetails.RequestInfo) SpecError {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
-		fmt.Println("server: SpecError creating new SpecError detail")
+		apexlog.Error("server: SpecError creating new SpecError detail")
 		return se
 	}
 
@@ -78,7 +107,7 @@ func (se SpecError) WithRequestInfo(info *errdetails.RequestInfo) SpecError {
 func (se SpecError) WithResourceInfo(info *errdetails.ResourceInfo) SpecError {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
-		fmt.Println("server: SpecError creating new ResourceInfo")
+		apexlog.Error("server: SpecError creating new ResourceInfo")
 		return se
 	}
 
@@ -91,7 +120,7 @@ func (se SpecError) WithResourceInfo(info *errdetails.ResourceInfo) SpecError {
 func (se SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecError {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
-		fmt.Println("server: SpecError creating new ErrorInfo")
+		apexlog.Error("server: SpecError creating new ErrorInfo")
 		return se
 	}
 
@@ -104,7 +133,7 @@ func (se SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecError {
 func (se SpecError) WithRetryInfo(info *errdetails.RetryInfo) SpecError {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
-		fmt.Println("server: SpecError creating new RetryInfo")
+		apexlog.Error("server: SpecError creating new RetryInfo")
 		return se
 	}
 
@@ -117,7 +146,7 @@ func (se SpecError) WithRetryInfo(info *errdetails.RetryInfo) SpecError {
 func (se SpecError) WithDebugInfo(info *errdetails.DebugInfo) SpecError {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
-		fmt.Println("server: SpecError creating new DebugInfo")
+		apexlog.Error("server: SpecError creating new DebugInfo")
 		return se
 	}
 
@@ -130,7 +159,7 @@ func (se SpecError) WithDebugInfo(info *errdetails.DebugInfo) SpecError {
 func (se SpecError) WithQuotaFailure(failure *errdetails.QuotaFailure) SpecError {
 	d, err := connect.NewErrorDetail(failure)
 	if err != nil {
-		fmt.Println("server: SpecError creating new QuotaFailure")
+		apexlog.Error("server: SpecError creating new QuotaFailure")
 		return se
 	}
 
@@ -143,7 +172,7 @@ func (se SpecError) WithQuotaFailure(failure *errdetails.QuotaFailure) SpecError
 func (se SpecError) WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecError {
 	d, err := connect.NewErrorDetail(failure)
 	if err != nil {
-		fmt.Println("server: SpecError creating new PreconditionFailure")
+		apexlog.Error("server: SpecError creating new PreconditionFailure")
 		return se
 	}
 
@@ -156,7 +185,7 @@ func (se SpecError) WithPreconditionFailure(failure *errdetails.PreconditionFail
 func (se SpecError) WithBadRequest(request *errdetails.BadRequest) SpecError {
 	d, err := connect.NewErrorDetail(request)
 	if err != nil {
-		fmt.Println("server: SpecError creating new BadRequest")
+		apexlog.Error("server: SpecError creating new BadRequest")
 		return se
 	}
 
@@ -169,7 +198,7 @@ func (se SpecError) WithBadRequest(request *errdetails.BadRequest) SpecError {
 func (se SpecError) WithHelp(help *errdetails.Help) SpecError {
 	d, err := connect.NewErrorDetail(help)
 	if err != nil {
-		fmt.Println("server: SpecError creating new Help")
+		apexlog.Error("server: SpecError creating new Help")
 		return se
 	}
 
@@ -182,7 +211,7 @@ func (se SpecError) WithHelp(help *errdetails.Help) SpecError {
 func (se SpecError) WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecError {
 	d, err := connect.NewErrorDetail(message)
 	if err != nil {
-		fmt.Println("server: SpecError creating new LocalizedMessage")
+		apexlog.Error("server: SpecError creating new LocalizedMessage")
 		return se
 	}
 
@@ -222,31 +251,57 @@ func (se SpecError) Error() string {
 	return buffer.String()
 }
 
-func (e *SpecError) Is(target error) bool {
+func (se SpecError) Is(target error) bool {
 	if target == nil {
 		return false
 	}
 
 	// Case 1: Check if target is a SpecError to compare types
-	var se SpecError
+	// var se2 SpecError
 	if errors.As(target, &se) {
-		return e.ConnectErr.Code() == se.ConnectErr.Code()
+		return se.ConnectErr.Code() == se.ConnectErr.Code()
 	}
 
 	// Case 2: Check if target is a connect.Error
 	var ce *connect.Error
 	if errors.As(target, &ce) {
-		return e.ConnectErr.Code() == ce.Code()
+		return se.ConnectErr.Code() == ce.Code()
 	}
 
 	return false
 }
 
-func (e *SpecError) Code() connect.Code {
-	if e == nil {
-		return connect.CodeUnknown
+func (se SpecError) Code() connect.Code {
+	return se.ConnectErr.Code()
+}
+
+func (se SpecError) ToStatus() *status.Status {
+	s := status.Status{
+		Code:    int32(se.Code()),
+		Message: se.ConnectErr.Message(),
 	}
-	return e.ConnectErr.Code()
+
+	for _, detail := range se.ConnectErr.Details() {
+		pb, err := detail.Value()
+		if err != nil {
+			apexlog.Warn("server: SpecError adding detail to Status; skipping but continuing")
+			continue
+		}
+
+		anyMsg, err := anypb.New(pb)
+		if err != nil {
+			apexlog.Warn("server: SpecError adding protobuffed detail to Status; skipping but continuing")
+			continue
+		}
+
+		s.Details = append(s.Details, anyMsg)
+	}
+
+	return &s
+}
+
+func (se SpecError) ToConnectError() *connect.Error {
+	return &se.ConnectErr
 }
 
 //func (se SpecError) Unwrap() error {
