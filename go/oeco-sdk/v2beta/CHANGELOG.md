@@ -1,3 +1,16 @@
+## 0.14.0 (2025-07-26)
+
+### 🚀 Features
+
+- upgrading open telemetry and better error handling ([5d9cdca](https://github.com/openecosystems/ecosystem/commit/5d9cdca))
+- adding better error handling ([bedb349](https://github.com/openecosystems/ecosystem/commit/bedb349))
+- OECO cleanup 30 ([#62](https://github.com/openecosystems/ecosystem/pull/62))
+- Oeco cleanup 29 ([#61](https://github.com/openecosystems/ecosystem/pull/61))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.13.0 (2025-07-19)
 
 ### 🚀 Features
