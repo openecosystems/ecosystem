@@ -43,18 +43,6 @@ type (
 	// SpecError the main Error type
 	SpecError struct {
 		ConnectErr connect.Error
-
-		// requestInfo         *errdetails.RequestInfo
-		// resourceInfo        *errdetails.ResourceInfo
-		// errorInfo           *errdetails.ErrorInfo
-		// retryInfo           *errdetails.RetryInfo
-		// debugInfo           *errdetails.DebugInfo
-		// quotaFailure        *errdetails.QuotaFailure
-		// preconditionFailure *errdetails.PreconditionFailure
-		// badRequest          *errdetails.BadRequest
-		// help                *errdetails.Help
-		// localizedMessage    *errdetails.LocalizedMessage
-		// internalApiErr      []error
 	}
 )
 
@@ -97,8 +85,6 @@ func (se SpecError) WithRequestInfo(info *errdetails.RequestInfo) SpecError {
 		return se
 	}
 
-	// se.requestInfo = info
-
 	se.ConnectErr.AddDetail(d)
 	return se
 }
@@ -111,8 +97,6 @@ func (se SpecError) WithResourceInfo(info *errdetails.ResourceInfo) SpecError {
 		return se
 	}
 
-	// se.resourceInfo = info
-
 	se.ConnectErr.AddDetail(d)
 	return se
 }
@@ -123,8 +107,6 @@ func (se SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecError {
 		apexlog.Error("server: SpecError creating new ErrorInfo")
 		return se
 	}
-
-	// se.errorInfo = info
 
 	se.ConnectErr.AddDetail(d)
 	return se
@@ -137,8 +119,6 @@ func (se SpecError) WithRetryInfo(info *errdetails.RetryInfo) SpecError {
 		return se
 	}
 
-	// se.retryInfo = info
-
 	se.ConnectErr.AddDetail(d)
 	return se
 }
@@ -149,8 +129,6 @@ func (se SpecError) WithDebugInfo(info *errdetails.DebugInfo) SpecError {
 		apexlog.Error("server: SpecError creating new DebugInfo")
 		return se
 	}
-
-	// se.debugInfo = info
 
 	se.ConnectErr.AddDetail(d)
 	return se
@@ -163,8 +141,6 @@ func (se SpecError) WithQuotaFailure(failure *errdetails.QuotaFailure) SpecError
 		return se
 	}
 
-	// se.quotaFailure = failure
-
 	se.ConnectErr.AddDetail(d)
 	return se
 }
@@ -175,8 +151,6 @@ func (se SpecError) WithPreconditionFailure(failure *errdetails.PreconditionFail
 		apexlog.Error("server: SpecError creating new PreconditionFailure")
 		return se
 	}
-
-	// se.preconditionFailure = failure
 
 	se.ConnectErr.AddDetail(d)
 	return se
@@ -189,8 +163,6 @@ func (se SpecError) WithBadRequest(request *errdetails.BadRequest) SpecError {
 		return se
 	}
 
-	// se.badRequest = request
-
 	se.ConnectErr.AddDetail(d)
 	return se
 }
@@ -202,8 +174,6 @@ func (se SpecError) WithHelp(help *errdetails.Help) SpecError {
 		return se
 	}
 
-	// se.help = help
-
 	se.ConnectErr.AddDetail(d)
 	return se
 }
@@ -214,8 +184,6 @@ func (se SpecError) WithLocalizedMessage(message *errdetails.LocalizedMessage) S
 		apexlog.Error("server: SpecError creating new LocalizedMessage")
 		return se
 	}
-
-	// se.localizedMessage = message
 
 	se.ConnectErr.AddDetail(d)
 	return se
@@ -235,12 +203,6 @@ func (se SpecError) WithInternalErrorDetail(errs ...error) SpecError {
 // It includes details from both internalApiErr and ConnectErr if they are present.
 func (se SpecError) Error() string {
 	var buffer bytes.Buffer
-
-	//if len(se.internalApiErr) > 0 {
-	//	for _, e := range se.internalApiErr {
-	//		buffer.WriteString("server: " + e.Error())
-	//	}
-	//}
 
 	if se.ConnectErr.Message() != "" {
 		buffer.WriteString(se.ConnectErr.Error())
