@@ -2,19 +2,19 @@
 date_created: 2023-10-11T16:56:19
 title: Markdown
 aliases:
-  - Markdown
+    - Markdown
 pcx_content_type: definition
 summary: >-
-  `Markdown` is a very lightweight plain text markup language for writing documentation. It is easy to read, easy to write, and easy to render to other markup languages like [HTML](/fundamentals/design-and-architecture/standards-based/data-standards/html).
+    `Markdown` is a very lightweight plain text markup language for writing documentation. It is easy to read, easy to write, and easy to render to other markup languages like [HTML](/fundamentals/design-and-architecture/standards-based/data-standards/html).
 hidden: true
 has_more: true
 todo: Find more details and sources
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/html
-  - /fundamentals/design-and-architecture/standards-based/data-standards/pdf
-  - /fundamentals/design-and-architecture/standards-based/design-patterns/convention-over-configuration
-  - /fundamentals/glossary/frontmatter
-  - https://url/of/the/link
+    - /fundamentals/design-and-architecture/standards-based/data-standards/html
+    - /fundamentals/design-and-architecture/standards-based/data-standards/pdf
+    - /fundamentals/design-and-architecture/standards-based/design-patterns/convention-over-configuration
+    - /fundamentals/glossary/frontmatter
+    - https://url/of/the/link
 ---
 
 # Markdown
@@ -30,16 +30,10 @@ By [Convention](/fundamentals/design-and-architecture/standards-based/design-pat
 [Frontmatter](/fundamentals/glossary/frontmatter) is an "extension" of `Markdown` that allows for adding meta data.
 
 By default links in `Markdown` use the following syntax:
-
-```md
-[Text of the link](https://url/of/the/link)
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">md</span></div></span></span></span></code></pre>{{</raw>}}
 
 More modern tools support the `Wiki Syntax`:
-
-```md
-[[Name of the document]]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">md</span></div></span></span></span></code></pre>{{</raw>}}
 
 Here the text of the link and the target of the link are identical to the name of the document that is referenced. This is much easier to read and to type.
 

@@ -2,13 +2,13 @@
 title: HTTP 429
 pcx_content_type: definition
 summary: >-
-  HTTP 429 "Too many requests" is an [HTTP Return code](/fundamentals/glossary/#http-return-code) that can be returned by a service if it doesn't have enough resources to fulfill this request, or if a [Rate Limit](/fundamentals/glossary/#rate-limiting) has been imposed on the consumer, which has been exceeded. An HTTP 429 may be an indication that a [DoS Attack](/fundamentals/glossary/dos-attack) is in progress.
+    HTTP 429 "Too many requests" is an [HTTP Return code](/fundamentals/glossary/#http-return-code) that can be returned by a service if it doesn't have enough resources to fulfill this request, or if a [Rate Limit](/fundamentals/glossary/#rate-limiting) has been imposed on the consumer, which has been exceeded. An HTTP 429 may be an indication that a [DoS Attack](/fundamentals/glossary/dos-attack) is in progress.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/dos-attack
-  - /fundamentals/glossary/http-return-code
-  - /fundamentals/glossary/rate-limiting
+    - /fundamentals/glossary/dos-attack
+    - /fundamentals/glossary/http-return-code
+    - /fundamentals/glossary/rate-limiting
 ---
 
 # HTTP 429

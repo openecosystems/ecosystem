@@ -10,21 +10,21 @@ weight: 1
 
 Architecture is a type of design that only deals with structure.
 
-- Enterprise Architecture
-- Business Architecture
-- Information Architecture
-- Data Architecture
-- Network Architecture
+-   Enterprise Architecture
+-   Business Architecture
+-   Information Architecture
+-   Data Architecture
+-   Network Architecture
 
 ## Design
 
-- Visual Design
-- User Interface Design
-- Web Design
-- Experience Design
-- Graphic Design
-- Product Design
-- Organizational Design
+-   Visual Design
+-   User Interface Design
+-   Web Design
+-   Experience Design
+-   Graphic Design
+-   Product Design
+-   Organizational Design
 
 ### High-Level Design
 

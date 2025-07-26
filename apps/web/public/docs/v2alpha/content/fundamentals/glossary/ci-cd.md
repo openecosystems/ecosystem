@@ -1,24 +1,24 @@
 ---
 title: CI/CD
 aliases:
-  - CI/CD
-  - CI
-  - CD
-  - CI Pipeline
-  - CI Pipelines
-  - CD Pipeline
-  - CD Pipelines
-  - Continuous Integration / Continuous Deployment (CI/CD)
+    - CI/CD
+    - CI
+    - CD
+    - CI Pipeline
+    - CI Pipelines
+    - CD Pipeline
+    - CD Pipelines
+    - Continuous Integration / Continuous Deployment (CI/CD)
 pcx_content_type: definition
 summary: >-
-  "`CI/CD` is the combined practices of continuously merging all developer's working copies into a shared mainline (including building, testing, validation, and [Versioning](/fundamentals/design-and-architecture/standards-based/data-standards/semantic-versioning)), and automatically deploying the build output."
+    "`CI/CD` is the combined practices of continuously merging all developer's working copies into a shared mainline (including building, testing, validation, and [Versioning](/fundamentals/design-and-architecture/standards-based/data-standards/semantic-versioning)), and automatically deploying the build output."
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/semantic-versioning
-  - /fundamentals/glossary/pull-request
-  - /fundamentals/glossary/artifact-repository
-  - /fundamentals/glossary/dtap
+    - /fundamentals/design-and-architecture/standards-based/data-standards/semantic-versioning
+    - /fundamentals/glossary/pull-request
+    - /fundamentals/glossary/artifact-repository
+    - /fundamentals/glossary/dtap
 ---
 
 # Continuous Integration / Continuous Deployment (CI/CD)
@@ -29,10 +29,10 @@ links_to:
 
 With `CI` a developer creates a new [Pull Request](/fundamentals/glossary/pull-request) whenever he believes his code changes are ready to be merged to the main branch. This triggers the `CI Pipeline` to perform various activities, among which:
 
-- **Formatting**: Check that the code meets formatting standards.
-- **Linting**: Ensure that the code meets the standards of the programming language in question.
-- **Building**: Build the code into an executable artifact.
-- **Testing**: Execute all the unit tests and make sure they pass.
+-   **Formatting**: Check that the code meets formatting standards.
+-   **Linting**: Ensure that the code meets the standards of the programming language in question.
+-   **Building**: Build the code into an executable artifact.
+-   **Testing**: Execute all the unit tests and make sure they pass.
 
 If any of these steps fail, then the developer is notified that some code changes are required, and he is required to update the [Pull Request](/fundamentals/glossary/pull-request).
 

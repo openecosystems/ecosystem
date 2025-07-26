@@ -2,16 +2,16 @@
 title: DoS attack
 pcx_content_type: definition
 summary: >-
-  A Denial of Service (DoS) happens when one client sends more requests than a system can handle, which also impacts other clients. A DoS can be an attack, but it doesn't have to be.<br><br>
+    A Denial of Service (DoS) happens when one client sends more requests than a system can handle, which also impacts other clients. A DoS can be an attack, but it doesn't have to be.<br><br>
 
-  **Related terms:** [DDoS attack](/fundamentals/glossary/#ddos-attack)
+    **Related terms:** [DDoS attack](/fundamentals/glossary/#ddos-attack)
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/ddos-attack
-  - /fundamentals/glossary/exponential-backoff
-  - /fundamentals/glossary/rate-limiting
-  - /fundamentals/glossary/retry-mechanism
+    - /fundamentals/glossary/ddos-attack
+    - /fundamentals/glossary/exponential-backoff
+    - /fundamentals/glossary/rate-limiting
+    - /fundamentals/glossary/retry-mechanism
 ---
 
 # DoS attack

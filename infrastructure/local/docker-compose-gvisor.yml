@@ -1,31 +1,31 @@
 # https://dev.to/rimelek/using-gvisors-container-runtime-in-docker-desktop-374m
 services:
-  runsc-installer:
-    image: alpine:3.20
-    volumes:
-      - type: volume
-        source: data
-        target: /var/lib/docker/volumes/${RUNSC_VOLUME_NAME:-runsc-runtime-binaries}/_data/
-      - type: bind
-        source: ~/.docker
-        target: /etc/docker
-    command:
-      - sh
-      - -c
-      - |
-        set -e
-        ARCH=$(uname -m)
-        URL=https://storage.googleapis.com/gvisor/releases/release/latest/$${ARCH}
-        wget $${URL}/runsc $${URL}/runsc.sha512 \
-          $${URL}/containerd-shim-runsc-v1 $${URL}/containerd-shim-runsc-v1.sha512
-        sha512sum -c runsc.sha512 \
-          -c containerd-shim-runsc-v1.sha512
-        rm -f *.sha512
-        chmod a+rx runsc containerd-shim-runsc-v1
+    runsc-installer:
+        image: alpine:3.20
+        volumes:
+            - type: volume
+              source: data
+              target: /var/lib/docker/volumes/${RUNSC_VOLUME_NAME:-runsc-runtime-binaries}/_data/
+            - type: bind
+              source: ~/.docker
+              target: /etc/docker
+        command:
+            - sh
+            - -c
+            - |
+                set -e
+                ARCH=$(uname -m)
+                URL=https://storage.googleapis.com/gvisor/releases/release/latest/$${ARCH}
+                wget $${URL}/runsc $${URL}/runsc.sha512 \
+                  $${URL}/containerd-shim-runsc-v1 $${URL}/containerd-shim-runsc-v1.sha512
+                sha512sum -c runsc.sha512 \
+                  -c containerd-shim-runsc-v1.sha512
+                rm -f *.sha512
+                chmod a+rx runsc containerd-shim-runsc-v1
 
-        dest="/var/lib/docker/volumes/${RUNSC_VOLUME_NAME:-runsc-runtime-binaries}/_data/"
-        mv runsc containerd-shim-runsc-v1 $$dest
-        $$dest/runsc install
+                dest="/var/lib/docker/volumes/${RUNSC_VOLUME_NAME:-runsc-runtime-binaries}/_data/"
+                mv runsc containerd-shim-runsc-v1 $$dest
+                $$dest/runsc install
 volumes:
-  data:
-    name: ${RUNSC_VOLUME_NAME:-runsc-runtime-binaries}
+    data:
+        name: ${RUNSC_VOLUME_NAME:-runsc-runtime-binaries}

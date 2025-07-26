@@ -2,7 +2,7 @@
 date_created: 2022-12-11T17:03:51
 title: COSMIC
 aliases:
-  - COSMIC
+    - COSMIC
 pcx_content_type: definition
 summary: >-
 

@@ -3,20 +3,20 @@ date_created: 2022-12-12T20:57:17
 author: Guillaume Hanique
 title: PHI
 aliases:
-  - PHI
-  - EHI
-  - Protected Health Information
-  - Protected Health Information (PHI)
+    - PHI
+    - EHI
+    - Protected Health Information
+    - Protected Health Information (PHI)
 pcx_content_type: definition
 summary: >-
-  Protected Health Information (PHI) includes _all_ personal health information of an individual, including payment information and demographic information.
+    Protected Health Information (PHI) includes _all_ personal health information of an individual, including payment information and demographic information.
 hidden: true
 has_more: true
 has_links: false
 links_to:
-  - /fundamentals/glossary/pii
-  - /fundamentals/glossary/hipaa
-  - /fundamentals/glossary/onc
+    - /fundamentals/glossary/pii
+    - /fundamentals/glossary/hipaa
+    - /fundamentals/glossary/onc
 ---
 
 # Protected Health Information (PHI)

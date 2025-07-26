@@ -1,5 +1,5 @@
-
 ## oeco ecosystem join
+
 Join an existing ecosystem
 
 ```bash
@@ -7,9 +7,11 @@ oeco ecosystem join
 ```
 
 ## Ecosystem Join
+
 ### Pre-conditions
-- You must have the oeco cli installed
-- An ecosystem must already exists
+
+-   You must have the oeco cli installed
+-   An ecosystem must already exists
 
 ### Pre-condition wire validations
 
@@ -17,12 +19,12 @@ oeco ecosystem join
 
 ### Post-conditions
 
-
 ### Form
-- Pick an ecosystem domain name. This will be your main domain {domain-name}.mesh
-  - (go get -u github.com/segmentio/go-slugify)
-- Type
-- Cidr
+
+-   Pick an ecosystem domain name. This will be your main domain {domain-name}.mesh
+    -   (go get -u github.com/segmentio/go-slugify)
+-   Type
+-   Cidr
 
 ### Business Logic
 
@@ -43,5 +45,3 @@ sequenceDiagram
     S->>CLI: System calls documentation client <br/>to pull markdown instructions for next steps
     U-->>E: User can now connect to connectors on the ecosystem or host their own
 ```
-
-

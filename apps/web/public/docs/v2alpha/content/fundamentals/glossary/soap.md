@@ -1,18 +1,18 @@
 ---
 title: SOAP
 aliases:
-  - SOAP
+    - SOAP
 pcx_content_type: definition
 summary: >-
-  "`Simple Object Access Protocol`. But it's not simple. It allows for describing services, similar to [Swagger](/fundamentals/design-and-architecture/standards-based/data-standards/swagger), but then in [XML](/fundamentals/design-and-architecture/standards-based/data-standards/xml). It is described in a [WSDL](/fundamentals/design-and-architecture/standards-based/data-standards/wsdl)."
+    "`Simple Object Access Protocol`. But it's not simple. It allows for describing services, similar to [Swagger](/fundamentals/design-and-architecture/standards-based/data-standards/swagger), but then in [XML](/fundamentals/design-and-architecture/standards-based/data-standards/xml). It is described in a [WSDL](/fundamentals/design-and-architecture/standards-based/data-standards/wsdl)."
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/swagger
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xml
-  - /fundamentals/design-and-architecture/standards-based/data-standards/wsdl
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xsd
-  - /fundamentals/glossary/debugging
+    - /fundamentals/design-and-architecture/standards-based/data-standards/swagger
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xml
+    - /fundamentals/design-and-architecture/standards-based/data-standards/wsdl
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xsd
+    - /fundamentals/glossary/debugging
 ---
 
 # Simple Object Access Protocol (SOAP)

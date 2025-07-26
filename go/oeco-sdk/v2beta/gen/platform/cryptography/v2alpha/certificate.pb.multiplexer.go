@@ -6,13 +6,13 @@ package cryptographyv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"google.golang.org/protobuf/types/known/anypb"
 
 	"github.com/nats-io/nats.go/jetstream"
 	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nats"
 	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/opentelemetry"
 	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/protovalidate"
-	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
 	optionv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/proto"
@@ -49,38 +49,36 @@ func (s *CertificateServiceHandler) GetVerifyCertificateConfiguration() *natsnod
 func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *connect.Request[VerifyCertificateRequest]) (*connect.Response[VerifyCertificateResponse], error) {
 
 	tracer := *opentelemetryv1.Bound.Tracer
-	log := *zaploggerv1.Bound.Logger
+
+	parentSpanCtx := trace.SpanContextFromContext(ctx)
+	ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
+
+	spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
+	if !ok {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	validationCtx, validationSpan := tracer.Start(ctx, "verify-certificate-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
 		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
 	}
 	validationSpan.End()
 
-	// Spec Propagation
-	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
-	if !ok {
-		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
-	}
-	specSpan.End()
-
 	// Validate field mask
 	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 		spec.SpecData.FieldMask.Normalize()
 		if !spec.SpecData.FieldMask.IsValid(&VerifyCertificateResponse{}) {
-			log.Error("Invalid field mask")
 			return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
 		}
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(validationCtx, "verify-certificate-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetVerifyCertificateConfiguration()
-	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
+	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
 		Stream:         config.StreamType,
 		Procedure:      config.Procedure,
@@ -88,21 +86,32 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 		CommandTopic:   config.Topic,
 		EntityTypeName: config.Entity.TypeName(),
 	})
-	if err2 != nil {
-		log.Error(err2.Error())
-		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	if serr != nil {
+		return nil, serr
 	}
 
-	var dd VerifyCertificateResponse
-	err3 := proto.Unmarshal(reply.Data, &dd)
-	if err3 != nil {
-		log.Error(err3.Error())
-		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	var s2 specv2pb.Spec
+	err := proto.Unmarshal(reply.Data, &s2)
+	if err != nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+	}
+
+	if s2.SpecError != nil {
+		return nil, sdkv2betalib.NewSpecErrorFromStatus(s2.SpecError)
+	}
+
+	if s2.SpecData == nil || s2.SpecData.Data == nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("The response did not contain any spec data response. Investigate. Bug."))
+	}
+
+	var response VerifyCertificateResponse
+	if err = anypb.UnmarshalTo(s2.SpecData.Data, &response, proto.UnmarshalOptions{}); err != nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
 	}
 
 	handlerSpan.End()
 
-	return connect.NewResponse(&dd), nil
+	return connect.NewResponse(&response), nil
 
 }
 
@@ -125,38 +134,36 @@ func (s *CertificateServiceHandler) GetSignCertificateConfiguration() *natsnodev
 func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *connect.Request[SignCertificateRequest]) (*connect.Response[SignCertificateResponse], error) {
 
 	tracer := *opentelemetryv1.Bound.Tracer
-	log := *zaploggerv1.Bound.Logger
+
+	parentSpanCtx := trace.SpanContextFromContext(ctx)
+	ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
+
+	spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
+	if !ok {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	validationCtx, validationSpan := tracer.Start(ctx, "sign-certificate-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
 		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
 	}
 	validationSpan.End()
 
-	// Spec Propagation
-	specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-	spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
-	if !ok {
-		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
-	}
-	specSpan.End()
-
 	// Validate field mask
 	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
 		spec.SpecData.FieldMask.Normalize()
 		if !spec.SpecData.FieldMask.IsValid(&SignCertificateResponse{}) {
-			log.Error("Invalid field mask")
 			return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
 		}
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(validationCtx, "sign-certificate-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetSignCertificateConfiguration()
-	reply, err2 := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
+	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
 		Request:        req.Msg,
 		Stream:         config.StreamType,
 		Procedure:      config.Procedure,
@@ -164,20 +171,31 @@ func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *co
 		CommandTopic:   config.Topic,
 		EntityTypeName: config.Entity.TypeName(),
 	})
-	if err2 != nil {
-		log.Error(err2.Error())
-		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	if serr != nil {
+		return nil, serr
 	}
 
-	var dd SignCertificateResponse
-	err3 := proto.Unmarshal(reply.Data, &dd)
-	if err3 != nil {
-		log.Error(err3.Error())
-		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+	var s2 specv2pb.Spec
+	err := proto.Unmarshal(reply.Data, &s2)
+	if err != nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+	}
+
+	if s2.SpecError != nil {
+		return nil, sdkv2betalib.NewSpecErrorFromStatus(s2.SpecError)
+	}
+
+	if s2.SpecData == nil || s2.SpecData.Data == nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("The response did not contain any spec data response. Investigate. Bug."))
+	}
+
+	var response SignCertificateResponse
+	if err = anypb.UnmarshalTo(s2.SpecData.Data, &response, proto.UnmarshalOptions{}); err != nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
 	}
 
 	handlerSpan.End()
 
-	return connect.NewResponse(&dd), nil
+	return connect.NewResponse(&response), nil
 
 }

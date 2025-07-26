@@ -1,4 +1,4 @@
 app:
-  name: event-v2alpha-event-multiplexer
-  environmentName: 'local-1'
-  environmentType: 'local'
+    name: event-v2alpha-event-multiplexer
+    environmentName: 'local-1'
+    environmentType: 'local'

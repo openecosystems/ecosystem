@@ -1,5 +1,5 @@
 app:
-  name: 'cryptography-v2alpha-account-authority'
-  version: 'v2.0.0'
-  environmentName: 'local-1'
-  environmentType: 'local'
+    name: 'cryptography-v2alpha-account-authority'
+    version: 'v2.0.0'
+    environmentName: 'local-1'
+    environmentType: 'local'

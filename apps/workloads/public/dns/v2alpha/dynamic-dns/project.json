@@ -1,137 +1,133 @@
 {
-  "name": "dns",
-  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/workloads/public/dns/v2alpha/dynamic-dns",
-  "targets": {
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns/app"
-      ],
-      "defaultConfiguration": "production",
-      "options": {
-        "command": "go build -o ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns/app",
-        "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
-      },
-      "configurations": {
-        "production": {
-          "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns/app"
-        }
-      },
-      "dependsOn": ["pre-build"]
-    },
-    "pre-build": {
-      "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns/package.json"
-      ],
-      "options": {
-        "commands": [
-          "mkdir -p ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns",
-          "cp package.json ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns"
-        ],
-        "parallel": false,
-        "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
-      }
-    },
-    "test": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "go test -v ./... -cover -race",
-        "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
-      }
-    },
-    "clean": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "go clean",
-        "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
-      }
-    },
-    "serve": {
-      "executor": "@nx-go/nx-go:serve",
-      "options": {
-        "cmd": "go",
-        "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns",
-        "main": "main.go"
-      }
-    },
-    "container": {
-      "executor": "@nx-tools/nx-container:build",
-      "options": {
-        "context": "dist/apps/workloads/public/dns/v2alpha/dynamic-dns",
-        "platforms": ["linux/amd64"],
-        "tags": ["workloads/public/mesh/v2alpha/lighthouse"]
-      }
-    },
-    "publish": {
-      "executor": "@platform/nx-container:push",
-      "options": {
-        "image": "workloads/public/mesh/v2alpha/lighthouse",
-        "version": {
-          "path": "apps/workloads/public/dns/v2alpha/dynamic-dns/package.json",
-          "key": "version"
+    "name": "dns",
+    "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/workloads/public/dns/v2alpha/dynamic-dns",
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns/app"],
+            "defaultConfiguration": "production",
+            "options": {
+                "command": "go build -o ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns/app",
+                "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
+            },
+            "configurations": {
+                "production": {
+                    "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns/app"
+                }
+            },
+            "dependsOn": ["pre-build"]
         },
-        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
-      }
+        "pre-build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns/package.json"],
+            "options": {
+                "commands": [
+                    "mkdir -p ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns",
+                    "cp package.json ../../../../../../dist/apps/workloads/public/dns/v2alpha/dynamic-dns"
+                ],
+                "parallel": false,
+                "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "go test -v ./... -cover -race",
+                "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
+            }
+        },
+        "clean": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "go clean",
+                "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
+            }
+        },
+        "serve": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "cmd": "go",
+                "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns",
+                "main": "main.go"
+            }
+        },
+        "container": {
+            "executor": "@nx-tools/nx-container:build",
+            "options": {
+                "context": "dist/apps/workloads/public/dns/v2alpha/dynamic-dns",
+                "platforms": ["linux/amd64"],
+                "tags": ["workloads/public/mesh/v2alpha/lighthouse"]
+            }
+        },
+        "publish": {
+            "executor": "@platform/nx-container:push",
+            "options": {
+                "image": "workloads/public/mesh/v2alpha/lighthouse",
+                "version": {
+                    "path": "apps/workloads/public/dns/v2alpha/dynamic-dns/package.json",
+                    "key": "version"
+                },
+                "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+                "parallel": false,
+                "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
+            }
+        },
+        "version": {
+            "outputs": ["{options.packageJson}"],
+            "executor": "@platform/nx-version:bump",
+            "options": {
+                "packageJson": "apps/workloads/public/dns/v2alpha/dynamic-dns/package.json"
+            }
+        },
+        "distribute": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config apps/workloads/public/dns/v2alpha/dynamic-dns/.goreleaser.yaml --clean"
+                ],
+                "parallel": false
+            }
+        },
+        "snapshot": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config apps/workloads/public/dns/v2alpha/dynamic-dns/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
+                ],
+                "parallel": false
+            }
+        },
+        "nightly": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config apps/workloads/public/dns/v2alpha/dynamic-dns/.goreleaser.yaml --nightly --clean --verbose"
+                ],
+                "parallel": false
+            }
+        }
     },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
-        "parallel": false,
-        "cwd": "apps/workloads/public/dns/v2alpha/dynamic-dns"
-      }
-    },
-    "version": {
-      "outputs": ["{options.packageJson}"],
-      "executor": "@platform/nx-version:bump",
-      "options": {
-        "packageJson": "apps/workloads/public/dns/v2alpha/dynamic-dns/package.json"
-      }
-    },
-    "distribute": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns"],
-      "options": {
-        "commands": [
-          "goreleaser release --config apps/workloads/public/dns/v2alpha/dynamic-dns/.goreleaser.yaml --clean"
-        ],
-        "parallel": false
-      }
-    },
-    "snapshot": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns"],
-      "options": {
-        "commands": [
-          "goreleaser release --config apps/workloads/public/dns/v2alpha/dynamic-dns/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
-        ],
-        "parallel": false
-      }
-    },
-    "nightly": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/dns/v2alpha/dynamic-dns"],
-      "options": {
-        "commands": [
-          "goreleaser release --config apps/workloads/public/dns/v2alpha/dynamic-dns/.goreleaser.yaml --nightly --clean --verbose"
-        ],
-        "parallel": false
-      }
-    }
-  },
-  "tags": [
-    "type:app",
-    "type:workload",
-    "cycle:public",
-    "system:dns",
-    "version:v2alpha",
-    "exposure:external",
-    "language:golang"
-  ]
+    "tags": [
+        "type:app",
+        "type:workload",
+        "cycle:public",
+        "system:dns",
+        "version:v2alpha",
+        "exposure:external",
+        "language:golang"
+    ]
 }

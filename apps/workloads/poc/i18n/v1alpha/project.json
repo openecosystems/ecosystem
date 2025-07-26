@@ -1,18 +1,16 @@
 {
-  "name": "apps-workloads-poc-i18n-v1alpha",
-  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/workloads/poc/i18n/v1alpha",
-  "targets": {
-
-  },
-  "tags": [
-    "type:app",
-    "type:workload",
-    "cycle:poc",
-    "system:i18n",
-    "version:v1alpha",
-    "exposure:external",
-    "language:golang"
-  ]
+    "name": "apps-workloads-poc-i18n-v1alpha",
+    "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/workloads/poc/i18n/v1alpha",
+    "targets": {},
+    "tags": [
+        "type:app",
+        "type:workload",
+        "cycle:poc",
+        "system:i18n",
+        "version:v1alpha",
+        "exposure:external",
+        "language:golang"
+    ]
 }

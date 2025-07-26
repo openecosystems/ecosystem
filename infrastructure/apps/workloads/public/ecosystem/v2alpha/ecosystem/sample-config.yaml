@@ -1,54 +1,54 @@
 pki:
-  ca: /etc/nebula/ca.crt
-  cert: /etc/nebula/host.crt
-  key: /etc/nebula/host.key
+    ca: /etc/nebula/ca.crt
+    cert: /etc/nebula/host.crt
+    key: /etc/nebula/host.key
 static_host_map:
-  "192.168.100.1": ["45.63.49.173:4242"]
+    '192.168.100.1': ['45.63.49.173:4242']
 lighthouse:
-  am_lighthouse: false
-  interval: 60
-  hosts:
-    - "192.168.100.1"
+    am_lighthouse: false
+    interval: 60
+    hosts:
+        - '192.168.100.1'
 listen:
-  host: 0.0.0.0
-  port: 4242
+    host: 0.0.0.0
+    port: 4242
 punchy:
-  punch: true
-  respond: true
+    punch: true
+    respond: true
 relay:
-  am_relay: false
-  use_relays: false
+    am_relay: false
+    use_relays: false
 
 tun:
-  disabled: false
-  dev: nebula1
-  drop_local_broadcast: false
-  drop_multicast: false
-  tx_queue: 500
-  mtu: 1300
-  routes:
+    disabled: false
+    dev: nebula1
+    drop_local_broadcast: false
+    drop_multicast: false
+    tx_queue: 500
+    mtu: 1300
+    routes:
 
 logging:
-  level: info
-  format: text
+    level: info
+    format: text
 
 firewall:
-  outbound_action: drop
-  inbound_action: drop
+    outbound_action: drop
+    inbound_action: drop
 
-  conntrack:
-    tcp_timeout: 12m
-    udp_timeout: 3m
-    default_timeout: 10m
+    conntrack:
+        tcp_timeout: 12m
+        udp_timeout: 3m
+        default_timeout: 10m
 
-  outbound:
-    - port: any
-      proto: any
-      host: any
-  inbound:
-    - port: any
-      proto: icmp
-      host: any
-    - port: any
-      proto: any
-      host: any
+    outbound:
+        - port: any
+          proto: any
+          host: any
+    inbound:
+        - port: any
+          proto: icmp
+          host: any
+        - port: any
+          proto: any
+          host: any

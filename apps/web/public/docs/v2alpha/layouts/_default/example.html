@@ -1,32 +1,24 @@
-{{ define "main" }}
-  {{- $type := default "overview" .Params.type -}}
+{{ define "main" }} {{- $type := default "overview" .Params.type -}}
 
-  <div class="DocsPage">
-    {{- partial "skipcontent" . -}}
-    {{- partial "topbar.mobile" . -}}
-    {{- partial "sidebar.nav" . -}}
+<div class="DocsPage">
+    {{- partial "skipcontent" . -}} {{- partial "topbar.mobile" . -}} {{- partial "sidebar.nav" . -}}
 
-    <div class="DocsToolbar">
-      {{- partial "topbar.search" . -}}
-      {{- partial "topbar.tools" . -}}
-    </div>
+    <div class="DocsToolbar">{{- partial "topbar.search" . -}} {{- partial "topbar.tools" . -}}</div>
 
     <main class="DocsBody">
-      <div id="docs-content" data-reach-skip-nav-content></div>
+        <div id="docs-content" data-reach-skip-nav-content></div>
 
-      <div class="DocsContent" id="main" page-type="{{ $type }}">
-        <article class="DocsMarkdown">
-          <h1>{{ .Title }}</h1>
+        <div class="DocsContent" id="main" page-type="{{ $type }}">
+            <article class="DocsMarkdown">
+                <h1>{{ .Title }}</h1>
 
-          <div class="DocsMarkdown--content-column">
-            {{- .Params.Summary -}}
-          </div>
+                <div class="DocsMarkdown--content-column">{{- .Params.Summary -}}</div>
 
-          {{- .Content -}}
-        </article>
-      </div>
+                {{- .Content -}}
+            </article>
+        </div>
     </main>
 
     {{ partial "footer" . }}
-  </div>
+</div>
 {{ end }}

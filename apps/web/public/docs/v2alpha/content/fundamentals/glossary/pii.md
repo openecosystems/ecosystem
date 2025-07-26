@@ -3,17 +3,17 @@ date_created: 2022-12-29T14:44:44
 author: Guillaume Hanique
 title: PII
 aliases:
-  - PII
-  - Personal Identifiable Information
-  - Personal Identifiable Information (PII)
+    - PII
+    - Personal Identifiable Information
+    - Personal Identifiable Information (PII)
 pcx_content_type: definition
 summary: >-
-  Personal Identifiable Information (PII) is any representation of information that permits the identity of an individual to whom the information applies to be reasonably inferred by either direct or indirect means.
+    Personal Identifiable Information (PII) is any representation of information that permits the identity of an individual to whom the information applies to be reasonably inferred by either direct or indirect means.
 hidden: true
 has_more: true
 has_links: false
 links_to:
-  - /fundamentals/glossary/phi
+    - /fundamentals/glossary/phi
 ---
 
 # Personal Identifiable Information (PII)

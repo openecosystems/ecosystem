@@ -2,21 +2,21 @@
 title: Exponential Backoff
 pcx_content_type: definition
 summary: >-
-  Exponential Backoff is an algorithm that uses feedback to multiplicatively decrease the rate of some process, in order to gradually find an acceptable rate. It is also applied to [Retry Mechanisms](/fundamentals/glossary/#retry-mechanism).
+    Exponential Backoff is an algorithm that uses feedback to multiplicatively decrease the rate of some process, in order to gradually find an acceptable rate. It is also applied to [Retry Mechanisms](/fundamentals/glossary/#retry-mechanism).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/dos-attack
-  - /fundamentals/glossary/http-429
-  - /fundamentals/glossary/rate-limiting
-  - /fundamentals/glossary/retry-mechanism
+    - /fundamentals/glossary/dos-attack
+    - /fundamentals/glossary/http-429
+    - /fundamentals/glossary/rate-limiting
+    - /fundamentals/glossary/retry-mechanism
 ---
 
 # Exponential Backoff
 
 Relates to:
 
-- [Rate Limiting](/fundamentals/glossary/rate-limiting)
+-   [Rate Limiting](/fundamentals/glossary/rate-limiting)
 
 Exponential Backoff is an algorithm that uses feedback to multiplicatively decrease the rate of some process, in order to gradually find an acceptable rate. In the strict sense of the word it is a `closed-loop control system`.
 

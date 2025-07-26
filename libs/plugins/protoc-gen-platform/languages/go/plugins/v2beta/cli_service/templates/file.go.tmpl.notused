@@ -31,7 +31,7 @@ func NewClient{{ $entityName.UpperCamelCase }}() *Client{{ $entityName.UpperCame
 
 	conn, err := grpc.DialContext(ctx,"sf-api-synthetic-mg0m90edhwgw8.cpln.app:443", grpc.WithBlock(), grpc.WithTransportCredentials(credentials.NewTLS(config)))
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err.SpecError())
 		return nil
 	}
 

@@ -1,53 +1,53 @@
 name: coverage
 
 on:
-  workflow_call:
-    inputs:
-      go-version:
-        required: false
-        type: string
-        default: stable
-      go-version-file:
-        required: false
-        type: string
-      working-directory:
-        required: false
-        type: string
-      test-timeout:
-        required: false
-        type: string
-        default: 5m
-    secrets:
-      gh_pat:
-        required: false
-      codecov_token:
-        required: false
+    workflow_call:
+        inputs:
+            go-version:
+                required: false
+                type: string
+                default: stable
+            go-version-file:
+                required: false
+                type: string
+            working-directory:
+                required: false
+                type: string
+            test-timeout:
+                required: false
+                type: string
+                default: 5m
+        secrets:
+            gh_pat:
+                required: false
+            codecov_token:
+                required: false
 
 jobs:
-  coverage:
-    runs-on: ubuntu-latest
-    env:
-      GH_PAT: ${{ secrets.gh_pat }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - run: |
-          git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
-        if: env.GH_PAT != null
-      - name: Install Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ inputs.go-version }}
-          go-version-file: ${{ inputs.go-version-file }}
-          cache: true
-      - name: Download Go modules
-        run: go mod download
-        working-directory: ${{ inputs.working-directory }}
-      - name: Test
-        run: go test -failfast -race -coverpkg=./... -covermode=atomic -coverprofile=coverage.txt ./... -timeout ${{ inputs.test-timeout }}
-        working-directory: ${{ inputs.working-directory }}
-      - uses: codecov/codecov-action@v5
-        with:
-          file: ./coverage.txt
-          token: ${{ secrets.codecov_token }}
-          working-directory: ${{ inputs.working-directory }}
+    coverage:
+        runs-on: ubuntu-latest
+        env:
+            GH_PAT: ${{ secrets.gh_pat }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - run: |
+                  git config --global url."https://${{ secrets.gh_pat }}@github.com/openecosystems".insteadOf "https://github.com/openecosystems"
+              if: env.GH_PAT != null
+            - name: Install Go
+              uses: actions/setup-go@v5
+              with:
+                  go-version: ${{ inputs.go-version }}
+                  go-version-file: ${{ inputs.go-version-file }}
+                  cache: true
+            - name: Download Go modules
+              run: go mod download
+              working-directory: ${{ inputs.working-directory }}
+            - name: Test
+              run: go test -failfast -race -coverpkg=./... -covermode=atomic -coverprofile=coverage.txt ./... -timeout ${{ inputs.test-timeout }}
+              working-directory: ${{ inputs.working-directory }}
+            - uses: codecov/codecov-action@v5
+              with:
+                  file: ./coverage.txt
+                  token: ${{ secrets.codecov_token }}
+                  working-directory: ${{ inputs.working-directory }}

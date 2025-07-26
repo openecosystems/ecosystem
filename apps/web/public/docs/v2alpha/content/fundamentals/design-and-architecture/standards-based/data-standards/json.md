@@ -2,14 +2,14 @@
 date_created: 2022-12-11T17:00:28
 title: JSON
 aliases:
-  - JSON
+    - JSON
 pcx_content_type: definition
 summary: >-
-  JSON is a way of describing any kind of artifact in a human-readable format, that is also easily parsed by JavaScript. Because of the convenience of using this format, many programming languages now have implementations to parse and render objects in `JSON`.
+    JSON is a way of describing any kind of artifact in a human-readable format, that is also easily parsed by JavaScript. Because of the convenience of using this format, many programming languages now have implementations to parse and render objects in `JSON`.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/yaml
+    - /fundamentals/design-and-architecture/standards-based/data-standards/yaml
 ---
 
 # JSON
@@ -22,17 +22,17 @@ A format that addresses the same problem as `JSON` is [YAML](/fundamentals/desig
 
 ## Advantages
 
-- Data can take any form (including arrays, and nested elements)
-- Widely accepted
-- Supported by pretty much any Programming Language
+-   Data can take any form (including arrays, and nested elements)
+-   Widely accepted
+-   Supported by pretty much any Programming Language
 
 ## Disadvantages
 
-- No schema enforcing
-- File can be big because of repeated key names
-- Doesn't support comments
+-   No schema enforcing
+-   File can be big because of repeated key names
+-   Doesn't support comments
 
 ## Sources
 
-- https://www.json.org/json-en.html
-- https://en.wikipedia.org/wiki/JSON
+-   https://www.json.org/json-en.html
+-   https://en.wikipedia.org/wiki/JSON

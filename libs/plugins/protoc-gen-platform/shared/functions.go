@@ -114,6 +114,12 @@ func (fns Functions) SnakeCaseToDashCase(name string) string {
 	return strings.Replace(name, "_", "-", -1)
 }
 
+// DashCase converts a snake_case string to a dash-case string by replacing underscores with hyphens.
+func (fns Functions) DashCase(name pgs.Name) string {
+	snake := name.LowerSnakeCase()
+	return fns.SnakeCaseToDashCase(snake.String())
+}
+
 // DescriptorPackage extracts and returns the package name as a string from the given Protocol Buffers file descriptor.
 func (fns Functions) DescriptorPackage(file pgs.File) string {
 	if file.Descriptor().Package == nil {

@@ -1,20 +1,17 @@
-{{- $DATA := (index $.Site.Data .Section) -}}
-{{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
+{{- $DATA := (index $.Site.Data .Section) -}} {{- $title := default (replace (title .Section) "-" " ") $DATA.name -}}
 
 <div class="DocsToolbar--tools">
-  <button data-feedback="true" class="DocsToolbar--feedback Button Button-is-docs-secondary">
-    <a href="/fundamentals" class="Link Link-without-underline">Fundamentals</a>
-  </button>
-  
-  <div class="DocsToolbar--tools-spacer"></div>
-  
-  <button data-feedback="true" class="DocsToolbar--feedback Button Button-is-docs-secondary">
-    <a href="/products" class="Link Link-without-underline">Products</a>
-  </button>
+    <button data-feedback="true" class="DocsToolbar--feedback Button Button-is-docs-secondary">
+        <a href="/fundamentals" class="Link Link-without-underline">Fundamentals</a>
+    </button>
 
-  <div class="DocsToolbar--tools-spacer"></div>
+    <div class="DocsToolbar--tools-spacer"></div>
 
-  <div class="DocsToolbar--theme-toggle">
-    {{- partialCached "topbar.theme" . -}}
-  </div>
+    <button data-feedback="true" class="DocsToolbar--feedback Button Button-is-docs-secondary">
+        <a href="/products" class="Link Link-without-underline">Products</a>
+    </button>
+
+    <div class="DocsToolbar--tools-spacer"></div>
+
+    <div class="DocsToolbar--theme-toggle">{{- partialCached "topbar.theme" . -}}</div>
 </div>

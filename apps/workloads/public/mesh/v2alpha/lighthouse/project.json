@@ -1,145 +1,141 @@
 {
-  "name": "lighthouse-v2alpha",
-  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/workloads/public/mesh/v2alpha/lighthouse",
-  "targets": {
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse/app"
-      ],
-      "defaultConfiguration": "production",
-      "options": {
-        "command": "go build -o ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse/app",
-        "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
-      },
-      "configurations": {
-        "production": {
-          "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse/app"
-        }
-      },
-      "dependsOn": ["pre-build"]
-    },
-    "pre-build": {
-      "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse/package.json"
-      ],
-      "options": {
-        "commands": [
-          "mkdir -p ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse",
-          "cp package.json ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse"
-        ],
-        "parallel": false,
-        "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
-      }
-    },
-    "test": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "go test -v ./... -cover -race",
-        "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
-      }
-    },
-    "clean": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "go clean",
-        "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
-      }
-    },
-    "serve": {
-      "executor": "@nx-go/nx-go:serve",
-      "options": {
-        "cmd": "go",
-        "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse",
-        "main": "main.go"
-      }
-    },
-    "container": {
-      "executor": "@nx-tools/nx-container:build",
-      "options": {
-        "context": "dist/apps/workloads/public/mesh/v2alpha/lighthouse",
-        "platforms": ["linux/amd64"],
-        "tags": ["workloads/public/mesh/v2alpha/lighthouse"]
-      }
-    },
-    "publish": {
-      "executor": "@platform/nx-container:push",
-      "options": {
-        "image": "workloads/public/mesh/v2alpha/lighthouse",
-        "version": {
-          "path": "apps/workloads/public/mesh/v2alpha/lighthouse/package.json",
-          "key": "version"
+    "name": "lighthouse-v2alpha",
+    "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/workloads/public/mesh/v2alpha/lighthouse",
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse/app"],
+            "defaultConfiguration": "production",
+            "options": {
+                "command": "go build -o ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse/app",
+                "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
+            },
+            "configurations": {
+                "production": {
+                    "command": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse/app"
+                }
+            },
+            "dependsOn": ["pre-build"]
         },
-        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
-      }
+        "pre-build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse/package.json"],
+            "options": {
+                "commands": [
+                    "mkdir -p ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse",
+                    "cp package.json ../../../../../../dist/apps/workloads/public/mesh/v2alpha/lighthouse"
+                ],
+                "parallel": false,
+                "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "go test -v ./... -cover -race",
+                "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
+            }
+        },
+        "clean": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "go clean",
+                "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
+            }
+        },
+        "serve": {
+            "executor": "@nx-go/nx-go:serve",
+            "options": {
+                "cmd": "go",
+                "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse",
+                "main": "main.go"
+            }
+        },
+        "container": {
+            "executor": "@nx-tools/nx-container:build",
+            "options": {
+                "context": "dist/apps/workloads/public/mesh/v2alpha/lighthouse",
+                "platforms": ["linux/amd64"],
+                "tags": ["workloads/public/mesh/v2alpha/lighthouse"]
+            }
+        },
+        "publish": {
+            "executor": "@platform/nx-container:push",
+            "options": {
+                "image": "workloads/public/mesh/v2alpha/lighthouse",
+                "version": {
+                    "path": "apps/workloads/public/mesh/v2alpha/lighthouse/package.json",
+                    "key": "version"
+                },
+                "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
+                "parallel": false,
+                "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
+            }
+        },
+        "version": {
+            "outputs": ["{options.packageJson}"],
+            "executor": "@platform/nx-version:bump",
+            "options": {
+                "packageJson": "apps/workloads/public/mesh/v2alpha/lighthouse/package.json"
+            }
+        },
+        "local": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "docker-compose --profile system-event-v2alpha-event-multiplexer up -d",
+                "cwd": "."
+            },
+            "dependsOn": ["container"]
+        },
+        "distribute": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --clean"
+                ],
+                "parallel": false
+            }
+        },
+        "snapshot": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
+                ],
+                "parallel": false
+            }
+        },
+        "nightly": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --nightly --clean --verbose"
+                ],
+                "parallel": false
+            }
+        }
     },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["go mod tidy", "gofumpt -l -w .", "golangci-lint run ./... --timeout=5m --fix"],
-        "parallel": false,
-        "cwd": "apps/workloads/public/mesh/v2alpha/lighthouse"
-      }
-    },
-    "version": {
-      "outputs": ["{options.packageJson}"],
-      "executor": "@platform/nx-version:bump",
-      "options": {
-        "packageJson": "apps/workloads/public/mesh/v2alpha/lighthouse/package.json"
-      }
-    },
-    "local": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "docker-compose --profile system-event-v2alpha-event-multiplexer up -d",
-        "cwd": "."
-      },
-      "dependsOn": ["container"]
-    },
-    "distribute": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
-      "options": {
-        "commands": [
-          "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --clean"
-        ],
-        "parallel": false
-      }
-    },
-    "snapshot": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
-      "options": {
-        "commands": [
-          "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --snapshot --clean --skip=sign,sbom --verbose"
-        ],
-        "parallel": false
-      }
-    },
-    "nightly": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/apps/workloads/public/mesh/v2alpha/lighthouse"],
-      "options": {
-        "commands": [
-          "goreleaser release --config apps/workloads/public/mesh/v2alpha/lighthouse/.goreleaser.yaml --nightly --clean --verbose"
-        ],
-        "parallel": false
-      }
-    }
-  },
-  "tags": [
-    "type:app",
-    "type:workload",
-    "cycle:public",
-    "system:mesh",
-    "version:v2alpha",
-    "exposure:external",
-    "language:golang"
-  ]
+    "tags": [
+        "type:app",
+        "type:workload",
+        "cycle:public",
+        "system:mesh",
+        "version:v2alpha",
+        "exposure:external",
+        "language:golang"
+    ]
 }

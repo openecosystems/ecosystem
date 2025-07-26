@@ -4,13 +4,13 @@ author: Guillaume Hanique
 title: OWL
 pcx_content_type: definition
 summary: >-
-  The Web Ontology Language (OWL) is a semantic web language design to represent rich and complex knowledge about things, a group of things, and relations between things. The current standard is OWS2. It was published in 2009. It is based on [RDF](/fundamentals/design-and-architecture/standards-based/data-standards/rdf).
+    The Web Ontology Language (OWL) is a semantic web language design to represent rich and complex knowledge about things, a group of things, and relations between things. The current standard is OWS2. It was published in 2009. It is based on [RDF](/fundamentals/design-and-architecture/standards-based/data-standards/rdf).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/rdf
-  - /fundamentals/glossary/complexity
-  - /fundamentals/glossary/labeled-property-graph
+    - /fundamentals/design-and-architecture/standards-based/data-standards/rdf
+    - /fundamentals/glossary/complexity
+    - /fundamentals/glossary/labeled-property-graph
 ---
 
 # OWL
@@ -21,9 +21,9 @@ Its intent is to reduce [Complexity](/fundamentals/glossary/complexity) and augm
 
 There are three main `OWL` artifacts:
 
-- **Concepts** represent a set of classes, entities, or things within a domain, which are used to classify `Instances` or other `Concepts`.
-- **Instances** are used to refer to the things represented by the `Concept`. These may include concrete objects, or abstracts like numbers or words.
-- **Relationships** specify how the objects relate to one another.
+-   **Concepts** represent a set of classes, entities, or things within a domain, which are used to classify `Instances` or other `Concepts`.
+-   **Instances** are used to refer to the things represented by the `Concept`. These may include concrete objects, or abstracts like numbers or words.
+-   **Relationships** specify how the objects relate to one another.
 
 `Object Properties` are used to link `Instances` to other `Instances`.
 
@@ -33,5 +33,5 @@ There are three main `OWL` artifacts:
 
 ## Sources
 
-- https://www.w3.org/TR/owl2-syntax/
-- https://www.w3.org/TR/2012/REC-owl2-overview-20121211/
+-   https://www.w3.org/TR/owl2-syntax/
+-   https://www.w3.org/TR/2012/REC-owl2-overview-20121211/

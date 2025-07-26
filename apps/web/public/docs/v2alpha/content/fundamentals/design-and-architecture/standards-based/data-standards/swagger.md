@@ -2,15 +2,15 @@
 date_created: 2022-12-11T17:13:01
 title: Swagger
 aliases:
-  - Swagger
+    - Swagger
 pcx_content_type: definition
 summary: >-
-  `Swagger` is the tooling that can be used with [OpenAPI](/fundamentals/design-and-architecture/standards-based/data-standards/#openapi) specificiations.
+    `Swagger` is the tooling that can be used with [OpenAPI](/fundamentals/design-and-architecture/standards-based/data-standards/#openapi) specificiations.
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/rest
-  - /fundamentals/design-and-architecture/standards-based/data-standards/openapi
+    - /fundamentals/design-and-architecture/standards-based/data-standards/rest
+    - /fundamentals/design-and-architecture/standards-based/data-standards/openapi
 ---
 
 # Swagger
@@ -23,4 +23,4 @@ Both the `OpenAPI Initiative` and `Swagger` are owned by Smartbear.
 
 ## Sources
 
-- https://swagger.io/blog/api-strategy/difference-between-swagger-and-openapi
+-   https://swagger.io/blog/api-strategy/difference-between-swagger-and-openapi

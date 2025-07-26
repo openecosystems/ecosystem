@@ -203,7 +203,7 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 	var settings specv2pb.SpecSettings
 	err = json.Unmarshal(bytes, &settings)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("SpecError:", err)
 		return
 	}
 

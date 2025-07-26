@@ -1,114 +1,113 @@
 launch-templates:
-  oeco-linux-medium-js:
-    resource-class: 'docker_linux_amd64/medium'
-    image: 'ubuntu22.04-node20.11-v10'
-    env:
-      GORELEASER_KEY: ${GORELEASER_KEY}
-      GIT_CHECKOUT_DEPTH: 0
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
-      GITHUB_ACTOR: ${GITHUB_ACTOR}
-    init-steps:
-      - name: Checkout
-        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
+    oeco-linux-medium-js:
+        resource-class: 'docker_linux_amd64/medium'
+        image: 'ubuntu22.04-node20.11-v10'
+        env:
+            GORELEASER_KEY: ${GORELEASER_KEY}
+            GIT_CHECKOUT_DEPTH: 0
+            GITHUB_TOKEN: ${GITHUB_TOKEN}
+            GITHUB_ACTOR: ${GITHUB_ACTOR}
+        init-steps:
+            - name: Checkout
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/checkout/main.yaml'
 
-      - name: Restore Node Modules Cache
-        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
-        inputs:
-          key: 'package-lock.json|yarn.lock|pnpm-lock.yaml'
-          paths: 'node_modules'
-          base-branch: 'main'
+            - name: Restore Node Modules Cache
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
+              inputs:
+                  key: 'package-lock.json|yarn.lock|pnpm-lock.yaml'
+                  paths: 'node_modules'
+                  base-branch: 'main'
 
-      - name: Install Node Modules
-        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
+            - name: Install Node Modules
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/install-node-modules/main.yaml'
 
-      - name: Restore Binary Cache
-        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
-        inputs:
-          key: '"libs/partner/go/nebula/v1/ca/bin/v1.9.4"'
-          paths: 'libs/partner/go/nebula/v1/ca/bin'
-          base-branch: 'main'
+            - name: Restore Binary Cache
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
+              inputs:
+                  key: '"libs/partner/go/nebula/v1/ca/bin/v1.9.4"'
+                  paths: 'libs/partner/go/nebula/v1/ca/bin'
+                  base-branch: 'main'
 
-      - name: Brew
-        script: |
-          sudo apt-get -y install build-essential gcc procps file unzip lsb-release
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            - name: Brew
+              script: |
+                  sudo apt-get -y install build-essential gcc procps file unzip lsb-release
+                  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: Restore Brew Dependencies Cache
-        uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
-        inputs:
-          key: '.nx/workflows/agents.yaml'
-          paths: '.cache'
-          base-branch: 'main'
+            - name: Restore Brew Dependencies Cache
+              uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
+              inputs:
+                  key: '.nx/workflows/agents.yaml'
+                  paths: '.cache'
+                  base-branch: 'main'
 
-      - name: Brew Dependencies
-        script: |
-          echo >> /home/workflows/.profile
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
-          brew install buf golangci-lint
-          brew install --cask goreleaser/tap/goreleaser-pro
-          echo "PATH=$PATH:/home/workflows/go/bin" >> $NX_CLOUD_ENV
-#          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
-#          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
-#          echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
-#          echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
-#          echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
+            - name: Brew Dependencies
+              script: |
+                  echo >> /home/workflows/.profile
+                  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+                  echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+                  brew install buf golangci-lint
+                  brew install --cask goreleaser/tap/goreleaser-pro
+                  echo "PATH=$PATH:/home/workflows/go/bin" >> $NX_CLOUD_ENV
+            #          brew install buf fastly/tap/fastly protobuf@3 hugo golangci-lint goreleaser/tap/goreleaser-pro goreleaser-pro ko
+            #          /home/linuxbrew/.linuxbrew/bin/brew link --overwrite protobuf@3
+            #          echo "LDFLAGS=-L/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib" >> $NX_CLOUD_ENV
+            #          echo "CPPFLAGS=-I/home/linuxbrew/.linuxbrew/opt/protobuf@3/include" >> $NX_CLOUD_ENV
+            #          echo "PKG_CONFIG_PATH=/home/linuxbrew/.linuxbrew/opt/protobuf@3/lib/pkgconfig" >> $NX_CLOUD_ENV
 
+            #      - name: Debug
+            #        script: |
+            #          echo $PATH
+            #          cat $(echo $NX_CLOUD_ENV)
 
-#      - name: Debug
-#        script: |
-#          echo $PATH
-#          cat $(echo $NX_CLOUD_ENV)
+            - name: Go Dependencies
+              script: |
+                  go install mvdan.cc/gofumpt@latest
+                  go install golang.org/x/vuln/cmd/govulncheck@latest
+            #          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
+            #          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
+            #          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
+            #          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
 
-      - name: Go Dependencies
-        script: |
-          go install mvdan.cc/gofumpt@latest
-          go install golang.org/x/vuln/cmd/govulncheck@latest
-#          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1
-#          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
-#          go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.6.8
-#          go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.14.0
+            #      - name: Rust Dependencies
+            #        script: |
+            #          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.81.0
+            #          echo "PATH=/home/workflows/.cargo/bin:$PATH" >> $NX_CLOUD_ENV
+            #          /home/workflows/.cargo/bin/rustup install 1.81.0
+            #          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
+            #          /home/workflows/.cargo/bin/rustup toolchain add 1.81.0
+            #          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
+            #          . "/home/workflows/.cargo/env"
 
-#      - name: Rust Dependencies
-#        script: |
-#          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.81.0
-#          echo "PATH=/home/workflows/.cargo/bin:$PATH" >> $NX_CLOUD_ENV
-#          /home/workflows/.cargo/bin/rustup install 1.81.0
-#          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
-#          /home/workflows/.cargo/bin/rustup toolchain add 1.81.0
-#          /home/workflows/.cargo/bin/rustup target add wasm32-wasi --toolchain 1.81.0
-#          . "/home/workflows/.cargo/env"
+            #      - name: Dotnet Dependencies
+            #        script: |
+            #          sudo apt-get install -y aspnetcore-runtime-6.0 dotnet-sdk-7.0
+            #          WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb"
+            #          wget "$WGET_DOTNET" -O packages-microsoft-prod.deb
+            #          sudo dpkg -i packages-microsoft-prod.deb
+            #          rm packages-microsoft-prod.deb
+            #          sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref
+            #          echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
 
-#      - name: Dotnet Dependencies
-#        script: |
-#          sudo apt-get install -y aspnetcore-runtime-6.0 dotnet-sdk-7.0
-#          WGET_DOTNET="https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb"
-#          wget "$WGET_DOTNET" -O packages-microsoft-prod.deb
-#          sudo dpkg -i packages-microsoft-prod.deb
-#          rm packages-microsoft-prod.deb
-#          sudo touch /etc/apt/preferences.d/99microsoft-dotnet.pref
-#          echo $'Package: *\nPin: origin "packages.microsoft.com"\nPin-Priority: 1001' | sudo tee /etc/apt/preferences.d/99microsoft-dotnet.pref
+            #      - name: Java Dependencies
+            #        script: |
+            #          sudo apt-get install -y openjdk-17-jdk
+            #          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
+            #          chmod +x go/bin/protoc-gen-grpc-java
 
-#      - name: Java Dependencies
-#        script: |
-#          sudo apt-get install -y openjdk-17-jdk
-#          curl -o go/bin/protoc-gen-grpc-java -fsSL https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/1.54.0/protoc-gen-grpc-java-1.54.0-linux-x86_64.exe
-#          chmod +x go/bin/protoc-gen-grpc-java
+            #      - name: Install Binary Cache (if needed)
+            #        script: |
+            #          cd go/oeco-sdk/bindings/nebula
+            #          make generate
 
-#      - name: Install Binary Cache (if needed)
-#        script: |
-#          cd go/oeco-sdk/bindings/nebula
-#          make generate
+            - name: Git Config
+              script: |
+                  git config --global user.email "cicd@openecosystems.com"
+                  git config --global user.name "Open Ecosystems CICD Bot"
+                  git status
+                  git tag
+                  git fetch --tags
+                  git tag
 
-      - name: Git Config
-        script: |
-          git config --global user.email "cicd@openecosystems.com"
-          git config --global user.name "Open Ecosystems CICD Bot"
-          git status
-          git tag
-          git fetch --tags
-          git tag
-
-      - name: Docker Repositories
-        script: |
-          echo "${GITHUB_TOKEN}" | docker login ghcr.io -u ${GITHUB_ACTOR} --password-stdin
+            - name: Docker Repositories
+              script: |
+                  echo "${GITHUB_TOKEN}" | docker login ghcr.io -u ${GITHUB_ACTOR} --password-stdin

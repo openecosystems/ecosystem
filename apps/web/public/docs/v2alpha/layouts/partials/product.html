@@ -1,8 +1,6 @@
-{{- $root := .Root -}}
-{{- $product := .Product -}}
-{{- $data := (index $root.Site.Data $product) -}}
+{{- $root := .Root -}} {{- $product := .Product -}} {{- $data := (index $root.Site.Data $product) -}}
 
 <a class="ProductGrid--link" href="{{- $data.product.url -}}">
-  {{- partial "product-logo" (dict "Root" $root "Product" $product) -}}
-  <span>{{ $data.name }}</span>
+    {{- partial "product-logo" (dict "Root" $root "Product" $product) -}}
+    <span>{{ $data.name }}</span>
 </a>

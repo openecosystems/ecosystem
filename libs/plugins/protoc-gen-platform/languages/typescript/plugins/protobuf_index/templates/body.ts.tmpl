@@ -1,2 +1,2 @@
 {{- $e := entity . -}}{{- $entityName := entityName $e }}{{- $versionName := getPackageVersionName . -}}
-export * as {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }} from './{{ protoPathWithoutProtoExtension .File }}_pb'
+export * as {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }} from './gen/{{ protoPathWithoutProtoExtension .File }}_pb'

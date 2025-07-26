@@ -3,32 +3,32 @@
 name: nightly
 
 on:
-  schedule:
-    - cron:  '0 0 * * 2-6' # At 12:00 AM, Tuesday through Saturday
+    schedule:
+        - cron: '0 0 * * 2-6' # At 12:00 AM, Tuesday through Saturday
 
 concurrency:
-  group: nightly
-  cancel-in-progress: false
+    group: nightly
+    cancel-in-progress: false
 
 jobs:
-  nightly:
-    uses: ./.github/workflows/_nightly.yml
-    permissions:
-      packages: write
-      contents: read
-      attestations: write
-      id-token: write
-    secrets:
-      docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
-      gh_pat: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
-      aur_key: ${{ secrets.AUR_KEY }}
-      fury_token: ${{ secrets.FURY_TOKEN }}
-      nfpm_gpg_key: ${{ secrets.NFPM_GPG_KEY }}
-      nfpm_passphrase: ${{ secrets.NFPM_PASSPHRASE }}
-      macos_sign_p12: ${{ secrets.MACOS_SIGN_P12 }}
-      macos_sign_password: ${{ secrets.MACOS_SIGN_PASSWORD }}
-      macos_notary_issuer_id: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
-      macos_notary_key_id: ${{ secrets.MACOS_NOTARY_KEY_ID }}
-      macos_notary_key: ${{ secrets.MACOS_NOTARY_KEY }}
+    nightly:
+        uses: ./.github/workflows/_nightly.yml
+        permissions:
+            packages: write
+            contents: read
+            attestations: write
+            id-token: write
+        secrets:
+            docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+            docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
+            gh_pat: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            goreleaser_key: ${{ secrets.GORELEASER_KEY }}
+            aur_key: ${{ secrets.AUR_KEY }}
+            fury_token: ${{ secrets.FURY_TOKEN }}
+            nfpm_gpg_key: ${{ secrets.NFPM_GPG_KEY }}
+            nfpm_passphrase: ${{ secrets.NFPM_PASSPHRASE }}
+            macos_sign_p12: ${{ secrets.MACOS_SIGN_P12 }}
+            macos_sign_password: ${{ secrets.MACOS_SIGN_PASSWORD }}
+            macos_notary_issuer_id: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
+            macos_notary_key_id: ${{ secrets.MACOS_NOTARY_KEY_ID }}
+            macos_notary_key: ${{ secrets.MACOS_NOTARY_KEY }}

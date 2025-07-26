@@ -2,14 +2,14 @@
 title: Projection
 pcx_content_type: definition
 summary: >-
-  A `Projection` is a declaration of a sub-model of a data document.
+    A `Projection` is a declaration of a sub-model of a data document.
 hidden: true
 has_more: true
 aliases:
-  - Projection
-  - Projections
+    - Projection
+    - Projections
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/json
+    - /fundamentals/design-and-architecture/standards-based/data-standards/json
 ---
 
 # Projection

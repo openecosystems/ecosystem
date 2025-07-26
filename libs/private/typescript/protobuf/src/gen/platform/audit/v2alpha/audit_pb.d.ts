@@ -2,11 +2,11 @@
 // @generated from file platform/audit/v2alpha/audit.proto (package platform.audit.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { Any, Timestamp } from "@bufbuild/protobuf/wkt";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Jurisdiction } from "../../type/v2/jurisdiction_pb";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { Any, Timestamp } from '@bufbuild/protobuf/wkt';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Jurisdiction } from '../../type/v2/jurisdiction_pb';
 
 /**
  * Describes the file platform/audit/v2alpha/audit.proto.
@@ -16,11 +16,11 @@ export declare const file_platform_audit_v2alpha_audit: GenFile;
 /**
  * @generated from message platform.audit.v2alpha.AuditConfiguration
  */
-export declare type AuditConfiguration = Message<"platform.audit.v2alpha.AuditConfiguration"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type AuditConfiguration = Message<'platform.audit.v2alpha.AuditConfiguration'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 };
 
 /**
@@ -35,34 +35,34 @@ export declare const AuditConfigurationSchema: GenMessage<AuditConfiguration>;
  *
  * @generated from message platform.audit.v2alpha.SearchRequest
  */
-export declare type SearchRequest = Message<"platform.audit.v2alpha.SearchRequest"> & {
-  /**
-   * Timestamp to begin searching.
-   *
-   * @generated from field: google.protobuf.Timestamp start_at = 2;
-   */
-  startAt?: Timestamp;
+export declare type SearchRequest = Message<'platform.audit.v2alpha.SearchRequest'> & {
+    /**
+     * Timestamp to begin searching.
+     *
+     * @generated from field: google.protobuf.Timestamp start_at = 2;
+     */
+    startAt?: Timestamp;
 
-  /**
-   * Timestamp to end searching
-   *
-   * @generated from field: google.protobuf.Timestamp end_at = 3;
-   */
-  endAt?: Timestamp;
+    /**
+     * Timestamp to end searching
+     *
+     * @generated from field: google.protobuf.Timestamp end_at = 3;
+     */
+    endAt?: Timestamp;
 
-  /**
-   * Indicates the page size
-   *
-   * @generated from field: int32 page_size = 4;
-   */
-  pageSize: number;
+    /**
+     * Indicates the page size
+     *
+     * @generated from field: int32 page_size = 4;
+     */
+    pageSize: number;
 
-  /**
-   * Page token provided in the response
-   *
-   * @generated from field: string page_token = 5;
-   */
-  pageToken: string;
+    /**
+     * Page token provided in the response
+     *
+     * @generated from field: string page_token = 5;
+     */
+    pageToken: string;
 };
 
 /**
@@ -76,34 +76,34 @@ export declare const SearchRequestSchema: GenMessage<SearchRequest>;
  *
  * @generated from message platform.audit.v2alpha.SearchResponse
  */
-export declare type SearchResponse = Message<"platform.audit.v2alpha.SearchResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type SearchResponse = Message<'platform.audit.v2alpha.SearchResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * Total count of audits
-   *
-   * @generated from field: int32 total_size = 2;
-   */
-  totalSize: number;
+    /**
+     * Total count of audits
+     *
+     * @generated from field: int32 total_size = 2;
+     */
+    totalSize: number;
 
-  /**
-   * Token to retrieve the next page
-   *
-   * @generated from field: string next_page_token = 3;
-   */
-  nextPageToken: string;
+    /**
+     * Token to retrieve the next page
+     *
+     * @generated from field: string next_page_token = 3;
+     */
+    nextPageToken: string;
 
-  /**
-   * List of audits
-   *
-   * @generated from field: repeated platform.audit.v2alpha.Audit audits = 4;
-   */
-  audits: Audit[];
+    /**
+     * List of audits
+     *
+     * @generated from field: repeated platform.audit.v2alpha.Audit audits = 4;
+     */
+    audits: Audit[];
 };
 
 /**
@@ -117,13 +117,13 @@ export declare const SearchResponseSchema: GenMessage<SearchResponse>;
  *
  * @generated from message platform.audit.v2alpha.AuditEntry
  */
-export declare type AuditEntry = Message<"platform.audit.v2alpha.AuditEntry"> & {
-  /**
-   * Data block recorded for Audit System
-   *
-   * @generated from field: google.protobuf.Any data = 1;
-   */
-  data?: Any;
+export declare type AuditEntry = Message<'platform.audit.v2alpha.AuditEntry'> & {
+    /**
+     * Data block recorded for Audit System
+     *
+     * @generated from field: google.protobuf.Any data = 1;
+     */
+    data?: Any;
 };
 
 /**
@@ -137,39 +137,39 @@ export declare const AuditEntrySchema: GenMessage<AuditEntry>;
  *
  * @generated from message platform.audit.v2alpha.Audit
  */
-export declare type Audit = Message<"platform.audit.v2alpha.Audit"> & {
-  /**
-   * ID used to identify this message
-   *
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Audit = Message<'platform.audit.v2alpha.Audit'> & {
+    /**
+     * ID used to identify this message
+     *
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * Timestamp indicating when this message was created.
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 2;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp indicating when this message was created.
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this message was last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 3;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp indicating when this message was last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * Audit Entry to record.
-   *
-   * @generated from field: platform.audit.v2alpha.AuditEntry entry = 4;
-   */
-  entry?: AuditEntry;
+    /**
+     * Audit Entry to record.
+     *
+     * @generated from field: platform.audit.v2alpha.AuditEntry entry = 4;
+     */
+    entry?: AuditEntry;
 
-  /**
-   * @generated from field: platform.type.v2.Jurisdiction jurisdiction = 5;
-   */
-  jurisdiction: Jurisdiction;
+    /**
+     * @generated from field: platform.type.v2.Jurisdiction jurisdiction = 5;
+     */
+    jurisdiction: Jurisdiction;
 };
 
 /**
@@ -185,12 +185,12 @@ export declare const AuditSchema: GenMessage<Audit>;
  * @generated from enum platform.audit.v2alpha.AuditCommands
  */
 export enum AuditCommands {
-  /**
-   * No command specified.
-   *
-   * @generated from enum value: AUDIT_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * No command specified.
+     *
+     * @generated from enum value: AUDIT_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 }
 
 /**
@@ -205,17 +205,17 @@ export declare const AuditCommandsSchema: GenEnum<AuditCommands>;
  * @generated from enum platform.audit.v2alpha.AuditEvents
  */
 export enum AuditEvents {
-  /**
-   * No event specified
-   *
-   * @generated from enum value: AUDIT_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * No event specified
+     *
+     * @generated from enum value: AUDIT_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: AUDIT_EVENTS_CREATED = 1;
-   */
-  CREATED = 1,
+    /**
+     * @generated from enum value: AUDIT_EVENTS_CREATED = 1;
+     */
+    CREATED = 1,
 }
 
 /**
@@ -230,15 +230,14 @@ export declare const AuditEventsSchema: GenEnum<AuditEvents>;
  * @generated from service platform.audit.v2alpha.AuditService
  */
 export declare const AuditService: GenService<{
-  /**
-   * Method to search for an audit event.
-   *
-   * @generated from rpc platform.audit.v2alpha.AuditService.Search
-   */
-  search: {
-    methodKind: "unary";
-    input: typeof SearchRequestSchema;
-    output: typeof SearchResponseSchema;
-  },
+    /**
+     * Method to search for an audit event.
+     *
+     * @generated from rpc platform.audit.v2alpha.AuditService.Search
+     */
+    search: {
+        methodKind: 'unary';
+        input: typeof SearchRequestSchema;
+        output: typeof SearchResponseSchema;
+    };
 }>;
-

@@ -2,11 +2,11 @@
 title: SQS
 pcx_content_type: definition
 summary: >-
-  AWS SQS is AWS' Queue Service. This service allows for sending and receiving messages over a Queue.
+    AWS SQS is AWS' Queue Service. This service allows for sending and receiving messages over a Queue.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/queue
+    - /fundamentals/glossary/queue
 ---
 
 # Simple Queue Service (SQS)

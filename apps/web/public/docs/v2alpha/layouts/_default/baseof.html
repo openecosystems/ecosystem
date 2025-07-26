@@ -1,25 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}" theme="light" is-docs-page js-focus-visible-polyfill-available>
-  <head>
-    {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
+    <head>
+        {{- partial "head.meta" (dict "Context" . "Product" .Section) -}}
 
-    <link rel="stylesheet" href="/style.css"/>
-    {{- block "styles" . -}}{{- end -}}
+        <link rel="stylesheet" href="/style.css" />
+        {{- block "styles" . -}}{{- end -}} {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife")
+        -}} {{- partial "script" (dict "src" "main.ts" "defer" true) -}} {{- block "scripts" . -}}{{- end -}}
 
-    {{- partial "script" (dict "src" "theme.ts" "inline" true "format" "iife") -}}
-    {{- partial "script" (dict "src" "main.ts" "defer" true) -}}
-    {{- block "scripts" . -}}{{- end -}}
-
-     <script>var $$r=document.documentElement;$$r.className='';!function(){var a=localStorage.getItem("dark");(a=a&&+a)||a||window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,$$r.classList.toggle("dark",a=!!a),localStorage.setItem("dark",+a+"")}()</script>
-  </head>
-  <body>
-    {{- block "main" . -}}{{- end -}}
-    {{- partial "littlefoot" -}}
-    {{ if .Page.Store.Get "hasMermaid" }}
-    <script type="module">
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
-      mermaid.initialize({ startOnLoad: true });
-    </script>
-    {{ end }}
-  </body>
+        <script>
+            var $$r = document.documentElement;
+            $$r.className = '';
+            !(function () {
+                var a = localStorage.getItem('dark');
+                (a = a && +a) || a || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
+                    $$r.classList.toggle('dark', (a = !!a)),
+                    localStorage.setItem('dark', +a + '');
+            })();
+        </script>
+    </head>
+    <body>
+        {{- block "main" . -}}{{- end -}} {{- partial "littlefoot" -}} {{ if .Page.Store.Get "hasMermaid" }}
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+        {{ end }}
+    </body>
 </html>

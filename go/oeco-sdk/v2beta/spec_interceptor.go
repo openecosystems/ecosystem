@@ -2,50 +2,102 @@ package sdkv2betalib
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"strconv"
 
 	"connectrpc.com/connect"
 
+	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // SpecInterceptor represents a structure that contains the platform specification defined by specv2pb.Spec.
 type SpecInterceptor struct{}
 
+// NewSpecInterceptor create an interceptor
 func NewSpecInterceptor() *SpecInterceptor {
 	return &SpecInterceptor{}
 }
 
+// WrapUnary wrap interceptor
 func (i *SpecInterceptor) WrapUnary(next connect.UnaryFunc) connect.UnaryFunc {
 	return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+		// Before Call
 		ctx = DecorateContext(ctx, req.Header(), req.Spec().Procedure)
-		return next(ctx, req)
+		conn, err := next(ctx, req)
+		// After Call
+		if err != nil {
+			err2 := i.HumanizeResponse(ctx, err)
+			return nil, &err2
+		}
+
+		return conn, nil
 	}
 }
 
+// WrapStreamingClient wrap interceptor for streaming clients
 func (*SpecInterceptor) WrapStreamingClient(next connect.StreamingClientFunc) connect.StreamingClientFunc {
 	return func(ctx context.Context, spec connect.Spec) connect.StreamingClientConn {
+		// Before Call
 		conn := next(ctx, spec)
+		// After Call
 		return conn
 	}
 }
 
+// WrapStreamingHandler server side
 func (i *SpecInterceptor) WrapStreamingHandler(next connect.StreamingHandlerFunc) connect.StreamingHandlerFunc {
 	return func(ctx context.Context, conn connect.StreamingHandlerConn) error {
+		// Before Call
 		ctx = DecorateContext(ctx, conn.RequestHeader(), conn.Spec().Procedure)
-		return next(ctx, conn)
+		err := next(ctx, conn)
+		// After Call
+		return err
 	}
 }
 
 // DecorateContext adds a "spec" value to the provided context based on the information extracted from the given request.
 func DecorateContext(ctx context.Context, h http.Header, procedure string) context.Context {
-	factory := NewFactory(h, procedure)
+	factory := NewFactory(ctx, h, procedure)
 	s := factory.Spec
 
 	ctx = context.WithValue(ctx, SpecContextKey, s)
 
 	return ctx
+}
+
+// HumanizeResponse humanize the response
+func (i *SpecInterceptor) HumanizeResponse(ctx context.Context, err error) connect.Error {
+	var specErr SpecError
+	var requestInfo *errdetails.RequestInfo
+
+	val := ctx.Value(SpecContextKey)
+	spec, ok := val.(*specv2pb.Spec)
+	if ok {
+		if spec != nil && spec.GetSpanContext() != nil && spec.GetSpanContext().GetTraceId() != "" {
+			requestInfo = &errdetails.RequestInfo{
+				RequestId:   spec.GetSpanContext().GetTraceId(),
+				ServingData: "build: ; version: v2.0",
+			}
+		}
+	}
+
+	if errors.As(err, &specErr) {
+		specErr = specErr.WithRequestInfo(requestInfo)
+
+		return specErr.ConnectErr
+	}
+
+	specErr = ErrServerInternal.WithRequestInfo(requestInfo)
+	return specErr.ConnectErr
+
+	//if merr := multierr.Errors(err); len(merr) > 1 {
+	//	if specErr != nil && specErr.ConnectErr != nil {
+	//		return specErr.ConnectErr
+	//	}
+	//}
 }
 
 //// NewSpecInterceptor creates a unary interceptor that decorates the context with a specification derived from the request.
@@ -92,8 +144,11 @@ func DecorateCLIRequest(_ context.Context, req connect.AnyRequest, settings *CLI
 func NewCLIInterceptor(settings *CLIConfiguration, overrides *RuntimeConfigurationOverrides) connect.UnaryInterceptorFunc {
 	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
 		return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+			// Before Call
 			DecorateCLIRequest(ctx, req, settings, overrides)
-			return next(ctx, req)
+			conn, err := next(ctx, req)
+			// After Call
+			return conn, err
 		}
 	}
 	return interceptor
@@ -103,8 +158,11 @@ func NewCLIInterceptor(settings *CLIConfiguration, overrides *RuntimeConfigurati
 func NewApplyHeadersInterceptor(settings *CLIConfiguration) connect.UnaryInterceptorFunc {
 	interceptor := func(next connect.UnaryFunc) connect.UnaryFunc {
 		return func(ctx context.Context, req connect.AnyRequest) (connect.AnyResponse, error) {
+			// Before Call
 			DecorateCLIRequest(ctx, req, settings, &RuntimeConfigurationOverrides{})
-			return next(ctx, req)
+			conn, err := next(ctx, req)
+			// After Call
+			return conn, err
 		}
 	}
 	return interceptor

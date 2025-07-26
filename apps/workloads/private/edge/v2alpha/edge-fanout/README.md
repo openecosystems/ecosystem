@@ -18,10 +18,10 @@ Additionally, for the test endpoints to work, the app expects a configured backe
 
 For requests made to domains ending in `.edgecompute.app`, the app will handle requests to the following endpoints without forwarding to the origin:
 
-* `/test/websocket`: bi-directional WebSocket
-* `/test/stream`: HTTP streaming of `text/plain`
-* `/test/sse`: SSE (streaming of `text/event-stream`)
-* `/test/long-poll`: Long-polling
+-   `/test/websocket`: bi-directional WebSocket
+-   `/test/stream`: HTTP streaming of `text/plain`
+-   `/test/sse`: SSE (streaming of `text/event-stream`)
+-   `/test/long-poll`: Long-polling
 
 Connecting to any of these endpoints will subscribe the connection to channel "test". The WebSocket endpoint echos back any messages it receives from the client.
 

@@ -1,5 +1,5 @@
 app:
-  name: 'edge-v2alpha-edge-router'
-  version: 'v2.0.0'
-  environmentName: 'local-1'
-  environmentType: 'local'
+    name: 'edge-v2alpha-edge-router'
+    version: 'v2.0.0'
+    environmentName: 'local-1'
+    environmentType: 'local'

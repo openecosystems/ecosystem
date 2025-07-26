@@ -150,7 +150,7 @@ func WatchConfigurations(directories ...string) error {
 				//}
 				//err := reloadProtoFile(event.Name)
 				//if err != nil {
-				//	fmt.Println("Error reloading proto file:", err)
+				//	fmt.Println("SpecError reloading proto file:", err)
 				//}
 				//
 				//protoregistry.GlobalFiles.RangeFiles(func(fd protoreflect.FileDescriptor) bool {
@@ -199,7 +199,7 @@ func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, err
 	if ctx != "" {
 		_, err := filesystem.Exists(filepath.Join(ContextDirectory, ctx))
 		if err != nil {
-			fmt.Println("Error: context does not exists: " + err.Error())
+			fmt.Println("SpecError: context does not exists: " + err.Error())
 			return nil, errors.New("context does not exists")
 		}
 	} else {
@@ -239,7 +239,7 @@ func createDefaultContextSettings(ecosystemName string, cidr string) (*specv2pb.
 
 	ip, ipnet, err := net.ParseCIDR(cidr)
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("SpecError:", err)
 		return nil, err
 	}
 
@@ -426,7 +426,7 @@ func ImportPackageJson() (string, string, error) {
 	var data PackageJson
 	err = json.Unmarshal(content, &data)
 	if err != nil {
-		panic("Error during Unmarshal of package.json: " + err.Error())
+		panic("SpecError during Unmarshal of package.json: " + err.Error())
 	}
 
 	if data.Name == "" {
@@ -476,14 +476,14 @@ func Resolve(_configurer *Configurer, destinationConfiguration, defaultConfigura
 	if defaultConfiguration != nil {
 		err = mergo.Merge(destinationConfiguration, defaultConfiguration, mergo.WithOverride)
 		if err != nil {
-			fmt.Println("Error merging settings configuration:", err)
+			fmt.Println("SpecError merging settings configuration:", err)
 		}
 	} else {
 		fmt.Println("No default configuration provided")
 	}
 
 	if err = mergo.Merge(destinationConfiguration, defaultConfiguration); err != nil {
-		fmt.Println("Error merging settings configuration:", err)
+		fmt.Println("SpecError merging settings configuration:", err)
 	}
 
 	importEnvironmentVariables(configurer, destinationConfiguration, "", "")
@@ -509,7 +509,7 @@ func Resolve(_configurer *Configurer, destinationConfiguration, defaultConfigura
 // Merge merge two configurations
 func Merge(dst, src interface{}) {
 	if err := mergo.Merge(dst, src); err != nil {
-		fmt.Println("Error merging settings configuration:", err)
+		fmt.Println("SpecError merging settings configuration:", err)
 	}
 }
 

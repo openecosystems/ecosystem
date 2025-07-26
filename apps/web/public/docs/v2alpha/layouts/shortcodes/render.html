@@ -1,7 +1,2 @@
-{{- $filename := default (.Get "file") (.Get 0) -}}
-{{- $dir := (path.Join .Page.Section "_partials") -}}
-{{- $url := (path.Join $dir $filename) -}}
-
-{{- with .Site.GetPage $url -}}
-  {{ .Content | markdownify }}
-{{- end -}}
+{{- $filename := default (.Get "file") (.Get 0) -}} {{- $dir := (path.Join .Page.Section "_partials") -}} {{- $url :=
+(path.Join $dir $filename) -}} {{- with .Site.GetPage $url -}} {{ .Content | markdownify }} {{- end -}}

@@ -1,64 +1,63 @@
 // Interface for Stream
 export interface Stream {
-  StreamPrefix(): string;
+    StreamPrefix(): string;
 }
 
 // InboundStream Class
 export class InboundStream implements Stream {
-  topicWildcard: string;
-  streamName: string;
+    topicWildcard: string;
+    streamName: string;
 
-  constructor() {
-    this.topicWildcard = "";
-    this.streamName = "";
-  }
+    constructor() {
+        this.topicWildcard = '';
+        this.streamName = '';
+    }
 
-  StreamPrefix(): string {
-    return InboundStream.StreamPrefix();
-  }
+    StreamPrefix(): string {
+        return InboundStream.StreamPrefix();
+    }
 
-  static StreamPrefix(): string {
-    return "inbound";
-  }
-
+    static StreamPrefix(): string {
+        return 'inbound';
+    }
 }
 
 // InternalStream Class
 export class InternalStream implements Stream {
-  topicWildcard: string;
-  streamName: string;
+    topicWildcard: string;
+    streamName: string;
 
-  constructor() {
-    this.topicWildcard = "";
-    this.streamName = "";
-  }
+    constructor() {
+        this.topicWildcard = '';
+        this.streamName = '';
+    }
 
-  StreamPrefix(): string {
-    return InternalStream.StreamPrefix();
-  }
+    StreamPrefix(): string {
+        return InternalStream.StreamPrefix();
+    }
 
-  static StreamPrefix(): string {
-    return "internal";
-  }
+    static StreamPrefix(): string {
+        return 'internal';
+    }
 }
 
 // OutboundStream Class
 export class OutboundStream implements Stream {
-  topicWildcard: string;
-  streamName: string;
+    topicWildcard: string;
+    streamName: string;
 
-  constructor() {
-    this.topicWildcard = "";
-    this.streamName = "";
-  }
+    constructor() {
+        this.topicWildcard = '';
+        this.streamName = '';
+    }
 
-  StreamPrefix(): string {
-    return OutboundStream.StreamPrefix();
-  }
+    StreamPrefix(): string {
+        return OutboundStream.StreamPrefix();
+    }
 
-  static StreamPrefix(): string {
-    return "outbound";
-  }
+    static StreamPrefix(): string {
+        return 'outbound';
+    }
 }
 
 export function GetQueueGroupName(scope: Stream, entityName: string): string {

@@ -2,24 +2,24 @@
 title: Disaster
 pcx_content_type: definition
 summary: >-
-  A catastrophic event that results in long downtime (days or even weeks).<br><br>
+    A catastrophic event that results in long downtime (days or even weeks).<br><br>
 
-  **Related terms:** [Failure](/fundamentals/glossary/#failure)
+    **Related terms:** [Failure](/fundamentals/glossary/#failure)
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/failure
-  - /fundamentals/glossary/region
+    - /fundamentals/glossary/failure
+    - /fundamentals/glossary/region
 ---
 
 # Disaster
 
 A catastrophic event that results in long downtime (days or even weeks). Examples:
 
-- War
-- Fire
-- Floods
-- Power grid disruption
+-   War
+-   Fire
+-   Floods
+-   Power grid disruption
 
 Typically this results in loss of infrastructure and data.
 

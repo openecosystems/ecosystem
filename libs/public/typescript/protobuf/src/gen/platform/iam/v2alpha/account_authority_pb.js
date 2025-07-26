@@ -2,103 +2,106 @@
 // @generated from file platform/iam/v2alpha/account_authority.proto (package platform.iam.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
-import { file_google_api_annotations } from "../../../google/api/annotations_pb";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_spec_v2_spec } from "../../spec/v2/spec_pb";
-import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import { file_platform_type_v2_file } from "../../type/v2/file_pb";
-import { file_platform_type_v2_credential } from "../../type/v2/credential_pb";
+import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
+import { file_google_api_annotations } from '../../../google/api/annotations_pb';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_spec_v2_spec } from '../../spec/v2/spec_pb';
+import { file_google_protobuf_timestamp } from '@bufbuild/protobuf/wkt';
+import { file_platform_type_v2_file } from '../../type/v2/file_pb';
+import { file_platform_type_v2_credential } from '../../type/v2/credential_pb';
 
 /**
  * Describes the file platform/iam/v2alpha/account_authority.proto.
  */
-export const file_platform_iam_v2alpha_account_authority = /*@__PURE__*/
-  fileDesc("CixwbGF0Zm9ybS9pYW0vdjJhbHBoYS9hY2NvdW50X2F1dGhvcml0eS5wcm90bxIUcGxhdGZvcm0uaWFtLnYyYWxwaGEiLAodQWNjb3VudEF1dGhvcml0eUNvbmZpZ3VyYXRpb24SCwoDcGtpGAEgASgJIn0KHUNyZWF0ZUFjY291bnRBdXRob3JpdHlSZXF1ZXN0EgwKBG5hbWUYASABKAkSJgoFY3VydmUYAiABKA4yFy5wbGF0Zm9ybS50eXBlLnYyLkN1cnZlEh4KFmVuY3J5cHRfa2V5X3Bhc3NwaHJhc2UYBCABKAk6Bvq2GAIIASKoAQoeQ3JlYXRlQWNjb3VudEF1dGhvcml0eVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBJBChFhY2NvdW50X2F1dGhvcml0eRgCIAEoCzImLnBsYXRmb3JtLmlhbS52MmFscGhhLkFjY291bnRBdXRob3JpdHk6Bvq2GAIIAiLAAQoQQWNjb3VudEF1dGhvcml0eRISCgJpZBgBIAEoCUIGyrcYAggBEi4KCmNyZWF0ZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjAKCmNyZWRlbnRpYWwYBCABKAsyHC5wbGF0Zm9ybS50eXBlLnYyLkNyZWRlbnRpYWw6Bvq2GAIIAiquAQoUQWNjb3VudEF1dGhvcml0eVR5cGUSJgoiQUNDT1VOVF9BVVRIT1JJVFlfVFlQRV9VTlNQRUNJRklFRBAAEicKI0FDQ09VTlRfQVVUSE9SSVRZX1RZUEVfT1JHQU5JWkFUSU9OEAESJAogQUNDT1VOVF9BVVRIT1JJVFlfVFlQRV9FQ09TWVNURU0QAhIfChtBQ0NPVU5UX0FVVEhPUklUWV9UWVBFX1VTRVIQAyqkAQobRXZlbnRBY2NvdW50QXV0aG9yaXR5U3RhdHVzEi4KKkVWRU5UX0FDQ09VTlRfQVVUSE9SSVRZX1NUQVRVU19VTlNQRUNJRklFRBAAEisKJ0VWRU5UX0FDQ09VTlRfQVVUSE9SSVRZX1NUQVRVU19DUkVBVElORxABEigKJEVWRU5UX0FDQ09VTlRfQVVUSE9SSVRZX1NUQVRVU19FUlJPUhAEKocBChhBY2NvdW50QXV0aG9yaXR5Q29tbWFuZHMSKgomQUNDT1VOVF9BVVRIT1JJVFlfQ09NTUFORFNfVU5TUEVDSUZJRUQQABI3CjNBQ0NPVU5UX0FVVEhPUklUWV9DT01NQU5EU19DUkVBVEVfQUNDT1VOVF9BVVRIT1JJVFkQARoGkrgYAggDKowBChZBY2NvdW50QXV0aG9yaXR5RXZlbnRzEigKJEFDQ09VTlRfQVVUSE9SSVRZX0VWRU5UU19VTlNQRUNJRklFRBAAEkAKMkFDQ09VTlRfQVVUSE9SSVRZX0VWRU5UU19DUkVBVEVEX0FDQ09VTlRfQVVUSE9SSVRZEAEaCOK4GAQIARgBGgaSuBgCCAQy5AEKF0FjY291bnRBdXRob3JpdHlTZXJ2aWNlEsgBChZDcmVhdGVBY2NvdW50QXV0aG9yaXR5EjMucGxhdGZvcm0uaWFtLnYyYWxwaGEuQ3JlYXRlQWNjb3VudEF1dGhvcml0eVJlcXVlc3QaNC5wbGF0Zm9ybS5pYW0udjJhbHBoYS5DcmVhdGVBY2NvdW50QXV0aG9yaXR5UmVzcG9uc2UiQ6K2GAgyBmNyZWF0Zaq2GAIIArK2GAwKBmNyZWF0ZRICywGC0+STAhs6ASoiFi92MmFscGhhL2lhbS9hYS9jcmVhdGVCtgFaXGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vaWFtL3YyYWxwaGE7aWFtdjJhbHBoYXBigsQTAggBgrUYBggDEAEYBoq1GDEKEWFjY291bnRfYXV0aG9yaXR5EhNhY2NvdW50X2F1dGhvcml0aWVzIgNqYW4oAjgBkrUYAwoBA5q1GAIIAaK1GAIIAWIGcHJvdG8z", [file_google_api_annotations, file_platform_options_v2_annotations, file_platform_spec_v2_spec, file_google_protobuf_timestamp, file_platform_type_v2_file, file_platform_type_v2_credential]);
+export const file_platform_iam_v2alpha_account_authority =
+    /*@__PURE__*/
+    fileDesc(
+        'CixwbGF0Zm9ybS9pYW0vdjJhbHBoYS9hY2NvdW50X2F1dGhvcml0eS5wcm90bxIUcGxhdGZvcm0uaWFtLnYyYWxwaGEiLAodQWNjb3VudEF1dGhvcml0eUNvbmZpZ3VyYXRpb24SCwoDcGtpGAEgASgJIn0KHUNyZWF0ZUFjY291bnRBdXRob3JpdHlSZXF1ZXN0EgwKBG5hbWUYASABKAkSJgoFY3VydmUYAiABKA4yFy5wbGF0Zm9ybS50eXBlLnYyLkN1cnZlEh4KFmVuY3J5cHRfa2V5X3Bhc3NwaHJhc2UYBCABKAk6Bvq2GAIIASKoAQoeQ3JlYXRlQWNjb3VudEF1dGhvcml0eVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBJBChFhY2NvdW50X2F1dGhvcml0eRgCIAEoCzImLnBsYXRmb3JtLmlhbS52MmFscGhhLkFjY291bnRBdXRob3JpdHk6Bvq2GAIIAiLAAQoQQWNjb3VudEF1dGhvcml0eRISCgJpZBgBIAEoCUIGyrcYAggBEi4KCmNyZWF0ZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjAKCmNyZWRlbnRpYWwYBCABKAsyHC5wbGF0Zm9ybS50eXBlLnYyLkNyZWRlbnRpYWw6Bvq2GAIIAiquAQoUQWNjb3VudEF1dGhvcml0eVR5cGUSJgoiQUNDT1VOVF9BVVRIT1JJVFlfVFlQRV9VTlNQRUNJRklFRBAAEicKI0FDQ09VTlRfQVVUSE9SSVRZX1RZUEVfT1JHQU5JWkFUSU9OEAESJAogQUNDT1VOVF9BVVRIT1JJVFlfVFlQRV9FQ09TWVNURU0QAhIfChtBQ0NPVU5UX0FVVEhPUklUWV9UWVBFX1VTRVIQAyqkAQobRXZlbnRBY2NvdW50QXV0aG9yaXR5U3RhdHVzEi4KKkVWRU5UX0FDQ09VTlRfQVVUSE9SSVRZX1NUQVRVU19VTlNQRUNJRklFRBAAEisKJ0VWRU5UX0FDQ09VTlRfQVVUSE9SSVRZX1NUQVRVU19DUkVBVElORxABEigKJEVWRU5UX0FDQ09VTlRfQVVUSE9SSVRZX1NUQVRVU19FUlJPUhAEKocBChhBY2NvdW50QXV0aG9yaXR5Q29tbWFuZHMSKgomQUNDT1VOVF9BVVRIT1JJVFlfQ09NTUFORFNfVU5TUEVDSUZJRUQQABI3CjNBQ0NPVU5UX0FVVEhPUklUWV9DT01NQU5EU19DUkVBVEVfQUNDT1VOVF9BVVRIT1JJVFkQARoGkrgYAggDKowBChZBY2NvdW50QXV0aG9yaXR5RXZlbnRzEigKJEFDQ09VTlRfQVVUSE9SSVRZX0VWRU5UU19VTlNQRUNJRklFRBAAEkAKMkFDQ09VTlRfQVVUSE9SSVRZX0VWRU5UU19DUkVBVEVEX0FDQ09VTlRfQVVUSE9SSVRZEAEaCOK4GAQIARgBGgaSuBgCCAQy5AEKF0FjY291bnRBdXRob3JpdHlTZXJ2aWNlEsgBChZDcmVhdGVBY2NvdW50QXV0aG9yaXR5EjMucGxhdGZvcm0uaWFtLnYyYWxwaGEuQ3JlYXRlQWNjb3VudEF1dGhvcml0eVJlcXVlc3QaNC5wbGF0Zm9ybS5pYW0udjJhbHBoYS5DcmVhdGVBY2NvdW50QXV0aG9yaXR5UmVzcG9uc2UiQ6K2GAgyBmNyZWF0Zaq2GAIIArK2GAwKBmNyZWF0ZRICywGC0+STAhs6ASoiFi92MmFscGhhL2lhbS9hYS9jcmVhdGVCtgFaXGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vaWFtL3YyYWxwaGE7aWFtdjJhbHBoYXBigsQTAggBgrUYBggDEAEYBoq1GDEKEWFjY291bnRfYXV0aG9yaXR5EhNhY2NvdW50X2F1dGhvcml0aWVzIgNqYW4oAjgBkrUYAwoBA5q1GAIIAaK1GAIIAWIGcHJvdG8z',
+        [
+            file_google_api_annotations,
+            file_platform_options_v2_annotations,
+            file_platform_spec_v2_spec,
+            file_google_protobuf_timestamp,
+            file_platform_type_v2_file,
+            file_platform_type_v2_credential,
+        ]
+    );
 
 /**
  * Describes the message platform.iam.v2alpha.AccountAuthorityConfiguration.
  * Use `create(AccountAuthorityConfigurationSchema)` to create a new message.
  */
-export const AccountAuthorityConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_iam_v2alpha_account_authority, 0);
+export const AccountAuthorityConfigurationSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_iam_v2alpha_account_authority, 0);
 
 /**
  * Describes the message platform.iam.v2alpha.CreateAccountAuthorityRequest.
  * Use `create(CreateAccountAuthorityRequestSchema)` to create a new message.
  */
-export const CreateAccountAuthorityRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_iam_v2alpha_account_authority, 1);
+export const CreateAccountAuthorityRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_iam_v2alpha_account_authority, 1);
 
 /**
  * Describes the message platform.iam.v2alpha.CreateAccountAuthorityResponse.
  * Use `create(CreateAccountAuthorityResponseSchema)` to create a new message.
  */
-export const CreateAccountAuthorityResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_iam_v2alpha_account_authority, 2);
+export const CreateAccountAuthorityResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_iam_v2alpha_account_authority, 2);
 
 /**
  * Describes the message platform.iam.v2alpha.AccountAuthority.
  * Use `create(AccountAuthoritySchema)` to create a new message.
  */
-export const AccountAuthoritySchema = /*@__PURE__*/
-  messageDesc(file_platform_iam_v2alpha_account_authority, 3);
+export const AccountAuthoritySchema = /*@__PURE__*/ messageDesc(file_platform_iam_v2alpha_account_authority, 3);
 
 /**
  * Describes the enum platform.iam.v2alpha.AccountAuthorityType.
  */
-export const AccountAuthorityTypeSchema = /*@__PURE__*/
-  enumDesc(file_platform_iam_v2alpha_account_authority, 0);
+export const AccountAuthorityTypeSchema = /*@__PURE__*/ enumDesc(file_platform_iam_v2alpha_account_authority, 0);
 
 /**
  * Supported event type for subscription.
  *
  * @generated from enum platform.iam.v2alpha.AccountAuthorityType
  */
-export const AccountAuthorityType = /*@__PURE__*/
-  tsEnum(AccountAuthorityTypeSchema);
+export const AccountAuthorityType = /*@__PURE__*/ tsEnum(AccountAuthorityTypeSchema);
 
 /**
  * Describes the enum platform.iam.v2alpha.EventAccountAuthorityStatus.
  */
-export const EventAccountAuthorityStatusSchema = /*@__PURE__*/
-  enumDesc(file_platform_iam_v2alpha_account_authority, 1);
+export const EventAccountAuthorityStatusSchema = /*@__PURE__*/ enumDesc(file_platform_iam_v2alpha_account_authority, 1);
 
 /**
  * The current status of a event
  *
  * @generated from enum platform.iam.v2alpha.EventAccountAuthorityStatus
  */
-export const EventAccountAuthorityStatus = /*@__PURE__*/
-  tsEnum(EventAccountAuthorityStatusSchema);
+export const EventAccountAuthorityStatus = /*@__PURE__*/ tsEnum(EventAccountAuthorityStatusSchema);
 
 /**
  * Describes the enum platform.iam.v2alpha.AccountAuthorityCommands.
  */
-export const AccountAuthorityCommandsSchema = /*@__PURE__*/
-  enumDesc(file_platform_iam_v2alpha_account_authority, 2);
+export const AccountAuthorityCommandsSchema = /*@__PURE__*/ enumDesc(file_platform_iam_v2alpha_account_authority, 2);
 
 /**
  * @generated from enum platform.iam.v2alpha.AccountAuthorityCommands
  */
-export const AccountAuthorityCommands = /*@__PURE__*/
-  tsEnum(AccountAuthorityCommandsSchema);
+export const AccountAuthorityCommands = /*@__PURE__*/ tsEnum(AccountAuthorityCommandsSchema);
 
 /**
  * Describes the enum platform.iam.v2alpha.AccountAuthorityEvents.
  */
-export const AccountAuthorityEventsSchema = /*@__PURE__*/
-  enumDesc(file_platform_iam_v2alpha_account_authority, 3);
+export const AccountAuthorityEventsSchema = /*@__PURE__*/ enumDesc(file_platform_iam_v2alpha_account_authority, 3);
 
 /**
  * @generated from enum platform.iam.v2alpha.AccountAuthorityEvents
  */
-export const AccountAuthorityEvents = /*@__PURE__*/
-  tsEnum(AccountAuthorityEventsSchema);
+export const AccountAuthorityEvents = /*@__PURE__*/ tsEnum(AccountAuthorityEventsSchema);
 
 /**
  * @generated from service platform.iam.v2alpha.AccountAuthorityService
  */
-export const AccountAuthorityService = /*@__PURE__*/
-  serviceDesc(file_platform_iam_v2alpha_account_authority, 0);
-
+export const AccountAuthorityService = /*@__PURE__*/ serviceDesc(file_platform_iam_v2alpha_account_authority, 0);

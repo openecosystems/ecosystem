@@ -79,7 +79,7 @@ func listenForPackets(device string, sub chan packetMsg) tea.Cmd {
 	return func() tea.Msg {
 		handle, err := pcap.OpenLive(device, 65536, true, pcap.BlockForever)
 		if err != nil {
-			log.Fatalf("Error opening device: %v", err)
+			log.Fatalf("SpecError opening device: %v", err)
 		}
 
 		packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
@@ -148,7 +148,7 @@ func main() {
 	})
 
 	if _, err := p.Run(); err != nil {
-		fmt.Println("Error starting program:", err)
+		fmt.Println("SpecError starting program:", err)
 		os.Exit(1)
 	}
 }

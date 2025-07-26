@@ -2,13 +2,13 @@
 // @generated from file platform/iam/v2alpha/account.proto (package platform.iam.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { Credential, Curve } from "../../type/v2/credential_pb";
-import type { File } from "../../type/v2/file_pb";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { PeerType } from "../../type/v2/peer_pb";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { Credential, Curve } from '../../type/v2/credential_pb';
+import type { File } from '../../type/v2/file_pb';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { PeerType } from '../../type/v2/peer_pb';
+import type { Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/iam/v2alpha/account.proto.
@@ -18,8 +18,7 @@ export declare const file_platform_iam_v2alpha_account: GenFile;
 /**
  * @generated from message platform.iam.v2alpha.AccountConfiguration
  */
-export declare type AccountConfiguration = Message<"platform.iam.v2alpha.AccountConfiguration"> & {
-};
+export declare type AccountConfiguration = Message<'platform.iam.v2alpha.AccountConfiguration'> & {};
 
 /**
  * Describes the message platform.iam.v2alpha.AccountConfiguration.
@@ -32,23 +31,23 @@ export declare const AccountConfigurationSchema: GenMessage<AccountConfiguration
  *
  * @generated from message platform.iam.v2alpha.CreateAccountRequest
  */
-export declare type CreateAccountRequest = Message<"platform.iam.v2alpha.CreateAccountRequest"> & {
-  /**
-   * Name of the Account. For example, 'Open Ecosystems, Inc.'
-   *
-   * @generated from field: string name = 1;
-   */
-  name: string;
+export declare type CreateAccountRequest = Message<'platform.iam.v2alpha.CreateAccountRequest'> & {
+    /**
+     * Name of the Account. For example, 'Open Ecosystems, Inc.'
+     *
+     * @generated from field: string name = 1;
+     */
+    name: string;
 
-  /**
-   * @generated from field: platform.type.v2.Curve curve = 2;
-   */
-  curve: Curve;
+    /**
+     * @generated from field: platform.type.v2.Curve curve = 2;
+     */
+    curve: Curve;
 
-  /**
-   * @generated from field: platform.type.v2.File cert = 3;
-   */
-  cert?: File;
+    /**
+     * @generated from field: platform.type.v2.File cert = 3;
+     */
+    cert?: File;
 };
 
 /**
@@ -62,18 +61,18 @@ export declare const CreateAccountRequestSchema: GenMessage<CreateAccountRequest
  *
  * @generated from message platform.iam.v2alpha.CreateAccountResponse
  */
-export declare type CreateAccountResponse = Message<"platform.iam.v2alpha.CreateAccountResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type CreateAccountResponse = Message<'platform.iam.v2alpha.CreateAccountResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.iam.v2alpha.Account account = 2;
-   */
-  account?: Account;
+    /**
+     * @generated from field: platform.iam.v2alpha.Account account = 2;
+     */
+    account?: Account;
 };
 
 /**
@@ -87,11 +86,11 @@ export declare const CreateAccountResponseSchema: GenMessage<CreateAccountRespon
  *
  * @generated from message platform.iam.v2alpha.VerifyAccountRequest
  */
-export declare type VerifyAccountRequest = Message<"platform.iam.v2alpha.VerifyAccountRequest"> & {
-  /**
-   * @generated from field: platform.type.v2.File public_cert = 1;
-   */
-  publicCert?: File;
+export declare type VerifyAccountRequest = Message<'platform.iam.v2alpha.VerifyAccountRequest'> & {
+    /**
+     * @generated from field: platform.type.v2.File public_cert = 1;
+     */
+    publicCert?: File;
 };
 
 /**
@@ -105,18 +104,18 @@ export declare const VerifyAccountRequestSchema: GenMessage<VerifyAccountRequest
  *
  * @generated from message platform.iam.v2alpha.VerifyAccountResponse
  */
-export declare type VerifyAccountResponse = Message<"platform.iam.v2alpha.VerifyAccountResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type VerifyAccountResponse = Message<'platform.iam.v2alpha.VerifyAccountResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.iam.v2alpha.Account account = 2;
-   */
-  account?: Account;
+    /**
+     * @generated from field: platform.iam.v2alpha.Account account = 2;
+     */
+    account?: Account;
 };
 
 /**
@@ -130,21 +129,21 @@ export declare const VerifyAccountResponseSchema: GenMessage<VerifyAccountRespon
  *
  * @generated from message platform.iam.v2alpha.SignAccountRequest
  */
-export declare type SignAccountRequest = Message<"platform.iam.v2alpha.SignAccountRequest"> & {
-  /**
-   * @generated from field: string name = 1;
-   */
-  name: string;
+export declare type SignAccountRequest = Message<'platform.iam.v2alpha.SignAccountRequest'> & {
+    /**
+     * @generated from field: string name = 1;
+     */
+    name: string;
 
-  /**
-   * @generated from field: platform.type.v2.PeerType peer_type = 2;
-   */
-  peerType: PeerType;
+    /**
+     * @generated from field: platform.type.v2.PeerType peer_type = 2;
+     */
+    peerType: PeerType;
 
-  /**
-   * @generated from field: platform.type.v2.File public_cert = 3;
-   */
-  publicCert?: File;
+    /**
+     * @generated from field: platform.type.v2.File public_cert = 3;
+     */
+    publicCert?: File;
 };
 
 /**
@@ -158,18 +157,18 @@ export declare const SignAccountRequestSchema: GenMessage<SignAccountRequest>;
  *
  * @generated from message platform.iam.v2alpha.SignAccountResponse
  */
-export declare type SignAccountResponse = Message<"platform.iam.v2alpha.SignAccountResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type SignAccountResponse = Message<'platform.iam.v2alpha.SignAccountResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.iam.v2alpha.Account account = 2;
-   */
-  account?: Account;
+    /**
+     * @generated from field: platform.iam.v2alpha.Account account = 2;
+     */
+    account?: Account;
 };
 
 /**
@@ -181,32 +180,32 @@ export declare const SignAccountResponseSchema: GenMessage<SignAccountResponse>;
 /**
  * @generated from message platform.iam.v2alpha.Account
  */
-export declare type Account = Message<"platform.iam.v2alpha.Account"> & {
-  /**
-   * Identifier for this Account
-   *
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Account = Message<'platform.iam.v2alpha.Account'> & {
+    /**
+     * Identifier for this Account
+     *
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * Timestamp indicating when this account subscription was created.
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 2;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp indicating when this account subscription was created.
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this account subscription was last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 3;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp indicating when this account subscription was last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * @generated from field: platform.type.v2.Credential credential = 4;
-   */
-  credential?: Credential;
+    /**
+     * @generated from field: platform.type.v2.Credential credential = 4;
+     */
+    credential?: Credential;
 };
 
 /**
@@ -221,26 +220,26 @@ export declare const AccountSchema: GenMessage<Account>;
  * @generated from enum platform.iam.v2alpha.AccountType
  */
 export enum AccountType {
-  /**
-   * Unspecified or unknown subscription type.
-   *
-   * @generated from enum value: ACCOUNT_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown subscription type.
+     *
+     * @generated from enum value: ACCOUNT_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Account for an organization.
-   *
-   * @generated from enum value: ACCOUNT_TYPE_ORGANIZATION = 1;
-   */
-  ORGANIZATION = 1,
+    /**
+     * Account for an organization.
+     *
+     * @generated from enum value: ACCOUNT_TYPE_ORGANIZATION = 1;
+     */
+    ORGANIZATION = 1,
 
-  /**
-   * Account for a user.
-   *
-   * @generated from enum value: ACCOUNT_TYPE_USER = 2;
-   */
-  USER = 2,
+    /**
+     * Account for a user.
+     *
+     * @generated from enum value: ACCOUNT_TYPE_USER = 2;
+     */
+    USER = 2,
 }
 
 /**
@@ -254,40 +253,40 @@ export declare const AccountTypeSchema: GenEnum<AccountType>;
  * @generated from enum platform.iam.v2alpha.EventAccountStatus
  */
 export enum EventAccountStatus {
-  /**
-   * Unspecified or unknown status.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown status.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Account is being created.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_STATUS_CREATING = 1;
-   */
-  CREATING = 1,
+    /**
+     * Account is being created.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_STATUS_CREATING = 1;
+     */
+    CREATING = 1,
 
-  /**
-   * Account is being verified.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_STATUS_VERIFYING = 2;
-   */
-  VERIFYING = 2,
+    /**
+     * Account is being verified.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_STATUS_VERIFYING = 2;
+     */
+    VERIFYING = 2,
 
-  /**
-   * Account is being signed.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_STATUS_SIGNING = 3;
-   */
-  SIGNING = 3,
+    /**
+     * Account is being signed.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_STATUS_SIGNING = 3;
+     */
+    SIGNING = 3,
 
-  /**
-   * Error.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_STATUS_ERROR = 4;
-   */
-  ERROR = 4,
+    /**
+     * Error.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_STATUS_ERROR = 4;
+     */
+    ERROR = 4,
 }
 
 /**
@@ -299,27 +298,27 @@ export declare const EventAccountStatusSchema: GenEnum<EventAccountStatus>;
  * @generated from enum platform.iam.v2alpha.AccountCommands
  */
 export enum AccountCommands {
-  /**
-   * Unspecified or unknown command
-   *
-   * @generated from enum value: ACCOUNT_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown command
+     *
+     * @generated from enum value: ACCOUNT_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ACCOUNT_COMMANDS_CREATE_ACCOUNT = 1;
-   */
-  CREATE_ACCOUNT = 1,
+    /**
+     * @generated from enum value: ACCOUNT_COMMANDS_CREATE_ACCOUNT = 1;
+     */
+    CREATE_ACCOUNT = 1,
 
-  /**
-   * @generated from enum value: ACCOUNT_COMMANDS_VERIFY_ACCOUNT = 2;
-   */
-  VERIFY_ACCOUNT = 2,
+    /**
+     * @generated from enum value: ACCOUNT_COMMANDS_VERIFY_ACCOUNT = 2;
+     */
+    VERIFY_ACCOUNT = 2,
 
-  /**
-   * @generated from enum value: ACCOUNT_COMMANDS_SIGN_ACCOUNT = 3;
-   */
-  SIGN_ACCOUNT = 3,
+    /**
+     * @generated from enum value: ACCOUNT_COMMANDS_SIGN_ACCOUNT = 3;
+     */
+    SIGN_ACCOUNT = 3,
 }
 
 /**
@@ -331,29 +330,29 @@ export declare const AccountCommandsSchema: GenEnum<AccountCommands>;
  * @generated from enum platform.iam.v2alpha.AccountEvents
  */
 export enum AccountEvents {
-  /**
-   * Unspecified or unknown account.
-   *
-   * @generated from enum value: ACCOUNT_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown account.
+     *
+     * @generated from enum value: ACCOUNT_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Event Account complete.
-   *
-   * @generated from enum value: ACCOUNT_EVENTS_CREATED_ACCOUNT = 1;
-   */
-  CREATED_ACCOUNT = 1,
+    /**
+     * Event Account complete.
+     *
+     * @generated from enum value: ACCOUNT_EVENTS_CREATED_ACCOUNT = 1;
+     */
+    CREATED_ACCOUNT = 1,
 
-  /**
-   * @generated from enum value: ACCOUNT_EVENTS_VERIFIED_ACCOUNT = 2;
-   */
-  VERIFIED_ACCOUNT = 2,
+    /**
+     * @generated from enum value: ACCOUNT_EVENTS_VERIFIED_ACCOUNT = 2;
+     */
+    VERIFIED_ACCOUNT = 2,
 
-  /**
-   * @generated from enum value: ACCOUNT_EVENTS_SIGNED_ACCOUNT = 3;
-   */
-  SIGNED_ACCOUNT = 3,
+    /**
+     * @generated from enum value: ACCOUNT_EVENTS_SIGNED_ACCOUNT = 3;
+     */
+    SIGNED_ACCOUNT = 3,
 }
 
 /**
@@ -367,35 +366,34 @@ export declare const AccountEventsSchema: GenEnum<AccountEvents>;
  * @generated from service platform.iam.v2alpha.AccountService
  */
 export declare const AccountService: GenService<{
-  /**
-   * Create an Account to connect to an ecosystem
-   *
-   * @generated from rpc platform.iam.v2alpha.AccountService.CreateAccount
-   */
-  createAccount: {
-    methodKind: "unary";
-    input: typeof CreateAccountRequestSchema;
-    output: typeof CreateAccountResponseSchema;
-  },
-  /**
-   * Verify an existing account
-   *
-   * @generated from rpc platform.iam.v2alpha.AccountService.VerifyAccount
-   */
-  verifyAccount: {
-    methodKind: "unary";
-    input: typeof VerifyAccountRequestSchema;
-    output: typeof VerifyAccountResponseSchema;
-  },
-  /**
-   * Sign a public key granting it access to the Ecosystem
-   *
-   * @generated from rpc platform.iam.v2alpha.AccountService.SignAccount
-   */
-  signAccount: {
-    methodKind: "unary";
-    input: typeof SignAccountRequestSchema;
-    output: typeof SignAccountResponseSchema;
-  },
+    /**
+     * Create an Account to connect to an ecosystem
+     *
+     * @generated from rpc platform.iam.v2alpha.AccountService.CreateAccount
+     */
+    createAccount: {
+        methodKind: 'unary';
+        input: typeof CreateAccountRequestSchema;
+        output: typeof CreateAccountResponseSchema;
+    };
+    /**
+     * Verify an existing account
+     *
+     * @generated from rpc platform.iam.v2alpha.AccountService.VerifyAccount
+     */
+    verifyAccount: {
+        methodKind: 'unary';
+        input: typeof VerifyAccountRequestSchema;
+        output: typeof VerifyAccountResponseSchema;
+    };
+    /**
+     * Sign a public key granting it access to the Ecosystem
+     *
+     * @generated from rpc platform.iam.v2alpha.AccountService.SignAccount
+     */
+    signAccount: {
+        methodKind: 'unary';
+        input: typeof SignAccountRequestSchema;
+        output: typeof SignAccountResponseSchema;
+    };
 }>;
-

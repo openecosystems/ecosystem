@@ -2,8 +2,8 @@
 date_created: 2022-12-11T17:05:58
 title: SNOMED
 aliases:
-  - SNOMED
-  - SNOMED CT
+    - SNOMED
+    - SNOMED CT
 pcx_content_type: definition
 summary: >-
 
@@ -11,8 +11,8 @@ hidden: true
 has_more: true
 todo: Find more details and sources
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/icd-10
-  - /fundamentals/glossary/billing
+    - /fundamentals/design-and-architecture/standards-based/data-standards/icd-10
+    - /fundamentals/glossary/billing
 ---
 
 # Systematized Nomenclature of Medicine (SNOMED)

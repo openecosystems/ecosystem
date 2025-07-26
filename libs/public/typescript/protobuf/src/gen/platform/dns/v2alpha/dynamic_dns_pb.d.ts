@@ -2,8 +2,8 @@
 // @generated from file platform/dns/v2alpha/dynamic_dns.proto (package platform.dns.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/dns/v2alpha/dynamic_dns.proto.
@@ -13,11 +13,11 @@ export declare const file_platform_dns_v2alpha_dynamic_dns: GenFile;
 /**
  * @generated from message platform.dns.v2alpha.DynamicDnsConfiguration
  */
-export declare type DynamicDnsConfiguration = Message<"platform.dns.v2alpha.DynamicDnsConfiguration"> & {
-  /**
-   * @generated from field: string dynamic_config = 1;
-   */
-  dynamicConfig: string;
+export declare type DynamicDnsConfiguration = Message<'platform.dns.v2alpha.DynamicDnsConfiguration'> & {
+    /**
+     * @generated from field: string dynamic_config = 1;
+     */
+    dynamicConfig: string;
 };
 
 /**
@@ -25,4 +25,3 @@ export declare type DynamicDnsConfiguration = Message<"platform.dns.v2alpha.Dyna
  * Use `create(DynamicDnsConfigurationSchema)` to create a new message.
  */
 export declare const DynamicDnsConfigurationSchema: GenMessage<DynamicDnsConfiguration>;
-

@@ -2,11 +2,11 @@
 title: Race Condition
 pcx_content_type: definition
 summary: >-
-  A Race Condition is one where a system's substantive behavior is dependent on the sequence or timing of other controllable events. It becomes a bug when one or more of those behaviors is undesirable.
+    A Race Condition is one where a system's substantive behavior is dependent on the sequence or timing of other controllable events. It becomes a bug when one or more of those behaviors is undesirable.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/racetrack-problem
+    - /fundamentals/glossary/racetrack-problem
 ---
 
 # Race Condition

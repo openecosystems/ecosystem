@@ -95,7 +95,7 @@ func (b *Binding) ResolveConfiguration(opts ...sdkv2betalib.ConfigurationProvide
 	var errs []error
 	for _, r := range b.configuration.EventStreamRegistry.Streams {
 		if err := mergo.Merge(&r, dsc); err != nil {
-			fmt.Println("Error merging nats stream configuration:", err)
+			fmt.Println("SpecError merging nats stream configuration:", err)
 			errs = append(errs, err)
 		}
 		mergedJsc = append(mergedJsc, r)
@@ -222,7 +222,7 @@ func (b *Binding) GetConfiguration() *Configuration {
 func (b *Binding) GetConfigurationBytes() ([]byte, error) {
 	byteArray, err := json.Marshal(*b.GetConfiguration()) //nolint:staticcheck
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("SpecError:", err)
 		return nil, err
 	}
 	return byteArray, nil

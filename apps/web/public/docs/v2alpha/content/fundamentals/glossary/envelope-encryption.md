@@ -2,14 +2,14 @@
 title: Envelope Encryption
 pcx_content_type: definition
 summary: >-
-  `Envelope Encryption` is similar to [PFS](/fundamentals/glossary/#pfs), but then for *storing* data (as opposed to transmitting data).
+    `Envelope Encryption` is similar to [PFS](/fundamentals/glossary/#pfs), but then for *storing* data (as opposed to transmitting data).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/encryption
-  - /fundamentals/glossary/encryption-key
-  - /fundamentals/glossary/key-ring
-  - /fundamentals/glossary/pfs
+    - /fundamentals/glossary/encryption
+    - /fundamentals/glossary/encryption-key
+    - /fundamentals/glossary/key-ring
+    - /fundamentals/glossary/pfs
 ---
 
 # Envelope Encryption

@@ -1,69 +1,63 @@
 {
-  "name": "protoc-gen-platform",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
-  "sourceRoot": "libs/plugins/protoc-gen-platform",
-  "implicitDependencies": ["proto"],
-  "targets": {
-    "test": {
-      "executor": "@nx-go/nx-go:test"
+    "name": "protoc-gen-platform",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "libs/plugins/protoc-gen-platform",
+    "implicitDependencies": ["proto"],
+    "targets": {
+        "test": {
+            "executor": "@nx-go/nx-go:test"
+        },
+        "build": {
+            "executor": "@nx-go/nx-go:build",
+            "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+            "options": {
+                "outputPath": "dist/bin/libs/plugins/protoc-gen-platform/protoc-gen-platform",
+                "main": "libs/plugins/protoc-gen-platform/main.go"
+            },
+            "dependsOn": ["pre-build"]
+        },
+        "pre-build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform/package.json"],
+            "options": {
+                "command": "mkdir -p ../../../dist/bin/libs/plugins/protoc-gen-platform && cp package.json ../../../dist/bin/libs/plugins/protoc-gen-platform",
+                "cwd": "libs/plugins/protoc-gen-platform"
+            }
+        },
+        "distribute": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --clean --verbose"
+                ],
+                "parallel": false
+            }
+        },
+        "snapshot": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
+                ],
+                "parallel": false
+            }
+        },
+        "nightly": {
+            "executor": "nx:run-commands",
+            "dependsOn": ["build"],
+            "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
+            "options": {
+                "commands": [
+                    "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --nightly --clean --verbose"
+                ],
+                "parallel": false
+            }
+        }
     },
-    "build": {
-      "executor": "@nx-go/nx-go:build",
-      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
-      "options": {
-        "outputPath": "dist/bin/libs/plugins/protoc-gen-platform/protoc-gen-platform",
-        "main": "libs/plugins/protoc-gen-platform/main.go"
-      },
-      "dependsOn": ["pre-build"]
-    },
-    "pre-build": {
-      "executor": "nx:run-commands",
-      "outputs": [
-        "{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform/package.json"
-      ],
-      "options": {
-        "command": "mkdir -p ../../../dist/bin/libs/plugins/protoc-gen-platform && cp package.json ../../../dist/bin/libs/plugins/protoc-gen-platform",
-        "cwd": "libs/plugins/protoc-gen-platform"
-      }
-    },
-    "distribute": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
-      "options": {
-        "commands": [
-          "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --clean --verbose"
-        ],
-        "parallel": false
-      }
-    },
-    "snapshot": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
-      "options": {
-        "commands": [
-          "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --snapshot --clean --skip=sign,sbom"
-        ],
-        "parallel": false
-      }
-    },
-    "nightly": {
-      "executor": "nx:run-commands",
-      "dependsOn": ["build"],
-      "outputs": ["{workspaceRoot}/dist/bin/libs/plugins/protoc-gen-platform"],
-      "options": {
-        "commands": [
-          "goreleaser release --config libs/plugins/protoc-gen-platform/.goreleaser.yaml --nightly --clean --verbose"
-        ],
-        "parallel": false
-      }
-    }
-  },
-  "tags": [
-    "type:plugin",
-    "cycle:public",
-    "language:golang"
-  ]
+    "tags": ["type:plugin", "cycle:public", "language:golang"]
 }

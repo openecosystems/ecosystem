@@ -108,6 +108,11 @@ func (m GoSdkModule) GenerateClientFile(file pgs.File) {
 		return
 	}
 
+	msg := fns.Entity(file)
+	if msg == nil {
+		return
+	}
+
 	system := fns.DomainSystemName2(file).LowerCamelCase().String()
 	version := fns.GetPackageVersion(file)
 	fileName := fns.ProtoName(file)
@@ -267,6 +272,11 @@ func (m GoSdkModule) GenerateReadmeFile(file pgs.File) {
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
+
+	msg := fns.Entity(file)
+	if msg == nil {
+		return
+	}
 
 	name := outPath.SetExt("/" + fns.DomainSystemName2(file).LowerCamelCase().String() + "/" + fns.GetPackageVersion(file) + "/README.md").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)

@@ -1,22 +1,22 @@
 ---
 title: Caching
 aliases:
-  - Cache
-  - Caching
+    - Cache
+    - Caching
 pcx_content_type: definition
 summary: >-
-  The art of remembering answers to questions for a period of time, so that if the same question is asked within that time frame, the answer can be provided without hitting the Back End. This concept is quite often used to increase performance, for example with Web Services or Database access.
+    The art of remembering answers to questions for a period of time, so that if the same question is asked within that time frame, the answer can be provided without hitting the Back End. This concept is quite often used to increase performance, for example with Web Services or Database access.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/back-end
-  - /fundamentals/glossary/performance
-  - /fundamentals/glossary/database
-  - /fundamentals/glossary/latency
-  - /fundamentals/glossary/dns
-  - /fundamentals/glossary/cdn
-  - /fundamentals/glossary/risk
-  - /fundamentals/glossary/ttl
+    - /fundamentals/glossary/back-end
+    - /fundamentals/glossary/performance
+    - /fundamentals/glossary/database
+    - /fundamentals/glossary/latency
+    - /fundamentals/glossary/dns
+    - /fundamentals/glossary/cdn
+    - /fundamentals/glossary/risk
+    - /fundamentals/glossary/ttl
 ---
 
 # Caching
@@ -41,9 +41,9 @@ If Caching is used, a Cache Miss is relatively expensive: instead of one call to
 
 Caching typically works well with the following use cases:
 
-- Database Lookups
-- [DNS](/fundamentals/glossary/dns)
-- Static content ([CDN](/fundamentals/glossary/cdn))
+-   Database Lookups
+-   [DNS](/fundamentals/glossary/dns)
+-   Static content ([CDN](/fundamentals/glossary/cdn))
 
 ## Risk obsolete data
 

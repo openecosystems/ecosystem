@@ -2,7 +2,7 @@
 // @generated from file platform/type/v2/peer.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile } from "@bufbuild/protobuf/codegenv1";
+import type { GenEnum, GenFile } from '@bufbuild/protobuf/codegenv1';
 
 /**
  * Describes the file platform/type/v2/peer.proto.
@@ -13,39 +13,38 @@ export declare const file_platform_type_v2_peer: GenFile;
  * @generated from enum platform.type.v2.PeerType
  */
 export enum PeerType {
-  /**
-   * @generated from enum value: PEER_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: PEER_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: PEER_TYPE_SERVICE_ACCOUNT = 1;
-   */
-  SERVICE_ACCOUNT = 1,
+    /**
+     * @generated from enum value: PEER_TYPE_SERVICE_ACCOUNT = 1;
+     */
+    SERVICE_ACCOUNT = 1,
 
-  /**
-   * @generated from enum value: PEER_TYPE_EDGE = 2;
-   */
-  EDGE = 2,
+    /**
+     * @generated from enum value: PEER_TYPE_EDGE = 2;
+     */
+    EDGE = 2,
 
-  /**
-   * @generated from enum value: PEER_TYPE_MULTIPLEXER = 3;
-   */
-  MULTIPLEXER = 3,
+    /**
+     * @generated from enum value: PEER_TYPE_MULTIPLEXER = 3;
+     */
+    MULTIPLEXER = 3,
 
-  /**
-   * @generated from enum value: PEER_TYPE_CONNECTOR = 4;
-   */
-  CONNECTOR = 4,
+    /**
+     * @generated from enum value: PEER_TYPE_CONNECTOR = 4;
+     */
+    CONNECTOR = 4,
 
-  /**
-   * @generated from enum value: PEER_TYPE_HOST = 5;
-   */
-  HOST = 5,
+    /**
+     * @generated from enum value: PEER_TYPE_HOST = 5;
+     */
+    HOST = 5,
 }
 
 /**
  * Describes the enum platform.type.v2.PeerType.
  */
 export declare const PeerTypeSchema: GenEnum<PeerType>;
-

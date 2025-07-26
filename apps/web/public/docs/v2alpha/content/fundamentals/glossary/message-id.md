@@ -2,11 +2,11 @@
 title: Message ID
 pcx_content_type: definition
 summary: >-
-  A `Message ID` is a unique number that Applications should assign to a message that it sends to another Application.
+    A `Message ID` is a unique number that Applications should assign to a message that it sends to another Application.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/tracing
+    - /fundamentals/glossary/tracing
 ---
 
 # Message ID

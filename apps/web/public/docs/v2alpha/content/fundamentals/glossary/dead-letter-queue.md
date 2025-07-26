@@ -2,26 +2,26 @@
 title: Dead Letter Queue
 pcx_content_type: definition
 summary: >-
-  A `Dead Letter Queue` is a [Design Pattern](/fundamentals/glossary/#design-pattern) where one moves messages to a dedicated [Queue](/fundamentals/glossary/#queue) called "the `Dead Letter Queue`" if the message meets one or more [Exception](/fundamentals/glossary/#exception-handling) criteria.
+    A `Dead Letter Queue` is a [Design Pattern](/fundamentals/glossary/#design-pattern) where one moves messages to a dedicated [Queue](/fundamentals/glossary/#queue) called "the `Dead Letter Queue`" if the message meets one or more [Exception](/fundamentals/glossary/#exception-handling) criteria.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/exception-handling
-  - /fundamentals/glossary/application-layer
-  - /fundamentals/glossary/aws
-  - /fundamentals/glossary/design-pattern
-  - /fundamentals/glossary/event-plane
-  - /fundamentals/glossary/exactly-once
-  - /fundamentals/glossary/exception-handling
-  - /fundamentals/glossary/guaranteed-delivery
-  - /fundamentals/glossary/incident
-  - /fundamentals/glossary/middleware-layer
-  - /fundamentals/glossary/monitoring
-  - /fundamentals/glossary/publish-subscribe
-  - /fundamentals/glossary/queue
-  - /fundamentals/glossary/racetrack-problem
-  - /fundamentals/glossary/request-response
-  - /fundamentals/glossary/ttl
+    - /fundamentals/glossary/exception-handling
+    - /fundamentals/glossary/application-layer
+    - /fundamentals/glossary/aws
+    - /fundamentals/glossary/design-pattern
+    - /fundamentals/glossary/event-plane
+    - /fundamentals/glossary/exactly-once
+    - /fundamentals/glossary/exception-handling
+    - /fundamentals/glossary/guaranteed-delivery
+    - /fundamentals/glossary/incident
+    - /fundamentals/glossary/middleware-layer
+    - /fundamentals/glossary/monitoring
+    - /fundamentals/glossary/publish-subscribe
+    - /fundamentals/glossary/queue
+    - /fundamentals/glossary/racetrack-problem
+    - /fundamentals/glossary/request-response
+    - /fundamentals/glossary/ttl
 ---
 
 # Dead Letter Queue
@@ -68,8 +68,8 @@ If a message fails to process correctly, because of an [Exception](/fundamentals
 
 Instead of putting the message back in the [Queue](/fundamentals/glossary/queue), it could be put in the `Dead Letter Queue` instead. This, however, would have to be implemented in the [Application Layer](/fundamentals/glossary/application-layer), as that is the lowest level that is aware that the message fails to be processed. It is somewhat tricky to implement though:
 
-- You are already in an [Exception](/fundamentals/glossary/exception-handling) state.
-- If [Guaranteed Delivery](/fundamentals/glossary/guaranteed-delivery) is one of the requirements, meeting that requirement is not trivial when removing a message from one [Queue](/fundamentals/glossary/queue) and putting it in the `Dead Letter Queue`. It will be even less trivial if [Exactly Once](/fundamentals/glossary/exactly-once) is also a requirement.
+-   You are already in an [Exception](/fundamentals/glossary/exception-handling) state.
+-   If [Guaranteed Delivery](/fundamentals/glossary/guaranteed-delivery) is one of the requirements, meeting that requirement is not trivial when removing a message from one [Queue](/fundamentals/glossary/queue) and putting it in the `Dead Letter Queue`. It will be even less trivial if [Exactly Once](/fundamentals/glossary/exactly-once) is also a requirement.
 
 The simpler solution might be [Message reaches a threshold read counter](#message-reaches-a-threshold-read-counter) in those cases.
 

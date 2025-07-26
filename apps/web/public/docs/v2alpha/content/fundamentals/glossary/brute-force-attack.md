@@ -2,19 +2,19 @@
 title: Brute Force Attack
 pcx_content_type: definition
 summary: >-
-  A Brute Force attack consists of an attacker submitting many passwords or passphrases with the hope of eventually guessing correctly, in order to gain illegal access to confidential data.
+    A Brute Force attack consists of an attacker submitting many passwords or passphrases with the hope of eventually guessing correctly, in order to gain illegal access to confidential data.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/2fa
-  - /fundamentals/glossary/api-gateway
-  - /fundamentals/glossary/aws/#shield
-  - /fundamentals/glossary/back-end
-  - /fundamentals/glossary/http-return-code
-  - /fundamentals/glossary/ip-address
-  - /fundamentals/glossary/metric
-  - /fundamentals/glossary/rate-limiting
-  - /fundamentals/glossary/waf
+    - /fundamentals/glossary/2fa
+    - /fundamentals/glossary/api-gateway
+    - /fundamentals/glossary/aws/#shield
+    - /fundamentals/glossary/back-end
+    - /fundamentals/glossary/http-return-code
+    - /fundamentals/glossary/ip-address
+    - /fundamentals/glossary/metric
+    - /fundamentals/glossary/rate-limiting
+    - /fundamentals/glossary/waf
 ---
 
 # Brute Force Attack

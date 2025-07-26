@@ -2,12 +2,12 @@
 title: NIST
 pcx_content_type: definition
 summary: >-
-  NIST is an agency of the United States Department of Commerce. Its mission is to promote American innovation and industrial competitiveness. Being founded in 1901 makes it more than 120 years old today.
+    NIST is an agency of the United States Department of Commerce. Its mission is to promote American innovation and industrial competitiveness. Being founded in 1901 makes it more than 120 years old today.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/fips
-  - /fundamentals/glossary/hipaa
+    - /fundamentals/glossary/fips
+    - /fundamentals/glossary/hipaa
 ---
 
 # National Institute of Standards and Technology (NIST)

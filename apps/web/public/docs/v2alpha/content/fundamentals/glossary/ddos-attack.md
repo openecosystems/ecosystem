@@ -2,13 +2,13 @@
 title: DDoS attack
 pcx_content_type: definition
 summary: >-
-  A Distributed Denial of Service (DDoS) attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
+    A Distributed Denial of Service (DDoS) attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming the target or its surrounding infrastructure with a flood of Internet traffic.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/dos-attack
-  - /fundamentals/glossary/csp
-  - /fundamentals/glossary/aws
+    - /fundamentals/glossary/dos-attack
+    - /fundamentals/glossary/csp
+    - /fundamentals/glossary/aws
 ---
 
 <!-- This document is an original CloudFlare Document from which the cloudflare links are removed. -->

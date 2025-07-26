@@ -99,7 +99,7 @@ pub(crate) fn determine_ingress_gateway(req: &mut Request, ctx: &Context, routin
     let ingress = backend_builder.finish();
 
     if ingress.is_err() {
-        println!("Ingress Error: {}", ingress.err().unwrap());
+        println!("Ingress SpecError: {}", ingress.err().unwrap());
         return None
     }
 
@@ -115,7 +115,7 @@ pub(crate) fn route_to_ingress_gateway(req: Request, ingress_gateway: Backend, p
             match req.send(ingress_gateway) {
                 Ok(val) => { Some(val) }
                 Err(val) => {
-                    println!("Error from ingress gateway: {}", val);
+                    println!("SpecError from ingress gateway: {}", val);
                     None
                 }
                 //Err(_) => { None }

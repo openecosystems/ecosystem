@@ -2,12 +2,12 @@
 // @generated from file platform/configuration/v2alpha/configuration.proto (package platform.configuration.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Any, Timestamp } from "@bufbuild/protobuf/wkt";
-import type { SpecDataCatalog } from "../../ontology/v2alpha/spec_data_catalog_pb";
-import type { SpecPlatformConfiguration } from "./spec_configuration_pb";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Any, Timestamp } from '@bufbuild/protobuf/wkt';
+import type { SpecDataCatalog } from '../../ontology/v2alpha/spec_data_catalog_pb';
+import type { SpecPlatformConfiguration } from './spec_configuration_pb';
 
 /**
  * Describes the file platform/configuration/v2alpha/configuration.proto.
@@ -19,22 +19,23 @@ export declare const file_platform_configuration_v2alpha_configuration: GenFile;
  *
  * @generated from message platform.configuration.v2alpha.CreateConfigurationRequest
  */
-export declare type CreateConfigurationRequest = Message<"platform.configuration.v2alpha.CreateConfigurationRequest"> & {
-  /**
-   * What type of configuration is this?
-   *
-   * @generated from field: platform.configuration.v2alpha.ConfigurationType type = 2;
-   */
-  type: ConfigurationType;
+export declare type CreateConfigurationRequest =
+    Message<'platform.configuration.v2alpha.CreateConfigurationRequest'> & {
+        /**
+         * What type of configuration is this?
+         *
+         * @generated from field: platform.configuration.v2alpha.ConfigurationType type = 2;
+         */
+        type: ConfigurationType;
 
-  /**
-   * ID of a parent configuration, required if ConfigurationType is a
-   * workspace or config group
-   *
-   * @generated from field: string parent_id = 3;
-   */
-  parentId: string;
-};
+        /**
+         * ID of a parent configuration, required if ConfigurationType is a
+         * workspace or config group
+         *
+         * @generated from field: string parent_id = 3;
+         */
+        parentId: string;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.CreateConfigurationRequest.
@@ -45,19 +46,20 @@ export declare const CreateConfigurationRequestSchema: GenMessage<CreateConfigur
 /**
  * @generated from message platform.configuration.v2alpha.CreateConfigurationResponse
  */
-export declare type CreateConfigurationResponse = Message<"platform.configuration.v2alpha.CreateConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type CreateConfigurationResponse =
+    Message<'platform.configuration.v2alpha.CreateConfigurationResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
-};
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+         */
+        configuration?: Configuration;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.CreateConfigurationResponse.
@@ -68,11 +70,11 @@ export declare const CreateConfigurationResponseSchema: GenMessage<CreateConfigu
 /**
  * @generated from message platform.configuration.v2alpha.GetConfigurationRequest
  */
-export declare type GetConfigurationRequest = Message<"platform.configuration.v2alpha.GetConfigurationRequest"> & {
-  /**
-   * @generated from field: string id = 2;
-   */
-  id: string;
+export declare type GetConfigurationRequest = Message<'platform.configuration.v2alpha.GetConfigurationRequest'> & {
+    /**
+     * @generated from field: string id = 2;
+     */
+    id: string;
 };
 
 /**
@@ -84,18 +86,18 @@ export declare const GetConfigurationRequestSchema: GenMessage<GetConfigurationR
 /**
  * @generated from message platform.configuration.v2alpha.GetConfigurationResponse
  */
-export declare type GetConfigurationResponse = Message<"platform.configuration.v2alpha.GetConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type GetConfigurationResponse = Message<'platform.configuration.v2alpha.GetConfigurationResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
+    /**
+     * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+     */
+    configuration?: Configuration;
 };
 
 /**
@@ -107,20 +109,20 @@ export declare const GetConfigurationResponseSchema: GenMessage<GetConfiguration
 /**
  * @generated from message platform.configuration.v2alpha.ListConfigurationsRequest
  */
-export declare type ListConfigurationsRequest = Message<"platform.configuration.v2alpha.ListConfigurationsRequest"> & {
-  /**
-   * How many records would you like returned within one page?
-   *
-   * @generated from field: int32 page_size = 2;
-   */
-  pageSize: number;
+export declare type ListConfigurationsRequest = Message<'platform.configuration.v2alpha.ListConfigurationsRequest'> & {
+    /**
+     * How many records would you like returned within one page?
+     *
+     * @generated from field: int32 page_size = 2;
+     */
+    pageSize: number;
 
-  /**
-   * Page token provided in the response
-   *
-   * @generated from field: string page_token = 3;
-   */
-  pageToken: string;
+    /**
+     * Page token provided in the response
+     *
+     * @generated from field: string page_token = 3;
+     */
+    pageToken: string;
 };
 
 /**
@@ -132,35 +134,36 @@ export declare const ListConfigurationsRequestSchema: GenMessage<ListConfigurati
 /**
  * @generated from message platform.configuration.v2alpha.ListConfigurationsResponse
  */
-export declare type ListConfigurationsResponse = Message<"platform.configuration.v2alpha.ListConfigurationsResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type ListConfigurationsResponse =
+    Message<'platform.configuration.v2alpha.ListConfigurationsResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * Total count of configurations
-   *
-   * @generated from field: int32 total_size = 2;
-   */
-  totalSize: number;
+        /**
+         * Total count of configurations
+         *
+         * @generated from field: int32 total_size = 2;
+         */
+        totalSize: number;
 
-  /**
-   * Token to retrieve the next page
-   *
-   * @generated from field: string next_page_token = 3;
-   */
-  nextPageToken: string;
+        /**
+         * Token to retrieve the next page
+         *
+         * @generated from field: string next_page_token = 3;
+         */
+        nextPageToken: string;
 
-  /**
-   * List of configurations
-   *
-   * @generated from field: repeated platform.configuration.v2alpha.Configuration configurations = 4;
-   */
-  configurations: Configuration[];
-};
+        /**
+         * List of configurations
+         *
+         * @generated from field: repeated platform.configuration.v2alpha.Configuration configurations = 4;
+         */
+        configurations: Configuration[];
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.ListConfigurationsResponse.
@@ -171,11 +174,11 @@ export declare const ListConfigurationsResponseSchema: GenMessage<ListConfigurat
 /**
  * @generated from message platform.configuration.v2alpha.ConfigurationsFilter
  */
-export declare type ConfigurationsFilter = Message<"platform.configuration.v2alpha.ConfigurationsFilter"> & {
-  /**
-   * @generated from field: string filter = 1;
-   */
-  filter: string;
+export declare type ConfigurationsFilter = Message<'platform.configuration.v2alpha.ConfigurationsFilter'> & {
+    /**
+     * @generated from field: string filter = 1;
+     */
+    filter: string;
 };
 
 /**
@@ -187,12 +190,13 @@ export declare const ConfigurationsFilterSchema: GenMessage<ConfigurationsFilter
 /**
  * @generated from message platform.configuration.v2alpha.UpdateConfigurationRequest
  */
-export declare type UpdateConfigurationRequest = Message<"platform.configuration.v2alpha.UpdateConfigurationRequest"> & {
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
-   */
-  config?: Configuration;
-};
+export declare type UpdateConfigurationRequest =
+    Message<'platform.configuration.v2alpha.UpdateConfigurationRequest'> & {
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
+         */
+        config?: Configuration;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.UpdateConfigurationRequest.
@@ -203,19 +207,20 @@ export declare const UpdateConfigurationRequestSchema: GenMessage<UpdateConfigur
 /**
  * @generated from message platform.configuration.v2alpha.UpdateConfigurationResponse
  */
-export declare type UpdateConfigurationResponse = Message<"platform.configuration.v2alpha.UpdateConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type UpdateConfigurationResponse =
+    Message<'platform.configuration.v2alpha.UpdateConfigurationResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
-};
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+         */
+        configuration?: Configuration;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.UpdateConfigurationResponse.
@@ -226,11 +231,11 @@ export declare const UpdateConfigurationResponseSchema: GenMessage<UpdateConfigu
 /**
  * @generated from message platform.configuration.v2alpha.LoadConfigurationRequest
  */
-export declare type LoadConfigurationRequest = Message<"platform.configuration.v2alpha.LoadConfigurationRequest"> & {
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
-   */
-  config?: Configuration;
+export declare type LoadConfigurationRequest = Message<'platform.configuration.v2alpha.LoadConfigurationRequest'> & {
+    /**
+     * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
+     */
+    config?: Configuration;
 };
 
 /**
@@ -242,18 +247,18 @@ export declare const LoadConfigurationRequestSchema: GenMessage<LoadConfiguratio
 /**
  * @generated from message platform.configuration.v2alpha.LoadConfigurationResponse
  */
-export declare type LoadConfigurationResponse = Message<"platform.configuration.v2alpha.LoadConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type LoadConfigurationResponse = Message<'platform.configuration.v2alpha.LoadConfigurationResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
+    /**
+     * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+     */
+    configuration?: Configuration;
 };
 
 /**
@@ -265,12 +270,13 @@ export declare const LoadConfigurationResponseSchema: GenMessage<LoadConfigurati
 /**
  * @generated from message platform.configuration.v2alpha.DeleteConfigurationRequest
  */
-export declare type DeleteConfigurationRequest = Message<"platform.configuration.v2alpha.DeleteConfigurationRequest"> & {
-  /**
-   * @generated from field: string id = 2;
-   */
-  id: string;
-};
+export declare type DeleteConfigurationRequest =
+    Message<'platform.configuration.v2alpha.DeleteConfigurationRequest'> & {
+        /**
+         * @generated from field: string id = 2;
+         */
+        id: string;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.DeleteConfigurationRequest.
@@ -281,19 +287,20 @@ export declare const DeleteConfigurationRequestSchema: GenMessage<DeleteConfigur
 /**
  * @generated from message platform.configuration.v2alpha.DeleteConfigurationResponse
  */
-export declare type DeleteConfigurationResponse = Message<"platform.configuration.v2alpha.DeleteConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type DeleteConfigurationResponse =
+    Message<'platform.configuration.v2alpha.DeleteConfigurationResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
-};
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+         */
+        configuration?: Configuration;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.DeleteConfigurationResponse.
@@ -304,17 +311,18 @@ export declare const DeleteConfigurationResponseSchema: GenMessage<DeleteConfigu
 /**
  * @generated from message platform.configuration.v2alpha.PublishConfigurationRequest
  */
-export declare type PublishConfigurationRequest = Message<"platform.configuration.v2alpha.PublishConfigurationRequest"> & {
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
-   */
-  config?: Configuration;
+export declare type PublishConfigurationRequest =
+    Message<'platform.configuration.v2alpha.PublishConfigurationRequest'> & {
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
+         */
+        config?: Configuration;
 
-  /**
-   * @generated from field: string id = 3;
-   */
-  id: string;
-};
+        /**
+         * @generated from field: string id = 3;
+         */
+        id: string;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.PublishConfigurationRequest.
@@ -325,19 +333,20 @@ export declare const PublishConfigurationRequestSchema: GenMessage<PublishConfig
 /**
  * @generated from message platform.configuration.v2alpha.PublishConfigurationResponse
  */
-export declare type PublishConfigurationResponse = Message<"platform.configuration.v2alpha.PublishConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type PublishConfigurationResponse =
+    Message<'platform.configuration.v2alpha.PublishConfigurationResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
-};
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+         */
+        configuration?: Configuration;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.PublishConfigurationResponse.
@@ -348,17 +357,18 @@ export declare const PublishConfigurationResponseSchema: GenMessage<PublishConfi
 /**
  * @generated from message platform.configuration.v2alpha.ArchiveConfigurationRequest
  */
-export declare type ArchiveConfigurationRequest = Message<"platform.configuration.v2alpha.ArchiveConfigurationRequest"> & {
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
-   */
-  config?: Configuration;
+export declare type ArchiveConfigurationRequest =
+    Message<'platform.configuration.v2alpha.ArchiveConfigurationRequest'> & {
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration config = 2;
+         */
+        config?: Configuration;
 
-  /**
-   * @generated from field: string id = 3;
-   */
-  id: string;
-};
+        /**
+         * @generated from field: string id = 3;
+         */
+        id: string;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.ArchiveConfigurationRequest.
@@ -369,19 +379,20 @@ export declare const ArchiveConfigurationRequestSchema: GenMessage<ArchiveConfig
 /**
  * @generated from message platform.configuration.v2alpha.ArchiveConfigurationResponse
  */
-export declare type ArchiveConfigurationResponse = Message<"platform.configuration.v2alpha.ArchiveConfigurationResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type ArchiveConfigurationResponse =
+    Message<'platform.configuration.v2alpha.ArchiveConfigurationResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
-   */
-  configuration?: Configuration;
-};
+        /**
+         * @generated from field: platform.configuration.v2alpha.Configuration configuration = 2;
+         */
+        configuration?: Configuration;
+    };
 
 /**
  * Describes the message platform.configuration.v2alpha.ArchiveConfigurationResponse.
@@ -392,86 +403,86 @@ export declare const ArchiveConfigurationResponseSchema: GenMessage<ArchiveConfi
 /**
  * @generated from message platform.configuration.v2alpha.Configuration
  */
-export declare type Configuration = Message<"platform.configuration.v2alpha.Configuration"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Configuration = Message<'platform.configuration.v2alpha.Configuration'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * @generated from field: string organization_slug = 2;
-   */
-  organizationSlug: string;
+    /**
+     * @generated from field: string organization_slug = 2;
+     */
+    organizationSlug: string;
 
-  /**
-   * @generated from field: string workspace_slug = 3;
-   */
-  workspaceSlug: string;
+    /**
+     * @generated from field: string workspace_slug = 3;
+     */
+    workspaceSlug: string;
 
-  /**
-   * @generated from field: google.protobuf.Timestamp created_at = 4;
-   */
-  createdAt?: Timestamp;
+    /**
+     * @generated from field: google.protobuf.Timestamp created_at = 4;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * @generated from field: google.protobuf.Timestamp updated_at = 5;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * @generated from field: google.protobuf.Timestamp updated_at = 5;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * @generated from field: string source_id = 6;
-   */
-  sourceId: string;
+    /**
+     * @generated from field: string source_id = 6;
+     */
+    sourceId: string;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.ConfigurationType type = 7;
-   */
-  type: ConfigurationType;
+    /**
+     * @generated from field: platform.configuration.v2alpha.ConfigurationType type = 7;
+     */
+    type: ConfigurationType;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.ConfigurationStatus status = 8;
-   */
-  status: ConfigurationStatus;
+    /**
+     * @generated from field: platform.configuration.v2alpha.ConfigurationStatus status = 8;
+     */
+    status: ConfigurationStatus;
 
-  /**
-   * @generated from field: string status_details = 9;
-   */
-  statusDetails: string;
+    /**
+     * @generated from field: string status_details = 9;
+     */
+    statusDetails: string;
 
-  /**
-   * @generated from field: string parent_id = 10;
-   */
-  parentId: string;
+    /**
+     * @generated from field: string parent_id = 10;
+     */
+    parentId: string;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.SpecDataCatalog data_catalog = 13;
-   */
-  dataCatalog?: SpecDataCatalog;
+    /**
+     * @generated from field: platform.ontology.v2alpha.SpecDataCatalog data_catalog = 13;
+     */
+    dataCatalog?: SpecDataCatalog;
 
-  /**
-   * @generated from field: string clinical_catalog = 14;
-   */
-  clinicalCatalog: string;
+    /**
+     * @generated from field: string clinical_catalog = 14;
+     */
+    clinicalCatalog: string;
 
-  /**
-   * @generated from field: platform.configuration.v2alpha.SpecPlatformConfiguration platform_configuration = 15;
-   */
-  platformConfiguration?: SpecPlatformConfiguration;
+    /**
+     * @generated from field: platform.configuration.v2alpha.SpecPlatformConfiguration platform_configuration = 15;
+     */
+    platformConfiguration?: SpecPlatformConfiguration;
 
-  /**
-   * @generated from field: map<string, google.protobuf.Any> platform_configurations = 16;
-   */
-  platformConfigurations: { [key: string]: Any };
+    /**
+     * @generated from field: map<string, google.protobuf.Any> platform_configurations = 16;
+     */
+    platformConfigurations: { [key: string]: Any };
 
-  /**
-   * @generated from field: map<string, google.protobuf.Any> solution_configurations = 17;
-   */
-  solutionConfigurations: { [key: string]: Any };
+    /**
+     * @generated from field: map<string, google.protobuf.Any> solution_configurations = 17;
+     */
+    solutionConfigurations: { [key: string]: Any };
 
-  /**
-   * @generated from field: map<string, google.protobuf.Any> connector_configurations = 18;
-   */
-  connectorConfigurations: { [key: string]: Any };
+    /**
+     * @generated from field: map<string, google.protobuf.Any> connector_configurations = 18;
+     */
+    connectorConfigurations: { [key: string]: Any };
 };
 
 /**
@@ -486,25 +497,25 @@ export declare const ConfigurationSchema: GenMessage<Configuration>;
  * @generated from enum platform.configuration.v2alpha.ConfigurationType
  */
 export enum ConfigurationType {
-  /**
-   * @generated from enum value: CONFIGURATION_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CONFIGURATION_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CONFIGURATION_TYPE_ORGANIZATION = 1;
-   */
-  ORGANIZATION = 1,
+    /**
+     * @generated from enum value: CONFIGURATION_TYPE_ORGANIZATION = 1;
+     */
+    ORGANIZATION = 1,
 
-  /**
-   * @generated from enum value: CONFIGURATION_TYPE_WORKSPACE = 2;
-   */
-  WORKSPACE = 2,
+    /**
+     * @generated from enum value: CONFIGURATION_TYPE_WORKSPACE = 2;
+     */
+    WORKSPACE = 2,
 
-  /**
-   * @generated from enum value: CONFIGURATION_TYPE_CONFIGURATION_GROUP = 3;
-   */
-  CONFIGURATION_GROUP = 3,
+    /**
+     * @generated from enum value: CONFIGURATION_TYPE_CONFIGURATION_GROUP = 3;
+     */
+    CONFIGURATION_GROUP = 3,
 }
 
 /**
@@ -518,40 +529,40 @@ export declare const ConfigurationTypeSchema: GenEnum<ConfigurationType>;
  * @generated from enum platform.configuration.v2alpha.ConfigurationStatus
  */
 export enum ConfigurationStatus {
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_CREATING = 1;
-   */
-  CREATING = 1,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_CREATING = 1;
+     */
+    CREATING = 1,
 
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_ACTIVE = 2;
-   */
-  ACTIVE = 2,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_ACTIVE = 2;
+     */
+    ACTIVE = 2,
 
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_INACTIVE = 3;
-   */
-  INACTIVE = 3,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_INACTIVE = 3;
+     */
+    INACTIVE = 3,
 
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_UPDATING = 4;
-   */
-  UPDATING = 4,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_UPDATING = 4;
+     */
+    UPDATING = 4,
 
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_DELETING = 5;
-   */
-  DELETING = 5,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_DELETING = 5;
+     */
+    DELETING = 5,
 
-  /**
-   * @generated from enum value: CONFIGURATION_STATUS_ERROR = 6;
-   */
-  ERROR = 6,
+    /**
+     * @generated from enum value: CONFIGURATION_STATUS_ERROR = 6;
+     */
+    ERROR = 6,
 }
 
 /**
@@ -565,30 +576,30 @@ export declare const ConfigurationStatusSchema: GenEnum<ConfigurationStatus>;
  * @generated from enum platform.configuration.v2alpha.ConfigurationBillingStatus
  */
 export enum ConfigurationBillingStatus {
-  /**
-   * @generated from enum value: CONFIGURATION_BILLING_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CONFIGURATION_BILLING_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CONFIGURATION_BILLING_STATUS_ACTIVE = 1;
-   */
-  ACTIVE = 1,
+    /**
+     * @generated from enum value: CONFIGURATION_BILLING_STATUS_ACTIVE = 1;
+     */
+    ACTIVE = 1,
 
-  /**
-   * @generated from enum value: CONFIGURATION_BILLING_STATUS_INACTIVE = 2;
-   */
-  INACTIVE = 2,
+    /**
+     * @generated from enum value: CONFIGURATION_BILLING_STATUS_INACTIVE = 2;
+     */
+    INACTIVE = 2,
 
-  /**
-   * @generated from enum value: CONFIGURATION_BILLING_STATUS_WARNING = 3;
-   */
-  WARNING = 3,
+    /**
+     * @generated from enum value: CONFIGURATION_BILLING_STATUS_WARNING = 3;
+     */
+    WARNING = 3,
 
-  /**
-   * @generated from enum value: CONFIGURATION_BILLING_STATUS_ERROR = 4;
-   */
-  ERROR = 4,
+    /**
+     * @generated from enum value: CONFIGURATION_BILLING_STATUS_ERROR = 4;
+     */
+    ERROR = 4,
 }
 
 /**
@@ -600,25 +611,25 @@ export declare const ConfigurationBillingStatusSchema: GenEnum<ConfigurationBill
  * @generated from enum platform.configuration.v2alpha.ConfigurationCommands
  */
 export enum ConfigurationCommands {
-  /**
-   * @generated from enum value: CONFIGURATION_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CONFIGURATION_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CONFIGURATION_COMMANDS_CREATE = 1;
-   */
-  CREATE = 1,
+    /**
+     * @generated from enum value: CONFIGURATION_COMMANDS_CREATE = 1;
+     */
+    CREATE = 1,
 
-  /**
-   * @generated from enum value: CONFIGURATION_COMMANDS_UPDATE = 2;
-   */
-  UPDATE = 2,
+    /**
+     * @generated from enum value: CONFIGURATION_COMMANDS_UPDATE = 2;
+     */
+    UPDATE = 2,
 
-  /**
-   * @generated from enum value: CONFIGURATION_COMMANDS_DELETE = 3;
-   */
-  DELETE = 3,
+    /**
+     * @generated from enum value: CONFIGURATION_COMMANDS_DELETE = 3;
+     */
+    DELETE = 3,
 }
 
 /**
@@ -630,25 +641,25 @@ export declare const ConfigurationCommandsSchema: GenEnum<ConfigurationCommands>
  * @generated from enum platform.configuration.v2alpha.ConfigurationEvents
  */
 export enum ConfigurationEvents {
-  /**
-   * @generated from enum value: CONFIGURATION_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CONFIGURATION_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CONFIGURATION_EVENTS_CREATED = 1;
-   */
-  CREATED = 1,
+    /**
+     * @generated from enum value: CONFIGURATION_EVENTS_CREATED = 1;
+     */
+    CREATED = 1,
 
-  /**
-   * @generated from enum value: CONFIGURATION_EVENTS_UPDATED = 2;
-   */
-  UPDATED = 2,
+    /**
+     * @generated from enum value: CONFIGURATION_EVENTS_UPDATED = 2;
+     */
+    UPDATED = 2,
 
-  /**
-   * @generated from enum value: CONFIGURATION_EVENTS_DELETED = 3;
-   */
-  DELETED = 3,
+    /**
+     * @generated from enum value: CONFIGURATION_EVENTS_DELETED = 3;
+     */
+    DELETED = 3,
 }
 
 /**
@@ -660,85 +671,84 @@ export declare const ConfigurationEventsSchema: GenEnum<ConfigurationEvents>;
  * @generated from service platform.configuration.v2alpha.ConfigurationService
  */
 export declare const ConfigurationService: GenService<{
-  /**
-   * Create a configuration that manages an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.CreateConfiguration
-   */
-  createConfiguration: {
-    methodKind: "unary";
-    input: typeof CreateConfigurationRequestSchema;
-    output: typeof CreateConfigurationResponseSchema;
-  },
-  /**
-   * List configurations for this ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.ListConfigurations
-   */
-  listConfigurations: {
-    methodKind: "unary";
-    input: typeof ListConfigurationsRequestSchema;
-    output: typeof ListConfigurationsResponseSchema;
-  },
-  /**
-   * Get configuration for an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.GetConfiguration
-   */
-  getConfiguration: {
-    methodKind: "unary";
-    input: typeof GetConfigurationRequestSchema;
-    output: typeof GetConfigurationResponseSchema;
-  },
-  /**
-   * Update configuration for an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.UpdateConfiguration
-   */
-  updateConfiguration: {
-    methodKind: "unary";
-    input: typeof UpdateConfigurationRequestSchema;
-    output: typeof UpdateConfigurationResponseSchema;
-  },
-  /**
-   * Load configuration for an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.LoadConfiguration
-   */
-  loadConfiguration: {
-    methodKind: "unary";
-    input: typeof LoadConfigurationRequestSchema;
-    output: typeof LoadConfigurationResponseSchema;
-  },
-  /**
-   * Delete configuration for an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.DeleteConfiguration
-   */
-  deleteConfiguration: {
-    methodKind: "unary";
-    input: typeof DeleteConfigurationRequestSchema;
-    output: typeof DeleteConfigurationResponseSchema;
-  },
-  /**
-   * Publish configuration for an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.PublishConfiguration
-   */
-  publishConfiguration: {
-    methodKind: "unary";
-    input: typeof PublishConfigurationRequestSchema;
-    output: typeof PublishConfigurationResponseSchema;
-  },
-  /**
-   * Archive configuration for an ecosystem
-   *
-   * @generated from rpc platform.configuration.v2alpha.ConfigurationService.ArchiveConfiguration
-   */
-  archiveConfiguration: {
-    methodKind: "unary";
-    input: typeof ArchiveConfigurationRequestSchema;
-    output: typeof ArchiveConfigurationResponseSchema;
-  },
+    /**
+     * Create a configuration that manages an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.CreateConfiguration
+     */
+    createConfiguration: {
+        methodKind: 'unary';
+        input: typeof CreateConfigurationRequestSchema;
+        output: typeof CreateConfigurationResponseSchema;
+    };
+    /**
+     * List configurations for this ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.ListConfigurations
+     */
+    listConfigurations: {
+        methodKind: 'unary';
+        input: typeof ListConfigurationsRequestSchema;
+        output: typeof ListConfigurationsResponseSchema;
+    };
+    /**
+     * Get configuration for an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.GetConfiguration
+     */
+    getConfiguration: {
+        methodKind: 'unary';
+        input: typeof GetConfigurationRequestSchema;
+        output: typeof GetConfigurationResponseSchema;
+    };
+    /**
+     * Update configuration for an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.UpdateConfiguration
+     */
+    updateConfiguration: {
+        methodKind: 'unary';
+        input: typeof UpdateConfigurationRequestSchema;
+        output: typeof UpdateConfigurationResponseSchema;
+    };
+    /**
+     * Load configuration for an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.LoadConfiguration
+     */
+    loadConfiguration: {
+        methodKind: 'unary';
+        input: typeof LoadConfigurationRequestSchema;
+        output: typeof LoadConfigurationResponseSchema;
+    };
+    /**
+     * Delete configuration for an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.DeleteConfiguration
+     */
+    deleteConfiguration: {
+        methodKind: 'unary';
+        input: typeof DeleteConfigurationRequestSchema;
+        output: typeof DeleteConfigurationResponseSchema;
+    };
+    /**
+     * Publish configuration for an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.PublishConfiguration
+     */
+    publishConfiguration: {
+        methodKind: 'unary';
+        input: typeof PublishConfigurationRequestSchema;
+        output: typeof PublishConfigurationResponseSchema;
+    };
+    /**
+     * Archive configuration for an ecosystem
+     *
+     * @generated from rpc platform.configuration.v2alpha.ConfigurationService.ArchiveConfiguration
+     */
+    archiveConfiguration: {
+        methodKind: 'unary';
+        input: typeof ArchiveConfigurationRequestSchema;
+        output: typeof ArchiveConfigurationResponseSchema;
+    };
 }>;
-

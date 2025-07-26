@@ -1,13 +1,13 @@
 {
-  "name": "libs-plugins-gnostic-gen-platform",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
-  "sourceRoot": "libs/plugins/gnostic-gen-platform",
-  "implicitDependencies": ["proto"],
-  "targets": {
-    "test": {
-      "executor": "@nx-go/nx-go:test"
-    }
-  },
-  "tags": []
+    "name": "libs-plugins-gnostic-gen-platform",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "libs/plugins/gnostic-gen-platform",
+    "implicitDependencies": ["proto"],
+    "targets": {
+        "test": {
+            "executor": "@nx-go/nx-go:test"
+        }
+    },
+    "tags": []
 }

@@ -1,1 +1,1 @@
-#  Hugo
+# Hugo

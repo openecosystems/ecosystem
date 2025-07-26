@@ -4,33 +4,53 @@
 // @generated from file platform/configuration/v2alpha/spec_configuration.proto (package platform.configuration.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_communication_v1alpha_preference_center } from "../../communication/v1alpha/preference_center_pb";
-import { file_platform_audit_v2alpha_audit } from "../../audit/v2alpha/audit_pb";
-import { file_platform_cli_v2alpha_oeco } from "../../cli/v2alpha/oeco_pb";
-import { file_platform_cryptography_v2alpha_certificate } from "../../cryptography/v2alpha/certificate_pb";
-import { file_platform_cryptography_v2alpha_encryption } from "../../cryptography/v2alpha/encryption_pb";
-import { file_platform_dns_v2alpha_dynamic_dns } from "../../dns/v2alpha/dynamic_dns_pb";
-import { file_platform_ecosystem_v2alpha_ecosystem } from "../../ecosystem/v2alpha/ecosystem_pb";
-import { file_platform_edge_v2alpha_edge_router } from "../../edge/v2alpha/edge_router_pb";
-import { file_platform_iam_v2alpha_account } from "../../iam/v2alpha/account_pb";
-import { file_platform_iam_v2alpha_account_authority } from "../../iam/v2alpha/account_authority_pb";
-import { file_platform_mesh_v2alpha_cryptographic_mesh } from "../../mesh/v2alpha/cryptographic_mesh_pb";
-import { file_platform_reference_v2alpha_reference } from "../../reference/v2alpha/reference_pb";
-import { file_platform_system_v2alpha_system } from "../../system/v2alpha/system_pb";
-import { file_platform_communication_v1beta_preference_center } from "../../communication/v1beta/preference_center_pb";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_communication_v1alpha_preference_center } from '../../communication/v1alpha/preference_center_pb';
+import { file_platform_audit_v2alpha_audit } from '../../audit/v2alpha/audit_pb';
+import { file_platform_cli_v2alpha_oeco } from '../../cli/v2alpha/oeco_pb';
+import { file_platform_cryptography_v2alpha_certificate } from '../../cryptography/v2alpha/certificate_pb';
+import { file_platform_cryptography_v2alpha_encryption } from '../../cryptography/v2alpha/encryption_pb';
+import { file_platform_dns_v2alpha_dynamic_dns } from '../../dns/v2alpha/dynamic_dns_pb';
+import { file_platform_ecosystem_v2alpha_ecosystem } from '../../ecosystem/v2alpha/ecosystem_pb';
+import { file_platform_edge_v2alpha_edge_router } from '../../edge/v2alpha/edge_router_pb';
+import { file_platform_iam_v2alpha_account } from '../../iam/v2alpha/account_pb';
+import { file_platform_iam_v2alpha_account_authority } from '../../iam/v2alpha/account_authority_pb';
+import { file_platform_mesh_v2alpha_cryptographic_mesh } from '../../mesh/v2alpha/cryptographic_mesh_pb';
+import { file_platform_reference_v2alpha_reference } from '../../reference/v2alpha/reference_pb';
+import { file_platform_system_v2alpha_system } from '../../system/v2alpha/system_pb';
+import { file_platform_communication_v1beta_preference_center } from '../../communication/v1beta/preference_center_pb';
 
 /**
  * Describes the file platform/configuration/v2alpha/spec_configuration.proto.
  */
-export const file_platform_configuration_v2alpha_spec_configuration = /*@__PURE__*/
-  fileDesc("CjdwbGF0Zm9ybS9jb25maWd1cmF0aW9uL3YyYWxwaGEvc3BlY19jb25maWd1cmF0aW9uLnByb3RvEh5wbGF0Zm9ybS5jb25maWd1cmF0aW9uLnYyYWxwaGEiwgoKGVNwZWNQbGF0Zm9ybUNvbmZpZ3VyYXRpb24STwobYXVkaXRfY29uZmlndXJhdGlvbl92MmFscGhhGAIgASgLMioucGxhdGZvcm0uYXVkaXQudjJhbHBoYS5BdWRpdENvbmZpZ3VyYXRpb24SSwoab2Vjb19jb25maWd1cmF0aW9uX3YyYWxwaGEYAyABKAsyJy5wbGF0Zm9ybS5jbGkudjJhbHBoYS5PZWNvQ29uZmlndXJhdGlvbhJiCiFjZXJ0aWZpY2F0ZV9jb25maWd1cmF0aW9uX3YyYWxwaGEYBCABKAsyNy5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5DZXJ0aWZpY2F0ZUNvbmZpZ3VyYXRpb24SYAogZW5jcnlwdGlvbl9jb25maWd1cmF0aW9uX3YyYWxwaGEYBSABKAsyNi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5FbmNyeXB0aW9uQ29uZmlndXJhdGlvbhJYCiFkeW5hbWljX2Ruc19jb25maWd1cmF0aW9uX3YyYWxwaGEYBiABKAsyLS5wbGF0Zm9ybS5kbnMudjJhbHBoYS5EeW5hbWljRG5zQ29uZmlndXJhdGlvbhJbCh9lY29zeXN0ZW1fY29uZmlndXJhdGlvbl92MmFscGhhGAcgASgLMjIucGxhdGZvcm0uZWNvc3lzdGVtLnYyYWxwaGEuRWNvc3lzdGVtQ29uZmlndXJhdGlvbhJZCiFlZGdlX3JvdXRlcl9jb25maWd1cmF0aW9uX3YyYWxwaGEYCCABKAsyLi5wbGF0Zm9ybS5lZGdlLnYyYWxwaGEuRWRnZVJvdXRlckNvbmZpZ3VyYXRpb24SUQodYWNjb3VudF9jb25maWd1cmF0aW9uX3YyYWxwaGEYCSABKAsyKi5wbGF0Zm9ybS5pYW0udjJhbHBoYS5BY2NvdW50Q29uZmlndXJhdGlvbhJkCidhY2NvdW50X2F1dGhvcml0eV9jb25maWd1cmF0aW9uX3YyYWxwaGEYCiABKAsyMy5wbGF0Zm9ybS5pYW0udjJhbHBoYS5BY2NvdW50QXV0aG9yaXR5Q29uZmlndXJhdGlvbhJnCihjcnlwdG9ncmFwaGljX21lc2hfY29uZmlndXJhdGlvbl92MmFscGhhGAsgASgLMjUucGxhdGZvcm0ubWVzaC52MmFscGhhLkNyeXB0b2dyYXBoaWNNZXNoQ29uZmlndXJhdGlvbhJbCh9yZWZlcmVuY2VfY29uZmlndXJhdGlvbl92MmFscGhhGAwgASgLMjIucGxhdGZvcm0ucmVmZXJlbmNlLnYyYWxwaGEuUmVmZXJlbmNlQ29uZmlndXJhdGlvbhJSChxzeXN0ZW1fY29uZmlndXJhdGlvbl92MmFscGhhGA0gASgLMiwucGxhdGZvcm0uc3lzdGVtLnYyYWxwaGEuU3lzdGVtQ29uZmlndXJhdGlvbhJsCiZwcmVmZXJlbmNlX2NlbnRlcl9jb25maWd1cmF0aW9uX3YxYmV0YRgOIAEoCzI8LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFiZXRhLlByZWZlcmVuY2VDZW50ZXJDb25maWd1cmF0aW9uEm4KJ3ByZWZlcmVuY2VfY2VudGVyX2NvbmZpZ3VyYXRpb25fdjFhbHBoYRgPIAEoCzI9LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5QcmVmZXJlbmNlQ2VudGVyQ29uZmlndXJhdGlvbkKCAVpwZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vbGlicy9wdWJsaWMvZ28vc2RrL2dlbi9wbGF0Zm9ybS9jb25maWd1cmF0aW9uL3YyYWxwaGE7Y29uZmlndXJhdGlvbnYyYWxwaGFwYoLEEwIIAoK1GAYIAxABGAJiBnByb3RvMw", [file_platform_options_v2_annotations, file_platform_communication_v1alpha_preference_center, file_platform_audit_v2alpha_audit, file_platform_cli_v2alpha_oeco, file_platform_cryptography_v2alpha_certificate, file_platform_cryptography_v2alpha_encryption, file_platform_dns_v2alpha_dynamic_dns, file_platform_ecosystem_v2alpha_ecosystem, file_platform_edge_v2alpha_edge_router, file_platform_iam_v2alpha_account, file_platform_iam_v2alpha_account_authority, file_platform_mesh_v2alpha_cryptographic_mesh, file_platform_reference_v2alpha_reference, file_platform_system_v2alpha_system, file_platform_communication_v1beta_preference_center]);
+export const file_platform_configuration_v2alpha_spec_configuration =
+    /*@__PURE__*/
+    fileDesc(
+        'CjdwbGF0Zm9ybS9jb25maWd1cmF0aW9uL3YyYWxwaGEvc3BlY19jb25maWd1cmF0aW9uLnByb3RvEh5wbGF0Zm9ybS5jb25maWd1cmF0aW9uLnYyYWxwaGEiwgoKGVNwZWNQbGF0Zm9ybUNvbmZpZ3VyYXRpb24STwobYXVkaXRfY29uZmlndXJhdGlvbl92MmFscGhhGAIgASgLMioucGxhdGZvcm0uYXVkaXQudjJhbHBoYS5BdWRpdENvbmZpZ3VyYXRpb24SSwoab2Vjb19jb25maWd1cmF0aW9uX3YyYWxwaGEYAyABKAsyJy5wbGF0Zm9ybS5jbGkudjJhbHBoYS5PZWNvQ29uZmlndXJhdGlvbhJiCiFjZXJ0aWZpY2F0ZV9jb25maWd1cmF0aW9uX3YyYWxwaGEYBCABKAsyNy5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5DZXJ0aWZpY2F0ZUNvbmZpZ3VyYXRpb24SYAogZW5jcnlwdGlvbl9jb25maWd1cmF0aW9uX3YyYWxwaGEYBSABKAsyNi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5FbmNyeXB0aW9uQ29uZmlndXJhdGlvbhJYCiFkeW5hbWljX2Ruc19jb25maWd1cmF0aW9uX3YyYWxwaGEYBiABKAsyLS5wbGF0Zm9ybS5kbnMudjJhbHBoYS5EeW5hbWljRG5zQ29uZmlndXJhdGlvbhJbCh9lY29zeXN0ZW1fY29uZmlndXJhdGlvbl92MmFscGhhGAcgASgLMjIucGxhdGZvcm0uZWNvc3lzdGVtLnYyYWxwaGEuRWNvc3lzdGVtQ29uZmlndXJhdGlvbhJZCiFlZGdlX3JvdXRlcl9jb25maWd1cmF0aW9uX3YyYWxwaGEYCCABKAsyLi5wbGF0Zm9ybS5lZGdlLnYyYWxwaGEuRWRnZVJvdXRlckNvbmZpZ3VyYXRpb24SUQodYWNjb3VudF9jb25maWd1cmF0aW9uX3YyYWxwaGEYCSABKAsyKi5wbGF0Zm9ybS5pYW0udjJhbHBoYS5BY2NvdW50Q29uZmlndXJhdGlvbhJkCidhY2NvdW50X2F1dGhvcml0eV9jb25maWd1cmF0aW9uX3YyYWxwaGEYCiABKAsyMy5wbGF0Zm9ybS5pYW0udjJhbHBoYS5BY2NvdW50QXV0aG9yaXR5Q29uZmlndXJhdGlvbhJnCihjcnlwdG9ncmFwaGljX21lc2hfY29uZmlndXJhdGlvbl92MmFscGhhGAsgASgLMjUucGxhdGZvcm0ubWVzaC52MmFscGhhLkNyeXB0b2dyYXBoaWNNZXNoQ29uZmlndXJhdGlvbhJbCh9yZWZlcmVuY2VfY29uZmlndXJhdGlvbl92MmFscGhhGAwgASgLMjIucGxhdGZvcm0ucmVmZXJlbmNlLnYyYWxwaGEuUmVmZXJlbmNlQ29uZmlndXJhdGlvbhJSChxzeXN0ZW1fY29uZmlndXJhdGlvbl92MmFscGhhGA0gASgLMiwucGxhdGZvcm0uc3lzdGVtLnYyYWxwaGEuU3lzdGVtQ29uZmlndXJhdGlvbhJsCiZwcmVmZXJlbmNlX2NlbnRlcl9jb25maWd1cmF0aW9uX3YxYmV0YRgOIAEoCzI8LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFiZXRhLlByZWZlcmVuY2VDZW50ZXJDb25maWd1cmF0aW9uEm4KJ3ByZWZlcmVuY2VfY2VudGVyX2NvbmZpZ3VyYXRpb25fdjFhbHBoYRgPIAEoCzI9LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5QcmVmZXJlbmNlQ2VudGVyQ29uZmlndXJhdGlvbkKCAVpwZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vbGlicy9wdWJsaWMvZ28vc2RrL2dlbi9wbGF0Zm9ybS9jb25maWd1cmF0aW9uL3YyYWxwaGE7Y29uZmlndXJhdGlvbnYyYWxwaGFwYoLEEwIIAoK1GAYIAxABGAJiBnByb3RvMw',
+        [
+            file_platform_options_v2_annotations,
+            file_platform_communication_v1alpha_preference_center,
+            file_platform_audit_v2alpha_audit,
+            file_platform_cli_v2alpha_oeco,
+            file_platform_cryptography_v2alpha_certificate,
+            file_platform_cryptography_v2alpha_encryption,
+            file_platform_dns_v2alpha_dynamic_dns,
+            file_platform_ecosystem_v2alpha_ecosystem,
+            file_platform_edge_v2alpha_edge_router,
+            file_platform_iam_v2alpha_account,
+            file_platform_iam_v2alpha_account_authority,
+            file_platform_mesh_v2alpha_cryptographic_mesh,
+            file_platform_reference_v2alpha_reference,
+            file_platform_system_v2alpha_system,
+            file_platform_communication_v1beta_preference_center,
+        ]
+    );
 
 /**
  * Describes the message platform.configuration.v2alpha.SpecPlatformConfiguration.
  * Use `create(SpecPlatformConfigurationSchema)` to create a new message.
  */
-export const SpecPlatformConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_configuration_v2alpha_spec_configuration, 0);
-
+export const SpecPlatformConfigurationSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_configuration_v2alpha_spec_configuration, 0);

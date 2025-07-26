@@ -5,7 +5,7 @@ summary: '`Google` has its own implementation of the [Cloud](/fundamentals/gloss
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/glossary/cloud
+    - /fundamentals/glossary/cloud
 ---
 
 # GCP

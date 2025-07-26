@@ -3,11 +3,11 @@ date_created: 2022-12-11T17:21:57
 title: BSON
 pcx_content_type: definition
 summary: >-
-  `BSON` is a binary data interchange format with the same capabilities as [JSON](/fundamentals/design-and-architecture/standards-based/data-standards/#json).
+    `BSON` is a binary data interchange format with the same capabilities as [JSON](/fundamentals/design-and-architecture/standards-based/data-standards/#json).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/json
+    - /fundamentals/design-and-architecture/standards-based/data-standards/json
 ---
 
 # Binary JSON (BSON)
@@ -18,5 +18,5 @@ links_to:
 
 ## Sources
 
-- https://bsonspec.org/
-- https://en.wikipedia.org/wiki/BSON
+-   https://bsonspec.org/
+-   https://en.wikipedia.org/wiki/BSON

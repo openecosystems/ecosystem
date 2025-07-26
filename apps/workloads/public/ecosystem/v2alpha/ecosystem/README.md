@@ -1,4 +1,3 @@
-
 # Manually Deploy Docker Image
 
 ```bash
@@ -19,7 +18,6 @@ cd proto
 grpcurl \
 -protoset <(buf build -o -) -plaintext \
 localhost:6478 list
-
 
 ```bash
 curl -X POST \
@@ -136,8 +134,6 @@ http://localhost:6477/v2/configurations/123
 
 https://event-v2alpha-event-multiplexer-j1dg37h9q8pk2.cpln.app
 
-
-
 cd proto
 ghz --insecure --protoset <(buf build -o -) \
 -d '{"email": "dimy2@jeannot.company", "first_name": "Dimy", "last_name": "Jeannot", "phone_number": "770"}' \
@@ -157,16 +153,13 @@ curl -X POST \
 -d '{}' \
 http://localhost:6477/v2/search
 
-
-docker run  -p 4222:8017 -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds://Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds  workloads/private/event/v2alpha/event-multiplexer:latest
-docker run  -p 4333:8017 -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds://Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds  workloads/private/event/v2alpha/event-multiplexer:latest
-
+docker run -p 4222:8017 -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds://Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds workloads/private/event/v2alpha/event-multiplexer:latest
+docker run -p 4333:8017 -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds://Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany.creds workloads/private/event/v2alpha/event-multiplexer:latest
 
 docker run --name nats-server -p 4222:4222 nats:latest -js
-docker run --name leafnode-red -p 4222:4222 -v ./leafnode.conf:/leafnode.conf -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-red.creds:/ngs.creds  nats:latest -c /leafnode.conf
-docker run --name leafnode-blue -p 4333:4222 -v ./leafnode.conf:/leafnode.conf -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds:/ngs.creds  nats:latest -c /leafnode.conf
-docker run --name event-multiplexer-blue -p 4444:8017 -p 6478:6478 -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds://Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds  workloads/private/event/v2alpha/event-multiplexer:latest
-
+docker run --name leafnode-red -p 4222:4222 -v ./leafnode.conf:/leafnode.conf -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-red.creds:/ngs.creds nats:latest -c /leafnode.conf
+docker run --name leafnode-blue -p 4333:4222 -v ./leafnode.conf:/leafnode.conf -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds:/ngs.creds nats:latest -c /leafnode.conf
+docker run --name event-multiplexer-blue -p 4444:8017 -p 6478:6478 -v /Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds://Users/dimyjeannot/workspace/personal/cloud-keys/synadia-ngs-jeannotcompany-blue.creds workloads/private/event/v2alpha/event-multiplexer:latest
 
 curl -X POST --header "Content-Type: application/json" --data '{}' http://localhost:6477/v2/search
 
@@ -177,7 +170,6 @@ curl \
 --header "x-spec-organization-slug:organization123" \
 http://localhost:6477/v1beta/communication/preference-center/options
 
-
 cd proto
 grpcurl \
 -protoset <(buf build -o -) -plaintext \
@@ -186,11 +178,11 @@ grpcurl \
 -d '{}' \
 localhost:6477 platform.communication.v1alpha.PreferenceCenterService/GetPreferenceOptions
 
-
 # Testing CORS
+
 curl 'http://localhost:6477/platform.communication.v1alpha.MarketingEmailService/Subscribe' --verbose \
 -X 'OPTIONS' \
--H 'Accept: */*' \
+-H 'Accept: _/_' \
 -H 'Accept-Language: en-US' \
 -H 'Access-Control-Request-Headers: content-type' \
 -H 'Access-Control-Request-Method: GET' \

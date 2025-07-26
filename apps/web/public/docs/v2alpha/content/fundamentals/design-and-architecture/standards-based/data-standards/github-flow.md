@@ -2,16 +2,16 @@
 date_created: 2022-12-11T17:16:47
 title: GitHub Flow
 aliases:
-  - GitHub Flow
+    - GitHub Flow
 pcx_content_type: definition
 summary: >-
-  `GitHub Flow` is a [Branching Model](/fundamentals/glossary/branching-model) defined by `GitHub`.
+    `GitHub Flow` is a [Branching Model](/fundamentals/glossary/branching-model) defined by `GitHub`.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/branching-model
-  - /fundamentals/design-and-architecture/standards-based/data-standards/gitflow
-  - /fundamentals/glossary/pull-request
+    - /fundamentals/glossary/branching-model
+    - /fundamentals/design-and-architecture/standards-based/data-standards/gitflow
+    - /fundamentals/glossary/pull-request
 ---
 
 # GitHub Flow
@@ -24,4 +24,4 @@ You can then create a [Pull Request](/fundamentals/glossary/pull-request) on the
 
 ## Sources
 
-- https://docs.github.com/en/get-started/quickstart/github-flow
+-   https://docs.github.com/en/get-started/quickstart/github-flow

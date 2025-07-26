@@ -1,6 +1,6 @@
 version: v2
 inputs:
-  - directory: ./
+    - directory: ./
 plugins:
 #  - local: protoc-gen-platform
 #    out: .

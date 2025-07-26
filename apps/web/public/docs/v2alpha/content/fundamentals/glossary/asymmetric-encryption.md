@@ -2,14 +2,14 @@
 title: Asymmetric Encryption
 pcx_content_type: definition
 summary: >-
-  A cryptographic algorithm that uses *two* keys: data that is encrypted with one key, can be decrypted with the other.
+    A cryptographic algorithm that uses *two* keys: data that is encrypted with one key, can be decrypted with the other.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/public-key
-  - /fundamentals/glossary/private-key
-  - /fundamentals/glossary/symmetric-encryption
-  - /fundamentals/glossary/encryption
+    - /fundamentals/glossary/public-key
+    - /fundamentals/glossary/private-key
+    - /fundamentals/glossary/symmetric-encryption
+    - /fundamentals/glossary/encryption
 ---
 
 # Asymmetric Encryption

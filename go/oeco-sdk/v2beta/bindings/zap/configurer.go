@@ -80,7 +80,7 @@ func (b *Binding) GetConfiguration() *Configuration {
 func (b *Binding) GetConfigurationBytes() ([]byte, error) {
 	byteArray, err := yaml.Marshal(b.GetConfiguration())
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("SpecError:", err)
 		return nil, err
 	}
 	return byteArray, nil

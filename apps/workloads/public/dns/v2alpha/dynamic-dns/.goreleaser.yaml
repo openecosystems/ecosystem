@@ -3,46 +3,45 @@ version: 2
 project_name: dns
 
 variables:
-  path_to_repo_root: "../../../../../../"
-  path_to_project: "apps/workloads/public/dns/v2alpha/dynamic-dns"
-  project_name: "dns"
+    path_to_repo_root: '../../../../../../'
+    path_to_project: 'apps/workloads/public/dns/v2alpha/dynamic-dns'
+    project_name: 'dns'
 
 dist: ./dist/apps/workloads/public/dns/v2alpha/dynamic-dns/release
 
 monorepo:
-  tag_prefix: "dns/"
-  dir: apps/workloads/public/dns/v2alpha/dynamic-dns
+    tag_prefix: 'dns/'
+    dir: apps/workloads/public/dns/v2alpha/dynamic-dns
 
 includes:
-  - from_file:
-      path: ./.config/goreleaser/goreleaser.workload.yaml
+    - from_file:
+          path: ./.config/goreleaser/goreleaser.workload.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/notarize.yaml
 #  - from_file:
 #      path: ./.config/goreleaser/dockerize.yaml
 
 nightly:
-  version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "dns/devel"
-  publish_release: true
-  keep_single_release: true
-
+    version_template: '{{ incpatch .Version }}-devel'
+    tag_name: 'dns/devel'
+    publish_release: true
+    keep_single_release: true
 
 kos:
-  - repositories:
-      - ghcr.io/openecosystems/dns
-      #- openecosystems/dns
-    tags:
-      - "{{.Version}}"
-      - "{{.Tag}}"
-      - latest
-      - "{{if not .Prerelease}}stable{{end}}"
-    bare: true
-    preserve_import_paths: false
-    platforms:
-      - linux/amd64
-      - linux/arm64
-      - darwin/amd64
-      - darwin/arm64
-      - windows/amd64
-      - windows/arm64
+    - repositories:
+          - ghcr.io/openecosystems/dns
+          #- openecosystems/dns
+      tags:
+          - '{{.Version}}'
+          - '{{.Tag}}'
+          - latest
+          - '{{if not .Prerelease}}stable{{end}}'
+      bare: true
+      preserve_import_paths: false
+      platforms:
+          - linux/amd64
+          - linux/arm64
+          - darwin/amd64
+          - darwin/arm64
+          - windows/amd64
+          - windows/arm64

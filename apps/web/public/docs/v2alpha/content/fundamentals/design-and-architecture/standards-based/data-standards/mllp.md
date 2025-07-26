@@ -2,19 +2,19 @@
 date_created: 2022-12-11T17:00:28
 title: MLLP
 aliases:
-  - MLLP
-  - MLLPv2
-  - Minimum Lower Layer Protocol
-  - Minimum Lower Layer Protocol (MLLP)
+    - MLLP
+    - MLLPv2
+    - Minimum Lower Layer Protocol
+    - Minimum Lower Layer Protocol (MLLP)
 pcx_content_type: definition
 summary: >-
-  `MLLP` is a protocol used to transfer [HL7v3](/fundamentals/design-and-architecture/standards-based/data-standards/hl7v3) messages via [TCP/IP](/fundamentals/design-and-architecture/standards-based/data-standards/tcp).
+    `MLLP` is a protocol used to transfer [HL7v3](/fundamentals/design-and-architecture/standards-based/data-standards/hl7v3) messages via [TCP/IP](/fundamentals/design-and-architecture/standards-based/data-standards/tcp).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/hl7v3
-  - /fundamentals/design-and-architecture/standards-based/data-standards/tcp
-  - /fundamentals/design-and-architecture/standards-based/data-standards/synchronous
+    - /fundamentals/design-and-architecture/standards-based/data-standards/hl7v3
+    - /fundamentals/design-and-architecture/standards-based/data-standards/tcp
+    - /fundamentals/design-and-architecture/standards-based/data-standards/synchronous
 ---
 
 # Minimum Lower Layer Protocol (MLLP)

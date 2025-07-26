@@ -44,7 +44,7 @@ pub(crate) fn extract_context(req: &mut Request, debug: bool) -> Option<Context>
 
     let _config_store = ConfigStore::try_open(&store);
     if _config_store.is_err() {
-        println!("Error {}", _config_store.err().unwrap().to_string());
+        println!("SpecError {}", _config_store.err().unwrap().to_string());
         println!("Context Store could not be opened: {}", store);
         return None
     }
@@ -53,7 +53,7 @@ pub(crate) fn extract_context(req: &mut Request, debug: bool) -> Option<Context>
 
     let _context = config_store.try_get("context");
     if _context.is_err() {
-        println!("Error {}", _context.err().unwrap().to_string());
+        println!("SpecError {}", _context.err().unwrap().to_string());
         println!("Could not find context value in the store");
         return None
     }

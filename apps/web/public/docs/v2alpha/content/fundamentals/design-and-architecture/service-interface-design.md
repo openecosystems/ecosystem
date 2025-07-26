@@ -32,13 +32,13 @@ Contribution interface design allows for deep extensibility by introducing strat
 
 ## Analytical Interface Design
 
-- Search, List, Analytics, Statistics, Get Connected Test Demographics, Top Daily Test
-  - Data-Product Driven Design
+-   Search, List, Analytics, Statistics, Get Connected Test Demographics, Top Daily Test
+    -   Data-Product Driven Design
 
 ## Observability Interface Design
 
-- Logs, Metrics, Lineage (Traces)
+-   Logs, Metrics, Lineage (Traces)
 
 ## Discoverability Interface Design
 
-- -
+-   -

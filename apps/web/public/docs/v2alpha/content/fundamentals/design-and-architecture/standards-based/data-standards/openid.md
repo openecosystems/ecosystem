@@ -13,4 +13,4 @@ has_links: false
 
 ## Sources
 
-- https://openid.net/connect/
+-   https://openid.net/connect/

@@ -291,7 +291,7 @@ func (m *CreateEcosystemModel) View() string {
 func (m *CreateEcosystemModel) errorView() string {
 	var s string
 	for _, err := range m.form.Errors() {
-		s += err.Error()
+		s += err.SpecError()
 	}
 	return s
 }

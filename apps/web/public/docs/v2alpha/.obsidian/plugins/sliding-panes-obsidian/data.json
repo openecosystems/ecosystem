@@ -1,11 +1,11 @@
 {
-  "headerWidth": 32,
-  "leafWidth": 700,
-  "leafAutoWidth": false,
-  "disabled": false,
-  "rotateHeaders": false,
-  "headerAlt": false,
-  "orienation": "mixed",
-  "stackingEnabled": true,
-  "smoothAnimation": true
+    "headerWidth": 32,
+    "leafWidth": 700,
+    "leafAutoWidth": false,
+    "disabled": false,
+    "rotateHeaders": false,
+    "headerAlt": false,
+    "orienation": "mixed",
+    "stackingEnabled": true,
+    "smoothAnimation": true
 }

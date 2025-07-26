@@ -2,110 +2,104 @@
 // @generated from file platform/system/v2alpha/system.proto (package platform.system.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
-import { file_google_api_annotations } from "../../../google/api/annotations_pb";
-import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_spec_v2_spec } from "../../spec/v2/spec_pb";
+import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
+import { file_google_api_annotations } from '../../../google/api/annotations_pb';
+import { file_google_protobuf_timestamp } from '@bufbuild/protobuf/wkt';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_spec_v2_spec } from '../../spec/v2/spec_pb';
 
 /**
  * Describes the file platform/system/v2alpha/system.proto.
  */
-export const file_platform_system_v2alpha_system = /*@__PURE__*/
-  fileDesc("CiRwbGF0Zm9ybS9zeXN0ZW0vdjJhbHBoYS9zeXN0ZW0ucHJvdG8SF3BsYXRmb3JtLnN5c3RlbS52MmFscGhhImsKDVB1YmxpY1N5c3RlbXMSFQoNY29tbXVuaWNhdGlvbhgBIAEoCBIVCg1jb25maWd1cmF0aW9uGAIgASgIEg0KBWV2ZW50GAMgASgIEgsKA2lhbRgEIAEoCBIQCghvbnRvbG9neRgFIAEoCCJQCg5Qcml2YXRlU3lzdGVtcxINCgVhdWRpdBgBIAEoCBIMCgRlZGdlGAIgASgIEhIKCmVuY3J5cHRpb24YAyABKAgSDQoFZXZlbnQYBCABKAgiHwoKUG9jU3lzdGVtcxIRCglyZWZlcmVuY2UYASABKAgi0QEKE1N5c3RlbUNvbmZpZ3VyYXRpb24SPgoOcHVibGljX3N5c3RlbXMYASABKAsyJi5wbGF0Zm9ybS5zeXN0ZW0udjJhbHBoYS5QdWJsaWNTeXN0ZW1zEkAKD3ByaXZhdGVfc3lzdGVtcxgCIAEoCzInLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLlByaXZhdGVTeXN0ZW1zEjgKC3BvY19zeXN0ZW1zGAMgASgLMiMucGxhdGZvcm0uc3lzdGVtLnYyYWxwaGEuUG9jU3lzdGVtcyIXCg1FbmFibGVSZXF1ZXN0Ogb6thgCCAEihgEKDkVuYWJsZVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBIvCgZzeXN0ZW0YAiABKAsyHy5wbGF0Zm9ybS5zeXN0ZW0udjJhbHBoYS5TeXN0ZW06Bvq2GAIIAiIYCg5EaXNhYmxlUmVxdWVzdDoG+rYYAggBIocBCg9EaXNhYmxlUmVzcG9uc2USOwoMc3BlY19jb250ZXh0GAEgASgLMiUucGxhdGZvcm0uc3BlYy52Mi5TcGVjUmVzcG9uc2VDb250ZXh0Ei8KBnN5c3RlbRgCIAEoCzIfLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLlN5c3RlbToG+rYYAggCIrQBCgZTeXN0ZW0SEgoCaWQYASABKAlCBsq3GAIIARIuCgplbmFibGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcDoG+rYYAggCKnIKDlN5c3RlbUNvbW1hbmRzEh8KG1NZU1RFTV9DT01NQU5EU19VTlNQRUNJRklFRBAAEhoKFlNZU1RFTV9DT01NQU5EU19FTkFCTEUQARIbChdTWVNURU1fQ09NTUFORFNfRElTQUJMRRACGgaSuBgCCAMqbAoMU3lzdGVtRXZlbnRzEh0KGVNZU1RFTV9FVkVOVFNfVU5TUEVDSUZJRUQQABIZChVTWVNURU1fRVZFTlRTX0VOQUJMRUQQARIaChZTWVNURU1fRVZFTlRTX0RJU0FCTEVEEAIaBpK4GAIIBDLZAgoNU3lzdGVtU2VydmljZRKgAQoGRW5hYmxlEiYucGxhdGZvcm0uc3lzdGVtLnYyYWxwaGEuRW5hYmxlUmVxdWVzdBonLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLkVuYWJsZVJlc3BvbnNlIkOithgIMgZlbmFibGWqthgCCAKythgMCgZlbmFibGUSAssBgtPkkwIbOgEqIhYvdjJhbHBoYS9zeXN0ZW0vZW5hYmxlMAESpAEKB0Rpc2FibGUSJy5wbGF0Zm9ybS5zeXN0ZW0udjJhbHBoYS5EaXNhYmxlUmVxdWVzdBooLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLkRpc2FibGVSZXNwb25zZSJGorYYCTIHZGlzYWJsZaq2GAIIBLK2GA0KB2Rpc2FibGUSAssBgtPkkwIcOgEqIhcvdjJhbHBoYS9zeXN0ZW0vZGlzYWJsZUKjAVpiZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vbGlicy9wdWJsaWMvZ28vc2RrL2dlbi9wbGF0Zm9ybS9zeXN0ZW0vdjJhbHBoYTtzeXN0ZW12MmFscGhhcGKCxBMCCAKCtRgGCAMQARgCirUYGAoGc3lzdGVtEgdzeXN0ZW1zIgNqYW4oApK1GAMKAQOatRgCCAGitRgCCAFiBnByb3RvMw", [file_google_api_annotations, file_google_protobuf_timestamp, file_platform_options_v2_annotations, file_platform_spec_v2_spec]);
+export const file_platform_system_v2alpha_system =
+    /*@__PURE__*/
+    fileDesc(
+        'CiRwbGF0Zm9ybS9zeXN0ZW0vdjJhbHBoYS9zeXN0ZW0ucHJvdG8SF3BsYXRmb3JtLnN5c3RlbS52MmFscGhhImsKDVB1YmxpY1N5c3RlbXMSFQoNY29tbXVuaWNhdGlvbhgBIAEoCBIVCg1jb25maWd1cmF0aW9uGAIgASgIEg0KBWV2ZW50GAMgASgIEgsKA2lhbRgEIAEoCBIQCghvbnRvbG9neRgFIAEoCCJQCg5Qcml2YXRlU3lzdGVtcxINCgVhdWRpdBgBIAEoCBIMCgRlZGdlGAIgASgIEhIKCmVuY3J5cHRpb24YAyABKAgSDQoFZXZlbnQYBCABKAgiHwoKUG9jU3lzdGVtcxIRCglyZWZlcmVuY2UYASABKAgi0QEKE1N5c3RlbUNvbmZpZ3VyYXRpb24SPgoOcHVibGljX3N5c3RlbXMYASABKAsyJi5wbGF0Zm9ybS5zeXN0ZW0udjJhbHBoYS5QdWJsaWNTeXN0ZW1zEkAKD3ByaXZhdGVfc3lzdGVtcxgCIAEoCzInLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLlByaXZhdGVTeXN0ZW1zEjgKC3BvY19zeXN0ZW1zGAMgASgLMiMucGxhdGZvcm0uc3lzdGVtLnYyYWxwaGEuUG9jU3lzdGVtcyIXCg1FbmFibGVSZXF1ZXN0Ogb6thgCCAEihgEKDkVuYWJsZVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBIvCgZzeXN0ZW0YAiABKAsyHy5wbGF0Zm9ybS5zeXN0ZW0udjJhbHBoYS5TeXN0ZW06Bvq2GAIIAiIYCg5EaXNhYmxlUmVxdWVzdDoG+rYYAggBIocBCg9EaXNhYmxlUmVzcG9uc2USOwoMc3BlY19jb250ZXh0GAEgASgLMiUucGxhdGZvcm0uc3BlYy52Mi5TcGVjUmVzcG9uc2VDb250ZXh0Ei8KBnN5c3RlbRgCIAEoCzIfLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLlN5c3RlbToG+rYYAggCIrQBCgZTeXN0ZW0SEgoCaWQYASABKAlCBsq3GAIIARIuCgplbmFibGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgpjcmVhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcDoG+rYYAggCKnIKDlN5c3RlbUNvbW1hbmRzEh8KG1NZU1RFTV9DT01NQU5EU19VTlNQRUNJRklFRBAAEhoKFlNZU1RFTV9DT01NQU5EU19FTkFCTEUQARIbChdTWVNURU1fQ09NTUFORFNfRElTQUJMRRACGgaSuBgCCAMqbAoMU3lzdGVtRXZlbnRzEh0KGVNZU1RFTV9FVkVOVFNfVU5TUEVDSUZJRUQQABIZChVTWVNURU1fRVZFTlRTX0VOQUJMRUQQARIaChZTWVNURU1fRVZFTlRTX0RJU0FCTEVEEAIaBpK4GAIIBDLZAgoNU3lzdGVtU2VydmljZRKgAQoGRW5hYmxlEiYucGxhdGZvcm0uc3lzdGVtLnYyYWxwaGEuRW5hYmxlUmVxdWVzdBonLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLkVuYWJsZVJlc3BvbnNlIkOithgIMgZlbmFibGWqthgCCAKythgMCgZlbmFibGUSAssBgtPkkwIbOgEqIhYvdjJhbHBoYS9zeXN0ZW0vZW5hYmxlMAESpAEKB0Rpc2FibGUSJy5wbGF0Zm9ybS5zeXN0ZW0udjJhbHBoYS5EaXNhYmxlUmVxdWVzdBooLnBsYXRmb3JtLnN5c3RlbS52MmFscGhhLkRpc2FibGVSZXNwb25zZSJGorYYCTIHZGlzYWJsZaq2GAIIBLK2GA0KB2Rpc2FibGUSAssBgtPkkwIcOgEqIhcvdjJhbHBoYS9zeXN0ZW0vZGlzYWJsZUKjAVpiZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vbGlicy9wdWJsaWMvZ28vc2RrL2dlbi9wbGF0Zm9ybS9zeXN0ZW0vdjJhbHBoYTtzeXN0ZW12MmFscGhhcGKCxBMCCAKCtRgGCAMQARgCirUYGAoGc3lzdGVtEgdzeXN0ZW1zIgNqYW4oApK1GAMKAQOatRgCCAGitRgCCAFiBnByb3RvMw',
+        [
+            file_google_api_annotations,
+            file_google_protobuf_timestamp,
+            file_platform_options_v2_annotations,
+            file_platform_spec_v2_spec,
+        ]
+    );
 
 /**
  * Describes the message platform.system.v2alpha.PublicSystems.
  * Use `create(PublicSystemsSchema)` to create a new message.
  */
-export const PublicSystemsSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 0);
+export const PublicSystemsSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 0);
 
 /**
  * Describes the message platform.system.v2alpha.PrivateSystems.
  * Use `create(PrivateSystemsSchema)` to create a new message.
  */
-export const PrivateSystemsSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 1);
+export const PrivateSystemsSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 1);
 
 /**
  * Describes the message platform.system.v2alpha.PocSystems.
  * Use `create(PocSystemsSchema)` to create a new message.
  */
-export const PocSystemsSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 2);
+export const PocSystemsSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 2);
 
 /**
  * Describes the message platform.system.v2alpha.SystemConfiguration.
  * Use `create(SystemConfigurationSchema)` to create a new message.
  */
-export const SystemConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 3);
+export const SystemConfigurationSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 3);
 
 /**
  * Describes the message platform.system.v2alpha.EnableRequest.
  * Use `create(EnableRequestSchema)` to create a new message.
  */
-export const EnableRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 4);
+export const EnableRequestSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 4);
 
 /**
  * Describes the message platform.system.v2alpha.EnableResponse.
  * Use `create(EnableResponseSchema)` to create a new message.
  */
-export const EnableResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 5);
+export const EnableResponseSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 5);
 
 /**
  * Describes the message platform.system.v2alpha.DisableRequest.
  * Use `create(DisableRequestSchema)` to create a new message.
  */
-export const DisableRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 6);
+export const DisableRequestSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 6);
 
 /**
  * Describes the message platform.system.v2alpha.DisableResponse.
  * Use `create(DisableResponseSchema)` to create a new message.
  */
-export const DisableResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 7);
+export const DisableResponseSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 7);
 
 /**
  * Describes the message platform.system.v2alpha.System.
  * Use `create(SystemSchema)` to create a new message.
  */
-export const SystemSchema = /*@__PURE__*/
-  messageDesc(file_platform_system_v2alpha_system, 8);
+export const SystemSchema = /*@__PURE__*/ messageDesc(file_platform_system_v2alpha_system, 8);
 
 /**
  * Describes the enum platform.system.v2alpha.SystemCommands.
  */
-export const SystemCommandsSchema = /*@__PURE__*/
-  enumDesc(file_platform_system_v2alpha_system, 0);
+export const SystemCommandsSchema = /*@__PURE__*/ enumDesc(file_platform_system_v2alpha_system, 0);
 
 /**
  * @generated from enum platform.system.v2alpha.SystemCommands
  */
-export const SystemCommands = /*@__PURE__*/
-  tsEnum(SystemCommandsSchema);
+export const SystemCommands = /*@__PURE__*/ tsEnum(SystemCommandsSchema);
 
 /**
  * Describes the enum platform.system.v2alpha.SystemEvents.
  */
-export const SystemEventsSchema = /*@__PURE__*/
-  enumDesc(file_platform_system_v2alpha_system, 1);
+export const SystemEventsSchema = /*@__PURE__*/ enumDesc(file_platform_system_v2alpha_system, 1);
 
 /**
  * @generated from enum platform.system.v2alpha.SystemEvents
  */
-export const SystemEvents = /*@__PURE__*/
-  tsEnum(SystemEventsSchema);
+export const SystemEvents = /*@__PURE__*/ tsEnum(SystemEventsSchema);
 
 /**
  * Event Subscription Service Interface
  *
  * @generated from service platform.system.v2alpha.SystemService
  */
-export const SystemService = /*@__PURE__*/
-  serviceDesc(file_platform_system_v2alpha_system, 0);
-
+export const SystemService = /*@__PURE__*/ serviceDesc(file_platform_system_v2alpha_system, 0);

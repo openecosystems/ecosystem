@@ -1,52 +1,52 @@
 {
-  "name": "docs",
-  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/web/public/docs/v2alpha",
-  "targets": {
-    "build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/apps/web/public/docs/v2alpha"],
-      "options": {
-        "command": "npx tsx bin/highlight.ts replace && hugo --minify && npx tsx bin/highlight.ts restore",
-        "cwd": "apps/web/public/docs/v2alpha",
-        "allowEmptyExit": false
-      },
-      "dependsOn": ["pre-build"]
-    },
-    "pre-build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/apps/web/public/docs/v2alpha/package.json"],
-      "options": {
-        "commands": [
-          "mkdir -p ../../../../../dist/apps/web/public/docs/v2alpha",
-          "cp package.json ../../../../../dist/apps/web/public/docs/v2alpha"
-        ],
-        "parallel": false,
-        "cwd": "apps/web/public/docs/v2alpha"
-      }
-    },
-    "serve": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "hugo serve -D",
-        "cwd": "apps/web/public/docs/v2alpha"
-      },
-      "dependsOn": ["build"]
-    },
-    "lint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "echo 'fix this lint'",
-        "cwd": "apps/web/public/docs/v2alpha"
-      }
-    },
-    "format": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npx tsx bin/format.ts",
-        "cwd": "apps/web/public/docs/v2alpha"
-      }
+    "name": "docs",
+    "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/web/public/docs/v2alpha",
+    "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/apps/web/public/docs/v2alpha"],
+            "options": {
+                "command": "npx tsx bin/highlight.ts replace && hugo --minify && npx tsx bin/highlight.ts restore",
+                "cwd": "apps/web/public/docs/v2alpha",
+                "allowEmptyExit": false
+            },
+            "dependsOn": ["pre-build"]
+        },
+        "pre-build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/apps/web/public/docs/v2alpha/package.json"],
+            "options": {
+                "commands": [
+                    "mkdir -p ../../../../../dist/apps/web/public/docs/v2alpha",
+                    "cp package.json ../../../../../dist/apps/web/public/docs/v2alpha"
+                ],
+                "parallel": false,
+                "cwd": "apps/web/public/docs/v2alpha"
+            }
+        },
+        "serve": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "hugo serve -D",
+                "cwd": "apps/web/public/docs/v2alpha"
+            },
+            "dependsOn": ["build"]
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "echo 'fix this lint'",
+                "cwd": "apps/web/public/docs/v2alpha"
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "npx tsx bin/format.ts",
+                "cwd": "apps/web/public/docs/v2alpha"
+            }
+        }
     }
-  }
 }

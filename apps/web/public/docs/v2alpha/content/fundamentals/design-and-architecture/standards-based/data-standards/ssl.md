@@ -1,14 +1,14 @@
 ---
 title: SSL
 aliases:
-  - SSL
+    - SSL
 pcx_content_type: definition
 summary: >-
-  Secure Sockets Layer (SSL) was a widely used cryptographic protocol for providing data security for Internet communications. SSL was superseded by [TLS](/fundamentals/design-and-architecture/standards-based/data-standards/tls); however, most people still refer to Internet cryptographic protocols as SSL.
+    Secure Sockets Layer (SSL) was a widely used cryptographic protocol for providing data security for Internet communications. SSL was superseded by [TLS](/fundamentals/design-and-architecture/standards-based/data-standards/tls); however, most people still refer to Internet cryptographic protocols as SSL.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/tls
+    - /fundamentals/design-and-architecture/standards-based/data-standards/tls
 ---
 
 # Secure Sockets Layer (SSL)
@@ -19,9 +19,9 @@ Both `SSL` and [TLS](/fundamentals/design-and-architecture/standards-based/data-
 
 There were three main versions of this protocol:
 
-- SSL 1.0
-- SSL 2.0
-- SSL 3.0
+-   SSL 1.0
+-   SSL 2.0
+-   SSL 3.0
 
 `SSL 1.0` was known to be insecure, and therefore never published.
 

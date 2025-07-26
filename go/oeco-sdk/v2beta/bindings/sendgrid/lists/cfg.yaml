@@ -2,6 +2,6 @@
 package: lists
 output: lists.gen.go
 generate:
-  models: true
-  client: true
-  embedded-spec: true
+    models: true
+    client: true
+    embedded-spec: true

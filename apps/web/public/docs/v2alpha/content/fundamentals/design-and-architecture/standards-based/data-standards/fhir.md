@@ -2,20 +2,20 @@
 date_created: 2022-12-11T16:58:55
 title: FHIR
 aliases:
-  - FHIR
+    - FHIR
 pcx_content_type: definition
 summary: >-
-  `FHIR` is an Industry Standard for describing Health Care related Artifacts.
+    `FHIR` is an Industry Standard for describing Health Care related Artifacts.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/c-cda
-  - /fundamentals/design-and-architecture/standards-based/data-standards/hl7v2
-  - /fundamentals/design-and-architecture/standards-based/data-standards/hl7v3
-  - /fundamentals/design-and-architecture/standards-based/data-standards/json
-  - /fundamentals/design-and-architecture/standards-based/data-standards/rest
-  - /fundamentals/design-and-architecture/standards-based/data-standards/soap
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xml
+    - /fundamentals/design-and-architecture/standards-based/data-standards/c-cda
+    - /fundamentals/design-and-architecture/standards-based/data-standards/hl7v2
+    - /fundamentals/design-and-architecture/standards-based/data-standards/hl7v3
+    - /fundamentals/design-and-architecture/standards-based/data-standards/json
+    - /fundamentals/design-and-architecture/standards-based/data-standards/rest
+    - /fundamentals/design-and-architecture/standards-based/data-standards/soap
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xml
 ---
 
 # Fast Healthcare Interoperability Resources (FHIR)
@@ -34,11 +34,11 @@ FHIR has a lot of FHIR Resources, where every FHIR Resource describes a differen
 
 FHIR Resources can be placed into a number of categories:
 
-- Foundation
-- Base
-- Clinical
-- Financial
-- Specialized
+-   Foundation
+-   Base
+-   Clinical
+-   Financial
+-   Specialized
 
 In total there are about 150 different FHIR Resources.
 
@@ -48,12 +48,12 @@ Every FHIR Resource has a "header" that is common to all FHIR Resources. This al
 
 There are two FHIR Standards:
 
-- [HL7v2](/fundamentals/design-and-architecture/standards-based/data-standards/hl7v2)
-- [HL7v3](/fundamentals/design-and-architecture/standards-based/data-standards/hl7v3)
+-   [HL7v2](/fundamentals/design-and-architecture/standards-based/data-standards/hl7v2)
+-   [HL7v3](/fundamentals/design-and-architecture/standards-based/data-standards/hl7v3)
 
 FHIR also provides a Clinical Document Architecture (CDA). [Consolidated CDA (C-CDA)](/fundamentals/design-and-architecture/standards-based/data-standards/c-cda) is another standard.
 
 ## Sources
 
-- https://www.hl7.org/fhir/
-- https://www.hl7.org/implement/standards/index.cfm?ref=nav
+-   https://www.hl7.org/fhir/
+-   https://www.hl7.org/implement/standards/index.cfm?ref=nav

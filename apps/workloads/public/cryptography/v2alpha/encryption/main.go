@@ -15,7 +15,7 @@ func main() {
 	//
 	//provider, err := sdkv2betalib.NewCredentialProvider()
 	//if err != nil {
-	//	fmt.Println("Error:", err)
+	//	fmt.Println("SpecError:", err)
 	//	return
 	//}
 

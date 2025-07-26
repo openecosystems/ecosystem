@@ -2,10 +2,10 @@
 // @generated from file platform/system/v2alpha/system.proto (package platform.system.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/system/v2alpha/system.proto.
@@ -15,31 +15,31 @@ export declare const file_platform_system_v2alpha_system: GenFile;
 /**
  * @generated from message platform.system.v2alpha.PublicSystems
  */
-export declare type PublicSystems = Message<"platform.system.v2alpha.PublicSystems"> & {
-  /**
-   * @generated from field: bool communication = 1;
-   */
-  communication: boolean;
+export declare type PublicSystems = Message<'platform.system.v2alpha.PublicSystems'> & {
+    /**
+     * @generated from field: bool communication = 1;
+     */
+    communication: boolean;
 
-  /**
-   * @generated from field: bool configuration = 2;
-   */
-  configuration: boolean;
+    /**
+     * @generated from field: bool configuration = 2;
+     */
+    configuration: boolean;
 
-  /**
-   * @generated from field: bool event = 3;
-   */
-  event: boolean;
+    /**
+     * @generated from field: bool event = 3;
+     */
+    event: boolean;
 
-  /**
-   * @generated from field: bool iam = 4;
-   */
-  iam: boolean;
+    /**
+     * @generated from field: bool iam = 4;
+     */
+    iam: boolean;
 
-  /**
-   * @generated from field: bool ontology = 5;
-   */
-  ontology: boolean;
+    /**
+     * @generated from field: bool ontology = 5;
+     */
+    ontology: boolean;
 };
 
 /**
@@ -51,26 +51,26 @@ export declare const PublicSystemsSchema: GenMessage<PublicSystems>;
 /**
  * @generated from message platform.system.v2alpha.PrivateSystems
  */
-export declare type PrivateSystems = Message<"platform.system.v2alpha.PrivateSystems"> & {
-  /**
-   * @generated from field: bool audit = 1;
-   */
-  audit: boolean;
+export declare type PrivateSystems = Message<'platform.system.v2alpha.PrivateSystems'> & {
+    /**
+     * @generated from field: bool audit = 1;
+     */
+    audit: boolean;
 
-  /**
-   * @generated from field: bool edge = 2;
-   */
-  edge: boolean;
+    /**
+     * @generated from field: bool edge = 2;
+     */
+    edge: boolean;
 
-  /**
-   * @generated from field: bool encryption = 3;
-   */
-  encryption: boolean;
+    /**
+     * @generated from field: bool encryption = 3;
+     */
+    encryption: boolean;
 
-  /**
-   * @generated from field: bool event = 4;
-   */
-  event: boolean;
+    /**
+     * @generated from field: bool event = 4;
+     */
+    event: boolean;
 };
 
 /**
@@ -82,11 +82,11 @@ export declare const PrivateSystemsSchema: GenMessage<PrivateSystems>;
 /**
  * @generated from message platform.system.v2alpha.PocSystems
  */
-export declare type PocSystems = Message<"platform.system.v2alpha.PocSystems"> & {
-  /**
-   * @generated from field: bool reference = 1;
-   */
-  reference: boolean;
+export declare type PocSystems = Message<'platform.system.v2alpha.PocSystems'> & {
+    /**
+     * @generated from field: bool reference = 1;
+     */
+    reference: boolean;
 };
 
 /**
@@ -98,21 +98,21 @@ export declare const PocSystemsSchema: GenMessage<PocSystems>;
 /**
  * @generated from message platform.system.v2alpha.SystemConfiguration
  */
-export declare type SystemConfiguration = Message<"platform.system.v2alpha.SystemConfiguration"> & {
-  /**
-   * @generated from field: platform.system.v2alpha.PublicSystems public_systems = 1;
-   */
-  publicSystems?: PublicSystems;
+export declare type SystemConfiguration = Message<'platform.system.v2alpha.SystemConfiguration'> & {
+    /**
+     * @generated from field: platform.system.v2alpha.PublicSystems public_systems = 1;
+     */
+    publicSystems?: PublicSystems;
 
-  /**
-   * @generated from field: platform.system.v2alpha.PrivateSystems private_systems = 2;
-   */
-  privateSystems?: PrivateSystems;
+    /**
+     * @generated from field: platform.system.v2alpha.PrivateSystems private_systems = 2;
+     */
+    privateSystems?: PrivateSystems;
 
-  /**
-   * @generated from field: platform.system.v2alpha.PocSystems poc_systems = 3;
-   */
-  pocSystems?: PocSystems;
+    /**
+     * @generated from field: platform.system.v2alpha.PocSystems poc_systems = 3;
+     */
+    pocSystems?: PocSystems;
 };
 
 /**
@@ -124,8 +124,7 @@ export declare const SystemConfigurationSchema: GenMessage<SystemConfiguration>;
 /**
  * @generated from message platform.system.v2alpha.EnableRequest
  */
-export declare type EnableRequest = Message<"platform.system.v2alpha.EnableRequest"> & {
-};
+export declare type EnableRequest = Message<'platform.system.v2alpha.EnableRequest'> & {};
 
 /**
  * Describes the message platform.system.v2alpha.EnableRequest.
@@ -136,18 +135,18 @@ export declare const EnableRequestSchema: GenMessage<EnableRequest>;
 /**
  * @generated from message platform.system.v2alpha.EnableResponse
  */
-export declare type EnableResponse = Message<"platform.system.v2alpha.EnableResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type EnableResponse = Message<'platform.system.v2alpha.EnableResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.system.v2alpha.System system = 2;
-   */
-  system?: System;
+    /**
+     * @generated from field: platform.system.v2alpha.System system = 2;
+     */
+    system?: System;
 };
 
 /**
@@ -159,8 +158,7 @@ export declare const EnableResponseSchema: GenMessage<EnableResponse>;
 /**
  * @generated from message platform.system.v2alpha.DisableRequest
  */
-export declare type DisableRequest = Message<"platform.system.v2alpha.DisableRequest"> & {
-};
+export declare type DisableRequest = Message<'platform.system.v2alpha.DisableRequest'> & {};
 
 /**
  * Describes the message platform.system.v2alpha.DisableRequest.
@@ -171,18 +169,18 @@ export declare const DisableRequestSchema: GenMessage<DisableRequest>;
 /**
  * @generated from message platform.system.v2alpha.DisableResponse
  */
-export declare type DisableResponse = Message<"platform.system.v2alpha.DisableResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type DisableResponse = Message<'platform.system.v2alpha.DisableResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.system.v2alpha.System system = 2;
-   */
-  system?: System;
+    /**
+     * @generated from field: platform.system.v2alpha.System system = 2;
+     */
+    system?: System;
 };
 
 /**
@@ -194,30 +192,30 @@ export declare const DisableResponseSchema: GenMessage<DisableResponse>;
 /**
  * @generated from message platform.system.v2alpha.System
  */
-export declare type System = Message<"platform.system.v2alpha.System"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type System = Message<'platform.system.v2alpha.System'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * @generated from field: google.protobuf.Timestamp enabled_at = 2;
-   */
-  enabledAt?: Timestamp;
+    /**
+     * @generated from field: google.protobuf.Timestamp enabled_at = 2;
+     */
+    enabledAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this message was created.
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 3;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp indicating when this message was created.
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 3;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this message was last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 4;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp indicating when this message was last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 4;
+     */
+    updatedAt?: Timestamp;
 };
 
 /**
@@ -230,20 +228,20 @@ export declare const SystemSchema: GenMessage<System>;
  * @generated from enum platform.system.v2alpha.SystemCommands
  */
 export enum SystemCommands {
-  /**
-   * @generated from enum value: SYSTEM_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: SYSTEM_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: SYSTEM_COMMANDS_ENABLE = 1;
-   */
-  ENABLE = 1,
+    /**
+     * @generated from enum value: SYSTEM_COMMANDS_ENABLE = 1;
+     */
+    ENABLE = 1,
 
-  /**
-   * @generated from enum value: SYSTEM_COMMANDS_DISABLE = 2;
-   */
-  DISABLE = 2,
+    /**
+     * @generated from enum value: SYSTEM_COMMANDS_DISABLE = 2;
+     */
+    DISABLE = 2,
 }
 
 /**
@@ -255,20 +253,20 @@ export declare const SystemCommandsSchema: GenEnum<SystemCommands>;
  * @generated from enum platform.system.v2alpha.SystemEvents
  */
 export enum SystemEvents {
-  /**
-   * @generated from enum value: SYSTEM_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: SYSTEM_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: SYSTEM_EVENTS_ENABLED = 1;
-   */
-  ENABLED = 1,
+    /**
+     * @generated from enum value: SYSTEM_EVENTS_ENABLED = 1;
+     */
+    ENABLED = 1,
 
-  /**
-   * @generated from enum value: SYSTEM_EVENTS_DISABLED = 2;
-   */
-  DISABLED = 2,
+    /**
+     * @generated from enum value: SYSTEM_EVENTS_DISABLED = 2;
+     */
+    DISABLED = 2,
 }
 
 /**
@@ -282,25 +280,24 @@ export declare const SystemEventsSchema: GenEnum<SystemEvents>;
  * @generated from service platform.system.v2alpha.SystemService
  */
 export declare const SystemService: GenService<{
-  /**
-   * Method to Subscribe to events based on scopes
-   *
-   * @generated from rpc platform.system.v2alpha.SystemService.Enable
-   */
-  enable: {
-    methodKind: "server_streaming";
-    input: typeof EnableRequestSchema;
-    output: typeof EnableResponseSchema;
-  },
-  /**
-   * Method to Unsubscribe to an event scope
-   *
-   * @generated from rpc platform.system.v2alpha.SystemService.Disable
-   */
-  disable: {
-    methodKind: "unary";
-    input: typeof DisableRequestSchema;
-    output: typeof DisableResponseSchema;
-  },
+    /**
+     * Method to Subscribe to events based on scopes
+     *
+     * @generated from rpc platform.system.v2alpha.SystemService.Enable
+     */
+    enable: {
+        methodKind: 'server_streaming';
+        input: typeof EnableRequestSchema;
+        output: typeof EnableResponseSchema;
+    };
+    /**
+     * Method to Unsubscribe to an event scope
+     *
+     * @generated from rpc platform.system.v2alpha.SystemService.Disable
+     */
+    disable: {
+        methodKind: 'unary';
+        input: typeof DisableRequestSchema;
+        output: typeof DisableResponseSchema;
+    };
 }>;
-

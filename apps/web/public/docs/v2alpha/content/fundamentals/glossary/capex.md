@@ -2,12 +2,12 @@
 title: CAPEX
 pcx_content_type: definition
 summary: >-
-  `CAPEX` describes the [expenses](/fundamentals/glossary/#cost) for *building* infrastructure. [OPEX](/fundamentals/glossary/#opex) describes the expenses for *operating* it.
+    `CAPEX` describes the [expenses](/fundamentals/glossary/#cost) for *building* infrastructure. [OPEX](/fundamentals/glossary/#opex) describes the expenses for *operating* it.
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/glossary/cost
-  - /fundamentals/glossary/opex
+    - /fundamentals/glossary/cost
+    - /fundamentals/glossary/opex
 ---
 
 # CAPEX

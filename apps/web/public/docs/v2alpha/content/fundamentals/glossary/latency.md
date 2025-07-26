@@ -1,20 +1,20 @@
 ---
 title: Latency
 aliases:
-  - Latency
+    - Latency
 pcx_content_type: definition
 summary: >-
-  A.k.a. "Delay". The time it takes for a request to result in a response. `Latency` is an important [Metric](/fundamentals/glossary/#metric) for measuring [Performance](/fundamentals/glossary/#performance).
+    A.k.a. "Delay". The time it takes for a request to result in a response. `Latency` is an important [Metric](/fundamentals/glossary/#metric) for measuring [Performance](/fundamentals/glossary/#performance).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/concurrent
-  - /fundamentals/glossary/database
-  - /fundamentals/glossary/metric
-  - /fundamentals/glossary/performance
-  - /fundamentals/glossary/sequential
-  - /fundamentals/glossary/suicide-mechanism
-  - /fundamentals/glossary/user-experience
+    - /fundamentals/glossary/concurrent
+    - /fundamentals/glossary/database
+    - /fundamentals/glossary/metric
+    - /fundamentals/glossary/performance
+    - /fundamentals/glossary/sequential
+    - /fundamentals/glossary/suicide-mechanism
+    - /fundamentals/glossary/user-experience
 ---
 
 # Latency
@@ -27,5 +27,5 @@ A.k.a. "Delay". The time it takes for a request to result in a response. `Latenc
 
 Things one can do to improve `Latency`, and things that one Should take into account, when designing or developing systems, are:
 
-- Limit the number of `hops`: a component that is invoked by another component, Should NOT, in turn, invoke yet another component. Likewise a component that interacts with a [Database](/fundamentals/glossary/database) Should have _one_ interaction with the `database`, not many.
-- Execute operations [Concurrently](/fundamentals/glossary/concurrent) instead of [Sequentially](/fundamentals/glossary/sequential).
+-   Limit the number of `hops`: a component that is invoked by another component, Should NOT, in turn, invoke yet another component. Likewise a component that interacts with a [Database](/fundamentals/glossary/database) Should have _one_ interaction with the `database`, not many.
+-   Execute operations [Concurrently](/fundamentals/glossary/concurrent) instead of [Sequentially](/fundamentals/glossary/sequential).

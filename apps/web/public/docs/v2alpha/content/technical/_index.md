@@ -5,4 +5,3 @@ weight: 1
 ---
 
 # Open Ecosystems Technical Fundamentals
-

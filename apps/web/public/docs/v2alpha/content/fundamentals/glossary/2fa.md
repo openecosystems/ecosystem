@@ -2,19 +2,19 @@
 title: 2FA
 pcx_content_type: definition
 summary: >-
-  Two-factor authentication (2FA) adds an additional layer of login security to Open Ecosystems accounts by requiring users to provide two mechanisms of authentication instead of just one.
+    Two-factor authentication (2FA) adds an additional layer of login security to Open Ecosystems accounts by requiring users to provide two mechanisms of authentication instead of just one.
 hidden: true
 has_more: true
 aliases:
-  - MFA
+    - MFA
 links_to:
-  - /fundamentals/glossary/brute-force-attack
-  - /fundamentals/glossary/dictionary-attack
-  - /fundamentals/glossary/hashing
-  - /fundamentals/glossary/otp
-  - /fundamentals/glossary/password-manager
-  - /fundamentals/glossary/social-engineering
-  - /fundamentals/glossary/tpm-chip
+    - /fundamentals/glossary/brute-force-attack
+    - /fundamentals/glossary/dictionary-attack
+    - /fundamentals/glossary/hashing
+    - /fundamentals/glossary/otp
+    - /fundamentals/glossary/password-manager
+    - /fundamentals/glossary/social-engineering
+    - /fundamentals/glossary/tpm-chip
 ---
 
 # 2FA
@@ -53,19 +53,19 @@ The strength of this form of Authentication depends on how advanced the algorith
 
 `Knowledge` is an Authentication Mechanism that is based on what the User knows. Typical examples are:
 
-- A password
-- Security Questions
-- PIN Code
-- Security Pattern
+-   A password
+-   Security Questions
+-   PIN Code
+-   Security Pattern
 
 ### Passwords
 
 Passwords are a way of Authentication where the User Authenticates using a series of characters that he only knows. Even though this form of Authentication has been used the longest, and is still the most widely used form of Authentication today, a Password has several security vulnerabilities:
 
-- Because Passwords are hard to remember, people tend to use the same Password everywhere. As a consequence, once the password has been compromised, a hacker not only has access to one Web Application the User uses, but to many.
-- Passwords should be [Hashed](/fundamentals/glossary/hashing) and then stored. This would make it impossible to recover the Password from the data that was stored in the system. However, not every Website applies this pattern. These Websites are also typically easy to hack (if they had sufficient Security mechanisms in place, they would probably also have hashed the passwords before they stored them). A compromise on one of these websites reveals a User's Password, which would also give access to other sites where the User used the same Password.
-- Because Passwords are hard to remember, people tend to use weak Passwords. Weak Passwords are easier to remember, but consequently also easier to guess. Websites tried to mitigate this problem by requiring people to use lowercase, uppercase, numbers, and "special characters". This, however, did not have the expected result. See the video below. This makes many passwords susceptible to [Dictionary Attacks](/fundamentals/glossary/dictionary-attack) and [Brute Force Attacks](/fundamentals/glossary/brute-force-attack).
-- [Password Managers](/fundamentals/glossary/password-manager) are another approach to addressing weak passwords and reuse. The idea is that the Password Manager generates strong Passwords, where it remembers what website uses what passwords. This approach is slightly better than using the same Password on multiple websites: if the Password Manager's password is compromised, so are all Passwords that are stored in it. Another disadvantage is that if the User would lose access to the Password Manager, he would lose access to all the websites he used it for.
+-   Because Passwords are hard to remember, people tend to use the same Password everywhere. As a consequence, once the password has been compromised, a hacker not only has access to one Web Application the User uses, but to many.
+-   Passwords should be [Hashed](/fundamentals/glossary/hashing) and then stored. This would make it impossible to recover the Password from the data that was stored in the system. However, not every Website applies this pattern. These Websites are also typically easy to hack (if they had sufficient Security mechanisms in place, they would probably also have hashed the passwords before they stored them). A compromise on one of these websites reveals a User's Password, which would also give access to other sites where the User used the same Password.
+-   Because Passwords are hard to remember, people tend to use weak Passwords. Weak Passwords are easier to remember, but consequently also easier to guess. Websites tried to mitigate this problem by requiring people to use lowercase, uppercase, numbers, and "special characters". This, however, did not have the expected result. See the video below. This makes many passwords susceptible to [Dictionary Attacks](/fundamentals/glossary/dictionary-attack) and [Brute Force Attacks](/fundamentals/glossary/brute-force-attack).
+-   [Password Managers](/fundamentals/glossary/password-manager) are another approach to addressing weak passwords and reuse. The idea is that the Password Manager generates strong Passwords, where it remembers what website uses what passwords. This approach is slightly better than using the same Password on multiple websites: if the Password Manager's password is compromised, so are all Passwords that are stored in it. Another disadvantage is that if the User would lose access to the Password Manager, he would lose access to all the websites he used it for.
 
 {{%youtube id="aHaBH4LqGsI"%}}
 
@@ -105,10 +105,10 @@ But a Security Pattern also has some Security Risks. Unfortunately "easier to re
 
 Possession is an Authentication Mechanism that is based on something the User _has_. There are many examples:
 
-- OTPs
-- Smart Cards
-- Security Keys
-- Authenticator Apps
+-   OTPs
+-   Smart Cards
+-   Security Keys
+-   Authenticator Apps
 
 ### OTP
 
@@ -130,5 +130,5 @@ Since the server produced the key, it can use the same key, encrypt the same tim
 
 ## Sources
 
-- https://docs.microsoft.com/en-us/windows/security/information-protection/tpm/how-windows-uses-the-tpm
-  [^1]: https://www.youtube.com/watch?v=OPZMNtAW4MM
+-   https://docs.microsoft.com/en-us/windows/security/information-protection/tpm/how-windows-uses-the-tpm
+    [^1]: https://www.youtube.com/watch?v=OPZMNtAW4MM

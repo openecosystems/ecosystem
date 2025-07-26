@@ -2,102 +2,109 @@
 // @generated from file platform/cryptography/v2alpha/certificate.proto (package platform.cryptography.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
-import { file_google_api_annotations } from "../../../google/api/annotations_pb";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_spec_v2_spec } from "../../spec/v2/spec_pb";
-import { file_platform_type_v2_file } from "../../type/v2/file_pb";
-import { file_google_protobuf_duration, file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
+import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
+import { file_google_api_annotations } from '../../../google/api/annotations_pb';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_spec_v2_spec } from '../../spec/v2/spec_pb';
+import { file_platform_type_v2_file } from '../../type/v2/file_pb';
+import { file_google_protobuf_duration, file_google_protobuf_timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/cryptography/v2alpha/certificate.proto.
  */
-export const file_platform_cryptography_v2alpha_certificate = /*@__PURE__*/
-  fileDesc("Ci9wbGF0Zm9ybS9jcnlwdG9ncmFwaHkvdjJhbHBoYS9jZXJ0aWZpY2F0ZS5wcm90bxIdcGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEiJwoYQ2VydGlmaWNhdGVDb25maWd1cmF0aW9uEgsKA3BraRgBIAEoCSJPChhWZXJpZnlDZXJ0aWZpY2F0ZVJlcXVlc3QSKwoLY2VydGlmaWNhdGUYASABKAsyFi5wbGF0Zm9ybS50eXBlLnYyLkZpbGU6Bvq2GAIIASKhAQoZVmVyaWZ5Q2VydGlmaWNhdGVSZXNwb25zZRI7CgxzcGVjX2NvbnRleHQYASABKAsyJS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSZXNwb25zZUNvbnRleHQSPwoLY2VydGlmaWNhdGUYAiABKAsyKi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5DZXJ0aWZpY2F0ZToG+rYYAggCIk0KFlNpZ25DZXJ0aWZpY2F0ZVJlcXVlc3QSKwoLY2VydGlmaWNhdGUYASABKAsyFi5wbGF0Zm9ybS50eXBlLnYyLkZpbGU6Bvq2GAIIASKfAQoXU2lnbkNlcnRpZmljYXRlUmVzcG9uc2USOwoMc3BlY19jb250ZXh0GAEgASgLMiUucGxhdGZvcm0uc3BlYy52Mi5TcGVjUmVzcG9uc2VDb250ZXh0Ej8KC2NlcnRpZmljYXRlGAIgASgLMioucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuQ2VydGlmaWNhdGU6Bvq2GAIIAiLxAQoLQ2VydGlmaWNhdGUSEgoCaWQYASABKAlCBsq3GAIIARIuCgpjcmVhdGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIMCgRuYW1lGAQgASgJEisKCGR1cmF0aW9uGAYgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uEisKC2NlcnRpZmljYXRlGAcgASgLMhYucGxhdGZvcm0udHlwZS52Mi5GaWxlOgb6thgCCAIqtAEKFkV2ZW50Q2VydGlmaWNhdGVTdGF0dXMSKAokRVZFTlRfQ0VSVElGSUNBVEVfU1RBVFVTX1VOU1BFQ0lGSUVEEAASJgoiRVZFTlRfQ0VSVElGSUNBVEVfU1RBVFVTX1ZFUklGWUlORxABEiQKIEVWRU5UX0NFUlRJRklDQVRFX1NUQVRVU19TSUdOSU5HEAISIgoeRVZFTlRfQ0VSVElGSUNBVEVfU1RBVFVTX0VSUk9SEAMqmwEKE0NlcnRpZmljYXRlQ29tbWFuZHMSJAogQ0VSVElGSUNBVEVfQ09NTUFORFNfVU5TUEVDSUZJRUQQABIrCidDRVJUSUZJQ0FURV9DT01NQU5EU19WRVJJRllfQ0VSVElGSUNBVEUQARIpCiVDRVJUSUZJQ0FURV9DT01NQU5EU19TSUdOX0NFUlRJRklDQVRFEAIaBpK4GAIIAyqXAQoRQ2VydGlmaWNhdGVFdmVudHMSIgoeQ0VSVElGSUNBVEVfRVZFTlRTX1VOU1BFQ0lGSUVEEAASKwonQ0VSVElGSUNBVEVfRVZFTlRTX1ZFUklGSUVEX0NFUlRJRklDQVRFEAESKQolQ0VSVElGSUNBVEVfRVZFTlRTX1NJR05FRF9DRVJUSUZJQ0FURRACGgaSuBgCCAQyyAMKEkNlcnRpZmljYXRlU2VydmljZRLdAQoRVmVyaWZ5Q2VydGlmaWNhdGUSNy5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5WZXJpZnlDZXJ0aWZpY2F0ZVJlcXVlc3QaOC5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5WZXJpZnlDZXJ0aWZpY2F0ZVJlc3BvbnNlIlWithgIMgZ2ZXJpZnmqthgCCAOythgMCgZ2ZXJpZnkSAs0BgtPkkwItOgEqIigvdjJhbHBoYS9jcnlwdG9ncmFwaHkvY2VydGlmaWNhdGUvdmVyaWZ5EtEBCg9TaWduQ2VydGlmaWNhdGUSNS5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5TaWduQ2VydGlmaWNhdGVSZXF1ZXN0GjYucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuU2lnbkNlcnRpZmljYXRlUmVzcG9uc2UiT6K2GAYyBHNpZ26qthgCCAOythgKCgRzaWduEgLNAYLT5JMCKzoBKiImL3YyYWxwaGEvY3J5cHRvZ3JhcGh5L2NlcnRpZmljYXRlL3NpZ25CuwFabmdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vY3J5cHRvZ3JhcGh5L3YyYWxwaGE7Y3J5cHRvZ3JhcGh5djJhbHBoYXBigsQTAggCgrUYBggDEAEYBoq1GCQKC2NlcnRpZmljYXRlEgxjZXJ0aWZpY2F0ZXMiA2phbigCOAGStRgDCgEDmrUYAggBorUYAggBYgZwcm90bzM", [file_google_api_annotations, file_platform_options_v2_annotations, file_platform_spec_v2_spec, file_platform_type_v2_file, file_google_protobuf_duration, file_google_protobuf_timestamp]);
+export const file_platform_cryptography_v2alpha_certificate =
+    /*@__PURE__*/
+    fileDesc(
+        'Ci9wbGF0Zm9ybS9jcnlwdG9ncmFwaHkvdjJhbHBoYS9jZXJ0aWZpY2F0ZS5wcm90bxIdcGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEiJwoYQ2VydGlmaWNhdGVDb25maWd1cmF0aW9uEgsKA3BraRgBIAEoCSJPChhWZXJpZnlDZXJ0aWZpY2F0ZVJlcXVlc3QSKwoLY2VydGlmaWNhdGUYASABKAsyFi5wbGF0Zm9ybS50eXBlLnYyLkZpbGU6Bvq2GAIIASKhAQoZVmVyaWZ5Q2VydGlmaWNhdGVSZXNwb25zZRI7CgxzcGVjX2NvbnRleHQYASABKAsyJS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSZXNwb25zZUNvbnRleHQSPwoLY2VydGlmaWNhdGUYAiABKAsyKi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5DZXJ0aWZpY2F0ZToG+rYYAggCIk0KFlNpZ25DZXJ0aWZpY2F0ZVJlcXVlc3QSKwoLY2VydGlmaWNhdGUYASABKAsyFi5wbGF0Zm9ybS50eXBlLnYyLkZpbGU6Bvq2GAIIASKfAQoXU2lnbkNlcnRpZmljYXRlUmVzcG9uc2USOwoMc3BlY19jb250ZXh0GAEgASgLMiUucGxhdGZvcm0uc3BlYy52Mi5TcGVjUmVzcG9uc2VDb250ZXh0Ej8KC2NlcnRpZmljYXRlGAIgASgLMioucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuQ2VydGlmaWNhdGU6Bvq2GAIIAiLxAQoLQ2VydGlmaWNhdGUSEgoCaWQYASABKAlCBsq3GAIIARIuCgpjcmVhdGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIMCgRuYW1lGAQgASgJEisKCGR1cmF0aW9uGAYgASgLMhkuZ29vZ2xlLnByb3RvYnVmLkR1cmF0aW9uEisKC2NlcnRpZmljYXRlGAcgASgLMhYucGxhdGZvcm0udHlwZS52Mi5GaWxlOgb6thgCCAIqtAEKFkV2ZW50Q2VydGlmaWNhdGVTdGF0dXMSKAokRVZFTlRfQ0VSVElGSUNBVEVfU1RBVFVTX1VOU1BFQ0lGSUVEEAASJgoiRVZFTlRfQ0VSVElGSUNBVEVfU1RBVFVTX1ZFUklGWUlORxABEiQKIEVWRU5UX0NFUlRJRklDQVRFX1NUQVRVU19TSUdOSU5HEAISIgoeRVZFTlRfQ0VSVElGSUNBVEVfU1RBVFVTX0VSUk9SEAMqmwEKE0NlcnRpZmljYXRlQ29tbWFuZHMSJAogQ0VSVElGSUNBVEVfQ09NTUFORFNfVU5TUEVDSUZJRUQQABIrCidDRVJUSUZJQ0FURV9DT01NQU5EU19WRVJJRllfQ0VSVElGSUNBVEUQARIpCiVDRVJUSUZJQ0FURV9DT01NQU5EU19TSUdOX0NFUlRJRklDQVRFEAIaBpK4GAIIAyqXAQoRQ2VydGlmaWNhdGVFdmVudHMSIgoeQ0VSVElGSUNBVEVfRVZFTlRTX1VOU1BFQ0lGSUVEEAASKwonQ0VSVElGSUNBVEVfRVZFTlRTX1ZFUklGSUVEX0NFUlRJRklDQVRFEAESKQolQ0VSVElGSUNBVEVfRVZFTlRTX1NJR05FRF9DRVJUSUZJQ0FURRACGgaSuBgCCAQyyAMKEkNlcnRpZmljYXRlU2VydmljZRLdAQoRVmVyaWZ5Q2VydGlmaWNhdGUSNy5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5WZXJpZnlDZXJ0aWZpY2F0ZVJlcXVlc3QaOC5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5WZXJpZnlDZXJ0aWZpY2F0ZVJlc3BvbnNlIlWithgIMgZ2ZXJpZnmqthgCCAOythgMCgZ2ZXJpZnkSAs0BgtPkkwItOgEqIigvdjJhbHBoYS9jcnlwdG9ncmFwaHkvY2VydGlmaWNhdGUvdmVyaWZ5EtEBCg9TaWduQ2VydGlmaWNhdGUSNS5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5TaWduQ2VydGlmaWNhdGVSZXF1ZXN0GjYucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuU2lnbkNlcnRpZmljYXRlUmVzcG9uc2UiT6K2GAYyBHNpZ26qthgCCAOythgKCgRzaWduEgLNAYLT5JMCKzoBKiImL3YyYWxwaGEvY3J5cHRvZ3JhcGh5L2NlcnRpZmljYXRlL3NpZ25CuwFabmdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vY3J5cHRvZ3JhcGh5L3YyYWxwaGE7Y3J5cHRvZ3JhcGh5djJhbHBoYXBigsQTAggCgrUYBggDEAEYBoq1GCQKC2NlcnRpZmljYXRlEgxjZXJ0aWZpY2F0ZXMiA2phbigCOAGStRgDCgEDmrUYAggBorUYAggBYgZwcm90bzM',
+        [
+            file_google_api_annotations,
+            file_platform_options_v2_annotations,
+            file_platform_spec_v2_spec,
+            file_platform_type_v2_file,
+            file_google_protobuf_duration,
+            file_google_protobuf_timestamp,
+        ]
+    );
 
 /**
  * Describes the message platform.cryptography.v2alpha.CertificateConfiguration.
  * Use `create(CertificateConfigurationSchema)` to create a new message.
  */
-export const CertificateConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_certificate, 0);
+export const CertificateConfigurationSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_cryptography_v2alpha_certificate, 0);
 
 /**
  * Describes the message platform.cryptography.v2alpha.VerifyCertificateRequest.
  * Use `create(VerifyCertificateRequestSchema)` to create a new message.
  */
-export const VerifyCertificateRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_certificate, 1);
+export const VerifyCertificateRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_cryptography_v2alpha_certificate, 1);
 
 /**
  * Describes the message platform.cryptography.v2alpha.VerifyCertificateResponse.
  * Use `create(VerifyCertificateResponseSchema)` to create a new message.
  */
-export const VerifyCertificateResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_certificate, 2);
+export const VerifyCertificateResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_cryptography_v2alpha_certificate, 2);
 
 /**
  * Describes the message platform.cryptography.v2alpha.SignCertificateRequest.
  * Use `create(SignCertificateRequestSchema)` to create a new message.
  */
-export const SignCertificateRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_certificate, 3);
+export const SignCertificateRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_cryptography_v2alpha_certificate, 3);
 
 /**
  * Describes the message platform.cryptography.v2alpha.SignCertificateResponse.
  * Use `create(SignCertificateResponseSchema)` to create a new message.
  */
-export const SignCertificateResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_certificate, 4);
+export const SignCertificateResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_cryptography_v2alpha_certificate, 4);
 
 /**
  * Describes the message platform.cryptography.v2alpha.Certificate.
  * Use `create(CertificateSchema)` to create a new message.
  */
-export const CertificateSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_certificate, 5);
+export const CertificateSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_certificate, 5);
 
 /**
  * Describes the enum platform.cryptography.v2alpha.EventCertificateStatus.
  */
-export const EventCertificateStatusSchema = /*@__PURE__*/
-  enumDesc(file_platform_cryptography_v2alpha_certificate, 0);
+export const EventCertificateStatusSchema = /*@__PURE__*/ enumDesc(file_platform_cryptography_v2alpha_certificate, 0);
 
 /**
  * The current status of a certificate
  *
  * @generated from enum platform.cryptography.v2alpha.EventCertificateStatus
  */
-export const EventCertificateStatus = /*@__PURE__*/
-  tsEnum(EventCertificateStatusSchema);
+export const EventCertificateStatus = /*@__PURE__*/ tsEnum(EventCertificateStatusSchema);
 
 /**
  * Describes the enum platform.cryptography.v2alpha.CertificateCommands.
  */
-export const CertificateCommandsSchema = /*@__PURE__*/
-  enumDesc(file_platform_cryptography_v2alpha_certificate, 1);
+export const CertificateCommandsSchema = /*@__PURE__*/ enumDesc(file_platform_cryptography_v2alpha_certificate, 1);
 
 /**
  * @generated from enum platform.cryptography.v2alpha.CertificateCommands
  */
-export const CertificateCommands = /*@__PURE__*/
-  tsEnum(CertificateCommandsSchema);
+export const CertificateCommands = /*@__PURE__*/ tsEnum(CertificateCommandsSchema);
 
 /**
  * Describes the enum platform.cryptography.v2alpha.CertificateEvents.
  */
-export const CertificateEventsSchema = /*@__PURE__*/
-  enumDesc(file_platform_cryptography_v2alpha_certificate, 2);
+export const CertificateEventsSchema = /*@__PURE__*/ enumDesc(file_platform_cryptography_v2alpha_certificate, 2);
 
 /**
  * @generated from enum platform.cryptography.v2alpha.CertificateEvents
  */
-export const CertificateEvents = /*@__PURE__*/
-  tsEnum(CertificateEventsSchema);
+export const CertificateEvents = /*@__PURE__*/ tsEnum(CertificateEventsSchema);
 
 /**
  * @generated from service platform.cryptography.v2alpha.CertificateService
  */
-export const CertificateService = /*@__PURE__*/
-  serviceDesc(file_platform_cryptography_v2alpha_certificate, 0);
-
+export const CertificateService = /*@__PURE__*/ serviceDesc(file_platform_cryptography_v2alpha_certificate, 0);

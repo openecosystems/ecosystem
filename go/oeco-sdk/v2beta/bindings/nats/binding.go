@@ -77,7 +77,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 					// Start NATS server
 					go func() {
 						if err := natsd.Run(server); err != nil {
-							fmt.Println("Error running embedded NATS server: " + err.Error())
+							fmt.Println("SpecError running embedded NATS server: " + err.Error())
 							panic(err)
 						}
 					}()

@@ -1,83 +1,83 @@
 name: _tag
 on:
-  workflow_call:
-    inputs:
-      go_version:
-        required: false
-        type: string
-    secrets:
-      docker_username:
-        required: true
-      docker_token:
-        required: true
-      gh_pat:
-        required: true
-      goreleaser_key:
-        required: false
+    workflow_call:
+        inputs:
+            go_version:
+                required: false
+                type: string
+        secrets:
+            docker_username:
+                required: true
+            docker_token:
+                required: true
+            gh_pat:
+                required: true
+            goreleaser_key:
+                required: false
 jobs:
-  tag:
-    environment: operations
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-    runs-on: ${{ matrix.os }}
-    env:
-      GO111MODULE: "on"
-      GH_PAT: ${{ secrets.gh_pat }}
-      REGISTRY: ghcr.io
-    permissions:
-      packages: write
-      contents: write
-      attestations: write
-      id-token: write
-      pull-requests: write
-    steps:
-      - name: Checkout code
-        id: checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
+    tag:
+        environment: operations
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+        env:
+            GO111MODULE: 'on'
+            GH_PAT: ${{ secrets.gh_pat }}
+            REGISTRY: ghcr.io
+        permissions:
+            packages: write
+            contents: write
+            attestations: write
+            id-token: write
+            pull-requests: write
+        steps:
+            - name: Checkout code
+              id: checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
 
-      - name: Github Config
-        id: github-config
-        run: |
-          git config --global user.email "cicd@openecosystems.com"
-          git config --global user.name "Open Ecosystems CICD Bot"
+            - name: Github Config
+              id: github-config
+              run: |
+                  git config --global user.email "cicd@openecosystems.com"
+                  git config --global user.name "Open Ecosystems CICD Bot"
 
-      - name: Setup pnpm
-        id: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+            - name: Setup pnpm
+              id: pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 9
 
-#      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --with-env-vars="BRANCH" #--stop-agents-after="e2e-ci"
-#        env:
-#          BRANCH: ${{ github.ref }}
+            #      - run: pnpm dlx nx-cloud start-ci-run --distribute-on=".nx/workflows/distribution-config.yaml" --with-env-vars="BRANCH" #--stop-agents-after="e2e-ci"
+            #        env:
+            #          BRANCH: ${{ github.ref }}
 
-      - name: Setup node
-        id: node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+            - name: Setup node
+              id: node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: 'pnpm'
 
-      - name: Install node dependencies
-        id: dependencies
-        run: pnpm install --frozen-lockfile
+            - name: Install node dependencies
+              id: dependencies
+              run: pnpm install --frozen-lockfile
 
-      - name: Set Shas
-        id: shas
-        uses: nrwl/nx-set-shas@v4
+            - name: Set Shas
+              id: shas
+              uses: nrwl/nx-set-shas@v4
 
-      - name: Run NX Tag
-        id: nx-tag
-        run: pnpm exec nx release --skip-publish
+            - name: Run NX Tag
+              id: nx-tag
+              run: pnpm exec nx release --skip-publish
 
-      - name: Push Changes and Tags
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
-          git config user.name "Open Ecosystems CICD Bot"
-          git config user.email "openecosystems@users.noreply.github.com"
-          git push origin HEAD:${{ github.head_ref }}
-          git push origin HEAD:${{ github.head_ref }} --tags
+            - name: Push Changes and Tags
+              run: |
+                  git remote set-url origin https://x-access-token:${{ secrets.gh_pat }}@github.com/openecosystems/ecosystem
+                  git config user.name "Open Ecosystems CICD Bot"
+                  git config user.email "openecosystems@users.noreply.github.com"
+                  git push origin HEAD:${{ github.head_ref }}
+                  git push origin HEAD:${{ github.head_ref }} --tags

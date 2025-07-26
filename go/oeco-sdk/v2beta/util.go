@@ -21,7 +21,7 @@ import (
 
 // GetDataFromSpec extracts and unmarshals the data field of a Spec object into a provided ProtoMessage instance.
 // Returns an error if the Spec or its Data field is nil, or if unmarshaling fails.
-func GetDataFromSpec[D protoreflect.ProtoMessage](_ context.Context, s *specproto.Spec, data D) error {
+func GetDataFromSpec[D protoreflect.ProtoMessage](_ context.Context, s *specproto.Spec, data D) SpecErrorable {
 	if s == nil {
 		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "Cannot create object from nil spec")
 		return ErrServerInternal
@@ -40,7 +40,7 @@ func GetDataFromSpec[D protoreflect.ProtoMessage](_ context.Context, s *specprot
 		RecursionLimit: 0,
 	})
 	if err != nil {
-		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "failed to unmarshal data: "+err.Error())
+		// return errors.NewSpecError(ctx, errors.SpecInternalError(), "failed to unmarshal data: "+err.SpecError())
 		return ErrServerInternal.WithInternalErrorDetail(err)
 	}
 	return nil

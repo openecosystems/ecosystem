@@ -1,19 +1,19 @@
 ---
 title: Scaling
 aliases:
-  - Scaling
-  - Scale
-  - Scaled
-  - Scalable
-  - Scalability
+    - Scaling
+    - Scale
+    - Scaled
+    - Scalable
+    - Scalability
 pcx_content_type: definition
 summary: >-
-  `Scaling` is the mechanism by which the number of Hardware or Software instances is increased or decreased. This can be done manually or automatically.
+    `Scaling` is the mechanism by which the number of Hardware or Software instances is increased or decreased. This can be done manually or automatically.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/performance
-  - /fundamentals/glossary/big-o-notation
+    - /fundamentals/glossary/performance
+    - /fundamentals/glossary/big-o-notation
 ---
 
 # Performance

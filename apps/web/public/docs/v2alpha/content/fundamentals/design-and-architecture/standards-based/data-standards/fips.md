@@ -3,7 +3,7 @@ date_created: 2022-12-11T17:19:48
 title: FIPS
 pcx_content_type: definition
 summary: >-
-  FIPS contains Security Functional Requirements and Non-Functional Requirements that we MUST adhere to.
+    FIPS contains Security Functional Requirements and Non-Functional Requirements that we MUST adhere to.
 hidden: true
 has_more: true
 todo: Find more details
@@ -16,4 +16,4 @@ FIPS contains Security Functional Requirements and Non-Functional Requirements t
 
 ## Sources
 
-- https://csrc.nist.gov/publications/detail/fips/140/2/final
+-   https://csrc.nist.gov/publications/detail/fips/140/2/final

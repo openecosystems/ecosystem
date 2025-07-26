@@ -2,14 +2,14 @@
 title: SOUP
 pcx_content_type: definition
 summary: >-
-  `Software of Unknown Provenance (SOUP)`. SOUP is software that is used in [Medical Device](/fundamentals/glossary/saamd), but was not created in compliance with [IEC 62304](/fundamentals/sdlc/iec-62304/).
+    `Software of Unknown Provenance (SOUP)`. SOUP is software that is used in [Medical Device](/fundamentals/glossary/saamd), but was not created in compliance with [IEC 62304](/fundamentals/sdlc/iec-62304/).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/saamd
-  - /fundamentals/sdlc/iec-62304/
-  - /fundamentals/glossary/sdlc/
-  - /fundamentals/glossary/risk/
+    - /fundamentals/glossary/saamd
+    - /fundamentals/sdlc/iec-62304/
+    - /fundamentals/glossary/sdlc/
+    - /fundamentals/glossary/risk/
 ---
 
 # Software of Unknown Provenance (SOUP)

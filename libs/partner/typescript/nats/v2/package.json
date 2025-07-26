@@ -1,11 +1,11 @@
 {
-  "name": "@openecosystems/natsv2",
-  "version": "0.0.1",
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
-  ],
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+    "name": "@openecosystems/natsv2",
+    "version": "0.0.1",
+    "files": [
+        "dist",
+        "!**/*.tsbuildinfo"
+    ],
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts"
 }

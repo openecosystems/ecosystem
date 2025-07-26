@@ -6,7 +6,6 @@ import "google/api/annotations.proto";
 import "platform/options/v2/annotations.proto";
 import "platform/spec/v2/spec.proto";
 import "google/protobuf/timestamp.proto";
-import "platform/type/v2/file.proto";
 import "platform/type/v2/credential.proto";
 
 option (platform.options.v2.network_file) = {type: NETWORK_TYPE_UNDERLAY;};

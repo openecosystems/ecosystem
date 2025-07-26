@@ -16,8 +16,8 @@
 // @generated from file google/api/http.proto (package google.api, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file google/api/http.proto.
@@ -31,27 +31,27 @@ export declare const file_google_api_http: GenFile;
  *
  * @generated from message google.api.Http
  */
-export declare type Http = Message<"google.api.Http"> & {
-  /**
-   * A list of HTTP configuration rules that apply to individual API methods.
-   *
-   * **NOTE:** All service configuration rules follow "last one wins" order.
-   *
-   * @generated from field: repeated google.api.HttpRule rules = 1;
-   */
-  rules: HttpRule[];
+export declare type Http = Message<'google.api.Http'> & {
+    /**
+     * A list of HTTP configuration rules that apply to individual API methods.
+     *
+     * **NOTE:** All service configuration rules follow "last one wins" order.
+     *
+     * @generated from field: repeated google.api.HttpRule rules = 1;
+     */
+    rules: HttpRule[];
 
-  /**
-   * When set to true, URL path parameters will be fully URI-decoded except in
-   * cases of single segment matches in reserved expansion, where "%2F" will be
-   * left encoded.
-   *
-   * The default behavior is to not decode RFC 6570 reserved characters in multi
-   * segment matches.
-   *
-   * @generated from field: bool fully_decode_reserved_expansion = 2;
-   */
-  fullyDecodeReservedExpansion: boolean;
+    /**
+     * When set to true, URL path parameters will be fully URI-decoded except in
+     * cases of single segment matches in reserved expansion, where "%2F" will be
+     * left encoded.
+     *
+     * The default behavior is to not decode RFC 6570 reserved characters in multi
+     * segment matches.
+     *
+     * @generated from field: bool fully_decode_reserved_expansion = 2;
+     */
+    fullyDecodeReservedExpansion: boolean;
 };
 
 /**
@@ -328,110 +328,117 @@ export declare const HttpSchema: GenMessage<Http>;
  *
  * @generated from message google.api.HttpRule
  */
-export declare type HttpRule = Message<"google.api.HttpRule"> & {
-  /**
-   * Selects a method to which this rule applies.
-   *
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
-   * details.
-   *
-   * @generated from field: string selector = 1;
-   */
-  selector: string;
+export declare type HttpRule = Message<'google.api.HttpRule'> & {
+    /**
+     * Selects a method to which this rule applies.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
+     *
+     * @generated from field: string selector = 1;
+     */
+    selector: string;
 
-  /**
-   * Determines the URL pattern is matched by this rules. This pattern can be
-   * used with any of the {get|put|post|delete|patch} methods. A custom method
-   * can be defined using the 'custom' field.
-   *
-   * @generated from oneof google.api.HttpRule.pattern
-   */
-  pattern: {
     /**
-     * Maps to HTTP GET. Used for listing and getting information about
-     * resources.
+     * Determines the URL pattern is matched by this rules. This pattern can be
+     * used with any of the {get|put|post|delete|patch} methods. A custom method
+     * can be defined using the 'custom' field.
      *
-     * @generated from field: string get = 2;
+     * @generated from oneof google.api.HttpRule.pattern
      */
-    value: string;
-    case: "get";
-  } | {
-    /**
-     * Maps to HTTP PUT. Used for replacing a resource.
-     *
-     * @generated from field: string put = 3;
-     */
-    value: string;
-    case: "put";
-  } | {
-    /**
-     * Maps to HTTP POST. Used for creating a resource or performing an action.
-     *
-     * @generated from field: string post = 4;
-     */
-    value: string;
-    case: "post";
-  } | {
-    /**
-     * Maps to HTTP DELETE. Used for deleting a resource.
-     *
-     * @generated from field: string delete = 5;
-     */
-    value: string;
-    case: "delete";
-  } | {
-    /**
-     * Maps to HTTP PATCH. Used for updating a resource.
-     *
-     * @generated from field: string patch = 6;
-     */
-    value: string;
-    case: "patch";
-  } | {
-    /**
-     * The custom pattern is used for specifying an HTTP method that is not
-     * included in the `pattern` field, such as HEAD, or "*" to leave the
-     * HTTP method unspecified for this rule. The wild-card rule is useful
-     * for services that provide content to Web (HTML) clients.
-     *
-     * @generated from field: google.api.CustomHttpPattern custom = 8;
-     */
-    value: CustomHttpPattern;
-    case: "custom";
-  } | { case: undefined; value?: undefined };
+    pattern:
+        | {
+              /**
+               * Maps to HTTP GET. Used for listing and getting information about
+               * resources.
+               *
+               * @generated from field: string get = 2;
+               */
+              value: string;
+              case: 'get';
+          }
+        | {
+              /**
+               * Maps to HTTP PUT. Used for replacing a resource.
+               *
+               * @generated from field: string put = 3;
+               */
+              value: string;
+              case: 'put';
+          }
+        | {
+              /**
+               * Maps to HTTP POST. Used for creating a resource or performing an action.
+               *
+               * @generated from field: string post = 4;
+               */
+              value: string;
+              case: 'post';
+          }
+        | {
+              /**
+               * Maps to HTTP DELETE. Used for deleting a resource.
+               *
+               * @generated from field: string delete = 5;
+               */
+              value: string;
+              case: 'delete';
+          }
+        | {
+              /**
+               * Maps to HTTP PATCH. Used for updating a resource.
+               *
+               * @generated from field: string patch = 6;
+               */
+              value: string;
+              case: 'patch';
+          }
+        | {
+              /**
+               * The custom pattern is used for specifying an HTTP method that is not
+               * included in the `pattern` field, such as HEAD, or "*" to leave the
+               * HTTP method unspecified for this rule. The wild-card rule is useful
+               * for services that provide content to Web (HTML) clients.
+               *
+               * @generated from field: google.api.CustomHttpPattern custom = 8;
+               */
+              value: CustomHttpPattern;
+              case: 'custom';
+          }
+        | { case: undefined; value?: undefined };
 
-  /**
-   * The name of the request field whose value is mapped to the HTTP request
-   * body, or `*` for mapping all request fields not captured by the path
-   * pattern to the HTTP body, or omitted for not having any HTTP request body.
-   *
-   * NOTE: the referred field must be present at the top-level of the request
-   * message type.
-   *
-   * @generated from field: string body = 7;
-   */
-  body: string;
+    /**
+     * The name of the request field whose value is mapped to the HTTP request
+     * body, or `*` for mapping all request fields not captured by the path
+     * pattern to the HTTP body, or omitted for not having any HTTP request body.
+     *
+     * NOTE: the referred field must be present at the top-level of the request
+     * message type.
+     *
+     * @generated from field: string body = 7;
+     */
+    body: string;
 
-  /**
-   * Optional. The name of the response field whose value is mapped to the HTTP
-   * response body. When omitted, the entire response message will be used
-   * as the HTTP response body.
-   *
-   * NOTE: The referred field must be present at the top-level of the response
-   * message type.
-   *
-   * @generated from field: string response_body = 12;
-   */
-  responseBody: string;
+    /**
+     * Optional. The name of the response field whose value is mapped to the HTTP
+     * response body. When omitted, the entire response message will be used
+     * as the HTTP response body.
+     *
+     * NOTE: The referred field must be present at the top-level of the response
+     * message type.
+     *
+     * @generated from field: string response_body = 12;
+     */
+    responseBody: string;
 
-  /**
-   * Additional HTTP bindings for the selector. Nested bindings must
-   * not contain an `additional_bindings` field themselves (that is,
-   * the nesting may only be one level deep).
-   *
-   * @generated from field: repeated google.api.HttpRule additional_bindings = 11;
-   */
-  additionalBindings: HttpRule[];
+    /**
+     * Additional HTTP bindings for the selector. Nested bindings must
+     * not contain an `additional_bindings` field themselves (that is,
+     * the nesting may only be one level deep).
+     *
+     * @generated from field: repeated google.api.HttpRule additional_bindings = 11;
+     */
+    additionalBindings: HttpRule[];
 };
 
 /**
@@ -445,20 +452,20 @@ export declare const HttpRuleSchema: GenMessage<HttpRule>;
  *
  * @generated from message google.api.CustomHttpPattern
  */
-export declare type CustomHttpPattern = Message<"google.api.CustomHttpPattern"> & {
-  /**
-   * The name of this custom HTTP verb.
-   *
-   * @generated from field: string kind = 1;
-   */
-  kind: string;
+export declare type CustomHttpPattern = Message<'google.api.CustomHttpPattern'> & {
+    /**
+     * The name of this custom HTTP verb.
+     *
+     * @generated from field: string kind = 1;
+     */
+    kind: string;
 
-  /**
-   * The path matched by this custom verb.
-   *
-   * @generated from field: string path = 2;
-   */
-  path: string;
+    /**
+     * The path matched by this custom verb.
+     *
+     * @generated from field: string path = 2;
+     */
+    path: string;
 };
 
 /**
@@ -466,4 +473,3 @@ export declare type CustomHttpPattern = Message<"google.api.CustomHttpPattern"> 
  * Use `create(CustomHttpPatternSchema)` to create a new message.
  */
 export declare const CustomHttpPatternSchema: GenMessage<CustomHttpPattern>;
-

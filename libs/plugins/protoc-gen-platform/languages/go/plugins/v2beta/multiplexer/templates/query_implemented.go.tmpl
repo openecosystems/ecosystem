@@ -14,63 +14,73 @@ func (s *{{ $s.Name }}Handler) Get{{ .Name }}Configuration() *natsnodev1.Listene
 		},
 	}
 }
+{{ $methodDashCaseName := dashCase .Name }}
 
 func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Request[{{ .Input.Name }}]) (*connect.Response[{{ .Output.Name }}], error) {
 
-tracer := *opentelemetryv1.Bound.Tracer
-log := *zaploggerv1.Bound.Logger
+	tracer := *opentelemetryv1.Bound.Tracer
 
-// Executes top level validation, no business domain validation
-validationCtx, validationSpan := tracer.Start(ctx, "request-validation", trace.WithSpanKind(trace.SpanKindInternal))
-v := *protovalidatev0.Bound.Validator
-if err := v.Validate(req.Msg); err != nil {
-return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
-}
-validationSpan.End()
+	parentSpanCtx := trace.SpanContextFromContext(ctx)
+	ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
 
-// Spec Propagation
-specCtx, specSpan := tracer.Start(validationCtx, "spec-propagation", trace.WithSpanKind(trace.SpanKindInternal))
-spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
-if !ok {
-return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
-}
-specSpan.End()
+	spec, ok := ctx.Value(sdkv2betalib.SpecContextKey).(*specv2pb.Spec)
+	if !ok {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot propagate spec to context"))
+	}
 
-// Validate field mask
-if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
-  spec.SpecData.FieldMask.Normalize()
-  if !spec.SpecData.FieldMask.IsValid(&{{ .Output.Name }}{}) {
-  log.Error("Invalid field mask")
-  return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
-  }
-}
+	// Executes top level validation, no business domain validation
+	validationCtx, validationSpan := tracer.Start(ctx, "{{ $methodDashCaseName }}-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	v := *protovalidatev0.Bound.Validator
+	if err := v.Validate(req.Msg); err != nil {
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+	}
+	validationSpan.End()
 
-// Distributed Domain Handler
-handlerCtx, handlerSpan := tracer.Start(specCtx, "event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	// Validate field mask
+	if spec.SpecData.FieldMask != nil && len(spec.SpecData.FieldMask.Paths) > 0 {
+	  spec.SpecData.FieldMask.Normalize()
+	  if !spec.SpecData.FieldMask.IsValid(&{{ .Output.Name }}{}) {
+	  	return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(errors.New("Invalid field mask"))
+	  }
+	}
 
-config := s.Get{{ .Name }}Configuration()
-reply, err2 := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
-Request:        req.Msg,
-Stream:         config.StreamType,
-Procedure:     config.Procedure,
-EventName:   "",
-EventTopic:   config.Topic,
-EntityTypeName: config.Entity.TypeName(),
-})
-if err2 != nil {
-log.Error(err2.Error())
-return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
-}
+	// Distributed Domain Handler
+	handlerCtx, handlerSpan := tracer.Start(validationCtx, "{{ $methodDashCaseName }}-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
 
-var dd {{ .Output.Name }}
-err3 := proto.Unmarshal(reply.Data, &dd)
-if err3 != nil {
-log.Error(err3.Error())
-return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
-}
+	config := s.Get{{ .Name }}Configuration()
+	reply, serr := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
+		Request:        req.Msg,
+		Stream:         config.StreamType,
+		Procedure:     config.Procedure,
+		EventName:   "",
+		EventTopic:   config.Topic,
+		EntityTypeName: config.Entity.TypeName(),
+	})
+	if serr != nil {
+		return nil, serr
+	}
 
-handlerSpan.End()
+	var s2 specv2pb.Spec
+	err := proto.Unmarshal(reply.Data, &s2)
+	if err != nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+	}
 
-return connect.NewResponse(&dd), nil
+	if s2.SpecError != nil {
+		return nil, sdkv2betalib.NewSpecErrorFromStatus(s2.SpecError)
+	}
+
+	if s2.SpecData == nil || s2.SpecData.Data == nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("The response did not contain any spec data response. Investigate. Bug."))
+	}
+
+	var response {{ .Output.Name }}
+	if err = anypb.UnmarshalTo(s2.SpecData.Data, &response, proto.UnmarshalOptions{}); err != nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+	}
+
+	handlerSpan.End()
+
+	return connect.NewResponse(&response), nil
 
 }

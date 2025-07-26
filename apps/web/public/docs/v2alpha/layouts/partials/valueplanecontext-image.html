@@ -1,9 +1,11 @@
-{{- $data := (index $.Site.Data .Section) -}}
-{{- $valueplanecontext := $data.meta.value_plane_context | default .Page.Params.value_plane_context -}}
-{{- if $valueplanecontext -}}
+{{- $data := (index $.Site.Data .Section) -}} {{- $valueplanecontext := $data.meta.value_plane_context | default
+.Page.Params.value_plane_context -}} {{- if $valueplanecontext -}}
 <div class="value-planes-context">
-  <a href="/fundamentals/planes/{{- $valueplanecontext -}}-plane/" class="DocsMarkdown--link">
-    <img src="/context/value-planes-{{- $valueplanecontext -}}-icon.svg" alt="Value plane context: {{- $valueplanecontext -}}">
-  </a>
+    <a href="/fundamentals/planes/{{- $valueplanecontext -}}-plane/" class="DocsMarkdown--link">
+        <img
+            src="/context/value-planes-{{- $valueplanecontext -}}-icon.svg"
+            alt="Value plane context: {{- $valueplanecontext -}}"
+        />
+    </a>
 </div>
 {{- end -}}

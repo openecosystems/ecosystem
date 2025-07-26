@@ -3,16 +3,16 @@ date_created: 2022-12-11T17:14:29
 title: SSO
 pcx_content_type: definition
 summary: >-
-  `SSO` is an Authentication scheme that allows a User to login with a single ID to any of several related, yet independent, software systems.
+    `SSO` is an Authentication scheme that allows a User to login with a single ID to any of several related, yet independent, software systems.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/message-protocol
-  - /fundamentals/design-and-architecture/standards-based/data-standards/saml
-  - /fundamentals/glossary/2fa/#passwords
-  - /fundamentals/glossary/authentication
-  - /fundamentals/glossary/single-point-of-failure
-  - /fundamentals/glossary/xss
+    - /fundamentals/glossary/message-protocol
+    - /fundamentals/design-and-architecture/standards-based/data-standards/saml
+    - /fundamentals/glossary/2fa/#passwords
+    - /fundamentals/glossary/authentication
+    - /fundamentals/glossary/single-point-of-failure
+    - /fundamentals/glossary/xss
 ---
 
 # SSO
@@ -23,16 +23,16 @@ The [Message Protocol](/fundamentals/glossary/message-protocol) that is used for
 
 ## Advantages
 
-- Risk mitigation: a website no longer has to manage credentials for its user, another party is doing that.
-- No need for one more [password](/fundamentals/glossary/2fa/#passwords)
-- Simpler administration
-- Better network security
+-   Risk mitigation: a website no longer has to manage credentials for its user, another party is doing that.
+-   No need for one more [password](/fundamentals/glossary/2fa/#passwords)
+-   Simpler administration
+-   Better network security
 
 ## Disadvantages
 
-- `SSO` turns the system that provides [Authentication](/fundamentals/glossary/authentication) into a [Single Point of Failure](/fundamentals/glossary/single-point-of-failure): if that system would become unavailable, the User would no longer be able to login into **any** site that uses that `SSO` provider.
-- If `SSO` credentials or tokens are compromised, not just one service gets compromised, but many.
-- `SSO` can be subject to web filtering. I.e.: many schools block Facebook, which inherently blocks access to any website that allows `SSO` with Facebook.
+-   `SSO` turns the system that provides [Authentication](/fundamentals/glossary/authentication) into a [Single Point of Failure](/fundamentals/glossary/single-point-of-failure): if that system would become unavailable, the User would no longer be able to login into **any** site that uses that `SSO` provider.
+-   If `SSO` credentials or tokens are compromised, not just one service gets compromised, but many.
+-   `SSO` can be subject to web filtering. I.e.: many schools block Facebook, which inherently blocks access to any website that allows `SSO` with Facebook.
 
 ## Security
 
@@ -46,5 +46,5 @@ Technically `SSO` can work without having to reveal identifying information like
 
 ## Sources
 
-- https://en.wikipedia.org/wiki/Single_sign-on
-- https://en.wikipedia.org/wiki/SAML_2.0
+-   https://en.wikipedia.org/wiki/Single_sign-on
+-   https://en.wikipedia.org/wiki/SAML_2.0

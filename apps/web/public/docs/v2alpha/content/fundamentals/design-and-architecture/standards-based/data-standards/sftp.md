@@ -4,13 +4,13 @@ author: Guillaume Hanique
 title: SFTP
 pcx_content_type: definition
 summary: >-
-  `Secure Shell File Transfer Protocol (SFTP)` = [SSH](#ssh) + [FTP](#ftp). Or in other words: `SFTP` adds File Transfer capabilities to something that is already Secure.
+    `Secure Shell File Transfer Protocol (SFTP)` = [SSH](#ssh) + [FTP](#ftp). Or in other words: `SFTP` adds File Transfer capabilities to something that is already Secure.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ssh
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ftp
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ftps
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ssh
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ftp
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ftps
 ---
 
 # Secure Shell File Transfer Protocol (SFTP)

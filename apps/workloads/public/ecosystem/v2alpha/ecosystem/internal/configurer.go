@@ -84,7 +84,7 @@ func (c *Configuration) GetConfiguration() *Configuration {
 func (c *Configuration) GetConfigurationBytes() ([]byte, error) {
 	byteArray, err := json.Marshal(*c.GetConfiguration())
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("SpecError:", err)
 		return nil, err
 	}
 	return byteArray, nil

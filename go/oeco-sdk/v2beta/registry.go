@@ -132,7 +132,7 @@ func (s *Systems) processSystems() error {
 // loadSystemDescriptors processes a SpecSystem and its data to create and return a System object or an error if it fails.
 func (s *Systems) loadSystemDescriptors(ss *specv2pb.SpecSystem, data []byte) (*System, error) {
 	if err := os.Setenv("GOLANG_PROTOBUF_REGISTRATION_CONFLICT", "ignore"); err != nil {
-		fmt.Println("Error setting environment variable:", err)
+		fmt.Println("SpecError setting environment variable:", err)
 		return nil, fmt.Errorf("error setting environment variable: %v", err)
 	}
 

@@ -6,9 +6,9 @@ package {{ package . }}
 import (
   "errors"
   "connectrpc.com/connect"
+  "google.golang.org/protobuf/types/known/anypb"
   {{ if $sm }}"github.com/nats-io/nats.go"{{end}}
   "github.com/nats-io/nats.go/jetstream"
-  "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
   "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nats"
   "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/opentelemetry"
   "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/protovalidate"

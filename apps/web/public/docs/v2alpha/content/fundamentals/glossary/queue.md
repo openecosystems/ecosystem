@@ -2,14 +2,14 @@
 title: Queue
 pcx_content_type: definition
 summary: >-
-  A Queue is a channel where `messages` are received. Multiple Applications can listen to that channel, but only one of them will receive the `message`. If nothing is listening, the `messages` on the channel will be persisted, until something starts listening to the channel.
+    A Queue is a channel where `messages` are received. Multiple Applications can listen to that channel, but only one of them will receive the `message`. If nothing is listening, the `messages` on the channel will be persisted, until something starts listening to the channel.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/dead-letter-queue
-  - /fundamentals/glossary/esb
-  - /fundamentals/glossary/performance
-  - /fundamentals/glossary/race-condition
+    - /fundamentals/glossary/dead-letter-queue
+    - /fundamentals/glossary/esb
+    - /fundamentals/glossary/performance
+    - /fundamentals/glossary/race-condition
 ---
 
 # Queue

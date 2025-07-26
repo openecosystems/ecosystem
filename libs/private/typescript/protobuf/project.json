@@ -3,9 +3,7 @@
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "libs/private/typescript/protobuf/src",
     "projectType": "library",
-    "implicitDependencies": [
-      "proto"
-    ],
+    "implicitDependencies": ["proto"],
     "release": {
         "version": {
             "generatorOptions": {
@@ -16,11 +14,11 @@
     },
     "targets": {
         "generate-disabled": {
-          "executor": "nx:run-commands",
-          "options": {
-            "command": "buf generate",
-            "cwd": "libs/private/typescript/protobuf"
-          }
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf generate",
+                "cwd": "libs/private/typescript/protobuf"
+            }
         },
         "build-disabled": {
             "executor": "@nx/js:tsc",
@@ -39,11 +37,5 @@
             }
         }
     },
-    "tags": [
-      "type:lib",
-      "cycle:private",
-      "language:typescript",
-      "type:protobuf",
-      "exposure:external"
-    ]
+    "tags": ["type:lib", "cycle:private", "language:typescript", "type:protobuf", "exposure:external"]
 }

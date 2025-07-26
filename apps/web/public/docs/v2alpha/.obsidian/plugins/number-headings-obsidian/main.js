@@ -23,11 +23,31 @@ PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
 function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    function adopt(value) {
+        return value instanceof P
+            ? value
+            : new P(function (resolve) {
+                  resolve(value);
+              });
+    }
     return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator['throw'](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 }
@@ -38,8 +58,7 @@ function getActiveView(app) {
 }
 function isViewActive(app) {
     const activeView = getActiveView(app);
-    if (activeView && activeView.file)
-        return true;
+    if (activeView && activeView.file) return true;
     return false;
 }
 function getViewMetadata(app) {
@@ -56,7 +75,9 @@ function getViewInfo(app) {
     const editor = activeView ? activeView.editor : undefined;
     if (activeView && data && editor) {
         return {
-            activeView, data, editor
+            activeView,
+            data,
+            editor,
         };
     }
     return undefined;
@@ -70,36 +91,30 @@ const DEFAULT_SETTINGS = {
     styleLevelOther: '1',
     auto: false,
     separator: '',
-    contents: ''
+    contents: '',
 };
 function isValidLevelStyle(s) {
-    if (s === 'A' || s === '1')
-        return true;
+    if (s === 'A' || s === '1') return true;
     return false;
 }
 function isValidFlag(f) {
-    if (f === true || f === false)
-        return true;
+    if (f === true || f === false) return true;
     return false;
 }
 function isValidFirstOrMaxLevel(x) {
-    if (typeof x === 'number' && x >= 1 && x <= 6)
-        return true;
+    if (typeof x === 'number' && x >= 1 && x <= 6) return true;
     return false;
 }
 function isValidSeparator(x) {
-    if (typeof x === 'string' && (x === '' || x === ':' || x === '.' || x === '-'))
-        return true;
+    if (typeof x === 'string' && (x === '' || x === ':' || x === '.' || x === '-')) return true;
     return false;
 }
 function isValidContents(x) {
-    if (typeof x === 'string' && (x === '' || x.startsWith('^')))
-        return true;
+    if (typeof x === 'string' && (x === '' || x.startsWith('^'))) return true;
     return false;
 }
 function doesContentsHaveValue(x) {
-    if (x.length > 2 && x.startsWith('^'))
-        return true;
+    if (x.length > 2 && x.startsWith('^')) return true;
     return false;
 }
 
@@ -115,38 +130,32 @@ function parseCompactFrontMatterSettings(fm) {
         const settings = Object.assign({}, DEFAULT_SETTINGS);
         for (const part of parts) {
             const cleanPart = part.trim();
-            if (cleanPart.length === 0)
-                continue;
+            if (cleanPart.length === 0) continue;
             if (cleanPart === AUTO_PART_KEY) {
                 // Parse auto numbering part
                 settings.auto = true;
-            }
-            else if (cleanPart.startsWith(FIRST_LEVEL_PART_KEY)) {
+            } else if (cleanPart.startsWith(FIRST_LEVEL_PART_KEY)) {
                 // Parse first level part
                 const nstring = cleanPart.substring(FIRST_LEVEL_PART_KEY.length + 1);
                 const n = parseInt(nstring);
                 if (isValidFirstOrMaxLevel(n)) {
                     settings.firstLevel = n;
                 }
-            }
-            else if (cleanPart.startsWith(MAX_LEVEL_PART_KEY)) {
+            } else if (cleanPart.startsWith(MAX_LEVEL_PART_KEY)) {
                 // Parse max level part
                 const nstring = cleanPart.substring(MAX_LEVEL_PART_KEY.length + 1);
                 const n = parseInt(nstring);
                 if (isValidFirstOrMaxLevel(n)) {
                     settings.maxLevel = n;
                 }
-            }
-            else if (cleanPart.startsWith(CONTENTS_PART_KEY)) {
-                if (cleanPart.length <= CONTENTS_PART_KEY.length + 1)
-                    continue;
+            } else if (cleanPart.startsWith(CONTENTS_PART_KEY)) {
+                if (cleanPart.length <= CONTENTS_PART_KEY.length + 1) continue;
                 // Parse contents heading part
                 const tocHeading = cleanPart.substring(CONTENTS_PART_KEY.length + 1);
                 if (isValidContents(tocHeading)) {
                     settings.contents = tocHeading;
                 }
-            }
-            else {
+            } else {
                 // Parse formatting part
                 const lastChar = cleanPart[cleanPart.length - 1];
                 let remainingPart = cleanPart;
@@ -159,8 +168,7 @@ function parseCompactFrontMatterSettings(fm) {
                 if (descriptors.length > 1 && descriptors[0] === '_') {
                     settings.skipTopLevel = true;
                     firstNumberedDescriptor = 1;
-                }
-                else {
+                } else {
                     settings.skipTopLevel = false;
                 }
                 if (descriptors.length - firstNumberedDescriptor >= 2) {
@@ -183,22 +191,48 @@ const getFrontMatterSettingsOrAlternative = ({ frontmatter }, alternativeSetting
     var _a, _b, _c, _d, _e;
     if (frontmatter !== undefined) {
         const decompactedSettings = parseCompactFrontMatterSettings(frontmatter);
-        if (decompactedSettings !== undefined)
-            return decompactedSettings;
+        if (decompactedSettings !== undefined) return decompactedSettings;
         // NOTE: Everything below is for backwards compatibility only
-        const skipTopLevelEntry = (_a = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-skip-top-level')) !== null && _a !== void 0 ? _a : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-skip-top-level');
+        const skipTopLevelEntry =
+            (_a = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-skip-top-level')) !== null &&
+            _a !== void 0
+                ? _a
+                : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-skip-top-level');
         const skipTopLevel = isValidFlag(skipTopLevelEntry) ? skipTopLevelEntry : alternativeSettings.skipTopLevel;
-        const maxLevelEntry = (_b = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-max-level')) !== null && _b !== void 0 ? _b : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-max-level');
+        const maxLevelEntry =
+            (_b = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-max-level')) !== null && _b !== void 0
+                ? _b
+                : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-max-level');
         const maxLevel = isValidFirstOrMaxLevel(maxLevelEntry) ? maxLevelEntry : alternativeSettings.maxLevel;
-        const styleLevel1Entry = String((_c = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-style-level-1')) !== null && _c !== void 0 ? _c : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-style-level-1'));
+        const styleLevel1Entry = String(
+            (_c = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-style-level-1')) !== null &&
+                _c !== void 0
+                ? _c
+                : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-style-level-1')
+        );
         const styleLevel1 = isValidLevelStyle(styleLevel1Entry) ? styleLevel1Entry : alternativeSettings.styleLevel1;
-        const styleLevelOtherEntry = String((_d = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-style-level-other')) !== null && _d !== void 0 ? _d : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-style-level-other'));
-        const styleLevelOther = isValidLevelStyle(styleLevelOtherEntry) ? styleLevelOtherEntry : alternativeSettings.styleLevelOther;
-        const autoEntry = (_e = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-auto')) !== null && _e !== void 0 ? _e : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-auto');
+        const styleLevelOtherEntry = String(
+            (_d = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-style-level-other')) !== null &&
+                _d !== void 0
+                ? _d
+                : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-style-level-other')
+        );
+        const styleLevelOther = isValidLevelStyle(styleLevelOtherEntry)
+            ? styleLevelOtherEntry
+            : alternativeSettings.styleLevelOther;
+        const autoEntry =
+            (_e = obsidian.parseFrontMatterEntry(frontmatter, 'number-headings-auto')) !== null && _e !== void 0
+                ? _e
+                : obsidian.parseFrontMatterEntry(frontmatter, 'header-numbering-auto');
         const auto = isValidFlag(autoEntry) ? autoEntry : alternativeSettings.auto;
-        return Object.assign(Object.assign({}, alternativeSettings), { skipTopLevel, maxLevel, styleLevel1, styleLevelOther, auto });
-    }
-    else {
+        return Object.assign(Object.assign({}, alternativeSettings), {
+            skipTopLevel,
+            maxLevel,
+            styleLevel1,
+            styleLevelOther,
+            auto,
+        });
+    } else {
         return alternativeSettings;
     }
 };
@@ -235,15 +269,13 @@ const saveSettingsToFrontMatter = ({ frontmatter }, editor, settings) => {
             const from = { line: keyLine, ch: 0 };
             const to = { line: keyLine + 1, ch: 0 };
             editor.replaceRange(frontMatterAdditions, from, to);
-        }
-        else {
+        } else {
             // Key not present, insert new key
             const from = { line: frontMatterLine + 1, ch: 0 };
             const to = { line: frontMatterLine + 1, ch: 0 };
             editor.replaceRange(frontMatterAdditions, from, to);
         }
-    }
-    else {
+    } else {
         // No frontmatter found, create frontmatter from scratch
         const v = settingsToCompactFrontMatterValue(settings);
         const newFrontMatter = `---\nnumber headings: ${v}\n---\n\n`;
@@ -264,7 +296,10 @@ class NumberingDoneModal extends obsidian.Modal {
         titleEl.setText('Number Headings - Successfully Completed');
         contentEl.createEl('div', { text: this.config.message });
         contentEl.createEl('pre', { text: this.config.preformattedMessage });
-        contentEl.createEl('div', { text: "Do you want to save these settings in the document's front matter?", cls: 'number-headings-question' });
+        contentEl.createEl('div', {
+            text: "Do you want to save these settings in the document's front matter?",
+            cls: 'number-headings-question',
+        });
         const containerForButtons = contentEl.createEl('div', { cls: 'number-headings-button-container' });
         const noButton = containerForButtons.createEl('button', {});
         noButton.setText('No');
@@ -304,11 +339,9 @@ const TOC_LIST_ITEM_BULLET = '-';
 function makeHeadingHashString(editor, heading) {
     const regex = /^\s{0,4}#+/g;
     const headingLineString = editor.getLine(heading.position.start.line);
-    if (!headingLineString)
-        return undefined;
+    if (!headingLineString) return undefined;
     const matches = headingLineString.match(regex);
-    if (!matches)
-        return undefined;
+    if (!matches) return undefined;
     if (matches.length !== 1) {
         // eslint-disable-next-line no-console
         console.log("Unexpected heading format: '" + headingLineString + "'");
@@ -322,8 +355,7 @@ function makeNumberingString(numberingStack) {
     for (let i = 0; i < numberingStack.length; i++) {
         if (i === 0) {
             numberingString += ' ';
-        }
-        else {
+        } else {
             numberingString += '.';
         }
         numberingString += numberingStack[i].toString();
@@ -333,8 +365,7 @@ function makeNumberingString(numberingStack) {
 function getHeadingPrefixRange(editor, heading) {
     const regex = /^\s{0,4}#+( )?([0-9]+\.|[A-Z]\.)*([0-9]+|[A-Z])?[:.-]?( )+/g;
     const headingLineString = editor.getLine(heading.position.start.line);
-    if (!headingLineString)
-        return undefined;
+    if (!headingLineString) return undefined;
     const matches = headingLineString.match(regex);
     if (matches && matches.length !== 1) {
         // eslint-disable-next-line no-console
@@ -344,19 +375,18 @@ function getHeadingPrefixRange(editor, heading) {
     const match = matches ? matches[0] : '';
     const from = {
         line: heading.position.start.line,
-        ch: 0
+        ch: 0,
     };
     const to = {
         line: heading.position.start.line,
-        ch: match.length
+        ch: match.length,
     };
     return { from, to };
 }
 function zerothNumberingTokenInStyle(style) {
     if (style === '1') {
         return 0;
-    }
-    else if (style === 'A') {
+    } else if (style === 'A') {
         return 'Z';
     }
     return 0;
@@ -364,8 +394,7 @@ function zerothNumberingTokenInStyle(style) {
 function firstNumberingTokenInStyle(style) {
     if (style === '1') {
         return 1;
-    }
-    else if (style === 'A') {
+    } else if (style === 'A') {
         return 'A';
     }
     return 1;
@@ -375,10 +404,8 @@ function nextNumberingToken(t) {
         return t + 1;
     }
     if (typeof t === 'string') {
-        if (t === 'Z')
-            return 'A';
-        else
-            return String.fromCharCode(t.charCodeAt(0) + 1);
+        if (t === 'Z') return 'A';
+        else return String.fromCharCode(t.charCodeAt(0) + 1);
     }
     return 1;
 }
@@ -410,22 +437,20 @@ function replaceRangeSafely(editor, changes, range, text) {
         changes.push({
             text: text,
             from: range.from,
-            to: range.to
+            to: range.to,
         });
     }
 }
 const updateHeadingNumbering = (viewInfo, settings) => {
     var _a;
-    if (!viewInfo)
-        return;
+    if (!viewInfo) return;
     const headings = (_a = viewInfo.data.headings) !== null && _a !== void 0 ? _a : [];
     const editor = viewInfo.editor;
     let previousLevel = 1;
     const numberingStack = [zerothNumberingTokenInStyle(settings.styleLevel1)];
     if (settings.firstLevel > 1) {
         previousLevel = settings.firstLevel;
-    }
-    else if (settings.skipTopLevel) {
+    } else if (settings.skipTopLevel) {
         previousLevel = 2;
     }
     const changes = [];
@@ -436,8 +461,7 @@ const updateHeadingNumbering = (viewInfo, settings) => {
         if (settings.firstLevel > level) {
             // Leave these headings as they are (this allows people to have numbers at the start of ignored headings)
             continue;
-        }
-        else if ((settings.skipTopLevel && level === 1) || (level > settings.maxLevel)) {
+        } else if ((settings.skipTopLevel && level === 1) || level > settings.maxLevel) {
             // Remove any heading numbers in these two cases:
             // 1. this is a top level and we are skipping top level headings
             // 2. this level is higher than the max level setting
@@ -458,8 +482,7 @@ const updateHeadingNumbering = (viewInfo, settings) => {
             if (x !== undefined) {
                 numberingStack.push(nextNumberingToken(x));
             }
-        }
-        else if (level < previousLevel) {
+        } else if (level < previousLevel) {
             for (let i = previousLevel; i > level; i--) {
                 numberingStack.pop();
             }
@@ -467,8 +490,7 @@ const updateHeadingNumbering = (viewInfo, settings) => {
             if (x !== undefined) {
                 numberingStack.push(nextNumberingToken(x));
             }
-        }
-        else if (level > previousLevel) {
+        } else if (level > previousLevel) {
             for (let i = previousLevel; i < level; i++) {
                 numberingStack.push(firstNumberingTokenInStyle(settings.styleLevelOther));
             }
@@ -481,11 +503,9 @@ const updateHeadingNumbering = (viewInfo, settings) => {
         }
         // Find the range to replace, and then do it
         const prefixRange = getHeadingPrefixRange(editor, heading);
-        if (prefixRange === undefined)
-            return;
+        if (prefixRange === undefined) return;
         const headingHashString = makeHeadingHashString(editor, heading);
-        if (headingHashString === undefined)
-            return;
+        if (headingHashString === undefined) return;
         const prefixString = makeNumberingString(numberingStack);
         replaceRangeSafely(editor, changes, prefixRange, headingHashString + prefixString + settings.separator + ' ');
     }
@@ -494,18 +514,16 @@ const updateHeadingNumbering = (viewInfo, settings) => {
         // eslint-disable-next-line no-console
         console.log('Number Headings Plugin: Applying headings numbering changes:', changes.length);
         editor.transaction({
-            changes: changes
+            changes: changes,
         });
     }
 };
 const updateTableOfContents = (viewInfo, settings) => {
     var _a;
-    if (!viewInfo)
-        return;
+    if (!viewInfo) return;
     const headings = (_a = viewInfo.data.headings) !== null && _a !== void 0 ? _a : [];
     const editor = viewInfo.editor;
-    if (!doesContentsHaveValue(settings.contents))
-        return;
+    if (!doesContentsHaveValue(settings.contents)) return;
     let tocHeading;
     let tocBuilder = '\n';
     const changes = [];
@@ -527,12 +545,12 @@ const updateTableOfContents = (viewInfo, settings) => {
     if (tocHeading) {
         const from = {
             line: tocHeading.position.start.line + 1,
-            ch: 0
+            ch: 0,
         };
         const startingLine = tocHeading.position.start.line + 1;
         let endingLine = 0;
         let foundList = false;
-        for (endingLine = startingLine;; endingLine++) {
+        for (endingLine = startingLine; ; endingLine++) {
             const line = editor.getLine(endingLine);
             if (line === undefined) {
                 // Reached end of file, insert at the start of the TOC section
@@ -541,21 +559,16 @@ const updateTableOfContents = (viewInfo, settings) => {
             }
             const trimmedLineText = line.trimStart();
             if (foundList) {
-                if (!trimmedLineText.startsWith(TOC_LIST_ITEM_BULLET))
-                    break;
-                if (trimmedLineText.startsWith('#'))
-                    break;
-            }
-            else {
+                if (!trimmedLineText.startsWith(TOC_LIST_ITEM_BULLET)) break;
+                if (trimmedLineText.startsWith('#')) break;
+            } else {
                 if (trimmedLineText.startsWith(TOC_LIST_ITEM_BULLET)) {
                     foundList = true;
-                }
-                else if (trimmedLineText.startsWith('#')) {
+                } else if (trimmedLineText.startsWith('#')) {
                     // Reached the next heading without finding existing TOC list, insert at the start of the TOC section
                     endingLine = startingLine;
                     break;
-                }
-                else {
+                } else {
                     continue;
                 }
             }
@@ -565,7 +578,7 @@ const updateTableOfContents = (viewInfo, settings) => {
         }
         const to = {
             line: endingLine,
-            ch: 0
+            ch: 0,
         };
         const range = { from, to };
         replaceRangeSafely(editor, changes, range, tocBuilder);
@@ -575,29 +588,26 @@ const updateTableOfContents = (viewInfo, settings) => {
         // eslint-disable-next-line no-console
         console.log('Number Headings Plugin: Applying table of contents changes:', changes.length);
         editor.transaction({
-            changes: changes
+            changes: changes,
         });
     }
 };
 const removeHeadingNumbering = (viewInfo) => {
     var _a;
-    if (!viewInfo)
-        return;
+    if (!viewInfo) return;
     const headings = (_a = viewInfo.data.headings) !== null && _a !== void 0 ? _a : [];
     const editor = viewInfo.editor;
     const changes = [];
     for (const heading of headings) {
         const prefixRange = getHeadingPrefixRange(editor, heading);
-        if (prefixRange === undefined)
-            return;
+        if (prefixRange === undefined) return;
         const headingHashString = makeHeadingHashString(editor, heading);
-        if (headingHashString === undefined)
-            return;
+        if (headingHashString === undefined) return;
         replaceRangeSafely(editor, changes, prefixRange, headingHashString + ' ');
     }
     if (changes.length > 0) {
         editor.transaction({
-            changes: changes
+            changes: changes,
         });
     }
 };
@@ -611,9 +621,13 @@ class NumberHeadingsPluginSettingTab extends obsidian.PluginSettingTab {
         const { containerEl } = this;
         containerEl.empty();
         containerEl.createEl('h2', { text: 'Number Headings - Settings' });
-        containerEl.createEl('div', { text: 'To add numbering to your document, bring up the command window (on Mac, type CMD+P), and then type "Number Headings" to see a list of available commands.' });
+        containerEl.createEl('div', {
+            text: 'To add numbering to your document, bring up the command window (on Mac, type CMD+P), and then type "Number Headings" to see a list of available commands.',
+        });
         containerEl.createEl('br', {});
-        containerEl.createEl('div', { text: 'If the document has front matter defined with the below settings, the project-wide settings defined on this screen will be ignored. You can define front matter like this:' });
+        containerEl.createEl('div', {
+            text: 'If the document has front matter defined with the below settings, the project-wide settings defined on this screen will be ignored. You can define front matter like this:',
+        });
         containerEl.createEl('pre', {
             text: `    ---
     alias:
@@ -621,139 +635,173 @@ class NumberHeadingsPluginSettingTab extends obsidian.PluginSettingTab {
     tags:
     - example-tag
     number headings: first-level 1, max 6, 1.1, auto, contents ^toc
-    ---`
+    ---`,
         });
         containerEl.createEl('div', {
             text: `
       The 'number headings' front matter key is used to store numbering settings specific to the file. There are four possible options
       in the value to the right of the colon, separated by commas.
-    `
+    `,
         });
         const ul = containerEl.createEl('ul', {});
         const li0 = ul.createEl('li', {});
         li0.createEl('b', { text: 'Automatic numbering' });
-        li0.createEl('span', { text: ': If \'auto\' appears, the document will be automatically numbered.' });
+        li0.createEl('span', { text: ": If 'auto' appears, the document will be automatically numbered." });
         const li1 = ul.createEl('li', {});
         li1.createEl('b', { text: 'First level to number' });
-        li1.createEl('span', { text: ': If \'first-level 2\' appears, the numbering will start at the second level' });
+        li1.createEl('span', { text: ": If 'first-level 2' appears, the numbering will start at the second level" });
         const li2 = ul.createEl('li', {});
         li2.createEl('b', { text: 'Maximum level to number' });
-        li2.createEl('span', { text: ': If \'max 6\' appears, the headings above level 6 will be skipped.' });
+        li2.createEl('span', { text: ": If 'max 6' appears, the headings above level 6 will be skipped." });
         const li3 = ul.createEl('li', {});
         li3.createEl('b', { text: 'Table of contents anchor' });
-        li3.createEl('span', { text: ': If \'contents ^toc\' appears, the heading that ends with the anchor ^toc will have a table of contents inserted beneath it.' });
+        li3.createEl('span', {
+            text: ": If 'contents ^toc' appears, the heading that ends with the anchor ^toc will have a table of contents inserted beneath it.",
+        });
         const li4 = ul.createEl('li', {});
         li4.createEl('b', { text: 'Numbering style' });
         li4.createEl('span', {
             text: `:
       A style text like '1.1', 'A.1', or '_.1.1' tells the plugin how to format the headings.
       If a style string ends with '.' (a dot), ':' (a colon), or '-' (a dash), the heading numbers will be separated from the heading title
-      with that symbol.`
+      with that symbol.`,
         });
         const ul3 = li4.createEl('ul', {});
         ul3.createEl('li', {
             text: `      
       For example, '1.1' means both top level and other headings will be numbered starting from '1'.
-    `
+    `,
         });
         ul3.createEl('li', {
             text: `      
       For example, 'A.1' means top level headings will be numbered starting from 'A'.
-    `
+    `,
         });
         ul3.createEl('li', {
             text: `      
       For example, '_.A.1' means top level headings will NOT be numbered, but the next levels will be numbered with letters and numbers.
-    `
+    `,
         });
         ul3.createEl('li', {
             text: `      
       For example, '1.1:' means headings will look like '## 2.4: Example Heading'
-    `
+    `,
         });
         ul3.createEl('li', {
             text: `      
       For example, 'A.1-' means headings will look like '## B.5- Example Heading'
-    `
+    `,
         });
         new obsidian.Setting(containerEl)
             .setName('Skip top heading level')
             .setDesc('If selected, numbering will not be applied to the top heading level.')
-            .addToggle(toggle => toggle
-            .setValue(this.plugin.settings.skipTopLevel)
-            .setTooltip('Skip top heading level')
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.skipTopLevel = value;
-            yield this.plugin.saveSettings();
-        })));
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(this.plugin.settings.skipTopLevel)
+                    .setTooltip('Skip top heading level')
+                    .onChange((value) =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            this.plugin.settings.skipTopLevel = value;
+                            yield this.plugin.saveSettings();
+                        })
+                    )
+            );
         new obsidian.Setting(containerEl)
             .setName('First heading level')
             .setDesc('First heading level to number.')
-            .addSlider(slider => slider
-            .setLimits(1, 6, 1)
-            .setValue(this.plugin.settings.firstLevel)
-            .setDynamicTooltip()
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.firstLevel = value;
-            yield this.plugin.saveSettings();
-        })));
+            .addSlider((slider) =>
+                slider
+                    .setLimits(1, 6, 1)
+                    .setValue(this.plugin.settings.firstLevel)
+                    .setDynamicTooltip()
+                    .onChange((value) =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            this.plugin.settings.firstLevel = value;
+                            yield this.plugin.saveSettings();
+                        })
+                    )
+            );
         new obsidian.Setting(containerEl)
             .setName('Maximum heading level')
             .setDesc('Maximum heading level to number.')
-            .addSlider(slider => slider
-            .setLimits(1, 6, 1)
-            .setValue(this.plugin.settings.maxLevel)
-            .setDynamicTooltip()
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.maxLevel = value;
-            yield this.plugin.saveSettings();
-        })));
+            .addSlider((slider) =>
+                slider
+                    .setLimits(1, 6, 1)
+                    .setValue(this.plugin.settings.maxLevel)
+                    .setDynamicTooltip()
+                    .onChange((value) =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            this.plugin.settings.maxLevel = value;
+                            yield this.plugin.saveSettings();
+                        })
+                    )
+            );
         new obsidian.Setting(containerEl)
             .setName('Style for level 1 headings')
-            .setDesc('Defines the numbering style for level one headings. Valid values are 1 (for numbers) or A (for capital letters).')
-            .addText(text => text
-            .setValue(this.plugin.settings.styleLevel1)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.styleLevel1 = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setDesc(
+                'Defines the numbering style for level one headings. Valid values are 1 (for numbers) or A (for capital letters).'
+            )
+            .addText((text) =>
+                text.setValue(this.plugin.settings.styleLevel1).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        this.plugin.settings.styleLevel1 = value;
+                        yield this.plugin.saveSettings();
+                    })
+                )
+            );
         new obsidian.Setting(containerEl)
             .setName('Style for lower level headings (below level 1)')
-            .setDesc('Defines the numbering style for headings below level one. Valid values are 1 (for numbers) or A (for capital letters).')
-            .addText(text => text
-            .setValue(this.plugin.settings.styleLevelOther)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.styleLevelOther = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setDesc(
+                'Defines the numbering style for headings below level one. Valid values are 1 (for numbers) or A (for capital letters).'
+            )
+            .addText((text) =>
+                text.setValue(this.plugin.settings.styleLevelOther).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        this.plugin.settings.styleLevelOther = value;
+                        yield this.plugin.saveSettings();
+                    })
+                )
+            );
         new obsidian.Setting(containerEl)
             .setName('Automatic numbering')
             .setDesc('Turns on automatic numbering of documents.')
-            .addToggle(toggle => toggle
-            .setValue(this.plugin.settings.auto)
-            .setTooltip('Turn on automatic numbering')
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.auto = value;
-            yield this.plugin.saveSettings();
-        })));
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(this.plugin.settings.auto)
+                    .setTooltip('Turn on automatic numbering')
+                    .onChange((value) =>
+                        __awaiter(this, void 0, void 0, function* () {
+                            this.plugin.settings.auto = value;
+                            yield this.plugin.saveSettings();
+                        })
+                    )
+            );
         new obsidian.Setting(containerEl)
             .setName('Separator style')
-            .setDesc('Defines the separator style between the heading number and the heading text. Valid values are : (colon) or . (dot) or - (dash). You can also leave it blank for no separator.')
-            .addText(text => text
-            .setValue(this.plugin.settings.separator)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.separator = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setDesc(
+                'Defines the separator style between the heading number and the heading text. Valid values are : (colon) or . (dot) or - (dash). You can also leave it blank for no separator.'
+            )
+            .addText((text) =>
+                text.setValue(this.plugin.settings.separator).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        this.plugin.settings.separator = value;
+                        yield this.plugin.saveSettings();
+                    })
+                )
+            );
         new obsidian.Setting(containerEl)
             .setName('Table of Contents Anchor')
-            .setDesc('Anchor which labels the header where a table of contents should be inserted. The anchor should be added at the end of a header. For example, ^toc.')
-            .addText(text => text
-            .setValue(this.plugin.settings.contents)
-            .onChange((value) => __awaiter(this, void 0, void 0, function* () {
-            this.plugin.settings.contents = value;
-            yield this.plugin.saveSettings();
-        })));
+            .setDesc(
+                'Anchor which labels the header where a table of contents should be inserted. The anchor should be added at the end of a header. For example, ^toc.'
+            )
+            .addText((text) =>
+                text.setValue(this.plugin.settings.contents).onChange((value) =>
+                    __awaiter(this, void 0, void 0, function* () {
+                        this.plugin.settings.contents = value;
+                        yield this.plugin.saveSettings();
+                    })
+                )
+            );
     }
 }
 class NumberHeadingsPlugin extends obsidian.Plugin {
@@ -766,8 +814,7 @@ class NumberHeadingsPlugin extends obsidian.Plugin {
                 id: 'number-headings',
                 name: 'Number all headings in document',
                 checkCallback: (checking) => {
-                    if (checking)
-                        return isViewActive(this.app);
+                    if (checking) return isViewActive(this.app);
                     const viewInfo = getViewInfo(this.app);
                     if (viewInfo) {
                         const settings = getFrontMatterSettingsOrAlternative(viewInfo.data, this.settings);
@@ -779,8 +826,7 @@ class NumberHeadingsPlugin extends obsidian.Plugin {
                         }, 3000);
                         const saveSettingsCallback = (shouldAddAutoFlag) => {
                             const tweakedSettings = Object.assign({}, settings);
-                            if (shouldAddAutoFlag)
-                                tweakedSettings.auto = true;
+                            if (shouldAddAutoFlag) tweakedSettings.auto = true;
                             saveSettingsToFrontMatter(viewInfo.data, viewInfo.editor, tweakedSettings);
                         };
                         const config = {
@@ -794,23 +840,22 @@ class NumberHeadingsPlugin extends obsidian.Plugin {
   Style for lower level headings (below level 1): ${settings.styleLevelOther}
   Separator: ${settings.separator}
   Table of Contents Anchor: ${settings.contents}`,
-                            saveSettingsCallback
+                            saveSettingsCallback,
                         };
                         showNumberingDoneMessage(this.app, config);
                     }
                     return false;
-                }
+                },
             });
             this.addCommand({
                 id: 'remove-number-headings',
                 name: 'Remove numbering from all headings in document',
                 checkCallback: (checking) => {
-                    if (checking)
-                        return isViewActive(this.app);
+                    if (checking) return isViewActive(this.app);
                     const viewInfo = getViewInfo(this.app);
                     removeHeadingNumbering(viewInfo);
                     return true;
-                }
+                },
             });
             // this.addCommand({
             //     id: 'save-settings-to-front-matter',
@@ -827,22 +872,24 @@ class NumberHeadingsPlugin extends obsidian.Plugin {
             //     }
             // });
             this.addSettingTab(new NumberHeadingsPluginSettingTab(this.app, this));
-            this.registerInterval(window.setInterval(() => {
-                const viewInfo = getViewInfo(this.app);
-                if (viewInfo) {
-                    const settings = getFrontMatterSettingsOrAlternative(viewInfo.data, this.settings);
-                    if (settings.auto) {
-                        updateHeadingNumbering(viewInfo, settings);
-                        setTimeout(() => {
-                            // HACK: This must happen after a timeout so that there is time for the editor transaction to complete
-                            const postNumberingViewInfo = getViewInfo(this.app);
-                            updateTableOfContents(postNumberingViewInfo, settings);
-                        }, 3000);
-                        // eslint-disable-next-line no-console
-                        console.log('Number Headings Plugin: Automatically numbered document');
+            this.registerInterval(
+                window.setInterval(() => {
+                    const viewInfo = getViewInfo(this.app);
+                    if (viewInfo) {
+                        const settings = getFrontMatterSettingsOrAlternative(viewInfo.data, this.settings);
+                        if (settings.auto) {
+                            updateHeadingNumbering(viewInfo, settings);
+                            setTimeout(() => {
+                                // HACK: This must happen after a timeout so that there is time for the editor transaction to complete
+                                const postNumberingViewInfo = getViewInfo(this.app);
+                                updateTableOfContents(postNumberingViewInfo, settings);
+                            }, 3000);
+                            // eslint-disable-next-line no-console
+                            console.log('Number Headings Plugin: Automatically numbered document');
+                        }
                     }
-                }
-            }, 10 * 1000));
+                }, 10 * 1000)
+            );
         });
     }
     loadSettings() {

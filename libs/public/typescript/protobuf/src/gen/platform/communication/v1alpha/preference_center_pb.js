@@ -2,141 +2,162 @@
 // @generated from file platform/communication/v1alpha/preference_center.proto (package platform.communication.v1alpha, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
-import { file_google_api_annotations } from "../../../google/api/annotations_pb";
-import { file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_spec_v2_spec } from "../../spec/v2/spec_pb";
-import { file_buf_validate_validate } from "../../../buf/validate/validate_pb";
+import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
+import { file_google_api_annotations } from '../../../google/api/annotations_pb';
+import { file_google_protobuf_timestamp } from '@bufbuild/protobuf/wkt';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_spec_v2_spec } from '../../spec/v2/spec_pb';
+import { file_buf_validate_validate } from '../../../buf/validate/validate_pb';
 
 /**
  * Describes the file platform/communication/v1alpha/preference_center.proto.
  */
-export const file_platform_communication_v1alpha_preference_center = /*@__PURE__*/
-  fileDesc("CjZwbGF0Zm9ybS9jb21tdW5pY2F0aW9uL3YxYWxwaGEvcHJlZmVyZW5jZV9jZW50ZXIucHJvdG8SHnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYSIfCh1QcmVmZXJlbmNlQ2VudGVyQ29uZmlndXJhdGlvbiLzAgofQ3JlYXRlT3JVcGRhdGVQcmVmZXJlbmNlUmVxdWVzdBIeCgxhbm9ueW1vdXNfaWQYASABKAlCCLpIBXIDGIACEhkKBWVtYWlsGAIgASgJQgq6SAdyBRiAAmABEhMKC2V4dGVybmFsX2lkGAMgASgJEh0KDHBob25lX251bWJlchgEIAEoCUIHukgEcgIYChIcCgpmaXJzdF9uYW1lGAUgASgJQgi6SAVyAxiAAhIbCglsYXN0X25hbWUYBiABKAlCCLpIBXIDGIACEhwKC3Bvc3RhbF9jb2RlGAcgASgJQge6SARyAhgKEhUKBGNpdHkYCCABKAlCB7pIBHICGEASJwoVc3RhdGVfcHJvdmluY2VfcmVnaW9uGAkgASgJQgi6SAVyAxiAARIZCgdjb3VudHJ5GAogASgJQgi6SAVyAxiAARIQCghsaXN0X2lkcxgLIAMoCRITCgtzZWdtZW50X2lkcxgMIAMoCToG+rYYAggBIrQBCiBDcmVhdGVPclVwZGF0ZVByZWZlcmVuY2VSZXNwb25zZRI7CgxzcGVjX2NvbnRleHQYASABKAsyJS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSZXNwb25zZUNvbnRleHQSSwoRcHJlZmVyZW5jZV9jZW50ZXIYAiABKAsyMC5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuUHJlZmVyZW5jZUNlbnRlcjoG+rYYAggCIo4BChdEZWxldGVQcmVmZXJlbmNlUmVxdWVzdBIeCgxhbm9ueW1vdXNfaWQYASABKAlCCLpIBXIDGIACEhcKBWVtYWlsGAIgASgJQgi6SAVyAxiAAhITCgtleHRlcm5hbF9pZBgDIAEoCRIdCgxwaG9uZV9udW1iZXIYBCABKAlCB7pIBHICGCA6Bvq2GAIIASKsAQoYRGVsZXRlUHJlZmVyZW5jZVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBJLChFwcmVmZXJlbmNlX2NlbnRlchgCIAEoCzIwLnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5QcmVmZXJlbmNlQ2VudGVyOgb6thgCCAIiNgoUR2V0UHJlZmVyZW5jZVJlcXVlc3QSFgoCaWQYASABKAlCCrpIB3IFEAMYgAI6Bvq2GAIIASKpAQoVR2V0UHJlZmVyZW5jZVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBJLChFwcmVmZXJlbmNlX2NlbnRlchgCIAEoCzIwLnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5QcmVmZXJlbmNlQ2VudGVyOgb6thgCCAIiJQobR2V0UHJlZmVyZW5jZU9wdGlvbnNSZXF1ZXN0Ogb6thgCCAEi8wEKHEdldFByZWZlcmVuY2VPcHRpb25zUmVzcG9uc2USOwoMc3BlY19jb250ZXh0GAEgASgLMiUucGxhdGZvcm0uc3BlYy52Mi5TcGVjUmVzcG9uc2VDb250ZXh0EkUKCmluZHVzdHJpZXMYAiADKAsyMS5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuRW1haWxTdWJzY3JpcHRpb24SRwoMY2FwYWJpbGl0aWVzGAMgAygLMjEucGxhdGZvcm0uY29tbXVuaWNhdGlvbi52MWFscGhhLkVtYWlsU3Vic2NyaXB0aW9uOgb6thgCCAIicgoRRW1haWxTdWJzY3JpcHRpb24SQwoEdHlwZRgBIAEoDjI1LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5FbWFpbFN1YnNjcmlwdGlvblR5cGUSCgoCaWQYAiABKAkSDAoEbmFtZRgDIAEoCSLGAwoQUHJlZmVyZW5jZUNlbnRlchISCgJpZBgBIAEoCUIGyrcYAggBEi4KCmNyZWF0ZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhQKDGFub255bW91c19pZBgEIAEoCRINCgVlbWFpbBgFIAEoCRITCgtleHRlcm5hbF9pZBgGIAEoCRIUCgxwaG9uZV9udW1iZXIYByABKAkSEgoKZmlyc3RfbmFtZRgIIAEoCRIRCglsYXN0X25hbWUYCSABKAkSEwoLcG9zdGFsX2NvZGUYCiABKAkSDAoEY2l0eRgLIAEoCRIdChVzdGF0ZV9wcm92aW5jZV9yZWdpb24YDCABKAkSDwoHY291bnRyeRgNIAEoCRIQCghsaXN0X2lkcxgOIAMoCRITCgtzZWdtZW50X2lkcxgPIAMoCRJNChJlbWFpbF9zdWJzY3JpcHRpb24YECADKAsyMS5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuRW1haWxTdWJzY3JpcHRpb24q2AEKGFByZWZlcmVuY2VDZW50ZXJDb21tYW5kcxIqCiZQUkVGRVJFTkNFX0NFTlRFUl9DT01NQU5EU19VTlNQRUNJRklFRBAAEigKJFBSRUZFUkVOQ0VfQ0VOVEVSX0NPTU1BTkRTX1NVQlNDUklCRRABEjIKLlBSRUZFUkVOQ0VfQ0VOVEVSX0NPTU1BTkRTX1VQREFURV9TVUJTQ1JJUFRJT04QAhIqCiZQUkVGRVJFTkNFX0NFTlRFUl9DT01NQU5EU19VTlNVQlNDUklCRRADGgaSuBgCCAMq6AEKFlByZWZlcmVuY2VDZW50ZXJFdmVudHMSKAokUFJFRkVSRU5DRV9DRU5URVJfRVZFTlRTX1VOU1BFQ0lGSUVEEAASMwojUFJFRkVSRU5DRV9DRU5URVJfRVZFTlRTX1NVQlNDUklCRUQQARoK4rgYBggBEAEYARIwCiBQUkVGRVJFTkNFX0NFTlRFUl9FVkVOVFNfVVBEQVRFRBACGgriuBgGCAEQARgBEjUKJVBSRUZFUkVOQ0VfQ0VOVEVSX0VWRU5UU19VTlNVQlNDUklCRUQQAxoK4rgYBggBEAEYARoGkrgYAggEKo4BChVFbWFpbFN1YnNjcmlwdGlvblR5cGUSJwojRU1BSUxfU1VCU0NSSVBUSU9OX1RZUEVfVU5TUEVDSUZJRUQQABIkCiBFTUFJTF9TVUJTQ1JJUFRJT05fVFlQRV9JTkRVU1RSWRABEiYKIkVNQUlMX1NVQlNDUklQVElPTl9UWVBFX0NBUEFCSUxJVFkQAjKYBwoXUHJlZmVyZW5jZUNlbnRlclNlcnZpY2US8gEKGENyZWF0ZU9yVXBkYXRlUHJlZmVyZW5jZRI/LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5DcmVhdGVPclVwZGF0ZVByZWZlcmVuY2VSZXF1ZXN0GkAucGxhdGZvcm0uY29tbXVuaWNhdGlvbi52MWFscGhhLkNyZWF0ZU9yVXBkYXRlUHJlZmVyZW5jZVJlc3BvbnNlIlOqthgCCAKythgWChBjcmVhdGUtb3ItdXBkYXRlEgLNAYLT5JMCLToBKiIoL3YxYWxwaGEvY29tbXVuaWNhdGlvbi9wcmVmZXJlbmNlLWNlbnRlchLVAQoQRGVsZXRlUHJlZmVyZW5jZRI3LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5EZWxldGVQcmVmZXJlbmNlUmVxdWVzdBo4LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5EZWxldGVQcmVmZXJlbmNlUmVzcG9uc2UiTqq2GAIIBLK2GAwKBmRlbGV0ZRICzQGC0+STAjIqMC92MWFscGhhL2NvbW11bmljYXRpb24vcHJlZmVyZW5jZS1jZW50ZXIve2VtYWlsfRLGAQoNR2V0UHJlZmVyZW5jZRI0LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5HZXRQcmVmZXJlbmNlUmVxdWVzdBo1LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5HZXRQcmVmZXJlbmNlUmVzcG9uc2UiSKq2GAIICrK2GAkKA2dldBICzQGC0+STAi8SLS92MWFscGhhL2NvbW11bmljYXRpb24vcHJlZmVyZW5jZS1jZW50ZXIve2lkfRLmAQoUR2V0UHJlZmVyZW5jZU9wdGlvbnMSOy5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuR2V0UHJlZmVyZW5jZU9wdGlvbnNSZXF1ZXN0GjwucGxhdGZvcm0uY29tbXVuaWNhdGlvbi52MWFscGhhLkdldFByZWZlcmVuY2VPcHRpb25zUmVzcG9uc2UiU6q2GAIICrK2GBEKC2dldC1vcHRpb25zEgLNAYLT5JMCMhIwL3YxYWxwaGEvY29tbXVuaWNhdGlvbi9wcmVmZXJlbmNlLWNlbnRlci9vcHRpb25zQscBWnBnaXRodWIuY29tL29wZW5lY29zeXN0ZW1zL2Vjb3N5c3RlbS9saWJzL3B1YmxpYy9nby9zZGsvZ2VuL3BsYXRmb3JtL2NvbW11bmljYXRpb24vdjFhbHBoYTtjb21tdW5pY2F0aW9udjFhbHBoYXBigsQTAggCgrUYBggDEAEYAoq1GC4KEXByZWZlcmVuY2VfY2VudGVyEhJwcmVmZXJlbmNlX2NlbnRlcnMiA2phbigCkrUYAwoBA5q1GAIIAaK1GAIIAWIGcHJvdG8z", [file_google_api_annotations, file_google_protobuf_timestamp, file_platform_options_v2_annotations, file_platform_spec_v2_spec, file_buf_validate_validate]);
+export const file_platform_communication_v1alpha_preference_center =
+    /*@__PURE__*/
+    fileDesc(
+        'CjZwbGF0Zm9ybS9jb21tdW5pY2F0aW9uL3YxYWxwaGEvcHJlZmVyZW5jZV9jZW50ZXIucHJvdG8SHnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYSIfCh1QcmVmZXJlbmNlQ2VudGVyQ29uZmlndXJhdGlvbiLzAgofQ3JlYXRlT3JVcGRhdGVQcmVmZXJlbmNlUmVxdWVzdBIeCgxhbm9ueW1vdXNfaWQYASABKAlCCLpIBXIDGIACEhkKBWVtYWlsGAIgASgJQgq6SAdyBRiAAmABEhMKC2V4dGVybmFsX2lkGAMgASgJEh0KDHBob25lX251bWJlchgEIAEoCUIHukgEcgIYChIcCgpmaXJzdF9uYW1lGAUgASgJQgi6SAVyAxiAAhIbCglsYXN0X25hbWUYBiABKAlCCLpIBXIDGIACEhwKC3Bvc3RhbF9jb2RlGAcgASgJQge6SARyAhgKEhUKBGNpdHkYCCABKAlCB7pIBHICGEASJwoVc3RhdGVfcHJvdmluY2VfcmVnaW9uGAkgASgJQgi6SAVyAxiAARIZCgdjb3VudHJ5GAogASgJQgi6SAVyAxiAARIQCghsaXN0X2lkcxgLIAMoCRITCgtzZWdtZW50X2lkcxgMIAMoCToG+rYYAggBIrQBCiBDcmVhdGVPclVwZGF0ZVByZWZlcmVuY2VSZXNwb25zZRI7CgxzcGVjX2NvbnRleHQYASABKAsyJS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSZXNwb25zZUNvbnRleHQSSwoRcHJlZmVyZW5jZV9jZW50ZXIYAiABKAsyMC5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuUHJlZmVyZW5jZUNlbnRlcjoG+rYYAggCIo4BChdEZWxldGVQcmVmZXJlbmNlUmVxdWVzdBIeCgxhbm9ueW1vdXNfaWQYASABKAlCCLpIBXIDGIACEhcKBWVtYWlsGAIgASgJQgi6SAVyAxiAAhITCgtleHRlcm5hbF9pZBgDIAEoCRIdCgxwaG9uZV9udW1iZXIYBCABKAlCB7pIBHICGCA6Bvq2GAIIASKsAQoYRGVsZXRlUHJlZmVyZW5jZVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBJLChFwcmVmZXJlbmNlX2NlbnRlchgCIAEoCzIwLnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5QcmVmZXJlbmNlQ2VudGVyOgb6thgCCAIiNgoUR2V0UHJlZmVyZW5jZVJlcXVlc3QSFgoCaWQYASABKAlCCrpIB3IFEAMYgAI6Bvq2GAIIASKpAQoVR2V0UHJlZmVyZW5jZVJlc3BvbnNlEjsKDHNwZWNfY29udGV4dBgBIAEoCzIlLnBsYXRmb3JtLnNwZWMudjIuU3BlY1Jlc3BvbnNlQ29udGV4dBJLChFwcmVmZXJlbmNlX2NlbnRlchgCIAEoCzIwLnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5QcmVmZXJlbmNlQ2VudGVyOgb6thgCCAIiJQobR2V0UHJlZmVyZW5jZU9wdGlvbnNSZXF1ZXN0Ogb6thgCCAEi8wEKHEdldFByZWZlcmVuY2VPcHRpb25zUmVzcG9uc2USOwoMc3BlY19jb250ZXh0GAEgASgLMiUucGxhdGZvcm0uc3BlYy52Mi5TcGVjUmVzcG9uc2VDb250ZXh0EkUKCmluZHVzdHJpZXMYAiADKAsyMS5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuRW1haWxTdWJzY3JpcHRpb24SRwoMY2FwYWJpbGl0aWVzGAMgAygLMjEucGxhdGZvcm0uY29tbXVuaWNhdGlvbi52MWFscGhhLkVtYWlsU3Vic2NyaXB0aW9uOgb6thgCCAIicgoRRW1haWxTdWJzY3JpcHRpb24SQwoEdHlwZRgBIAEoDjI1LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5FbWFpbFN1YnNjcmlwdGlvblR5cGUSCgoCaWQYAiABKAkSDAoEbmFtZRgDIAEoCSLGAwoQUHJlZmVyZW5jZUNlbnRlchISCgJpZBgBIAEoCUIGyrcYAggBEi4KCmNyZWF0ZWRfYXQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi4KCnVwZGF0ZWRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhQKDGFub255bW91c19pZBgEIAEoCRINCgVlbWFpbBgFIAEoCRITCgtleHRlcm5hbF9pZBgGIAEoCRIUCgxwaG9uZV9udW1iZXIYByABKAkSEgoKZmlyc3RfbmFtZRgIIAEoCRIRCglsYXN0X25hbWUYCSABKAkSEwoLcG9zdGFsX2NvZGUYCiABKAkSDAoEY2l0eRgLIAEoCRIdChVzdGF0ZV9wcm92aW5jZV9yZWdpb24YDCABKAkSDwoHY291bnRyeRgNIAEoCRIQCghsaXN0X2lkcxgOIAMoCRITCgtzZWdtZW50X2lkcxgPIAMoCRJNChJlbWFpbF9zdWJzY3JpcHRpb24YECADKAsyMS5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuRW1haWxTdWJzY3JpcHRpb24q2AEKGFByZWZlcmVuY2VDZW50ZXJDb21tYW5kcxIqCiZQUkVGRVJFTkNFX0NFTlRFUl9DT01NQU5EU19VTlNQRUNJRklFRBAAEigKJFBSRUZFUkVOQ0VfQ0VOVEVSX0NPTU1BTkRTX1NVQlNDUklCRRABEjIKLlBSRUZFUkVOQ0VfQ0VOVEVSX0NPTU1BTkRTX1VQREFURV9TVUJTQ1JJUFRJT04QAhIqCiZQUkVGRVJFTkNFX0NFTlRFUl9DT01NQU5EU19VTlNVQlNDUklCRRADGgaSuBgCCAMq6AEKFlByZWZlcmVuY2VDZW50ZXJFdmVudHMSKAokUFJFRkVSRU5DRV9DRU5URVJfRVZFTlRTX1VOU1BFQ0lGSUVEEAASMwojUFJFRkVSRU5DRV9DRU5URVJfRVZFTlRTX1NVQlNDUklCRUQQARoK4rgYBggBEAEYARIwCiBQUkVGRVJFTkNFX0NFTlRFUl9FVkVOVFNfVVBEQVRFRBACGgriuBgGCAEQARgBEjUKJVBSRUZFUkVOQ0VfQ0VOVEVSX0VWRU5UU19VTlNVQlNDUklCRUQQAxoK4rgYBggBEAEYARoGkrgYAggEKo4BChVFbWFpbFN1YnNjcmlwdGlvblR5cGUSJwojRU1BSUxfU1VCU0NSSVBUSU9OX1RZUEVfVU5TUEVDSUZJRUQQABIkCiBFTUFJTF9TVUJTQ1JJUFRJT05fVFlQRV9JTkRVU1RSWRABEiYKIkVNQUlMX1NVQlNDUklQVElPTl9UWVBFX0NBUEFCSUxJVFkQAjKYBwoXUHJlZmVyZW5jZUNlbnRlclNlcnZpY2US8gEKGENyZWF0ZU9yVXBkYXRlUHJlZmVyZW5jZRI/LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5DcmVhdGVPclVwZGF0ZVByZWZlcmVuY2VSZXF1ZXN0GkAucGxhdGZvcm0uY29tbXVuaWNhdGlvbi52MWFscGhhLkNyZWF0ZU9yVXBkYXRlUHJlZmVyZW5jZVJlc3BvbnNlIlOqthgCCAKythgWChBjcmVhdGUtb3ItdXBkYXRlEgLNAYLT5JMCLToBKiIoL3YxYWxwaGEvY29tbXVuaWNhdGlvbi9wcmVmZXJlbmNlLWNlbnRlchLVAQoQRGVsZXRlUHJlZmVyZW5jZRI3LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5EZWxldGVQcmVmZXJlbmNlUmVxdWVzdBo4LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5EZWxldGVQcmVmZXJlbmNlUmVzcG9uc2UiTqq2GAIIBLK2GAwKBmRlbGV0ZRICzQGC0+STAjIqMC92MWFscGhhL2NvbW11bmljYXRpb24vcHJlZmVyZW5jZS1jZW50ZXIve2VtYWlsfRLGAQoNR2V0UHJlZmVyZW5jZRI0LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5HZXRQcmVmZXJlbmNlUmVxdWVzdBo1LnBsYXRmb3JtLmNvbW11bmljYXRpb24udjFhbHBoYS5HZXRQcmVmZXJlbmNlUmVzcG9uc2UiSKq2GAIICrK2GAkKA2dldBICzQGC0+STAi8SLS92MWFscGhhL2NvbW11bmljYXRpb24vcHJlZmVyZW5jZS1jZW50ZXIve2lkfRLmAQoUR2V0UHJlZmVyZW5jZU9wdGlvbnMSOy5wbGF0Zm9ybS5jb21tdW5pY2F0aW9uLnYxYWxwaGEuR2V0UHJlZmVyZW5jZU9wdGlvbnNSZXF1ZXN0GjwucGxhdGZvcm0uY29tbXVuaWNhdGlvbi52MWFscGhhLkdldFByZWZlcmVuY2VPcHRpb25zUmVzcG9uc2UiU6q2GAIICrK2GBEKC2dldC1vcHRpb25zEgLNAYLT5JMCMhIwL3YxYWxwaGEvY29tbXVuaWNhdGlvbi9wcmVmZXJlbmNlLWNlbnRlci9vcHRpb25zQscBWnBnaXRodWIuY29tL29wZW5lY29zeXN0ZW1zL2Vjb3N5c3RlbS9saWJzL3B1YmxpYy9nby9zZGsvZ2VuL3BsYXRmb3JtL2NvbW11bmljYXRpb24vdjFhbHBoYTtjb21tdW5pY2F0aW9udjFhbHBoYXBigsQTAggCgrUYBggDEAEYAoq1GC4KEXByZWZlcmVuY2VfY2VudGVyEhJwcmVmZXJlbmNlX2NlbnRlcnMiA2phbigCkrUYAwoBA5q1GAIIAaK1GAIIAWIGcHJvdG8z',
+        [
+            file_google_api_annotations,
+            file_google_protobuf_timestamp,
+            file_platform_options_v2_annotations,
+            file_platform_spec_v2_spec,
+            file_buf_validate_validate,
+        ]
+    );
 
 /**
  * Describes the message platform.communication.v1alpha.PreferenceCenterConfiguration.
  * Use `create(PreferenceCenterConfigurationSchema)` to create a new message.
  */
-export const PreferenceCenterConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 0);
+export const PreferenceCenterConfigurationSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 0);
 
 /**
  * Describes the message platform.communication.v1alpha.CreateOrUpdatePreferenceRequest.
  * Use `create(CreateOrUpdatePreferenceRequestSchema)` to create a new message.
  */
-export const CreateOrUpdatePreferenceRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 1);
+export const CreateOrUpdatePreferenceRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 1);
 
 /**
  * Describes the message platform.communication.v1alpha.CreateOrUpdatePreferenceResponse.
  * Use `create(CreateOrUpdatePreferenceResponseSchema)` to create a new message.
  */
-export const CreateOrUpdatePreferenceResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 2);
+export const CreateOrUpdatePreferenceResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 2);
 
 /**
  * Describes the message platform.communication.v1alpha.DeletePreferenceRequest.
  * Use `create(DeletePreferenceRequestSchema)` to create a new message.
  */
-export const DeletePreferenceRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 3);
+export const DeletePreferenceRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 3);
 
 /**
  * Describes the message platform.communication.v1alpha.DeletePreferenceResponse.
  * Use `create(DeletePreferenceResponseSchema)` to create a new message.
  */
-export const DeletePreferenceResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 4);
+export const DeletePreferenceResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 4);
 
 /**
  * Describes the message platform.communication.v1alpha.GetPreferenceRequest.
  * Use `create(GetPreferenceRequestSchema)` to create a new message.
  */
-export const GetPreferenceRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 5);
+export const GetPreferenceRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 5);
 
 /**
  * Describes the message platform.communication.v1alpha.GetPreferenceResponse.
  * Use `create(GetPreferenceResponseSchema)` to create a new message.
  */
-export const GetPreferenceResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 6);
+export const GetPreferenceResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 6);
 
 /**
  * Describes the message platform.communication.v1alpha.GetPreferenceOptionsRequest.
  * Use `create(GetPreferenceOptionsRequestSchema)` to create a new message.
  */
-export const GetPreferenceOptionsRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 7);
+export const GetPreferenceOptionsRequestSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 7);
 
 /**
  * Describes the message platform.communication.v1alpha.GetPreferenceOptionsResponse.
  * Use `create(GetPreferenceOptionsResponseSchema)` to create a new message.
  */
-export const GetPreferenceOptionsResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 8);
+export const GetPreferenceOptionsResponseSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 8);
 
 /**
  * Describes the message platform.communication.v1alpha.EmailSubscription.
  * Use `create(EmailSubscriptionSchema)` to create a new message.
  */
-export const EmailSubscriptionSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 9);
+export const EmailSubscriptionSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 9);
 
 /**
  * Describes the message platform.communication.v1alpha.PreferenceCenter.
  * Use `create(PreferenceCenterSchema)` to create a new message.
  */
-export const PreferenceCenterSchema = /*@__PURE__*/
-  messageDesc(file_platform_communication_v1alpha_preference_center, 10);
+export const PreferenceCenterSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_communication_v1alpha_preference_center, 10);
 
 /**
  * Describes the enum platform.communication.v1alpha.PreferenceCenterCommands.
  */
-export const PreferenceCenterCommandsSchema = /*@__PURE__*/
-  enumDesc(file_platform_communication_v1alpha_preference_center, 0);
+export const PreferenceCenterCommandsSchema =
+    /*@__PURE__*/
+    enumDesc(file_platform_communication_v1alpha_preference_center, 0);
 
 /**
  * Commands used with the Preference Center Service
  *
  * @generated from enum platform.communication.v1alpha.PreferenceCenterCommands
  */
-export const PreferenceCenterCommands = /*@__PURE__*/
-  tsEnum(PreferenceCenterCommandsSchema);
+export const PreferenceCenterCommands = /*@__PURE__*/ tsEnum(PreferenceCenterCommandsSchema);
 
 /**
  * Describes the enum platform.communication.v1alpha.PreferenceCenterEvents.
  */
-export const PreferenceCenterEventsSchema = /*@__PURE__*/
-  enumDesc(file_platform_communication_v1alpha_preference_center, 1);
+export const PreferenceCenterEventsSchema =
+    /*@__PURE__*/
+    enumDesc(file_platform_communication_v1alpha_preference_center, 1);
 
 /**
  * Preference Center Events
  *
  * @generated from enum platform.communication.v1alpha.PreferenceCenterEvents
  */
-export const PreferenceCenterEvents = /*@__PURE__*/
-  tsEnum(PreferenceCenterEventsSchema);
+export const PreferenceCenterEvents = /*@__PURE__*/ tsEnum(PreferenceCenterEventsSchema);
 
 /**
  * Describes the enum platform.communication.v1alpha.EmailSubscriptionType.
  */
-export const EmailSubscriptionTypeSchema = /*@__PURE__*/
-  enumDesc(file_platform_communication_v1alpha_preference_center, 2);
+export const EmailSubscriptionTypeSchema =
+    /*@__PURE__*/
+    enumDesc(file_platform_communication_v1alpha_preference_center, 2);
 
 /**
  * @generated from enum platform.communication.v1alpha.EmailSubscriptionType
  */
-export const EmailSubscriptionType = /*@__PURE__*/
-  tsEnum(EmailSubscriptionTypeSchema);
+export const EmailSubscriptionType = /*@__PURE__*/ tsEnum(EmailSubscriptionTypeSchema);
 
 /**
  * Preference Center Service interface
  *
  * @generated from service platform.communication.v1alpha.PreferenceCenterService
  */
-export const PreferenceCenterService = /*@__PURE__*/
-  serviceDesc(file_platform_communication_v1alpha_preference_center, 0);
-
+export const PreferenceCenterService =
+    /*@__PURE__*/
+    serviceDesc(file_platform_communication_v1alpha_preference_center, 0);

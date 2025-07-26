@@ -1,18 +1,18 @@
 ---
 title: Zero Trust Architecture
 aliases:
-  - Zero Trust Architecture
-  - ZTA
-  - Zero Trust
+    - Zero Trust Architecture
+    - ZTA
+    - Zero Trust
 pcx_content_type: definition
 summary: >-
-  An IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. No single specific technology is associated with zero trust architecture; it is a holistic approach to network security that incorporates several different principles and technologies.<br><br>
+    An IT security model that requires strict identity verification for every person and device trying to access resources on a private network, regardless of whether they are sitting within or outside of the network perimeter. No single specific technology is associated with zero trust architecture; it is a holistic approach to network security that incorporates several different principles and technologies.<br><br>
 
-  **Related Terms**: [ZTNA](/fundamentals/glossary/#ztna)
+    **Related Terms**: [ZTNA](/fundamentals/glossary/#ztna)
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/ztna
+    - /fundamentals/glossary/ztna
 ---
 
 # Zero Trust Architecture

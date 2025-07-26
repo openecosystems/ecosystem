@@ -3,7 +3,7 @@ date_created: 2022-12-11T17:19:36
 title: Section 508
 pcx_content_type: definition
 summary: >-
-  Handicapped people may have Readers that help them understand websites. But in order for those to work well the website should meet certain standards. These standards are called `Section 508`.
+    Handicapped people may have Readers that help them understand websites. But in order for those to work well the website should meet certain standards. These standards are called `Section 508`.
 hidden: true
 has_more: true
 has_links: false
@@ -21,4 +21,4 @@ However, there are also consultancy companies that can do more extensive 508 com
 
 ## Sources
 
-- https://www.section508.gov/
+-   https://www.section508.gov/

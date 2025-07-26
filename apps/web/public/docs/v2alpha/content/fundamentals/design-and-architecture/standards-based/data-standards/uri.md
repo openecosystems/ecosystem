@@ -1,22 +1,22 @@
 ---
 title: URI
 aliases:
-  - URI
-  - Uniform Resource Identifier (URI)
-  - Uniform Resource Identifier
+    - URI
+    - Uniform Resource Identifier (URI)
+    - Uniform Resource Identifier
 pcx_content_type: definition
 date_created: 2022-12-11T17:01:51
 author: Guillaume Hanique
 summary: >-
-  A Uniform Resource Identifier (URI) is a unique sequence of characters that identifies a logical or physical resource used by web technologies. URIs may be used to identify anything, including real-world objects, such as people and places, concepts, or information resources such as web pages and books.
+    A Uniform Resource Identifier (URI) is a unique sequence of characters that identifies a logical or physical resource used by web technologies. URIs may be used to identify anything, including real-world objects, such as people and places, concepts, or information resources such as web pages and books.
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/url
-  - /fundamentals/design-and-architecture/standards-based/data-standards/urn
-  - /fundamentals/design-and-architecture/standards-based/data-standards/rdf
-  - /fundamentals/design-and-architecture/standards-based/data-standards/owl
-  - /fundamentals/design-and-architecture/standards-based/data-standards/iri
+    - /fundamentals/design-and-architecture/standards-based/data-standards/url
+    - /fundamentals/design-and-architecture/standards-based/data-standards/urn
+    - /fundamentals/design-and-architecture/standards-based/data-standards/rdf
+    - /fundamentals/design-and-architecture/standards-based/data-standards/owl
+    - /fundamentals/design-and-architecture/standards-based/data-standards/iri
 ---
 
 # URI
@@ -30,10 +30,7 @@ Other `URI`s provide only a unique name, without a means of locating or retrievi
 `URI`s are not only used by Browsers. They are also used to identify anything in [RDF](/fundamentals/design-and-architecture/standards-based/data-standards/rdf) and [OWL](/fundamentals/design-and-architecture/standards-based/data-standards/owl).
 
 The `URI` syntax is:
-
-```text
-URI = scheme ":" ["//" authority] path ["?" query] ["#" fragment]
-```
+{{<raw>}}<pre class="CodeBlock CodeBlock-with-rows CodeBlock-scrolls-horizontally CodeBlock-is-light-in-light-theme CodeBlock--language-txt" language="txt"><code><span class="CodeBlock--rows"><span class="CodeBlock--rows-content"><span class="CodeBlock--row"><span class="CodeBlock--row-indicator"></span><div class="CodeBlock--row-content"><span class="CodeBlock--token-plain">text</span></div></span></span></span></code></pre>{{</raw>}}
 
 Some examples:
 
@@ -73,5 +70,5 @@ Some examples:
 
 ## Sources
 
-- https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
-- https://www.rfc-editor.org/rfc/rfc3986
+-   https://en.wikipedia.org/wiki/Uniform_Resource_Identifier
+-   https://www.rfc-editor.org/rfc/rfc3986

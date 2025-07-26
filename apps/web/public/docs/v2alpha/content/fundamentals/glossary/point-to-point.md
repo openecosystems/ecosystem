@@ -2,21 +2,21 @@
 title: Point-to-Point
 pcx_content_type: definition
 summary: >-
-  `Point-to-Point` is an [MEP](/fundamentals/glossary/#mep) where the publisher of a message is programmed to send the message to specific receivers.
+    `Point-to-Point` is an [MEP](/fundamentals/glossary/#mep) where the publisher of a message is programmed to send the message to specific receivers.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/at-least-once
-  - /fundamentals/glossary/at-most-once
-  - /fundamentals/glossary/esb
-  - /fundamentals/glossary/exactly-once
-  - /fundamentals/glossary/mdp
-  - /fundamentals/glossary/mep
-  - /fundamentals/glossary/publish-subscribe
-  - /fundamentals/glossary/queue
-  - /fundamentals/glossary/time-critical
-  - /fundamentals/glossary/topic
-  - /fundamentals/glossary/ttl
+    - /fundamentals/glossary/at-least-once
+    - /fundamentals/glossary/at-most-once
+    - /fundamentals/glossary/esb
+    - /fundamentals/glossary/exactly-once
+    - /fundamentals/glossary/mdp
+    - /fundamentals/glossary/mep
+    - /fundamentals/glossary/publish-subscribe
+    - /fundamentals/glossary/queue
+    - /fundamentals/glossary/time-critical
+    - /fundamentals/glossary/topic
+    - /fundamentals/glossary/ttl
 ---
 
 # Point-to-Point

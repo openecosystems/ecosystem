@@ -2,12 +2,12 @@
 title: Symmetric Encryption
 pcx_content_type: definition
 summary: >-
-  A cryptographic algorithm to [Encrypt](/fundamentals/glossary/#encryption) data using a `key`, where the data can be Decrypted using the same `key`. The most commonly used algorithm is AES256.
+    A cryptographic algorithm to [Encrypt](/fundamentals/glossary/#encryption) data using a `key`, where the data can be Decrypted using the same `key`. The most commonly used algorithm is AES256.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/encryption
-  - /fundamentals/glossary/encryption-key
+    - /fundamentals/glossary/encryption
+    - /fundamentals/glossary/encryption-key
 ---
 
 # Symmetric Encryption

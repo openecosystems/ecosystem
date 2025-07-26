@@ -1,15 +1,15 @@
 ---
 title: IPv4
 aliases:
-  - IPv4
+    - IPv4
 pcx_content_type: definition
 summary: >-
-  Internet Protocol v4 (IPv4) is a full specification of how communication should work across networks.
+    Internet Protocol v4 (IPv4) is a full specification of how communication should work across networks.
 hidden: true
 has_more: true
 todo: Find sources
 links_to:
-  - /fundamentals/glossary/cidr-block
+    - /fundamentals/glossary/cidr-block
 ---
 
 # IPv4
@@ -26,10 +26,10 @@ Some network ranges are reserved. Network ranges can be specified using the [CID
 
 Some special ranges (there are more):
 
-- 0.0.0.0/8: The current network.
-- 10.0.0.0/8: Private network.
-- 127.0.0.0/8: Local host.
-- 172.16.0.0/12: Private network.
-- 192.0.0.0/24: Private network.
-- 192.168.0.0/16: Private network. Usually home networks.
-- 255.255.255.255/32: Broadcast address.
+-   0.0.0.0/8: The current network.
+-   10.0.0.0/8: Private network.
+-   127.0.0.0/8: Local host.
+-   172.16.0.0/12: Private network.
+-   192.0.0.0/24: Private network.
+-   192.168.0.0/16: Private network. Usually home networks.
+-   255.255.255.255/32: Broadcast address.

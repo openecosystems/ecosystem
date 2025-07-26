@@ -2,18 +2,19 @@
 // @generated from file platform/type/v2/file.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
 
 /**
  * Describes the file platform/type/v2/file.proto.
  */
-export const file_platform_type_v2_file = /*@__PURE__*/
-  fileDesc("ChtwbGF0Zm9ybS90eXBlL3YyL2ZpbGUucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIicwoERmlsZRIMCgRuYW1lGAEgASgJEg8KB2NvbnRlbnQYAiABKAwSDAoEc2l6ZRgDIAEoAxIMCgR0eXBlGAQgASgJEhUKDWNyZWF0aW9uX3RpbWUYBSABKAMSGQoRbW9kaWZpY2F0aW9uX3RpbWUYBiABKANCVlpUZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS90eXBlL3YyO3R5cGV2MnBiYgZwcm90bzM");
+export const file_platform_type_v2_file =
+    /*@__PURE__*/
+    fileDesc(
+        'ChtwbGF0Zm9ybS90eXBlL3YyL2ZpbGUucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIicwoERmlsZRIMCgRuYW1lGAEgASgJEg8KB2NvbnRlbnQYAiABKAwSDAoEc2l6ZRgDIAEoAxIMCgR0eXBlGAQgASgJEhUKDWNyZWF0aW9uX3RpbWUYBSABKAMSGQoRbW9kaWZpY2F0aW9uX3RpbWUYBiABKANCVlpUZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS90eXBlL3YyO3R5cGV2MnBiYgZwcm90bzM'
+    );
 
 /**
  * Describes the message platform.type.v2.File.
  * Use `create(FileSchema)` to create a new message.
  */
-export const FileSchema = /*@__PURE__*/
-  messageDesc(file_platform_type_v2_file, 0);
-
+export const FileSchema = /*@__PURE__*/ messageDesc(file_platform_type_v2_file, 0);

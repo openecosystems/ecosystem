@@ -2,10 +2,10 @@
 // @generated from file platform/reference/v2alpha/reference.proto (package platform.reference.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/reference/v2alpha/reference.proto.
@@ -15,8 +15,7 @@ export declare const file_platform_reference_v2alpha_reference: GenFile;
 /**
  * @generated from message platform.reference.v2alpha.ReferenceConfiguration
  */
-export declare type ReferenceConfiguration = Message<"platform.reference.v2alpha.ReferenceConfiguration"> & {
-};
+export declare type ReferenceConfiguration = Message<'platform.reference.v2alpha.ReferenceConfiguration'> & {};
 
 /**
  * Describes the message platform.reference.v2alpha.ReferenceConfiguration.
@@ -27,11 +26,11 @@ export declare const ReferenceConfigurationSchema: GenMessage<ReferenceConfigura
 /**
  * @generated from message platform.reference.v2alpha.UnaryRequest
  */
-export declare type UnaryRequest = Message<"platform.reference.v2alpha.UnaryRequest"> & {
-  /**
-   * @generated from field: platform.reference.v2alpha.ClientMessage message = 1;
-   */
-  message?: ClientMessage;
+export declare type UnaryRequest = Message<'platform.reference.v2alpha.UnaryRequest'> & {
+    /**
+     * @generated from field: platform.reference.v2alpha.ClientMessage message = 1;
+     */
+    message?: ClientMessage;
 };
 
 /**
@@ -43,18 +42,18 @@ export declare const UnaryRequestSchema: GenMessage<UnaryRequest>;
 /**
  * @generated from message platform.reference.v2alpha.UnaryResponse
  */
-export declare type UnaryResponse = Message<"platform.reference.v2alpha.UnaryResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type UnaryResponse = Message<'platform.reference.v2alpha.UnaryResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.reference.v2alpha.ServerMessage message = 2;
-   */
-  message?: ServerMessage;
+    /**
+     * @generated from field: platform.reference.v2alpha.ServerMessage message = 2;
+     */
+    message?: ServerMessage;
 };
 
 /**
@@ -66,11 +65,11 @@ export declare const UnaryResponseSchema: GenMessage<UnaryResponse>;
 /**
  * @generated from message platform.reference.v2alpha.ServerStreamingRequest
  */
-export declare type ServerStreamingRequest = Message<"platform.reference.v2alpha.ServerStreamingRequest"> & {
-  /**
-   * @generated from field: platform.reference.v2alpha.ClientMessage message = 1;
-   */
-  message?: ClientMessage;
+export declare type ServerStreamingRequest = Message<'platform.reference.v2alpha.ServerStreamingRequest'> & {
+    /**
+     * @generated from field: platform.reference.v2alpha.ClientMessage message = 1;
+     */
+    message?: ClientMessage;
 };
 
 /**
@@ -82,11 +81,11 @@ export declare const ServerStreamingRequestSchema: GenMessage<ServerStreamingReq
 /**
  * @generated from message platform.reference.v2alpha.ServerStreamingResponse
  */
-export declare type ServerStreamingResponse = Message<"platform.reference.v2alpha.ServerStreamingResponse"> & {
-  /**
-   * @generated from field: platform.reference.v2alpha.ServerMessage message = 1;
-   */
-  message?: ServerMessage;
+export declare type ServerStreamingResponse = Message<'platform.reference.v2alpha.ServerStreamingResponse'> & {
+    /**
+     * @generated from field: platform.reference.v2alpha.ServerMessage message = 1;
+     */
+    message?: ServerMessage;
 };
 
 /**
@@ -98,16 +97,16 @@ export declare const ServerStreamingResponseSchema: GenMessage<ServerStreamingRe
 /**
  * @generated from message platform.reference.v2alpha.ServerMessage
  */
-export declare type ServerMessage = Message<"platform.reference.v2alpha.ServerMessage"> & {
-  /**
-   * @generated from field: string user = 1;
-   */
-  user: string;
+export declare type ServerMessage = Message<'platform.reference.v2alpha.ServerMessage'> & {
+    /**
+     * @generated from field: string user = 1;
+     */
+    user: string;
 
-  /**
-   * @generated from field: string text = 2;
-   */
-  text: string;
+    /**
+     * @generated from field: string text = 2;
+     */
+    text: string;
 };
 
 /**
@@ -119,16 +118,16 @@ export declare const ServerMessageSchema: GenMessage<ServerMessage>;
 /**
  * @generated from message platform.reference.v2alpha.ClientMessage
  */
-export declare type ClientMessage = Message<"platform.reference.v2alpha.ClientMessage"> & {
-  /**
-   * @generated from field: string user = 1;
-   */
-  user: string;
+export declare type ClientMessage = Message<'platform.reference.v2alpha.ClientMessage'> & {
+    /**
+     * @generated from field: string user = 1;
+     */
+    user: string;
 
-  /**
-   * @generated from field: string text = 2;
-   */
-  text: string;
+    /**
+     * @generated from field: string text = 2;
+     */
+    text: string;
 };
 
 /**
@@ -140,25 +139,25 @@ export declare const ClientMessageSchema: GenMessage<ClientMessage>;
 /**
  * @generated from message platform.reference.v2alpha.Reference
  */
-export declare type Reference = Message<"platform.reference.v2alpha.Reference"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Reference = Message<'platform.reference.v2alpha.Reference'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * Timestamp indicating when this message was created.
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 2;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp indicating when this message was created.
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this message was last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 3;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp indicating when this message was last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
 };
 
 /**
@@ -171,21 +170,20 @@ export declare const ReferenceSchema: GenMessage<Reference>;
  * @generated from service platform.reference.v2alpha.ReferenceService
  */
 export declare const ReferenceService: GenService<{
-  /**
-   * @generated from rpc platform.reference.v2alpha.ReferenceService.Unary
-   */
-  unary: {
-    methodKind: "unary";
-    input: typeof UnaryRequestSchema;
-    output: typeof UnaryResponseSchema;
-  },
-  /**
-   * @generated from rpc platform.reference.v2alpha.ReferenceService.ServerStreaming
-   */
-  serverStreaming: {
-    methodKind: "server_streaming";
-    input: typeof ServerStreamingRequestSchema;
-    output: typeof ServerStreamingResponseSchema;
-  },
+    /**
+     * @generated from rpc platform.reference.v2alpha.ReferenceService.Unary
+     */
+    unary: {
+        methodKind: 'unary';
+        input: typeof UnaryRequestSchema;
+        output: typeof UnaryResponseSchema;
+    };
+    /**
+     * @generated from rpc platform.reference.v2alpha.ReferenceService.ServerStreaming
+     */
+    serverStreaming: {
+        methodKind: 'server_streaming';
+        input: typeof ServerStreamingRequestSchema;
+        output: typeof ServerStreamingResponseSchema;
+    };
 }>;
-

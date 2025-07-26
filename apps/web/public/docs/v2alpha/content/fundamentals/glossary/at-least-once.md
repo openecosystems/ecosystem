@@ -2,15 +2,15 @@
 title: At Least Once
 pcx_content_type: definition
 summary: >-
-  `At Least Once` is an [MDP](/fundamentals/glossary/#mdp). With this pattern the sender would send the message, and have a [Retry Mechanism](/fundamentals/glossary/#retry-mechanism) in place in case sending the message fails.
+    `At Least Once` is an [MDP](/fundamentals/glossary/#mdp). With this pattern the sender would send the message, and have a [Retry Mechanism](/fundamentals/glossary/#retry-mechanism) in place in case sending the message fails.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/mdp
-  - /fundamentals/glossary/retry-mechanism
-  - /fundamentals/glossary/idempotence
-  - /fundamentals/glossary/duplicate-detection
-  - /fundamentals/glossary/metric
+    - /fundamentals/glossary/mdp
+    - /fundamentals/glossary/retry-mechanism
+    - /fundamentals/glossary/idempotence
+    - /fundamentals/glossary/duplicate-detection
+    - /fundamentals/glossary/metric
 ---
 
 # At Least Once

@@ -2,20 +2,20 @@
 date_created: 2022-12-11T17:51:40
 title: MDSAP
 aliases:
-  - MDSAP
-  - Medical Device Single Audit Plan
-  - Medical Device Single Audit Plan (MSDAP)
+    - MDSAP
+    - Medical Device Single Audit Plan
+    - Medical Device Single Audit Plan (MSDAP)
 pcx_content_type: definition
 summary: >-
-  "The `MDSAP` is a program that allows the conduct of a single regulatory audit of a medical device manufacturer's quality management system that satisfies the requirements of multiple regulatory jurisdictions."
+    "The `MDSAP` is a program that allows the conduct of a single regulatory audit of a medical device manufacturer's quality management system that satisfies the requirements of multiple regulatory jurisdictions."
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/design-patterns/iso-13485
-  - /fundamentals/glossary/saamd
-  - /fundamentals/glossary/auditing
-  - /fundamentals/design-and-architecture/standards-based/design-patterns/mdd
-  - /fundamentals/design-and-architecture/standards-based/design-patterns/mdr
+    - /fundamentals/design-and-architecture/standards-based/design-patterns/iso-13485
+    - /fundamentals/glossary/saamd
+    - /fundamentals/glossary/auditing
+    - /fundamentals/design-and-architecture/standards-based/design-patterns/mdd
+    - /fundamentals/design-and-architecture/standards-based/design-patterns/mdr
 ---
 
 # Medical Device Single Audit Plan (MSDAP)
@@ -30,4 +30,4 @@ The equivalent to `MSDAP` for Europe are the [Medical Device Directives (MDD)](/
 
 ## Sources
 
-- https://www.fda.gov/media/90179/download
+-   https://www.fda.gov/media/90179/download

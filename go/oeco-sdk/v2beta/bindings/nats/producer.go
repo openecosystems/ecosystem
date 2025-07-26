@@ -3,7 +3,6 @@ package natsnodev1
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"connectrpc.com/connect"
@@ -18,14 +17,12 @@ import (
 
 // MultiplexCommandSync sends a command synchronously by publishing it to a NATS stream and awaiting a reply.
 // Uses Nats Publish and Subscribe Pattern
-func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {
+func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, command *SpecCommand) (*nats.Msg, error) {
 	if command == nil {
 		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecCommand object is required"))
 	}
 
 	log := *zaploggerv1.Bound.Logger
-	// acc := *configurationv2alphalib.Bound.AdaptiveConfigurationControl
-
 	s.SpecEvent = command.CommandName
 	s.SpecType = command.EntityTypeName
 
@@ -53,24 +50,9 @@ func (b *Binding) MultiplexCommandSync(_ context.Context, s *specv2pb.Spec, comm
 
 	subject := GetMultiplexedRequestSubjectName(command.Stream.StreamPrefix(), command.CommandTopic, command.Procedure)
 
-	log.Debug("Publishing on " + subject)
+	log.Debug("Issuing a multiplex command: " + command.Procedure + ", on channel: " + subject)
 
-	n := b.Nats
-
-	// When a Listener responds to a request/reply subject, it should always respond
-	// with a special type that stores both the Data and the Error
-	reply, err := n.RequestMsg(&nats.Msg{
-		Subject: subject,
-		Data:    specBytes,
-	}, 10*time.Second)
-	// Here we deserialize the SpecData/SpecError object
-	// If an .Error !=nil, then we repond with a Connect ErrorDetail and respond to the multiplexer
-	if err != nil {
-		log.Error(err.Error())
-		return nil, err
-	}
-
-	return reply, err
+	return publish(b.Nats, subject, specBytes)
 }
 
 // MultiplexEventSync sends an event to a multiplexed stream and waits for the response or error within the specified timeout.
@@ -81,14 +63,12 @@ func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event 
 	}
 
 	log := *zaploggerv1.Bound.Logger
-
 	s.SpecEvent = event.EventName
 	s.SpecType = event.EntityTypeName
 
 	data, err := anypb.New(event.Request)
 	if err != nil {
-		log.Error(err.Error())
-		return nil, connect.NewError(connect.CodeInternal, errors.New("internal error"))
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("internal error"))
 	}
 
 	s.Data = data
@@ -98,20 +78,39 @@ func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event 
 		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not marshall spec"))
 	}
 
-	// Encrypt here
-
 	subject := GetMultiplexedRequestSubjectName(event.Stream.StreamPrefix(), event.EventTopic, event.Procedure)
 
-	log.Debug("Publishing on " + subject)
+	log.Debug("Issuing a multiplex event: " + event.Procedure + ", on channel: " + subject)
 
-	n := b.Nats
+	return publish(b.Nats, subject, specBytes)
+}
 
+func publish(n *nats.Conn, subject string, specBytes []byte) (*nats.Msg, error) {
 	reply, err := n.RequestMsg(&nats.Msg{
 		Subject: subject,
 		Data:    specBytes,
 	}, 10*time.Second)
 	if err != nil {
-		fmt.Println(err)
+		switch {
+		case errors.Is(err, nats.ErrTimeout):
+			return nil, ErrTimeout
+		case errors.Is(err, nats.ErrNoResponders):
+			// no responders
+			return nil, ErrNoResponders
+		case errors.Is(err, nats.ErrConnectionClosed):
+			// NATS connection was closed
+			return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+		case errors.Is(err, nats.ErrBadSubscription):
+			// something wrong with the sub
+			return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+		default:
+			// unknown or generic error
+			return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("unhandled NATS error"), err)
+		}
+	}
+
+	if reply == nil {
+		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("received nil reply from NATS responder"))
 	}
 
 	return reply, err

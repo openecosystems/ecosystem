@@ -3,9 +3,7 @@
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "libs/partner/typescript/protobuf/src",
     "projectType": "library",
-    "implicitDependencies": [
-
-    ],
+    "implicitDependencies": [],
     "release": {
         "version": {
             "generatorOptions": {
@@ -15,7 +13,6 @@
         }
     },
     "targets": {
-
         "build": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
@@ -28,17 +25,13 @@
             }
         },
         "pre-build": {
-          "executor": "nx:run-commands",
-          "outputs": [
-
-          ],
-          "options": {
-            "commands": [
-              "cp -R src/gen ../../../../dist/libs/partner/typescript/protobuf/src"
-            ],
-            "parallel": false,
-            "cwd": "libs/partner/typescript/protobuf"
-          }
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "commands": ["cp -R src/gen ../../../../dist/libs/partner/typescript/protobuf/src"],
+                "parallel": false,
+                "cwd": "libs/partner/typescript/protobuf"
+            }
         },
         "nx-release-publish": {
             "options": {
@@ -46,11 +39,5 @@
             }
         }
     },
-    "tags": [
-      "type:lib",
-      "cycle:partner",
-      "language:typescript",
-      "type:protobuf",
-      "exposure:external"
-    ]
+    "tags": ["type:lib", "cycle:partner", "language:typescript", "type:protobuf", "exposure:external"]
 }

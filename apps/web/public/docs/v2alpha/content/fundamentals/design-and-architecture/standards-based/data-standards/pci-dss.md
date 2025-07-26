@@ -3,7 +3,7 @@ date_created: 2022-12-11T17:20:53
 title: PCI-DSS
 pcx_content_type: definition
 summary: >-
-  PCI-DSS is a set of regulations to protect Credit Card details.
+    PCI-DSS is a set of regulations to protect Credit Card details.
 hidden: true
 has_more: true
 has_links: false
@@ -17,4 +17,4 @@ If a company is Breached and Credit Cards are abused, then if the organization i
 
 ## Sources
 
-- https://www.pcicomplianceguide.org/faq/
+-   https://www.pcicomplianceguide.org/faq/

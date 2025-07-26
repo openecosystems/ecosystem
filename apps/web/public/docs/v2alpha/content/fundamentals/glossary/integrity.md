@@ -2,14 +2,14 @@
 title: Integrity
 pcx_content_type: definition
 summary: >-
-  Data Integrity is the maintenance of, and the assurance of, data accuracy and consistency over its entire life-cycle.
+    Data Integrity is the maintenance of, and the assurance of, data accuracy and consistency over its entire life-cycle.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/blockchain
-  - /fundamentals/glossary/encryption
-  - /fundamentals/glossary/hashing
-  - /fundamentals/glossary/private-key
+    - /fundamentals/glossary/blockchain
+    - /fundamentals/glossary/encryption
+    - /fundamentals/glossary/hashing
+    - /fundamentals/glossary/private-key
 ---
 
 # Integrity

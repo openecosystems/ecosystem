@@ -1,16 +1,16 @@
 ---
 title: Failure
 aliases:
-  - Failure
-  - Failures
+    - Failure
+    - Failures
 pcx_content_type: definition
 summary: >-
-  An event where a component becomes unavailable. Typically this does not result in loss, and minor actions are required to continue business, like restarting a server.
+    An event where a component becomes unavailable. Typically this does not result in loss, and minor actions are required to continue business, like restarting a server.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/design-patterns/design-for-failure
-  - /fundamentals/glossary/availability-zone
+    - /fundamentals/design-and-architecture/standards-based/design-patterns/design-for-failure
+    - /fundamentals/glossary/availability-zone
 ---
 
 # Failure

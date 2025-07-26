@@ -2,59 +2,64 @@
 // @generated from file platform/audit/v2alpha/audit.proto (package platform.audit.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
-import { file_google_api_annotations } from "../../../google/api/annotations_pb";
-import { file_google_protobuf_any, file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_spec_v2_spec } from "../../spec/v2/spec_pb";
-import { file_platform_type_v2_jurisdiction } from "../../type/v2/jurisdiction_pb";
+import { enumDesc, fileDesc, messageDesc, serviceDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
+import { file_google_api_annotations } from '../../../google/api/annotations_pb';
+import { file_google_protobuf_any, file_google_protobuf_timestamp } from '@bufbuild/protobuf/wkt';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_spec_v2_spec } from '../../spec/v2/spec_pb';
+import { file_platform_type_v2_jurisdiction } from '../../type/v2/jurisdiction_pb';
 
 /**
  * Describes the file platform/audit/v2alpha/audit.proto.
  */
-export const file_platform_audit_v2alpha_audit = /*@__PURE__*/
-  fileDesc("CiJwbGF0Zm9ybS9hdWRpdC92MmFscGhhL2F1ZGl0LnByb3RvEhZwbGF0Zm9ybS5hdWRpdC52MmFscGhhIj4KEkF1ZGl0Q29uZmlndXJhdGlvbhIoCgJpZBgBIAEoCUIc0rcYGAoWGhJUaGlzIGlzIGEgYXVkaXQgaWQoASKYAQoNU2VhcmNoUmVxdWVzdBIsCghzdGFydF9hdBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASKgoGZW5kX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIRCglwYWdlX3NpemUYBCABKAUSEgoKcGFnZV90b2tlbhgFIAEoCToG+rYYAggBIrEBCg5TZWFyY2hSZXNwb25zZRI7CgxzcGVjX2NvbnRleHQYASABKAsyJS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSZXNwb25zZUNvbnRleHQSEgoKdG90YWxfc2l6ZRgCIAEoBRIXCg9uZXh0X3BhZ2VfdG9rZW4YAyABKAkSLQoGYXVkaXRzGAQgAygLMh0ucGxhdGZvcm0uYXVkaXQudjJhbHBoYS5BdWRpdDoG+rYYAggCIjgKCkF1ZGl0RW50cnkSIgoEZGF0YRgBIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5Bbnk6Bvq2GAIIAiLsAQoFQXVkaXQSEgoCaWQYASABKAlCBsq3GAIIARIuCgpjcmVhdGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIxCgVlbnRyeRgEIAEoCzIiLnBsYXRmb3JtLmF1ZGl0LnYyYWxwaGEuQXVkaXRFbnRyeRI0CgxqdXJpc2RpY3Rpb24YBSABKA4yHi5wbGF0Zm9ybS50eXBlLnYyLkp1cmlzZGljdGlvbjoG+rYYAggCKjcKDUF1ZGl0Q29tbWFuZHMSHgoaQVVESVRfQ09NTUFORFNfVU5TUEVDSUZJRUQQABoGkrgYAggDKlUKC0F1ZGl0RXZlbnRzEhwKGEFVRElUX0VWRU5UU19VTlNQRUNJRklFRBAAEiAKFEFVRElUX0VWRU5UU19DUkVBVEVEEAEaBuK4GAIIARoGkrgYAggEMqEBCgxBdWRpdFNlcnZpY2USkAEKBlNlYXJjaBIlLnBsYXRmb3JtLmF1ZGl0LnYyYWxwaGEuU2VhcmNoUmVxdWVzdBomLnBsYXRmb3JtLmF1ZGl0LnYyYWxwaGEuU2VhcmNoUmVzcG9uc2UiN6K2GAgyBnNlYXJjaKq2GAIICLK2GAwKBnNlYXJjaBICywGC0+STAg86ASoiCi92Mi9zZWFyY2hCoAFaYWdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2xpYnMvcHJpdmF0ZS9nby9zZGsvZ2VuL3BsYXRmb3JtL2F1ZGl0L3YyYWxwaGE7YXVkaXR2MmFscGhhcGKCxBMCCAGCtRgGCAEQARgCirUYFgoFYXVkaXQSBmF1ZGl0cyIDamFuKAKStRgDCgEDmrUYAggBorUYAggBYgZwcm90bzM", [file_google_api_annotations, file_google_protobuf_any, file_google_protobuf_timestamp, file_platform_options_v2_annotations, file_platform_spec_v2_spec, file_platform_type_v2_jurisdiction]);
+export const file_platform_audit_v2alpha_audit =
+    /*@__PURE__*/
+    fileDesc(
+        'CiJwbGF0Zm9ybS9hdWRpdC92MmFscGhhL2F1ZGl0LnByb3RvEhZwbGF0Zm9ybS5hdWRpdC52MmFscGhhIj4KEkF1ZGl0Q29uZmlndXJhdGlvbhIoCgJpZBgBIAEoCUIc0rcYGAoWGhJUaGlzIGlzIGEgYXVkaXQgaWQoASKYAQoNU2VhcmNoUmVxdWVzdBIsCghzdGFydF9hdBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASKgoGZW5kX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIRCglwYWdlX3NpemUYBCABKAUSEgoKcGFnZV90b2tlbhgFIAEoCToG+rYYAggBIrEBCg5TZWFyY2hSZXNwb25zZRI7CgxzcGVjX2NvbnRleHQYASABKAsyJS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSZXNwb25zZUNvbnRleHQSEgoKdG90YWxfc2l6ZRgCIAEoBRIXCg9uZXh0X3BhZ2VfdG9rZW4YAyABKAkSLQoGYXVkaXRzGAQgAygLMh0ucGxhdGZvcm0uYXVkaXQudjJhbHBoYS5BdWRpdDoG+rYYAggCIjgKCkF1ZGl0RW50cnkSIgoEZGF0YRgBIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5Bbnk6Bvq2GAIIAiLsAQoFQXVkaXQSEgoCaWQYASABKAlCBsq3GAIIARIuCgpjcmVhdGVkX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIuCgp1cGRhdGVkX2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIxCgVlbnRyeRgEIAEoCzIiLnBsYXRmb3JtLmF1ZGl0LnYyYWxwaGEuQXVkaXRFbnRyeRI0CgxqdXJpc2RpY3Rpb24YBSABKA4yHi5wbGF0Zm9ybS50eXBlLnYyLkp1cmlzZGljdGlvbjoG+rYYAggCKjcKDUF1ZGl0Q29tbWFuZHMSHgoaQVVESVRfQ09NTUFORFNfVU5TUEVDSUZJRUQQABoGkrgYAggDKlUKC0F1ZGl0RXZlbnRzEhwKGEFVRElUX0VWRU5UU19VTlNQRUNJRklFRBAAEiAKFEFVRElUX0VWRU5UU19DUkVBVEVEEAEaBuK4GAIIARoGkrgYAggEMqEBCgxBdWRpdFNlcnZpY2USkAEKBlNlYXJjaBIlLnBsYXRmb3JtLmF1ZGl0LnYyYWxwaGEuU2VhcmNoUmVxdWVzdBomLnBsYXRmb3JtLmF1ZGl0LnYyYWxwaGEuU2VhcmNoUmVzcG9uc2UiN6K2GAgyBnNlYXJjaKq2GAIICLK2GAwKBnNlYXJjaBICywGC0+STAg86ASoiCi92Mi9zZWFyY2hCoAFaYWdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2xpYnMvcHJpdmF0ZS9nby9zZGsvZ2VuL3BsYXRmb3JtL2F1ZGl0L3YyYWxwaGE7YXVkaXR2MmFscGhhcGKCxBMCCAGCtRgGCAEQARgCirUYFgoFYXVkaXQSBmF1ZGl0cyIDamFuKAKStRgDCgEDmrUYAggBorUYAggBYgZwcm90bzM',
+        [
+            file_google_api_annotations,
+            file_google_protobuf_any,
+            file_google_protobuf_timestamp,
+            file_platform_options_v2_annotations,
+            file_platform_spec_v2_spec,
+            file_platform_type_v2_jurisdiction,
+        ]
+    );
 
 /**
  * Describes the message platform.audit.v2alpha.AuditConfiguration.
  * Use `create(AuditConfigurationSchema)` to create a new message.
  */
-export const AuditConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_audit_v2alpha_audit, 0);
+export const AuditConfigurationSchema = /*@__PURE__*/ messageDesc(file_platform_audit_v2alpha_audit, 0);
 
 /**
  * Describes the message platform.audit.v2alpha.SearchRequest.
  * Use `create(SearchRequestSchema)` to create a new message.
  */
-export const SearchRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_audit_v2alpha_audit, 1);
+export const SearchRequestSchema = /*@__PURE__*/ messageDesc(file_platform_audit_v2alpha_audit, 1);
 
 /**
  * Describes the message platform.audit.v2alpha.SearchResponse.
  * Use `create(SearchResponseSchema)` to create a new message.
  */
-export const SearchResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_audit_v2alpha_audit, 2);
+export const SearchResponseSchema = /*@__PURE__*/ messageDesc(file_platform_audit_v2alpha_audit, 2);
 
 /**
  * Describes the message platform.audit.v2alpha.AuditEntry.
  * Use `create(AuditEntrySchema)` to create a new message.
  */
-export const AuditEntrySchema = /*@__PURE__*/
-  messageDesc(file_platform_audit_v2alpha_audit, 3);
+export const AuditEntrySchema = /*@__PURE__*/ messageDesc(file_platform_audit_v2alpha_audit, 3);
 
 /**
  * Describes the message platform.audit.v2alpha.Audit.
  * Use `create(AuditSchema)` to create a new message.
  */
-export const AuditSchema = /*@__PURE__*/
-  messageDesc(file_platform_audit_v2alpha_audit, 4);
+export const AuditSchema = /*@__PURE__*/ messageDesc(file_platform_audit_v2alpha_audit, 4);
 
 /**
  * Describes the enum platform.audit.v2alpha.AuditCommands.
  */
-export const AuditCommandsSchema = /*@__PURE__*/
-  enumDesc(file_platform_audit_v2alpha_audit, 0);
+export const AuditCommandsSchema = /*@__PURE__*/ enumDesc(file_platform_audit_v2alpha_audit, 0);
 
 /**
  * *
@@ -62,14 +67,12 @@ export const AuditCommandsSchema = /*@__PURE__*/
  *
  * @generated from enum platform.audit.v2alpha.AuditCommands
  */
-export const AuditCommands = /*@__PURE__*/
-  tsEnum(AuditCommandsSchema);
+export const AuditCommands = /*@__PURE__*/ tsEnum(AuditCommandsSchema);
 
 /**
  * Describes the enum platform.audit.v2alpha.AuditEvents.
  */
-export const AuditEventsSchema = /*@__PURE__*/
-  enumDesc(file_platform_audit_v2alpha_audit, 1);
+export const AuditEventsSchema = /*@__PURE__*/ enumDesc(file_platform_audit_v2alpha_audit, 1);
 
 /**
  * *
@@ -77,8 +80,7 @@ export const AuditEventsSchema = /*@__PURE__*/
  *
  * @generated from enum platform.audit.v2alpha.AuditEvents
  */
-export const AuditEvents = /*@__PURE__*/
-  tsEnum(AuditEventsSchema);
+export const AuditEvents = /*@__PURE__*/ tsEnum(AuditEventsSchema);
 
 /**
  * *
@@ -86,6 +88,4 @@ export const AuditEvents = /*@__PURE__*/
  *
  * @generated from service platform.audit.v2alpha.AuditService
  */
-export const AuditService = /*@__PURE__*/
-  serviceDesc(file_platform_audit_v2alpha_audit, 0);
-
+export const AuditService = /*@__PURE__*/ serviceDesc(file_platform_audit_v2alpha_audit, 0);

@@ -2,10 +2,10 @@
 // @generated from file platform/ecosystem/v2alpha/ecosystem.proto (package platform.ecosystem.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/ecosystem/v2alpha/ecosystem.proto.
@@ -15,11 +15,11 @@ export declare const file_platform_ecosystem_v2alpha_ecosystem: GenFile;
 /**
  * @generated from message platform.ecosystem.v2alpha.EcosystemConfiguration
  */
-export declare type EcosystemConfiguration = Message<"platform.ecosystem.v2alpha.EcosystemConfiguration"> & {
-  /**
-   * @generated from field: bool closed = 1;
-   */
-  closed: boolean;
+export declare type EcosystemConfiguration = Message<'platform.ecosystem.v2alpha.EcosystemConfiguration'> & {
+    /**
+     * @generated from field: bool closed = 1;
+     */
+    closed: boolean;
 };
 
 /**
@@ -33,49 +33,49 @@ export declare const EcosystemConfigurationSchema: GenMessage<EcosystemConfigura
  *
  * @generated from message platform.ecosystem.v2alpha.CreateEcosystemRequest
  */
-export declare type CreateEcosystemRequest = Message<"platform.ecosystem.v2alpha.CreateEcosystemRequest"> & {
-  /**
-   * @generated from field: string organization_id = 1;
-   */
-  organizationId: string;
+export declare type CreateEcosystemRequest = Message<'platform.ecosystem.v2alpha.CreateEcosystemRequest'> & {
+    /**
+     * @generated from field: string organization_id = 1;
+     */
+    organizationId: string;
 
-  /**
-   * Globally unique slug for this ecosystem
-   *
-   * @generated from field: string slug = 2;
-   */
-  slug: string;
+    /**
+     * Globally unique slug for this ecosystem
+     *
+     * @generated from field: string slug = 2;
+     */
+    slug: string;
 
-  /**
-   * What type of ecosystem is this?
-   *
-   * @generated from field: platform.ecosystem.v2alpha.EcosystemType type = 3;
-   */
-  type: EcosystemType;
+    /**
+     * What type of ecosystem is this?
+     *
+     * @generated from field: platform.ecosystem.v2alpha.EcosystemType type = 3;
+     */
+    type: EcosystemType;
 
-  /**
-   * @generated from field: string name = 4;
-   */
-  name: string;
+    /**
+     * @generated from field: string name = 4;
+     */
+    name: string;
 
-  /**
-   * Give your ecosystem a short description
-   *
-   * @generated from field: string short_description = 5;
-   */
-  shortDescription: string;
+    /**
+     * Give your ecosystem a short description
+     *
+     * @generated from field: string short_description = 5;
+     */
+    shortDescription: string;
 
-  /**
-   * Describe your ecosystem in detail
-   *
-   * @generated from field: string description = 6;
-   */
-  description: string;
+    /**
+     * Describe your ecosystem in detail
+     *
+     * @generated from field: string description = 6;
+     */
+    description: string;
 
-  /**
-   * @generated from field: string cidr = 7;
-   */
-  cidr: string;
+    /**
+     * @generated from field: string cidr = 7;
+     */
+    cidr: string;
 };
 
 /**
@@ -87,30 +87,30 @@ export declare const CreateEcosystemRequestSchema: GenMessage<CreateEcosystemReq
 /**
  * @generated from message platform.ecosystem.v2alpha.CreateEcosystemResponse
  */
-export declare type CreateEcosystemResponse = Message<"platform.ecosystem.v2alpha.CreateEcosystemResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type CreateEcosystemResponse = Message<'platform.ecosystem.v2alpha.CreateEcosystemResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * REMOVE THIS
-   *
-   * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
-   */
-  ecosystem?: Ecosystem;
+    /**
+     * REMOVE THIS
+     *
+     * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
+     */
+    ecosystem?: Ecosystem;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.Ecosystem test_ecosystem = 3;
-   */
-  testEcosystem?: Ecosystem;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.Ecosystem test_ecosystem = 3;
+     */
+    testEcosystem?: Ecosystem;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.Ecosystem live_ecosystem = 4;
-   */
-  liveEcosystem?: Ecosystem;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.Ecosystem live_ecosystem = 4;
+     */
+    liveEcosystem?: Ecosystem;
 };
 
 /**
@@ -122,13 +122,13 @@ export declare const CreateEcosystemResponseSchema: GenMessage<CreateEcosystemRe
 /**
  * @generated from message platform.ecosystem.v2alpha.GetEcosystemRequest
  */
-export declare type GetEcosystemRequest = Message<"platform.ecosystem.v2alpha.GetEcosystemRequest"> & {
-  /**
-   * Globally unique slug for this ecosystem
-   *
-   * @generated from field: string slug = 1;
-   */
-  slug: string;
+export declare type GetEcosystemRequest = Message<'platform.ecosystem.v2alpha.GetEcosystemRequest'> & {
+    /**
+     * Globally unique slug for this ecosystem
+     *
+     * @generated from field: string slug = 1;
+     */
+    slug: string;
 };
 
 /**
@@ -140,18 +140,18 @@ export declare const GetEcosystemRequestSchema: GenMessage<GetEcosystemRequest>;
 /**
  * @generated from message platform.ecosystem.v2alpha.GetEcosystemResponse
  */
-export declare type GetEcosystemResponse = Message<"platform.ecosystem.v2alpha.GetEcosystemResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type GetEcosystemResponse = Message<'platform.ecosystem.v2alpha.GetEcosystemResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
-   */
-  ecosystem?: Ecosystem;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
+     */
+    ecosystem?: Ecosystem;
 };
 
 /**
@@ -163,20 +163,20 @@ export declare const GetEcosystemResponseSchema: GenMessage<GetEcosystemResponse
 /**
  * @generated from message platform.ecosystem.v2alpha.ListEcosystemsRequest
  */
-export declare type ListEcosystemsRequest = Message<"platform.ecosystem.v2alpha.ListEcosystemsRequest"> & {
-  /**
-   * How many records would you like returned within one page?
-   *
-   * @generated from field: uint32 page_size = 1;
-   */
-  pageSize: number;
+export declare type ListEcosystemsRequest = Message<'platform.ecosystem.v2alpha.ListEcosystemsRequest'> & {
+    /**
+     * How many records would you like returned within one page?
+     *
+     * @generated from field: uint32 page_size = 1;
+     */
+    pageSize: number;
 
-  /**
-   * Page token provided in the response
-   *
-   * @generated from field: string page_token = 2;
-   */
-  pageToken: string;
+    /**
+     * Page token provided in the response
+     *
+     * @generated from field: string page_token = 2;
+     */
+    pageToken: string;
 };
 
 /**
@@ -188,34 +188,34 @@ export declare const ListEcosystemsRequestSchema: GenMessage<ListEcosystemsReque
 /**
  * @generated from message platform.ecosystem.v2alpha.ListEcosystemsResponse
  */
-export declare type ListEcosystemsResponse = Message<"platform.ecosystem.v2alpha.ListEcosystemsResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type ListEcosystemsResponse = Message<'platform.ecosystem.v2alpha.ListEcosystemsResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * Total count of ecosystems
-   *
-   * @generated from field: int32 total_size = 2;
-   */
-  totalSize: number;
+    /**
+     * Total count of ecosystems
+     *
+     * @generated from field: int32 total_size = 2;
+     */
+    totalSize: number;
 
-  /**
-   * Token to retrieve the next page
-   *
-   * @generated from field: string next_page_token = 3;
-   */
-  nextPageToken: string;
+    /**
+     * Token to retrieve the next page
+     *
+     * @generated from field: string next_page_token = 3;
+     */
+    nextPageToken: string;
 
-  /**
-   * List of ecosystems
-   *
-   * @generated from field: repeated platform.ecosystem.v2alpha.Ecosystem ecosystems = 4;
-   */
-  ecosystems: Ecosystem[];
+    /**
+     * List of ecosystems
+     *
+     * @generated from field: repeated platform.ecosystem.v2alpha.Ecosystem ecosystems = 4;
+     */
+    ecosystems: Ecosystem[];
 };
 
 /**
@@ -227,11 +227,11 @@ export declare const ListEcosystemsResponseSchema: GenMessage<ListEcosystemsResp
 /**
  * @generated from message platform.ecosystem.v2alpha.EcosystemsFilter
  */
-export declare type EcosystemsFilter = Message<"platform.ecosystem.v2alpha.EcosystemsFilter"> & {
-  /**
-   * @generated from field: string filter = 1;
-   */
-  filter: string;
+export declare type EcosystemsFilter = Message<'platform.ecosystem.v2alpha.EcosystemsFilter'> & {
+    /**
+     * @generated from field: string filter = 1;
+     */
+    filter: string;
 };
 
 /**
@@ -243,32 +243,32 @@ export declare const EcosystemsFilterSchema: GenMessage<EcosystemsFilter>;
 /**
  * @generated from message platform.ecosystem.v2alpha.UpdateEcosystemRequest
  */
-export declare type UpdateEcosystemRequest = Message<"platform.ecosystem.v2alpha.UpdateEcosystemRequest"> & {
-  /**
-   * Globally unique slug for this ecosystem
-   *
-   * @generated from field: string slug = 1;
-   */
-  slug: string;
+export declare type UpdateEcosystemRequest = Message<'platform.ecosystem.v2alpha.UpdateEcosystemRequest'> & {
+    /**
+     * Globally unique slug for this ecosystem
+     *
+     * @generated from field: string slug = 1;
+     */
+    slug: string;
 
-  /**
-   * @generated from field: string name = 4;
-   */
-  name: string;
+    /**
+     * @generated from field: string name = 4;
+     */
+    name: string;
 
-  /**
-   * Give your ecosystem a short description
-   *
-   * @generated from field: string short_description = 5;
-   */
-  shortDescription: string;
+    /**
+     * Give your ecosystem a short description
+     *
+     * @generated from field: string short_description = 5;
+     */
+    shortDescription: string;
 
-  /**
-   * Describe your ecosystem in detail
-   *
-   * @generated from field: string description = 6;
-   */
-  description: string;
+    /**
+     * Describe your ecosystem in detail
+     *
+     * @generated from field: string description = 6;
+     */
+    description: string;
 };
 
 /**
@@ -280,18 +280,18 @@ export declare const UpdateEcosystemRequestSchema: GenMessage<UpdateEcosystemReq
 /**
  * @generated from message platform.ecosystem.v2alpha.UpdateEcosystemResponse
  */
-export declare type UpdateEcosystemResponse = Message<"platform.ecosystem.v2alpha.UpdateEcosystemResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type UpdateEcosystemResponse = Message<'platform.ecosystem.v2alpha.UpdateEcosystemResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
-   */
-  ecosystem?: Ecosystem;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
+     */
+    ecosystem?: Ecosystem;
 };
 
 /**
@@ -303,13 +303,13 @@ export declare const UpdateEcosystemResponseSchema: GenMessage<UpdateEcosystemRe
 /**
  * @generated from message platform.ecosystem.v2alpha.DeleteEcosystemRequest
  */
-export declare type DeleteEcosystemRequest = Message<"platform.ecosystem.v2alpha.DeleteEcosystemRequest"> & {
-  /**
-   * Globally unique slug for this ecosystem
-   *
-   * @generated from field: string slug = 1;
-   */
-  slug: string;
+export declare type DeleteEcosystemRequest = Message<'platform.ecosystem.v2alpha.DeleteEcosystemRequest'> & {
+    /**
+     * Globally unique slug for this ecosystem
+     *
+     * @generated from field: string slug = 1;
+     */
+    slug: string;
 };
 
 /**
@@ -321,18 +321,18 @@ export declare const DeleteEcosystemRequestSchema: GenMessage<DeleteEcosystemReq
 /**
  * @generated from message platform.ecosystem.v2alpha.DeleteEcosystemResponse
  */
-export declare type DeleteEcosystemResponse = Message<"platform.ecosystem.v2alpha.DeleteEcosystemResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type DeleteEcosystemResponse = Message<'platform.ecosystem.v2alpha.DeleteEcosystemResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
-   */
-  ecosystem?: Ecosystem;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.Ecosystem ecosystem = 2;
+     */
+    ecosystem?: Ecosystem;
 };
 
 /**
@@ -344,71 +344,71 @@ export declare const DeleteEcosystemResponseSchema: GenMessage<DeleteEcosystemRe
 /**
  * @generated from message platform.ecosystem.v2alpha.Ecosystem
  */
-export declare type Ecosystem = Message<"platform.ecosystem.v2alpha.Ecosystem"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Ecosystem = Message<'platform.ecosystem.v2alpha.Ecosystem'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * @generated from field: string slug = 2;
-   */
-  slug: string;
+    /**
+     * @generated from field: string slug = 2;
+     */
+    slug: string;
 
-  /**
-   * @generated from field: string organization_id = 3;
-   */
-  organizationId: string;
+    /**
+     * @generated from field: string organization_id = 3;
+     */
+    organizationId: string;
 
-  /**
-   * @generated from field: google.protobuf.Timestamp created_at = 4;
-   */
-  createdAt?: Timestamp;
+    /**
+     * @generated from field: google.protobuf.Timestamp created_at = 4;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * @generated from field: google.protobuf.Timestamp updated_at = 5;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * @generated from field: google.protobuf.Timestamp updated_at = 5;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * @generated from field: string source_id = 6;
-   */
-  sourceId: string;
+    /**
+     * @generated from field: string source_id = 6;
+     */
+    sourceId: string;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.EcosystemType type = 7;
-   */
-  type: EcosystemType;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.EcosystemType type = 7;
+     */
+    type: EcosystemType;
 
-  /**
-   * @generated from field: platform.ecosystem.v2alpha.EcosystemStatus status = 8;
-   */
-  status: EcosystemStatus;
+    /**
+     * @generated from field: platform.ecosystem.v2alpha.EcosystemStatus status = 8;
+     */
+    status: EcosystemStatus;
 
-  /**
-   * @generated from field: string status_details = 9;
-   */
-  statusDetails: string;
+    /**
+     * @generated from field: string status_details = 9;
+     */
+    statusDetails: string;
 
-  /**
-   * @generated from field: string name = 10;
-   */
-  name: string;
+    /**
+     * @generated from field: string name = 10;
+     */
+    name: string;
 
-  /**
-   * @generated from field: string short_description = 11;
-   */
-  shortDescription: string;
+    /**
+     * @generated from field: string short_description = 11;
+     */
+    shortDescription: string;
 
-  /**
-   * @generated from field: string description = 12;
-   */
-  description: string;
+    /**
+     * @generated from field: string description = 12;
+     */
+    description: string;
 
-  /**
-   * @generated from field: string cidr = 13;
-   */
-  cidr: string;
+    /**
+     * @generated from field: string cidr = 13;
+     */
+    cidr: string;
 };
 
 /**
@@ -423,25 +423,25 @@ export declare const EcosystemSchema: GenMessage<Ecosystem>;
  * @generated from enum platform.ecosystem.v2alpha.EcosystemType
  */
 export enum EcosystemType {
-  /**
-   * @generated from enum value: ECOSYSTEM_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ECOSYSTEM_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_TYPE_PUBLIC = 1;
-   */
-  PUBLIC = 1,
+    /**
+     * @generated from enum value: ECOSYSTEM_TYPE_PUBLIC = 1;
+     */
+    PUBLIC = 1,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_TYPE_PRIVATE = 2;
-   */
-  PRIVATE = 2,
+    /**
+     * @generated from enum value: ECOSYSTEM_TYPE_PRIVATE = 2;
+     */
+    PRIVATE = 2,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_TYPE_PATIENT = 3;
-   */
-  PATIENT = 3,
+    /**
+     * @generated from enum value: ECOSYSTEM_TYPE_PATIENT = 3;
+     */
+    PATIENT = 3,
 }
 
 /**
@@ -455,40 +455,40 @@ export declare const EcosystemTypeSchema: GenEnum<EcosystemType>;
  * @generated from enum platform.ecosystem.v2alpha.EcosystemStatus
  */
 export enum EcosystemStatus {
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_CREATING = 1;
-   */
-  CREATING = 1,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_CREATING = 1;
+     */
+    CREATING = 1,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_ACTIVE = 2;
-   */
-  ACTIVE = 2,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_ACTIVE = 2;
+     */
+    ACTIVE = 2,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_INACTIVE = 3;
-   */
-  INACTIVE = 3,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_INACTIVE = 3;
+     */
+    INACTIVE = 3,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_UPDATING = 4;
-   */
-  UPDATING = 4,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_UPDATING = 4;
+     */
+    UPDATING = 4,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_DELETING = 5;
-   */
-  DELETING = 5,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_DELETING = 5;
+     */
+    DELETING = 5,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_STATUS_ERROR = 6;
-   */
-  ERROR = 6,
+    /**
+     * @generated from enum value: ECOSYSTEM_STATUS_ERROR = 6;
+     */
+    ERROR = 6,
 }
 
 /**
@@ -502,30 +502,30 @@ export declare const EcosystemStatusSchema: GenEnum<EcosystemStatus>;
  * @generated from enum platform.ecosystem.v2alpha.EcosystemBillingStatus
  */
 export enum EcosystemBillingStatus {
-  /**
-   * @generated from enum value: ECOSYSTEM_BILLING_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ECOSYSTEM_BILLING_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_BILLING_STATUS_ACTIVE = 1;
-   */
-  ACTIVE = 1,
+    /**
+     * @generated from enum value: ECOSYSTEM_BILLING_STATUS_ACTIVE = 1;
+     */
+    ACTIVE = 1,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_BILLING_STATUS_INACTIVE = 2;
-   */
-  INACTIVE = 2,
+    /**
+     * @generated from enum value: ECOSYSTEM_BILLING_STATUS_INACTIVE = 2;
+     */
+    INACTIVE = 2,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_BILLING_STATUS_WARNING = 3;
-   */
-  WARNING = 3,
+    /**
+     * @generated from enum value: ECOSYSTEM_BILLING_STATUS_WARNING = 3;
+     */
+    WARNING = 3,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_BILLING_STATUS_ERROR = 4;
-   */
-  ERROR = 4,
+    /**
+     * @generated from enum value: ECOSYSTEM_BILLING_STATUS_ERROR = 4;
+     */
+    ERROR = 4,
 }
 
 /**
@@ -537,25 +537,25 @@ export declare const EcosystemBillingStatusSchema: GenEnum<EcosystemBillingStatu
  * @generated from enum platform.ecosystem.v2alpha.EcosystemCommands
  */
 export enum EcosystemCommands {
-  /**
-   * @generated from enum value: ECOSYSTEM_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ECOSYSTEM_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_COMMANDS_CREATE = 1;
-   */
-  CREATE = 1,
+    /**
+     * @generated from enum value: ECOSYSTEM_COMMANDS_CREATE = 1;
+     */
+    CREATE = 1,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_COMMANDS_UPDATE = 2;
-   */
-  UPDATE = 2,
+    /**
+     * @generated from enum value: ECOSYSTEM_COMMANDS_UPDATE = 2;
+     */
+    UPDATE = 2,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_COMMANDS_DELETE = 3;
-   */
-  DELETE = 3,
+    /**
+     * @generated from enum value: ECOSYSTEM_COMMANDS_DELETE = 3;
+     */
+    DELETE = 3,
 }
 
 /**
@@ -567,30 +567,30 @@ export declare const EcosystemCommandsSchema: GenEnum<EcosystemCommands>;
  * @generated from enum platform.ecosystem.v2alpha.EcosystemEvents
  */
 export enum EcosystemEvents {
-  /**
-   * @generated from enum value: ECOSYSTEM_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ECOSYSTEM_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_EVENTS_CREATED = 1;
-   */
-  CREATED = 1,
+    /**
+     * @generated from enum value: ECOSYSTEM_EVENTS_CREATED = 1;
+     */
+    CREATED = 1,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_EVENTS_UPDATED = 2;
-   */
-  UPDATED = 2,
+    /**
+     * @generated from enum value: ECOSYSTEM_EVENTS_UPDATED = 2;
+     */
+    UPDATED = 2,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_EVENTS_DELETED = 3;
-   */
-  DELETED = 3,
+    /**
+     * @generated from enum value: ECOSYSTEM_EVENTS_DELETED = 3;
+     */
+    DELETED = 3,
 
-  /**
-   * @generated from enum value: ECOSYSTEM_EVENTS_ERRORED = 4;
-   */
-  ERRORED = 4,
+    /**
+     * @generated from enum value: ECOSYSTEM_EVENTS_ERRORED = 4;
+     */
+    ERRORED = 4,
 }
 
 /**
@@ -602,45 +602,44 @@ export declare const EcosystemEventsSchema: GenEnum<EcosystemEvents>;
  * @generated from service platform.ecosystem.v2alpha.EcosystemService
  */
 export declare const EcosystemService: GenService<{
-  /**
-   * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.CreateEcosystem
-   */
-  createEcosystem: {
-    methodKind: "unary";
-    input: typeof CreateEcosystemRequestSchema;
-    output: typeof CreateEcosystemResponseSchema;
-  },
-  /**
-   * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.ListEcosystems
-   */
-  listEcosystems: {
-    methodKind: "unary";
-    input: typeof ListEcosystemsRequestSchema;
-    output: typeof ListEcosystemsResponseSchema;
-  },
-  /**
-   * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.GetEcosystem
-   */
-  getEcosystem: {
-    methodKind: "unary";
-    input: typeof GetEcosystemRequestSchema;
-    output: typeof GetEcosystemResponseSchema;
-  },
-  /**
-   * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.UpdateEcosystem
-   */
-  updateEcosystem: {
-    methodKind: "unary";
-    input: typeof UpdateEcosystemRequestSchema;
-    output: typeof UpdateEcosystemResponseSchema;
-  },
-  /**
-   * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.DeleteEcosystem
-   */
-  deleteEcosystem: {
-    methodKind: "unary";
-    input: typeof DeleteEcosystemRequestSchema;
-    output: typeof DeleteEcosystemResponseSchema;
-  },
+    /**
+     * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.CreateEcosystem
+     */
+    createEcosystem: {
+        methodKind: 'unary';
+        input: typeof CreateEcosystemRequestSchema;
+        output: typeof CreateEcosystemResponseSchema;
+    };
+    /**
+     * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.ListEcosystems
+     */
+    listEcosystems: {
+        methodKind: 'unary';
+        input: typeof ListEcosystemsRequestSchema;
+        output: typeof ListEcosystemsResponseSchema;
+    };
+    /**
+     * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.GetEcosystem
+     */
+    getEcosystem: {
+        methodKind: 'unary';
+        input: typeof GetEcosystemRequestSchema;
+        output: typeof GetEcosystemResponseSchema;
+    };
+    /**
+     * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.UpdateEcosystem
+     */
+    updateEcosystem: {
+        methodKind: 'unary';
+        input: typeof UpdateEcosystemRequestSchema;
+        output: typeof UpdateEcosystemResponseSchema;
+    };
+    /**
+     * @generated from rpc platform.ecosystem.v2alpha.EcosystemService.DeleteEcosystem
+     */
+    deleteEcosystem: {
+        methodKind: 'unary';
+        input: typeof DeleteEcosystemRequestSchema;
+        output: typeof DeleteEcosystemResponseSchema;
+    };
 }>;
-

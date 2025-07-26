@@ -2,19 +2,19 @@
 date_created: 2023-10-05T11:03:26
 title: Consent
 aliases:
-  - Consent
+    - Consent
 pcx_content_type: definition
 summary: >-
-  `Consent` is a record where an individual authorizes a legal entity to access, use, or disclose [PII](/fundamentals/glossary/pii) and under what conditions that is allowed.
+    `Consent` is a record where an individual authorizes a legal entity to access, use, or disclose [PII](/fundamentals/glossary/pii) and under what conditions that is allowed.
 hidden: true
 has_more: true
 has_links: false
 links_to:
-  - /fundamentals/glossary/pii
-  - /fundamentals/glossary/hipaa
-  - /fundamentals/glossary/zero-trust-architecture
-  - /fundamentals/glossary/authentication
-  - /fundamentals/glossary/authorization
+    - /fundamentals/glossary/pii
+    - /fundamentals/glossary/hipaa
+    - /fundamentals/glossary/zero-trust-architecture
+    - /fundamentals/glossary/authentication
+    - /fundamentals/glossary/authorization
 ---
 
 # Consent

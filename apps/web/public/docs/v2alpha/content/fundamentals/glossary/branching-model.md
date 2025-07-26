@@ -3,7 +3,7 @@ date_created: 2022-12-29T11:37:15
 author: Guillaume Hanique
 title: Branching Model
 aliases:
-  - Branching Model
+    - Branching Model
 pcx_content_type: definition
 summary: >-
 

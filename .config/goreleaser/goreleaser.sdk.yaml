@@ -1,53 +1,53 @@
 version: 2
 variables:
-  main: ""
-  binary_name: ""
-  description: ""
-  maintainer: ""
-  homepage: "https://www.openecosystems.com"
-  brew_commit_author_name: ""
-  brew_commit_author_email: ""
-  brew_owner: openecosystems
-  docker_io_registry_owner: openecosystems
-  ghcr_io_registry_owner: openecosystems
-  aur_project_name: ""
-  path_to_repo_root: ""
-  path_to_project: ""
-  nightly_tag_name: ""
+    main: ''
+    binary_name: ''
+    description: ''
+    maintainer: ''
+    homepage: 'https://www.openecosystems.com'
+    brew_commit_author_name: ''
+    brew_commit_author_email: ''
+    brew_owner: openecosystems
+    docker_io_registry_owner: openecosystems
+    ghcr_io_registry_owner: openecosystems
+    aur_project_name: ''
+    path_to_repo_root: ''
+    path_to_project: ''
+    nightly_tag_name: ''
 
 builds:
-  - env:
-      - CGO_ENABLED=0
-    no_main_check: true
-    goos:
-      - linux
-      - windows
-      - darwin
+    - env:
+          - CGO_ENABLED=0
+      no_main_check: true
+      goos:
+          - linux
+          - windows
+          - darwin
 
 archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of `uname`.
-    name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
-    format_overrides:
-      - goos: windows
-        format: zip
+    - format: tar.gz
+      # this name template makes the OS and Arch compatible with the results of `uname`.
+      name_template: >-
+          {{ .ProjectName }}_
+          {{- title .Os }}_
+          {{- if eq .Arch "amd64" }}x86_64
+          {{- else if eq .Arch "386" }}i386
+          {{- else }}{{ .Arch }}{{ end }}
+          {{- if .Arm }}v{{ .Arm }}{{ end }}
+      # use zip for windows archives
+      format_overrides:
+          - goos: windows
+            format: zip
 
 changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+    sort: asc
+    filters:
+        exclude:
+            - '^docs:'
+            - '^test:'
 
 nightly:
-  version_template: "{{ incpatch .Version }}-devel"
-  tag_name: "{{ .Var.nightly_tag_name }}/devel"
-  publish_release: true
-  keep_single_release: true
+    version_template: '{{ incpatch .Version }}-devel'
+    tag_name: '{{ .Var.nightly_tag_name }}/devel'
+    publish_release: true
+    keep_single_release: true

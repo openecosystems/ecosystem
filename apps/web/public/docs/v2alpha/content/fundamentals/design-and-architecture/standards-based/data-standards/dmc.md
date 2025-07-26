@@ -3,7 +3,7 @@ date_created: 2022-12-11T17:08:17
 title: DMC
 pcx_content_type: definition
 summary: >-
-  A Data Matrix Code (DMC) is a 2D Barcode. It can be distinguished from other barcodes by two black lines.
+    A Data Matrix Code (DMC) is a 2D Barcode. It can be distinguished from other barcodes by two black lines.
 hidden: true
 has_more: true
 has_links: false
@@ -19,4 +19,4 @@ These Barcodes have parity data in them that can be used to reconstruct missing 
 
 ## Sources
 
-- https://www.gs1.org/docs/barcodes/GS1_DataMatrix_Guideline.pdf
+-   https://www.gs1.org/docs/barcodes/GS1_DataMatrix_Guideline.pdf

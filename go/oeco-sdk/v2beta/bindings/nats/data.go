@@ -5,8 +5,8 @@ import (
 	specproto "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 )
 
-// NatsSpecWrapper wrapper for Data and Error
+// NatsSpecWrapper wrapper for Data and SpecError
 type NatsSpecWrapper struct {
 	SpecData  *specproto.SpecData
-	SpecError sdkv2betalib.SpecError
+	SpecError sdkv2betalib.SpecErrorable
 }
