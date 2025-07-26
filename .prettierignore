@@ -3,4 +3,7 @@
 /coverage
 /.nx/cache
 /.nx/workspace-data
-/go/oeco-sdk/v2beta/bindings/pushpin/bi
+/go/oeco-sdk/v2beta/bindings/pushpin/bin
+/apps/web/public/docs/v2alpha/.obsidian
+/apps/web/public/docs
+/.config/spellcheck/spellcheck.yaml

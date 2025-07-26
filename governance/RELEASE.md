@@ -1,11 +1,13 @@
 # Prerequisites
 
--   Merge all changes to main (releases will only release from main) 
+-   Merge all changes to main (releases will only release from main)
 -   Ensure Git is not in a "dirty" state
 -   Ensure all of the protos have been published if changed
     -   cd proto
     -   buf registry login buf.build
     -   buf push
+-   Make sure npx nx format:write --all passes
+-   Make sure everything builds nx run-many -t build --skip-nx-cache
 
 # Initial Release
 
