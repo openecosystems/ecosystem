@@ -1,3 +1,20 @@
+## 0.17.0 (2025-07-26)
+
+### 🚀 Features
+
+- OECO cleanup 30 ([#62](https://github.com/openecosystems/ecosystem/pull/62))
+- Oeco cleanup 29 ([#61](https://github.com/openecosystems/ecosystem/pull/61))
+
+### 🩹 Fixes
+
+- disabling typescript projects for now ([#66](https://github.com/openecosystems/ecosystem/pull/66))
+- Oeco stability 3 ([#65](https://github.com/openecosystems/ecosystem/pull/65))
+- stability and formatting ([#63](https://github.com/openecosystems/ecosystem/pull/63))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.16.0 (2025-07-26)
 
 ### 🚀 Features
