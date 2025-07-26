@@ -1,3 +1,13 @@
+## 0.15.0 (2025-07-26)
+
+### 🚀 Features
+
+- better distributed error handling ([294beee](https://github.com/openecosystems/ecosystem/commit/294beee))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.14.0 (2025-07-26)
 
 ### 🚀 Features
