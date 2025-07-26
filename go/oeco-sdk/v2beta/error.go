@@ -265,11 +265,3 @@ func (se SpecError) ToStatus() *status.Status {
 func (se SpecError) ToConnectError() *connect.Error {
 	return &se.ConnectErr
 }
-
-//func (se SpecError) Unwrap() error {
-//	// Allow matching embedded SpecApiError in case there is one.
-//	if se.ConnectErr == nil {
-//		return nil
-//	}
-//	return se.ConnectErr
-//}
