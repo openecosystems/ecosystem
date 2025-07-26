@@ -1,12 +1,26 @@
 package shared
 
 import (
+	"fmt"
 	"regexp"
 	"sort"
 	"strings"
 
 	pgs "github.com/lyft/protoc-gen-star/v2"
 )
+
+// GetPackageScopeSystemAndVersion extracts scope, system, version from the proto package name.
+// For example, "platform.cryptography.v2alpha" returns ("platform", "cryptography", "v2alpha").
+func (fns Functions) GetPackageScopeSystemAndVersion(file pgs.File) (scope pgs.Name, system pgs.Name, version pgs.Name, err error) {
+	pkgName := file.Package().ProtoName().String()
+
+	parts := strings.Split(pkgName, ".")
+	if len(parts) < 3 {
+		return "", "", "", fmt.Errorf("invalid proto package format: %q", pkgName)
+	}
+
+	return pgs.Name(parts[0]), pgs.Name(parts[1]), pgs.Name(parts[2]), nil
+}
 
 // GetAnyGoFieldPackage returns the Go package name for a given protobuf field based on its type and attributes.
 func (fns Functions) GetAnyGoFieldPackage(f pgs.Field) string {

@@ -7,7 +7,7 @@ plugins:
     #### v2beta Generation
     ####
     - local: protoc-gen-platform
-      out: ./v2beta/gen/platform
+      out: ./v2beta/gen
       opt:
           - paths=source_relative
           - language=go
