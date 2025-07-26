@@ -6,6 +6,5 @@ const (
 	ReasonInvalidFormat = "INVALID_FORMAT"
 	ReasonNotAllowed    = "NOT_ALLOWED"
 	ReasonDuplicate     = "DUPLICATE"
-
-	ReasonMissingField = "MISSING_FIELD"
+	ReasonMissingField  = "MISSING_FIELD"
 )
