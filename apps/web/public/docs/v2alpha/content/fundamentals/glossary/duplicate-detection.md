@@ -1,21 +1,21 @@
 ---
 title: Duplicate Detection
 aliases:
-  - Duplicate Detection
+    - Duplicate Detection
 pcx_content_type: definition
 summary: >-
-  For the scenarios where [Idempotence](/fundamentals/glossary/#idempotence) is not possible, but processing each request must be guaranteed nevertheless, one should implement `Duplicate Detection` to prevent requests being processed more than once if they are received more than once.
+    For the scenarios where [Idempotence](/fundamentals/glossary/#idempotence) is not possible, but processing each request must be guaranteed nevertheless, one should implement `Duplicate Detection` to prevent requests being processed more than once if they are received more than once.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/at-least-once
-  - /fundamentals/glossary/caching
-  - /fundamentals/glossary/exception-handling
-  - /fundamentals/glossary/idempotence
-  - /fundamentals/glossary/mep
-  - /fundamentals/glossary/message-id
-  - /fundamentals/glossary/request-response
-  - /fundamentals/glossary/retry-mechanism
+    - /fundamentals/glossary/at-least-once
+    - /fundamentals/glossary/caching
+    - /fundamentals/glossary/exception-handling
+    - /fundamentals/glossary/idempotence
+    - /fundamentals/glossary/mep
+    - /fundamentals/glossary/message-id
+    - /fundamentals/glossary/request-response
+    - /fundamentals/glossary/retry-mechanism
 ---
 
 # Duplicate Detection

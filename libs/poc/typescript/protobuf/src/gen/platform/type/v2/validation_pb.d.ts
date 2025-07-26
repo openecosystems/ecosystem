@@ -2,8 +2,8 @@
 // @generated from file platform/type/v2/validation.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/type/v2/validation.proto.
@@ -13,16 +13,16 @@ export declare const file_platform_type_v2_validation: GenFile;
 /**
  * @generated from message platform.type.v2.RequestValidation
  */
-export declare type RequestValidation = Message<"platform.type.v2.RequestValidation"> & {
-  /**
-   * @generated from field: bool validate_only = 1;
-   */
-  validateOnly: boolean;
+export declare type RequestValidation = Message<'platform.type.v2.RequestValidation'> & {
+    /**
+     * @generated from field: bool validate_only = 1;
+     */
+    validateOnly: boolean;
 
-  /**
-   * @generated from field: platform.type.v2.ValidationSignature signature = 2;
-   */
-  signature?: ValidationSignature;
+    /**
+     * @generated from field: platform.type.v2.ValidationSignature signature = 2;
+     */
+    signature?: ValidationSignature;
 };
 
 /**
@@ -34,16 +34,16 @@ export declare const RequestValidationSchema: GenMessage<RequestValidation>;
 /**
  * @generated from message platform.type.v2.ResponseValidation
  */
-export declare type ResponseValidation = Message<"platform.type.v2.ResponseValidation"> & {
-  /**
-   * @generated from field: bool validate_only = 1;
-   */
-  validateOnly: boolean;
+export declare type ResponseValidation = Message<'platform.type.v2.ResponseValidation'> & {
+    /**
+     * @generated from field: bool validate_only = 1;
+     */
+    validateOnly: boolean;
 
-  /**
-   * @generated from field: platform.type.v2.ValidationSignature signature = 2;
-   */
-  signature?: ValidationSignature;
+    /**
+     * @generated from field: platform.type.v2.ValidationSignature signature = 2;
+     */
+    signature?: ValidationSignature;
 };
 
 /**
@@ -55,11 +55,11 @@ export declare const ResponseValidationSchema: GenMessage<ResponseValidation>;
 /**
  * @generated from message platform.type.v2.ValidationSignature
  */
-export declare type ValidationSignature = Message<"platform.type.v2.ValidationSignature"> & {
-  /**
-   * @generated from field: string jwt = 1;
-   */
-  jwt: string;
+export declare type ValidationSignature = Message<'platform.type.v2.ValidationSignature'> & {
+    /**
+     * @generated from field: string jwt = 1;
+     */
+    jwt: string;
 };
 
 /**
@@ -67,4 +67,3 @@ export declare type ValidationSignature = Message<"platform.type.v2.ValidationSi
  * Use `create(ValidationSignatureSchema)` to create a new message.
  */
 export declare const ValidationSignatureSchema: GenMessage<ValidationSignature>;
-

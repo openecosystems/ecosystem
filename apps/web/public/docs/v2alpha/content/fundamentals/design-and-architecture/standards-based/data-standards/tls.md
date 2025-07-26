@@ -1,18 +1,18 @@
 ---
 title: TLS
 aliases:
-  - TLS
+    - TLS
 pcx_content_type: definition
 summary: >-
-  Transport Layer Security (TLS) is a security protocol that replaces [SSL](/fundamentals/design-and-architecture/standards-based/data-standards/ssl) for data privacy and Internet communication security. TLS encrypts communications between web applications and servers such as between a visitor’s browser loading a website.
+    Transport Layer Security (TLS) is a security protocol that replaces [SSL](/fundamentals/design-and-architecture/standards-based/data-standards/ssl) for data privacy and Internet communication security. TLS encrypts communications between web applications and servers such as between a visitor’s browser loading a website.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ssl
-  - /fundamentals/glossary/encryption
-  - /fundamentals/glossary/pfs
-  - /fundamentals/glossary/symmetric-encryption
-  - /fundamentals/glossary/hashing
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ssl
+    - /fundamentals/glossary/encryption
+    - /fundamentals/glossary/pfs
+    - /fundamentals/glossary/symmetric-encryption
+    - /fundamentals/glossary/hashing
 ---
 
 # Transport Layer Security (TLS)
@@ -35,10 +35,10 @@ Alternatively client and server could make use of a `STARTTLS` request to indica
 
 At the time of writing there are 4 versions of `TLS`:
 
-- TLS 1.0
-- TLS 1.1
-- TLS 1.2
-- TLS 1.3 (the current version)
+-   TLS 1.0
+-   TLS 1.1
+-   TLS 1.2
+-   TLS 1.3 (the current version)
 
 `TLS 1.0` and `TLS 1.1` saw the light of day in 1995 and 2006 respectively. Both were deprecated in 2021.
 
@@ -50,4 +50,4 @@ At the time of writing there are 4 versions of `TLS`:
 
 ## References
 
-- https://en.wikipedia.org/wiki/Transport_Layer_Security
+-   https://en.wikipedia.org/wiki/Transport_Layer_Security

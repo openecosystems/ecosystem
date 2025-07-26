@@ -1,4 +1,4 @@
 app:
-  name: ecosystem-v2alpha
-  environmentName: 'local-1'
-  environmentType: 'local'
+    name: ecosystem-v2alpha
+    environmentName: 'local-1'
+    environmentType: 'local'

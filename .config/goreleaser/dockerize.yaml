@@ -1,27 +1,25 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 version: 2
 variables:
-  project_name: ""
+    project_name: ''
 kos:
-  - repositories:
-      - ghcr.io/openecosystems/{{ .Var.project_name }}
-      #- openecosystems/{{ .Var.project_name }}
-    tags:
-      - "{{.Version}}"
-      - "{{.Tag}}"
-      - latest
-      - "{{if not .Prerelease}}stable{{end}}"
-    bare: true
-    preserve_import_paths: false
-    platforms:
-      - linux/amd64
-      - linux/arm64
-      - darwin/amd64
-      - darwin/arm64
-      - windows/amd64
-      - windows/arm64
-
-
+    - repositories:
+          - ghcr.io/openecosystems/{{ .Var.project_name }}
+          #- openecosystems/{{ .Var.project_name }}
+      tags:
+          - '{{.Version}}'
+          - '{{.Tag}}'
+          - latest
+          - '{{if not .Prerelease}}stable{{end}}'
+      bare: true
+      preserve_import_paths: false
+      platforms:
+          - linux/amd64
+          - linux/arm64
+          - darwin/amd64
+          - darwin/arm64
+          - windows/amd64
+          - windows/arm64
 #dockers:
 #  - image_templates: [ "openecosystems/{{ .ProjectName }}:{{ .Version }}-amd64" ]
 #    dockerfile: Dockerfile

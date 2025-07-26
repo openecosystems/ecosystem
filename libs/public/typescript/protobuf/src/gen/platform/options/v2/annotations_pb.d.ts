@@ -2,9 +2,17 @@
 // @generated from file platform/options/v2/annotations.proto (package platform.options.v2, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenExtension, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { EnumOptions, EnumValueOptions, FieldOptions, FileOptions, MessageOptions, MethodOptions, ServiceOptions } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenExtension, GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type {
+    EnumOptions,
+    EnumValueOptions,
+    FieldOptions,
+    FileOptions,
+    MessageOptions,
+    MethodOptions,
+    ServiceOptions,
+} from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/options/v2/annotations.proto.
@@ -18,11 +26,11 @@ export declare const file_platform_options_v2_annotations: GenFile;
  *
  * @generated from message platform.options.v2.NetworkOptions
  */
-export declare type NetworkOptions = Message<"platform.options.v2.NetworkOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.NetworkType type = 1;
-   */
-  type: NetworkType;
+export declare type NetworkOptions = Message<'platform.options.v2.NetworkOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.NetworkType type = 1;
+     */
+    type: NetworkType;
 };
 
 /**
@@ -34,11 +42,11 @@ export declare const NetworkOptionsSchema: GenMessage<NetworkOptions>;
 /**
  * @generated from message platform.options.v2.SystemOptions
  */
-export declare type SystemOptions = Message<"platform.options.v2.SystemOptions"> & {
-  /**
-   * @generated from field: bool platform_system = 1;
-   */
-  platformSystem: boolean;
+export declare type SystemOptions = Message<'platform.options.v2.SystemOptions'> & {
+    /**
+     * @generated from field: bool platform_system = 1;
+     */
+    platformSystem: boolean;
 };
 
 /**
@@ -50,41 +58,41 @@ export declare const SystemOptionsSchema: GenMessage<SystemOptions>;
 /**
  * @generated from message platform.options.v2.ApiOptions
  */
-export declare type ApiOptions = Message<"platform.options.v2.ApiOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.ApiType type = 1;
-   */
-  type: ApiType;
+export declare type ApiOptions = Message<'platform.options.v2.ApiOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.ApiType type = 1;
+     */
+    type: ApiType;
 
-  /**
-   * @generated from field: platform.options.v2.ApiLifecycle cycle = 2;
-   */
-  cycle: ApiLifecycle;
+    /**
+     * @generated from field: platform.options.v2.ApiLifecycle cycle = 2;
+     */
+    cycle: ApiLifecycle;
 
-  /**
-   * @generated from field: platform.options.v2.ApiInterfaceType interface = 3;
-   */
-  interface: ApiInterfaceType;
+    /**
+     * @generated from field: platform.options.v2.ApiInterfaceType interface = 3;
+     */
+    interface: ApiInterfaceType;
 
-  /**
-   * @generated from field: platform.options.v2.NetworkType network = 4;
-   */
-  network: NetworkType;
+    /**
+     * @generated from field: platform.options.v2.NetworkType network = 4;
+     */
+    network: NetworkType;
 
-  /**
-   * @generated from field: platform.options.v2.SpecRequestScope scope = 5;
-   */
-  scope: SpecRequestScope;
+    /**
+     * @generated from field: platform.options.v2.SpecRequestScope scope = 5;
+     */
+    scope: SpecRequestScope;
 
-  /**
-   * @generated from field: string shortname = 6;
-   */
-  shortname: string;
+    /**
+     * @generated from field: string shortname = 6;
+     */
+    shortname: string;
 
-  /**
-   * @generated from field: bool versionable = 7;
-   */
-  versionable: boolean;
+    /**
+     * @generated from field: bool versionable = 7;
+     */
+    versionable: boolean;
 };
 
 /**
@@ -96,41 +104,41 @@ export declare const ApiOptionsSchema: GenMessage<ApiOptions>;
 /**
  * @generated from message platform.options.v2.EntityOptions
  */
-export declare type EntityOptions = Message<"platform.options.v2.EntityOptions"> & {
-  /**
-   * @generated from field: string entity = 1;
-   */
-  entity: string;
+export declare type EntityOptions = Message<'platform.options.v2.EntityOptions'> & {
+    /**
+     * @generated from field: string entity = 1;
+     */
+    entity: string;
 
-  /**
-   * @generated from field: string entity_plural = 2;
-   */
-  entityPlural: string;
+    /**
+     * @generated from field: string entity_plural = 2;
+     */
+    entityPlural: string;
 
-  /**
-   * @generated from field: platform.options.v2.EntityType type = 3;
-   */
-  type: EntityType;
+    /**
+     * @generated from field: platform.options.v2.EntityType type = 3;
+     */
+    type: EntityType;
 
-  /**
-   * @generated from field: string namespace = 4;
-   */
-  namespace: string;
+    /**
+     * @generated from field: string namespace = 4;
+     */
+    namespace: string;
 
-  /**
-   * @generated from field: platform.options.v2.EntityConsistency consistency = 5;
-   */
-  consistency: EntityConsistency;
+    /**
+     * @generated from field: platform.options.v2.EntityConsistency consistency = 5;
+     */
+    consistency: EntityConsistency;
 
-  /**
-   * @generated from field: platform.options.v2.EntityHierarchy hierarchy = 6;
-   */
-  hierarchy: EntityHierarchy;
+    /**
+     * @generated from field: platform.options.v2.EntityHierarchy hierarchy = 6;
+     */
+    hierarchy: EntityHierarchy;
 
-  /**
-   * @generated from field: bool versionable = 7;
-   */
-  versionable: boolean;
+    /**
+     * @generated from field: bool versionable = 7;
+     */
+    versionable: boolean;
 };
 
 /**
@@ -142,11 +150,11 @@ export declare const EntityOptionsSchema: GenMessage<EntityOptions>;
 /**
  * @generated from message platform.options.v2.LanguageOptions
  */
-export declare type LanguageOptions = Message<"platform.options.v2.LanguageOptions"> & {
-  /**
-   * @generated from field: repeated platform.options.v2.LanguageType languages = 1;
-   */
-  languages: LanguageType[];
+export declare type LanguageOptions = Message<'platform.options.v2.LanguageOptions'> & {
+    /**
+     * @generated from field: repeated platform.options.v2.LanguageType languages = 1;
+     */
+    languages: LanguageType[];
 };
 
 /**
@@ -158,11 +166,11 @@ export declare const LanguageOptionsSchema: GenMessage<LanguageOptions>;
 /**
  * @generated from message platform.options.v2.GraphqlOptions
  */
-export declare type GraphqlOptions = Message<"platform.options.v2.GraphqlOptions"> & {
-  /**
-   * @generated from field: bool enabled = 1;
-   */
-  enabled: boolean;
+export declare type GraphqlOptions = Message<'platform.options.v2.GraphqlOptions'> & {
+    /**
+     * @generated from field: bool enabled = 1;
+     */
+    enabled: boolean;
 };
 
 /**
@@ -174,16 +182,16 @@ export declare const GraphqlOptionsSchema: GenMessage<GraphqlOptions>;
 /**
  * @generated from message platform.options.v2.SpecServiceOptions
  */
-export declare type SpecServiceOptions = Message<"platform.options.v2.SpecServiceOptions"> & {
-  /**
-   * @generated from field: int32 grpc_port = 1;
-   */
-  grpcPort: number;
+export declare type SpecServiceOptions = Message<'platform.options.v2.SpecServiceOptions'> & {
+    /**
+     * @generated from field: int32 grpc_port = 1;
+     */
+    grpcPort: number;
 
-  /**
-   * @generated from field: int32 http_port = 2;
-   */
-  httpPort: number;
+    /**
+     * @generated from field: int32 http_port = 2;
+     */
+    httpPort: number;
 };
 
 /**
@@ -195,16 +203,16 @@ export declare const SpecServiceOptionsSchema: GenMessage<SpecServiceOptions>;
 /**
  * @generated from message platform.options.v2.RateLimitFilter
  */
-export declare type RateLimitFilter = Message<"platform.options.v2.RateLimitFilter"> & {
-  /**
-   * @generated from field: bool enabled = 1;
-   */
-  enabled: boolean;
+export declare type RateLimitFilter = Message<'platform.options.v2.RateLimitFilter'> & {
+    /**
+     * @generated from field: bool enabled = 1;
+     */
+    enabled: boolean;
 
-  /**
-   * @generated from field: string metric = 2;
-   */
-  metric: string;
+    /**
+     * @generated from field: string metric = 2;
+     */
+    metric: string;
 };
 
 /**
@@ -216,11 +224,11 @@ export declare const RateLimitFilterSchema: GenMessage<RateLimitFilter>;
 /**
  * @generated from message platform.options.v2.AuthorizationFilter
  */
-export declare type AuthorizationFilter = Message<"platform.options.v2.AuthorizationFilter"> & {
-  /**
-   * @generated from field: bool enabled = 1;
-   */
-  enabled: boolean;
+export declare type AuthorizationFilter = Message<'platform.options.v2.AuthorizationFilter'> & {
+    /**
+     * @generated from field: bool enabled = 1;
+     */
+    enabled: boolean;
 };
 
 /**
@@ -232,11 +240,11 @@ export declare const AuthorizationFilterSchema: GenMessage<AuthorizationFilter>;
 /**
  * @generated from message platform.options.v2.ConsentFilter
  */
-export declare type ConsentFilter = Message<"platform.options.v2.ConsentFilter"> & {
-  /**
-   * @generated from field: bool enabled = 1;
-   */
-  enabled: boolean;
+export declare type ConsentFilter = Message<'platform.options.v2.ConsentFilter'> & {
+    /**
+     * @generated from field: bool enabled = 1;
+     */
+    enabled: boolean;
 };
 
 /**
@@ -248,21 +256,21 @@ export declare const ConsentFilterSchema: GenMessage<ConsentFilter>;
 /**
  * @generated from message platform.options.v2.ProxyOptions
  */
-export declare type ProxyOptions = Message<"platform.options.v2.ProxyOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.AuthorizationFilter authorization = 1;
-   */
-  authorization?: AuthorizationFilter;
+export declare type ProxyOptions = Message<'platform.options.v2.ProxyOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.AuthorizationFilter authorization = 1;
+     */
+    authorization?: AuthorizationFilter;
 
-  /**
-   * @generated from field: platform.options.v2.ConsentFilter consent = 2;
-   */
-  consent?: ConsentFilter;
+    /**
+     * @generated from field: platform.options.v2.ConsentFilter consent = 2;
+     */
+    consent?: ConsentFilter;
 
-  /**
-   * @generated from field: platform.options.v2.RateLimitFilter rate_limit = 3;
-   */
-  rateLimit?: RateLimitFilter;
+    /**
+     * @generated from field: platform.options.v2.RateLimitFilter rate_limit = 3;
+     */
+    rateLimit?: RateLimitFilter;
 };
 
 /**
@@ -274,11 +282,11 @@ export declare const ProxyOptionsSchema: GenMessage<ProxyOptions>;
 /**
  * @generated from message platform.options.v2.ConnectorOptions
  */
-export declare type ConnectorOptions = Message<"platform.options.v2.ConnectorOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.ConnectorType type = 1;
-   */
-  type: ConnectorType;
+export declare type ConnectorOptions = Message<'platform.options.v2.ConnectorOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.ConnectorType type = 1;
+     */
+    type: ConnectorType;
 };
 
 /**
@@ -290,11 +298,11 @@ export declare const ConnectorOptionsSchema: GenMessage<ConnectorOptions>;
 /**
  * @generated from message platform.options.v2.CQRSOptions
  */
-export declare type CQRSOptions = Message<"platform.options.v2.CQRSOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.CQRSType type = 1;
-   */
-  type: CQRSType;
+export declare type CQRSOptions = Message<'platform.options.v2.CQRSOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.CQRSType type = 1;
+     */
+    type: CQRSType;
 };
 
 /**
@@ -306,11 +314,11 @@ export declare const CQRSOptionsSchema: GenMessage<CQRSOptions>;
 /**
  * @generated from message platform.options.v2.RateLimitOptions
  */
-export declare type RateLimitOptions = Message<"platform.options.v2.RateLimitOptions"> & {
-  /**
-   * @generated from field: bool limit = 1;
-   */
-  limit: boolean;
+export declare type RateLimitOptions = Message<'platform.options.v2.RateLimitOptions'> & {
+    /**
+     * @generated from field: bool limit = 1;
+     */
+    limit: boolean;
 };
 
 /**
@@ -322,16 +330,16 @@ export declare const RateLimitOptionsSchema: GenMessage<RateLimitOptions>;
 /**
  * @generated from message platform.options.v2.PermissionOptions
  */
-export declare type PermissionOptions = Message<"platform.options.v2.PermissionOptions"> & {
-  /**
-   * @generated from field: string permission = 1;
-   */
-  permission: string;
+export declare type PermissionOptions = Message<'platform.options.v2.PermissionOptions'> & {
+    /**
+     * @generated from field: string permission = 1;
+     */
+    permission: string;
 
-  /**
-   * @generated from field: repeated platform.options.v2.AuthRole roles = 2;
-   */
-  roles: AuthRole[];
+    /**
+     * @generated from field: repeated platform.options.v2.AuthRole roles = 2;
+     */
+    roles: AuthRole[];
 };
 
 /**
@@ -343,11 +351,11 @@ export declare const PermissionOptionsSchema: GenMessage<PermissionOptions>;
 /**
  * @generated from message platform.options.v2.GraphOptions
  */
-export declare type GraphOptions = Message<"platform.options.v2.GraphOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.GraphType type = 1;
-   */
-  type: GraphType;
+export declare type GraphOptions = Message<'platform.options.v2.GraphOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.GraphType type = 1;
+     */
+    type: GraphType;
 };
 
 /**
@@ -359,21 +367,21 @@ export declare const GraphOptionsSchema: GenMessage<GraphOptions>;
 /**
  * @generated from message platform.options.v2.EntityFieldOptions
  */
-export declare type EntityFieldOptions = Message<"platform.options.v2.EntityFieldOptions"> & {
-  /**
-   * @generated from field: bool key = 1;
-   */
-  key: boolean;
+export declare type EntityFieldOptions = Message<'platform.options.v2.EntityFieldOptions'> & {
+    /**
+     * @generated from field: bool key = 1;
+     */
+    key: boolean;
 
-  /**
-   * @generated from field: repeated platform.options.v2.FieldBehavior behavior = 2;
-   */
-  behavior: FieldBehavior[];
+    /**
+     * @generated from field: repeated platform.options.v2.FieldBehavior behavior = 2;
+     */
+    behavior: FieldBehavior[];
 
-  /**
-   * @generated from field: bool version_key = 3;
-   */
-  versionKey: boolean;
+    /**
+     * @generated from field: bool version_key = 3;
+     */
+    versionKey: boolean;
 };
 
 /**
@@ -385,41 +393,41 @@ export declare const EntityFieldOptionsSchema: GenMessage<EntityFieldOptions>;
 /**
  * @generated from message platform.options.v2.SpecConfiguration
  */
-export declare type SpecConfiguration = Message<"platform.options.v2.SpecConfiguration"> & {
-  /**
-   * The label key.
-   *
-   * @generated from field: string key = 1;
-   */
-  key: string;
+export declare type SpecConfiguration = Message<'platform.options.v2.SpecConfiguration'> & {
+    /**
+     * The label key.
+     *
+     * @generated from field: string key = 1;
+     */
+    key: string;
 
-  /**
-   * The type of data that can be assigned to the label.
-   *
-   * @generated from field: platform.options.v2.SpecConfiguration.SpecConfigurationType type = 2;
-   */
-  type: SpecConfiguration_SpecConfigurationType;
+    /**
+     * The type of data that can be assigned to the label.
+     *
+     * @generated from field: platform.options.v2.SpecConfiguration.SpecConfigurationType type = 2;
+     */
+    type: SpecConfiguration_SpecConfigurationType;
 
-  /**
-   * A human-readable description for the label.
-   *
-   * @generated from field: string description = 3;
-   */
-  description: string;
+    /**
+     * A human-readable description for the label.
+     *
+     * @generated from field: string description = 3;
+     */
+    description: string;
 
-  /**
-   * Is this configuration overridable?
-   *
-   * @generated from field: bool overrideable = 4;
-   */
-  overrideable: boolean;
+    /**
+     * Is this configuration overridable?
+     *
+     * @generated from field: bool overrideable = 4;
+     */
+    overrideable: boolean;
 
-  /**
-   * Allow for safe deprecation of configurations
-   *
-   * @generated from field: bool enabled = 5;
-   */
-  enabled: boolean;
+    /**
+     * Allow for safe deprecation of configurations
+     *
+     * @generated from field: bool enabled = 5;
+     */
+    enabled: boolean;
 };
 
 /**
@@ -434,39 +442,39 @@ export declare const SpecConfigurationSchema: GenMessage<SpecConfiguration>;
  * @generated from enum platform.options.v2.SpecConfiguration.SpecConfigurationType
  */
 export enum SpecConfiguration_SpecConfigurationType {
-  /**
-   * @generated from enum value: SPEC_CONFIGURATION_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: SPEC_CONFIGURATION_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * A variable-length string. This is the default.
-   *
-   * @generated from enum value: SPEC_CONFIGURATION_TYPE_STRING = 1;
-   */
-  STRING = 1,
+    /**
+     * A variable-length string. This is the default.
+     *
+     * @generated from enum value: SPEC_CONFIGURATION_TYPE_STRING = 1;
+     */
+    STRING = 1,
 
-  /**
-   * Boolean; true or false.
-   *
-   * @generated from enum value: SPEC_CONFIGURATION_TYPE_BOOL = 2;
-   */
-  BOOL = 2,
+    /**
+     * Boolean; true or false.
+     *
+     * @generated from enum value: SPEC_CONFIGURATION_TYPE_BOOL = 2;
+     */
+    BOOL = 2,
 
-  /**
-   * @generated from enum value: SPEC_CONFIGURATION_TYPE_INT = 3;
-   */
-  INT = 3,
+    /**
+     * @generated from enum value: SPEC_CONFIGURATION_TYPE_INT = 3;
+     */
+    INT = 3,
 
-  /**
-   * @generated from enum value: SPEC_CONFIGURATION_TYPE_LIST = 4;
-   */
-  LIST = 4,
+    /**
+     * @generated from enum value: SPEC_CONFIGURATION_TYPE_LIST = 4;
+     */
+    LIST = 4,
 
-  /**
-   * @generated from enum value: SPEC_CONFIGURATION_TYPE_MAP = 5;
-   */
-  MAP = 5,
+    /**
+     * @generated from enum value: SPEC_CONFIGURATION_TYPE_MAP = 5;
+     */
+    MAP = 5,
 }
 
 /**
@@ -477,16 +485,16 @@ export declare const SpecConfiguration_SpecConfigurationTypeSchema: GenEnum<Spec
 /**
  * @generated from message platform.options.v2.ConfigurationOptions
  */
-export declare type ConfigurationOptions = Message<"platform.options.v2.ConfigurationOptions"> & {
-  /**
-   * @generated from field: bool enabled = 1;
-   */
-  enabled: boolean;
+export declare type ConfigurationOptions = Message<'platform.options.v2.ConfigurationOptions'> & {
+    /**
+     * @generated from field: bool enabled = 1;
+     */
+    enabled: boolean;
 
-  /**
-   * @generated from field: int32 field_number = 2;
-   */
-  fieldNumber: number;
+    /**
+     * @generated from field: int32 field_number = 2;
+     */
+    fieldNumber: number;
 };
 
 /**
@@ -498,11 +506,11 @@ export declare const ConfigurationOptionsSchema: GenMessage<ConfigurationOptions
 /**
  * @generated from message platform.options.v2.ConfigurationFieldOptions
  */
-export declare type ConfigurationFieldOptions = Message<"platform.options.v2.ConfigurationFieldOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.SpecConfiguration configuration = 1;
-   */
-  configuration?: SpecConfiguration;
+export declare type ConfigurationFieldOptions = Message<'platform.options.v2.ConfigurationFieldOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.SpecConfiguration configuration = 1;
+     */
+    configuration?: SpecConfiguration;
 };
 
 /**
@@ -514,16 +522,16 @@ export declare const ConfigurationFieldOptionsSchema: GenMessage<ConfigurationFi
 /**
  * @generated from message platform.options.v2.SyntheticOptions
  */
-export declare type SyntheticOptions = Message<"platform.options.v2.SyntheticOptions"> & {
-  /**
-   * @generated from field: string dictionary_key = 1;
-   */
-  dictionaryKey: string;
+export declare type SyntheticOptions = Message<'platform.options.v2.SyntheticOptions'> & {
+    /**
+     * @generated from field: string dictionary_key = 1;
+     */
+    dictionaryKey: string;
 
-  /**
-   * @generated from field: platform.options.v2.SyntheticType type = 2;
-   */
-  type: SyntheticType;
+    /**
+     * @generated from field: platform.options.v2.SyntheticType type = 2;
+     */
+    type: SyntheticType;
 };
 
 /**
@@ -537,13 +545,13 @@ export declare const SyntheticOptionsSchema: GenMessage<SyntheticOptions>;
  *
  * @generated from message platform.options.v2.Classification
  */
-export declare type Classification = Message<"platform.options.v2.Classification"> & {
-  /**
-   * Classification Type
-   *
-   * @generated from field: platform.options.v2.ClassificationType type = 1;
-   */
-  type: ClassificationType;
+export declare type Classification = Message<'platform.options.v2.Classification'> & {
+    /**
+     * Classification Type
+     *
+     * @generated from field: platform.options.v2.ClassificationType type = 1;
+     */
+    type: ClassificationType;
 };
 
 /**
@@ -555,11 +563,11 @@ export declare const ClassificationSchema: GenMessage<Classification>;
 /**
  * @generated from message platform.options.v2.SpecOptions
  */
-export declare type SpecOptions = Message<"platform.options.v2.SpecOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.SpecEnumType type = 1;
-   */
-  type: SpecEnumType;
+export declare type SpecOptions = Message<'platform.options.v2.SpecOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.SpecEnumType type = 1;
+     */
+    type: SpecEnumType;
 };
 
 /**
@@ -571,21 +579,21 @@ export declare const SpecOptionsSchema: GenMessage<SpecOptions>;
 /**
  * @generated from message platform.options.v2.BillingOptions
  */
-export declare type BillingOptions = Message<"platform.options.v2.BillingOptions"> & {
-  /**
-   * @generated from field: bool billable = 1;
-   */
-  billable: boolean;
+export declare type BillingOptions = Message<'platform.options.v2.BillingOptions'> & {
+    /**
+     * @generated from field: bool billable = 1;
+     */
+    billable: boolean;
 
-  /**
-   * @generated from field: bool partner_billable = 2;
-   */
-  partnerBillable: boolean;
+    /**
+     * @generated from field: bool partner_billable = 2;
+     */
+    partnerBillable: boolean;
 
-  /**
-   * @generated from field: bool metered = 3;
-   */
-  metered: boolean;
+    /**
+     * @generated from field: bool metered = 3;
+     */
+    metered: boolean;
 };
 
 /**
@@ -597,11 +605,11 @@ export declare const BillingOptionsSchema: GenMessage<BillingOptions>;
 /**
  * @generated from message platform.options.v2.EventOptions
  */
-export declare type EventOptions = Message<"platform.options.v2.EventOptions"> & {
-  /**
-   * @generated from field: bool versionable = 1;
-   */
-  versionable: boolean;
+export declare type EventOptions = Message<'platform.options.v2.EventOptions'> & {
+    /**
+     * @generated from field: bool versionable = 1;
+     */
+    versionable: boolean;
 };
 
 /**
@@ -613,11 +621,11 @@ export declare const EventOptionsSchema: GenMessage<EventOptions>;
 /**
  * @generated from message platform.options.v2.AuthRoleOptions
  */
-export declare type AuthRoleOptions = Message<"platform.options.v2.AuthRoleOptions"> & {
-  /**
-   * @generated from field: platform.options.v2.AuthRoleType role_type = 1;
-   */
-  roleType: AuthRoleType;
+export declare type AuthRoleOptions = Message<'platform.options.v2.AuthRoleOptions'> & {
+    /**
+     * @generated from field: platform.options.v2.AuthRoleType role_type = 1;
+     */
+    roleType: AuthRoleType;
 };
 
 /**
@@ -629,11 +637,11 @@ export declare const AuthRoleOptionsSchema: GenMessage<AuthRoleOptions>;
 /**
  * @generated from message platform.options.v2.RoutineOptions
  */
-export declare type RoutineOptions = Message<"platform.options.v2.RoutineOptions"> & {
-  /**
-   * @generated from field: string listener = 1;
-   */
-  listener: string;
+export declare type RoutineOptions = Message<'platform.options.v2.RoutineOptions'> & {
+    /**
+     * @generated from field: string listener = 1;
+     */
+    listener: string;
 };
 
 /**
@@ -646,31 +654,31 @@ export declare const RoutineOptionsSchema: GenMessage<RoutineOptions>;
  * @generated from enum platform.options.v2.NetworkType
  */
 export enum NetworkType {
-  /**
-   * @generated from enum value: NETWORK_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: NETWORK_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Loopbacks, UNIX Sockets, direct-point-to-point fabric
-   *
-   * @generated from enum value: NETWORK_TYPE_UNDERLAY = 1;
-   */
-  UNDERLAY = 1,
+    /**
+     * Loopbacks, UNIX Sockets, direct-point-to-point fabric
+     *
+     * @generated from enum value: NETWORK_TYPE_UNDERLAY = 1;
+     */
+    UNDERLAY = 1,
 
-  /**
-   * HTTPS public internet, externally managed proxies or VPNs
-   *
-   * @generated from enum value: NETWORK_TYPE_INTERNET = 2;
-   */
-  INTERNET = 2,
+    /**
+     * HTTPS public internet, externally managed proxies or VPNs
+     *
+     * @generated from enum value: NETWORK_TYPE_INTERNET = 2;
+     */
+    INTERNET = 2,
 
-  /**
-   * Mesh Overlay network, internally managed proxy and/or VPN
-   *
-   * @generated from enum value: NETWORK_TYPE_OVERLAY = 3;
-   */
-  OVERLAY = 3,
+    /**
+     * Mesh Overlay network, internally managed proxy and/or VPN
+     *
+     * @generated from enum value: NETWORK_TYPE_OVERLAY = 3;
+     */
+    OVERLAY = 3,
 }
 
 /**
@@ -682,30 +690,30 @@ export declare const NetworkTypeSchema: GenEnum<NetworkType>;
  * @generated from enum platform.options.v2.ApiType
  */
 export enum ApiType {
-  /**
-   * @generated from enum value: API_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: API_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: API_TYPE_PRIVATE = 1;
-   */
-  PRIVATE = 1,
+    /**
+     * @generated from enum value: API_TYPE_PRIVATE = 1;
+     */
+    PRIVATE = 1,
 
-  /**
-   * @generated from enum value: API_TYPE_PARTNER = 2;
-   */
-  PARTNER = 2,
+    /**
+     * @generated from enum value: API_TYPE_PARTNER = 2;
+     */
+    PARTNER = 2,
 
-  /**
-   * @generated from enum value: API_TYPE_PUBLIC = 3;
-   */
-  PUBLIC = 3,
+    /**
+     * @generated from enum value: API_TYPE_PUBLIC = 3;
+     */
+    PUBLIC = 3,
 
-  /**
-   * @generated from enum value: API_TYPE_POC = 4;
-   */
-  POC = 4,
+    /**
+     * @generated from enum value: API_TYPE_POC = 4;
+     */
+    POC = 4,
 }
 
 /**
@@ -717,40 +725,40 @@ export declare const ApiTypeSchema: GenEnum<ApiType>;
  * @generated from enum platform.options.v2.ApiInterfaceType
  */
 export enum ApiInterfaceType {
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_META = 1;
-   */
-  META = 1,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_META = 1;
+     */
+    META = 1,
 
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_OPERATIONAL = 2;
-   */
-  OPERATIONAL = 2,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_OPERATIONAL = 2;
+     */
+    OPERATIONAL = 2,
 
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_CONTRIBUTION = 3;
-   */
-  CONTRIBUTION = 3,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_CONTRIBUTION = 3;
+     */
+    CONTRIBUTION = 3,
 
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_ANALYTICAL = 4;
-   */
-  ANALYTICAL = 4,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_ANALYTICAL = 4;
+     */
+    ANALYTICAL = 4,
 
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_OBSERVABLE = 5;
-   */
-  OBSERVABLE = 5,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_OBSERVABLE = 5;
+     */
+    OBSERVABLE = 5,
 
-  /**
-   * @generated from enum value: API_INTERFACE_TYPE_DISCOVERABLE = 6;
-   */
-  DISCOVERABLE = 6,
+    /**
+     * @generated from enum value: API_INTERFACE_TYPE_DISCOVERABLE = 6;
+     */
+    DISCOVERABLE = 6,
 }
 
 /**
@@ -762,40 +770,40 @@ export declare const ApiInterfaceTypeSchema: GenEnum<ApiInterfaceType>;
  * @generated from enum platform.options.v2.ApiLifecycle
  */
 export enum ApiLifecycle {
-  /**
-   * @generated from enum value: API_LIFECYCLE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: API_LIFECYCLE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: API_LIFECYCLE_ALPHA = 1;
-   */
-  ALPHA = 1,
+    /**
+     * @generated from enum value: API_LIFECYCLE_ALPHA = 1;
+     */
+    ALPHA = 1,
 
-  /**
-   * @generated from enum value: API_LIFECYCLE_BETA = 2;
-   */
-  BETA = 2,
+    /**
+     * @generated from enum value: API_LIFECYCLE_BETA = 2;
+     */
+    BETA = 2,
 
-  /**
-   * @generated from enum value: API_LIFECYCLE_LIMITED_AVAILABILITY = 3;
-   */
-  LIMITED_AVAILABILITY = 3,
+    /**
+     * @generated from enum value: API_LIFECYCLE_LIMITED_AVAILABILITY = 3;
+     */
+    LIMITED_AVAILABILITY = 3,
 
-  /**
-   * @generated from enum value: API_LIFECYCLE_GENERAL_AVAILABILITY = 4;
-   */
-  GENERAL_AVAILABILITY = 4,
+    /**
+     * @generated from enum value: API_LIFECYCLE_GENERAL_AVAILABILITY = 4;
+     */
+    GENERAL_AVAILABILITY = 4,
 
-  /**
-   * @generated from enum value: API_LIFECYCLE_DEPRECATED = 5;
-   */
-  DEPRECATED = 5,
+    /**
+     * @generated from enum value: API_LIFECYCLE_DEPRECATED = 5;
+     */
+    DEPRECATED = 5,
 
-  /**
-   * @generated from enum value: API_LIFECYCLE_RETIRED = 6;
-   */
-  RETIRED = 6,
+    /**
+     * @generated from enum value: API_LIFECYCLE_RETIRED = 6;
+     */
+    RETIRED = 6,
 }
 
 /**
@@ -807,45 +815,45 @@ export declare const ApiLifecycleSchema: GenEnum<ApiLifecycle>;
  * @generated from enum platform.options.v2.EntityType
  */
 export enum EntityType {
-  /**
-   * @generated from enum value: ENTITY_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ENTITY_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_AEROSPIKE = 1;
-   */
-  AEROSPIKE = 1,
+    /**
+     * @generated from enum value: ENTITY_TYPE_AEROSPIKE = 1;
+     */
+    AEROSPIKE = 1,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_DGRAPH = 2;
-   */
-  DGRAPH = 2,
+    /**
+     * @generated from enum value: ENTITY_TYPE_DGRAPH = 2;
+     */
+    DGRAPH = 2,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_MONGODB = 3;
-   */
-  MONGODB = 3,
+    /**
+     * @generated from enum value: ENTITY_TYPE_MONGODB = 3;
+     */
+    MONGODB = 3,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_BIGQUERY = 4;
-   */
-  BIGQUERY = 4,
+    /**
+     * @generated from enum value: ENTITY_TYPE_BIGQUERY = 4;
+     */
+    BIGQUERY = 4,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_REDIS = 5;
-   */
-  REDIS = 5,
+    /**
+     * @generated from enum value: ENTITY_TYPE_REDIS = 5;
+     */
+    REDIS = 5,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_ROCKSDB = 6;
-   */
-  ROCKSDB = 6,
+    /**
+     * @generated from enum value: ENTITY_TYPE_ROCKSDB = 6;
+     */
+    ROCKSDB = 6,
 
-  /**
-   * @generated from enum value: ENTITY_TYPE_COUCHBASE = 7;
-   */
-  COUCHBASE = 7,
+    /**
+     * @generated from enum value: ENTITY_TYPE_COUCHBASE = 7;
+     */
+    COUCHBASE = 7,
 }
 
 /**
@@ -857,20 +865,20 @@ export declare const EntityTypeSchema: GenEnum<EntityType>;
  * @generated from enum platform.options.v2.EntityConsistency
  */
 export enum EntityConsistency {
-  /**
-   * @generated from enum value: ENTITY_CONSISTENCY_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ENTITY_CONSISTENCY_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ENTITY_CONSISTENCY_STRONG = 1;
-   */
-  STRONG = 1,
+    /**
+     * @generated from enum value: ENTITY_CONSISTENCY_STRONG = 1;
+     */
+    STRONG = 1,
 
-  /**
-   * @generated from enum value: ENTITY_CONSISTENCY_EVENTUAL = 2;
-   */
-  EVENTUAL = 2,
+    /**
+     * @generated from enum value: ENTITY_CONSISTENCY_EVENTUAL = 2;
+     */
+    EVENTUAL = 2,
 }
 
 /**
@@ -882,25 +890,25 @@ export declare const EntityConsistencySchema: GenEnum<EntityConsistency>;
  * @generated from enum platform.options.v2.EntityHierarchy
  */
 export enum EntityHierarchy {
-  /**
-   * @generated from enum value: ENTITY_HIERARCHY_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: ENTITY_HIERARCHY_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ENTITY_HIERARCHY_PLATFORM = 1;
-   */
-  PLATFORM = 1,
+    /**
+     * @generated from enum value: ENTITY_HIERARCHY_PLATFORM = 1;
+     */
+    PLATFORM = 1,
 
-  /**
-   * @generated from enum value: ENTITY_HIERARCHY_ORGANIZATION = 2;
-   */
-  ORGANIZATION = 2,
+    /**
+     * @generated from enum value: ENTITY_HIERARCHY_ORGANIZATION = 2;
+     */
+    ORGANIZATION = 2,
 
-  /**
-   * @generated from enum value: ENTITY_HIERARCHY_ECOSYSTEM = 3;
-   */
-  ECOSYSTEM = 3,
+    /**
+     * @generated from enum value: ENTITY_HIERARCHY_ECOSYSTEM = 3;
+     */
+    ECOSYSTEM = 3,
 }
 
 /**
@@ -912,65 +920,65 @@ export declare const EntityHierarchySchema: GenEnum<EntityHierarchy>;
  * @generated from enum platform.options.v2.LanguageType
  */
 export enum LanguageType {
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_CPLUSPLUS = 1;
-   */
-  CPLUSPLUS = 1,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_CPLUSPLUS = 1;
+     */
+    CPLUSPLUS = 1,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_RUST = 2;
-   */
-  RUST = 2,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_RUST = 2;
+     */
+    RUST = 2,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_GOLANG = 3;
-   */
-  GOLANG = 3,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_GOLANG = 3;
+     */
+    GOLANG = 3,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_JAVA = 4;
-   */
-  JAVA = 4,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_JAVA = 4;
+     */
+    JAVA = 4,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_PYTHON = 5;
-   */
-  PYTHON = 5,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_PYTHON = 5;
+     */
+    PYTHON = 5,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_TYPESCRIPT = 6;
-   */
-  TYPESCRIPT = 6,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_TYPESCRIPT = 6;
+     */
+    TYPESCRIPT = 6,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_CSHARP = 7;
-   */
-  CSHARP = 7,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_CSHARP = 7;
+     */
+    CSHARP = 7,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_SWIFT = 8;
-   */
-  SWIFT = 8,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_SWIFT = 8;
+     */
+    SWIFT = 8,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_ANDROID = 9;
-   */
-  ANDROID = 9,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_ANDROID = 9;
+     */
+    ANDROID = 9,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_GRAPHQL = 10;
-   */
-  GRAPHQL = 10,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_GRAPHQL = 10;
+     */
+    GRAPHQL = 10,
 
-  /**
-   * @generated from enum value: LANGUAGE_TYPE_LUA = 11;
-   */
-  LUA = 11,
+    /**
+     * @generated from enum value: LANGUAGE_TYPE_LUA = 11;
+     */
+    LUA = 11,
 }
 
 /**
@@ -982,15 +990,15 @@ export declare const LanguageTypeSchema: GenEnum<LanguageType>;
  * @generated from enum platform.options.v2.ConnectorType
  */
 export enum ConnectorType {
-  /**
-   * @generated from enum value: CONNECTOR_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CONNECTOR_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CONNECTOR_TYPE_REFERENCE = 1;
-   */
-  REFERENCE = 1,
+    /**
+     * @generated from enum value: CONNECTOR_TYPE_REFERENCE = 1;
+     */
+    REFERENCE = 1,
 }
 
 /**
@@ -1002,30 +1010,30 @@ export declare const ConnectorTypeSchema: GenEnum<ConnectorType>;
  * @generated from enum platform.options.v2.AuthRoleType
  */
 export enum AuthRoleType {
-  /**
-   * @generated from enum value: AUTH_ROLE_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: AUTH_ROLE_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_TYPE_PLATFORM = 1;
-   */
-  PLATFORM = 1,
+    /**
+     * @generated from enum value: AUTH_ROLE_TYPE_PLATFORM = 1;
+     */
+    PLATFORM = 1,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_TYPE_ORGANIZATION = 2;
-   */
-  ORGANIZATION = 2,
+    /**
+     * @generated from enum value: AUTH_ROLE_TYPE_ORGANIZATION = 2;
+     */
+    ORGANIZATION = 2,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_TYPE_ECOSYSTEM = 3;
-   */
-  ECOSYSTEM = 3,
+    /**
+     * @generated from enum value: AUTH_ROLE_TYPE_ECOSYSTEM = 3;
+     */
+    ECOSYSTEM = 3,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_TYPE_CONNECTED_TEST = 4;
-   */
-  CONNECTED_TEST = 4,
+    /**
+     * @generated from enum value: AUTH_ROLE_TYPE_CONNECTED_TEST = 4;
+     */
+    CONNECTED_TEST = 4,
 }
 
 /**
@@ -1037,85 +1045,85 @@ export declare const AuthRoleTypeSchema: GenEnum<AuthRoleType>;
  * @generated from enum platform.options.v2.CQRSType
  */
 export enum CQRSType {
-  /**
-   * @generated from enum value: CQRS_TYPE_UNSPECIFIED = 0;
-   */
-  CQRS_TYPE_UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CQRS_TYPE_UNSPECIFIED = 0;
+     */
+    CQRS_TYPE_UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_NONE = 1;
-   */
-  CQRS_TYPE_NONE = 1,
+    /**
+     * @generated from enum value: CQRS_TYPE_NONE = 1;
+     */
+    CQRS_TYPE_NONE = 1,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_MUTATION_CREATE = 2;
-   */
-  CQRS_TYPE_MUTATION_CREATE = 2,
+    /**
+     * @generated from enum value: CQRS_TYPE_MUTATION_CREATE = 2;
+     */
+    CQRS_TYPE_MUTATION_CREATE = 2,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_MUTATION_UPDATE = 3;
-   */
-  CQRS_TYPE_MUTATION_UPDATE = 3,
+    /**
+     * @generated from enum value: CQRS_TYPE_MUTATION_UPDATE = 3;
+     */
+    CQRS_TYPE_MUTATION_UPDATE = 3,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_MUTATION_DELETE = 4;
-   */
-  CQRS_TYPE_MUTATION_DELETE = 4,
+    /**
+     * @generated from enum value: CQRS_TYPE_MUTATION_DELETE = 4;
+     */
+    CQRS_TYPE_MUTATION_DELETE = 4,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_MUTATION_CLIENT_STREAM = 5;
-   */
-  CQRS_TYPE_MUTATION_CLIENT_STREAM = 5,
+    /**
+     * @generated from enum value: CQRS_TYPE_MUTATION_CLIENT_STREAM = 5;
+     */
+    CQRS_TYPE_MUTATION_CLIENT_STREAM = 5,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_MUTATION_SERVER_STREAM = 6;
-   */
-  CQRS_TYPE_MUTATION_SERVER_STREAM = 6,
+    /**
+     * @generated from enum value: CQRS_TYPE_MUTATION_SERVER_STREAM = 6;
+     */
+    CQRS_TYPE_MUTATION_SERVER_STREAM = 6,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_MUTATION_BIDI_STREAM = 7;
-   */
-  CQRS_TYPE_MUTATION_BIDI_STREAM = 7,
+    /**
+     * @generated from enum value: CQRS_TYPE_MUTATION_BIDI_STREAM = 7;
+     */
+    CQRS_TYPE_MUTATION_BIDI_STREAM = 7,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_LIST = 8;
-   */
-  CQRS_TYPE_QUERY_LIST = 8,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_LIST = 8;
+     */
+    CQRS_TYPE_QUERY_LIST = 8,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_STREAM = 9;
-   */
-  CQRS_TYPE_QUERY_STREAM = 9,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_STREAM = 9;
+     */
+    CQRS_TYPE_QUERY_STREAM = 9,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_GET = 10;
-   */
-  CQRS_TYPE_QUERY_GET = 10,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_GET = 10;
+     */
+    CQRS_TYPE_QUERY_GET = 10,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_EVENT_STREAM = 11;
-   */
-  CQRS_TYPE_QUERY_EVENT_STREAM = 11,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_EVENT_STREAM = 11;
+     */
+    CQRS_TYPE_QUERY_EVENT_STREAM = 11,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_CLIENT_STREAM = 12;
-   */
-  CQRS_TYPE_QUERY_CLIENT_STREAM = 12,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_CLIENT_STREAM = 12;
+     */
+    CQRS_TYPE_QUERY_CLIENT_STREAM = 12,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_SERVER_STREAM = 13;
-   */
-  CQRS_TYPE_QUERY_SERVER_STREAM = 13,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_SERVER_STREAM = 13;
+     */
+    CQRS_TYPE_QUERY_SERVER_STREAM = 13,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_BIDI_STREAM = 14;
-   */
-  CQRS_TYPE_QUERY_BIDI_STREAM = 14,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_BIDI_STREAM = 14;
+     */
+    CQRS_TYPE_QUERY_BIDI_STREAM = 14,
 
-  /**
-   * @generated from enum value: CQRS_TYPE_QUERY_EXISTS = 15;
-   */
-  CQRS_TYPE_QUERY_EXISTS = 15,
+    /**
+     * @generated from enum value: CQRS_TYPE_QUERY_EXISTS = 15;
+     */
+    CQRS_TYPE_QUERY_EXISTS = 15,
 }
 
 /**
@@ -1127,142 +1135,142 @@ export declare const CQRSTypeSchema: GenEnum<CQRSType>;
  * @generated from enum platform.options.v2.AuthRole
  */
 export enum AuthRole {
-  /**
-   * @generated from enum value: AUTH_ROLE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: AUTH_ROLE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ANONYMOUS = 1;
-   */
-  ANONYMOUS = 1,
+    /**
+     * @generated from enum value: AUTH_ROLE_ANONYMOUS = 1;
+     */
+    ANONYMOUS = 1,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100;
-   */
-  PLATFORM_SUPER_ADMIN = 100,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_SUPER_ADMIN = 100;
+     */
+    PLATFORM_SUPER_ADMIN = 100,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_CLINICAL_ADMIN = 101;
-   */
-  PLATFORM_CLINICAL_ADMIN = 101,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_CLINICAL_ADMIN = 101;
+     */
+    PLATFORM_CLINICAL_ADMIN = 101,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_BILLING_ADMIN = 102;
-   */
-  PLATFORM_BILLING_ADMIN = 102,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_BILLING_ADMIN = 102;
+     */
+    PLATFORM_BILLING_ADMIN = 102,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_ADMIN = 103;
-   */
-  PLATFORM_ADMIN = 103,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_ADMIN = 103;
+     */
+    PLATFORM_ADMIN = 103,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_MANAGER = 104;
-   */
-  PLATFORM_MANAGER = 104,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_MANAGER = 104;
+     */
+    PLATFORM_MANAGER = 104,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_USER = 105;
-   */
-  PLATFORM_USER = 105,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_USER = 105;
+     */
+    PLATFORM_USER = 105,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_PLATFORM_VIEWER = 106;
-   */
-  PLATFORM_VIEWER = 106,
+    /**
+     * @generated from enum value: AUTH_ROLE_PLATFORM_VIEWER = 106;
+     */
+    PLATFORM_VIEWER = 106,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_SUPER_ADMIN = 200;
-   */
-  ORGANIZATION_SUPER_ADMIN = 200,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_SUPER_ADMIN = 200;
+     */
+    ORGANIZATION_SUPER_ADMIN = 200,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_CLINICAL_ADMIN = 201;
-   */
-  ORGANIZATION_CLINICAL_ADMIN = 201,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_CLINICAL_ADMIN = 201;
+     */
+    ORGANIZATION_CLINICAL_ADMIN = 201,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_BILLING_ADMIN = 202;
-   */
-  ORGANIZATION_BILLING_ADMIN = 202,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_BILLING_ADMIN = 202;
+     */
+    ORGANIZATION_BILLING_ADMIN = 202,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_ADMIN = 203;
-   */
-  ORGANIZATION_ADMIN = 203,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_ADMIN = 203;
+     */
+    ORGANIZATION_ADMIN = 203,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_MANAGER = 204;
-   */
-  ORGANIZATION_MANAGER = 204,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_MANAGER = 204;
+     */
+    ORGANIZATION_MANAGER = 204,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_USER = 205;
-   */
-  ORGANIZATION_USER = 205,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_USER = 205;
+     */
+    ORGANIZATION_USER = 205,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ORGANIZATION_VIEWER = 206;
-   */
-  ORGANIZATION_VIEWER = 206,
+    /**
+     * @generated from enum value: AUTH_ROLE_ORGANIZATION_VIEWER = 206;
+     */
+    ORGANIZATION_VIEWER = 206,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_SUPER_ADMIN = 300;
-   */
-  ECOSYSTEM_SUPER_ADMIN = 300,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_SUPER_ADMIN = 300;
+     */
+    ECOSYSTEM_SUPER_ADMIN = 300,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_CLINICAL_ADMIN = 301;
-   */
-  ECOSYSTEM_CLINICAL_ADMIN = 301,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_CLINICAL_ADMIN = 301;
+     */
+    ECOSYSTEM_CLINICAL_ADMIN = 301,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_BILLING_ADMIN = 302;
-   */
-  ECOSYSTEM_BILLING_ADMIN = 302,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_BILLING_ADMIN = 302;
+     */
+    ECOSYSTEM_BILLING_ADMIN = 302,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_ADMIN = 303;
-   */
-  ECOSYSTEM_ADMIN = 303,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_ADMIN = 303;
+     */
+    ECOSYSTEM_ADMIN = 303,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_MANAGER = 304;
-   */
-  ECOSYSTEM_MANAGER = 304,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_MANAGER = 304;
+     */
+    ECOSYSTEM_MANAGER = 304,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_USER = 305;
-   */
-  ECOSYSTEM_USER = 305,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_USER = 305;
+     */
+    ECOSYSTEM_USER = 305,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_ECOSYSTEM_VIEWER = 306;
-   */
-  ECOSYSTEM_VIEWER = 306,
+    /**
+     * @generated from enum value: AUTH_ROLE_ECOSYSTEM_VIEWER = 306;
+     */
+    ECOSYSTEM_VIEWER = 306,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PATIENT = 15;
-   */
-  CONNECTED_TEST_PATIENT = 15,
+    /**
+     * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PATIENT = 15;
+     */
+    CONNECTED_TEST_PATIENT = 15,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PROVIDER = 16;
-   */
-  CONNECTED_TEST_PROVIDER = 16,
+    /**
+     * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PROVIDER = 16;
+     */
+    CONNECTED_TEST_PROVIDER = 16,
 
-  /**
-   * Such as power of attorney
-   *
-   * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PROXY = 17;
-   */
-  CONNECTED_TEST_PROXY = 17,
+    /**
+     * Such as power of attorney
+     *
+     * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_PROXY = 17;
+     */
+    CONNECTED_TEST_PROXY = 17,
 
-  /**
-   * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_VIEWER = 18;
-   */
-  CONNECTED_TEST_VIEWER = 18,
+    /**
+     * @generated from enum value: AUTH_ROLE_CONNECTED_TEST_VIEWER = 18;
+     */
+    CONNECTED_TEST_VIEWER = 18,
 }
 
 /**
@@ -1274,20 +1282,20 @@ export declare const AuthRoleSchema: GenEnum<AuthRole>;
  * @generated from enum platform.options.v2.GraphType
  */
 export enum GraphType {
-  /**
-   * @generated from enum value: GRAPH_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: GRAPH_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: GRAPH_TYPE_INPUT = 1;
-   */
-  INPUT = 1,
+    /**
+     * @generated from enum value: GRAPH_TYPE_INPUT = 1;
+     */
+    INPUT = 1,
 
-  /**
-   * @generated from enum value: GRAPH_TYPE_OUTPUT = 2;
-   */
-  OUTPUT = 2,
+    /**
+     * @generated from enum value: GRAPH_TYPE_OUTPUT = 2;
+     */
+    OUTPUT = 2,
 }
 
 /**
@@ -1304,78 +1312,78 @@ export declare const GraphTypeSchema: GenEnum<GraphType>;
  * @generated from enum platform.options.v2.FieldBehavior
  */
 export enum FieldBehavior {
-  /**
-   * Conventional default for enums. Do not use this.
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Conventional default for enums. Do not use this.
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Specifically denotes a field as optional.
-   * While all fields in protocol buffers are optional, this may be specified
-   * for emphasis if appropriate.
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_OPTIONAL = 1;
-   */
-  OPTIONAL = 1,
+    /**
+     * Specifically denotes a field as optional.
+     * While all fields in protocol buffers are optional, this may be specified
+     * for emphasis if appropriate.
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_OPTIONAL = 1;
+     */
+    OPTIONAL = 1,
 
-  /**
-   * Denotes a field as required.
-   * This indicates that the field **must** be provided as part of the request,
-   * and failure to do so will cause an error (usually `INVALID_ARGUMENT`).
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_REQUIRED = 2;
-   */
-  REQUIRED = 2,
+    /**
+     * Denotes a field as required.
+     * This indicates that the field **must** be provided as part of the request,
+     * and failure to do so will cause an error (usually `INVALID_ARGUMENT`).
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_REQUIRED = 2;
+     */
+    REQUIRED = 2,
 
-  /**
-   * Denotes a field as output only.
-   * This indicates that the field is provided in responses, but including the
-   * field in a request does nothing (the server *must* ignore it and
-   * *must not* throw an error as a result of the field's presence).
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_OUTPUT_ONLY = 3;
-   */
-  OUTPUT_ONLY = 3,
+    /**
+     * Denotes a field as output only.
+     * This indicates that the field is provided in responses, but including the
+     * field in a request does nothing (the server *must* ignore it and
+     * *must not* throw an error as a result of the field's presence).
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_OUTPUT_ONLY = 3;
+     */
+    OUTPUT_ONLY = 3,
 
-  /**
-   * Denotes a field as input only.
-   * This indicates that the field is provided in requests, and the
-   * corresponding field is not included in output.
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_INPUT_ONLY = 4;
-   */
-  INPUT_ONLY = 4,
+    /**
+     * Denotes a field as input only.
+     * This indicates that the field is provided in requests, and the
+     * corresponding field is not included in output.
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_INPUT_ONLY = 4;
+     */
+    INPUT_ONLY = 4,
 
-  /**
-   * Denotes a field as immutable.
-   * This indicates that the field may be set once in a request to create a
-   * resource, but may not be changed thereafter.
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_IMMUTABLE = 5;
-   */
-  IMMUTABLE = 5,
+    /**
+     * Denotes a field as immutable.
+     * This indicates that the field may be set once in a request to create a
+     * resource, but may not be changed thereafter.
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_IMMUTABLE = 5;
+     */
+    IMMUTABLE = 5,
 
-  /**
-   * Denotes that a (repeated) field is an unordered list.
-   * This indicates that the service may provide the elements of the list
-   * in any arbitrary  order, rather than the order the user originally
-   * provided. Additionally, the list's order may or may not be stable.
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_UNORDERED_LIST = 6;
-   */
-  UNORDERED_LIST = 6,
+    /**
+     * Denotes that a (repeated) field is an unordered list.
+     * This indicates that the service may provide the elements of the list
+     * in any arbitrary  order, rather than the order the user originally
+     * provided. Additionally, the list's order may or may not be stable.
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_UNORDERED_LIST = 6;
+     */
+    UNORDERED_LIST = 6,
 
-  /**
-   * Denotes that this field returns a non-empty default value if not set.
-   * This indicates that if the user provides the empty value in a request,
-   * a non-empty value will be returned. The user will not be aware of what
-   * non-empty value to expect.
-   *
-   * @generated from enum value: FIELD_BEHAVIOR_NON_EMPTY_DEFAULT = 7;
-   */
-  NON_EMPTY_DEFAULT = 7,
+    /**
+     * Denotes that this field returns a non-empty default value if not set.
+     * This indicates that if the user provides the empty value in a request,
+     * a non-empty value will be returned. The user will not be aware of what
+     * non-empty value to expect.
+     *
+     * @generated from enum value: FIELD_BEHAVIOR_NON_EMPTY_DEFAULT = 7;
+     */
+    NON_EMPTY_DEFAULT = 7,
 }
 
 /**
@@ -1387,45 +1395,45 @@ export declare const FieldBehaviorSchema: GenEnum<FieldBehavior>;
  * @generated from enum platform.options.v2.SyntheticType
  */
 export enum SyntheticType {
-  /**
-   * @generated from enum value: SYNTHETIC_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: SYNTHETIC_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * faker.fakeValuesService().resolve("company.name", this, faker);
-   *
-   * @generated from enum value: SYNTHETIC_TYPE_DIRECT_FROM_DICTIONARY = 1;
-   */
-  DIRECT_FROM_DICTIONARY = 1,
+    /**
+     * faker.fakeValuesService().resolve("company.name", this, faker);
+     *
+     * @generated from enum value: SYNTHETIC_TYPE_DIRECT_FROM_DICTIONARY = 1;
+     */
+    DIRECT_FROM_DICTIONARY = 1,
 
-  /**
-   * List<List<String>> buzzwordLists = (List<List<String>>) faker.fakeValuesService().fetchObject("company.buzzwords");
-   * List<String> buzzwords = new ArrayList<String>();
-   * for (List<String> buzzwordList : buzzwordLists) {
-   *    buzzwords.addAll(buzzwordList);
-   * }
-   * return buzzwords.get(faker.random().nextInt(buzzwords.size()));
-   *
-   * @generated from enum value: SYNTHETIC_TYPE_SELECT_RANDOM_FROM_LIST = 2;
-   */
-  SELECT_RANDOM_FROM_LIST = 2,
+    /**
+     * List<List<String>> buzzwordLists = (List<List<String>>) faker.fakeValuesService().fetchObject("company.buzzwords");
+     * List<String> buzzwords = new ArrayList<String>();
+     * for (List<String> buzzwordList : buzzwordLists) {
+     *    buzzwords.addAll(buzzwordList);
+     * }
+     * return buzzwords.get(faker.random().nextInt(buzzwords.size()));
+     *
+     * @generated from enum value: SYNTHETIC_TYPE_SELECT_RANDOM_FROM_LIST = 2;
+     */
+    SELECT_RANDOM_FROM_LIST = 2,
 
-  /**
-   * List<List<String>> catchPhraseLists = (List<List<String>>) faker.fakeValuesService().fetchObject("company.buzzwords");
-   * return joinSampleOfEachList(catchPhraseLists, " ");
-   *
-   * @generated from enum value: SYNTHETIC_TYPE_LIST_FROM_LIST = 3;
-   */
-  LIST_FROM_LIST = 3,
+    /**
+     * List<List<String>> catchPhraseLists = (List<List<String>>) faker.fakeValuesService().fetchObject("company.buzzwords");
+     * return joinSampleOfEachList(catchPhraseLists, " ");
+     *
+     * @generated from enum value: SYNTHETIC_TYPE_LIST_FROM_LIST = 3;
+     */
+    LIST_FROM_LIST = 3,
 
-  /**
-   * int number = faker.random().nextInt(13) + 1;
-   * return "https://pigment.github.io/fake-logos/logos/medium/color/" + number + ".png";
-   *
-   * @generated from enum value: SYNTHETIC_TYPE_GENERATED_LOGO = 6;
-   */
-  GENERATED_LOGO = 6,
+    /**
+     * int number = faker.random().nextInt(13) + 1;
+     * return "https://pigment.github.io/fake-logos/logos/medium/color/" + number + ".png";
+     *
+     * @generated from enum value: SYNTHETIC_TYPE_GENERATED_LOGO = 6;
+     */
+    GENERATED_LOGO = 6,
 }
 
 /**
@@ -1439,45 +1447,45 @@ export declare const SyntheticTypeSchema: GenEnum<SyntheticType>;
  * @generated from enum platform.options.v2.ClassificationType
  */
 export enum ClassificationType {
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_DERIVATIVE_DATA = 1;
-   */
-  DERIVATIVE_DATA = 1,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_DERIVATIVE_DATA = 1;
+     */
+    DERIVATIVE_DATA = 1,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_DE_IDENTIFIED = 2;
-   */
-  DE_IDENTIFIED = 2,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_DE_IDENTIFIED = 2;
+     */
+    DE_IDENTIFIED = 2,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_PUBLIC = 3;
-   */
-  PUBLIC = 3,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_PUBLIC = 3;
+     */
+    PUBLIC = 3,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_INTERNAL_USE = 4;
-   */
-  INTERNAL_USE = 4,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_INTERNAL_USE = 4;
+     */
+    INTERNAL_USE = 4,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_CONFIDENTIAL = 5;
-   */
-  CONFIDENTIAL = 5,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_CONFIDENTIAL = 5;
+     */
+    CONFIDENTIAL = 5,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_RESTRICTED = 6;
-   */
-  RESTRICTED = 6,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_RESTRICTED = 6;
+     */
+    RESTRICTED = 6,
 
-  /**
-   * @generated from enum value: CLASSIFICATION_TYPE_HIGHLY_RESTRICTED = 7;
-   */
-  HIGHLY_RESTRICTED = 7,
+    /**
+     * @generated from enum value: CLASSIFICATION_TYPE_HIGHLY_RESTRICTED = 7;
+     */
+    HIGHLY_RESTRICTED = 7,
 }
 
 /**
@@ -1489,35 +1497,35 @@ export declare const ClassificationTypeSchema: GenEnum<ClassificationType>;
  * @generated from enum platform.options.v2.SpecEnumType
  */
 export enum SpecEnumType {
-  /**
-   * @generated from enum value: SPEC_ENUM_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: SPEC_ENUM_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: SPEC_ENUM_TYPE_NONE = 1;
-   */
-  NONE = 1,
+    /**
+     * @generated from enum value: SPEC_ENUM_TYPE_NONE = 1;
+     */
+    NONE = 1,
 
-  /**
-   * @generated from enum value: SPEC_ENUM_TYPE_TOPICS = 2;
-   */
-  TOPICS = 2,
+    /**
+     * @generated from enum value: SPEC_ENUM_TYPE_TOPICS = 2;
+     */
+    TOPICS = 2,
 
-  /**
-   * @generated from enum value: SPEC_ENUM_TYPE_COMMANDS = 3;
-   */
-  COMMANDS = 3,
+    /**
+     * @generated from enum value: SPEC_ENUM_TYPE_COMMANDS = 3;
+     */
+    COMMANDS = 3,
 
-  /**
-   * @generated from enum value: SPEC_ENUM_TYPE_EVENTS = 4;
-   */
-  EVENTS = 4,
+    /**
+     * @generated from enum value: SPEC_ENUM_TYPE_EVENTS = 4;
+     */
+    EVENTS = 4,
 
-  /**
-   * @generated from enum value: SPEC_ENUM_TYPE_ROUTINE_LISTENERS = 5;
-   */
-  ROUTINE_LISTENERS = 5,
+    /**
+     * @generated from enum value: SPEC_ENUM_TYPE_ROUTINE_LISTENERS = 5;
+     */
+    ROUTINE_LISTENERS = 5,
 }
 
 /**
@@ -1529,25 +1537,25 @@ export declare const SpecEnumTypeSchema: GenEnum<SpecEnumType>;
  * @generated from enum platform.options.v2.SpecRequestScope
  */
 export enum SpecRequestScope {
-  /**
-   * @generated from enum value: SPEC_REQUEST_SCOPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: SPEC_REQUEST_SCOPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: SPEC_REQUEST_SCOPE_USER = 1;
-   */
-  USER = 1,
+    /**
+     * @generated from enum value: SPEC_REQUEST_SCOPE_USER = 1;
+     */
+    USER = 1,
 
-  /**
-   * @generated from enum value: SPEC_REQUEST_SCOPE_ECOSYSTEM = 2;
-   */
-  ECOSYSTEM = 2,
+    /**
+     * @generated from enum value: SPEC_REQUEST_SCOPE_ECOSYSTEM = 2;
+     */
+    ECOSYSTEM = 2,
 
-  /**
-   * @generated from enum value: SPEC_REQUEST_SCOPE_ORGANIZATION = 3;
-   */
-  ORGANIZATION = 3,
+    /**
+     * @generated from enum value: SPEC_REQUEST_SCOPE_ORGANIZATION = 3;
+     */
+    ORGANIZATION = 3,
 }
 
 /**
@@ -1689,4 +1697,3 @@ export declare const auth_role: GenExtension<EnumValueOptions, AuthRoleOptions>;
  * @generated from extension: platform.options.v2.EventOptions event = 50063;
  */
 export declare const event: GenExtension<EnumValueOptions, EventOptions>;
-

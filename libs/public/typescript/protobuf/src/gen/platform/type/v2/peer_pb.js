@@ -2,23 +2,23 @@
 // @generated from file platform/type/v2/peer.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
+import { enumDesc, fileDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
 
 /**
  * Describes the file platform/type/v2/peer.proto.
  */
-export const file_platform_type_v2_peer = /*@__PURE__*/
-  fileDesc("ChtwbGF0Zm9ybS90eXBlL3YyL3BlZXIucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIqoAEKCFBlZXJUeXBlEhkKFVBFRVJfVFlQRV9VTlNQRUNJRklFRBAAEh0KGVBFRVJfVFlQRV9TRVJWSUNFX0FDQ09VTlQQARISCg5QRUVSX1RZUEVfRURHRRACEhkKFVBFRVJfVFlQRV9NVUxUSVBMRVhFUhADEhcKE1BFRVJfVFlQRV9DT05ORUNUT1IQBBISCg5QRUVSX1RZUEVfSE9TVBAFQlZaVGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z");
+export const file_platform_type_v2_peer =
+    /*@__PURE__*/
+    fileDesc(
+        'ChtwbGF0Zm9ybS90eXBlL3YyL3BlZXIucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIqoAEKCFBlZXJUeXBlEhkKFVBFRVJfVFlQRV9VTlNQRUNJRklFRBAAEh0KGVBFRVJfVFlQRV9TRVJWSUNFX0FDQ09VTlQQARISCg5QRUVSX1RZUEVfRURHRRACEhkKFVBFRVJfVFlQRV9NVUxUSVBMRVhFUhADEhcKE1BFRVJfVFlQRV9DT05ORUNUT1IQBBISCg5QRUVSX1RZUEVfSE9TVBAFQlZaVGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z'
+    );
 
 /**
  * Describes the enum platform.type.v2.PeerType.
  */
-export const PeerTypeSchema = /*@__PURE__*/
-  enumDesc(file_platform_type_v2_peer, 0);
+export const PeerTypeSchema = /*@__PURE__*/ enumDesc(file_platform_type_v2_peer, 0);
 
 /**
  * @generated from enum platform.type.v2.PeerType
  */
-export const PeerType = /*@__PURE__*/
-  tsEnum(PeerTypeSchema);
-
+export const PeerType = /*@__PURE__*/ tsEnum(PeerTypeSchema);

@@ -1,14 +1,14 @@
 ---
 title: OTP
 aliases:
-  - OTP
+    - OTP
 pcx_content_type: definition
 summary: >-
-  OTP stands for one-time-password, which is a temporary verification code usually transmitted via SMS or email. OTPs remain active within a short period. The user will have to request another OTP if they are unable to use it within the set time frame.
+    OTP stands for one-time-password, which is a temporary verification code usually transmitted via SMS or email. OTPs remain active within a short period. The user will have to request another OTP if they are unable to use it within the set time frame.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/2fa
+    - /fundamentals/glossary/2fa
 ---
 
 # One-Time Password (OTP)

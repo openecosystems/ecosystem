@@ -1,15 +1,15 @@
 ---
 title: Synchronous
 aliases:
-  - Synchronous
+    - Synchronous
 pcx_content_type: definition
 summary: >-
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/latency
-  - /fundamentals/glossary/performance
-  - /fundamentals/design-and-architecture/standards-based/design-patterns/request-acknowledge-process
+    - /fundamentals/glossary/latency
+    - /fundamentals/glossary/performance
+    - /fundamentals/design-and-architecture/standards-based/design-patterns/request-acknowledge-process
 ---
 
 # Synchronous

@@ -3,34 +3,34 @@
 name: snapshot
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-    branches:
-      - main-disabled
+    pull_request:
+        types: [opened, reopened, synchronize]
+        branches:
+            - main-disabled
 
 #concurrency:
 #  group: snapshot
 #  cancel-in-progress: true
 
 jobs:
-  snapshot:
-    uses: ./.github/workflows/_snapshot.yml
-    permissions:
-      packages: write
-      contents: read
-      attestations: write
-      id-token: write
-    secrets:
-      docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
-      gh_pat: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
-      aur_key: ${{ secrets.AUR_KEY }}
-      fury_token: ${{ secrets.FURY_TOKEN }}
-      nfpm_gpg_key: ${{ secrets.NFPM_GPG_KEY }}
-      nfpm_passphrase: ${{ secrets.NFPM_PASSPHRASE }}
-      macos_sign_p12: ${{ secrets.MACOS_SIGN_P12 }}
-      macos_sign_password: ${{ secrets.MACOS_SIGN_PASSWORD }}
-      macos_notary_issuer_id: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
-      macos_notary_key_id: ${{ secrets.MACOS_NOTARY_KEY_ID }}
-      macos_notary_key: ${{ secrets.MACOS_NOTARY_KEY }}
+    snapshot:
+        uses: ./.github/workflows/_snapshot.yml
+        permissions:
+            packages: write
+            contents: read
+            attestations: write
+            id-token: write
+        secrets:
+            docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+            docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
+            gh_pat: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            goreleaser_key: ${{ secrets.GORELEASER_KEY }}
+            aur_key: ${{ secrets.AUR_KEY }}
+            fury_token: ${{ secrets.FURY_TOKEN }}
+            nfpm_gpg_key: ${{ secrets.NFPM_GPG_KEY }}
+            nfpm_passphrase: ${{ secrets.NFPM_PASSPHRASE }}
+            macos_sign_p12: ${{ secrets.MACOS_SIGN_P12 }}
+            macos_sign_password: ${{ secrets.MACOS_SIGN_PASSWORD }}
+            macos_notary_issuer_id: ${{ secrets.MACOS_NOTARY_ISSUER_ID }}
+            macos_notary_key_id: ${{ secrets.MACOS_NOTARY_KEY_ID }}
+            macos_notary_key: ${{ secrets.MACOS_NOTARY_KEY }}

@@ -1,18 +1,18 @@
 ---
 title: Retry Mechanism
 aliases:
-  - Retry Mechanism
+    - Retry Mechanism
 pcx_content_type: definition
 summary: >-
-  A Retry Mechanism is a mechanism that monitors a request, and on the detection of a Failure automatically fires a repeat of the request.
+    A Retry Mechanism is a mechanism that monitors a request, and on the detection of a Failure automatically fires a repeat of the request.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/dos-attack
-  - /fundamentals/glossary/duplicate-detection
-  - /fundamentals/glossary/idempotence
-  - /fundamentals/glossary/rate-limiting
-  - /fundamentals/glossary/ttl
+    - /fundamentals/glossary/dos-attack
+    - /fundamentals/glossary/duplicate-detection
+    - /fundamentals/glossary/idempotence
+    - /fundamentals/glossary/rate-limiting
+    - /fundamentals/glossary/ttl
 ---
 
 # Retry Mechanism
@@ -25,9 +25,9 @@ Retries could result in a [DoS](/fundamentals/glossary/dos-attack) if the Retry 
 
 Retries, by definition, can cause duplicates. I.e.: if processing takes longer than a [TTL](/fundamentals/glossary/ttl), then the request will be processed AND retried. Duplicates should be handled correctly. Two possible ways of handling duplicates:
 
-- [Duplicate Detection](/fundamentals/glossary/duplicate-detection): If the receiver can determine that the message has been processed, it can skip processing duplicates.
-- [Idempotence](/fundamentals/glossary/idempotence): The system can be designed in such a way that repeatedly processing the same message will always have the same result. I.e.: "Change the value to 2" is idempotent, whereas "Increase the value by 1" is not.
+-   [Duplicate Detection](/fundamentals/glossary/duplicate-detection): If the receiver can determine that the message has been processed, it can skip processing duplicates.
+-   [Idempotence](/fundamentals/glossary/idempotence): The system can be designed in such a way that repeatedly processing the same message will always have the same result. I.e.: "Change the value to 2" is idempotent, whereas "Increase the value by 1" is not.
 
 ## Sources
 
-- https://denalibalser.medium.com/best-practices-for-retry-685bf58de79
+-   https://denalibalser.medium.com/best-practices-for-retry-685bf58de79

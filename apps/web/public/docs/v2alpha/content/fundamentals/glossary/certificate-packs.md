@@ -2,7 +2,7 @@
 title: certificate packs
 pcx_content_type: definition
 summary: >-
-  Certificate packs allowOpen Ecosystem to fallback to a different SSL certificate for browsers that do not support the latest standards. Certificate packs allow Custom SSL certificates to contain different signature algorithms for the same hostnames listed within the SSL certificate without taking up additional Custom SSL certificate quota for yourOpen Ecosystem account.
+    Certificate packs allowOpen Ecosystem to fallback to a different SSL certificate for browsers that do not support the latest standards. Certificate packs allow Custom SSL certificates to contain different signature algorithms for the same hostnames listed within the SSL certificate without taking up additional Custom SSL certificate quota for yourOpen Ecosystem account.
 hidden: true
 has_more: true
 has_links: false

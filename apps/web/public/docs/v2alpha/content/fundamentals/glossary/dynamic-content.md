@@ -2,13 +2,13 @@
 title: dynamic content
 pcx_content_type: definition
 summary: >-
-  Dynamic content is website content that has to be fetched from the origin server, because the content has a time dependency.<br><br>
+    Dynamic content is website content that has to be fetched from the origin server, because the content has a time dependency.<br><br>
 
-  **Related terms:** [static content](/fundamentals/glossary/#static-content)
+    **Related terms:** [static content](/fundamentals/glossary/#static-content)
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/static-content
+    - /fundamentals/glossary/static-content
 ---
 
 # dynamic content

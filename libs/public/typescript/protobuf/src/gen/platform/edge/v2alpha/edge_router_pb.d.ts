@@ -2,8 +2,8 @@
 // @generated from file platform/edge/v2alpha/edge_router.proto (package platform.edge.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/edge/v2alpha/edge_router.proto.
@@ -15,13 +15,13 @@ export declare const file_platform_edge_v2alpha_edge_router: GenFile;
  *
  * @generated from message platform.edge.v2alpha.EdgeRouterConfiguration
  */
-export declare type EdgeRouterConfiguration = Message<"platform.edge.v2alpha.EdgeRouterConfiguration"> & {
-  /**
-   * Test waf configuration string
-   *
-   * @generated from field: string edge_router_config = 1;
-   */
-  edgeRouterConfig: string;
+export declare type EdgeRouterConfiguration = Message<'platform.edge.v2alpha.EdgeRouterConfiguration'> & {
+    /**
+     * Test waf configuration string
+     *
+     * @generated from field: string edge_router_config = 1;
+     */
+    edgeRouterConfig: string;
 };
 
 /**
@@ -29,4 +29,3 @@ export declare type EdgeRouterConfiguration = Message<"platform.edge.v2alpha.Edg
  * Use `create(EdgeRouterConfigurationSchema)` to create a new message.
  */
 export declare const EdgeRouterConfigurationSchema: GenMessage<EdgeRouterConfiguration>;
-

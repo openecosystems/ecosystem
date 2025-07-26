@@ -4,11 +4,11 @@ author: Guillaume Hanique
 title: GZIP
 pcx_content_type: definition
 summary: >-
-  `GZIP` has relatively high Compression, but it is both slow to Compress and Decompress. As such it does not do well with high [Throughput](/fundamentals/glossary/throughput).
+    `GZIP` has relatively high Compression, but it is both slow to Compress and Decompress. As such it does not do well with high [Throughput](/fundamentals/glossary/throughput).
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/glossary/throughput
+    - /fundamentals/glossary/throughput
 ---
 
 # GZIP

@@ -2,10 +2,10 @@ import * as events from './events';
 import * as timeago from './timeago';
 
 (function () {
-  timeago.init();
+    timeago.init();
 
-  events.focus();
-  events.mobile();
-  events.tabs();
-  events.activeTab();
+    events.focus();
+    events.mobile();
+    events.tabs();
+    events.activeTab();
 })();

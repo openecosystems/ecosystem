@@ -5,133 +5,130 @@ export type AccountCommand = number;
 export type AccountEvent = number;
 
 // Constants for Account Type Names
-export const AccountTypeName = "account";
-export const AccountTypeNamePlural = "accounts";
-export const AccountTypeNameScreamingCamelCase = "ACCOUNT";
-export const AccountTypeNamePluralScreamingCamelCase = "ACCOUNTS";
-export const AccountTypeNameEventPrefix = "account.";
+export const AccountTypeName = 'account';
+export const AccountTypeNamePlural = 'accounts';
+export const AccountTypeNameScreamingCamelCase = 'ACCOUNT';
+export const AccountTypeNamePluralScreamingCamelCase = 'ACCOUNTS';
+export const AccountTypeNameEventPrefix = 'account.';
 
 // Enums for AccountCommands
 export enum AccountCommands {
-  
-  AccountCommandsUnspecified = 0,
-  AccountCommandsCreateAccount = 1,
-  AccountCommandsVerifyAccount = 2,
-  AccountCommandsSignAccount = 3,
-  UnrecognizedAccountCommand = -1,
+    AccountCommandsUnspecified = 0,
+    AccountCommandsCreateAccount = 1,
+    AccountCommandsVerifyAccount = 2,
+    AccountCommandsSignAccount = 3,
+    UnrecognizedAccountCommand = -1,
 }
 
 // Enums for Account Events
 export enum AccountEvents {
-
-  AccountEventsUnspecified = 0,
-  AccountEventsCreatedAccount = 1,
-  AccountEventsVerifiedAccount = 2,
-  AccountEventsSignedAccount = 3,
-  UnrecognizedAccountEvent  = -1,
+    AccountEventsUnspecified = 0,
+    AccountEventsCreatedAccount = 1,
+    AccountEventsVerifiedAccount = 2,
+    AccountEventsSignedAccount = 3,
+    UnrecognizedAccountEvent = -1,
 }
 
 // Topics
-export const CommandDataAccountTopic = "account.data.command";
-export const EventDataAccountTopic = "account.data.event";
-export const RoutineDataAccountTopic = "account.data.routine";
-export const UnrecognizedAccountTopic = "unrecognized";
+export const CommandDataAccountTopic = 'account.data.command';
+export const EventDataAccountTopic = 'account.data.event';
+export const RoutineDataAccountTopic = 'account.data.routine';
+export const UnrecognizedAccountTopic = 'unrecognized';
 
 // Command Methods
 export class AccountCommandHelper {
-  static commandName(command: AccountCommands): string {
-    switch (command) {
-      case AccountCommands.AccountCommandsUnspecified:
-        return "AccountCommandsUnspecified"
-      case AccountCommands.AccountCommandsCreateAccount:
-        return "AccountCommandsCreateAccount"
-      case AccountCommands.AccountCommandsVerifyAccount:
-        return "AccountCommandsVerifyAccount"
-      case AccountCommands.AccountCommandsSignAccount:
-        return "AccountCommandsSignAccount"
-      default:
-        return "UnrecognizedAccountCommand"
+    static commandName(command: AccountCommands): string {
+        switch (command) {
+            case AccountCommands.AccountCommandsUnspecified:
+                return 'AccountCommandsUnspecified';
+            case AccountCommands.AccountCommandsCreateAccount:
+                return 'AccountCommandsCreateAccount';
+            case AccountCommands.AccountCommandsVerifyAccount:
+                return 'AccountCommandsVerifyAccount';
+            case AccountCommands.AccountCommandsSignAccount:
+                return 'AccountCommandsSignAccount';
+            default:
+                return 'UnrecognizedAccountCommand';
+        }
     }
-  }
 
-  static commandTopic(command: AccountCommands): string {
-    switch (command) {
-      case AccountCommands.AccountCommandsUnspecified:
-      case AccountCommands.AccountCommandsCreateAccount:
-      case AccountCommands.AccountCommandsVerifyAccount:
-      case AccountCommands.AccountCommandsSignAccount:
-        return CommandDataAccountTopic;
-      default:
-		    return UnrecognizedAccountTopic;
+    static commandTopic(command: AccountCommands): string {
+        switch (command) {
+            case AccountCommands.AccountCommandsUnspecified:
+            case AccountCommands.AccountCommandsCreateAccount:
+            case AccountCommands.AccountCommandsVerifyAccount:
+            case AccountCommands.AccountCommandsSignAccount:
+                return CommandDataAccountTopic;
+            default:
+                return UnrecognizedAccountTopic;
+        }
     }
-  }
 
-  static commandTopicWildcard(): string {
-    return AccountTypeNameEventPrefix + ">";
-  }
-
-  static getAccountCommand(command: string): AccountCommands {
-    switch (command) {
-      case "AccountCommandsUnspecified":
-        return AccountCommands.AccountCommandsUnspecified;
-      case "AccountCommandsCreateAccount":
-        return AccountCommands.AccountCommandsCreateAccount;
-      case "AccountCommandsVerifyAccount":
-        return AccountCommands.AccountCommandsVerifyAccount;
-      case "AccountCommandsSignAccount":
-        return AccountCommands.AccountCommandsSignAccount;
-      default:
-        return AccountCommands.UnrecognizedAccountCommand;
+    static commandTopicWildcard(): string {
+        return AccountTypeNameEventPrefix + '>';
     }
-  }
+
+    static getAccountCommand(command: string): AccountCommands {
+        switch (command) {
+            case 'AccountCommandsUnspecified':
+                return AccountCommands.AccountCommandsUnspecified;
+            case 'AccountCommandsCreateAccount':
+                return AccountCommands.AccountCommandsCreateAccount;
+            case 'AccountCommandsVerifyAccount':
+                return AccountCommands.AccountCommandsVerifyAccount;
+            case 'AccountCommandsSignAccount':
+                return AccountCommands.AccountCommandsSignAccount;
+            default:
+                return AccountCommands.UnrecognizedAccountCommand;
+        }
+    }
 }
 
 // Event Methods
 export class AccountEventHelper {
-  static eventName(event: AccountEvents): string {
-    switch (event) {
-      case AccountEvents.AccountEventsUnspecified:
-        return "AccountEventsUnspecified";
-      case AccountEvents.AccountEventsCreatedAccount:
-        return "AccountEventsCreatedAccount";
-      case AccountEvents.AccountEventsVerifiedAccount:
-        return "AccountEventsVerifiedAccount";
-      case AccountEvents.AccountEventsSignedAccount:
-        return "AccountEventsSignedAccount";
-      default:
-        return "UnrecognizedAccountEvent";
+    static eventName(event: AccountEvents): string {
+        switch (event) {
+            case AccountEvents.AccountEventsUnspecified:
+                return 'AccountEventsUnspecified';
+            case AccountEvents.AccountEventsCreatedAccount:
+                return 'AccountEventsCreatedAccount';
+            case AccountEvents.AccountEventsVerifiedAccount:
+                return 'AccountEventsVerifiedAccount';
+            case AccountEvents.AccountEventsSignedAccount:
+                return 'AccountEventsSignedAccount';
+            default:
+                return 'UnrecognizedAccountEvent';
+        }
     }
-  }
 
-  static eventTopic(event: AccountEvents): string {
-    switch (event) {
-      case AccountEvents.AccountEventsUnspecified:
-      case AccountEvents.AccountEventsCreatedAccount:
-      case AccountEvents.AccountEventsVerifiedAccount:
-      case AccountEvents.AccountEventsSignedAccount:
-        return EventDataAccountTopic;
-      default:
-        return UnrecognizedAccountTopic;
+    static eventTopic(event: AccountEvents): string {
+        switch (event) {
+            case AccountEvents.AccountEventsUnspecified:
+            case AccountEvents.AccountEventsCreatedAccount:
+            case AccountEvents.AccountEventsVerifiedAccount:
+            case AccountEvents.AccountEventsSignedAccount:
+                return EventDataAccountTopic;
+            default:
+                return UnrecognizedAccountTopic;
+        }
     }
-  }
 
-  static eventTopicWildcard(): string {
-    return AccountTypeNameEventPrefix + ">";
-  }
-
-  static getAccountEvent(event: string): AccountEvents {
-    switch (event) {
-      case "AccountEventsUnspecified":
-        return AccountEvents.AccountEventsUnspecified;
-      case "AccountEventsCreatedAccount":
-        return AccountEvents.AccountEventsCreatedAccount;
-      case "AccountEventsVerifiedAccount":
-        return AccountEvents.AccountEventsVerifiedAccount;
-      case "AccountEventsSignedAccount":
-        return AccountEvents.AccountEventsSignedAccount;
-      default:
-        return AccountEvents.UnrecognizedAccountEvent;
+    static eventTopicWildcard(): string {
+        return AccountTypeNameEventPrefix + '>';
     }
-  }
+
+    static getAccountEvent(event: string): AccountEvents {
+        switch (event) {
+            case 'AccountEventsUnspecified':
+                return AccountEvents.AccountEventsUnspecified;
+            case 'AccountEventsCreatedAccount':
+                return AccountEvents.AccountEventsCreatedAccount;
+            case 'AccountEventsVerifiedAccount':
+                return AccountEvents.AccountEventsVerifiedAccount;
+            case 'AccountEventsSignedAccount':
+                return AccountEvents.AccountEventsSignedAccount;
+            default:
+                return AccountEvents.UnrecognizedAccountEvent;
+        }
+    }
 }
-

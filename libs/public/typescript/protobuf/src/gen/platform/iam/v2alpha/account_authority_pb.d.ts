@@ -2,11 +2,11 @@
 // @generated from file platform/iam/v2alpha/account_authority.proto (package platform.iam.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { Credential, Curve } from "../../type/v2/credential_pb";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { Credential, Curve } from '../../type/v2/credential_pb';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/iam/v2alpha/account_authority.proto.
@@ -16,11 +16,11 @@ export declare const file_platform_iam_v2alpha_account_authority: GenFile;
 /**
  * @generated from message platform.iam.v2alpha.AccountAuthorityConfiguration
  */
-export declare type AccountAuthorityConfiguration = Message<"platform.iam.v2alpha.AccountAuthorityConfiguration"> & {
-  /**
-   * @generated from field: string pki = 1;
-   */
-  pki: string;
+export declare type AccountAuthorityConfiguration = Message<'platform.iam.v2alpha.AccountAuthorityConfiguration'> & {
+    /**
+     * @generated from field: string pki = 1;
+     */
+    pki: string;
 };
 
 /**
@@ -34,25 +34,25 @@ export declare const AccountAuthorityConfigurationSchema: GenMessage<AccountAuth
  *
  * @generated from message platform.iam.v2alpha.CreateAccountAuthorityRequest
  */
-export declare type CreateAccountAuthorityRequest = Message<"platform.iam.v2alpha.CreateAccountAuthorityRequest"> & {
-  /**
-   * Name of the Account Authority. For example, 'Open Ecosystems, Inc.'
-   *
-   * @generated from field: string name = 1;
-   */
-  name: string;
+export declare type CreateAccountAuthorityRequest = Message<'platform.iam.v2alpha.CreateAccountAuthorityRequest'> & {
+    /**
+     * Name of the Account Authority. For example, 'Open Ecosystems, Inc.'
+     *
+     * @generated from field: string name = 1;
+     */
+    name: string;
 
-  /**
-   * @generated from field: platform.type.v2.Curve curve = 2;
-   */
-  curve: Curve;
+    /**
+     * @generated from field: platform.type.v2.Curve curve = 2;
+     */
+    curve: Curve;
 
-  /**
-   * Encrypt key with this passphrase and write out key in an encrypted format
-   *
-   * @generated from field: string encrypt_key_passphrase = 4;
-   */
-  encryptKeyPassphrase: string;
+    /**
+     * Encrypt key with this passphrase and write out key in an encrypted format
+     *
+     * @generated from field: string encrypt_key_passphrase = 4;
+     */
+    encryptKeyPassphrase: string;
 };
 
 /**
@@ -66,18 +66,18 @@ export declare const CreateAccountAuthorityRequestSchema: GenMessage<CreateAccou
  *
  * @generated from message platform.iam.v2alpha.CreateAccountAuthorityResponse
  */
-export declare type CreateAccountAuthorityResponse = Message<"platform.iam.v2alpha.CreateAccountAuthorityResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type CreateAccountAuthorityResponse = Message<'platform.iam.v2alpha.CreateAccountAuthorityResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.iam.v2alpha.AccountAuthority account_authority = 2;
-   */
-  accountAuthority?: AccountAuthority;
+    /**
+     * @generated from field: platform.iam.v2alpha.AccountAuthority account_authority = 2;
+     */
+    accountAuthority?: AccountAuthority;
 };
 
 /**
@@ -89,32 +89,32 @@ export declare const CreateAccountAuthorityResponseSchema: GenMessage<CreateAcco
 /**
  * @generated from message platform.iam.v2alpha.AccountAuthority
  */
-export declare type AccountAuthority = Message<"platform.iam.v2alpha.AccountAuthority"> & {
-  /**
-   * Identifier for this Account Authority
-   *
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type AccountAuthority = Message<'platform.iam.v2alpha.AccountAuthority'> & {
+    /**
+     * Identifier for this Account Authority
+     *
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * Timestamp indicating when this event subscription was created.
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 2;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp indicating when this event subscription was created.
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this event subscription was last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 3;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp indicating when this event subscription was last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * @generated from field: platform.type.v2.Credential credential = 4;
-   */
-  credential?: Credential;
+    /**
+     * @generated from field: platform.type.v2.Credential credential = 4;
+     */
+    credential?: Credential;
 };
 
 /**
@@ -129,33 +129,33 @@ export declare const AccountAuthoritySchema: GenMessage<AccountAuthority>;
  * @generated from enum platform.iam.v2alpha.AccountAuthorityType
  */
 export enum AccountAuthorityType {
-  /**
-   * Unspecified or unknown subscription type.
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown subscription type.
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * AccountAuthority for an organization.
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_ORGANIZATION = 1;
-   */
-  ORGANIZATION = 1,
+    /**
+     * AccountAuthority for an organization.
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_ORGANIZATION = 1;
+     */
+    ORGANIZATION = 1,
 
-  /**
-   * AccountAuthority for an ecosystem
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_ECOSYSTEM = 2;
-   */
-  ECOSYSTEM = 2,
+    /**
+     * AccountAuthority for an ecosystem
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_ECOSYSTEM = 2;
+     */
+    ECOSYSTEM = 2,
 
-  /**
-   * AccountAuthority for a user.
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_USER = 3;
-   */
-  USER = 3,
+    /**
+     * AccountAuthority for a user.
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_TYPE_USER = 3;
+     */
+    USER = 3,
 }
 
 /**
@@ -169,26 +169,26 @@ export declare const AccountAuthorityTypeSchema: GenEnum<AccountAuthorityType>;
  * @generated from enum platform.iam.v2alpha.EventAccountAuthorityStatus
  */
 export enum EventAccountAuthorityStatus {
-  /**
-   * Unspecified or unknown status.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_AUTHORITY_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown status.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_AUTHORITY_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * AccountAuthority is being created.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_AUTHORITY_STATUS_CREATING = 1;
-   */
-  CREATING = 1,
+    /**
+     * AccountAuthority is being created.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_AUTHORITY_STATUS_CREATING = 1;
+     */
+    CREATING = 1,
 
-  /**
-   * Error.
-   *
-   * @generated from enum value: EVENT_ACCOUNT_AUTHORITY_STATUS_ERROR = 4;
-   */
-  ERROR = 4,
+    /**
+     * Error.
+     *
+     * @generated from enum value: EVENT_ACCOUNT_AUTHORITY_STATUS_ERROR = 4;
+     */
+    ERROR = 4,
 }
 
 /**
@@ -200,17 +200,17 @@ export declare const EventAccountAuthorityStatusSchema: GenEnum<EventAccountAuth
  * @generated from enum platform.iam.v2alpha.AccountAuthorityCommands
  */
 export enum AccountAuthorityCommands {
-  /**
-   * Unspecified or unknown command
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown command
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: ACCOUNT_AUTHORITY_COMMANDS_CREATE_ACCOUNT_AUTHORITY = 1;
-   */
-  CREATE_ACCOUNT_AUTHORITY = 1,
+    /**
+     * @generated from enum value: ACCOUNT_AUTHORITY_COMMANDS_CREATE_ACCOUNT_AUTHORITY = 1;
+     */
+    CREATE_ACCOUNT_AUTHORITY = 1,
 }
 
 /**
@@ -222,19 +222,19 @@ export declare const AccountAuthorityCommandsSchema: GenEnum<AccountAuthorityCom
  * @generated from enum platform.iam.v2alpha.AccountAuthorityEvents
  */
 export enum AccountAuthorityEvents {
-  /**
-   * Unspecified or unknown event.
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown event.
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Event AccountAuthority complete.
-   *
-   * @generated from enum value: ACCOUNT_AUTHORITY_EVENTS_CREATED_ACCOUNT_AUTHORITY = 1;
-   */
-  CREATED_ACCOUNT_AUTHORITY = 1,
+    /**
+     * Event AccountAuthority complete.
+     *
+     * @generated from enum value: ACCOUNT_AUTHORITY_EVENTS_CREATED_ACCOUNT_AUTHORITY = 1;
+     */
+    CREATED_ACCOUNT_AUTHORITY = 1,
 }
 
 /**
@@ -246,15 +246,14 @@ export declare const AccountAuthorityEventsSchema: GenEnum<AccountAuthorityEvent
  * @generated from service platform.iam.v2alpha.AccountAuthorityService
  */
 export declare const AccountAuthorityService: GenService<{
-  /**
-   * Method to create an Account Authority to manage the ecosystem partners
-   *
-   * @generated from rpc platform.iam.v2alpha.AccountAuthorityService.CreateAccountAuthority
-   */
-  createAccountAuthority: {
-    methodKind: "unary";
-    input: typeof CreateAccountAuthorityRequestSchema;
-    output: typeof CreateAccountAuthorityResponseSchema;
-  },
+    /**
+     * Method to create an Account Authority to manage the ecosystem partners
+     *
+     * @generated from rpc platform.iam.v2alpha.AccountAuthorityService.CreateAccountAuthority
+     */
+    createAccountAuthority: {
+        methodKind: 'unary';
+        input: typeof CreateAccountAuthorityRequestSchema;
+        output: typeof CreateAccountAuthorityResponseSchema;
+    };
 }>;
-

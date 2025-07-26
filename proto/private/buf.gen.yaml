@@ -1,5 +1,4 @@
 version: v2
 inputs:
-  - directory: ../../proto/private
+    - directory: ../../proto/private
 plugins:
-

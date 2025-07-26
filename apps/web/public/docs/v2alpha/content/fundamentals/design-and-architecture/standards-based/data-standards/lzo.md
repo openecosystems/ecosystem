@@ -4,7 +4,7 @@ author: Guillaume Hanique
 title: LZO
 pcx_content_type: definition
 summary: >-
-  LZO is a Lossless Compression method that is optimized for Decompression.
+    LZO is a Lossless Compression method that is optimized for Decompression.
 hidden: true
 has_more: true
 has_links: false
@@ -16,4 +16,4 @@ LZO is a Lossless Compression method that is optimized for Decompression.
 
 ## Sources
 
-- https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Oberhumer
+-   https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Oberhumer

@@ -1,14 +1,14 @@
 ---
 title: Exception Handling
 aliases:
-  - Exception Handling
+    - Exception Handling
 pcx_content_type: definition
 summary: >-
-  Sometimes when running code things happen that were not expected, i.e. when an object is expected to exist but doesn't, or when a response is expected within a certain amount of time, but isn't. The art to prevent Applications from crashing in these cases, is called `Exception Handling`.
+    Sometimes when running code things happen that were not expected, i.e. when an object is expected to exist but doesn't, or when a response is expected within a certain amount of time, but isn't. The art to prevent Applications from crashing in these cases, is called `Exception Handling`.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/error-detection
+    - /fundamentals/glossary/error-detection
 ---
 
 # Exception Handling

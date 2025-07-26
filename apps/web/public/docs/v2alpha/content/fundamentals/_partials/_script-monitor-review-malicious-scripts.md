@@ -1,8 +1,8 @@
 ---
 _build:
-  publishResources: false
-  render: never
-  list: never
+    publishResources: false
+    render: never
+    list: never
 ---
 
 Review the information in the Page Shield dashboard about the detected malicious scripts, and eventually update the pages where the scripts were detected.

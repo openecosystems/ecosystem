@@ -1,13 +1,13 @@
 {
-  "legacyEditor": false,
-  "livePreview": true,
-  "alwaysUpdateLinks": true,
-  "strictLineBreaks": true,
-  "showFrontmatter": true,
-  "foldHeading": true,
-  "foldIndent": true,
-  "newFileLocation": "root",
-  "fileSortOrder": "alphabetical",
-  "spellcheck": true,
-  "promptDelete": false
+    "legacyEditor": false,
+    "livePreview": true,
+    "alwaysUpdateLinks": true,
+    "strictLineBreaks": true,
+    "showFrontmatter": true,
+    "foldHeading": true,
+    "foldIndent": true,
+    "newFileLocation": "root",
+    "fileSortOrder": "alphabetical",
+    "spellcheck": true,
+    "promptDelete": false
 }

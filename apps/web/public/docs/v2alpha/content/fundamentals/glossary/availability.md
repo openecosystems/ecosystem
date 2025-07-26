@@ -2,18 +2,18 @@
 title: Availability
 pcx_content_type: definition
 summary: >-
-  `Availability` is a [Metric](/fundamentals/glossary/#metric) that indicates how much of the time a system is available. It is typically expressed in a number of [Nines](/fundamentals/glossary/#nines).
+    `Availability` is a [Metric](/fundamentals/glossary/#metric) that indicates how much of the time a system is available. It is typically expressed in a number of [Nines](/fundamentals/glossary/#nines).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/availability-zone
-  - /fundamentals/glossary/complexity
-  - /fundamentals/glossary/cost
-  - /fundamentals/glossary/csp
-  - /fundamentals/glossary/metric
-  - /fundamentals/glossary/nines
-  - /fundamentals/glossary/performance
-  - /fundamentals/glossary/region
+    - /fundamentals/glossary/availability-zone
+    - /fundamentals/glossary/complexity
+    - /fundamentals/glossary/cost
+    - /fundamentals/glossary/csp
+    - /fundamentals/glossary/metric
+    - /fundamentals/glossary/nines
+    - /fundamentals/glossary/performance
+    - /fundamentals/glossary/region
 ---
 
 # Availability

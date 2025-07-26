@@ -16,9 +16,9 @@
 // @generated from file google/rpc/status.proto (package google.rpc, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { Any } from "@bufbuild/protobuf/wkt";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { Any } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file google/rpc/status.proto.
@@ -36,32 +36,32 @@ export declare const file_google_rpc_status: GenFile;
  *
  * @generated from message google.rpc.Status
  */
-export declare type Status = Message<"google.rpc.Status"> & {
-  /**
-   * The status code, which should be an enum value of
-   * [google.rpc.Code][google.rpc.Code].
-   *
-   * @generated from field: int32 code = 1;
-   */
-  code: number;
+export declare type Status = Message<'google.rpc.Status'> & {
+    /**
+     * The status code, which should be an enum value of
+     * [google.rpc.Code][google.rpc.Code].
+     *
+     * @generated from field: int32 code = 1;
+     */
+    code: number;
 
-  /**
-   * A developer-facing error message, which should be in English. Any
-   * user-facing error message should be localized and sent in the
-   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
-   * by the client.
-   *
-   * @generated from field: string message = 2;
-   */
-  message: string;
+    /**
+     * A developer-facing error message, which should be in English. Any
+     * user-facing error message should be localized and sent in the
+     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+     * by the client.
+     *
+     * @generated from field: string message = 2;
+     */
+    message: string;
 
-  /**
-   * A list of messages that carry the error details.  There is a common set of
-   * message types for APIs to use.
-   *
-   * @generated from field: repeated google.protobuf.Any details = 3;
-   */
-  details: Any[];
+    /**
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
+     *
+     * @generated from field: repeated google.protobuf.Any details = 3;
+     */
+    details: Any[];
 };
 
 /**
@@ -69,4 +69,3 @@ export declare type Status = Message<"google.rpc.Status"> & {
  * Use `create(StatusSchema)` to create a new message.
  */
 export declare const StatusSchema: GenMessage<Status>;
-

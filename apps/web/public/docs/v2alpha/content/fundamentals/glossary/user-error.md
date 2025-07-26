@@ -3,12 +3,12 @@ date_created: 2022-12-01T11:43:28
 title: User SpecError
 pcx_content_type: definition
 summary: >-
-  A `User SpecError` is an error made by the human User of a complex system, usually a computer system. Also known as `PEBMAC`, `ID-10-T`, `PICNIC`, or `IBM SpecError`. One should replace the User and try again.
+    A `User SpecError` is an error made by the human User of a complex system, usually a computer system. Also known as `PEBMAC`, `ID-10-T`, `PICNIC`, or `IBM SpecError`. One should replace the User and try again.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/exception-handling
-  - /fundamentals/glossary/happy-path
+    - /fundamentals/glossary/exception-handling
+    - /fundamentals/glossary/happy-path
 ---
 
 # User SpecError

@@ -1,17 +1,17 @@
 {
-  "name": "proto-poc",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "proto",
-  "sourceRoot": "proto/poc",
-  "targets": {
-    "generate-disabled": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "proto/poc"
-      },
-      "cache": false
-    }
-  },
-  "tags": []
+    "name": "proto-poc",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "proto",
+    "sourceRoot": "proto/poc",
+    "targets": {
+        "generate-disabled": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf generate",
+                "cwd": "proto/poc"
+            },
+            "cache": false
+        }
+    },
+    "tags": []
 }

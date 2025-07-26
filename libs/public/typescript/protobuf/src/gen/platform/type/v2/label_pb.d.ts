@@ -2,8 +2,8 @@
 // @generated from file platform/type/v2/label.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenEnum, GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/type/v2/label.proto.
@@ -15,27 +15,27 @@ export declare const file_platform_type_v2_label: GenFile;
  *
  * @generated from message platform.type.v2.LabelDescriptor
  */
-export declare type LabelDescriptor = Message<"platform.type.v2.LabelDescriptor"> & {
-  /**
-   * The label key.
-   *
-   * @generated from field: string key = 1;
-   */
-  key: string;
+export declare type LabelDescriptor = Message<'platform.type.v2.LabelDescriptor'> & {
+    /**
+     * The label key.
+     *
+     * @generated from field: string key = 1;
+     */
+    key: string;
 
-  /**
-   * The type of data that can be assigned to the label.
-   *
-   * @generated from field: platform.type.v2.LabelDescriptor.ValueType value_type = 2;
-   */
-  valueType: LabelDescriptor_ValueType;
+    /**
+     * The type of data that can be assigned to the label.
+     *
+     * @generated from field: platform.type.v2.LabelDescriptor.ValueType value_type = 2;
+     */
+    valueType: LabelDescriptor_ValueType;
 
-  /**
-   * A human-readable description for the label.
-   *
-   * @generated from field: string description = 3;
-   */
-  description: string;
+    /**
+     * A human-readable description for the label.
+     *
+     * @generated from field: string description = 3;
+     */
+    description: string;
 };
 
 /**
@@ -50,35 +50,34 @@ export declare const LabelDescriptorSchema: GenMessage<LabelDescriptor>;
  * @generated from enum platform.type.v2.LabelDescriptor.ValueType
  */
 export enum LabelDescriptor_ValueType {
-  /**
-   * A variable-length string. This is the default.
-   *
-   * @generated from enum value: VALUE_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * A variable-length string. This is the default.
+     *
+     * @generated from enum value: VALUE_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: VALUE_TYPE_STRING = 1;
-   */
-  STRING = 1,
+    /**
+     * @generated from enum value: VALUE_TYPE_STRING = 1;
+     */
+    STRING = 1,
 
-  /**
-   * Boolean; true or false.
-   *
-   * @generated from enum value: VALUE_TYPE_BOOL = 2;
-   */
-  BOOL = 2,
+    /**
+     * Boolean; true or false.
+     *
+     * @generated from enum value: VALUE_TYPE_BOOL = 2;
+     */
+    BOOL = 2,
 
-  /**
-   * A 64-bit signed integer.
-   *
-   * @generated from enum value: VALUE_TYPE_INT64 = 3;
-   */
-  INT64 = 3,
+    /**
+     * A 64-bit signed integer.
+     *
+     * @generated from enum value: VALUE_TYPE_INT64 = 3;
+     */
+    INT64 = 3,
 }
 
 /**
  * Describes the enum platform.type.v2.LabelDescriptor.ValueType.
  */
 export declare const LabelDescriptor_ValueTypeSchema: GenEnum<LabelDescriptor_ValueType>;
-

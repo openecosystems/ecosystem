@@ -1,6 +1,6 @@
 {
-  "name": "proto-partner",
-  "version": "0.0.0",
-  "private": true,
-  "license": "Apache-2.0"
+    "name": "proto-partner",
+    "version": "0.0.0",
+    "private": true,
+    "license": "Apache-2.0"
 }

@@ -7,7 +7,7 @@ summary: >-
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/gdpr
+    - /fundamentals/design-and-architecture/standards-based/data-standards/gdpr
 ---
 
 # HiTrust
@@ -16,4 +16,4 @@ If one is `HiTrust` compliant, by definition one is also [GDPR](/fundamentals/de
 
 ## Sources
 
-- 2022-09-01 - All Hands Meeting
+-   2022-09-01 - All Hands Meeting

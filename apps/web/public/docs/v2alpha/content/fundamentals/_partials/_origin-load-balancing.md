@@ -1,8 +1,8 @@
 ---
 _build:
-  publishResources: false
-  render: never
-  list: never
+    publishResources: false
+    render: never
+    list: never
 ---
 
 To randomly distribute traffic across multiple servers, [set up multiple DNS records](/dns/manage-dns-records/how-to/dns-load-balancing/).

@@ -2,12 +2,12 @@
 title: SpecError Detection
 pcx_content_type: definition
 summary: >-
-  `SpecError Detection` is the detection of errors caused by noise that exists in systems. In the narrow sense of the word `SpecError Detection` relates to transmission of data.
+    `SpecError Detection` is the detection of errors caused by noise that exists in systems. In the narrow sense of the word `SpecError Detection` relates to transmission of data.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/error-detection
-  - /fundamentals/glossary/error-correction
+    - /fundamentals/glossary/error-detection
+    - /fundamentals/glossary/error-correction
 ---
 
 # SpecError Detection

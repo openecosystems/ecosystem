@@ -2,25 +2,25 @@
 // @generated from file platform/type/v2/jurisdiction.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
+import { enumDesc, fileDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
 
 /**
  * Describes the file platform/type/v2/jurisdiction.proto.
  */
-export const file_platform_type_v2_jurisdiction = /*@__PURE__*/
-  fileDesc("CiNwbGF0Zm9ybS90eXBlL3YyL2p1cmlzZGljdGlvbi5wcm90bxIQcGxhdGZvcm0udHlwZS52MirKAQoMSnVyaXNkaWN0aW9uEhwKGEpVUklTRElDVElPTl9VTlNQRUNJRklFRBAAEhgKFEpVUklTRElDVElPTl9OQV9VU18xEAESGQoVSlVSSVNESUNUSU9OX0dPVl9VU18xEAISGAoUSlVSSVNESUNUSU9OX0VVX0RFXzEQAxIZChVKVVJJU0RJQ1RJT05fR09WX0VVXzEQBBIYChRKVVJJU0RJQ1RJT05fQVNfQ05fMRAFEhgKFEpVUklTRElDVElPTl9TQV9CUl8xEAZCOVo3bGlicy9wcm90b2J1Zi9nby9wcm90b2J1Zi9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z");
+export const file_platform_type_v2_jurisdiction =
+    /*@__PURE__*/
+    fileDesc(
+        'CiNwbGF0Zm9ybS90eXBlL3YyL2p1cmlzZGljdGlvbi5wcm90bxIQcGxhdGZvcm0udHlwZS52MirKAQoMSnVyaXNkaWN0aW9uEhwKGEpVUklTRElDVElPTl9VTlNQRUNJRklFRBAAEhgKFEpVUklTRElDVElPTl9OQV9VU18xEAESGQoVSlVSSVNESUNUSU9OX0dPVl9VU18xEAISGAoUSlVSSVNESUNUSU9OX0VVX0RFXzEQAxIZChVKVVJJU0RJQ1RJT05fR09WX0VVXzEQBBIYChRKVVJJU0RJQ1RJT05fQVNfQ05fMRAFEhgKFEpVUklTRElDVElPTl9TQV9CUl8xEAZCOVo3bGlicy9wcm90b2J1Zi9nby9wcm90b2J1Zi9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z'
+    );
 
 /**
  * Describes the enum platform.type.v2.Jurisdiction.
  */
-export const JurisdictionSchema = /*@__PURE__*/
-  enumDesc(file_platform_type_v2_jurisdiction, 0);
+export const JurisdictionSchema = /*@__PURE__*/ enumDesc(file_platform_type_v2_jurisdiction, 0);
 
 /**
  * Jurisdiction
  *
  * @generated from enum platform.type.v2.Jurisdiction
  */
-export const Jurisdiction = /*@__PURE__*/
-  tsEnum(JurisdictionSchema);
-
+export const Jurisdiction = /*@__PURE__*/ tsEnum(JurisdictionSchema);

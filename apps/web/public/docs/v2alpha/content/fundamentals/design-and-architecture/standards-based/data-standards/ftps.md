@@ -3,12 +3,12 @@ date_created: 2022-12-11T17:09:46
 title: FTPS
 pcx_content_type: definition
 summary: >-
-  File Transfer Protocol, Secure (FTPS) = [FTP](#ftp) + [SSL](#ssl). Or in other words: `FTPS` adds Security to File Transfer capabilities.
+    File Transfer Protocol, Secure (FTPS) = [FTP](#ftp) + [SSL](#ssl). Or in other words: `FTPS` adds Security to File Transfer capabilities.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ftp
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ssl
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ftp
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ssl
 ---
 
 # FTPS

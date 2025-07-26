@@ -1,26 +1,26 @@
 version: v2
 modules:
-  # 10000
-#  - path: poc
-#    name: buf.build/openecosystems/poc
-  # 20000
-  - path: public
-    name: buf.build/openecosystems/public
-  # 30000
-#  - path: partner
-#    name: buf.build/openecosystems/partner
-  # 40000
-#  - path: private
-#    name: buf.build/openecosystems/private
-  # 50000
-  - path: protobuf
-    name: buf.build/openecosystems/protobuf
+    # 10000
+    #  - path: poc
+    #    name: buf.build/openecosystems/poc
+    # 20000
+    - path: public
+      name: buf.build/openecosystems/public
+    # 30000
+    #  - path: partner
+    #    name: buf.build/openecosystems/partner
+    # 40000
+    #  - path: private
+    #    name: buf.build/openecosystems/private
+    # 50000
+    - path: protobuf
+      name: buf.build/openecosystems/protobuf
 lint:
-  use:
-    - DEFAULT
+    use:
+        - DEFAULT
 breaking:
-  use:
-    - FILE
+    use:
+        - FILE
 deps:
-  - buf.build/googleapis/googleapis
-  - buf.build/bufbuild/protovalidate
+    - buf.build/googleapis/googleapis
+    - buf.build/bufbuild/protovalidate

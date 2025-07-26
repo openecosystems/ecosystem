@@ -1,33 +1,33 @@
 {
-  "name": "libs-public-typescript-sdk-v2alpha",
-  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/public/typescript/sdk/v2alpha/src",
-  "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
-  "tags": [],
-  "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/public/typescript/sdk/v2alpha",
-        "tsConfig": "libs/public/typescript/sdk/v2alpha/tsconfig.lib.json",
-        "packageJson": "libs/public/typescript/sdk/v2alpha/package.json",
-        "main": "libs/public/typescript/sdk/v2alpha/src/index.ts",
-        "assets": ["libs/public/typescript/sdk/v2alpha/*.md"]
-      }
+    "name": "libs-public-typescript-sdk-v2alpha",
+    "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "libs/public/typescript/sdk/v2alpha/src",
+    "projectType": "library",
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/{projectRoot}",
+                "currentVersionResolver": "git-tag"
+            }
+        }
     },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/libs/public/typescript/sdk/v2alpha",
+                "tsConfig": "libs/public/typescript/sdk/v2alpha/tsconfig.lib.json",
+                "packageJson": "libs/public/typescript/sdk/v2alpha/package.json",
+                "main": "libs/public/typescript/sdk/v2alpha/src/index.ts",
+                "assets": ["libs/public/typescript/sdk/v2alpha/*.md"]
+            }
+        },
+        "nx-release-publish": {
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
+        }
     }
-  }
 }

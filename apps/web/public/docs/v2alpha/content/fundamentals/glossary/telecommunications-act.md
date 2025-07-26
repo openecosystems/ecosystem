@@ -1,11 +1,11 @@
 ---
 title: Telecommunications Act
 aliases:
-  - Telecommunications Act
-  - Telecommunications Act (United Kingdom)
+    - Telecommunications Act
+    - Telecommunications Act (United Kingdom)
 pcx_content_type: definition
 summary: >-
-  A Bill to make provision about the security of public electronic communications networks and public electronic communications services.
+    A Bill to make provision about the security of public electronic communications networks and public electronic communications services.
 hidden: true
 has_more: true
 ---
@@ -16,4 +16,4 @@ A Bill to make provision about the security of public electronic communications 
 
 ## Sources
 
-- https://bills.parliament.uk/bills/2806
+-   https://bills.parliament.uk/bills/2806

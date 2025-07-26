@@ -2,13 +2,13 @@
 title: protobuf
 pcx_content_type: definition
 summary: >-
-  Protocol for describing messages and services.
+    Protocol for describing messages and services.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/open-source
-  - /fundamentals/glossary/rest-api
-  - /fundamentals/design-and-architecture/standards-based/data-standards/protobuf
+    - /fundamentals/glossary/open-source
+    - /fundamentals/glossary/rest-api
+    - /fundamentals/design-and-architecture/standards-based/data-standards/protobuf
 ---
 
 # Protocol Buffers (Protobuf)

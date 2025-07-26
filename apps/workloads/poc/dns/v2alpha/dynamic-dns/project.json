@@ -1,43 +1,43 @@
 {
-  "name": "apps-workloads-poc-dns-v2alpha-dynamic-dns",
-  "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/workloads/poc/dns/v2alpha/dynamic-dns",
-  "targets": {
-    "container": {
-      "executor": "@nx-tools/nx-container:build",
-      "options": {
-        "context": "apps/workloads/poc/dns/v2alpha/dynamic-dns",
-        "platforms": ["linux/amd64"],
-        "tags": ["workloads/poc/dns/v2alpha/dynamic-dns"]
-      }
-    },
-    "publish": {
-      "executor": "@ecosystem/nx-container:push",
-      "options": {
-        "image": "workloads/poc/dns/v2alpha/dynamic-dns",
-        "version": {
-          "path": "apps/workloads/poc/dns/v2alpha/dynamic-dns/package.json",
-          "key": "version"
+    "name": "apps-workloads-poc-dns-v2alpha-dynamic-dns",
+    "$schema": "../../../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/workloads/poc/dns/v2alpha/dynamic-dns",
+    "targets": {
+        "container": {
+            "executor": "@nx-tools/nx-container:build",
+            "options": {
+                "context": "apps/workloads/poc/dns/v2alpha/dynamic-dns",
+                "platforms": ["linux/amd64"],
+                "tags": ["workloads/poc/dns/v2alpha/dynamic-dns"]
+            }
         },
-        "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
-      }
+        "publish": {
+            "executor": "@ecosystem/nx-container:push",
+            "options": {
+                "image": "workloads/poc/dns/v2alpha/dynamic-dns",
+                "version": {
+                    "path": "apps/workloads/poc/dns/v2alpha/dynamic-dns/package.json",
+                    "key": "version"
+                },
+                "registries": ["jeannotcompany.registry.cpln.io", "ghcr.io/jeannotcompany"]
+            }
+        },
+        "version": {
+            "outputs": ["{options.packageJson}"],
+            "executor": "@ecosystem/nx-version:bump",
+            "options": {
+                "packageJson": "apps/workloads/poc/dns/v2alpha/dynamic-dns/package.json"
+            }
+        }
     },
-    "version": {
-      "outputs": ["{options.packageJson}"],
-      "executor": "@ecosystem/nx-version:bump",
-      "options": {
-        "packageJson": "apps/workloads/poc/dns/v2alpha/dynamic-dns/package.json"
-      }
-    }
-  },
-  "tags": [
-    "type:app",
-    "type:workload",
-    "cycle:poc",
-    "system:dns",
-    "version:v2alpha",
-    "exposure:external",
-    "language:golang"
-  ]
+    "tags": [
+        "type:app",
+        "type:workload",
+        "cycle:poc",
+        "system:dns",
+        "version:v2alpha",
+        "exposure:external",
+        "language:golang"
+    ]
 }

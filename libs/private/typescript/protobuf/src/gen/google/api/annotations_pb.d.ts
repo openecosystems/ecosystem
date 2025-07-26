@@ -16,9 +16,9 @@
 // @generated from file google/api/annotations.proto (package google.api, syntax proto3)
 /* eslint-disable */
 
-import type { GenExtension, GenFile } from "@bufbuild/protobuf/codegenv1";
-import type { MethodOptions } from "@bufbuild/protobuf/wkt";
-import type { HttpRule } from "./http_pb";
+import type { GenExtension, GenFile } from '@bufbuild/protobuf/codegenv1';
+import type { MethodOptions } from '@bufbuild/protobuf/wkt';
+import type { HttpRule } from './http_pb';
 
 /**
  * Describes the file google/api/annotations.proto.
@@ -31,4 +31,3 @@ export declare const file_google_api_annotations: GenFile;
  * @generated from extension: google.api.HttpRule http = 72295728;
  */
 export declare const http: GenExtension<MethodOptions, HttpRule>;
-

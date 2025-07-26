@@ -2,16 +2,16 @@
 date_created: 2022-12-11T17:20:46
 title: GDPR
 aliases:
-  - GDPR
-  - General Data Protection Regulation
-  - General Data Protection Regulation (GDPR)
+    - GDPR
+    - General Data Protection Regulation
+    - General Data Protection Regulation (GDPR)
 pcx_content_type: definition
 summary: >-
-  The `General Data Protection Regulation (GDPR)` is a regulation in EU law on data protection and privacy in the European Union and the European Economic Area.
+    The `General Data Protection Regulation (GDPR)` is a regulation in EU law on data protection and privacy in the European Union and the European Economic Area.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/pii
+    - /fundamentals/glossary/pii
 ---
 
 # General Data Protection Regulation (GDPR)
@@ -40,5 +40,5 @@ The `GDPR` is a regulation in EU law on data protection and privacy in the Europ
 
 ## Sources
 
-- https://en.wikipedia.org/wiki/General_Data_Protection_Regulation
-- https://ec.europa.eu/info/law/law-topic/data-protection/data-protection-eu_en
+-   https://en.wikipedia.org/wiki/General_Data_Protection_Regulation
+-   https://ec.europa.eu/info/law/law-topic/data-protection/data-protection-eu_en

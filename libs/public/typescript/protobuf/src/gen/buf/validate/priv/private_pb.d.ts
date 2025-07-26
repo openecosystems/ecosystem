@@ -16,9 +16,9 @@
 // @generated from file buf/validate/priv/private.proto (package buf.validate.priv, syntax proto3)
 /* eslint-disable */
 
-import type { GenExtension, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { FieldOptions } from "@bufbuild/protobuf/wkt";
+import type { GenExtension, GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { FieldOptions } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file buf/validate/priv/private.proto.
@@ -30,11 +30,11 @@ export declare const file_buf_validate_priv_private: GenFile;
  *
  * @generated from message buf.validate.priv.FieldConstraints
  */
-export declare type FieldConstraints = Message<"buf.validate.priv.FieldConstraints"> & {
-  /**
-   * @generated from field: repeated buf.validate.priv.Constraint cel = 1;
-   */
-  cel: Constraint[];
+export declare type FieldConstraints = Message<'buf.validate.priv.FieldConstraints'> & {
+    /**
+     * @generated from field: repeated buf.validate.priv.Constraint cel = 1;
+     */
+    cel: Constraint[];
 };
 
 /**
@@ -48,21 +48,21 @@ export declare const FieldConstraintsSchema: GenMessage<FieldConstraints>;
  *
  * @generated from message buf.validate.priv.Constraint
  */
-export declare type Constraint = Message<"buf.validate.priv.Constraint"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Constraint = Message<'buf.validate.priv.Constraint'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * @generated from field: string message = 2;
-   */
-  message: string;
+    /**
+     * @generated from field: string message = 2;
+     */
+    message: string;
 
-  /**
-   * @generated from field: string expression = 3;
-   */
-  expression: string;
+    /**
+     * @generated from field: string expression = 3;
+     */
+    expression: string;
 };
 
 /**
@@ -77,4 +77,3 @@ export declare const ConstraintSchema: GenMessage<Constraint>;
  * @generated from extension: optional buf.validate.priv.FieldConstraints field = 1160;
  */
 export declare const field: GenExtension<FieldOptions, FieldConstraints>;
-

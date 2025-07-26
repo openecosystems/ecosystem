@@ -75,12 +75,13 @@ docker run -d --runtime=io.containerd.wasmedge.v1 --platform=wasi/wasm --name ed
 docker build --platform linux/amd64 -t workloads/internal/edge/v2alpha/edge-router:latest .
 docker run -d --platform=linux/amd64 --name edge-router -p 7676:7676 workloads/internal/edge/v2alpha/edge-router:latest
 
-
 # To compile ring, we will not be able to use Apple's version of LLVM https://github.com/briansmith/ring/issues/1824
+
 brew install gcc
 brew install llvm
 
 ## Verify configuration
+
 llvm-config --version
 
 echo 'export PATH="/usr/local/opt/llvm/bin:$PATH"' >> ~/.zshrc
@@ -125,7 +126,7 @@ http://127.0.0.1:7676/platform.communication.v1alpha.MarketingEmailService/Subsc
 
 curl 'http://localhost:7676/platform.communication.v1alpha.MarketingEmailService/Subscribe' \
 -X 'OPTIONS' \
--H 'Accept: */*' \
+-H 'Accept: _/_' \
 -H 'Accept-Language: en-US' \
 -H 'Access-Control-Request-Headers: content-type' \
 -H 'Access-Control-Request-Method: GET' \

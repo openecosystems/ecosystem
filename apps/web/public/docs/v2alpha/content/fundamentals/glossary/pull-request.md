@@ -3,15 +3,15 @@ date_created: 2022-12-29T11:33:53
 author: Guillaume Hanique
 title: Pull Request
 aliases:
-  - Pull Request
+    - Pull Request
 pcx_content_type: definition
 summary: >-
-  A `Pull Request` is a common model where a set of code changes can be presented to other developers for review.
+    A `Pull Request` is a common model where a set of code changes can be presented to other developers for review.
 hidden: true
 has_more: true
 has_links: false
 links_to:
-  - /fundamentals/glossary/ci-cd
+    - /fundamentals/glossary/ci-cd
 ---
 
 # Pull Request

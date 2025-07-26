@@ -5,7 +5,7 @@ summary: '`Azure` is the [Cloud](/fundamentals/glossary/cloud) implementation by
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/glossary/cloud
+    - /fundamentals/glossary/cloud
 ---
 
 # Azure

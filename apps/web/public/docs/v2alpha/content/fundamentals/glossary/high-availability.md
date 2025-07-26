@@ -1,8 +1,8 @@
 ---
 title: High Availability
 aliases:
-  - High Availability
-  - Fault-Tolerance
+    - High Availability
+    - Fault-Tolerance
 pcx_content_type: definition
 summary: >-
 

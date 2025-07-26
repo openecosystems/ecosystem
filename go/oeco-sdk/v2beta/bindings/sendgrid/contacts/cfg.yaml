@@ -2,6 +2,6 @@
 package: contacts
 output: contacts.gen.go
 generate:
-  models: true
-  client: true
-  embedded-spec: true
+    models: true
+    client: true
+    embedded-spec: true

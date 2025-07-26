@@ -2,11 +2,11 @@
 // @generated from file platform/cryptography/v2alpha/certificate.proto (package platform.cryptography.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { File } from "../../type/v2/file_pb";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Duration, Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { File } from '../../type/v2/file_pb';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Duration, Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/cryptography/v2alpha/certificate.proto.
@@ -16,11 +16,11 @@ export declare const file_platform_cryptography_v2alpha_certificate: GenFile;
 /**
  * @generated from message platform.cryptography.v2alpha.CertificateConfiguration
  */
-export declare type CertificateConfiguration = Message<"platform.cryptography.v2alpha.CertificateConfiguration"> & {
-  /**
-   * @generated from field: string pki = 1;
-   */
-  pki: string;
+export declare type CertificateConfiguration = Message<'platform.cryptography.v2alpha.CertificateConfiguration'> & {
+    /**
+     * @generated from field: string pki = 1;
+     */
+    pki: string;
 };
 
 /**
@@ -34,11 +34,11 @@ export declare const CertificateConfigurationSchema: GenMessage<CertificateConfi
  *
  * @generated from message platform.cryptography.v2alpha.VerifyCertificateRequest
  */
-export declare type VerifyCertificateRequest = Message<"platform.cryptography.v2alpha.VerifyCertificateRequest"> & {
-  /**
-   * @generated from field: platform.type.v2.File certificate = 1;
-   */
-  certificate?: File;
+export declare type VerifyCertificateRequest = Message<'platform.cryptography.v2alpha.VerifyCertificateRequest'> & {
+    /**
+     * @generated from field: platform.type.v2.File certificate = 1;
+     */
+    certificate?: File;
 };
 
 /**
@@ -52,18 +52,18 @@ export declare const VerifyCertificateRequestSchema: GenMessage<VerifyCertificat
  *
  * @generated from message platform.cryptography.v2alpha.VerifyCertificateResponse
  */
-export declare type VerifyCertificateResponse = Message<"platform.cryptography.v2alpha.VerifyCertificateResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type VerifyCertificateResponse = Message<'platform.cryptography.v2alpha.VerifyCertificateResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.cryptography.v2alpha.Certificate certificate = 2;
-   */
-  certificate?: Certificate;
+    /**
+     * @generated from field: platform.cryptography.v2alpha.Certificate certificate = 2;
+     */
+    certificate?: Certificate;
 };
 
 /**
@@ -77,11 +77,11 @@ export declare const VerifyCertificateResponseSchema: GenMessage<VerifyCertifica
  *
  * @generated from message platform.cryptography.v2alpha.SignCertificateRequest
  */
-export declare type SignCertificateRequest = Message<"platform.cryptography.v2alpha.SignCertificateRequest"> & {
-  /**
-   * @generated from field: platform.type.v2.File certificate = 1;
-   */
-  certificate?: File;
+export declare type SignCertificateRequest = Message<'platform.cryptography.v2alpha.SignCertificateRequest'> & {
+    /**
+     * @generated from field: platform.type.v2.File certificate = 1;
+     */
+    certificate?: File;
 };
 
 /**
@@ -95,18 +95,18 @@ export declare const SignCertificateRequestSchema: GenMessage<SignCertificateReq
  *
  * @generated from message platform.cryptography.v2alpha.SignCertificateResponse
  */
-export declare type SignCertificateResponse = Message<"platform.cryptography.v2alpha.SignCertificateResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type SignCertificateResponse = Message<'platform.cryptography.v2alpha.SignCertificateResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: platform.cryptography.v2alpha.Certificate certificate = 2;
-   */
-  certificate?: Certificate;
+    /**
+     * @generated from field: platform.cryptography.v2alpha.Certificate certificate = 2;
+     */
+    certificate?: Certificate;
 };
 
 /**
@@ -118,42 +118,42 @@ export declare const SignCertificateResponseSchema: GenMessage<SignCertificateRe
 /**
  * @generated from message platform.cryptography.v2alpha.Certificate
  */
-export declare type Certificate = Message<"platform.cryptography.v2alpha.Certificate"> & {
-  /**
-   * Identifier for this Certificate Authority
-   *
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type Certificate = Message<'platform.cryptography.v2alpha.Certificate'> & {
+    /**
+     * Identifier for this Certificate Authority
+     *
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * Timestamp indicating when this event subscription was created.
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 2;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp indicating when this event subscription was created.
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp indicating when this event subscription was last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 3;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp indicating when this event subscription was last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * @generated from field: string name = 4;
-   */
-  name: string;
+    /**
+     * @generated from field: string name = 4;
+     */
+    name: string;
 
-  /**
-   * @generated from field: google.protobuf.Duration duration = 6;
-   */
-  duration?: Duration;
+    /**
+     * @generated from field: google.protobuf.Duration duration = 6;
+     */
+    duration?: Duration;
 
-  /**
-   * @generated from field: platform.type.v2.File certificate = 7;
-   */
-  certificate?: File;
+    /**
+     * @generated from field: platform.type.v2.File certificate = 7;
+     */
+    certificate?: File;
 };
 
 /**
@@ -168,33 +168,33 @@ export declare const CertificateSchema: GenMessage<Certificate>;
  * @generated from enum platform.cryptography.v2alpha.EventCertificateStatus
  */
 export enum EventCertificateStatus {
-  /**
-   * Unspecified or unknown status.
-   *
-   * @generated from enum value: EVENT_CERTIFICATE_STATUS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown status.
+     *
+     * @generated from enum value: EVENT_CERTIFICATE_STATUS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Certificate is being verified.
-   *
-   * @generated from enum value: EVENT_CERTIFICATE_STATUS_VERIFYING = 1;
-   */
-  VERIFYING = 1,
+    /**
+     * Certificate is being verified.
+     *
+     * @generated from enum value: EVENT_CERTIFICATE_STATUS_VERIFYING = 1;
+     */
+    VERIFYING = 1,
 
-  /**
-   * Certificate is being signed.
-   *
-   * @generated from enum value: EVENT_CERTIFICATE_STATUS_SIGNING = 2;
-   */
-  SIGNING = 2,
+    /**
+     * Certificate is being signed.
+     *
+     * @generated from enum value: EVENT_CERTIFICATE_STATUS_SIGNING = 2;
+     */
+    SIGNING = 2,
 
-  /**
-   * Error.
-   *
-   * @generated from enum value: EVENT_CERTIFICATE_STATUS_ERROR = 3;
-   */
-  ERROR = 3,
+    /**
+     * Error.
+     *
+     * @generated from enum value: EVENT_CERTIFICATE_STATUS_ERROR = 3;
+     */
+    ERROR = 3,
 }
 
 /**
@@ -206,22 +206,22 @@ export declare const EventCertificateStatusSchema: GenEnum<EventCertificateStatu
  * @generated from enum platform.cryptography.v2alpha.CertificateCommands
  */
 export enum CertificateCommands {
-  /**
-   * Unspecified or unknown command
-   *
-   * @generated from enum value: CERTIFICATE_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown command
+     *
+     * @generated from enum value: CERTIFICATE_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CERTIFICATE_COMMANDS_VERIFY_CERTIFICATE = 1;
-   */
-  VERIFY_CERTIFICATE = 1,
+    /**
+     * @generated from enum value: CERTIFICATE_COMMANDS_VERIFY_CERTIFICATE = 1;
+     */
+    VERIFY_CERTIFICATE = 1,
 
-  /**
-   * @generated from enum value: CERTIFICATE_COMMANDS_SIGN_CERTIFICATE = 2;
-   */
-  SIGN_CERTIFICATE = 2,
+    /**
+     * @generated from enum value: CERTIFICATE_COMMANDS_SIGN_CERTIFICATE = 2;
+     */
+    SIGN_CERTIFICATE = 2,
 }
 
 /**
@@ -233,22 +233,22 @@ export declare const CertificateCommandsSchema: GenEnum<CertificateCommands>;
  * @generated from enum platform.cryptography.v2alpha.CertificateEvents
  */
 export enum CertificateEvents {
-  /**
-   * Unspecified or unknown event.
-   *
-   * @generated from enum value: CERTIFICATE_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown event.
+     *
+     * @generated from enum value: CERTIFICATE_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CERTIFICATE_EVENTS_VERIFIED_CERTIFICATE = 1;
-   */
-  VERIFIED_CERTIFICATE = 1,
+    /**
+     * @generated from enum value: CERTIFICATE_EVENTS_VERIFIED_CERTIFICATE = 1;
+     */
+    VERIFIED_CERTIFICATE = 1,
 
-  /**
-   * @generated from enum value: CERTIFICATE_EVENTS_SIGNED_CERTIFICATE = 2;
-   */
-  SIGNED_CERTIFICATE = 2,
+    /**
+     * @generated from enum value: CERTIFICATE_EVENTS_SIGNED_CERTIFICATE = 2;
+     */
+    SIGNED_CERTIFICATE = 2,
 }
 
 /**
@@ -260,25 +260,24 @@ export declare const CertificateEventsSchema: GenEnum<CertificateEvents>;
  * @generated from service platform.cryptography.v2alpha.CertificateService
  */
 export declare const CertificateService: GenService<{
-  /**
-   * Method to VerifyCertificate to events based on scopes
-   *
-   * @generated from rpc platform.cryptography.v2alpha.CertificateService.VerifyCertificate
-   */
-  verifyCertificate: {
-    methodKind: "unary";
-    input: typeof VerifyCertificateRequestSchema;
-    output: typeof VerifyCertificateResponseSchema;
-  },
-  /**
-   * Method to SignCertificate to events based on scopes
-   *
-   * @generated from rpc platform.cryptography.v2alpha.CertificateService.SignCertificate
-   */
-  signCertificate: {
-    methodKind: "unary";
-    input: typeof SignCertificateRequestSchema;
-    output: typeof SignCertificateResponseSchema;
-  },
+    /**
+     * Method to VerifyCertificate to events based on scopes
+     *
+     * @generated from rpc platform.cryptography.v2alpha.CertificateService.VerifyCertificate
+     */
+    verifyCertificate: {
+        methodKind: 'unary';
+        input: typeof VerifyCertificateRequestSchema;
+        output: typeof VerifyCertificateResponseSchema;
+    };
+    /**
+     * Method to SignCertificate to events based on scopes
+     *
+     * @generated from rpc platform.cryptography.v2alpha.CertificateService.SignCertificate
+     */
+    signCertificate: {
+        methodKind: 'unary';
+        input: typeof SignCertificateRequestSchema;
+        output: typeof SignCertificateResponseSchema;
+    };
 }>;
-

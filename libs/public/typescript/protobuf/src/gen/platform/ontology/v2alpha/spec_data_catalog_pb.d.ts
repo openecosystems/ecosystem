@@ -4,9 +4,9 @@
 // @generated from file platform/ontology/v2alpha/spec_data_catalog.proto (package platform.ontology.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { ClassificationType } from "../../options/v2/annotations_pb";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { ClassificationType } from '../../options/v2/annotations_pb';
 
 /**
  * Describes the file platform/ontology/v2alpha/spec_data_catalog.proto.
@@ -16,86 +16,86 @@ export declare const file_platform_ontology_v2alpha_spec_data_catalog: GenFile;
 /**
  * @generated from message platform.ontology.v2alpha.SpecDataCatalog
  */
-export declare type SpecDataCatalog = Message<"platform.ontology.v2alpha.SpecDataCatalog"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.Audit audit = 1;
-   */
-  audit?: Audit;
+export declare type SpecDataCatalog = Message<'platform.ontology.v2alpha.SpecDataCatalog'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.Audit audit = 1;
+     */
+    audit?: Audit;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Cli cli = 2;
-   */
-  cli?: Cli;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Cli cli = 2;
+     */
+    cli?: Cli;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Communication communication = 3;
-   */
-  communication?: Communication;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Communication communication = 3;
+     */
+    communication?: Communication;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Configuration configuration = 4;
-   */
-  configuration?: Configuration;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Configuration configuration = 4;
+     */
+    configuration?: Configuration;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Cryptography cryptography = 5;
-   */
-  cryptography?: Cryptography;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Cryptography cryptography = 5;
+     */
+    cryptography?: Cryptography;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Dns dns = 6;
-   */
-  dns?: Dns;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Dns dns = 6;
+     */
+    dns?: Dns;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Ecosystem ecosystem = 7;
-   */
-  ecosystem?: Ecosystem;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Ecosystem ecosystem = 7;
+     */
+    ecosystem?: Ecosystem;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Edge edge = 8;
-   */
-  edge?: Edge;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Edge edge = 8;
+     */
+    edge?: Edge;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Iam iam = 9;
-   */
-  iam?: Iam;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Iam iam = 9;
+     */
+    iam?: Iam;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Mesh mesh = 10;
-   */
-  mesh?: Mesh;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Mesh mesh = 10;
+     */
+    mesh?: Mesh;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Ontology ontology = 11;
-   */
-  ontology?: Ontology;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Ontology ontology = 11;
+     */
+    ontology?: Ontology;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Options options = 12;
-   */
-  options?: Options;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Options options = 12;
+     */
+    options?: Options;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Reference reference = 13;
-   */
-  reference?: Reference;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Reference reference = 13;
+     */
+    reference?: Reference;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Spec spec = 14;
-   */
-  spec?: Spec;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Spec spec = 14;
+     */
+    spec?: Spec;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.System system = 15;
-   */
-  system?: System;
+    /**
+     * @generated from field: platform.ontology.v2alpha.System system = 15;
+     */
+    system?: System;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.Type type = 16;
-   */
-  type?: Type;
+    /**
+     * @generated from field: platform.ontology.v2alpha.Type type = 16;
+     */
+    type?: Type;
 };
 
 /**
@@ -107,11 +107,11 @@ export declare const SpecDataCatalogSchema: GenMessage<SpecDataCatalog>;
 /**
  * @generated from message platform.ontology.v2alpha.Audit
  */
-export declare type Audit = Message<"platform.ontology.v2alpha.Audit"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.AuditV2Alpha audit_v2alpha = 1;
-   */
-  auditV2alpha?: AuditV2Alpha;
+export declare type Audit = Message<'platform.ontology.v2alpha.Audit'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.AuditV2Alpha audit_v2alpha = 1;
+     */
+    auditV2alpha?: AuditV2Alpha;
 };
 
 /**
@@ -123,8 +123,7 @@ export declare const AuditSchema: GenMessage<Audit>;
 /**
  * @generated from message platform.ontology.v2alpha.Cli
  */
-export declare type Cli = Message<"platform.ontology.v2alpha.Cli"> & {
-};
+export declare type Cli = Message<'platform.ontology.v2alpha.Cli'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Cli.
@@ -135,16 +134,16 @@ export declare const CliSchema: GenMessage<Cli>;
 /**
  * @generated from message platform.ontology.v2alpha.Communication
  */
-export declare type Communication = Message<"platform.ontology.v2alpha.Communication"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Alpha preference_center_v1alpha = 2;
-   */
-  preferenceCenterV1alpha?: PreferenceCenterV1Alpha;
+export declare type Communication = Message<'platform.ontology.v2alpha.Communication'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Alpha preference_center_v1alpha = 2;
+     */
+    preferenceCenterV1alpha?: PreferenceCenterV1Alpha;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Beta preference_center_v1beta = 3;
-   */
-  preferenceCenterV1beta?: PreferenceCenterV1Beta;
+    /**
+     * @generated from field: platform.ontology.v2alpha.PreferenceCenterV1Beta preference_center_v1beta = 3;
+     */
+    preferenceCenterV1beta?: PreferenceCenterV1Beta;
 };
 
 /**
@@ -156,11 +155,11 @@ export declare const CommunicationSchema: GenMessage<Communication>;
 /**
  * @generated from message platform.ontology.v2alpha.Configuration
  */
-export declare type Configuration = Message<"platform.ontology.v2alpha.Configuration"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.ConfigurationV2Alpha configuration_v2alpha = 4;
-   */
-  configurationV2alpha?: ConfigurationV2Alpha;
+export declare type Configuration = Message<'platform.ontology.v2alpha.Configuration'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.ConfigurationV2Alpha configuration_v2alpha = 4;
+     */
+    configurationV2alpha?: ConfigurationV2Alpha;
 };
 
 /**
@@ -172,11 +171,11 @@ export declare const ConfigurationSchema: GenMessage<Configuration>;
 /**
  * @generated from message platform.ontology.v2alpha.Cryptography
  */
-export declare type Cryptography = Message<"platform.ontology.v2alpha.Cryptography"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.CertificateV2Alpha certificate_v2alpha = 5;
-   */
-  certificateV2alpha?: CertificateV2Alpha;
+export declare type Cryptography = Message<'platform.ontology.v2alpha.Cryptography'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.CertificateV2Alpha certificate_v2alpha = 5;
+     */
+    certificateV2alpha?: CertificateV2Alpha;
 };
 
 /**
@@ -188,8 +187,7 @@ export declare const CryptographySchema: GenMessage<Cryptography>;
 /**
  * @generated from message platform.ontology.v2alpha.Dns
  */
-export declare type Dns = Message<"platform.ontology.v2alpha.Dns"> & {
-};
+export declare type Dns = Message<'platform.ontology.v2alpha.Dns'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Dns.
@@ -200,11 +198,11 @@ export declare const DnsSchema: GenMessage<Dns>;
 /**
  * @generated from message platform.ontology.v2alpha.Ecosystem
  */
-export declare type Ecosystem = Message<"platform.ontology.v2alpha.Ecosystem"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.EcosystemV2Alpha ecosystem_v2alpha = 6;
-   */
-  ecosystemV2alpha?: EcosystemV2Alpha;
+export declare type Ecosystem = Message<'platform.ontology.v2alpha.Ecosystem'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.EcosystemV2Alpha ecosystem_v2alpha = 6;
+     */
+    ecosystemV2alpha?: EcosystemV2Alpha;
 };
 
 /**
@@ -216,8 +214,7 @@ export declare const EcosystemSchema: GenMessage<Ecosystem>;
 /**
  * @generated from message platform.ontology.v2alpha.Edge
  */
-export declare type Edge = Message<"platform.ontology.v2alpha.Edge"> & {
-};
+export declare type Edge = Message<'platform.ontology.v2alpha.Edge'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Edge.
@@ -228,16 +225,16 @@ export declare const EdgeSchema: GenMessage<Edge>;
 /**
  * @generated from message platform.ontology.v2alpha.Iam
  */
-export declare type Iam = Message<"platform.ontology.v2alpha.Iam"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.AccountV2Alpha account_v2alpha = 7;
-   */
-  accountV2alpha?: AccountV2Alpha;
+export declare type Iam = Message<'platform.ontology.v2alpha.Iam'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.AccountV2Alpha account_v2alpha = 7;
+     */
+    accountV2alpha?: AccountV2Alpha;
 
-  /**
-   * @generated from field: platform.ontology.v2alpha.AccountAuthorityV2Alpha account_authority_v2alpha = 8;
-   */
-  accountAuthorityV2alpha?: AccountAuthorityV2Alpha;
+    /**
+     * @generated from field: platform.ontology.v2alpha.AccountAuthorityV2Alpha account_authority_v2alpha = 8;
+     */
+    accountAuthorityV2alpha?: AccountAuthorityV2Alpha;
 };
 
 /**
@@ -249,8 +246,7 @@ export declare const IamSchema: GenMessage<Iam>;
 /**
  * @generated from message platform.ontology.v2alpha.Mesh
  */
-export declare type Mesh = Message<"platform.ontology.v2alpha.Mesh"> & {
-};
+export declare type Mesh = Message<'platform.ontology.v2alpha.Mesh'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Mesh.
@@ -261,8 +257,7 @@ export declare const MeshSchema: GenMessage<Mesh>;
 /**
  * @generated from message platform.ontology.v2alpha.Ontology
  */
-export declare type Ontology = Message<"platform.ontology.v2alpha.Ontology"> & {
-};
+export declare type Ontology = Message<'platform.ontology.v2alpha.Ontology'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Ontology.
@@ -273,8 +268,7 @@ export declare const OntologySchema: GenMessage<Ontology>;
 /**
  * @generated from message platform.ontology.v2alpha.Options
  */
-export declare type Options = Message<"platform.ontology.v2alpha.Options"> & {
-};
+export declare type Options = Message<'platform.ontology.v2alpha.Options'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Options.
@@ -285,11 +279,11 @@ export declare const OptionsSchema: GenMessage<Options>;
 /**
  * @generated from message platform.ontology.v2alpha.Reference
  */
-export declare type Reference = Message<"platform.ontology.v2alpha.Reference"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.ReferenceV2Alpha reference_v2alpha = 9;
-   */
-  referenceV2alpha?: ReferenceV2Alpha;
+export declare type Reference = Message<'platform.ontology.v2alpha.Reference'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.ReferenceV2Alpha reference_v2alpha = 9;
+     */
+    referenceV2alpha?: ReferenceV2Alpha;
 };
 
 /**
@@ -301,8 +295,7 @@ export declare const ReferenceSchema: GenMessage<Reference>;
 /**
  * @generated from message platform.ontology.v2alpha.Spec
  */
-export declare type Spec = Message<"platform.ontology.v2alpha.Spec"> & {
-};
+export declare type Spec = Message<'platform.ontology.v2alpha.Spec'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Spec.
@@ -313,11 +306,11 @@ export declare const SpecSchema: GenMessage<Spec>;
 /**
  * @generated from message platform.ontology.v2alpha.System
  */
-export declare type System = Message<"platform.ontology.v2alpha.System"> & {
-  /**
-   * @generated from field: platform.ontology.v2alpha.SystemV2Alpha system_v2alpha = 10;
-   */
-  systemV2alpha?: SystemV2Alpha;
+export declare type System = Message<'platform.ontology.v2alpha.System'> & {
+    /**
+     * @generated from field: platform.ontology.v2alpha.SystemV2Alpha system_v2alpha = 10;
+     */
+    systemV2alpha?: SystemV2Alpha;
 };
 
 /**
@@ -329,8 +322,7 @@ export declare const SystemSchema: GenMessage<System>;
 /**
  * @generated from message platform.ontology.v2alpha.Type
  */
-export declare type Type = Message<"platform.ontology.v2alpha.Type"> & {
-};
+export declare type Type = Message<'platform.ontology.v2alpha.Type'> & {};
 
 /**
  * Describes the message platform.ontology.v2alpha.Type.
@@ -341,86 +333,86 @@ export declare const TypeSchema: GenMessage<Type>;
 /**
  * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Beta
  */
-export declare type PreferenceCenterV1Beta = Message<"platform.ontology.v2alpha.PreferenceCenterV1Beta"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type PreferenceCenterV1Beta = Message<'platform.ontology.v2alpha.PreferenceCenterV1Beta'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType anonymous_id = 4;
-   */
-  anonymousId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType anonymous_id = 4;
+     */
+    anonymousId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType email = 5;
-   */
-  email: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType email = 5;
+     */
+    email: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType external_id = 6;
-   */
-  externalId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType external_id = 6;
+     */
+    externalId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType phone_number = 7;
-   */
-  phoneNumber: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType phone_number = 7;
+     */
+    phoneNumber: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType first_name = 8;
-   */
-  firstName: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType first_name = 8;
+     */
+    firstName: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType last_name = 9;
-   */
-  lastName: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType last_name = 9;
+     */
+    lastName: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType postal_code = 10;
-   */
-  postalCode: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType postal_code = 10;
+     */
+    postalCode: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType city = 11;
-   */
-  city: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType city = 11;
+     */
+    city: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType state_province_region = 12;
-   */
-  stateProvinceRegion: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType state_province_region = 12;
+     */
+    stateProvinceRegion: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType country = 13;
-   */
-  country: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType country = 13;
+     */
+    country: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType list_ids = 14;
-   */
-  listIds: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType list_ids = 14;
+     */
+    listIds: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType segment_ids = 15;
-   */
-  segmentIds: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType segment_ids = 15;
+     */
+    segmentIds: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType email_subscription = 16;
-   */
-  emailSubscription: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType email_subscription = 16;
+     */
+    emailSubscription: ClassificationType;
 };
 
 /**
@@ -432,86 +424,86 @@ export declare const PreferenceCenterV1BetaSchema: GenMessage<PreferenceCenterV1
 /**
  * @generated from message platform.ontology.v2alpha.PreferenceCenterV1Alpha
  */
-export declare type PreferenceCenterV1Alpha = Message<"platform.ontology.v2alpha.PreferenceCenterV1Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type PreferenceCenterV1Alpha = Message<'platform.ontology.v2alpha.PreferenceCenterV1Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType anonymous_id = 4;
-   */
-  anonymousId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType anonymous_id = 4;
+     */
+    anonymousId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType email = 5;
-   */
-  email: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType email = 5;
+     */
+    email: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType external_id = 6;
-   */
-  externalId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType external_id = 6;
+     */
+    externalId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType phone_number = 7;
-   */
-  phoneNumber: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType phone_number = 7;
+     */
+    phoneNumber: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType first_name = 8;
-   */
-  firstName: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType first_name = 8;
+     */
+    firstName: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType last_name = 9;
-   */
-  lastName: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType last_name = 9;
+     */
+    lastName: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType postal_code = 10;
-   */
-  postalCode: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType postal_code = 10;
+     */
+    postalCode: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType city = 11;
-   */
-  city: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType city = 11;
+     */
+    city: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType state_province_region = 12;
-   */
-  stateProvinceRegion: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType state_province_region = 12;
+     */
+    stateProvinceRegion: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType country = 13;
-   */
-  country: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType country = 13;
+     */
+    country: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType list_ids = 14;
-   */
-  listIds: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType list_ids = 14;
+     */
+    listIds: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType segment_ids = 15;
-   */
-  segmentIds: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType segment_ids = 15;
+     */
+    segmentIds: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType email_subscription = 16;
-   */
-  emailSubscription: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType email_subscription = 16;
+     */
+    emailSubscription: ClassificationType;
 };
 
 /**
@@ -523,31 +515,31 @@ export declare const PreferenceCenterV1AlphaSchema: GenMessage<PreferenceCenterV
 /**
  * @generated from message platform.ontology.v2alpha.AuditV2Alpha
  */
-export declare type AuditV2Alpha = Message<"platform.ontology.v2alpha.AuditV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type AuditV2Alpha = Message<'platform.ontology.v2alpha.AuditV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType entry = 4;
-   */
-  entry: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType entry = 4;
+     */
+    entry: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType jurisdiction = 5;
-   */
-  jurisdiction: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType jurisdiction = 5;
+     */
+    jurisdiction: ClassificationType;
 };
 
 /**
@@ -559,86 +551,86 @@ export declare const AuditV2AlphaSchema: GenMessage<AuditV2Alpha>;
 /**
  * @generated from message platform.ontology.v2alpha.ConfigurationV2Alpha
  */
-export declare type ConfigurationV2Alpha = Message<"platform.ontology.v2alpha.ConfigurationV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type ConfigurationV2Alpha = Message<'platform.ontology.v2alpha.ConfigurationV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType organization_slug = 2;
-   */
-  organizationSlug: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType organization_slug = 2;
+     */
+    organizationSlug: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType workspace_slug = 3;
-   */
-  workspaceSlug: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType workspace_slug = 3;
+     */
+    workspaceSlug: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 4;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 4;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 5;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 5;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType source_id = 6;
-   */
-  sourceId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType source_id = 6;
+     */
+    sourceId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType type = 7;
-   */
-  type: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType type = 7;
+     */
+    type: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType status = 8;
-   */
-  status: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType status = 8;
+     */
+    status: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType status_details = 9;
-   */
-  statusDetails: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType status_details = 9;
+     */
+    statusDetails: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType parent_id = 10;
-   */
-  parentId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType parent_id = 10;
+     */
+    parentId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType data_catalog = 13;
-   */
-  dataCatalog: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType data_catalog = 13;
+     */
+    dataCatalog: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType clinical_catalog = 14;
-   */
-  clinicalCatalog: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType clinical_catalog = 14;
+     */
+    clinicalCatalog: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType platform_configuration = 15;
-   */
-  platformConfiguration: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType platform_configuration = 15;
+     */
+    platformConfiguration: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType platform_configurations = 16;
-   */
-  platformConfigurations: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType platform_configurations = 16;
+     */
+    platformConfigurations: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType solution_configurations = 17;
-   */
-  solutionConfigurations: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType solution_configurations = 17;
+     */
+    solutionConfigurations: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType connector_configurations = 18;
-   */
-  connectorConfigurations: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType connector_configurations = 18;
+     */
+    connectorConfigurations: ClassificationType;
 };
 
 /**
@@ -650,36 +642,36 @@ export declare const ConfigurationV2AlphaSchema: GenMessage<ConfigurationV2Alpha
 /**
  * @generated from message platform.ontology.v2alpha.CertificateV2Alpha
  */
-export declare type CertificateV2Alpha = Message<"platform.ontology.v2alpha.CertificateV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type CertificateV2Alpha = Message<'platform.ontology.v2alpha.CertificateV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType name = 4;
-   */
-  name: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType name = 4;
+     */
+    name: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType duration = 6;
-   */
-  duration: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType duration = 6;
+     */
+    duration: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType certificate = 7;
-   */
-  certificate: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType certificate = 7;
+     */
+    certificate: ClassificationType;
 };
 
 /**
@@ -691,71 +683,71 @@ export declare const CertificateV2AlphaSchema: GenMessage<CertificateV2Alpha>;
 /**
  * @generated from message platform.ontology.v2alpha.EcosystemV2Alpha
  */
-export declare type EcosystemV2Alpha = Message<"platform.ontology.v2alpha.EcosystemV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type EcosystemV2Alpha = Message<'platform.ontology.v2alpha.EcosystemV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType slug = 2;
-   */
-  slug: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType slug = 2;
+     */
+    slug: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType organization_id = 3;
-   */
-  organizationId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType organization_id = 3;
+     */
+    organizationId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 4;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 4;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 5;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 5;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType source_id = 6;
-   */
-  sourceId: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType source_id = 6;
+     */
+    sourceId: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType type = 7;
-   */
-  type: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType type = 7;
+     */
+    type: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType status = 8;
-   */
-  status: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType status = 8;
+     */
+    status: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType status_details = 9;
-   */
-  statusDetails: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType status_details = 9;
+     */
+    statusDetails: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType name = 10;
-   */
-  name: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType name = 10;
+     */
+    name: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType short_description = 11;
-   */
-  shortDescription: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType short_description = 11;
+     */
+    shortDescription: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType description = 12;
-   */
-  description: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType description = 12;
+     */
+    description: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType cidr = 13;
-   */
-  cidr: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType cidr = 13;
+     */
+    cidr: ClassificationType;
 };
 
 /**
@@ -767,26 +759,26 @@ export declare const EcosystemV2AlphaSchema: GenMessage<EcosystemV2Alpha>;
 /**
  * @generated from message platform.ontology.v2alpha.AccountV2Alpha
  */
-export declare type AccountV2Alpha = Message<"platform.ontology.v2alpha.AccountV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type AccountV2Alpha = Message<'platform.ontology.v2alpha.AccountV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType credential = 4;
-   */
-  credential: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType credential = 4;
+     */
+    credential: ClassificationType;
 };
 
 /**
@@ -798,26 +790,26 @@ export declare const AccountV2AlphaSchema: GenMessage<AccountV2Alpha>;
 /**
  * @generated from message platform.ontology.v2alpha.AccountAuthorityV2Alpha
  */
-export declare type AccountAuthorityV2Alpha = Message<"platform.ontology.v2alpha.AccountAuthorityV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type AccountAuthorityV2Alpha = Message<'platform.ontology.v2alpha.AccountAuthorityV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType credential = 4;
-   */
-  credential: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType credential = 4;
+     */
+    credential: ClassificationType;
 };
 
 /**
@@ -829,21 +821,21 @@ export declare const AccountAuthorityV2AlphaSchema: GenMessage<AccountAuthorityV
 /**
  * @generated from message platform.ontology.v2alpha.ReferenceV2Alpha
  */
-export declare type ReferenceV2Alpha = Message<"platform.ontology.v2alpha.ReferenceV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type ReferenceV2Alpha = Message<'platform.ontology.v2alpha.ReferenceV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 2;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 2;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 3;
+     */
+    updatedAt: ClassificationType;
 };
 
 /**
@@ -855,26 +847,26 @@ export declare const ReferenceV2AlphaSchema: GenMessage<ReferenceV2Alpha>;
 /**
  * @generated from message platform.ontology.v2alpha.SystemV2Alpha
  */
-export declare type SystemV2Alpha = Message<"platform.ontology.v2alpha.SystemV2Alpha"> & {
-  /**
-   * @generated from field: platform.options.v2.ClassificationType id = 1;
-   */
-  id: ClassificationType;
+export declare type SystemV2Alpha = Message<'platform.ontology.v2alpha.SystemV2Alpha'> & {
+    /**
+     * @generated from field: platform.options.v2.ClassificationType id = 1;
+     */
+    id: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType enabled_at = 2;
-   */
-  enabledAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType enabled_at = 2;
+     */
+    enabledAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType created_at = 3;
-   */
-  createdAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType created_at = 3;
+     */
+    createdAt: ClassificationType;
 
-  /**
-   * @generated from field: platform.options.v2.ClassificationType updated_at = 4;
-   */
-  updatedAt: ClassificationType;
+    /**
+     * @generated from field: platform.options.v2.ClassificationType updated_at = 4;
+     */
+    updatedAt: ClassificationType;
 };
 
 /**
@@ -882,4 +874,3 @@ export declare type SystemV2Alpha = Message<"platform.ontology.v2alpha.SystemV2A
  * Use `create(SystemV2AlphaSchema)` to create a new message.
  */
 export declare const SystemV2AlphaSchema: GenMessage<SystemV2Alpha>;
-

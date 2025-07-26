@@ -2,15 +2,15 @@
 title: Terraform
 pcx_content_type: definition
 summary: >-
-  [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building Open Ecosystems resources.
+    [Terraform](https://www.terraform.io/) is a tool for building, changing, and versioning infrastructure, and provides components and documentation for building Open Ecosystems resources.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/api
-  - /fundamentals/glossary/current-state
-  - /fundamentals/glossary/desired-state
-  - /fundamentals/glossary/iaas
-  - /fundamentals/glossary/infrastructure-as-code
+    - /fundamentals/glossary/api
+    - /fundamentals/glossary/current-state
+    - /fundamentals/glossary/desired-state
+    - /fundamentals/glossary/iaas
+    - /fundamentals/glossary/infrastructure-as-code
 ---
 
 # Terraform
@@ -33,14 +33,14 @@ With `Terraform` the `Desired State` is described using HCL[^1].
 
 Having a `State File` has some advantages:
 
-- It is much easier to compare the `Desired State` to a local file (the `State File`, than it is to the real `Current State`, because the latter will involve a lot of [API](/fundamentals/glossary/api) calls to the [IaaS](/fundamentals/glossary/iaas) or DCaaS layer.
-- The `State File` can also be parsed by other tools, which gives them an easy to read model of what the infrastructure currently looks like.
+-   It is much easier to compare the `Desired State` to a local file (the `State File`, than it is to the real `Current State`, because the latter will involve a lot of [API](/fundamentals/glossary/api) calls to the [IaaS](/fundamentals/glossary/iaas) or DCaaS layer.
+-   The `State File` can also be parsed by other tools, which gives them an easy to read model of what the infrastructure currently looks like.
 
 ### Disadvantages
 
 Having a `State File` also has some disadvantages:
 
-- The `State File` must be stored on Shared Storage, and it can never get lost, or it would break [Infrastructure as Code](/fundamentals/glossary/infrastructure-as-code). These requirements are not easily met.
-- Nothing and nobody else can make changes to the infrastructure outside of `Terraform`. If changes are made, they will NOT be detected by `Terraform`, which results in an infrastructure that does NOT match the `Desired State`, although everything seems to be saying it is.
+-   The `State File` must be stored on Shared Storage, and it can never get lost, or it would break [Infrastructure as Code](/fundamentals/glossary/infrastructure-as-code). These requirements are not easily met.
+-   Nothing and nobody else can make changes to the infrastructure outside of `Terraform`. If changes are made, they will NOT be detected by `Terraform`, which results in an infrastructure that does NOT match the `Desired State`, although everything seems to be saying it is.
 
 [^1]: HashiCorp Configuration Language

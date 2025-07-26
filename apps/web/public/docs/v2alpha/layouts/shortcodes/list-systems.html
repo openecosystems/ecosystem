@@ -19,27 +19,21 @@
   but not every System that is a System of Engagement belongs to the Workload Plane.
 -->
 
-{{- $category := .Get "category" -}}
-{{- $subcategory := .Get "subcategory" -}}
-
-{{- $data_systems := (index $.Site.Data "systems") -}}
-{{- $data_category := (index $data_systems $category) -}}
-{{- $data_subcategory := (index $data_category $subcategory) -}}
-{{- $systems := (index $data_subcategory "systems") -}}
+{{- $category := .Get "category" -}} {{- $subcategory := .Get "subcategory" -}} {{- $data_systems := (index $.Site.Data
+"systems") -}} {{- $data_category := (index $data_systems $category) -}} {{- $data_subcategory := (index $data_category
+$subcategory) -}} {{- $systems := (index $data_subcategory "systems") -}}
 
 <table>
-  <tr>
-    <th>System</th>
-    <th>Value Plane Context</th>
-    <th>Platform Context</th>
-  </tr>
-  {{- range $system := $systems -}}
-    {{- $dataSystem := (index $.Site.Data $system) -}}
-  <tr>
-    <td>{{ $dataSystem.name }}</td>
-    <td>{{ $dataSystem.meta.value_plane_context }}</td>
-    <td>{{ $dataSystem.meta.platform_context }}</td>
-  </tr>
-  {{- end -}}
+    <tr>
+        <th>System</th>
+        <th>Value Plane Context</th>
+        <th>Platform Context</th>
+    </tr>
+    {{- range $system := $systems -}} {{- $dataSystem := (index $.Site.Data $system) -}}
+    <tr>
+        <td>{{ $dataSystem.name }}</td>
+        <td>{{ $dataSystem.meta.value_plane_context }}</td>
+        <td>{{ $dataSystem.meta.platform_context }}</td>
+    </tr>
+    {{- end -}}
 </table>
-

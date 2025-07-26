@@ -1,20 +1,20 @@
 version: v2
 inputs:
-  - directory: ../../../../proto/private
+    - directory: ../../../../proto/private
 plugins:
-  - local: protoc-gen-platform
-    out: ./src/gen
-    opt:
-      - paths=source_relative
-      - language=typescript
-      - type=spec
-      - prefix=private
-    strategy: all
-  - local: protoc-gen-platform
-    out: ./src/gen
-    opt:
-      - paths=source_relative
-      - language=typescript
-      - type=spec-index
-      - prefix=private
-    strategy: all
+    - local: protoc-gen-platform
+      out: ./src/gen
+      opt:
+          - paths=source_relative
+          - language=typescript
+          - type=spec
+          - prefix=private
+      strategy: all
+    - local: protoc-gen-platform
+      out: ./src/gen
+      opt:
+          - paths=source_relative
+          - language=typescript
+          - type=spec-index
+          - prefix=private
+      strategy: all

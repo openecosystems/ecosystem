@@ -2,13 +2,13 @@
 title: WAF
 pcx_content_type: definition
 summary: >-
-  A web application firewall (WAF) is a security system that helps protect web applications by filtering and monitoring HTTP traffic between a web application and the [Internet](/fundamentals/glossary/#internet).
+    A web application firewall (WAF) is a security system that helps protect web applications by filtering and monitoring HTTP traffic between a web application and the [Internet](/fundamentals/glossary/#internet).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/availability
-  - /fundamentals/glossary/internet
-  - /fundamentals/glossary/waf
+    - /fundamentals/glossary/availability
+    - /fundamentals/glossary/internet
+    - /fundamentals/glossary/waf
 ---
 
 # WAF

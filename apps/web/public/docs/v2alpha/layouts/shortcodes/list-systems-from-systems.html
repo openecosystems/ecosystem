@@ -19,41 +19,41 @@
   but not every System that is a System of Engagement belongs to the Workload Plane.
 -->
 
-{{- $category := .Get "category" -}}
-{{- $subcategory := .Get "subcategory" -}}
-
-{{- $data_systems := (index $.Site.Data "systems") -}}
-{{- $data_category := (index $data_systems $category) -}}
-{{- $data_subcategory := (index $data_category $subcategory) -}}
-
+{{- $category := .Get "category" -}} {{- $subcategory := .Get "subcategory" -}} {{- $data_systems := (index $.Site.Data
+"systems") -}} {{- $data_category := (index $data_systems $category) -}} {{- $data_subcategory := (index $data_category
+$subcategory) -}}
 
 <!-- Allows the shortcode to be closed -->
 {{- $inner := .Inner -}}
 
 <style>
-  .ProductGrid--content {
-    --n: 1;
-    display: grid;
-    flex-direction: column;
-    grid-template-columns: repeat(var(--n), 1fr);
-  }
+    .ProductGrid--content {
+        --n: 1;
+        display: grid;
+        flex-direction: column;
+        grid-template-columns: repeat(var(--n), 1fr);
+    }
 
-  @media screen and (min-width: 600px) {
-    .ProductGrid--content { --n: 1 }
-  }
+    @media screen and (min-width: 600px) {
+        .ProductGrid--content {
+            --n: 1;
+        }
+    }
 
-  @media screen and (min-width: 978px) {
-    .ProductGrid--content { --n: 2 }
-  }
+    @media screen and (min-width: 978px) {
+        .ProductGrid--content {
+            --n: 2;
+        }
+    }
 
-  @media screen and (min-width: 1200px) {
-    .ProductGrid--content { --n: 2 }
-  }
+    @media screen and (min-width: 1200px) {
+        .ProductGrid--content {
+            --n: 2;
+        }
+    }
 </style>
 
 <p>The following Systems are {{ $data_subcategory.title }}:</p>
 <div class="ProductGrid">
-	<div class="ProductGrid--content">
-
-  </div>
+    <div class="ProductGrid--content"></div>
 </div>

@@ -6,7 +6,7 @@ summary: >-
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/glossary/impact
+    - /fundamentals/glossary/impact
 ---
 
 # Risk

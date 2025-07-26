@@ -1,15 +1,15 @@
 ---
 title: CIDR Block
 aliases:
-  - CIDR Block
+    - CIDR Block
 pcx_content_type: definition
 summary: >-
-  `Classless Inter-Domain Routing` is a method for allocating [IP Addresses](/fundamentals/glossary/ip-address) and routing. Its goal was to reduce the size of routing tables across the internet, and to slow down the exhaustion of [IPv4](/fundamentals/design-and-architecture/standards-based/data-standards/ipv4) addresses. A `CIDR Block` specifies a subnet.
+    `Classless Inter-Domain Routing` is a method for allocating [IP Addresses](/fundamentals/glossary/ip-address) and routing. Its goal was to reduce the size of routing tables across the internet, and to slow down the exhaustion of [IPv4](/fundamentals/design-and-architecture/standards-based/data-standards/ipv4) addresses. A `CIDR Block` specifies a subnet.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/ip-address
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
+    - /fundamentals/glossary/ip-address
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
 ---
 
 # CIDR Block

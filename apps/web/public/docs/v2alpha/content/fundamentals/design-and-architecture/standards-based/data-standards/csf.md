@@ -2,12 +2,12 @@
 date_created: 2022-12-11T17:23:44
 title: CSF
 aliases:
-  - CSF
-  - Component Story Format
-  - Component Story Format (CSF)
+    - CSF
+    - Component Story Format
+    - Component Story Format (CSF)
 pcx_content_type: definition
 summary: >-
-  `CSF` is a framework that is used to structure and organize elements of User Interfaces. It is design to help developers and designers to break down different parts of a User Interface into discrete units called "components" that can be managed, implemented, and reused more easily.
+    `CSF` is a framework that is used to structure and organize elements of User Interfaces. It is design to help developers and designers to break down different parts of a User Interface into discrete units called "components" that can be managed, implemented, and reused more easily.
 hidden: true
 has_more: true
 todo: Find more details
@@ -22,5 +22,5 @@ has_links: false
 
 ## Sources
 
-- https://github.com/ComponentDriven/csf
-- 2022-12-12 - Architecture Standup
+-   https://github.com/ComponentDriven/csf
+-   2022-12-12 - Architecture Standup

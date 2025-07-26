@@ -2,12 +2,12 @@
 title: Freeware
 pcx_content_type: definition
 summary: >-
-  Some software products are "free" to use. Not everything that is `Freeware` is also [Open Source](/fundamentals/glossary/#open-source). Not everything that is `Freeware` is actually free.
+    Some software products are "free" to use. Not everything that is `Freeware` is also [Open Source](/fundamentals/glossary/#open-source). Not everything that is `Freeware` is actually free.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/open-source
-  - /fundamentals/glossary/software-license
+    - /fundamentals/glossary/open-source
+    - /fundamentals/glossary/software-license
 ---
 
 # Freeware

@@ -13,5 +13,5 @@ has_links: false
 
 ## Sources
 
-- https://www.w3.org/XML/1998/06/xmlspec-report-19980910.htm
-- https://en.wikipedia.org/wiki/Document_type_definition
+-   https://www.w3.org/XML/1998/06/xmlspec-report-19980910.htm
+-   https://en.wikipedia.org/wiki/Document_type_definition

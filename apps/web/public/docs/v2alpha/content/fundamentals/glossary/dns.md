@@ -2,14 +2,14 @@
 title: DNS
 pcx_content_type: definition
 summary: >-
-  The Domain Name System (DNS) is the phonebook of the Internet. DNS translates domain names to IP addresses.
+    The Domain Name System (DNS) is the phonebook of the Internet. DNS translates domain names to IP addresses.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ipv6
-  - /fundamentals/glossary/caching
-  - /fundamentals/glossary/ttl
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ipv6
+    - /fundamentals/glossary/caching
+    - /fundamentals/glossary/ttl
 ---
 
 # DNS

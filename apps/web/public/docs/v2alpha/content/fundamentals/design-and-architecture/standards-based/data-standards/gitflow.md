@@ -2,17 +2,17 @@
 date_created: 2022-12-11T17:16:55
 title: GitFlow
 aliases:
-  - GitFlow
+    - GitFlow
 pcx_content_type: definition
 summary: >-
-  `GitFlow` is a [Branching Model](/fundamentals/glossary/branching-model) that does not depend on creating forks of central repositories. Instead, it creates separate timelines by agreeing on specific `branch names`.
+    `GitFlow` is a [Branching Model](/fundamentals/glossary/branching-model) that does not depend on creating forks of central repositories. Instead, it creates separate timelines by agreeing on specific `branch names`.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/github-flow
-  - /fundamentals/glossary/branching-model
-  - /fundamentals/glossary/ci-cd
-  - /fundamentals/glossary/production-environment
+    - /fundamentals/design-and-architecture/standards-based/data-standards/github-flow
+    - /fundamentals/glossary/branching-model
+    - /fundamentals/glossary/ci-cd
+    - /fundamentals/glossary/production-environment
 ---
 
 # GitFlow
@@ -37,15 +37,15 @@ Now if a developer wants to build a new feature, he creates a `feature branch` o
 
 If the new features are ready to be released, a `release branch` will be created. By convention the name is "release/x.y.z", where "x.y.z" is the version number of the new release. Meanwhile developers can continue creating new features and put them on the `develop` branch. The `release branch` will be used for QA. If bugs are discovered, they are fixed on the `release branch`. If everything checks out, the release branch can be "Finished". The following things will happen:
 
-- The `release branch` is merged with `master`, creating a new `master`. The new `master` contains all the features that were added to `develop` since the last release, as well as all the bug fixes from the `release branch`.
-- The new `master` will be tagged with the version that is in the `release branch`.
-- The `release branch` will be merged with `develop`, to make sure that the bug fixes will also end up in future releases. So the new `develop` will contain the bug fixes, as well as all the new features that did not end up on `master`.
+-   The `release branch` is merged with `master`, creating a new `master`. The new `master` contains all the features that were added to `develop` since the last release, as well as all the bug fixes from the `release branch`.
+-   The new `master` will be tagged with the version that is in the `release branch`.
+-   The `release branch` will be merged with `develop`, to make sure that the bug fixes will also end up in future releases. So the new `develop` will contain the bug fixes, as well as all the new features that did not end up on `master`.
 
 Now suppose there is an issue in the Production Environment that requires a code change. What happens then is that a `hotfix branch` will be created on top of the current `master`. The name will be "hotfix/x.y.z", where "x.y.z" is slightly higher than the tag of the current `master`. The changes that will fix the bug will then be committed to the `hotfix branch` and tested. If everything checks out, the `hotfix branch` will be "Finished". The following things will happen.
 
-- The `hotfix branch` is merged with `master`, creating a new `master`, which is identical to the old one, but the hotfix. So no features that have been developed by developers will end up in the new `master`.
-- The new `master` is tagged with the version number that is in the `hotfix branch`.
-- The `hotfix branch` is merged with `develop`, so that the hotfix will also be applied in future releases. So the new `develop` will contain all the features that were not yet released, **and** the hotfix.
+-   The `hotfix branch` is merged with `master`, creating a new `master`, which is identical to the old one, but the hotfix. So no features that have been developed by developers will end up in the new `master`.
+-   The new `master` is tagged with the version number that is in the `hotfix branch`.
+-   The `hotfix branch` is merged with `develop`, so that the hotfix will also be applied in future releases. So the new `develop` will contain all the features that were not yet released, **and** the hotfix.
 
 ## Git Extension
 
@@ -53,11 +53,11 @@ Now suppose there is an issue in the Production Environment that requires a code
 
 That it is an extension means that you can execute commands like
 
-- `git feature start featurename`, and
-- `git release finish 1.2.0`,
+-   `git feature start featurename`, and
+-   `git release finish 1.2.0`,
 
 and then `git` will do all the things described above automatically.
 
 ## Sources
 
-- https://nvie.com/posts/a-successful-git-branching-model/
+-   https://nvie.com/posts/a-successful-git-branching-model/

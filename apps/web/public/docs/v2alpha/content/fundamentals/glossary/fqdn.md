@@ -2,11 +2,11 @@
 title: FQDN
 pcx_content_type: definition
 summary: >-
-  `Fully Qualified Domain Name`, a Domain Name that can be resolved both from within a Local Area Network an from the [Internet](/fundamentals/glossary/#internet).
+    `Fully Qualified Domain Name`, a Domain Name that can be resolved both from within a Local Area Network an from the [Internet](/fundamentals/glossary/#internet).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/internet
+    - /fundamentals/glossary/internet
 ---
 
 # FQDN

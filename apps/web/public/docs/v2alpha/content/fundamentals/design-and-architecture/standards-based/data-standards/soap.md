@@ -3,16 +3,16 @@ date_created: 2022-12-11T17:14:39
 title: SOAP
 pcx_content_type: definition
 summary: >-
-  Simple Object Access Protocol (SOAP). It allows for describing services, similar to [Swagger](/fundamentals/design-and-architecture/standards-based/data-standards/#swagger), but then in [XML](/fundamentals/design-and-architecture/standards-based/data-standards/#xml). Whether or not it's really "simple" is debatable.
+    Simple Object Access Protocol (SOAP). It allows for describing services, similar to [Swagger](/fundamentals/design-and-architecture/standards-based/data-standards/#swagger), but then in [XML](/fundamentals/design-and-architecture/standards-based/data-standards/#xml). Whether or not it's really "simple" is debatable.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/openapi
-  - /fundamentals/design-and-architecture/standards-based/data-standards/swagger
-  - /fundamentals/design-and-architecture/standards-based/data-standards/wsdl
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xml
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xsd
-  - /fundamentals/glossary/debugging
+    - /fundamentals/design-and-architecture/standards-based/data-standards/openapi
+    - /fundamentals/design-and-architecture/standards-based/data-standards/swagger
+    - /fundamentals/design-and-architecture/standards-based/data-standards/wsdl
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xml
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xsd
+    - /fundamentals/glossary/debugging
 ---
 
 # Simple Object Access Protocol (SOAP)
@@ -31,4 +31,4 @@ The advantage is also a disadvantage: it makes everything all the more complex, 
 
 ## Sources
 
-- https://www.w3.org/TR/soap/
+-   https://www.w3.org/TR/soap/

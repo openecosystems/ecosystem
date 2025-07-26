@@ -1,48 +1,48 @@
 {
-  "name": "proto",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "projectType": "proto",
-  "sourceRoot": "proto",
-  "implicitDependencies": ["proto-public", "proto-private", "proto-poc"],
-  "targets": {
-    "generate-disabled": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "proto"
-      },
-      "cache": false
+    "name": "proto",
+    "$schema": "../node_modules/nx/schemas/project-schema.json",
+    "projectType": "proto",
+    "sourceRoot": "proto",
+    "implicitDependencies": ["proto-public", "proto-private", "proto-poc"],
+    "targets": {
+        "generate-disabled": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf generate",
+                "cwd": "proto"
+            },
+            "cache": false
+        },
+        "breaking": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf breaking --against ../.git#branch=main,subdir=proto",
+                "cwd": "proto"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf build",
+                "cwd": "proto"
+            },
+            "dependsOn": ["pre-build"]
+        },
+        "pre-build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/proto/package.json"],
+            "options": {
+                "command": "mkdir -p ../dist/proto && cp package.json ../dist/proto",
+                "cwd": "proto"
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf lint",
+                "cwd": "proto"
+            }
+        }
     },
-    "breaking": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf breaking --against ../.git#branch=main,subdir=proto",
-        "cwd": "proto"
-      }
-    },
-    "build": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf build",
-        "cwd": "proto"
-      },
-      "dependsOn": ["pre-build"]
-    },
-    "pre-build": {
-      "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/dist/proto/package.json"],
-      "options": {
-        "command": "mkdir -p ../dist/proto && cp package.json ../dist/proto",
-        "cwd": "proto"
-      }
-    },
-    "lint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf lint",
-        "cwd": "proto"
-      }
-    }
-  },
-  "tags": []
+    "tags": []
 }

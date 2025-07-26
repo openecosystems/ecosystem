@@ -3,11 +3,11 @@ date_created: 2022-12-11T17:20:09
 title: ALCOA
 pcx_content_type: definition
 summary: >-
-  ALCOA is a set of principles to ensure data quality. It is an implementation of [GDocP](/fundamentals/design-and-architecture/standards-based/data-standards/#gdocp).
+    ALCOA is a set of principles to ensure data quality. It is an implementation of [GDocP](/fundamentals/design-and-architecture/standards-based/data-standards/#gdocp).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/gdocp
+    - /fundamentals/design-and-architecture/standards-based/data-standards/gdocp
 ---
 
 # Attributable, Legible, Contemporaneous, Original, Accurate (ALCOA)
@@ -16,11 +16,11 @@ links_to:
 
 `ALCOA` is an acronym of:
 
-- **Attributable**: Who, When, What and Why.
-- **Legible**: Readable and Permanent.
-- **Contemporaneous**: Timestamped.
-- **Original**: Original, Immutable.
-- **Accurate**: Data must be unambiguous.
+-   **Attributable**: Who, When, What and Why.
+-   **Legible**: Readable and Permanent.
+-   **Contemporaneous**: Timestamped.
+-   **Original**: Original, Immutable.
+-   **Accurate**: Data must be unambiguous.
 
 ## Attributable
 
@@ -28,15 +28,15 @@ The raw data must be traceable to an _authorized_ person recording the data.
 
 When a change is made, the following data must be added to a document:
 
-- **When** it was changed (a date or timestamp)
-- **Who** changed it (i.e. Initials)
-- **Why** it was changed (description)
+-   **When** it was changed (a date or timestamp)
+-   **Who** changed it (i.e. Initials)
+-   **Why** it was changed (description)
 
 For digital records an audit trail should describe:
 
-- When the record was created, edited, signed or viewed
-- Who performed the action
-- Why the action was performed
+-   When the record was created, edited, signed or viewed
+-   Who performed the action
+-   Why the action was performed
 
 ## Legible
 
@@ -60,10 +60,10 @@ Original records MUST NEVER be destroyed.
 
 Data can only be modified if there is a record of:
 
-- what it used to be,
-- when it was changed,
-- who changed it, and
-- why it was changed.
+-   what it used to be,
+-   when it was changed,
+-   who changed it, and
+-   why it was changed.
 
 In any case it MUST be possible to retrieve the original record.
 
@@ -77,4 +77,4 @@ Data must be correct, truthful, complete, valid, and reliable.
 
 ## Sources
 
-- https://blink.ucsd.edu/research/_files/ALCOA-Standards-210304.pdf
+-   https://blink.ucsd.edu/research/_files/ALCOA-Standards-210304.pdf

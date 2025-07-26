@@ -2,16 +2,16 @@
 title: CVML
 pcx_content_type: definition
 aliases:
-  - CVML
-  - Computer Vision and Machine Learning (CV/ML)
+    - CVML
+    - Computer Vision and Machine Learning (CV/ML)
 summary: >-
-  Computer Vision / Machine Learning (CVML) is an interdisciplinary field that combines Computer Vision and [Machine Learning](/fundamentals/glossary/ai) techniques to enable computers to interpret, understand, and make decisions based on visual data.
+    Computer Vision / Machine Learning (CVML) is an interdisciplinary field that combines Computer Vision and [Machine Learning](/fundamentals/glossary/ai) techniques to enable computers to interpret, understand, and make decisions based on visual data.
 hidden: true
 has_more: false
 has_links: false
 links_to:
-  - /fundamentals/glossary/ai
-  - /connected-test/
+    - /fundamentals/glossary/ai
+    - /connected-test/
 ---
 
 # Computer Vision / Machine Learning (CVML)

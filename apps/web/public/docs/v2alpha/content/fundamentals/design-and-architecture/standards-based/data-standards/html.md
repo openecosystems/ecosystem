@@ -2,15 +2,15 @@
 date_created: 2022-12-11T17:10:19
 title: HTML
 aliases:
-  - HTML
+    - HTML
 pcx_content_type: definition
 summary: >-
-  `HyperText Markup Language`. `HTML` is the code that is used to structure a web page and its content.
+    `HyperText Markup Language`. `HTML` is the code that is used to structure a web page and its content.
 hidden: true
 has_more: true
 todo: Find more details and sources
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/markdown
+    - /fundamentals/design-and-architecture/standards-based/data-standards/markdown
 ---
 
 # HTML

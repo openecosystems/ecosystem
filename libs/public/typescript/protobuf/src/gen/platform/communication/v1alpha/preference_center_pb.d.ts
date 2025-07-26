@@ -2,10 +2,10 @@
 // @generated from file platform/communication/v1alpha/preference_center.proto (package platform.communication.v1alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
-import type { SpecResponseContext } from "../../spec/v2/spec_pb";
-import type { Timestamp } from "@bufbuild/protobuf/wkt";
+import type { GenEnum, GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
+import type { SpecResponseContext } from '../../spec/v2/spec_pb';
+import type { Timestamp } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/communication/v1alpha/preference_center.proto.
@@ -15,8 +15,8 @@ export declare const file_platform_communication_v1alpha_preference_center: GenF
 /**
  * @generated from message platform.communication.v1alpha.PreferenceCenterConfiguration
  */
-export declare type PreferenceCenterConfiguration = Message<"platform.communication.v1alpha.PreferenceCenterConfiguration"> & {
-};
+export declare type PreferenceCenterConfiguration =
+    Message<'platform.communication.v1alpha.PreferenceCenterConfiguration'> & {};
 
 /**
  * Describes the message platform.communication.v1alpha.PreferenceCenterConfiguration.
@@ -29,67 +29,68 @@ export declare const PreferenceCenterConfigurationSchema: GenMessage<PreferenceC
  *
  * @generated from message platform.communication.v1alpha.CreateOrUpdatePreferenceRequest
  */
-export declare type CreateOrUpdatePreferenceRequest = Message<"platform.communication.v1alpha.CreateOrUpdatePreferenceRequest"> & {
-  /**
-   * @generated from field: string anonymous_id = 1;
-   */
-  anonymousId: string;
+export declare type CreateOrUpdatePreferenceRequest =
+    Message<'platform.communication.v1alpha.CreateOrUpdatePreferenceRequest'> & {
+        /**
+         * @generated from field: string anonymous_id = 1;
+         */
+        anonymousId: string;
 
-  /**
-   * @generated from field: string email = 2;
-   */
-  email: string;
+        /**
+         * @generated from field: string email = 2;
+         */
+        email: string;
 
-  /**
-   * @generated from field: string external_id = 3;
-   */
-  externalId: string;
+        /**
+         * @generated from field: string external_id = 3;
+         */
+        externalId: string;
 
-  /**
-   * @generated from field: string phone_number = 4;
-   */
-  phoneNumber: string;
+        /**
+         * @generated from field: string phone_number = 4;
+         */
+        phoneNumber: string;
 
-  /**
-   * @generated from field: string first_name = 5;
-   */
-  firstName: string;
+        /**
+         * @generated from field: string first_name = 5;
+         */
+        firstName: string;
 
-  /**
-   * @generated from field: string last_name = 6;
-   */
-  lastName: string;
+        /**
+         * @generated from field: string last_name = 6;
+         */
+        lastName: string;
 
-  /**
-   * @generated from field: string postal_code = 7;
-   */
-  postalCode: string;
+        /**
+         * @generated from field: string postal_code = 7;
+         */
+        postalCode: string;
 
-  /**
-   * @generated from field: string city = 8;
-   */
-  city: string;
+        /**
+         * @generated from field: string city = 8;
+         */
+        city: string;
 
-  /**
-   * @generated from field: string state_province_region = 9;
-   */
-  stateProvinceRegion: string;
+        /**
+         * @generated from field: string state_province_region = 9;
+         */
+        stateProvinceRegion: string;
 
-  /**
-   * @generated from field: string country = 10;
-   */
-  country: string;
+        /**
+         * @generated from field: string country = 10;
+         */
+        country: string;
 
-  /**
-   * @generated from field: repeated string list_ids = 11;
-   */
-  listIds: string[];
+        /**
+         * @generated from field: repeated string list_ids = 11;
+         */
+        listIds: string[];
 
-  /**
-   * @generated from field: repeated string segment_ids = 12;
-   */
-  segmentIds: string[];
-};
+        /**
+         * @generated from field: repeated string segment_ids = 12;
+         */
+        segmentIds: string[];
+    };
 
 /**
  * Describes the message platform.communication.v1alpha.CreateOrUpdatePreferenceRequest.
@@ -102,21 +103,22 @@ export declare const CreateOrUpdatePreferenceRequestSchema: GenMessage<CreateOrU
  *
  * @generated from message platform.communication.v1alpha.CreateOrUpdatePreferenceResponse
  */
-export declare type CreateOrUpdatePreferenceResponse = Message<"platform.communication.v1alpha.CreateOrUpdatePreferenceResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type CreateOrUpdatePreferenceResponse =
+    Message<'platform.communication.v1alpha.CreateOrUpdatePreferenceResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * Preference Center data
-   *
-   * @generated from field: platform.communication.v1alpha.PreferenceCenter preference_center = 2;
-   */
-  preferenceCenter?: PreferenceCenter;
-};
+        /**
+         * Preference Center data
+         *
+         * @generated from field: platform.communication.v1alpha.PreferenceCenter preference_center = 2;
+         */
+        preferenceCenter?: PreferenceCenter;
+    };
 
 /**
  * Describes the message platform.communication.v1alpha.CreateOrUpdatePreferenceResponse.
@@ -129,26 +131,26 @@ export declare const CreateOrUpdatePreferenceResponseSchema: GenMessage<CreateOr
  *
  * @generated from message platform.communication.v1alpha.DeletePreferenceRequest
  */
-export declare type DeletePreferenceRequest = Message<"platform.communication.v1alpha.DeletePreferenceRequest"> & {
-  /**
-   * @generated from field: string anonymous_id = 1;
-   */
-  anonymousId: string;
+export declare type DeletePreferenceRequest = Message<'platform.communication.v1alpha.DeletePreferenceRequest'> & {
+    /**
+     * @generated from field: string anonymous_id = 1;
+     */
+    anonymousId: string;
 
-  /**
-   * @generated from field: string email = 2;
-   */
-  email: string;
+    /**
+     * @generated from field: string email = 2;
+     */
+    email: string;
 
-  /**
-   * @generated from field: string external_id = 3;
-   */
-  externalId: string;
+    /**
+     * @generated from field: string external_id = 3;
+     */
+    externalId: string;
 
-  /**
-   * @generated from field: string phone_number = 4;
-   */
-  phoneNumber: string;
+    /**
+     * @generated from field: string phone_number = 4;
+     */
+    phoneNumber: string;
 };
 
 /**
@@ -162,20 +164,20 @@ export declare const DeletePreferenceRequestSchema: GenMessage<DeletePreferenceR
  *
  * @generated from message platform.communication.v1alpha.DeletePreferenceResponse
  */
-export declare type DeletePreferenceResponse = Message<"platform.communication.v1alpha.DeletePreferenceResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type DeletePreferenceResponse = Message<'platform.communication.v1alpha.DeletePreferenceResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * DeletePreference email marketing data
-   *
-   * @generated from field: platform.communication.v1alpha.PreferenceCenter preference_center = 2;
-   */
-  preferenceCenter?: PreferenceCenter;
+    /**
+     * DeletePreference email marketing data
+     *
+     * @generated from field: platform.communication.v1alpha.PreferenceCenter preference_center = 2;
+     */
+    preferenceCenter?: PreferenceCenter;
 };
 
 /**
@@ -189,11 +191,11 @@ export declare const DeletePreferenceResponseSchema: GenMessage<DeletePreference
  *
  * @generated from message platform.communication.v1alpha.GetPreferenceRequest
  */
-export declare type GetPreferenceRequest = Message<"platform.communication.v1alpha.GetPreferenceRequest"> & {
-  /**
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type GetPreferenceRequest = Message<'platform.communication.v1alpha.GetPreferenceRequest'> & {
+    /**
+     * @generated from field: string id = 1;
+     */
+    id: string;
 };
 
 /**
@@ -207,20 +209,20 @@ export declare const GetPreferenceRequestSchema: GenMessage<GetPreferenceRequest
  *
  * @generated from message platform.communication.v1alpha.GetPreferenceResponse
  */
-export declare type GetPreferenceResponse = Message<"platform.communication.v1alpha.GetPreferenceResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type GetPreferenceResponse = Message<'platform.communication.v1alpha.GetPreferenceResponse'> & {
+    /**
+     * The response context
+     *
+     * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+     */
+    specContext?: SpecResponseContext;
 
-  /**
-   * Preference Center data
-   *
-   * @generated from field: platform.communication.v1alpha.PreferenceCenter preference_center = 2;
-   */
-  preferenceCenter?: PreferenceCenter;
+    /**
+     * Preference Center data
+     *
+     * @generated from field: platform.communication.v1alpha.PreferenceCenter preference_center = 2;
+     */
+    preferenceCenter?: PreferenceCenter;
 };
 
 /**
@@ -234,8 +236,8 @@ export declare const GetPreferenceResponseSchema: GenMessage<GetPreferenceRespon
  *
  * @generated from message platform.communication.v1alpha.GetPreferenceOptionsRequest
  */
-export declare type GetPreferenceOptionsRequest = Message<"platform.communication.v1alpha.GetPreferenceOptionsRequest"> & {
-};
+export declare type GetPreferenceOptionsRequest =
+    Message<'platform.communication.v1alpha.GetPreferenceOptionsRequest'> & {};
 
 /**
  * Describes the message platform.communication.v1alpha.GetPreferenceOptionsRequest.
@@ -248,24 +250,25 @@ export declare const GetPreferenceOptionsRequestSchema: GenMessage<GetPreference
  *
  * @generated from message platform.communication.v1alpha.GetPreferenceOptionsResponse
  */
-export declare type GetPreferenceOptionsResponse = Message<"platform.communication.v1alpha.GetPreferenceOptionsResponse"> & {
-  /**
-   * The response context
-   *
-   * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
-   */
-  specContext?: SpecResponseContext;
+export declare type GetPreferenceOptionsResponse =
+    Message<'platform.communication.v1alpha.GetPreferenceOptionsResponse'> & {
+        /**
+         * The response context
+         *
+         * @generated from field: platform.spec.v2.SpecResponseContext spec_context = 1;
+         */
+        specContext?: SpecResponseContext;
 
-  /**
-   * @generated from field: repeated platform.communication.v1alpha.EmailSubscription industries = 2;
-   */
-  industries: EmailSubscription[];
+        /**
+         * @generated from field: repeated platform.communication.v1alpha.EmailSubscription industries = 2;
+         */
+        industries: EmailSubscription[];
 
-  /**
-   * @generated from field: repeated platform.communication.v1alpha.EmailSubscription capabilities = 3;
-   */
-  capabilities: EmailSubscription[];
-};
+        /**
+         * @generated from field: repeated platform.communication.v1alpha.EmailSubscription capabilities = 3;
+         */
+        capabilities: EmailSubscription[];
+    };
 
 /**
  * Describes the message platform.communication.v1alpha.GetPreferenceOptionsResponse.
@@ -276,21 +279,21 @@ export declare const GetPreferenceOptionsResponseSchema: GenMessage<GetPreferenc
 /**
  * @generated from message platform.communication.v1alpha.EmailSubscription
  */
-export declare type EmailSubscription = Message<"platform.communication.v1alpha.EmailSubscription"> & {
-  /**
-   * @generated from field: platform.communication.v1alpha.EmailSubscriptionType type = 1;
-   */
-  type: EmailSubscriptionType;
+export declare type EmailSubscription = Message<'platform.communication.v1alpha.EmailSubscription'> & {
+    /**
+     * @generated from field: platform.communication.v1alpha.EmailSubscriptionType type = 1;
+     */
+    type: EmailSubscriptionType;
 
-  /**
-   * @generated from field: string id = 2;
-   */
-  id: string;
+    /**
+     * @generated from field: string id = 2;
+     */
+    id: string;
 
-  /**
-   * @generated from field: string name = 3;
-   */
-  name: string;
+    /**
+     * @generated from field: string name = 3;
+     */
+    name: string;
 };
 
 /**
@@ -304,92 +307,92 @@ export declare const EmailSubscriptionSchema: GenMessage<EmailSubscription>;
  *
  * @generated from message platform.communication.v1alpha.PreferenceCenter
  */
-export declare type PreferenceCenter = Message<"platform.communication.v1alpha.PreferenceCenter"> & {
-  /**
-   * Identifier
-   *
-   * @generated from field: string id = 1;
-   */
-  id: string;
+export declare type PreferenceCenter = Message<'platform.communication.v1alpha.PreferenceCenter'> & {
+    /**
+     * Identifier
+     *
+     * @generated from field: string id = 1;
+     */
+    id: string;
 
-  /**
-   * Timestamp when created
-   *
-   * @generated from field: google.protobuf.Timestamp created_at = 2;
-   */
-  createdAt?: Timestamp;
+    /**
+     * Timestamp when created
+     *
+     * @generated from field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
 
-  /**
-   * Timestamp last updated.
-   *
-   * @generated from field: google.protobuf.Timestamp updated_at = 3;
-   */
-  updatedAt?: Timestamp;
+    /**
+     * Timestamp last updated.
+     *
+     * @generated from field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
 
-  /**
-   * @generated from field: string anonymous_id = 4;
-   */
-  anonymousId: string;
+    /**
+     * @generated from field: string anonymous_id = 4;
+     */
+    anonymousId: string;
 
-  /**
-   * @generated from field: string email = 5;
-   */
-  email: string;
+    /**
+     * @generated from field: string email = 5;
+     */
+    email: string;
 
-  /**
-   * @generated from field: string external_id = 6;
-   */
-  externalId: string;
+    /**
+     * @generated from field: string external_id = 6;
+     */
+    externalId: string;
 
-  /**
-   * @generated from field: string phone_number = 7;
-   */
-  phoneNumber: string;
+    /**
+     * @generated from field: string phone_number = 7;
+     */
+    phoneNumber: string;
 
-  /**
-   * @generated from field: string first_name = 8;
-   */
-  firstName: string;
+    /**
+     * @generated from field: string first_name = 8;
+     */
+    firstName: string;
 
-  /**
-   * @generated from field: string last_name = 9;
-   */
-  lastName: string;
+    /**
+     * @generated from field: string last_name = 9;
+     */
+    lastName: string;
 
-  /**
-   * @generated from field: string postal_code = 10;
-   */
-  postalCode: string;
+    /**
+     * @generated from field: string postal_code = 10;
+     */
+    postalCode: string;
 
-  /**
-   * @generated from field: string city = 11;
-   */
-  city: string;
+    /**
+     * @generated from field: string city = 11;
+     */
+    city: string;
 
-  /**
-   * @generated from field: string state_province_region = 12;
-   */
-  stateProvinceRegion: string;
+    /**
+     * @generated from field: string state_province_region = 12;
+     */
+    stateProvinceRegion: string;
 
-  /**
-   * @generated from field: string country = 13;
-   */
-  country: string;
+    /**
+     * @generated from field: string country = 13;
+     */
+    country: string;
 
-  /**
-   * @generated from field: repeated string list_ids = 14;
-   */
-  listIds: string[];
+    /**
+     * @generated from field: repeated string list_ids = 14;
+     */
+    listIds: string[];
 
-  /**
-   * @generated from field: repeated string segment_ids = 15;
-   */
-  segmentIds: string[];
+    /**
+     * @generated from field: repeated string segment_ids = 15;
+     */
+    segmentIds: string[];
 
-  /**
-   * @generated from field: repeated platform.communication.v1alpha.EmailSubscription email_subscription = 16;
-   */
-  emailSubscription: EmailSubscription[];
+    /**
+     * @generated from field: repeated platform.communication.v1alpha.EmailSubscription email_subscription = 16;
+     */
+    emailSubscription: EmailSubscription[];
 };
 
 /**
@@ -404,27 +407,27 @@ export declare const PreferenceCenterSchema: GenMessage<PreferenceCenter>;
  * @generated from enum platform.communication.v1alpha.PreferenceCenterCommands
  */
 export enum PreferenceCenterCommands {
-  /**
-   * Unspecified or unknown command
-   *
-   * @generated from enum value: PREFERENCE_CENTER_COMMANDS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown command
+     *
+     * @generated from enum value: PREFERENCE_CENTER_COMMANDS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: PREFERENCE_CENTER_COMMANDS_SUBSCRIBE = 1;
-   */
-  SUBSCRIBE = 1,
+    /**
+     * @generated from enum value: PREFERENCE_CENTER_COMMANDS_SUBSCRIBE = 1;
+     */
+    SUBSCRIBE = 1,
 
-  /**
-   * @generated from enum value: PREFERENCE_CENTER_COMMANDS_UPDATE_SUBSCRIPTION = 2;
-   */
-  UPDATE_SUBSCRIPTION = 2,
+    /**
+     * @generated from enum value: PREFERENCE_CENTER_COMMANDS_UPDATE_SUBSCRIPTION = 2;
+     */
+    UPDATE_SUBSCRIPTION = 2,
 
-  /**
-   * @generated from enum value: PREFERENCE_CENTER_COMMANDS_UNSUBSCRIBE = 3;
-   */
-  UNSUBSCRIBE = 3,
+    /**
+     * @generated from enum value: PREFERENCE_CENTER_COMMANDS_UNSUBSCRIBE = 3;
+     */
+    UNSUBSCRIBE = 3,
 }
 
 /**
@@ -438,33 +441,33 @@ export declare const PreferenceCenterCommandsSchema: GenEnum<PreferenceCenterCom
  * @generated from enum platform.communication.v1alpha.PreferenceCenterEvents
  */
 export enum PreferenceCenterEvents {
-  /**
-   * Unknown or unspecified event.
-   *
-   * @generated from enum value: PREFERENCE_CENTER_EVENTS_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unknown or unspecified event.
+     *
+     * @generated from enum value: PREFERENCE_CENTER_EVENTS_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * CreateOrUpdatePreferenced.
-   *
-   * @generated from enum value: PREFERENCE_CENTER_EVENTS_SUBSCRIBED = 1;
-   */
-  SUBSCRIBED = 1,
+    /**
+     * CreateOrUpdatePreferenced.
+     *
+     * @generated from enum value: PREFERENCE_CENTER_EVENTS_SUBSCRIBED = 1;
+     */
+    SUBSCRIBED = 1,
 
-  /**
-   * Updated
-   *
-   * @generated from enum value: PREFERENCE_CENTER_EVENTS_UPDATED = 2;
-   */
-  UPDATED = 2,
+    /**
+     * Updated
+     *
+     * @generated from enum value: PREFERENCE_CENTER_EVENTS_UPDATED = 2;
+     */
+    UPDATED = 2,
 
-  /**
-   * DeletePreferenced
-   *
-   * @generated from enum value: PREFERENCE_CENTER_EVENTS_UNSUBSCRIBED = 3;
-   */
-  UNSUBSCRIBED = 3,
+    /**
+     * DeletePreferenced
+     *
+     * @generated from enum value: PREFERENCE_CENTER_EVENTS_UNSUBSCRIBED = 3;
+     */
+    UNSUBSCRIBED = 3,
 }
 
 /**
@@ -476,22 +479,22 @@ export declare const PreferenceCenterEventsSchema: GenEnum<PreferenceCenterEvent
  * @generated from enum platform.communication.v1alpha.EmailSubscriptionType
  */
 export enum EmailSubscriptionType {
-  /**
-   * Unknown or unspecified event.
-   *
-   * @generated from enum value: EMAIL_SUBSCRIPTION_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unknown or unspecified event.
+     *
+     * @generated from enum value: EMAIL_SUBSCRIPTION_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: EMAIL_SUBSCRIPTION_TYPE_INDUSTRY = 1;
-   */
-  INDUSTRY = 1,
+    /**
+     * @generated from enum value: EMAIL_SUBSCRIPTION_TYPE_INDUSTRY = 1;
+     */
+    INDUSTRY = 1,
 
-  /**
-   * @generated from enum value: EMAIL_SUBSCRIPTION_TYPE_CAPABILITY = 2;
-   */
-  CAPABILITY = 2,
+    /**
+     * @generated from enum value: EMAIL_SUBSCRIPTION_TYPE_CAPABILITY = 2;
+     */
+    CAPABILITY = 2,
 }
 
 /**
@@ -505,45 +508,44 @@ export declare const EmailSubscriptionTypeSchema: GenEnum<EmailSubscriptionType>
  * @generated from service platform.communication.v1alpha.PreferenceCenterService
  */
 export declare const PreferenceCenterService: GenService<{
-  /**
-   * CreateOrUpdatePreference to our communications
-   *
-   * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.CreateOrUpdatePreference
-   */
-  createOrUpdatePreference: {
-    methodKind: "unary";
-    input: typeof CreateOrUpdatePreferenceRequestSchema;
-    output: typeof CreateOrUpdatePreferenceResponseSchema;
-  },
-  /**
-   * DeletePreference from our communications
-   *
-   * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.DeletePreference
-   */
-  deletePreference: {
-    methodKind: "unary";
-    input: typeof DeletePreferenceRequestSchema;
-    output: typeof DeletePreferenceResponseSchema;
-  },
-  /**
-   * Get Communication Preferences
-   *
-   * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.GetPreference
-   */
-  getPreference: {
-    methodKind: "unary";
-    input: typeof GetPreferenceRequestSchema;
-    output: typeof GetPreferenceResponseSchema;
-  },
-  /**
-   * Get Preference Options
-   *
-   * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.GetPreferenceOptions
-   */
-  getPreferenceOptions: {
-    methodKind: "unary";
-    input: typeof GetPreferenceOptionsRequestSchema;
-    output: typeof GetPreferenceOptionsResponseSchema;
-  },
+    /**
+     * CreateOrUpdatePreference to our communications
+     *
+     * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.CreateOrUpdatePreference
+     */
+    createOrUpdatePreference: {
+        methodKind: 'unary';
+        input: typeof CreateOrUpdatePreferenceRequestSchema;
+        output: typeof CreateOrUpdatePreferenceResponseSchema;
+    };
+    /**
+     * DeletePreference from our communications
+     *
+     * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.DeletePreference
+     */
+    deletePreference: {
+        methodKind: 'unary';
+        input: typeof DeletePreferenceRequestSchema;
+        output: typeof DeletePreferenceResponseSchema;
+    };
+    /**
+     * Get Communication Preferences
+     *
+     * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.GetPreference
+     */
+    getPreference: {
+        methodKind: 'unary';
+        input: typeof GetPreferenceRequestSchema;
+        output: typeof GetPreferenceResponseSchema;
+    };
+    /**
+     * Get Preference Options
+     *
+     * @generated from rpc platform.communication.v1alpha.PreferenceCenterService.GetPreferenceOptions
+     */
+    getPreferenceOptions: {
+        methodKind: 'unary';
+        input: typeof GetPreferenceOptionsRequestSchema;
+        output: typeof GetPreferenceOptionsResponseSchema;
+    };
 }>;
-

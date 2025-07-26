@@ -3,7 +3,6 @@ syntax = "proto3";
 package platform.spec.v2;
 
 import "platform/options/v2/annotations.proto";
-import "platform/type/v2/transport.proto";
 import "platform/type/v2/protocol.proto";
 import "platform/type/v2/git_repository.proto";
 import "platform/type/v2/header.proto";

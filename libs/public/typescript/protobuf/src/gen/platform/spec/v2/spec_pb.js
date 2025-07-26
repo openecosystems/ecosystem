@@ -2,162 +2,157 @@
 // @generated from file platform/spec/v2/spec.proto (package platform.spec.v2, syntax proto3)
 /* eslint-disable */
 
-import { enumDesc, fileDesc, messageDesc, tsEnum } from "@bufbuild/protobuf/codegenv1";
-import { file_google_protobuf_any, file_google_protobuf_field_mask, file_google_protobuf_timestamp } from "@bufbuild/protobuf/wkt";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_platform_type_v2_jurisdiction } from "../../type/v2/jurisdiction_pb";
-import { file_platform_type_v2_validation } from "../../type/v2/validation_pb";
-import { file_platform_type_v2_mask } from "../../type/v2/mask_pb";
-import { file_google_rpc_status } from "../../../google/rpc/status_pb";
+import { enumDesc, fileDesc, messageDesc, tsEnum } from '@bufbuild/protobuf/codegenv1';
+import {
+    file_google_protobuf_any,
+    file_google_protobuf_field_mask,
+    file_google_protobuf_timestamp,
+} from '@bufbuild/protobuf/wkt';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_platform_type_v2_jurisdiction } from '../../type/v2/jurisdiction_pb';
+import { file_platform_type_v2_validation } from '../../type/v2/validation_pb';
+import { file_platform_type_v2_mask } from '../../type/v2/mask_pb';
+import { file_google_rpc_status } from '../../../google/rpc/status_pb';
 
 /**
  * Describes the file platform/spec/v2/spec.proto.
  */
-export const file_platform_spec_v2_spec = /*@__PURE__*/
-  fileDesc("ChtwbGF0Zm9ybS9zcGVjL3YyL3NwZWMucHJvdG8SEHBsYXRmb3JtLnNwZWMudjIimgEKB1NwZWNLZXkSGQoRb3JnYW5pemF0aW9uX3NsdWcYAiABKAkSFgoOd29ya3NwYWNlX3NsdWcYAyABKAkSNQoNd29ya3NwYWNlX2phbhgEIAEoDjIeLnBsYXRmb3JtLnR5cGUudjIuSnVyaXNkaWN0aW9uEhEKCXNwZWNfdHlwZRgFIAEoCRIKCgJpZBgGIAEoCToG+rYYAggBIvwECgRTcGVjEhQKDHNwZWNfdmVyc2lvbhgBIAEoCRISCgptZXNzYWdlX2lkGAIgASgJEisKB3NlbnRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi8KC3JlY2VpdmVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIwCgxjb21wbGV0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhEKCXNwZWNfdHlwZRgGIAEoCRI4Cg9zcGVjX2V2ZW50X3R5cGUYByABKA4yHy5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNFdmVudFR5cGUSEgoKc3BlY19ldmVudBgIIAEoCRIyCglwcmluY2lwYWwYCSABKAsyHy5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNQcmluY2lwYWwSMwoMc3Bhbl9jb250ZXh0GAogASgLMh0ucGxhdGZvcm0uc3BlYy52Mi5TcGFuQ29udGV4dBIuCgdjb250ZXh0GAsgASgLMh0ucGxhdGZvcm0uc3BlYy52Mi5TcGVjQ29udGV4dBI9Cg9yb3V0aW5lX2NvbnRleHQYDCABKAsyJC5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSb3V0aW5lQ29udGV4dBIiCgRkYXRhGA0gASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueRItCglzcGVjX2RhdGEYDiABKAsyGi5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNEYXRhEiYKCnNwZWNfZXJyb3IYDyABKAsyEi5nb29nbGUucnBjLlN0YXR1czoG+rYYAggBItMCCgpTcGVjUHVibGljEhQKDHNwZWNfdmVyc2lvbhgBIAEoCRISCgptZXNzYWdlX2lkGAIgASgJEisKB3NlbnRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi8KC3JlY2VpdmVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIwCgxjb21wbGV0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhEKCXNwZWNfdHlwZRgGIAEoCRI4Cg9zcGVjX2V2ZW50X3R5cGUYByABKA4yHy5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNFdmVudFR5cGUSEgoKc3BlY19ldmVudBgIIAEoCRIiCgRkYXRhGAkgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueToG+rYYAggBIt0ECgtTcGVjQ29udGV4dBIUCgxlY29zeXN0ZW1faWQYASABKAkSFgoOZWNvc3lzdGVtX3NsdWcYAiABKAkSNQoNZWNvc3lzdGVtX2phbhgDIAEoDjIeLnBsYXRmb3JtLnR5cGUudjIuSnVyaXNkaWN0aW9uEhcKD29yZ2FuaXphdGlvbl9pZBgxIAEoCRIZChFvcmdhbml6YXRpb25fc2x1ZxgyIAEoCRIWCg53b3Jrc3BhY2Vfc2x1ZxgzIAEoCRI1Cg13b3Jrc3BhY2VfamFuGDQgASgOMh4ucGxhdGZvcm0udHlwZS52Mi5KdXJpc2RpY3Rpb24SCgoCaXAYBSABKAkSDgoGbG9jYWxlGAYgASgJEhAKCHRpbWV6b25lGAcgASgJEhIKCnVzZXJfYWdlbnQYCCABKAkSNAoKdmFsaWRhdGlvbhgJIAEoCzIgLnBsYXRmb3JtLnNwZWMudjIuU3BlY1ZhbGlkYXRpb24SMAoIcHJvZHVjZXIYCiABKAsyHi5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNQcm9kdWNlchIsCgZkZXZpY2UYCyABKAsyHC5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNEZXZpY2USMAoIbG9jYXRpb24YDCABKAsyHi5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNMb2NhdGlvbhIuCgduZXR3b3JrGA0gASgLMh0ucGxhdGZvcm0uc3BlYy52Mi5TcGVjTmV0d29yaxIkCgJvcxgOIAEoCzIYLnBsYXRmb3JtLnNwZWMudjIuU3BlY09TOgb6thgCCAEiZQoLU3BhbkNvbnRleHQSEAoIdHJhY2VfaWQYASABKAkSDwoHc3Bhbl9pZBgCIAEoCRIWCg5wYXJlbnRfc3Bhbl9pZBgDIAEoCRITCgt0cmFjZV9mbGFncxgEIAEoCToG+rYYAggBIscBChJTcGVjUm91dGluZUNvbnRleHQSEgoKcm91dGluZV9pZBgBIAEoCRJLCgxyb3V0aW5lX2RhdGEYAyADKAsyNS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSb3V0aW5lQ29udGV4dC5Sb3V0aW5lRGF0YUVudHJ5GkgKEFJvdXRpbmVEYXRhRW50cnkSCwoDa2V5GAEgASgJEiMKBXZhbHVlGAIgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueToCOAE6Bvq2GAIIASLZAQoNU3BlY1ByaW5jaXBhbBIxCgR0eXBlGAEgASgOMiMucGxhdGZvcm0uc3BlYy52Mi5TcGVjUHJpbmNpcGFsVHlwZRIUCgxhbm9ueW1vdXNfaWQYAiABKAkSFAoMcHJpbmNpcGFsX2lkGAMgASgJEhcKD3ByaW5jaXBhbF9lbWFpbBgEIAEoCRIVCg1jb25uZWN0aW9uX2lkGAUgASgJEjEKCmF1dGhfcm9sZXMYBiADKA4yHS5wbGF0Zm9ybS5vcHRpb25zLnYyLkF1dGhSb2xlOgb6thgCCAEiLwoOU3BlY1ZhbGlkYXRpb24SFQoNdmFsaWRhdGVfb25seRgBIAEoCDoG+rYYAggBIlcKDFNwZWNQcm9kdWNlchIMCgRuYW1lGAEgASgJEg8KB3ZlcnNpb24YAiABKAkSDQoFYnVpbGQYAyABKAkSEQoJbmFtZXNwYWNlGAQgASgJOgb6thgCCAEiiAEKClNwZWNEZXZpY2USCgoCaWQYASABKAkSDAoEdHlwZRgCIAEoCRIWCg5hZHZlcnRpc2luZ19pZBgDIAEoCRIUCgxtYW51ZmFjdHVyZXIYBCABKAkSDQoFbW9kZWwYBSABKAkSDAoEbmFtZRgGIAEoCRINCgV0b2tlbhgHIAEoCToG+rYYAggBImkKDFNwZWNMb2NhdGlvbhIMCgRjaXR5GAEgASgJEg8KB2NvdW50cnkYAiABKAkSEAoIbGF0aXR1ZGUYAyABKAESEQoJbG9uZ2l0dWRlGAQgASgBEg0KBXNwZWVkGAUgASgJOgb6thgCCAEiWQoLU3BlY05ldHdvcmsSEQoJYmx1ZXRvb3RoGAEgASgIEhAKCGNlbGx1bGFyGAIgASgIEgwKBHdpZmkYAyABKAgSDwoHY2FycmllchgEIAEoCToG+rYYAggBIi8KBlNwZWNPUxIMCgRuYW1lGAEgASgJEg8KB3ZlcnNpb24YAiABKAk6Bvq2GAIIASKTAQoIU3BlY0RhdGESKwoNY29uZmlndXJhdGlvbhgBIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5BbnkSIgoEZGF0YRgCIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5BbnkSLgoKZmllbGRfbWFzaxgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE1hc2s6Bvq2GAIIASKkAQoSU3BlY1JlcXVlc3RDb250ZXh0Ej8KEnJlcXVlc3RfdmFsaWRhdGlvbhgBIAEoCzIjLnBsYXRmb3JtLnR5cGUudjIuUmVxdWVzdFZhbGlkYXRpb24SGQoRb3JnYW5pemF0aW9uX3NsdWcYAiABKAkSFgoOd29ya3NwYWNlX3NsdWcYAyABKAkSEgoKcm91dGluZV9pZBgEIAEoCToG+rYYAggBIq0CChNTcGVjUmVzcG9uc2VDb250ZXh0EkEKE3Jlc3BvbnNlX3ZhbGlkYXRpb24YASABKAsyJC5wbGF0Zm9ybS50eXBlLnYyLlJlc3BvbnNlVmFsaWRhdGlvbhI1Cg1yZXNwb25zZV9tYXNrGAIgASgLMh4ucGxhdGZvcm0udHlwZS52Mi5SZXNwb25zZU1hc2sSFgoOZWNvc3lzdGVtX3NsdWcYAyABKAkSGQoRb3JnYW5pemF0aW9uX3NsdWcYMiABKAkSFgoOd29ya3NwYWNlX3NsdWcYMyABKAkSNQoNd29ya3NwYWNlX2phbhg0IAEoDjIeLnBsYXRmb3JtLnR5cGUudjIuSnVyaXNkaWN0aW9uEhIKCnJvdXRpbmVfaWQYNSABKAk6Bvq2GAIIAiINCgtTcGVjV3JhcHBlciqgAgoNU3BlY0V2ZW50VHlwZRIfChtTUEVDX0VWRU5UX1RZUEVfVU5TUEVDSUZJRUQQABIbChdTUEVDX0VWRU5UX1RZUEVfQ09NTUFORBABEhkKFVNQRUNfRVZFTlRfVFlQRV9FVkVOVBACEhsKF1NQRUNfRVZFTlRfVFlQRV9ST1VUSU5FEAMSFgoSU1BFQ19FVkVOVF9UWVBFX01MEAQSGgoWU1BFQ19FVkVOVF9UWVBFX1NUUkVBTRAFEhYKElNQRUNfRVZFTlRfVFlQRV9EQhAGEhsKF1NQRUNfRVZFTlRfVFlQRV9QUk9GSUxFEAcSFwoTU1BFQ19FVkVOVF9UWVBFX0VUTBAIEhcKE1NQRUNfRVZFTlRfVFlQRV9MT0cQCSq+AQoRU3BlY1ByaW5jaXBhbFR5cGUSIwofU1BFQ19QUklOQ0lQQUxfVFlQRV9VTlNQRUNJRklFRBAAEhwKGFNQRUNfUFJJTkNJUEFMX1RZUEVfVVNFUhABEicKI1NQRUNfUFJJTkNJUEFMX1RZUEVfU0VSVklDRV9BQ0NPVU5UEAISHQoZU1BFQ19QUklOQ0lQQUxfVFlQRV9HUk9VUBADEh4KGlNQRUNfUFJJTkNJUEFMX1RZUEVfRE9NQUlOEARCXFpUZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS9zcGVjL3YyO3NwZWN2MnBimrUYAggBYgZwcm90bzM", [file_google_protobuf_any, file_google_protobuf_timestamp, file_platform_options_v2_annotations, file_platform_type_v2_jurisdiction, file_platform_type_v2_validation, file_platform_type_v2_mask, file_google_protobuf_field_mask, file_google_rpc_status]);
+export const file_platform_spec_v2_spec =
+    /*@__PURE__*/
+    fileDesc(
+        'ChtwbGF0Zm9ybS9zcGVjL3YyL3NwZWMucHJvdG8SEHBsYXRmb3JtLnNwZWMudjIimgEKB1NwZWNLZXkSGQoRb3JnYW5pemF0aW9uX3NsdWcYAiABKAkSFgoOd29ya3NwYWNlX3NsdWcYAyABKAkSNQoNd29ya3NwYWNlX2phbhgEIAEoDjIeLnBsYXRmb3JtLnR5cGUudjIuSnVyaXNkaWN0aW9uEhEKCXNwZWNfdHlwZRgFIAEoCRIKCgJpZBgGIAEoCToG+rYYAggBIvwECgRTcGVjEhQKDHNwZWNfdmVyc2lvbhgBIAEoCRISCgptZXNzYWdlX2lkGAIgASgJEisKB3NlbnRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi8KC3JlY2VpdmVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIwCgxjb21wbGV0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhEKCXNwZWNfdHlwZRgGIAEoCRI4Cg9zcGVjX2V2ZW50X3R5cGUYByABKA4yHy5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNFdmVudFR5cGUSEgoKc3BlY19ldmVudBgIIAEoCRIyCglwcmluY2lwYWwYCSABKAsyHy5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNQcmluY2lwYWwSMwoMc3Bhbl9jb250ZXh0GAogASgLMh0ucGxhdGZvcm0uc3BlYy52Mi5TcGFuQ29udGV4dBIuCgdjb250ZXh0GAsgASgLMh0ucGxhdGZvcm0uc3BlYy52Mi5TcGVjQ29udGV4dBI9Cg9yb3V0aW5lX2NvbnRleHQYDCABKAsyJC5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSb3V0aW5lQ29udGV4dBIiCgRkYXRhGA0gASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueRItCglzcGVjX2RhdGEYDiABKAsyGi5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNEYXRhEiYKCnNwZWNfZXJyb3IYDyABKAsyEi5nb29nbGUucnBjLlN0YXR1czoG+rYYAggBItMCCgpTcGVjUHVibGljEhQKDHNwZWNfdmVyc2lvbhgBIAEoCRISCgptZXNzYWdlX2lkGAIgASgJEisKB3NlbnRfYXQYAyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi8KC3JlY2VpdmVkX2F0GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIwCgxjb21wbGV0ZWRfYXQYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhEKCXNwZWNfdHlwZRgGIAEoCRI4Cg9zcGVjX2V2ZW50X3R5cGUYByABKA4yHy5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNFdmVudFR5cGUSEgoKc3BlY19ldmVudBgIIAEoCRIiCgRkYXRhGAkgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueToG+rYYAggBIt0ECgtTcGVjQ29udGV4dBIUCgxlY29zeXN0ZW1faWQYASABKAkSFgoOZWNvc3lzdGVtX3NsdWcYAiABKAkSNQoNZWNvc3lzdGVtX2phbhgDIAEoDjIeLnBsYXRmb3JtLnR5cGUudjIuSnVyaXNkaWN0aW9uEhcKD29yZ2FuaXphdGlvbl9pZBgxIAEoCRIZChFvcmdhbml6YXRpb25fc2x1ZxgyIAEoCRIWCg53b3Jrc3BhY2Vfc2x1ZxgzIAEoCRI1Cg13b3Jrc3BhY2VfamFuGDQgASgOMh4ucGxhdGZvcm0udHlwZS52Mi5KdXJpc2RpY3Rpb24SCgoCaXAYBSABKAkSDgoGbG9jYWxlGAYgASgJEhAKCHRpbWV6b25lGAcgASgJEhIKCnVzZXJfYWdlbnQYCCABKAkSNAoKdmFsaWRhdGlvbhgJIAEoCzIgLnBsYXRmb3JtLnNwZWMudjIuU3BlY1ZhbGlkYXRpb24SMAoIcHJvZHVjZXIYCiABKAsyHi5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNQcm9kdWNlchIsCgZkZXZpY2UYCyABKAsyHC5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNEZXZpY2USMAoIbG9jYXRpb24YDCABKAsyHi5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNMb2NhdGlvbhIuCgduZXR3b3JrGA0gASgLMh0ucGxhdGZvcm0uc3BlYy52Mi5TcGVjTmV0d29yaxIkCgJvcxgOIAEoCzIYLnBsYXRmb3JtLnNwZWMudjIuU3BlY09TOgb6thgCCAEiZQoLU3BhbkNvbnRleHQSEAoIdHJhY2VfaWQYASABKAkSDwoHc3Bhbl9pZBgCIAEoCRIWCg5wYXJlbnRfc3Bhbl9pZBgDIAEoCRITCgt0cmFjZV9mbGFncxgEIAEoCToG+rYYAggBIscBChJTcGVjUm91dGluZUNvbnRleHQSEgoKcm91dGluZV9pZBgBIAEoCRJLCgxyb3V0aW5lX2RhdGEYAyADKAsyNS5wbGF0Zm9ybS5zcGVjLnYyLlNwZWNSb3V0aW5lQ29udGV4dC5Sb3V0aW5lRGF0YUVudHJ5GkgKEFJvdXRpbmVEYXRhRW50cnkSCwoDa2V5GAEgASgJEiMKBXZhbHVlGAIgASgLMhQuZ29vZ2xlLnByb3RvYnVmLkFueToCOAE6Bvq2GAIIASLZAQoNU3BlY1ByaW5jaXBhbBIxCgR0eXBlGAEgASgOMiMucGxhdGZvcm0uc3BlYy52Mi5TcGVjUHJpbmNpcGFsVHlwZRIUCgxhbm9ueW1vdXNfaWQYAiABKAkSFAoMcHJpbmNpcGFsX2lkGAMgASgJEhcKD3ByaW5jaXBhbF9lbWFpbBgEIAEoCRIVCg1jb25uZWN0aW9uX2lkGAUgASgJEjEKCmF1dGhfcm9sZXMYBiADKA4yHS5wbGF0Zm9ybS5vcHRpb25zLnYyLkF1dGhSb2xlOgb6thgCCAEiLwoOU3BlY1ZhbGlkYXRpb24SFQoNdmFsaWRhdGVfb25seRgBIAEoCDoG+rYYAggBIlcKDFNwZWNQcm9kdWNlchIMCgRuYW1lGAEgASgJEg8KB3ZlcnNpb24YAiABKAkSDQoFYnVpbGQYAyABKAkSEQoJbmFtZXNwYWNlGAQgASgJOgb6thgCCAEiiAEKClNwZWNEZXZpY2USCgoCaWQYASABKAkSDAoEdHlwZRgCIAEoCRIWCg5hZHZlcnRpc2luZ19pZBgDIAEoCRIUCgxtYW51ZmFjdHVyZXIYBCABKAkSDQoFbW9kZWwYBSABKAkSDAoEbmFtZRgGIAEoCRINCgV0b2tlbhgHIAEoCToG+rYYAggBImkKDFNwZWNMb2NhdGlvbhIMCgRjaXR5GAEgASgJEg8KB2NvdW50cnkYAiABKAkSEAoIbGF0aXR1ZGUYAyABKAESEQoJbG9uZ2l0dWRlGAQgASgBEg0KBXNwZWVkGAUgASgJOgb6thgCCAEiWQoLU3BlY05ldHdvcmsSEQoJYmx1ZXRvb3RoGAEgASgIEhAKCGNlbGx1bGFyGAIgASgIEgwKBHdpZmkYAyABKAgSDwoHY2FycmllchgEIAEoCToG+rYYAggBIi8KBlNwZWNPUxIMCgRuYW1lGAEgASgJEg8KB3ZlcnNpb24YAiABKAk6Bvq2GAIIASKTAQoIU3BlY0RhdGESKwoNY29uZmlndXJhdGlvbhgBIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5BbnkSIgoEZGF0YRgCIAEoCzIULmdvb2dsZS5wcm90b2J1Zi5BbnkSLgoKZmllbGRfbWFzaxgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE1hc2s6Bvq2GAIIASKkAQoSU3BlY1JlcXVlc3RDb250ZXh0Ej8KEnJlcXVlc3RfdmFsaWRhdGlvbhgBIAEoCzIjLnBsYXRmb3JtLnR5cGUudjIuUmVxdWVzdFZhbGlkYXRpb24SGQoRb3JnYW5pemF0aW9uX3NsdWcYAiABKAkSFgoOd29ya3NwYWNlX3NsdWcYAyABKAkSEgoKcm91dGluZV9pZBgEIAEoCToG+rYYAggBIq0CChNTcGVjUmVzcG9uc2VDb250ZXh0EkEKE3Jlc3BvbnNlX3ZhbGlkYXRpb24YASABKAsyJC5wbGF0Zm9ybS50eXBlLnYyLlJlc3BvbnNlVmFsaWRhdGlvbhI1Cg1yZXNwb25zZV9tYXNrGAIgASgLMh4ucGxhdGZvcm0udHlwZS52Mi5SZXNwb25zZU1hc2sSFgoOZWNvc3lzdGVtX3NsdWcYAyABKAkSGQoRb3JnYW5pemF0aW9uX3NsdWcYMiABKAkSFgoOd29ya3NwYWNlX3NsdWcYMyABKAkSNQoNd29ya3NwYWNlX2phbhg0IAEoDjIeLnBsYXRmb3JtLnR5cGUudjIuSnVyaXNkaWN0aW9uEhIKCnJvdXRpbmVfaWQYNSABKAk6Bvq2GAIIAiINCgtTcGVjV3JhcHBlciqgAgoNU3BlY0V2ZW50VHlwZRIfChtTUEVDX0VWRU5UX1RZUEVfVU5TUEVDSUZJRUQQABIbChdTUEVDX0VWRU5UX1RZUEVfQ09NTUFORBABEhkKFVNQRUNfRVZFTlRfVFlQRV9FVkVOVBACEhsKF1NQRUNfRVZFTlRfVFlQRV9ST1VUSU5FEAMSFgoSU1BFQ19FVkVOVF9UWVBFX01MEAQSGgoWU1BFQ19FVkVOVF9UWVBFX1NUUkVBTRAFEhYKElNQRUNfRVZFTlRfVFlQRV9EQhAGEhsKF1NQRUNfRVZFTlRfVFlQRV9QUk9GSUxFEAcSFwoTU1BFQ19FVkVOVF9UWVBFX0VUTBAIEhcKE1NQRUNfRVZFTlRfVFlQRV9MT0cQCSq+AQoRU3BlY1ByaW5jaXBhbFR5cGUSIwofU1BFQ19QUklOQ0lQQUxfVFlQRV9VTlNQRUNJRklFRBAAEhwKGFNQRUNfUFJJTkNJUEFMX1RZUEVfVVNFUhABEicKI1NQRUNfUFJJTkNJUEFMX1RZUEVfU0VSVklDRV9BQ0NPVU5UEAISHQoZU1BFQ19QUklOQ0lQQUxfVFlQRV9HUk9VUBADEh4KGlNQRUNfUFJJTkNJUEFMX1RZUEVfRE9NQUlOEARCXFpUZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS9zcGVjL3YyO3NwZWN2MnBimrUYAggBYgZwcm90bzM',
+        [
+            file_google_protobuf_any,
+            file_google_protobuf_timestamp,
+            file_platform_options_v2_annotations,
+            file_platform_type_v2_jurisdiction,
+            file_platform_type_v2_validation,
+            file_platform_type_v2_mask,
+            file_google_protobuf_field_mask,
+            file_google_rpc_status,
+        ]
+    );
 
 /**
  * Describes the message platform.spec.v2.SpecKey.
  * Use `create(SpecKeySchema)` to create a new message.
  */
-export const SpecKeySchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 0);
+export const SpecKeySchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 0);
 
 /**
  * Describes the message platform.spec.v2.Spec.
  * Use `create(SpecSchema)` to create a new message.
  */
-export const SpecSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 1);
+export const SpecSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 1);
 
 /**
  * Describes the message platform.spec.v2.SpecPublic.
  * Use `create(SpecPublicSchema)` to create a new message.
  */
-export const SpecPublicSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 2);
+export const SpecPublicSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 2);
 
 /**
  * Describes the message platform.spec.v2.SpecContext.
  * Use `create(SpecContextSchema)` to create a new message.
  */
-export const SpecContextSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 3);
+export const SpecContextSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 3);
 
 /**
  * Describes the message platform.spec.v2.SpanContext.
  * Use `create(SpanContextSchema)` to create a new message.
  */
-export const SpanContextSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 4);
+export const SpanContextSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 4);
 
 /**
  * Describes the message platform.spec.v2.SpecRoutineContext.
  * Use `create(SpecRoutineContextSchema)` to create a new message.
  */
-export const SpecRoutineContextSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 5);
+export const SpecRoutineContextSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 5);
 
 /**
  * Describes the message platform.spec.v2.SpecPrincipal.
  * Use `create(SpecPrincipalSchema)` to create a new message.
  */
-export const SpecPrincipalSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 6);
+export const SpecPrincipalSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 6);
 
 /**
  * Describes the message platform.spec.v2.SpecValidation.
  * Use `create(SpecValidationSchema)` to create a new message.
  */
-export const SpecValidationSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 7);
+export const SpecValidationSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 7);
 
 /**
  * Describes the message platform.spec.v2.SpecProducer.
  * Use `create(SpecProducerSchema)` to create a new message.
  */
-export const SpecProducerSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 8);
+export const SpecProducerSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 8);
 
 /**
  * Describes the message platform.spec.v2.SpecDevice.
  * Use `create(SpecDeviceSchema)` to create a new message.
  */
-export const SpecDeviceSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 9);
+export const SpecDeviceSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 9);
 
 /**
  * Describes the message platform.spec.v2.SpecLocation.
  * Use `create(SpecLocationSchema)` to create a new message.
  */
-export const SpecLocationSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 10);
+export const SpecLocationSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 10);
 
 /**
  * Describes the message platform.spec.v2.SpecNetwork.
  * Use `create(SpecNetworkSchema)` to create a new message.
  */
-export const SpecNetworkSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 11);
+export const SpecNetworkSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 11);
 
 /**
  * Describes the message platform.spec.v2.SpecOS.
  * Use `create(SpecOSSchema)` to create a new message.
  */
-export const SpecOSSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 12);
+export const SpecOSSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 12);
 
 /**
  * Describes the message platform.spec.v2.SpecData.
  * Use `create(SpecDataSchema)` to create a new message.
  */
-export const SpecDataSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 13);
+export const SpecDataSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 13);
 
 /**
  * Describes the message platform.spec.v2.SpecRequestContext.
  * Use `create(SpecRequestContextSchema)` to create a new message.
  */
-export const SpecRequestContextSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 14);
+export const SpecRequestContextSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 14);
 
 /**
  * Describes the message platform.spec.v2.SpecResponseContext.
  * Use `create(SpecResponseContextSchema)` to create a new message.
  */
-export const SpecResponseContextSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 15);
+export const SpecResponseContextSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 15);
 
 /**
  * Describes the message platform.spec.v2.SpecWrapper.
  * Use `create(SpecWrapperSchema)` to create a new message.
  */
-export const SpecWrapperSchema = /*@__PURE__*/
-  messageDesc(file_platform_spec_v2_spec, 16);
+export const SpecWrapperSchema = /*@__PURE__*/ messageDesc(file_platform_spec_v2_spec, 16);
 
 /**
  * Describes the enum platform.spec.v2.SpecEventType.
  */
-export const SpecEventTypeSchema = /*@__PURE__*/
-  enumDesc(file_platform_spec_v2_spec, 0);
+export const SpecEventTypeSchema = /*@__PURE__*/ enumDesc(file_platform_spec_v2_spec, 0);
 
 /**
  * @generated from enum platform.spec.v2.SpecEventType
  */
-export const SpecEventType = /*@__PURE__*/
-  tsEnum(SpecEventTypeSchema);
+export const SpecEventType = /*@__PURE__*/ tsEnum(SpecEventTypeSchema);
 
 /**
  * Describes the enum platform.spec.v2.SpecPrincipalType.
  */
-export const SpecPrincipalTypeSchema = /*@__PURE__*/
-  enumDesc(file_platform_spec_v2_spec, 1);
+export const SpecPrincipalTypeSchema = /*@__PURE__*/ enumDesc(file_platform_spec_v2_spec, 1);
 
 /**
  * Spec principal types
  *
  * @generated from enum platform.spec.v2.SpecPrincipalType
  */
-export const SpecPrincipalType = /*@__PURE__*/
-  tsEnum(SpecPrincipalTypeSchema);
-
+export const SpecPrincipalType = /*@__PURE__*/ tsEnum(SpecPrincipalTypeSchema);

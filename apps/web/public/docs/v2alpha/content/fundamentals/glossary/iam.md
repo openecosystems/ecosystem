@@ -2,13 +2,13 @@
 title: IAM
 pcx_content_type: definition
 summary: >-
-  Identity and Access Management (IAM) is a framework of policies and technologies to ensure that the right users (that are part of the ecosystem connected to or within an enterprise) have the appropriate access to technology resources.
+    Identity and Access Management (IAM) is a framework of policies and technologies to ensure that the right users (that are part of the ecosystem connected to or within an enterprise) have the appropriate access to technology resources.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/audit-logging
-  - /fundamentals/glossary/aws
-  - /fundamentals/glossary/rbac
+    - /fundamentals/glossary/audit-logging
+    - /fundamentals/glossary/aws
+    - /fundamentals/glossary/rbac
 ---
 
 # Identity and Access Management (IAM)
@@ -21,4 +21,4 @@ I.e.: Instead of using a Service Principal to get permissions to get data from a
 
 ## Sources
 
-- https://en.wikipedia.org/wiki/Identity_management
+-   https://en.wikipedia.org/wiki/Identity_management

@@ -2,22 +2,22 @@
 title: AWS
 pcx_content_type: definition
 summary: >-
-  `Amazon Web Services (AWS)` is the biggest [CSP](/fundamentals/glossary/#csp) at the time of writing.
+    `Amazon Web Services (AWS)` is the biggest [CSP](/fundamentals/glossary/#csp) at the time of writing.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/caching
-  - /fundamentals/glossary/cdn
-  - /fundamentals/glossary/certificate
-  - /fundamentals/glossary/csp
-  - /fundamentals/glossary/ddos-attack
-  - /fundamentals/glossary/iam
-  - /fundamentals/glossary/infrastructure-as-code
-  - /fundamentals/glossary/kubernetes
-  - /fundamentals/glossary/s3
-  - /fundamentals/glossary/service-mesh
-  - /fundamentals/glossary/sqs
-  - /fundamentals/glossary/waf
+    - /fundamentals/glossary/caching
+    - /fundamentals/glossary/cdn
+    - /fundamentals/glossary/certificate
+    - /fundamentals/glossary/csp
+    - /fundamentals/glossary/ddos-attack
+    - /fundamentals/glossary/iam
+    - /fundamentals/glossary/infrastructure-as-code
+    - /fundamentals/glossary/kubernetes
+    - /fundamentals/glossary/s3
+    - /fundamentals/glossary/service-mesh
+    - /fundamentals/glossary/sqs
+    - /fundamentals/glossary/waf
 ---
 
 # AWS
@@ -40,8 +40,8 @@ AWS Athena is expensive, though. Executing a query against `1 TB` of data will t
 
 AWS Aurora is AWS's Serverless implementation of Relational Databases. It comes in the following flavors:
 
-- Aurora MySQL
-- Aurora Postgres
+-   Aurora MySQL
+-   Aurora Postgres
 
 With AWS RDS you could provision both AWS Aurora (MySQL) and plain MySQL. AWS Aurora makes Scaling much easier for a Price. But if you don't need it, MySQL is cheaper. (The same goes for AWS Aurora (PostgreSQL) and PostgreSQL, obviously).
 
@@ -103,11 +103,11 @@ Event-driven serverless computing platform on AWS.
 
 AWS Relational Database Service (AWS RDS) allows for provisioning Relational Databases:
 
-- AWS Aurora
-- MariaDB
-- MySQL
-- Oracle Database
-- Postgres
+-   AWS Aurora
+-   MariaDB
+-   MySQL
+-   Oracle Database
+-   Postgres
 
 ## Route 53
 

@@ -1,14 +1,14 @@
 ---
 title: FIPS
 aliases:
-  - FIPS
+    - FIPS
 pcx_content_type: definition
 summary: >-
-  Contains security functional and non-functional requirements that Health Care applications must adhere to.
+    Contains security functional and non-functional requirements that Health Care applications must adhere to.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/nist
+    - /fundamentals/glossary/nist
 ---
 
 # FIPS
@@ -17,4 +17,4 @@ Contains security functional and non-functional requirements that Health Care ap
 
 ## Sources
 
-- https://csrc.nist.gov/publications/detail/fips/140/2/final
+-   https://csrc.nist.gov/publications/detail/fips/140/2/final

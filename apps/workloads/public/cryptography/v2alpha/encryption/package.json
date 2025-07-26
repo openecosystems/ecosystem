@@ -1,7 +1,7 @@
 {
-  "name": "cryptography-v2alpha-encryption",
-  "version": "0.32.0",
-  "description": "Encryption service",
-  "private": true,
-  "license": "Apache-2.0"
+    "name": "cryptography-v2alpha-encryption",
+    "version": "0.32.0",
+    "description": "Encryption service",
+    "private": true,
+    "license": "Apache-2.0"
 }

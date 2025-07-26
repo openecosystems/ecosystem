@@ -2,8 +2,8 @@
 // @generated from file platform/mesh/v2alpha/cryptographic_mesh.proto (package platform.mesh.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/mesh/v2alpha/cryptographic_mesh.proto.
@@ -13,11 +13,11 @@ export declare const file_platform_mesh_v2alpha_cryptographic_mesh: GenFile;
 /**
  * @generated from message platform.mesh.v2alpha.CryptographicMeshConfiguration
  */
-export declare type CryptographicMeshConfiguration = Message<"platform.mesh.v2alpha.CryptographicMeshConfiguration"> & {
-  /**
-   * @generated from field: string mesh_config = 1;
-   */
-  meshConfig: string;
+export declare type CryptographicMeshConfiguration = Message<'platform.mesh.v2alpha.CryptographicMeshConfiguration'> & {
+    /**
+     * @generated from field: string mesh_config = 1;
+     */
+    meshConfig: string;
 };
 
 /**
@@ -25,4 +25,3 @@ export declare type CryptographicMeshConfiguration = Message<"platform.mesh.v2al
  * Use `create(CryptographicMeshConfigurationSchema)` to create a new message.
  */
 export declare const CryptographicMeshConfigurationSchema: GenMessage<CryptographicMeshConfiguration>;
-

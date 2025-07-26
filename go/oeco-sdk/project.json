@@ -1,17 +1,17 @@
 {
-  "name": "go-sdk",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
-  "sourceRoot": "go/oeco-sdk",
-  "implicitDependencies": ["proto", "protoc-gen-platform"],
-  "targets": {
-    "generate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "go/oeco-sdk"
-      },
-      "cache": false
+    "name": "go-sdk",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "go/oeco-sdk",
+    "implicitDependencies": ["proto", "protoc-gen-platform"],
+    "targets": {
+        "generate": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf generate",
+                "cwd": "go/oeco-sdk"
+            },
+            "cache": false
+        }
     }
-  }
 }

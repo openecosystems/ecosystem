@@ -3,12 +3,12 @@ date_created: 2022-12-11T17:09:35
 title: URN
 pcx_content_type: definition
 summary: >-
-  A URN is a [URI](/fundamentals/design-and-architecture/standards-based/data-standards/#uri) that uses the `urn` scheme to identify a logical or physical resource used by web technology, but it does not provide information to locate the object.
+    A URN is a [URI](/fundamentals/design-and-architecture/standards-based/data-standards/#uri) that uses the `urn` scheme to identify a logical or physical resource used by web technology, but it does not provide information to locate the object.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/uri
-  - /fundamentals/design-and-architecture/standards-based/data-standards/url
+    - /fundamentals/design-and-architecture/standards-based/data-standards/uri
+    - /fundamentals/design-and-architecture/standards-based/data-standards/url
 ---
 
 # URN
@@ -23,5 +23,5 @@ AWS uses `URNs` extensively. Every object that is created also is assigned a `UR
 
 ## Sources
 
-- https://en.wikipedia.org/wiki/Uniform_Resource_Name
-- https://www.rfc-editor.org/rfc/rfc8141.html
+-   https://en.wikipedia.org/wiki/Uniform_Resource_Name
+-   https://www.rfc-editor.org/rfc/rfc8141.html

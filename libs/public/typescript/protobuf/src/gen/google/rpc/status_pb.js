@@ -16,19 +16,21 @@
 // @generated from file google/rpc/status.proto (package google.rpc, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_google_protobuf_any } from "@bufbuild/protobuf/wkt";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_google_protobuf_any } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file google/rpc/status.proto.
  */
-export const file_google_rpc_status = /*@__PURE__*/
-  fileDesc("Chdnb29nbGUvcnBjL3N0YXR1cy5wcm90bxIKZ29vZ2xlLnJwYyJOCgZTdGF0dXMSDAoEY29kZRgBIAEoBRIPCgdtZXNzYWdlGAIgASgJEiUKB2RldGFpbHMYAyADKAsyFC5nb29nbGUucHJvdG9idWYuQW55QmEKDmNvbS5nb29nbGUucnBjQgtTdGF0dXNQcm90b1ABWjdnb29nbGUuZ29sYW5nLm9yZy9nZW5wcm90by9nb29nbGVhcGlzL3JwYy9zdGF0dXM7c3RhdHVz+AEBogIDUlBDYgZwcm90bzM", [file_google_protobuf_any]);
+export const file_google_rpc_status =
+    /*@__PURE__*/
+    fileDesc(
+        'Chdnb29nbGUvcnBjL3N0YXR1cy5wcm90bxIKZ29vZ2xlLnJwYyJOCgZTdGF0dXMSDAoEY29kZRgBIAEoBRIPCgdtZXNzYWdlGAIgASgJEiUKB2RldGFpbHMYAyADKAsyFC5nb29nbGUucHJvdG9idWYuQW55QmEKDmNvbS5nb29nbGUucnBjQgtTdGF0dXNQcm90b1ABWjdnb29nbGUuZ29sYW5nLm9yZy9nZW5wcm90by9nb29nbGVhcGlzL3JwYy9zdGF0dXM7c3RhdHVz+AEBogIDUlBDYgZwcm90bzM',
+        [file_google_protobuf_any]
+    );
 
 /**
  * Describes the message google.rpc.Status.
  * Use `create(StatusSchema)` to create a new message.
  */
-export const StatusSchema = /*@__PURE__*/
-  messageDesc(file_google_rpc_status, 0);
-
+export const StatusSchema = /*@__PURE__*/ messageDesc(file_google_rpc_status, 0);

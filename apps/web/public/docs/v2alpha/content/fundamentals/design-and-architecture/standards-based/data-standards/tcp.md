@@ -2,18 +2,18 @@
 date_created: 2022-12-11T17:15:47
 title: TCP
 aliases:
-  - TCP
-  - TCP/IP
+    - TCP
+    - TCP/IP
 pcx_content_type: definition
 summary: >-
-  Where [IPv4](/fundamentals/design-and-architecture/standards-based/data-standards/#ipv4) and [IPv6](/fundamentals/design-and-architecture/standards-based/data-standards/#ipv6) specify how packets are sent across a Network, TCP adds the concepts of "Connections" and TCP IP Ports (among others).
+    Where [IPv4](/fundamentals/design-and-architecture/standards-based/data-standards/#ipv4) and [IPv6](/fundamentals/design-and-architecture/standards-based/data-standards/#ipv6) specify how packets are sent across a Network, TCP adds the concepts of "Connections" and TCP IP Ports (among others).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ipv6
-  - /fundamentals/design-and-architecture/standards-based/data-standards/http
-  - /fundamentals/design-and-architecture/standards-based/data-standards/smtp
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ipv6
+    - /fundamentals/design-and-architecture/standards-based/data-standards/http
+    - /fundamentals/design-and-architecture/standards-based/data-standards/smtp
 ---
 
 # TCP
@@ -24,4 +24,4 @@ A `TCP Port` provides multiplexing, allowing multiple networking applications to
 
 ## Sources
 
-- https://www.ietf.org/rfc/rfc793.txt
+-   https://www.ietf.org/rfc/rfc793.txt

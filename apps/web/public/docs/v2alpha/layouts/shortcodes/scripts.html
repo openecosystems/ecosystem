@@ -1,5 +1,2 @@
-{{- $src := .Get "src" -}}
-{{- $inline := default false (.Get "inline") -}}
-{{- $target := default "es2015" (.Get "target") -}}
-
-{{- partial "script" (dict "src" $src "inline" $inline "target" $target) -}}
+{{- $src := .Get "src" -}} {{- $inline := default false (.Get "inline") -}} {{- $target := default "es2015" (.Get
+"target") -}} {{- partial "script" (dict "src" $src "inline" $inline "target" $target) -}}

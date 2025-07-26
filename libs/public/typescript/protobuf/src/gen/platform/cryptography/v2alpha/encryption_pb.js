@@ -2,67 +2,64 @@
 // @generated from file platform/cryptography/v2alpha/encryption.proto (package platform.cryptography.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
+import { fileDesc, messageDesc, serviceDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
 
 /**
  * Describes the file platform/cryptography/v2alpha/encryption.proto.
  */
-export const file_platform_cryptography_v2alpha_encryption = /*@__PURE__*/
-  fileDesc("Ci5wbGF0Zm9ybS9jcnlwdG9ncmFwaHkvdjJhbHBoYS9lbmNyeXB0aW9uLnByb3RvEh1wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYSIZChdFbmNyeXB0aW9uQ29uZmlndXJhdGlvbiJUChFFbmNyeXB0aW9uQ29udGV4dBIMCgR1c2VyGAEgASgJEg4KBmVudGl0eRgCIAEoCRIRCglwcmluY2lwYWwYAyABKAkSDgoGaW50ZW50GAQgASgJIm8KCkNpcGhlclRleHQSEwoLY2lwaGVyX3RleHQYASABKAwSTAoSZW5jcnlwdGlvbl9jb250ZXh0GAIgASgLMjAucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuRW5jcnlwdGlvbkNvbnRleHQiPQoORW5jcnlwdFJlcXVlc3QSEgoKcGxhaW5fdGV4dBgBIAEoDBIXCg9hc3NvY2lhdGVkX2RhdGEYAiABKAwibAoPRW5jcnlwdFJlc3BvbnNlEkAKC2NpcGhlcl90ZXh0GAEgASgLMikucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuQ2lwaGVyVGV4dEgAEg0KA2VychgCIAEoCUgAQggKBnJlc3VsdCJpCg5EZWNyeXB0UmVxdWVzdBI+CgtjaXBoZXJfdGV4dBgBIAEoCzIpLnBsYXRmb3JtLmNyeXB0b2dyYXBoeS52MmFscGhhLkNpcGhlclRleHQSFwoPYXNzb2NpYXRlZF9kYXRhGAIgASgMIkAKD0RlY3J5cHRSZXNwb25zZRIUCgpwbGFpbl90ZXh0GAEgASgMSAASDQoDZXJyGAIgASgJSABCCAoGcmVzdWx0MusBChFFbmNyeXB0aW9uU2VydmljZRJqCgdFbmNyeXB0Ei0ucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuRW5jcnlwdFJlcXVlc3QaLi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5FbmNyeXB0UmVzcG9uc2UiABJqCgdEZWNyeXB0Ei0ucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuRGVjcnlwdFJlcXVlc3QaLi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5EZWNyeXB0UmVzcG9uc2UiAEKSAVpuZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS9jcnlwdG9ncmFwaHkvdjJhbHBoYTtjcnlwdG9ncmFwaHl2MmFscGhhcGKCxBMCCAGCtRgGCAMQARgCkrUYBAoCAwGatRgAorUYAggBYgZwcm90bzM", [file_platform_options_v2_annotations]);
+export const file_platform_cryptography_v2alpha_encryption =
+    /*@__PURE__*/
+    fileDesc(
+        'Ci5wbGF0Zm9ybS9jcnlwdG9ncmFwaHkvdjJhbHBoYS9lbmNyeXB0aW9uLnByb3RvEh1wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYSIZChdFbmNyeXB0aW9uQ29uZmlndXJhdGlvbiJUChFFbmNyeXB0aW9uQ29udGV4dBIMCgR1c2VyGAEgASgJEg4KBmVudGl0eRgCIAEoCRIRCglwcmluY2lwYWwYAyABKAkSDgoGaW50ZW50GAQgASgJIm8KCkNpcGhlclRleHQSEwoLY2lwaGVyX3RleHQYASABKAwSTAoSZW5jcnlwdGlvbl9jb250ZXh0GAIgASgLMjAucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuRW5jcnlwdGlvbkNvbnRleHQiPQoORW5jcnlwdFJlcXVlc3QSEgoKcGxhaW5fdGV4dBgBIAEoDBIXCg9hc3NvY2lhdGVkX2RhdGEYAiABKAwibAoPRW5jcnlwdFJlc3BvbnNlEkAKC2NpcGhlcl90ZXh0GAEgASgLMikucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuQ2lwaGVyVGV4dEgAEg0KA2VychgCIAEoCUgAQggKBnJlc3VsdCJpCg5EZWNyeXB0UmVxdWVzdBI+CgtjaXBoZXJfdGV4dBgBIAEoCzIpLnBsYXRmb3JtLmNyeXB0b2dyYXBoeS52MmFscGhhLkNpcGhlclRleHQSFwoPYXNzb2NpYXRlZF9kYXRhGAIgASgMIkAKD0RlY3J5cHRSZXNwb25zZRIUCgpwbGFpbl90ZXh0GAEgASgMSAASDQoDZXJyGAIgASgJSABCCAoGcmVzdWx0MusBChFFbmNyeXB0aW9uU2VydmljZRJqCgdFbmNyeXB0Ei0ucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuRW5jcnlwdFJlcXVlc3QaLi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5FbmNyeXB0UmVzcG9uc2UiABJqCgdEZWNyeXB0Ei0ucGxhdGZvcm0uY3J5cHRvZ3JhcGh5LnYyYWxwaGEuRGVjcnlwdFJlcXVlc3QaLi5wbGF0Zm9ybS5jcnlwdG9ncmFwaHkudjJhbHBoYS5EZWNyeXB0UmVzcG9uc2UiAEKSAVpuZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS9jcnlwdG9ncmFwaHkvdjJhbHBoYTtjcnlwdG9ncmFwaHl2MmFscGhhcGKCxBMCCAGCtRgGCAMQARgCkrUYBAoCAwGatRgAorUYAggBYgZwcm90bzM',
+        [file_platform_options_v2_annotations]
+    );
 
 /**
  * Describes the message platform.cryptography.v2alpha.EncryptionConfiguration.
  * Use `create(EncryptionConfigurationSchema)` to create a new message.
  */
-export const EncryptionConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 0);
+export const EncryptionConfigurationSchema =
+    /*@__PURE__*/
+    messageDesc(file_platform_cryptography_v2alpha_encryption, 0);
 
 /**
  * Describes the message platform.cryptography.v2alpha.EncryptionContext.
  * Use `create(EncryptionContextSchema)` to create a new message.
  */
-export const EncryptionContextSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 1);
+export const EncryptionContextSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_encryption, 1);
 
 /**
  * Describes the message platform.cryptography.v2alpha.CipherText.
  * Use `create(CipherTextSchema)` to create a new message.
  */
-export const CipherTextSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 2);
+export const CipherTextSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_encryption, 2);
 
 /**
  * Describes the message platform.cryptography.v2alpha.EncryptRequest.
  * Use `create(EncryptRequestSchema)` to create a new message.
  */
-export const EncryptRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 3);
+export const EncryptRequestSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_encryption, 3);
 
 /**
  * Describes the message platform.cryptography.v2alpha.EncryptResponse.
  * Use `create(EncryptResponseSchema)` to create a new message.
  */
-export const EncryptResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 4);
+export const EncryptResponseSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_encryption, 4);
 
 /**
  * Describes the message platform.cryptography.v2alpha.DecryptRequest.
  * Use `create(DecryptRequestSchema)` to create a new message.
  */
-export const DecryptRequestSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 5);
+export const DecryptRequestSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_encryption, 5);
 
 /**
  * Describes the message platform.cryptography.v2alpha.DecryptResponse.
  * Use `create(DecryptResponseSchema)` to create a new message.
  */
-export const DecryptResponseSchema = /*@__PURE__*/
-  messageDesc(file_platform_cryptography_v2alpha_encryption, 6);
+export const DecryptResponseSchema = /*@__PURE__*/ messageDesc(file_platform_cryptography_v2alpha_encryption, 6);
 
 /**
  * @generated from service platform.cryptography.v2alpha.EncryptionService
  */
-export const EncryptionService = /*@__PURE__*/
-  serviceDesc(file_platform_cryptography_v2alpha_encryption, 0);
-
+export const EncryptionService = /*@__PURE__*/ serviceDesc(file_platform_cryptography_v2alpha_encryption, 0);

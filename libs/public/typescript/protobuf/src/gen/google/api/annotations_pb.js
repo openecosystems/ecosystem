@@ -16,21 +16,23 @@
 // @generated from file google/api/annotations.proto (package google.api, syntax proto3)
 /* eslint-disable */
 
-import { extDesc, fileDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_google_api_http } from "./http_pb";
-import { file_google_protobuf_descriptor } from "@bufbuild/protobuf/wkt";
+import { extDesc, fileDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_google_api_http } from './http_pb';
+import { file_google_protobuf_descriptor } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file google/api/annotations.proto.
  */
-export const file_google_api_annotations = /*@__PURE__*/
-  fileDesc("Chxnb29nbGUvYXBpL2Fubm90YXRpb25zLnByb3RvEgpnb29nbGUuYXBpOksKBGh0dHASHi5nb29nbGUucHJvdG9idWYuTWV0aG9kT3B0aW9ucxiwyrwiIAEoCzIULmdvb2dsZS5hcGkuSHR0cFJ1bGVSBGh0dHBCbgoOY29tLmdvb2dsZS5hcGlCEEFubm90YXRpb25zUHJvdG9QAVpBZ29vZ2xlLmdvbGFuZy5vcmcvZ2VucHJvdG8vZ29vZ2xlYXBpcy9hcGkvYW5ub3RhdGlvbnM7YW5ub3RhdGlvbnOiAgRHQVBJYgZwcm90bzM", [file_google_api_http, file_google_protobuf_descriptor]);
+export const file_google_api_annotations =
+    /*@__PURE__*/
+    fileDesc(
+        'Chxnb29nbGUvYXBpL2Fubm90YXRpb25zLnByb3RvEgpnb29nbGUuYXBpOksKBGh0dHASHi5nb29nbGUucHJvdG9idWYuTWV0aG9kT3B0aW9ucxiwyrwiIAEoCzIULmdvb2dsZS5hcGkuSHR0cFJ1bGVSBGh0dHBCbgoOY29tLmdvb2dsZS5hcGlCEEFubm90YXRpb25zUHJvdG9QAVpBZ29vZ2xlLmdvbGFuZy5vcmcvZ2VucHJvdG8vZ29vZ2xlYXBpcy9hcGkvYW5ub3RhdGlvbnM7YW5ub3RhdGlvbnOiAgRHQVBJYgZwcm90bzM',
+        [file_google_api_http, file_google_protobuf_descriptor]
+    );
 
 /**
  * See `HttpRule`.
  *
  * @generated from extension: google.api.HttpRule http = 72295728;
  */
-export const http = /*@__PURE__*/
-  extDesc(file_google_api_annotations, 0);
-
+export const http = /*@__PURE__*/ extDesc(file_google_api_annotations, 0);

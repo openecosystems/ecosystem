@@ -1,16 +1,8 @@
 {
-  "name": "infrastructure-apps-workloads-private-edge",
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "infrastructure/apps/workloads/private",
-  "targets": {
-
-  },
-  "tags": [
-    "type:infrastructure",
-    "cycle:private",
-    "language:golang",
-    "version:v2alpha",
-    "exposure:internal"
-  ]
+    "name": "infrastructure-apps-workloads-private-edge",
+    "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "infrastructure/apps/workloads/private",
+    "targets": {},
+    "tags": ["type:infrastructure", "cycle:private", "language:golang", "version:v2alpha", "exposure:internal"]
 }

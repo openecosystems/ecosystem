@@ -2,8 +2,8 @@
 // @generated from file platform/type/v2/credential.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import type { GenEnum, GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenEnum, GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/type/v2/credential.proto.
@@ -13,81 +13,81 @@ export declare const file_platform_type_v2_credential: GenFile;
 /**
  * @generated from message platform.type.v2.Credential
  */
-export declare type Credential = Message<"platform.type.v2.Credential"> & {
-  /**
-   * @generated from field: platform.type.v2.CredentialType type = 1;
-   */
-  type: CredentialType;
+export declare type Credential = Message<'platform.type.v2.Credential'> & {
+    /**
+     * @generated from field: platform.type.v2.CredentialType type = 1;
+     */
+    type: CredentialType;
 
-  /**
-   * @generated from field: string mesh_account_id = 2;
-   */
-  meshAccountId: string;
+    /**
+     * @generated from field: string mesh_account_id = 2;
+     */
+    meshAccountId: string;
 
-  /**
-   * @generated from field: string ecosystem_slug = 3;
-   */
-  ecosystemSlug: string;
+    /**
+     * @generated from field: string ecosystem_slug = 3;
+     */
+    ecosystemSlug: string;
 
-  /**
-   * @generated from field: string mesh_hostname = 4;
-   */
-  meshHostname: string;
+    /**
+     * @generated from field: string mesh_hostname = 4;
+     */
+    meshHostname: string;
 
-  /**
-   * @generated from field: string mesh_ip = 5;
-   */
-  meshIp: string;
+    /**
+     * @generated from field: string mesh_ip = 5;
+     */
+    meshIp: string;
 
-  /**
-   * @generated from field: platform.type.v2.Curve curve = 6;
-   */
-  curve: Curve;
+    /**
+     * @generated from field: platform.type.v2.Curve curve = 6;
+     */
+    curve: Curve;
 
-  /**
-   * @generated from field: string aa_cert_x509 = 7;
-   */
-  aaCertX509: string;
+    /**
+     * @generated from field: string aa_cert_x509 = 7;
+     */
+    aaCertX509: string;
 
-  /**
-   * @generated from field: string aa_cert_x509_qr_code = 8;
-   */
-  aaCertX509QrCode: string;
+    /**
+     * @generated from field: string aa_cert_x509_qr_code = 8;
+     */
+    aaCertX509QrCode: string;
 
-  /**
-   * @generated from field: string aa_private_key = 9;
-   */
-  aaPrivateKey: string;
+    /**
+     * @generated from field: string aa_private_key = 9;
+     */
+    aaPrivateKey: string;
 
-  /**
-   * @generated from field: string cert_x509 = 10;
-   */
-  certX509: string;
+    /**
+     * @generated from field: string cert_x509 = 10;
+     */
+    certX509: string;
 
-  /**
-   * @generated from field: string cert_x509_qr_code = 11;
-   */
-  certX509QrCode: string;
+    /**
+     * @generated from field: string cert_x509_qr_code = 11;
+     */
+    certX509QrCode: string;
 
-  /**
-   * @generated from field: string private_key = 12;
-   */
-  privateKey: string;
+    /**
+     * @generated from field: string private_key = 12;
+     */
+    privateKey: string;
 
-  /**
-   * @generated from field: string n_key = 13;
-   */
-  nKey: string;
+    /**
+     * @generated from field: string n_key = 13;
+     */
+    nKey: string;
 
-  /**
-   * @generated from field: repeated string groups = 14;
-   */
-  groups: string[];
+    /**
+     * @generated from field: repeated string groups = 14;
+     */
+    groups: string[];
 
-  /**
-   * @generated from field: repeated string subnets = 15;
-   */
-  subnets: string[];
+    /**
+     * @generated from field: repeated string subnets = 15;
+     */
+    subnets: string[];
 };
 
 /**
@@ -100,26 +100,26 @@ export declare const CredentialSchema: GenMessage<Credential>;
  * @generated from enum platform.type.v2.CredentialType
  */
 export enum CredentialType {
-  /**
-   * Unspecified or unknown credential.
-   *
-   * @generated from enum value: CREDENTIAL_TYPE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * Unspecified or unknown credential.
+     *
+     * @generated from enum value: CREDENTIAL_TYPE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * Credential for an account authority.
-   *
-   * @generated from enum value: CREDENTIAL_TYPE_ACCOUNT_AUTHORITY = 1;
-   */
-  ACCOUNT_AUTHORITY = 1,
+    /**
+     * Credential for an account authority.
+     *
+     * @generated from enum value: CREDENTIAL_TYPE_ACCOUNT_AUTHORITY = 1;
+     */
+    ACCOUNT_AUTHORITY = 1,
 
-  /**
-   * Credential for a mesh service account.
-   *
-   * @generated from enum value: CREDENTIAL_TYPE_MESH_ACCOUNT = 2;
-   */
-  MESH_ACCOUNT = 2,
+    /**
+     * Credential for a mesh service account.
+     *
+     * @generated from enum value: CREDENTIAL_TYPE_MESH_ACCOUNT = 2;
+     */
+    MESH_ACCOUNT = 2,
 }
 
 /**
@@ -131,24 +131,23 @@ export declare const CredentialTypeSchema: GenEnum<CredentialType>;
  * @generated from enum platform.type.v2.Curve
  */
 export enum Curve {
-  /**
-   * @generated from enum value: CURVE_UNSPECIFIED = 0;
-   */
-  UNSPECIFIED = 0,
+    /**
+     * @generated from enum value: CURVE_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
 
-  /**
-   * @generated from enum value: CURVE_EDDSA = 1;
-   */
-  EDDSA = 1,
+    /**
+     * @generated from enum value: CURVE_EDDSA = 1;
+     */
+    EDDSA = 1,
 
-  /**
-   * @generated from enum value: CURVE_ECDSA = 2;
-   */
-  ECDSA = 2,
+    /**
+     * @generated from enum value: CURVE_ECDSA = 2;
+     */
+    ECDSA = 2,
 }
 
 /**
  * Describes the enum platform.type.v2.Curve.
  */
 export declare const CurveSchema: GenEnum<Curve>;
-

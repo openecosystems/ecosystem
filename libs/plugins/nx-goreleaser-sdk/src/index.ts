@@ -27,16 +27,12 @@ export const createNodes = [
             const targets: ProjectConfiguration['targets'] = {
                 build: {
                     executor: 'nx:run-commands',
-                    outputs: [
-                        `{workspaceRoot}/${distPath}/artifacts.json`,
-                    ],
+                    outputs: [`{workspaceRoot}/${distPath}/artifacts.json`],
                     options: {
-                        commands: [
-                            `goreleaser build --clean --snapshot --config ${projectRoot}/.goreleaser.sdk.yaml`
-                        ],
+                        commands: [`goreleaser build --clean --snapshot --config ${projectRoot}/.goreleaser.sdk.yaml`],
                         parallel: false,
                         forwardAllArgs: false,
-                        cwd: "",
+                        cwd: '',
                     },
                 },
                 test: {
@@ -50,15 +46,13 @@ export const createNodes = [
                     executor: 'nx:run-commands',
                     options: {
                         command: `rm -rf ${distPath}`,
-                        cwd: "",
+                        cwd: '',
                     },
                 },
                 lint: {
                     executor: 'nx:run-commands',
                     options: {
-                        commands: [
-                            'golangci-lint run ./... --timeout=5m',
-                        ],
+                        commands: ['golangci-lint run ./... --timeout=5m'],
                         parallel: false,
                         cwd: projectRoot,
                     },
@@ -66,27 +60,21 @@ export const createNodes = [
                 format: {
                     executor: 'nx:run-commands',
                     options: {
-                        commands: [
-                            'go mod tidy',
-                            'gofumpt -l -w .',
-                            'golangci-lint run ./... --timeout=5m --fix',
-                        ],
+                        commands: ['go mod tidy', 'gofumpt -l -w .', 'golangci-lint run ./... --timeout=5m --fix'],
                         parallel: false,
                         cwd: projectRoot,
                     },
                 },
-                "nx-release-publish": {
+                'nx-release-publish': {
                     executor: 'nx:run-commands',
                     dependsOn: ['build'],
                     outputs: [`{workspaceRoot}/dist/${projectRoot}`],
                     options: {
-                        commands: [
-                            `goreleaser release --config ${projectRoot}/.goreleaser.sdk.yaml --clean`,
-                        ],
+                        commands: [`goreleaser release --config ${projectRoot}/.goreleaser.sdk.yaml --clean`],
                         parallel: false,
                         forwardAllArgs: false,
                     },
-                    cache: false
+                    cache: false,
                 },
                 snapshot: {
                     executor: 'nx:run-commands',
@@ -99,7 +87,7 @@ export const createNodes = [
                         parallel: false,
                         forwardAllArgs: false,
                     },
-                    cache: false
+                    cache: false,
                 },
                 nightly: {
                     executor: 'nx:run-commands',
@@ -112,7 +100,7 @@ export const createNodes = [
                         parallel: false,
                         forwardAllArgs: false,
                     },
-                    cache: false
+                    cache: false,
                 },
             };
 
@@ -121,11 +109,7 @@ export const createNodes = [
                 root: projectRoot,
                 projectType: 'library',
                 targets,
-                tags: [
-                    'lang:go',
-                    "language:golang",
-                    "type:sdk",
-                ],
+                tags: ['lang:go', 'language:golang', 'type:sdk'],
             };
 
             return {
@@ -133,12 +117,9 @@ export const createNodes = [
                     [projectName]: project,
                 },
             };
-
-
         } catch (err) {
             console.warn(`Failed to read or parse package.json at ${packageJsonPath}:`, err);
             return { projects: {} };
         }
-
     },
 ];

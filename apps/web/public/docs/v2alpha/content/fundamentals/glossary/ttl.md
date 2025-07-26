@@ -2,11 +2,11 @@
 title: TTL
 pcx_content_type: definition
 summary: >-
-  `Time to Live`, a timespan after creation of data, after which the data is no longer valid or relevant.
+    `Time to Live`, a timespan after creation of data, after which the data is no longer valid or relevant.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/exception-handling
+    - /fundamentals/glossary/exception-handling
 ---
 
 # Time to Live (TTL)

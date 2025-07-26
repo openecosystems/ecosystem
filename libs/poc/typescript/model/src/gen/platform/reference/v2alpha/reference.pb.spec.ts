@@ -5,97 +5,94 @@ export type ReferenceCommand = number;
 export type ReferenceEvent = number;
 
 // Constants for Reference Type Names
-export const ReferenceTypeName = "reference";
-export const ReferenceTypeNamePlural = "references";
-export const ReferenceTypeNameScreamingCamelCase = "REFERENCE";
-export const ReferenceTypeNamePluralScreamingCamelCase = "REFERENCES";
-export const ReferenceTypeNameEventPrefix = "reference.";
+export const ReferenceTypeName = 'reference';
+export const ReferenceTypeNamePlural = 'references';
+export const ReferenceTypeNameScreamingCamelCase = 'REFERENCE';
+export const ReferenceTypeNamePluralScreamingCamelCase = 'REFERENCES';
+export const ReferenceTypeNameEventPrefix = 'reference.';
 
 // Enums for ReferenceCommands
 export enum ReferenceCommands {
-  
-  ReferenceCommandsUnspecified = 0,
-  UnrecognizedReferenceCommand = -1,
+    ReferenceCommandsUnspecified = 0,
+    UnrecognizedReferenceCommand = -1,
 }
 
 // Enums for Reference Events
 export enum ReferenceEvents {
-
-  ReferenceEventsUnspecified = 0,
-  UnrecognizedReferenceEvent  = -1,
+    ReferenceEventsUnspecified = 0,
+    UnrecognizedReferenceEvent = -1,
 }
 
 // Topics
-export const CommandDataReferenceTopic = "reference.data.command";
-export const EventDataReferenceTopic = "reference.data.event";
-export const RoutineDataReferenceTopic = "reference.data.routine";
-export const UnrecognizedReferenceTopic = "unrecognized";
+export const CommandDataReferenceTopic = 'reference.data.command';
+export const EventDataReferenceTopic = 'reference.data.event';
+export const RoutineDataReferenceTopic = 'reference.data.routine';
+export const UnrecognizedReferenceTopic = 'unrecognized';
 
 // Command Methods
 export class ReferenceCommandHelper {
-  static commandName(command: ReferenceCommands): string {
-    switch (command) {
-      case ReferenceCommands.ReferenceCommandsUnspecified:
-        return "ReferenceCommandsUnspecified"
-      default:
-        return "UnrecognizedReferenceCommand"
+    static commandName(command: ReferenceCommands): string {
+        switch (command) {
+            case ReferenceCommands.ReferenceCommandsUnspecified:
+                return 'ReferenceCommandsUnspecified';
+            default:
+                return 'UnrecognizedReferenceCommand';
+        }
     }
-  }
 
-  static commandTopic(command: ReferenceCommands): string {
-    switch (command) {
-      case ReferenceCommands.ReferenceCommandsUnspecified:
-        return CommandDataReferenceTopic;
-      default:
-		    return UnrecognizedReferenceTopic;
+    static commandTopic(command: ReferenceCommands): string {
+        switch (command) {
+            case ReferenceCommands.ReferenceCommandsUnspecified:
+                return CommandDataReferenceTopic;
+            default:
+                return UnrecognizedReferenceTopic;
+        }
     }
-  }
 
-  static commandTopicWildcard(): string {
-    return ReferenceTypeNameEventPrefix + ">";
-  }
-
-  static getReferenceCommand(command: string): ReferenceCommands {
-    switch (command) {
-      case "ReferenceCommandsUnspecified":
-        return ReferenceCommands.ReferenceCommandsUnspecified;
-      default:
-        return ReferenceCommands.UnrecognizedReferenceCommand;
+    static commandTopicWildcard(): string {
+        return ReferenceTypeNameEventPrefix + '>';
     }
-  }
+
+    static getReferenceCommand(command: string): ReferenceCommands {
+        switch (command) {
+            case 'ReferenceCommandsUnspecified':
+                return ReferenceCommands.ReferenceCommandsUnspecified;
+            default:
+                return ReferenceCommands.UnrecognizedReferenceCommand;
+        }
+    }
 }
 
 // Event Methods
 export class ReferenceEventHelper {
-  static eventName(event: ReferenceEvents): string {
-    switch (event) {
-      case ReferenceEvents.ReferenceEventsUnspecified:
-        return "ReferenceEventsUnspecified";
-      default:
-        return "UnrecognizedReferenceEvent";
+    static eventName(event: ReferenceEvents): string {
+        switch (event) {
+            case ReferenceEvents.ReferenceEventsUnspecified:
+                return 'ReferenceEventsUnspecified';
+            default:
+                return 'UnrecognizedReferenceEvent';
+        }
     }
-  }
 
-  static eventTopic(event: ReferenceEvents): string {
-    switch (event) {
-      case ReferenceEvents.ReferenceEventsUnspecified:
-        return EventDataReferenceTopic;
-      default:
-        return UnrecognizedReferenceTopic;
+    static eventTopic(event: ReferenceEvents): string {
+        switch (event) {
+            case ReferenceEvents.ReferenceEventsUnspecified:
+                return EventDataReferenceTopic;
+            default:
+                return UnrecognizedReferenceTopic;
+        }
     }
-  }
 
-  static eventTopicWildcard(): string {
-    return ReferenceTypeNameEventPrefix + ">";
-  }
-
-  static getReferenceEvent(event: string): ReferenceEvents {
-    switch (event) {
-      case "ReferenceEventsUnspecified":
-        return ReferenceEvents.ReferenceEventsUnspecified;
-      default:
-        return ReferenceEvents.UnrecognizedReferenceEvent;
+    static eventTopicWildcard(): string {
+        return ReferenceTypeNameEventPrefix + '>';
     }
-  }
+
+    static getReferenceEvent(event: string): ReferenceEvents {
+        switch (event) {
+            case 'ReferenceEventsUnspecified':
+                return ReferenceEvents.ReferenceEventsUnspecified;
+            default:
+                return ReferenceEvents.UnrecognizedReferenceEvent;
+        }
+    }
 }
-

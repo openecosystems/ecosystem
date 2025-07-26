@@ -2,8 +2,8 @@
 // @generated from file platform/cli/v2alpha/oeco.proto (package platform.cli.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/cli/v2alpha/oeco.proto.
@@ -13,11 +13,11 @@ export declare const file_platform_cli_v2alpha_oeco: GenFile;
 /**
  * @generated from message platform.cli.v2alpha.OecoConfiguration
  */
-export declare type OecoConfiguration = Message<"platform.cli.v2alpha.OecoConfiguration"> & {
-  /**
-   * @generated from field: string oeco = 1;
-   */
-  oeco: string;
+export declare type OecoConfiguration = Message<'platform.cli.v2alpha.OecoConfiguration'> & {
+    /**
+     * @generated from field: string oeco = 1;
+     */
+    oeco: string;
 };
 
 /**
@@ -25,4 +25,3 @@ export declare type OecoConfiguration = Message<"platform.cli.v2alpha.OecoConfig
  * Use `create(OecoConfigurationSchema)` to create a new message.
  */
 export declare const OecoConfigurationSchema: GenMessage<OecoConfiguration>;
-

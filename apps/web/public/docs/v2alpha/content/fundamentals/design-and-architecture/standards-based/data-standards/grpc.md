@@ -1,20 +1,20 @@
 ---
 title: gRPC
 aliases:
-  - gRPC
+    - gRPC
 date_created: 2022-12-11T17:06:49
 author: Guillaume Hanique
 pcx_content_type: definition
 summary: >-
-  gRPC uses a binary format to encode data, which is *much* faster, cheaper, and compact than many other Message Protocols.
+    gRPC uses a binary format to encode data, which is *much* faster, cheaper, and compact than many other Message Protocols.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/html
-  - /fundamentals/design-and-architecture/standards-based/data-standards/json
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xml
-  - /fundamentals/glossary/message-protocol
-  - /fundamentals/glossary/performance
+    - /fundamentals/design-and-architecture/standards-based/data-standards/html
+    - /fundamentals/design-and-architecture/standards-based/data-standards/json
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xml
+    - /fundamentals/glossary/message-protocol
+    - /fundamentals/glossary/performance
 ---
 
 # gRPC
@@ -29,5 +29,5 @@ Another reason why `gRPC` is much faster than most other [Message Protocols](/fu
 
 ## Sources
 
-- https://grpc.io/
-- https://grpc.github.io/grpc/core/index.html
+-   https://grpc.io/
+-   https://grpc.github.io/grpc/core/index.html

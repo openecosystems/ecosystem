@@ -2,19 +2,21 @@
 // @generated from file platform/dns/v2alpha/dynamic_dns.proto (package platform.dns.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
 
 /**
  * Describes the file platform/dns/v2alpha/dynamic_dns.proto.
  */
-export const file_platform_dns_v2alpha_dynamic_dns = /*@__PURE__*/
-  fileDesc("CiZwbGF0Zm9ybS9kbnMvdjJhbHBoYS9keW5hbWljX2Rucy5wcm90bxIUcGxhdGZvcm0uZG5zLnYyYWxwaGEiMQoXRHluYW1pY0Ruc0NvbmZpZ3VyYXRpb24SFgoOZHluYW1pY19jb25maWcYASABKAlCf1pcZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS9kbnMvdjJhbHBoYTtkbnN2MmFscGhhcGKCxBMCCAOCtRgGCAMQARgGkrUYAwoBA5q1GACitRgCCAFiBnByb3RvMw", [file_platform_options_v2_annotations]);
+export const file_platform_dns_v2alpha_dynamic_dns =
+    /*@__PURE__*/
+    fileDesc(
+        'CiZwbGF0Zm9ybS9kbnMvdjJhbHBoYS9keW5hbWljX2Rucy5wcm90bxIUcGxhdGZvcm0uZG5zLnYyYWxwaGEiMQoXRHluYW1pY0Ruc0NvbmZpZ3VyYXRpb24SFgoOZHluYW1pY19jb25maWcYASABKAlCf1pcZ2l0aHViLmNvbS9vcGVuZWNvc3lzdGVtcy9lY29zeXN0ZW0vZ28vb2Vjby1zZGsvdjJiZXRhL2dlbi9wbGF0Zm9ybS9kbnMvdjJhbHBoYTtkbnN2MmFscGhhcGKCxBMCCAOCtRgGCAMQARgGkrUYAwoBA5q1GACitRgCCAFiBnByb3RvMw',
+        [file_platform_options_v2_annotations]
+    );
 
 /**
  * Describes the message platform.dns.v2alpha.DynamicDnsConfiguration.
  * Use `create(DynamicDnsConfigurationSchema)` to create a new message.
  */
-export const DynamicDnsConfigurationSchema = /*@__PURE__*/
-  messageDesc(file_platform_dns_v2alpha_dynamic_dns, 0);
-
+export const DynamicDnsConfigurationSchema = /*@__PURE__*/ messageDesc(file_platform_dns_v2alpha_dynamic_dns, 0);

@@ -4,7 +4,7 @@ author: Guillaume Hanique
 title: Part 11
 pcx_content_type: definition
 summary: >-
-  Title 21 CFR Part 11 is the part of `Title 21` of the `Code of Federal Regulations` that establishes the United States Food and Drug Administration (FDA) regulations on electronic records and electronic signatures (ERES).
+    Title 21 CFR Part 11 is the part of `Title 21` of the `Code of Federal Regulations` that establishes the United States Food and Drug Administration (FDA) regulations on electronic records and electronic signatures (ERES).
 hidden: true
 has_more: true
 has_links: false
@@ -16,4 +16,4 @@ Title 21 CFR Part 11 is the part of `Title 21` of the `Code of Federal Regulatio
 
 ## Sources
 
-- https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?fr=11.1
+-   https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/CFRSearch.cfm?fr=11.1

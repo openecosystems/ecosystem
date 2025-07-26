@@ -1,15 +1,15 @@
 ---
 title: IPv6
 aliases:
-  - IPv6
+    - IPv6
 pcx_content_type: definition
 summary: >-
-  Internet Protocol v6 (IPv6) is a full specification of how communication should work across networks.
+    Internet Protocol v6 (IPv6) is a full specification of how communication should work across networks.
 hidden: true
 has_more: true
 todo: Find sources
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ipv4
 ---
 
 # IPv6

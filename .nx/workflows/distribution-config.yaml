@@ -1,5 +1,5 @@
 distribute-on:
-  small-changeset: 3 oeco-linux-medium-js # Distribute on small if 1-25% of projects affected in PR
-  medium-changeset: 6 oeco-linux-medium-js # Distribute on medium if 26-50% of projects affected in PR
-  large-changeset: 10 oeco-linux-medium-js # Distribute on large if 51-75% of projects affected in PR
-  extra-large-changeset: 15 oeco-linux-medium-js # Distribute on extra-large if 76-100% of projects affected in PR
+    small-changeset: 3 oeco-linux-medium-js # Distribute on small if 1-25% of projects affected in PR
+    medium-changeset: 6 oeco-linux-medium-js # Distribute on medium if 26-50% of projects affected in PR
+    large-changeset: 10 oeco-linux-medium-js # Distribute on large if 51-75% of projects affected in PR
+    extra-large-changeset: 15 oeco-linux-medium-js # Distribute on extra-large if 76-100% of projects affected in PR

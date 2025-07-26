@@ -16,32 +16,31 @@
 // @generated from file buf/validate/expression.proto (package buf.validate, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
 
 /**
  * Describes the file buf/validate/expression.proto.
  */
-export const file_buf_validate_expression = /*@__PURE__*/
-  fileDesc("Ch1idWYvdmFsaWRhdGUvZXhwcmVzc2lvbi5wcm90bxIMYnVmLnZhbGlkYXRlIj0KCkNvbnN0cmFpbnQSCgoCaWQYASABKAkSDwoHbWVzc2FnZRgCIAEoCRISCgpleHByZXNzaW9uGAMgASgJIjkKClZpb2xhdGlvbnMSKwoKdmlvbGF0aW9ucxgBIAMoCzIXLmJ1Zi52YWxpZGF0ZS5WaW9sYXRpb24iWAoJVmlvbGF0aW9uEhIKCmZpZWxkX3BhdGgYASABKAkSFQoNY29uc3RyYWludF9pZBgCIAEoCRIPCgdtZXNzYWdlGAMgASgJEg8KB2Zvcl9rZXkYBCABKAhCcAoSYnVpbGQuYnVmLnZhbGlkYXRlQg9FeHByZXNzaW9uUHJvdG9QAVpHYnVmLmJ1aWxkL2dlbi9nby9idWZidWlsZC9wcm90b3ZhbGlkYXRlL3Byb3RvY29sYnVmZmVycy9nby9idWYvdmFsaWRhdGViBnByb3RvMw");
+export const file_buf_validate_expression =
+    /*@__PURE__*/
+    fileDesc(
+        'Ch1idWYvdmFsaWRhdGUvZXhwcmVzc2lvbi5wcm90bxIMYnVmLnZhbGlkYXRlIj0KCkNvbnN0cmFpbnQSCgoCaWQYASABKAkSDwoHbWVzc2FnZRgCIAEoCRISCgpleHByZXNzaW9uGAMgASgJIjkKClZpb2xhdGlvbnMSKwoKdmlvbGF0aW9ucxgBIAMoCzIXLmJ1Zi52YWxpZGF0ZS5WaW9sYXRpb24iWAoJVmlvbGF0aW9uEhIKCmZpZWxkX3BhdGgYASABKAkSFQoNY29uc3RyYWludF9pZBgCIAEoCRIPCgdtZXNzYWdlGAMgASgJEg8KB2Zvcl9rZXkYBCABKAhCcAoSYnVpbGQuYnVmLnZhbGlkYXRlQg9FeHByZXNzaW9uUHJvdG9QAVpHYnVmLmJ1aWxkL2dlbi9nby9idWZidWlsZC9wcm90b3ZhbGlkYXRlL3Byb3RvY29sYnVmZmVycy9nby9idWYvdmFsaWRhdGViBnByb3RvMw'
+    );
 
 /**
  * Describes the message buf.validate.Constraint.
  * Use `create(ConstraintSchema)` to create a new message.
  */
-export const ConstraintSchema = /*@__PURE__*/
-  messageDesc(file_buf_validate_expression, 0);
+export const ConstraintSchema = /*@__PURE__*/ messageDesc(file_buf_validate_expression, 0);
 
 /**
  * Describes the message buf.validate.Violations.
  * Use `create(ViolationsSchema)` to create a new message.
  */
-export const ViolationsSchema = /*@__PURE__*/
-  messageDesc(file_buf_validate_expression, 1);
+export const ViolationsSchema = /*@__PURE__*/ messageDesc(file_buf_validate_expression, 1);
 
 /**
  * Describes the message buf.validate.Violation.
  * Use `create(ViolationSchema)` to create a new message.
  */
-export const ViolationSchema = /*@__PURE__*/
-  messageDesc(file_buf_validate_expression, 2);
-
+export const ViolationSchema = /*@__PURE__*/ messageDesc(file_buf_validate_expression, 2);

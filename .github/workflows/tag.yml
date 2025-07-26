@@ -3,42 +3,42 @@
 name: tag
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-    branches:
-      - main-disabled
+    pull_request:
+        types: [opened, reopened, synchronize]
+        branches:
+            - main-disabled
 
 #concurrency:
 #  group: tag
 #  cancel-in-progress: true
 
 permissions:
-  contents: write
-  pull-requests: write
+    contents: write
+    pull-requests: write
 
 jobs:
-#  build:
-#    strategy:
-#      matrix:
-#        #go_version: ["1.19", stable]
-#        go_version: [ stable ]
-#    uses: ./.github/workflows/_build.yml
-#    secrets:
-#      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
-#      codecov_token: ${{ secrets.CODECOV_TOKEN }}
-#      gh_pat: ${{ secrets.GITHUB_TOKEN }}
-#    with:
-#      go_version: ${{ matrix.go_version }}
-  tag:
-    uses: ./.github/workflows/_tag.yml
-    permissions:
-      packages: write
-      contents: write
-      attestations: write
-      id-token: write
-      pull-requests: write
-    secrets:
-      docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
-      docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
-      gh_pat: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
+    #  build:
+    #    strategy:
+    #      matrix:
+    #        #go_version: ["1.19", stable]
+    #        go_version: [ stable ]
+    #    uses: ./.github/workflows/_build.yml
+    #    secrets:
+    #      goreleaser_key: ${{ secrets.GORELEASER_KEY }}
+    #      codecov_token: ${{ secrets.CODECOV_TOKEN }}
+    #      gh_pat: ${{ secrets.GITHUB_TOKEN }}
+    #    with:
+    #      go_version: ${{ matrix.go_version }}
+    tag:
+        uses: ./.github/workflows/_tag.yml
+        permissions:
+            packages: write
+            contents: write
+            attestations: write
+            id-token: write
+            pull-requests: write
+        secrets:
+            docker_username: ${{ secrets.DOCKERHUB_USERNAME }}
+            docker_token: ${{ secrets.DOCKERHUB_TOKEN }}
+            gh_pat: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+            goreleaser_key: ${{ secrets.GORELEASER_KEY }}

@@ -6,7 +6,6 @@ nx g @nx/node:application apps/connectors/public/advertisement/v1/decision \
 --unitTestRunner=jest \
 --e2eTestRunner=none
 
-
 nx g @nx/node:library \
 --directory=libs/partner/typescript/nats/v2 \
 --name=libs-partner-typescript-nats-v2 \
@@ -86,7 +85,6 @@ nx g @nx/node:library \
 --linter=eslint \
 --publishable=true \
 --unitTestRunner=jest
-
 
 nx g @nx/node:library \
 --directory=libs/partner/typescript/protobuf \

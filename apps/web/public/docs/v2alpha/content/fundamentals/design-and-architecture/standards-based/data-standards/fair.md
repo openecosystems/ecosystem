@@ -3,13 +3,13 @@ date_created: 2022-12-11T17:20:03
 title: FAIR
 pcx_content_type: definition
 summary: >-
-  In 2016, the 'FAIR Guiding Principles for scientific data management and stewardship' were published in Scientific Data. The authors intended to provide guidelines to improve the Findability, Accessibility, Interoperability, and Reuse of digital assets. It is an implementation of [GDocP](/fundamentals/design-and-architecture/standards-based/data-standards/#gdocp).
+    In 2016, the 'FAIR Guiding Principles for scientific data management and stewardship' were published in Scientific Data. The authors intended to provide guidelines to improve the Findability, Accessibility, Interoperability, and Reuse of digital assets. It is an implementation of [GDocP](/fundamentals/design-and-architecture/standards-based/data-standards/#gdocp).
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/gdocp
-  - /fundamentals/glossary/authentication
-  - /fundamentals/glossary/authorization
+    - /fundamentals/design-and-architecture/standards-based/data-standards/gdocp
+    - /fundamentals/glossary/authentication
+    - /fundamentals/glossary/authorization
 ---
 
 # Findability, Accessibility, Interoperability, and Reuse (FAIR)
@@ -34,4 +34,4 @@ The ultimate goal of FAIR is to optimize the reuse of data. To achieve this, met
 
 ## Sources
 
-- https://www.go-fair.org/fair-principles/
+-   https://www.go-fair.org/fair-principles/

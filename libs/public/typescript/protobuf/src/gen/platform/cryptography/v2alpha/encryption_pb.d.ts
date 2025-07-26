@@ -2,8 +2,8 @@
 // @generated from file platform/cryptography/v2alpha/encryption.proto (package platform.cryptography.v2alpha, syntax proto3)
 /* eslint-disable */
 
-import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv1";
-import type { Message } from "@bufbuild/protobuf";
+import type { GenFile, GenMessage, GenService } from '@bufbuild/protobuf/codegenv1';
+import type { Message } from '@bufbuild/protobuf';
 
 /**
  * Describes the file platform/cryptography/v2alpha/encryption.proto.
@@ -13,8 +13,7 @@ export declare const file_platform_cryptography_v2alpha_encryption: GenFile;
 /**
  * @generated from message platform.cryptography.v2alpha.EncryptionConfiguration
  */
-export declare type EncryptionConfiguration = Message<"platform.cryptography.v2alpha.EncryptionConfiguration"> & {
-};
+export declare type EncryptionConfiguration = Message<'platform.cryptography.v2alpha.EncryptionConfiguration'> & {};
 
 /**
  * Describes the message platform.cryptography.v2alpha.EncryptionConfiguration.
@@ -25,28 +24,28 @@ export declare const EncryptionConfigurationSchema: GenMessage<EncryptionConfigu
 /**
  * @generated from message platform.cryptography.v2alpha.EncryptionContext
  */
-export declare type EncryptionContext = Message<"platform.cryptography.v2alpha.EncryptionContext"> & {
-  /**
-   * TODO: Revisit these types.
-   *
-   * @generated from field: string user = 1;
-   */
-  user: string;
+export declare type EncryptionContext = Message<'platform.cryptography.v2alpha.EncryptionContext'> & {
+    /**
+     * TODO: Revisit these types.
+     *
+     * @generated from field: string user = 1;
+     */
+    user: string;
 
-  /**
-   * @generated from field: string entity = 2;
-   */
-  entity: string;
+    /**
+     * @generated from field: string entity = 2;
+     */
+    entity: string;
 
-  /**
-   * @generated from field: string principal = 3;
-   */
-  principal: string;
+    /**
+     * @generated from field: string principal = 3;
+     */
+    principal: string;
 
-  /**
-   * @generated from field: string intent = 4;
-   */
-  intent: string;
+    /**
+     * @generated from field: string intent = 4;
+     */
+    intent: string;
 };
 
 /**
@@ -58,16 +57,16 @@ export declare const EncryptionContextSchema: GenMessage<EncryptionContext>;
 /**
  * @generated from message platform.cryptography.v2alpha.CipherText
  */
-export declare type CipherText = Message<"platform.cryptography.v2alpha.CipherText"> & {
-  /**
-   * @generated from field: bytes cipher_text = 1;
-   */
-  cipherText: Uint8Array;
+export declare type CipherText = Message<'platform.cryptography.v2alpha.CipherText'> & {
+    /**
+     * @generated from field: bytes cipher_text = 1;
+     */
+    cipherText: Uint8Array;
 
-  /**
-   * @generated from field: platform.cryptography.v2alpha.EncryptionContext encryption_context = 2;
-   */
-  encryptionContext?: EncryptionContext;
+    /**
+     * @generated from field: platform.cryptography.v2alpha.EncryptionContext encryption_context = 2;
+     */
+    encryptionContext?: EncryptionContext;
 };
 
 /**
@@ -79,16 +78,16 @@ export declare const CipherTextSchema: GenMessage<CipherText>;
 /**
  * @generated from message platform.cryptography.v2alpha.EncryptRequest
  */
-export declare type EncryptRequest = Message<"platform.cryptography.v2alpha.EncryptRequest"> & {
-  /**
-   * @generated from field: bytes plain_text = 1;
-   */
-  plainText: Uint8Array;
+export declare type EncryptRequest = Message<'platform.cryptography.v2alpha.EncryptRequest'> & {
+    /**
+     * @generated from field: bytes plain_text = 1;
+     */
+    plainText: Uint8Array;
 
-  /**
-   * @generated from field: bytes associated_data = 2;
-   */
-  associatedData: Uint8Array;
+    /**
+     * @generated from field: bytes associated_data = 2;
+     */
+    associatedData: Uint8Array;
 };
 
 /**
@@ -100,23 +99,26 @@ export declare const EncryptRequestSchema: GenMessage<EncryptRequest>;
 /**
  * @generated from message platform.cryptography.v2alpha.EncryptResponse
  */
-export declare type EncryptResponse = Message<"platform.cryptography.v2alpha.EncryptResponse"> & {
-  /**
-   * @generated from oneof platform.cryptography.v2alpha.EncryptResponse.result
-   */
-  result: {
+export declare type EncryptResponse = Message<'platform.cryptography.v2alpha.EncryptResponse'> & {
     /**
-     * @generated from field: platform.cryptography.v2alpha.CipherText cipher_text = 1;
+     * @generated from oneof platform.cryptography.v2alpha.EncryptResponse.result
      */
-    value: CipherText;
-    case: "cipherText";
-  } | {
-    /**
-     * @generated from field: string err = 2;
-     */
-    value: string;
-    case: "err";
-  } | { case: undefined; value?: undefined };
+    result:
+        | {
+              /**
+               * @generated from field: platform.cryptography.v2alpha.CipherText cipher_text = 1;
+               */
+              value: CipherText;
+              case: 'cipherText';
+          }
+        | {
+              /**
+               * @generated from field: string err = 2;
+               */
+              value: string;
+              case: 'err';
+          }
+        | { case: undefined; value?: undefined };
 };
 
 /**
@@ -128,16 +130,16 @@ export declare const EncryptResponseSchema: GenMessage<EncryptResponse>;
 /**
  * @generated from message platform.cryptography.v2alpha.DecryptRequest
  */
-export declare type DecryptRequest = Message<"platform.cryptography.v2alpha.DecryptRequest"> & {
-  /**
-   * @generated from field: platform.cryptography.v2alpha.CipherText cipher_text = 1;
-   */
-  cipherText?: CipherText;
+export declare type DecryptRequest = Message<'platform.cryptography.v2alpha.DecryptRequest'> & {
+    /**
+     * @generated from field: platform.cryptography.v2alpha.CipherText cipher_text = 1;
+     */
+    cipherText?: CipherText;
 
-  /**
-   * @generated from field: bytes associated_data = 2;
-   */
-  associatedData: Uint8Array;
+    /**
+     * @generated from field: bytes associated_data = 2;
+     */
+    associatedData: Uint8Array;
 };
 
 /**
@@ -149,23 +151,26 @@ export declare const DecryptRequestSchema: GenMessage<DecryptRequest>;
 /**
  * @generated from message platform.cryptography.v2alpha.DecryptResponse
  */
-export declare type DecryptResponse = Message<"platform.cryptography.v2alpha.DecryptResponse"> & {
-  /**
-   * @generated from oneof platform.cryptography.v2alpha.DecryptResponse.result
-   */
-  result: {
+export declare type DecryptResponse = Message<'platform.cryptography.v2alpha.DecryptResponse'> & {
     /**
-     * @generated from field: bytes plain_text = 1;
+     * @generated from oneof platform.cryptography.v2alpha.DecryptResponse.result
      */
-    value: Uint8Array;
-    case: "plainText";
-  } | {
-    /**
-     * @generated from field: string err = 2;
-     */
-    value: string;
-    case: "err";
-  } | { case: undefined; value?: undefined };
+    result:
+        | {
+              /**
+               * @generated from field: bytes plain_text = 1;
+               */
+              value: Uint8Array;
+              case: 'plainText';
+          }
+        | {
+              /**
+               * @generated from field: string err = 2;
+               */
+              value: string;
+              case: 'err';
+          }
+        | { case: undefined; value?: undefined };
 };
 
 /**
@@ -178,21 +183,20 @@ export declare const DecryptResponseSchema: GenMessage<DecryptResponse>;
  * @generated from service platform.cryptography.v2alpha.EncryptionService
  */
 export declare const EncryptionService: GenService<{
-  /**
-   * @generated from rpc platform.cryptography.v2alpha.EncryptionService.Encrypt
-   */
-  encrypt: {
-    methodKind: "unary";
-    input: typeof EncryptRequestSchema;
-    output: typeof EncryptResponseSchema;
-  },
-  /**
-   * @generated from rpc platform.cryptography.v2alpha.EncryptionService.Decrypt
-   */
-  decrypt: {
-    methodKind: "unary";
-    input: typeof DecryptRequestSchema;
-    output: typeof DecryptResponseSchema;
-  },
+    /**
+     * @generated from rpc platform.cryptography.v2alpha.EncryptionService.Encrypt
+     */
+    encrypt: {
+        methodKind: 'unary';
+        input: typeof EncryptRequestSchema;
+        output: typeof EncryptResponseSchema;
+    };
+    /**
+     * @generated from rpc platform.cryptography.v2alpha.EncryptionService.Decrypt
+     */
+    decrypt: {
+        methodKind: 'unary';
+        input: typeof DecryptRequestSchema;
+        output: typeof DecryptResponseSchema;
+    };
 }>;
-

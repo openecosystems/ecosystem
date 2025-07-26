@@ -1,28 +1,28 @@
 ---
 title: Encryption
 aliases:
-  - Encryption
-  - Encrypt
-  - Encrypted
-  - Encrypting
-  - Decrypt
-  - Decrypted
-  - Decrypting
+    - Encryption
+    - Encrypt
+    - Encrypted
+    - Encrypting
+    - Decrypt
+    - Decrypted
+    - Decrypting
 pcx_content_type: definition
 summary: >-
-  Encryption is the process of encoding information in an unreadable format. It can also be done in a way that only the intended recipient can decrypt the information.
+    Encryption is the process of encoding information in an unreadable format. It can also be done in a way that only the intended recipient can decrypt the information.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/asymmetric-encryption
-  - /fundamentals/glossary/authentication
-  - /fundamentals/glossary/encryption-key
-  - /fundamentals/glossary/envelope-encryption
-  - /fundamentals/glossary/nist
-  - /fundamentals/glossary/pfs
-  - /fundamentals/glossary/private-key
-  - /fundamentals/glossary/public-key
-  - /fundamentals/glossary/symmetric-encryption
+    - /fundamentals/glossary/asymmetric-encryption
+    - /fundamentals/glossary/authentication
+    - /fundamentals/glossary/encryption-key
+    - /fundamentals/glossary/envelope-encryption
+    - /fundamentals/glossary/nist
+    - /fundamentals/glossary/pfs
+    - /fundamentals/glossary/private-key
+    - /fundamentals/glossary/public-key
+    - /fundamentals/glossary/symmetric-encryption
 ---
 
 # Encryption
@@ -35,8 +35,8 @@ Market standards are set by [NIST](/fundamentals/glossary/nist). Every system th
 
 There are two forms of Encryption:
 
-- [Symmetric Encryption](/fundamentals/glossary/symmetric-encryption)
-- [Asymmetric Encryption](/fundamentals/glossary/asymmetric-encryption)
+-   [Symmetric Encryption](/fundamentals/glossary/symmetric-encryption)
+-   [Asymmetric Encryption](/fundamentals/glossary/asymmetric-encryption)
 
 [Symmetric Encryption](/fundamentals/glossary/symmetric-encryption) means that the same [Encryption Key](/fundamentals/glossary/encryption-key) can be used both to Encrypt and to Decrypt the information. This is cheap in terms of computing resources, but the downside is that the Encryption Key has to be exchanged between the sender and receiver, which introduces a Security Risk.
 

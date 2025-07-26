@@ -1,5 +1,4 @@
 version: v2
 inputs:
-  - directory: ../../proto/poc
+    - directory: ../../proto/poc
 plugins:
-

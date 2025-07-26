@@ -1,7 +1,7 @@
 {
-  "name": "@openecosystems/docs",
-  "version": "0.47.0-db14aa9",
-  "license": "UNLICENSED",
-  "description": "Open Ecosystems Documentation",
-  "type": "module"
+    "name": "@openecosystems/docs",
+    "version": "0.47.0-db14aa9",
+    "license": "UNLICENSED",
+    "description": "Open Ecosystems Documentation",
+    "type": "module"
 }

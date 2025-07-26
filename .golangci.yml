@@ -1,57 +1,57 @@
 run:
-  dir: .
-  tests: false
-  allow-parallel-runners: true
+    dir: .
+    tests: false
+    allow-parallel-runners: true
 
 issues:
-  include:
-    - EXC0001
-    - EXC0005
-    - EXC0011
-    - EXC0012
-    - EXC0013
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - errcheck
-  exclude-dirs:
-    - "vendor"
-    - "node_modules"
-    - "dist"
-    - "tmp"
-    - ".nx"
-    - ".config"
-    - ".github"
-    - ".spec"
-    - ".vscode"
-  max-issues-per-linter: 0
-  max-same-issues: 0
+    include:
+        - EXC0001
+        - EXC0005
+        - EXC0011
+        - EXC0012
+        - EXC0013
+    exclude-rules:
+        - path: _test\.go
+          linters:
+              - errcheck
+    exclude-dirs:
+        - 'vendor'
+        - 'node_modules'
+        - 'dist'
+        - 'tmp'
+        - '.nx'
+        - '.config'
+        - '.github'
+        - '.spec'
+        - '.vscode'
+    max-issues-per-linter: 0
+    max-same-issues: 0
 
 linters:
-  enable:
-    - bodyclose
-    - gofumpt
-    - goimports
-    - gosec
-    - nilerr
-    - revive
-    - rowserrcheck
-    - sqlclosecheck
-    - tparallel
-    - unconvert
-    - unparam
-    - whitespace
-    - noctx
-    - perfsprint
-    - asasalint
-    - bidichk
-    - copyloopvar
-    - decorder
-    - dogsled
-    - goconst
-    - gosimple
-    - gosmopolitan
-    - iface
-    #- wrapcheck # Wrap all errors returned from partners
-    - recvcheck
-    #- protogetter # Clean up proto access
+    enable:
+        - bodyclose
+        - gofumpt
+        - goimports
+        - gosec
+        - nilerr
+        - revive
+        - rowserrcheck
+        - sqlclosecheck
+        - tparallel
+        - unconvert
+        - unparam
+        - whitespace
+        - noctx
+        - perfsprint
+        - asasalint
+        - bidichk
+        - copyloopvar
+        - decorder
+        - dogsled
+        - goconst
+        - gosimple
+        - gosmopolitan
+        - iface
+        #- wrapcheck # Wrap all errors returned from partners
+        - recvcheck
+        #- protogetter # Clean up proto access

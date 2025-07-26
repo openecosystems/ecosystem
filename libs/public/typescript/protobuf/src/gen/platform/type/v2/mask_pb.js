@@ -2,20 +2,22 @@
 // @generated from file platform/type/v2/mask.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
-import { file_google_protobuf_field_mask } from "@bufbuild/protobuf/wkt";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
+import { file_google_protobuf_field_mask } from '@bufbuild/protobuf/wkt';
 
 /**
  * Describes the file platform/type/v2/mask.proto.
  */
-export const file_platform_type_v2_mask = /*@__PURE__*/
-  fileDesc("ChtwbGF0Zm9ybS90eXBlL3YyL21hc2sucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIidwoMUmVzcG9uc2VNYXNrEi4KCmZpZWxkX21hc2sYASABKAsyGi5nb29nbGUucHJvdG9idWYuRmllbGRNYXNrEi8KC3BvbGljeV9tYXNrGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLkZpZWxkTWFzazoG+rYYAggBQlZaVGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z", [file_platform_options_v2_annotations, file_google_protobuf_field_mask]);
+export const file_platform_type_v2_mask =
+    /*@__PURE__*/
+    fileDesc(
+        'ChtwbGF0Zm9ybS90eXBlL3YyL21hc2sucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIidwoMUmVzcG9uc2VNYXNrEi4KCmZpZWxkX21hc2sYASABKAsyGi5nb29nbGUucHJvdG9idWYuRmllbGRNYXNrEi8KC3BvbGljeV9tYXNrGAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLkZpZWxkTWFzazoG+rYYAggBQlZaVGdpdGh1Yi5jb20vb3BlbmVjb3N5c3RlbXMvZWNvc3lzdGVtL2dvL29lY28tc2RrL3YyYmV0YS9nZW4vcGxhdGZvcm0vdHlwZS92Mjt0eXBldjJwYmIGcHJvdG8z',
+        [file_platform_options_v2_annotations, file_google_protobuf_field_mask]
+    );
 
 /**
  * Describes the message platform.type.v2.ResponseMask.
  * Use `create(ResponseMaskSchema)` to create a new message.
  */
-export const ResponseMaskSchema = /*@__PURE__*/
-  messageDesc(file_platform_type_v2_mask, 0);
-
+export const ResponseMaskSchema = /*@__PURE__*/ messageDesc(file_platform_type_v2_mask, 0);

@@ -2,11 +2,11 @@
 title: SaaS
 pcx_content_type: definition
 summary: >-
-  Software as a Service (SaaS) is a [Cloud](/fundamentals/glossary/cloud) computing model that provides software applications to users over the internet on a subscription basis.
+    Software as a Service (SaaS) is a [Cloud](/fundamentals/glossary/cloud) computing model that provides software applications to users over the internet on a subscription basis.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/cloud
+    - /fundamentals/glossary/cloud
 ---
 
 # Software as a Service (SaaS)

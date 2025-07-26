@@ -3,8 +3,7 @@
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "libs/partner/typescript/model/src",
     "projectType": "library",
-    "implicitDependencies": [
-    ],
+    "implicitDependencies": [],
     "release": {
         "version": {
             "generatorOptions": {
@@ -14,7 +13,6 @@
         }
     },
     "targets": {
-
         "build": {
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
@@ -32,11 +30,5 @@
             }
         }
     },
-    "tags": [
-      "type:lib",
-      "cycle:partner",
-      "language:typescript",
-      "type:model",
-      "exposure:external"
-    ]
+    "tags": ["type:lib", "cycle:partner", "language:typescript", "type:model", "exposure:external"]
 }

@@ -2,33 +2,33 @@
 // @generated from file platform/type/v2/validation.proto (package platform.type.v2, syntax proto3)
 /* eslint-disable */
 
-import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
-import { file_platform_options_v2_annotations } from "../../options/v2/annotations_pb";
+import { fileDesc, messageDesc } from '@bufbuild/protobuf/codegenv1';
+import { file_platform_options_v2_annotations } from '../../options/v2/annotations_pb';
 
 /**
  * Describes the file platform/type/v2/validation.proto.
  */
-export const file_platform_type_v2_validation = /*@__PURE__*/
-  fileDesc("CiFwbGF0Zm9ybS90eXBlL3YyL3ZhbGlkYXRpb24ucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIibAoRUmVxdWVzdFZhbGlkYXRpb24SFQoNdmFsaWRhdGVfb25seRgBIAEoCBI4CglzaWduYXR1cmUYAiABKAsyJS5wbGF0Zm9ybS50eXBlLnYyLlZhbGlkYXRpb25TaWduYXR1cmU6Bvq2GAIIASJtChJSZXNwb25zZVZhbGlkYXRpb24SFQoNdmFsaWRhdGVfb25seRgBIAEoCBI4CglzaWduYXR1cmUYAiABKAsyJS5wbGF0Zm9ybS50eXBlLnYyLlZhbGlkYXRpb25TaWduYXR1cmU6Bvq2GAIIASIqChNWYWxpZGF0aW9uU2lnbmF0dXJlEgsKA2p3dBgBIAEoCToG+rYYAggBQjlaN2xpYnMvcHJvdG9idWYvZ28vcHJvdG9idWYvZ2VuL3BsYXRmb3JtL3R5cGUvdjI7dHlwZXYycGJiBnByb3RvMw", [file_platform_options_v2_annotations]);
+export const file_platform_type_v2_validation =
+    /*@__PURE__*/
+    fileDesc(
+        'CiFwbGF0Zm9ybS90eXBlL3YyL3ZhbGlkYXRpb24ucHJvdG8SEHBsYXRmb3JtLnR5cGUudjIibAoRUmVxdWVzdFZhbGlkYXRpb24SFQoNdmFsaWRhdGVfb25seRgBIAEoCBI4CglzaWduYXR1cmUYAiABKAsyJS5wbGF0Zm9ybS50eXBlLnYyLlZhbGlkYXRpb25TaWduYXR1cmU6Bvq2GAIIASJtChJSZXNwb25zZVZhbGlkYXRpb24SFQoNdmFsaWRhdGVfb25seRgBIAEoCBI4CglzaWduYXR1cmUYAiABKAsyJS5wbGF0Zm9ybS50eXBlLnYyLlZhbGlkYXRpb25TaWduYXR1cmU6Bvq2GAIIASIqChNWYWxpZGF0aW9uU2lnbmF0dXJlEgsKA2p3dBgBIAEoCToG+rYYAggBQjlaN2xpYnMvcHJvdG9idWYvZ28vcHJvdG9idWYvZ2VuL3BsYXRmb3JtL3R5cGUvdjI7dHlwZXYycGJiBnByb3RvMw',
+        [file_platform_options_v2_annotations]
+    );
 
 /**
  * Describes the message platform.type.v2.RequestValidation.
  * Use `create(RequestValidationSchema)` to create a new message.
  */
-export const RequestValidationSchema = /*@__PURE__*/
-  messageDesc(file_platform_type_v2_validation, 0);
+export const RequestValidationSchema = /*@__PURE__*/ messageDesc(file_platform_type_v2_validation, 0);
 
 /**
  * Describes the message platform.type.v2.ResponseValidation.
  * Use `create(ResponseValidationSchema)` to create a new message.
  */
-export const ResponseValidationSchema = /*@__PURE__*/
-  messageDesc(file_platform_type_v2_validation, 1);
+export const ResponseValidationSchema = /*@__PURE__*/ messageDesc(file_platform_type_v2_validation, 1);
 
 /**
  * Describes the message platform.type.v2.ValidationSignature.
  * Use `create(ValidationSignatureSchema)` to create a new message.
  */
-export const ValidationSignatureSchema = /*@__PURE__*/
-  messageDesc(file_platform_type_v2_validation, 2);
-
+export const ValidationSignatureSchema = /*@__PURE__*/ messageDesc(file_platform_type_v2_validation, 2);

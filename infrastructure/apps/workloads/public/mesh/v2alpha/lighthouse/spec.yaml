@@ -1,5 +1,5 @@
 app:
-  name: 'mesh-v2alpha-lighthouse'
-  version: 'v2.0.0'
-  environmentName: 'local-1'
-  environmentType: 'local'
+    name: 'mesh-v2alpha-lighthouse'
+    version: 'v2.0.0'
+    environmentName: 'local-1'
+    environmentType: 'local'

@@ -5,9 +5,9 @@ summary: A `CSP` is a `Cloud Service Provider`. The biggest ones are [AWS](/fund
 hidden: true
 has_more: false
 links_to:
-  - /fundamentals/glossary/aws
-  - /fundamentals/glossary/azure
-  - /fundamentals/glossary/gcp
+    - /fundamentals/glossary/aws
+    - /fundamentals/glossary/azure
+    - /fundamentals/glossary/gcp
 ---
 
 # CSP

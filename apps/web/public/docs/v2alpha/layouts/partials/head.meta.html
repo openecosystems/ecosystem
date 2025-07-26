@@ -1,82 +1,74 @@
-{{/* @see :: data/<Product>.yml */}}
-{{- $DATA := (index .Context.Site.Data .Product) -}}
-{{- $META := merge $DATA.meta (default dict .Context.Params.meta) -}}
+{{/* @see :: data/<Product
+    >.yml */}} {{- $DATA := (index .Context.Site.Data .Product) -}} {{- $META := merge $DATA.meta (default dict
+    .Context.Params.meta) -}} {{- $pt := default .Context.Title .Context.Params.meta.title -}} {{- $hasDataTitle := ne
+    (printf "%s" $DATA.meta.title) "%!s(<nil
+        >)" -}} {{- $title := cond $hasDataTitle (printf "%s · %s" $pt $DATA.meta.title) $pt }}
 
-{{- $pt := default .Context.Title .Context.Params.meta.title -}}
-{{- $hasDataTitle := ne (printf "%s" $DATA.meta.title) "%!s(<nil>)" -}}
-{{- $title := cond $hasDataTitle (printf "%s · %s" $pt $DATA.meta.title) $pt }}
+        <meta charset="utf-8" />
+        <title>{{ $title }}</title>
+        <meta http-equiv="cleartype" content="on" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta charset="utf-8">
-<title>{{ $title }}</title>
-<meta http-equiv="cleartype" content="on"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="application-name" content="{{ $title }}" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="apple-mobile-web-app-title" content="{{ $title }}" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#f38020" />
 
-<meta name="application-name" content="{{ $title }}"/>
-<meta name="msapplication-tap-highlight" content="no"/>
-<meta name="apple-mobile-web-app-title" content="{{ $title }}"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="theme-color" content="#f38020"/>
+        <meta name="description" content="{{ $META.description }}" />
 
-<meta name="description" content="{{ $META.description }}" />
+        <meta property="og:image" content="{{ $META.image | absURL }}" />
+        <meta property="og:title" content="{{ $title }}" />
+        <meta property="og:description" content="{{ $META.description }}" />
+        <meta property="og:type" content="website" />
 
-<meta property="og:image" content="{{ $META.image | absURL }}"/>
-<meta property="og:title" content="{{ $title }}"/>
-<meta property="og:description" content="{{ $META.description }}"/>
-<meta property="og:type" content="website"/>
+        <meta name="twitter:title" content="{{ $title }}" />
+        <meta name="twitter:image" content="{{ $META.image | absURL }}" />
+        <meta name="twitter:description" content="{{ $META.description }}" />
+        <meta name="twitter:creator" content="{{ $META.author }}" />
+        <meta name="twitter:card" content="summary_large_image" />
 
-<meta name="twitter:title" content="{{ $title }}"/>
-<meta name="twitter:image" content="{{ $META.image | absURL }}"/>
-<meta name="twitter:description" content="{{ $META.description }}"/>
-<meta name="twitter:creator" content="{{ $META.author }}"/>
-<meta name="twitter:card" content="summary_large_image"/>
+        {{- with .Context.Params.pcx_content_type -}}
+        <meta name="pcx_content_type" content="{{ . }}" />
+        {{- end -}}
 
-{{- with .Context.Params.pcx_content_type -}}
-<meta name="pcx_content_type" content= "{{ . }}" />
-{{- end -}}
+        <link rel="icon" href="/favicon.png" />
+        <link rel="canonical" href="{{ .Context.Permalink }}" />
+        <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+        <link rel="manifest" href="/manifest.webmanifest" />
 
-<link rel="icon" href="/favicon.png"/>
-<link rel="canonical" href="{{ .Context.Permalink }}"/>
-<link rel="sitemap" href="/sitemap.xml" type="application/xml"/>
-<link rel="manifest" href="/manifest.webmanifest"/>
+        <link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+        <link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png" />
+        <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png" />
 
-<link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png"/>
-<link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png"/>
-<link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png"/>
-<link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png"/>
-<link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png"/>
-<link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png"/>
-<link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png"/>
-<link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png"/>
+        {{- $algolia := index $.Context.Site.Params "algolia" -}} {{- if (and $algolia (eq $.Context.RelPermalink
+        "/search/")) -}}
+        <link rel="stylesheet" href="/search.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/satellite-min.css" />
+        {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}} {{- $script := (resources.Get
+        "search.ts") | js.Build $opts -}} {{- if hugo.IsProduction -}} {{- $script = $script | minify | fingerprint
+        "md5" -}} {{- end -}}
 
-{{- $algolia := index $.Context.Site.Params "algolia" -}}
-
-{{- if (and $algolia (eq $.Context.RelPermalink "/search/")) -}}
-  <link rel="stylesheet" href="/search.css"/>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/satellite-min.css"
-  />
-  {{- $opts := dict "target" "es2015" "minify" hugo.IsProduction "format" "iife" -}}
-  {{- $script := (resources.Get "search.ts") | js.Build $opts -}}
-
-  {{- if hugo.IsProduction -}}
-    {{- $script = $script | minify | fingerprint "md5" -}}
-  {{- end -}}
-
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.10.5/dist/algoliasearch-lite.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.57.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js@1.11.0/dist/umd/index.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-query-suggestions@1.11.0/dist/umd/index.production.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-recent-searches@1.11.0/dist/umd/index.production.min.js"></script>
-  <script
-    src="{{ $script.RelPermalink }}" defer
-    data-appid="{{ $algolia.appId }}"
-    data-apikey="{{ $algolia.apiKey }}"
-    data-indexname="{{ $algolia.indexName }}"
-  ></script>
-{{- else -}}
-  {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}}
-{{- end -}}
+        <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.10.5/dist/algoliasearch-lite.umd.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.57.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js@1.11.0/dist/umd/index.production.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-query-suggestions@1.11.0/dist/umd/index.production.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-plugin-recent-searches@1.11.0/dist/umd/index.production.min.js"></script>
+        <script
+            src="{{ $script.RelPermalink }}"
+            defer
+            data-appid="{{ $algolia.appId }}"
+            data-apikey="{{ $algolia.apiKey }}"
+            data-indexname="{{ $algolia.indexName }}"
+        ></script>
+        {{- else -}} {{- partial "script" (dict "src" "search.redirect.ts" "defer" true) -}} {{- end -}}
+    </nil></Product
+>

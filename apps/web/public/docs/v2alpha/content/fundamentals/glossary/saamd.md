@@ -1,21 +1,21 @@
 ---
 title: SaaMD
 aliases:
-  - SaaMD
-  - SaaMDs
-  - SaMD
-  - SaMDs
-  - Medical Device
-  - Medical Devices
+    - SaaMD
+    - SaaMDs
+    - SaMD
+    - SaMDs
+    - Medical Device
+    - Medical Devices
 pcx_content_type: definition
 summary: >-
-  `Software as a Medical Device (SaaMD)`. Software becomes a Medical Device if it is used to provide Diagnostic Data.
+    `Software as a Medical Device (SaaMD)`. Software becomes a Medical Device if it is used to provide Diagnostic Data.
 hidden: true
 has_more: true
 links_to:
-  - /connected-test/
-  - /fundamentals/glossary/saas
-  - /rdt/
+    - /connected-test/
+    - /fundamentals/glossary/saas
+    - /rdt/
 ---
 
 # Software as a Medical Device (SaaMD)

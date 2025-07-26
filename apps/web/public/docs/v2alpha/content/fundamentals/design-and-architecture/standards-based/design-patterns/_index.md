@@ -1,8 +1,8 @@
 ---
 title: Design Patterns
 aliases:
-  - Design Pattern
-  - Design Patterns
+    - Design Pattern
+    - Design Patterns
 pcx_content_type: glossary
 layout: single
 weight: 2

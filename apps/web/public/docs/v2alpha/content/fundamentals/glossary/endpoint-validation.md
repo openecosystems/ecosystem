@@ -2,13 +2,13 @@
 title: Endpoint Validation
 pcx_content_type: definition
 summary: >-
-  `Endpoint Validation` is the process to assert that the endpoint of a communication is the intended recipient and not a hostile recipient pretending to be the intended one.
+    `Endpoint Validation` is the process to assert that the endpoint of a communication is the intended recipient and not a hostile recipient pretending to be the intended one.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/ssl
-  - /fundamentals/glossary/private-key
-  - /fundamentals/glossary/certificate-authority
+    - /fundamentals/design-and-architecture/standards-based/data-standards/ssl
+    - /fundamentals/glossary/private-key
+    - /fundamentals/glossary/certificate-authority
 ---
 
 # Endpoint Validation

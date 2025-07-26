@@ -2,17 +2,17 @@
 title: Metric Monitoring
 pcx_content_type: definition
 summary: >-
-  ``Metric Monitoring`` uses [Metrics](/fundamentals/glossary/#metric) to determine if the system is still running within normal parameters.
+    ``Metric Monitoring`` uses [Metrics](/fundamentals/glossary/#metric) to determine if the system is still running within normal parameters.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/alerting
-  - /fundamentals/glossary/elk-stack
-  - /fundamentals/glossary/event-monitoring
-  - /fundamentals/glossary/exception-handling
-  - /fundamentals/glossary/machine-learning
-  - /fundamentals/glossary/metric
-  - /fundamentals/glossary/monitoring-maturity-level
+    - /fundamentals/glossary/alerting
+    - /fundamentals/glossary/elk-stack
+    - /fundamentals/glossary/event-monitoring
+    - /fundamentals/glossary/exception-handling
+    - /fundamentals/glossary/machine-learning
+    - /fundamentals/glossary/metric
+    - /fundamentals/glossary/monitoring-maturity-level
 ---
 
 # Metric Monitoring
@@ -39,10 +39,10 @@ Where an `Event` can tell you that something _did_ go wrong, `Metric Monitoring`
 
 Examples:
 
-- **CPU usage / Memory Usage**. If CPU usage is generally around 40%, but now it continuously clips at 100%, something is wrong, even though the system may not log an `SpecError Event`.
-- **Disk usage**. If the amount of storage used on a disk gradually increases, there will be a moment when the disk is full and the system will crash.
-- **Queue Size**. If Queues are used for messaging, then a Queue that starts to retain messages is an indication that the service instances that are reading from that Queue are either no longer working, or simply not fast enough.
-- **Nr of Login Attempts**. If there is typically one login per second, but all of a sudden it increases to 20 logins per second, someone is probably trying to hack the system.
+-   **CPU usage / Memory Usage**. If CPU usage is generally around 40%, but now it continuously clips at 100%, something is wrong, even though the system may not log an `SpecError Event`.
+-   **Disk usage**. If the amount of storage used on a disk gradually increases, there will be a moment when the disk is full and the system will crash.
+-   **Queue Size**. If Queues are used for messaging, then a Queue that starts to retain messages is an indication that the service instances that are reading from that Queue are either no longer working, or simply not fast enough.
+-   **Nr of Login Attempts**. If there is typically one login per second, but all of a sudden it increases to 20 logins per second, someone is probably trying to hack the system.
 
 ## Alerting
 

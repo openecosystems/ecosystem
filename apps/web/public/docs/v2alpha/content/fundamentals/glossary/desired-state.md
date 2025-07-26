@@ -2,12 +2,12 @@
 title: Desired State
 pcx_content_type: definition
 summary: >-
-  In the context of [Infrastructure as Code](/fundamentals/glossary/#infrastructure-as-code) a `Desired State` is a declaration of what an infrastructure should look like.
+    In the context of [Infrastructure as Code](/fundamentals/glossary/#infrastructure-as-code) a `Desired State` is a declaration of what an infrastructure should look like.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/glossary/current-state
-  - /fundamentals/glossary/infrastructure-as-code
+    - /fundamentals/glossary/current-state
+    - /fundamentals/glossary/infrastructure-as-code
 ---
 
 # Desired State

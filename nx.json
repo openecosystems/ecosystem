@@ -158,7 +158,16 @@
         "groups": {
             "sdks-typescript": {
                 "projectsRelationship": "independent",
-                "projects": ["tag:type:sdk", "tag:cycle:public", "tag:language:typescript", "!tag:language:golang", "!tag:language:rust", "!tag:cycle:private", "!tag:cycle:poc", "!tag:cycle:partner"],
+                "projects": [
+                    "tag:type:sdk",
+                    "tag:cycle:public",
+                    "tag:language:typescript",
+                    "!tag:language:golang",
+                    "!tag:language:rust",
+                    "!tag:cycle:private",
+                    "!tag:cycle:poc",
+                    "!tag:cycle:partner"
+                ],
                 "git": {
                     "commit": true,
                     "tag": true,

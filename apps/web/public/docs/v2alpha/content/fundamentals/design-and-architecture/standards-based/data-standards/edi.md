@@ -3,11 +3,11 @@ date_created: 2022-12-11T17:06:42
 title: EDI
 pcx_content_type: definition
 summary: >-
-  Electronic Data Interchange (EDI) is **the electronic interchange of business information using a standardized format**; a process which allows one company to send information to another company electronically rather than with paper. Business entities conducting business electronically are called trading partners.
+    Electronic Data Interchange (EDI) is **the electronic interchange of business information using a standardized format**; a process which allows one company to send information to another company electronically rather than with paper. Business entities conducting business electronically are called trading partners.
 hidden: true
 has_more: true
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/xml
+    - /fundamentals/design-and-architecture/standards-based/data-standards/xml
 ---
 
 # Electronic Data Interchange (EDI)
@@ -22,5 +22,5 @@ Part of the EDI standard is the definition of a number of standardized documents
 
 ## Sources
 
-- https://www.unimaze.com/for-developers/edi-file-formats/
-- https://web.archive.org/web/20080511043940/https://www.itl.nist.gov/fipspubs/fip161-2.htm
+-   https://www.unimaze.com/for-developers/edi-file-formats/
+-   https://web.archive.org/web/20080511043940/https://www.itl.nist.gov/fipspubs/fip161-2.htm

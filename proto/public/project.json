@@ -1,17 +1,17 @@
 {
-  "name": "proto-public",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "proto",
-  "sourceRoot": "proto/public",
-  "targets": {
-    "generate-disabled": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "buf generate",
-        "cwd": "proto/public"
-      },
-      "cache": false
-    }
-  },
-  "tags": []
+    "name": "proto-public",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "proto",
+    "sourceRoot": "proto/public",
+    "targets": {
+        "generate-disabled": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "buf generate",
+                "cwd": "proto/public"
+            },
+            "cache": false
+        }
+    },
+    "tags": []
 }

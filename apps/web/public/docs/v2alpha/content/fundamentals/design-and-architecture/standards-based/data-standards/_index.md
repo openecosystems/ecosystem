@@ -1,7 +1,7 @@
 ---
 title: Data Standards
 aliases:
-  - Data Standards
+    - Data Standards
 pcx_content_type: glossary
 layout: single
 weight: 1

@@ -2,7 +2,7 @@
 date_created: 2022-12-11T17:05:25
 title: ICD-10
 aliases:
-  - ICD-10
+    - ICD-10
 pcx_content_type: definition
 summary: >-
 
@@ -10,9 +10,9 @@ hidden: true
 has_more: true
 todo: Find more details and sources
 links_to:
-  - /fundamentals/design-and-architecture/standards-based/data-standards/snomed
-  - /fundamentals/glossary/billing
-  - /fundamentals/glossary/code-set
+    - /fundamentals/design-and-architecture/standards-based/data-standards/snomed
+    - /fundamentals/glossary/billing
+    - /fundamentals/glossary/code-set
 ---
 
 # ICD-10
