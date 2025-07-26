@@ -1,5 +1,6 @@
 # Prerequisites
 
+-   Merge all changes to main (releases will only release from main) 
 -   Ensure Git is not in a "dirty" state
 -   Ensure all of the protos have been published if changed
     -   cd proto
