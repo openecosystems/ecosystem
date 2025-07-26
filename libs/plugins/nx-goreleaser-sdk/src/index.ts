@@ -53,6 +53,16 @@ export const createNodes = [
                         cwd: "",
                     },
                 },
+                lint: {
+                    executor: 'nx:run-commands',
+                    options: {
+                        commands: [
+                            'golangci-lint run ./... --timeout=5m',
+                        ],
+                        parallel: false,
+                        cwd: projectRoot,
+                    },
+                },
                 format: {
                     executor: 'nx:run-commands',
                     options: {
