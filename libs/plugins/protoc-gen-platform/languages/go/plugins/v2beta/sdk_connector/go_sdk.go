@@ -148,13 +148,14 @@ func (m GoSdkConnectorModule) GenerateClientFile(file pgs.File) {
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
 	scope := _scope.LowerCamelCase().String()
 	system := _system.LowerCamelCase().String()
-	systemFlattened := strings.ReplaceAll(system, "_", "")
-	version := _version.LowerCamelCase().String()
+	// systemFlattened := strings.ReplaceAll(system, "_", "")
+	version := _version.String()
+	gopackage := fns.GetGoPackageFromFile(file)
 	fileName := fns.ProtoName(file)
 
 	// packagePath := fns.DotNotationToFilePath(file.Package().ProtoName().String())
 
-	clientFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + systemFlattened + version + "pbconnect" + "/" + fileName + ".client.go").String()
+	clientFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + gopackage + "pbconnect" + "/" + fileName + ".client.go").String()
 	// clientFileName := strings.TrimPrefix(m.ctx.OutputPath(file).SetExt(".client.go").String(), "platform/")
 	m.OverwriteGeneratorTemplateFile(clientFileName, m.Tpl, file)
 }
@@ -191,7 +192,7 @@ func (m GoSdkConnectorModule) GenerateProjectJsonFile(file pgs.File) {
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
 	scope := _scope.LowerCamelCase().String()
 	system := _system.LowerCamelCase().String()
-	version := _version.LowerCamelCase().String()
+	version := _version.String()
 
 	projectJsonFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + "project.json").String()
 	m.OverwriteGeneratorTemplateFile(projectJsonFileName, m.Tpl, m.data)
@@ -228,7 +229,7 @@ func (m GoSdkConnectorModule) GeneratePackageJsonFile(file pgs.File) {
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
 	scope := _scope.LowerCamelCase().String()
 	system := _system.LowerCamelCase().String()
-	version := _version.LowerCamelCase().String()
+	version := _version.String()
 
 	projectJsonFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + "package.json").String()
 	m.OverwriteGeneratorTemplateFile(projectJsonFileName, m.Tpl, m.data)
@@ -266,7 +267,7 @@ func (m GoSdkConnectorModule) GenerateGoModFile(file pgs.File) {
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
 	scope := _scope.LowerCamelCase().String()
 	system := _system.LowerCamelCase().String()
-	version := _version.LowerCamelCase().String()
+	version := _version.String()
 
 	goModFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + "go.mod").String()
 	m.OverwriteGeneratorTemplateFile(goModFileName, m.Tpl, m.data)
@@ -303,7 +304,7 @@ func (m GoSdkConnectorModule) GenerateGoReleaserFile(file pgs.File) {
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
 	scope := _scope.LowerCamelCase().String()
 	system := _system.LowerCamelCase().String()
-	version := _version.LowerCamelCase().String()
+	version := _version.String()
 
 	name := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + ".goreleaser.sdk.yaml").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, m.data)
@@ -342,7 +343,7 @@ func (m GoSdkConnectorModule) GenerateReadmeFile(file pgs.File) {
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
 	scope := _scope.LowerCamelCase().String()
 	system := _system.LowerCamelCase().String()
-	version := _version.LowerCamelCase().String()
+	version := _version.String()
 
 	name := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + "README.md").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
