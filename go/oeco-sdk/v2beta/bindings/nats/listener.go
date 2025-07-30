@@ -17,6 +17,7 @@ import (
 	optionv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 	"go.opentelemetry.io/otel/trace"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 // SpecEventListener is an interface for handling event streaming, listening, and processing for specific configurations.
@@ -274,6 +275,28 @@ func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
 		log.Error("SpecError acknowledging message", zap.Error(err4))
 		return
 	}
+}
+
+func RespondToListenerProcess(ctx context.Context, request *ListenerMessage, response protopb.Message, serr sdkv2betalib.SpecErrorable) {
+	if serr != nil {
+		request.Spec.SpecError = serr.ToStatus()
+		RespondToMultiplexedRequest(ctx, request)
+		return
+	}
+
+	a, err := anypb.New(response)
+	if err != nil {
+		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err).ToStatus()
+		RespondToMultiplexedRequest(ctx, request)
+		return
+	}
+
+	if request.Spec.SpecData != nil {
+		request.Spec.SpecData = &specv2pb.SpecData{}
+	}
+
+	request.Spec.SpecData.Data = a
+	RespondToMultiplexedRequest(ctx, request)
 }
 
 // convertNatsToListenerMessage transforms a NATS message into a ListenerMessage while setting up the required context.
