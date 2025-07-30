@@ -1,3 +1,13 @@
+## 0.19.0 (2025-07-30)
+
+### 🚀 Features
+
+- Oeco stability 8 ([#69](https://github.com/openecosystems/ecosystem/pull/69))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.18.0 (2025-07-26)
 
 ### 🚀 Features
