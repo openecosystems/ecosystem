@@ -2,11 +2,11 @@
 
 ### 🩹 Fixes
 
-- Oeco stability 10 ([#70](https://github.com/openecosystems/ecosystem/pull/70))
+-   Oeco stability 10 ([#70](https://github.com/openecosystems/ecosystem/pull/70))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot @dimyjeannot
+-   Dimy Jeannot @dimyjeannot
 
 ## 0.19.0 (2025-07-30)
 
