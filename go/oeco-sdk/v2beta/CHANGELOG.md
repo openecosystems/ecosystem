@@ -1,3 +1,14 @@
+## 0.19.2 (2025-08-03)
+
+### 🩹 Fixes
+
+- improving nats debugging. Need to update the Health Checker ([#71](https://github.com/openecosystems/ecosystem/pull/71))
+- improving nats debugging. Need to update the Health Checker ([4ce39b0](https://github.com/openecosystems/ecosystem/commit/4ce39b0))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.19.1 (2025-08-03)
 
 ### 🩹 Fixes
