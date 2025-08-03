@@ -12,6 +12,7 @@ import (
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
 
+	apexlog "github.com/apex/log"
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	nebulav1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nebula"
 )
@@ -126,6 +127,15 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						}
 
 						natsOptions = append(natsOptions, nats.SetCustomDialer(nebulav1.Bound.MeshSocket))
+						natsOptions = append(natsOptions, nats.DisconnectErrHandler(func(_ *nats.Conn, err error) {
+							apexlog.Info("Disconnected due to: " + err.Error())
+						}))
+						natsOptions = append(natsOptions, nats.ReconnectHandler(func(nc *nats.Conn) {
+							apexlog.Info("Reconnected to " + nc.ConnectedUrl())
+						}))
+						natsOptions = append(natsOptions, nats.ClosedHandler(func(_ *nats.Conn) {
+							apexlog.Info("Connection closed.")
+						}))
 					}
 
 					_nats, err := nats.Connect(servers, natsOptions...)
