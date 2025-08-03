@@ -127,16 +127,17 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						}
 
 						natsOptions = append(natsOptions, nats.SetCustomDialer(nebulav1.Bound.MeshSocket))
-						natsOptions = append(natsOptions, nats.DisconnectErrHandler(func(_ *nats.Conn, err error) {
-							apexlog.Info("Disconnected due to: " + err.Error())
-						}))
-						natsOptions = append(natsOptions, nats.ReconnectHandler(func(nc *nats.Conn) {
-							apexlog.Info("Reconnected to " + nc.ConnectedUrl())
-						}))
-						natsOptions = append(natsOptions, nats.ClosedHandler(func(_ *nats.Conn) {
-							apexlog.Info("Connection closed.")
-						}))
 					}
+
+					natsOptions = append(natsOptions, nats.DisconnectErrHandler(func(_ *nats.Conn, err error) {
+						apexlog.Info("Disconnected due to: " + err.Error())
+					}))
+					natsOptions = append(natsOptions, nats.ReconnectHandler(func(nc *nats.Conn) {
+						apexlog.Info("Reconnected to " + nc.ConnectedUrl())
+					}))
+					natsOptions = append(natsOptions, nats.ClosedHandler(func(_ *nats.Conn) {
+						apexlog.Info("Connection closed.")
+					}))
 
 					_nats, err := nats.Connect(servers, natsOptions...)
 					if err != nil {
