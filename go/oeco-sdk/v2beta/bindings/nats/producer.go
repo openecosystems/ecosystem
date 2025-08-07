@@ -52,7 +52,7 @@ func (b *Binding) MultiplexCommandSync(ctx context.Context, s *specv2pb.Spec, co
 
 	log.Debug("Issuing a multiplex command: " + command.Procedure + ", on channel: " + subject)
 
-	return publish(b.Nats, subject, specBytes)
+	return publish(b.Nats, subject, s, specBytes)
 }
 
 // MultiplexEventSync sends an event to a multiplexed stream and waits for the response or error within the specified timeout.
@@ -82,10 +82,10 @@ func (b *Binding) MultiplexEventSync(_ context.Context, s *specv2pb.Spec, event 
 
 	log.Debug("Issuing a multiplex event: " + event.Procedure + ", on channel: " + subject)
 
-	return publish(b.Nats, subject, specBytes)
+	return publish(b.Nats, subject, s, specBytes)
 }
 
-func publish(n *nats.Conn, subject string, specBytes []byte) (*nats.Msg, error) {
+func publish(n *nats.Conn, subject string, s *specv2pb.Spec, specBytes []byte) (*nats.Msg, error) {
 	reply, err := n.RequestMsg(&nats.Msg{
 		Subject: subject,
 		Data:    specBytes,
@@ -93,24 +93,24 @@ func publish(n *nats.Conn, subject string, specBytes []byte) (*nats.Msg, error) 
 	if err != nil {
 		switch {
 		case errors.Is(err, nats.ErrTimeout):
-			return nil, ErrTimeout
+			return nil, ErrTimeout.WithSpecDetail(s)
 		case errors.Is(err, nats.ErrNoResponders):
 			// no responders
-			return nil, ErrNoResponders
+			return nil, ErrNoResponders.WithSpecDetail(s)
 		case errors.Is(err, nats.ErrConnectionClosed):
 			// NATS connection was closed
-			return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+			return nil, sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(err)
 		case errors.Is(err, nats.ErrBadSubscription):
 			// something wrong with the sub
-			return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err)
+			return nil, sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(err)
 		default:
 			// unknown or generic error
-			return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("unhandled NATS error"), err)
+			return nil, sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("unhandled NATS error"), err)
 		}
 	}
 
 	if reply == nil {
-		return nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("received nil reply from NATS responder"))
+		return nil, sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("received nil reply from NATS responder"))
 	}
 
 	return reply, err
@@ -120,7 +120,7 @@ func publish(n *nats.Conn, subject string, specBytes []byte) (*nats.Msg, error) 
 // Uses Nats Sync Publish for streaming
 func MultiplexEventStreamSync[T any](ctx context.Context, s *specv2pb.Spec, event *SpecStreamEvent, nats *nats.Conn, stream *connect.ServerStream[T], convert func(*nats.Msg) (*T, error)) error {
 	if event == nil {
-		return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("a SpecEvent object is required"))
+		return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("a SpecEvent object is required"))
 	}
 
 	log := *zaploggerv1.Bound.Logger
@@ -141,21 +141,21 @@ func MultiplexEventStreamSync[T any](ctx context.Context, s *specv2pb.Spec, even
 
 	specBytes, err := proto.Marshal(s)
 	if err != nil {
-		return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not marshall spec"))
+		return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("could not marshall spec"))
 	}
 
 	// Encrypt here
 
 	log.Debug("Publishing on " + subject)
 	if err = nats.Publish(subject, specBytes); err != nil {
-		return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("failed to publish")).WithInternalErrorDetail(err)
+		return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("failed to publish")).WithInternalErrorDetail(err)
 	}
 
 	// Subscribe to streamed results
 	log.Debug("Waiting on results from " + responseSubject)
 	sub, err := nats.SubscribeSync(responseSubject)
 	if err != nil {
-		return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not subscribe stream sync to nats")).WithInternalErrorDetail(err)
+		return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("could not subscribe stream sync to nats")).WithInternalErrorDetail(err)
 	}
 
 	defer sub.Unsubscribe()
@@ -166,17 +166,17 @@ func MultiplexEventStreamSync[T any](ctx context.Context, s *specv2pb.Spec, even
 			if errors.Is(err1, context.Canceled) {
 				return nil
 			}
-			return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not process additional events")).WithInternalErrorDetail(err1)
+			return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("could not process additional events")).WithInternalErrorDetail(err1)
 		}
 
 		converted, err1 := convert(msg)
 		if err1 != nil {
-			return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not convert event")).WithInternalErrorDetail(err1)
+			return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("could not convert event")).WithInternalErrorDetail(err1)
 		}
 
 		err1 = stream.Send(converted)
 		if err != nil {
-			return sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not stream event")).WithInternalErrorDetail(err1)
+			return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("could not stream event")).WithInternalErrorDetail(err1)
 		}
 	}
 }

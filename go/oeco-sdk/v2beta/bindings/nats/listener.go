@@ -178,7 +178,7 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage) {
 	case optionv2pb.CQRSType_CQRS_TYPE_UNSPECIFIED:
 		fallthrough
 	default:
-		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad.")).ToStatus()
+		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(request.Spec).WithInternalErrorDetail(errors.New("Cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad.")).ToStatus()
 		respond(&nm, request.Spec)
 		return
 	}
@@ -186,7 +186,7 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage) {
 	go func() {
 		_, err = js.Publish(context.Background(), subject, specBytes)
 		if err != nil {
-			request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("Found error when publishing"), err).ToStatus()
+			request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(request.Spec).WithInternalErrorDetail(errors.New("Found error when publishing"), err).ToStatus()
 			respond(&nm, request.Spec)
 			return
 		}
@@ -203,7 +203,7 @@ func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 	}
 
 	if spec == nil {
-		e := sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("the spec is nil: ")).ToStatus()
+		e := sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("the spec is nil: ")).ToStatus()
 		spec = &specv2pb.Spec{
 			SpecError: e,
 		}
@@ -211,16 +211,16 @@ func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 
 	marshal, err := protopb.Marshal(spec)
 	if err != nil {
-		apexlog.Error(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("cannot marshal spec: "), err).Error())
+		apexlog.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("cannot marshal spec: "), err).Error())
 		err = msg.Respond(nil)
 		if err != nil {
-			apexlog.Error(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
+			apexlog.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
 		}
 	}
 
 	err = msg.Respond(marshal)
 	if err != nil {
-		apexlog.Error(sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
+		apexlog.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
 	}
 }
 

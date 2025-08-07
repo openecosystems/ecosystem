@@ -152,7 +152,7 @@ message SpecPublic {
   string spec_type = 6;
 
   //
-  SpecEventType spec_event_type = 7;
+  // SpecEventType spec_event_type = 7;
 
   //
   string spec_event = 8;

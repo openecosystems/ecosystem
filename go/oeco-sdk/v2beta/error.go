@@ -6,13 +6,16 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"connectrpc.com/connect"
 	apexlog "github.com/apex/log"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 
+	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 	"google.golang.org/genproto/googleapis/rpc/status"
 	"google.golang.org/protobuf/types/known/anypb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // Using guidance from: https://google.aip.dev/193
@@ -32,6 +35,7 @@ type (
 		WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecError
 		WithBadRequest(request *errdetails.BadRequest) SpecError
 		WithHelp(help *errdetails.Help) SpecError
+		WithSpecDetail(spec *specv2pb.Spec) SpecError
 		WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecError
 		WithInternalErrorDetail(errs ...error) SpecError
 		// WithDebugDetail(ctx context.Context, spec *specv2pb.Spec, errs ...error) SpecError
@@ -182,6 +186,57 @@ func (se SpecError) WithLocalizedMessage(message *errdetails.LocalizedMessage) S
 	d, err := connect.NewErrorDetail(message)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new LocalizedMessage")
+		return se
+	}
+
+	se.ConnectErr.AddDetail(d)
+	return se
+}
+
+func (se SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecError {
+	if spec == nil {
+		return se
+	}
+
+	s := specv2pb.SpecPublic{}
+
+	if spec.SpecVersion != "" {
+		s.SpecVersion = spec.SpecVersion
+	}
+
+	if spec.MessageId != "" {
+		s.MessageId = spec.MessageId
+	}
+
+	if spec.SentAt.AsTime().IsZero() || spec.SentAt.AsTime().Equal(time.Unix(0, 0).UTC()) {
+		s.SentAt = spec.ReceivedAt
+	} else {
+		s.SentAt = spec.SentAt
+	}
+
+	if spec.ReceivedAt != nil {
+		s.ReceivedAt = spec.ReceivedAt
+	}
+
+	if spec.CompletedAt.AsTime().IsZero() || spec.CompletedAt.AsTime().Equal(time.Unix(0, 0).UTC()) {
+		s.CompletedAt = timestamppb.Now()
+	} else {
+		s.CompletedAt = spec.CompletedAt
+	}
+
+	if spec.SpecType != "" {
+		s.SpecType = spec.SpecType
+	}
+
+	s.SpecEventType = spec.SpecEventType
+
+	if spec.SpecEvent != "" {
+		s.SpecEvent = spec.SpecEvent
+	}
+
+	d, err := connect.NewErrorDetail(&s)
+	if err != nil {
+		apexlog.Error("server: SpecError creating SpecPublic error detail")
 		return se
 	}
 

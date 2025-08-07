@@ -39,7 +39,9 @@ type Server struct {
 	ConfigurationProvider   *BaseSpecConfigurationProvider
 	NetListener             *net.Listener
 
-	options *serverOptions
+	options          *serverOptions
+	publicHTTPServer *http.Server
+	meshHTTPServer   *http.Server
 	// err     error
 }
 
@@ -158,8 +160,7 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 	/*
 	 * Graceful Shutdown Management
 	 */
-	signal.Notify(serverQuit, syscall.SIGTERM)
-	signal.Notify(serverQuit, os.Interrupt)
+	signal.Notify(serverQuit, syscall.SIGTERM, os.Interrupt)
 	select {
 	case err := <-specListenableErr:
 		if err.Error != nil {
@@ -167,8 +168,10 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 		}
 	case err := <-httpServerErr:
 		fmt.Println(ErrServerInternal.WithInternalErrorDetail(err, errors.New("received an httpServerError")).Error())
-	case <-serverQuit:
+	case sig := <-serverQuit:
+		fmt.Println("Received signal:", sig)
 		server.Shutdown()
+		os.Exit(0)
 	}
 }
 
@@ -238,6 +241,7 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 		WriteTimeout: 10 * time.Second, // Time allowed to write the response
 		IdleTimeout:  15 * time.Second, // Time for keep-alive connections
 	}
+	server.publicHTTPServer = publicHTTPServer
 
 	meshHTTPServer := &http.Server{
 		Addr: meshEndpoint,
@@ -247,12 +251,13 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 		WriteTimeout: 10 * time.Second, // Time allowed to write the response
 		IdleTimeout:  15 * time.Second, // Time for keep-alive connections
 	}
+	server.meshHTTPServer = meshHTTPServer
 
 	_httpServerErr := make(chan error)
 
 	if server.PublicConnectHTTPServer != nil {
 		go func() {
-			_httpServerErr <- publicHTTPServer.ListenAndServe()
+			_httpServerErr <- server.publicHTTPServer.ListenAndServe()
 		}()
 		fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
 	}
@@ -261,9 +266,9 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 		if settings.Platform.Mesh.Enabled {
 			go func() {
 				if ln != nil {
-					_httpServerErr <- meshHTTPServer.Serve(*ln)
+					_httpServerErr <- server.meshHTTPServer.Serve(*ln)
 				} else {
-					_httpServerErr <- meshHTTPServer.ListenAndServe()
+					_httpServerErr <- server.meshHTTPServer.ListenAndServe()
 				}
 			}()
 			fmt.Println("Mesh HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Mesh.Endpoint)
@@ -292,8 +297,20 @@ func (server *Server) Shutdown() {
 	fmt.Printf("Stopping server gracefully. Draining connections for up to %v seconds", 30)
 	fmt.Println()
 
-	_, cancel := context.WithTimeout(context.Background(), 30)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
+
+	if server.PublicConnectHTTPServer != nil {
+		if err := server.publicHTTPServer.Shutdown(ctx); err != nil {
+			fmt.Println("Public server shutdown error:", err)
+		}
+	}
+
+	if server.MeshConnectHTTPServer != nil {
+		if err := server.meshHTTPServer.Shutdown(ctx); err != nil {
+			fmt.Println("Mesh server shutdown error:", err)
+		}
+	}
 
 	ShutdownBindings(server.Bindings)
 }
