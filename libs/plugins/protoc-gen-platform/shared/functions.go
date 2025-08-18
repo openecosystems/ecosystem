@@ -120,6 +120,15 @@ func (fns Functions) DashCase(name pgs.Name) string {
 	return fns.SnakeCaseToDashCase(snake.String())
 }
 
+func (fns Functions) ToLower(name pgs.Name) string {
+	s := strings.ToLower(name.String())
+	s = strings.ReplaceAll(s, " ", "")
+	s = strings.ReplaceAll(s, "-", "")
+	s = strings.ReplaceAll(s, "_", "")
+
+	return s
+}
+
 // DescriptorPackage extracts and returns the package name as a string from the given Protocol Buffers file descriptor.
 func (fns Functions) DescriptorPackage(file pgs.File) string {
 	if file.Descriptor().Package == nil {

@@ -187,7 +187,7 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 
 	messageId := ksuid.New().String()
 
-	sentAt := &timestamppb.Timestamp{Seconds: 0, Nanos: 0}
+	sentAt := timestamppb.Now()
 	if _sentAt, ok := headers[SentAtKey]; ok {
 		t, err := time.Parse(time.RFC3339, _sentAt)
 		if err != nil {
@@ -200,7 +200,6 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 	// Completed at is provided upstream by the implementing service/turbine
 	completedAt := &timestamppb.Timestamp{Seconds: 0, Nanos: 0}
 
-	fmt.Println("Handling: " + procedure)
 	specType := ""
 
 	// Spec.SpecPrincipal
@@ -276,25 +275,24 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 	ecosystemSlug := h.Get(EcosystemSlug)
 	organizationID := h.Get(OrganizationID)
 	organizationSlug := h.Get(OrganizationSlug)
-	workspaceSlug := h.Get(WorkspaceSlug)
 
-	var workspaceJAN typev2pb.Jurisdiction
-	_workspaceJAN := h.Get(WorkspaceJurisdictionAreaNetworkKey)
-	switch _workspaceJAN {
+	var ecosystemJAN typev2pb.Jurisdiction
+	_ecosystemJAN := h.Get(WorkspaceJurisdictionAreaNetworkKey)
+	switch _ecosystemJAN {
 	case "JURISDICTION_NA_US_1":
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_NA_US_1
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_NA_US_1
 	case "JURISDICTION_GOV_US_1":
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_GOV_US_1
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_GOV_US_1
 	case "JURISDICTION_EU_DE_1":
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_EU_DE_1
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_EU_DE_1
 	case "JURISDICTION_GOV_EU_1  ":
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_GOV_EU_1
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_GOV_EU_1
 	case "JURISDICTION_AS_CN_1":
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_AS_CN_1
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_AS_CN_1
 	case "JURISDICTION_SA_BR_1":
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_SA_BR_1
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_SA_BR_1
 	default:
-		workspaceJAN = typev2pb.Jurisdiction_JURISDICTION_UNSPECIFIED
+		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_UNSPECIFIED
 	}
 
 	ip := h.Get(IpKey)
@@ -409,8 +407,7 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 			EcosystemSlug:    ecosystemSlug,
 			OrganizationId:   organizationID,
 			OrganizationSlug: organizationSlug,
-			WorkspaceSlug:    workspaceSlug,
-			WorkspaceJan:     workspaceJAN,
+			EcosystemJan:     ecosystemJAN,
 			Ip:               ip,
 			Locale:           locale,
 			Timezone:         timezone,

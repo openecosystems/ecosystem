@@ -158,7 +158,7 @@ func MultiplexEventStreamSync[T any](ctx context.Context, s *specv2pb.Spec, even
 		return sdkv2betalib.ErrServerInternal.WithSpecDetail(s).WithInternalErrorDetail(errors.New("could not subscribe stream sync to nats")).WithInternalErrorDetail(err)
 	}
 
-	defer sub.Unsubscribe()
+	defer sub.Unsubscribe() // nolint:errcheck
 
 	for {
 		msg, err1 := sub.NextMsgWithContext(ctx)

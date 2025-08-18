@@ -299,7 +299,7 @@ func (connector *Connector) Shutdown() {
 }
 
 // descKind returns a string describing the kind of protoreflect.Descriptor instance provided as input.
-func descKind(desc protoreflect.Descriptor) string {
+func descKind(desc protoreflect.Descriptor) string { // nolint:unused
 	switch desc := desc.(type) {
 	case protoreflect.FileDescriptor:
 		return "a file"
