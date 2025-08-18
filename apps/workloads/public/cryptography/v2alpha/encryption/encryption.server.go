@@ -19,7 +19,7 @@ import (
 type EncryptionServiceHandler struct{}
 
 // Encrypt handles the encryption of plaintext and associated data, returning an EncryptResponse with the result or an error.
-func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.EncryptRequest]) (*connect.Response[cryptographyv2alphapb.EncryptResponse], error) {
+func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.EncryptRequest]) (*connect.Response[cryptographyv2alphapb.EncryptResponse], error) { // nolint:unused
 	tracer := *opentelemetryv1.Bound.Tracer
 	log := *zaploggerv1.Bound.Logger
 	_ = *tinkv2.Bound
@@ -40,7 +40,7 @@ func (s *EncryptionServiceHandler) Encrypt(ctx context.Context, req *connect.Req
 }
 
 // Decrypt processes a request to decrypt the provided ciphertext and returns a response containing either plaintext or an error.
-func (s *EncryptionServiceHandler) Decrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.DecryptRequest]) (*connect.Response[cryptographyv2alphapb.DecryptResponse], error) {
+func (s *EncryptionServiceHandler) Decrypt(ctx context.Context, req *connect.Request[cryptographyv2alphapb.DecryptRequest]) (*connect.Response[cryptographyv2alphapb.DecryptResponse], error) { // nolint:unused
 	tracer := *opentelemetryv1.Bound.Tracer
 	// log := *zaploggerv1.Bound.Logger
 

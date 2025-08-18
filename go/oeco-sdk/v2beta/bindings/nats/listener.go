@@ -25,7 +25,8 @@ import (
 type SpecEventListener interface {
 	GetConfiguration() *ListenerConfiguration
 	Listen(ctx context.Context, listenerErr chan sdkv2betalib.SpecListenableErr)
-	Process(ctx context.Context, request *ListenerMessage)
+	Validate(ctx context.Context, message *ListenerMessage)
+	Process(ctx context.Context, message *ListenerMessage)
 }
 
 // ListenerConfiguration defines the configuration for a listener, including stream type, entity, subject, queue, and Jetstream settings.
@@ -48,6 +49,9 @@ type ListenerMessage struct {
 	NatsMessage           *nats.Msg
 	ListenerConfiguration *ListenerConfiguration
 	EventResponseChannel  string
+	Request               protopb.Message
+	Response              protopb.Message
+	SpecError             sdkv2betalib.SpecErrorable
 }
 
 // ListenerErr represents an error encountered by a listener, including the related subscription for context.
@@ -57,7 +61,7 @@ type ListenerErr struct {
 }
 
 // ListenForMultiplexedRequests subscribes to a NATS subject to process multiplexed spec events synchronously.
-func ListenForMultiplexedRequests(ctx context.Context, listener SpecEventListener) {
+func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener) {
 	configuration := listener.GetConfiguration()
 
 	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil || configuration.Entity == nil {
@@ -111,8 +115,21 @@ func ListenForMultiplexedRequests(ctx context.Context, listener SpecEventListene
 	_, err := n.QueueSubscribe(subject, queue, func(msg *nats.Msg) {
 		messageCtx, message, _ := convertNatsToListenerMessage(configuration, msg)
 
+		listener.Validate(messageCtx, message)
+
+		if message.Spec.Context.Validation.GetValidateOnly() {
+			RespondToListenerProcess(messageCtx, message)
+			return
+		}
+
+		if message.SpecError != nil || message.Response != nil {
+			RespondToListenerProcess(messageCtx, message)
+			return
+		}
+
 		// The Processor is responsible for replying to the Reply subject and responding with any errors
 		listener.Process(messageCtx, message)
+		RespondToListenerProcess(messageCtx, message)
 	})
 	if err != nil {
 		fmt.Println("Found error in queue subscribing to nats subject: " + err.Error())
@@ -120,29 +137,29 @@ func ListenForMultiplexedRequests(ctx context.Context, listener SpecEventListene
 	}
 }
 
-// RespondToMultiplexedRequest processes an inbound request, modifies the provided message, and sends a response through NATS.
-func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage) {
+// RespondToMultiplexedRequest processes an inbound message, modifies the provided message, and sends a response through NATS.
+func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
 	js := *Bound.JetStream
-	nm := *request.NatsMessage
+	nm := *message.NatsMessage
 
-	if request.Spec == nil {
+	if message.Spec == nil {
 		spec := specv2pb.Spec{SpecError: sdkv2betalib.ErrServerInternal.ToStatus()}
 		respond(&nm, &spec)
 		return
 	}
 
-	if request.Spec.SpecData != nil && request.Spec.SpecData.Data != nil {
-		fmutils.Filter(request.Spec.SpecData.Data, request.Spec.SpecData.FieldMask.GetPaths())
+	if message.Spec.SpecData != nil && message.Spec.SpecData.Data != nil {
+		fmutils.Filter(message.Spec.SpecData.Data, message.Spec.SpecData.FieldMask.GetPaths())
 	}
 
-	specBytes, err := protopb.Marshal(request.Spec)
+	specBytes, err := protopb.Marshal(message.Spec)
 	if err != nil {
-		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err).ToStatus()
-		respond(&nm, request.Spec)
+		message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err).ToStatus()
+		respond(&nm, message.Spec)
 		return
 	}
 
-	configuration := request.ListenerConfiguration
+	configuration := message.ListenerConfiguration
 
 	subject := ""
 
@@ -178,24 +195,24 @@ func RespondToMultiplexedRequest(_ context.Context, request *ListenerMessage) {
 	case optionv2pb.CQRSType_CQRS_TYPE_UNSPECIFIED:
 		fallthrough
 	default:
-		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(request.Spec).WithInternalErrorDetail(errors.New("Cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad.")).ToStatus()
-		respond(&nm, request.Spec)
+		message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(errors.New("cannot respond to multiplexed requests, as CQRS type is invalid. This should have been caught at startup. Bad")).ToStatus()
+		respond(&nm, message.Spec)
 		return
 	}
 
 	go func() {
 		_, err = js.Publish(context.Background(), subject, specBytes)
 		if err != nil {
-			request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(request.Spec).WithInternalErrorDetail(errors.New("Found error when publishing"), err).ToStatus()
-			respond(&nm, request.Spec)
+			message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(errors.New("found error when publishing"), err).ToStatus()
+			respond(&nm, message.Spec)
 			return
 		}
 	}()
 
-	respond(&nm, request.Spec)
+	respond(&nm, message.Spec)
 }
 
-// respond reply to a NATS request
+// respond reply to a NATS message
 func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 	if msg == nil {
 		apexlog.Warn("Received nil message, ignoring")
@@ -252,7 +269,16 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 	// TODO: This must be closed
 	_, err = c.Consume(func(msg jetstream.Msg) {
 		messageCtx, message, _ := convertJetstreamToListenerMessage(configuration, &msg)
+
+		listener.Validate(messageCtx, message)
+		if message.Response != nil {
+			RespondToJetstreamEvent(messageCtx, message)
+			return
+		}
+
+		// The Processor is responsible for replying to the Reply subject and responding with any errors
 		listener.Process(messageCtx, message)
+		RespondToJetstreamEvent(messageCtx, message)
 	}, jetstream.ConsumeErrHandler(func(_ jetstream.ConsumeContext, err error) {
 		fmt.Println(err)
 	}))
@@ -265,10 +291,10 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 	//
 }
 
-// RespondToJetstreamEvent processes an inbound request, modifies the provided message, and sends a response through NATS.
-func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
+// RespondToJetstreamEvent processes an inbound message, modifies the provided message, and sends a response through NATS.
+func RespondToJetstreamEvent(_ context.Context, message *ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
-	jm := *request.Message
+	jm := *message.Message
 
 	err4 := jm.Ack()
 	if err4 != nil {
@@ -277,26 +303,33 @@ func RespondToJetstreamEvent(_ context.Context, request *ListenerMessage) {
 	}
 }
 
-func RespondToListenerProcess(ctx context.Context, request *ListenerMessage, response protopb.Message, serr sdkv2betalib.SpecErrorable) {
+func RespondToListenerProcess(ctx context.Context, message *ListenerMessage) {
+	serr := message.SpecError
+	response := message.Response
+
 	if serr != nil {
-		request.Spec.SpecError = serr.ToStatus()
-		RespondToMultiplexedRequest(ctx, request)
+		message.Spec.SpecError = serr.ToStatus()
+		RespondToMultiplexedRequest(ctx, message)
 		return
+	}
+
+	if response == nil {
+		message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(errors.New("response is nil: ")).ToStatus()
 	}
 
 	a, err := anypb.New(response)
 	if err != nil {
-		request.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(err).ToStatus()
-		RespondToMultiplexedRequest(ctx, request)
+		message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(err).ToStatus()
+		RespondToMultiplexedRequest(ctx, message)
 		return
 	}
 
-	if request.Spec.SpecData != nil {
-		request.Spec.SpecData = &specv2pb.SpecData{}
+	if message.Spec.SpecData != nil {
+		message.Spec.SpecData = &specv2pb.SpecData{}
 	}
 
-	request.Spec.SpecData.Data = a
-	RespondToMultiplexedRequest(ctx, request)
+	message.Spec.SpecData.Data = a
+	RespondToMultiplexedRequest(ctx, message)
 }
 
 // convertNatsToListenerMessage transforms a NATS message into a ListenerMessage while setting up the required context.

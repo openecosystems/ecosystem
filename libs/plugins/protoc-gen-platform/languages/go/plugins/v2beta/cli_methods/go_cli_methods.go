@@ -116,20 +116,20 @@ func (m GoCliMethodsModule) GenerateFile(file pgs.File) {
 		"domainSystemName2":             fns.DomainSystemName2,
 		"getMethodShortName":            fns.GetMethodShortName,
 		"getApiOptionsNetwork":          fns.GetApiOptionsNetwork,
+		"toLower":                       fns.ToLower,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
 	for _, s := range file.Services() {
 		for _, method := range s.Methods() {
-			system := fns.DomainSystemName2(file).LowerCamelCase().String()
-			version := fns.GetPackageVersion(file)
 			methodName := method.Name().LowerSnakeCase().String()
+			gopackage := fns.GetGoPackageAlias(file)
 
 			fullPath := file.InputPath().String()
 			dirPath := filepath.Dir(fullPath)
 
-			name := outPath.SetExt("/" + dirPath + "/" + system + version + "pbcli" + "/" + methodName + ".cmd.go").String()
+			name := outPath.SetExt("/" + dirPath + "/" + gopackage + "cli" + "/" + methodName + ".cmd.go").String()
 			m.OverwriteGeneratorTemplateFile(name, m.Tpl, method)
 
 			// name := m.ctx.OutputPath(file).SetBase(method.Name().LowerSnakeCase().String()).SetExt(".pb." + l.FileExtension())

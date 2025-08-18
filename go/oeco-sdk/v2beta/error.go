@@ -11,14 +11,24 @@ import (
 	"connectrpc.com/connect"
 	apexlog "github.com/apex/log"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
-
-	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 	"google.golang.org/genproto/googleapis/rpc/status"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
+
+	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+	typev2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2"
 )
 
 // Using guidance from: https://google.aip.dev/193
+
+// Reason is the stable logical identity for a SpecError.
+type Reason string
+
+// HasReason check if the Error has a reson
+type HasReason interface {
+	error
+	SpecReason() Reason
+}
 
 // SpecErrorable is an interface for defining API-based errors, providing methods to access and modify error details.
 // SpecError represents a custom error type containing SpecApiError and optional internal error details.
@@ -46,6 +56,7 @@ type (
 
 	// SpecError the main Error type
 	SpecError struct {
+		reason     Reason
 		ConnectErr connect.Error
 	}
 )
@@ -64,7 +75,7 @@ func NewSpecErrorFromStatus(status *status.Status) SpecError {
 		return ErrServerInternal.WithInternalErrorDetail(errors.New("status is nil when attempting to create a new spec error"))
 	}
 	ee := SpecError{
-		ConnectErr: *connect.NewError(connect.Code(status.Code), errors.New(status.Message)),
+		ConnectErr: *connect.NewError(connect.Code(status.Code), errors.New(status.Message)), // nolint:gosec
 	}
 
 	if status.Details != nil {
@@ -198,27 +209,23 @@ func (se SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecError {
 		return se
 	}
 
-	s := specv2pb.SpecPublic{}
+	s := typev2pb.SpecErrorDetail{}
 
-	if spec.SpecVersion != "" {
-		s.SpecVersion = spec.SpecVersion
-	}
-
-	if spec.MessageId != "" {
-		s.MessageId = spec.MessageId
-	}
-
-	if spec.SentAt.AsTime().IsZero() || spec.SentAt.AsTime().Equal(time.Unix(0, 0).UTC()) {
-		s.SentAt = spec.ReceivedAt
-	} else {
-		s.SentAt = spec.SentAt
+	if spec.SpanContext != nil && spec.SpanContext.TraceId != "" {
+		s.CorrelationId = spec.SpanContext.TraceId
 	}
 
 	if spec.ReceivedAt != nil {
 		s.ReceivedAt = spec.ReceivedAt
 	}
 
-	if spec.CompletedAt.AsTime().IsZero() || spec.CompletedAt.AsTime().Equal(time.Unix(0, 0).UTC()) {
+	if spec.SentAt != nil && spec.SentAt.AsTime().IsZero() || spec.SentAt.AsTime().Equal(time.Unix(0, 0).UTC()) {
+		s.SentAt = spec.ReceivedAt
+	} else {
+		s.SentAt = spec.SentAt
+	}
+
+	if spec.CompletedAt != nil && spec.CompletedAt.AsTime().IsZero() || spec.CompletedAt.AsTime().Equal(time.Unix(0, 0).UTC()) {
 		s.CompletedAt = timestamppb.Now()
 	} else {
 		s.CompletedAt = spec.CompletedAt
@@ -228,15 +235,9 @@ func (se SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecError {
 		s.SpecType = spec.SpecType
 	}
 
-	s.SpecEventType = spec.SpecEventType
-
-	if spec.SpecEvent != "" {
-		s.SpecEvent = spec.SpecEvent
-	}
-
 	d, err := connect.NewErrorDetail(&s)
 	if err != nil {
-		apexlog.Error("server: SpecError creating SpecPublic error detail")
+		apexlog.Error("server: SpecError creating SpecErrorDetail error detail")
 		return se
 	}
 
@@ -246,11 +247,16 @@ func (se SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecError {
 
 // WithInternalErrorDetail sets internal error details for the SpecError instance and returns the updated SpecError object.
 func (se SpecError) WithInternalErrorDetail(errs ...error) SpecError {
-	var errStrings []string
-	for _, err := range errs {
-		errStrings = append(errStrings, err.Error())
+	msgs := make([]string, 0, len(errs))
+	for _, e := range errs {
+		if e != nil {
+			msgs = append(msgs, e.Error())
+		}
 	}
-	apexlog.WithField("internal_errors", strings.Join(errStrings, "; ")).Error("captured internal errors")
+	if len(msgs) > 0 {
+		apexlog.WithField("internal_errors", strings.Join(msgs, "; ")).
+			Error("captured internal errors")
+	}
 	return se
 }
 
@@ -268,18 +274,23 @@ func (se SpecError) Error() string {
 	return buffer.String()
 }
 
+// Is Check if this is a specific error
 func (se SpecError) Is(target error) bool {
 	if target == nil {
 		return false
 	}
 
-	// Case 1: Check if target is a SpecError to compare types
-	// var se2 SpecError
-	if errors.As(target, &se) {
-		return se.ConnectErr.Code() == se.ConnectErr.Code()
+	var hr HasReason
+	if errors.As(target, &hr) {
+		return se.reason != "" && se.reason == hr.SpecReason()
 	}
 
-	// Case 2: Check if target is a connect.Error
+	var _se SpecError
+	if errors.As(target, &_se) {
+		return se.reason != "" && se.reason == _se.reason
+	}
+
+	// Check if target is a connect.Error
 	var ce *connect.Error
 	if errors.As(target, &ce) {
 		return se.ConnectErr.Code() == ce.Code()
@@ -294,7 +305,7 @@ func (se SpecError) Code() connect.Code {
 
 func (se SpecError) ToStatus() *status.Status {
 	s := status.Status{
-		Code:    int32(se.Code()),
+		Code:    int32(se.Code()), //nolint:gosec
 		Message: se.ConnectErr.Message(),
 	}
 
@@ -317,6 +328,27 @@ func (se SpecError) ToStatus() *status.Status {
 	return &s
 }
 
+func (se SpecError) Unwrap() error { return &se.ConnectErr } // lets errors.Is/As traverse
+
+func (se SpecError) SpecReason() Reason { return se.reason }
+
 func (se SpecError) ToConnectError() *connect.Error {
 	return &se.ConnectErr
+}
+
+// IsSpecErrorable checks if the given error implements SpecErrorable.
+// Returns the casted SpecErrorable and a bool indicating success.
+func IsSpecErrorable(err error) (SpecErrorable, bool) {
+	if err == nil {
+		return nil, false
+	}
+	var se SpecErrorable
+	ok := errors.As(err, &se)
+	return se, ok
+}
+
+// IsReason Quick check by reason, anywhere in the error chain
+func IsReason(err error, reason Reason) bool {
+	var hr HasReason
+	return errors.As(err, &hr) && hr.SpecReason() == reason
 }

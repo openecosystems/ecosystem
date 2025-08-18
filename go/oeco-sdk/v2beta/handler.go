@@ -83,7 +83,7 @@ import (
 //				//	},
 //				//}
 //
-//				//a := typev2pb.SpecErrorDetail{
+//				//a := typev2pb.SNOpecErrorDetailNOLONGERAVAILABLE{
 //				//	CorrelationId: "123",
 //				//	UserMessage:   "hello world",
 //				//}

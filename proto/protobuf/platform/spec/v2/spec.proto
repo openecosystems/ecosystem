@@ -152,9 +152,6 @@ message SpecPublic {
   string spec_type = 6;
 
   //
-  // SpecEventType spec_event_type = 7;
-
-  //
   string spec_event = 8;
 
   //
@@ -184,15 +181,6 @@ message SpecContext {
 
   // The organization associated with this context.
   string organization_slug = 50;
-
-  // The workspace associated with this context.
-  string workspace_slug = 51;
-
-  // The workspace jan associated with this context.
-  // Right now this is an enumeration with a finite number of items.
-  // That is incorrect. This should be a string instead.
-  // See `2023-09-14 - Docs Sync` in sf-docs-internal.
-  platform.type.v2.Jurisdiction workspace_jan = 52;
 
   // The ip address of the requester. MUST meet RFC 791 or
   string ip = 5;
@@ -409,24 +397,6 @@ message SpecData {
 }
 
 //
-message SpecRequestContext {
-  option (platform.options.v2.graph) = {
-    type: GRAPH_TYPE_INPUT
-  };
-
-  //Should we only validate this request? There are no mutating side effects
-  platform.type.v2.RequestValidation request_validation = 1;
-
-  //The organization to which you want to associate this request
-  string organization_slug = 2;
-
-  //The workspace to which you want to associate this request
-  string workspace_slug = 3;
-
-  string routine_id = 4;
-}
-
-//
 message SpecResponseContext {
   option (platform.options.v2.graph) = {
     type: GRAPH_TYPE_OUTPUT
@@ -443,11 +413,8 @@ message SpecResponseContext {
   //The organization associated with this response
   string organization_slug = 50;
 
-  //The workspace associated with this response
-  string workspace_slug = 51;
-
   //The workspace location associated with this response
-  platform.type.v2.Jurisdiction workspace_jan = 52;
+  platform.type.v2.Jurisdiction ecosystem_jan = 52;
 
   string routine_id = 53;
 }

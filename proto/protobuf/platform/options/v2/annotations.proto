@@ -77,7 +77,6 @@ message ApiOptions {
   ApiLifecycle cycle = 2;
   ApiInterfaceType interface = 3;
   NetworkType network = 4;
-  SpecRequestScope scope = 5;
   string shortname = 6;
   bool versionable = 7;
 
@@ -326,6 +325,7 @@ message RateLimitOptions {
 message PermissionOptions {
   string permission = 1;
   repeated AuthRole roles = 2;
+  SpecRequestScope scope = 3;
 }
 
 //===========================================
@@ -518,6 +518,7 @@ enum SpecRequestScope {
   SPEC_REQUEST_SCOPE_USER = 1;
   SPEC_REQUEST_SCOPE_ECOSYSTEM = 2;
   SPEC_REQUEST_SCOPE_ORGANIZATION = 3;
+  SPEC_REQUEST_SCOPE_PLATFORM = 4;
 }
 
 message EventOptions {

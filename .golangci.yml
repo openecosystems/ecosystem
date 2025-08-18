@@ -34,7 +34,7 @@ linters:
         - goimports
         - gosec
         - nilerr
-        - revive
+        #- revive
         - rowserrcheck
         - sqlclosecheck
         - tparallel

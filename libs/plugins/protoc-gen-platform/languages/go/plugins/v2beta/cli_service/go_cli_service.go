@@ -116,12 +116,12 @@ func (m GoCliServiceModule) GenerateFile(file pgs.File) {
 		return
 	}
 
-	system := fns.DomainSystemName2(file).LowerCamelCase().String()
-	version := fns.GetPackageVersion(file)
 	fileName := fns.ProtoName(file)
 	fullPath := file.InputPath().String()
+	gopackage := fns.GetGoPackageAlias(file)
+
 	dirPath := filepath.Dir(fullPath)
 
-	name := outPath.SetExt("/" + dirPath + "/" + system + version + "pbcli" + "/" + fileName + ".cmds.go").String()
+	name := outPath.SetExt("/" + dirPath + "/" + gopackage + "cli" + "/" + fileName + ".cmds.go").String()
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
 }

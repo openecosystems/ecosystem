@@ -3,6 +3,7 @@ syntax = "proto3";
 package platform.type.v2;
 
 import "platform/options/v2/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pb";
 
@@ -13,5 +14,14 @@ message SpecErrorDetail {
   string correlation_id = 1;
 
   //
-  string user_message = 2;
+  google.protobuf.Timestamp sent_at = 2;
+
+  //
+  google.protobuf.Timestamp received_at = 3;
+
+  //
+  google.protobuf.Timestamp completed_at = 4;
+
+  //
+  string spec_type = 5;
 }

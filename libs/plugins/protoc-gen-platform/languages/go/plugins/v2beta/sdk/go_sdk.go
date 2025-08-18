@@ -114,16 +114,16 @@ func (m GoSdkModule) GenerateClientFile(file pgs.File) {
 	}
 
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
-	scope := _scope.LowerCamelCase().String()
-	system := _system.LowerCamelCase().String()
+	scope := _scope.LowerSnakeCase().String()
+	system := _system.LowerSnakeCase().String()
 	version := _version.String()
-	gopackage := fns.GetGoPackageFromFile(file)
+	gopackage := fns.GetGoPackageAlias(file)
 	fileName := fns.ProtoName(file)
 
 	// system := fns.DomainSystemName2(file).LowerCamelCase().String()
 	// version := fns.GetPackageVersion(file)
 
-	clientFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + gopackage + "pbconnect" + "/" + fileName + ".client.go").String()
+	clientFileName := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + gopackage + "connect" + "/" + fileName + ".client.go").String()
 	// clientFileName := strings.TrimPrefix(m.ctx.OutputPath(file).SetExt(".client.go").String(), "platform/")
 	m.OverwriteGeneratorTemplateFile(clientFileName, m.Tpl, file)
 }
@@ -305,8 +305,8 @@ func (m GoSdkModule) GenerateReadmeFile(file pgs.File) {
 	}
 
 	_scope, _system, _version, _ := fns.GetPackageScopeSystemAndVersion(file)
-	scope := _scope.LowerCamelCase().String()
-	system := _system.LowerCamelCase().String()
+	scope := _scope.LowerSnakeCase().String()
+	system := _system.LowerSnakeCase().String()
 	version := _version.String()
 
 	name := outPath.SetExt("/" + scope + "/" + system + "/" + version + "/" + "README.md").String()

@@ -171,6 +171,16 @@ func (fns Functions) GetGoPathFromFile(file pgs.File) string {
 	return goPkg
 }
 
+func (fns Functions) GetGoPackageAlias(f pgs.File) string {
+	full := f.Descriptor().GetOptions().GetGoPackage()
+	if idx := strings.Index(full, ";"); idx != -1 {
+		return full[idx+1:] // alias part
+	}
+	// fallback: last path segment
+	parts := strings.Split(full, "/")
+	return parts[len(parts)-1]
+}
+
 // GetGoPathFromMessage returns the Go import path for a given Protocol Buffers message.
 func (fns Functions) GetGoPathFromMessage(msg pgs.Message) string {
 	return fns.GetGoImportPathForMessage(msg)

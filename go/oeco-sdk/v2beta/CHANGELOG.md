@@ -2,11 +2,11 @@
 
 ### 🩹 Fixes
 
-- adding a new WithSpecDetail to SpecError for better user experience ([#72](https://github.com/openecosystems/ecosystem/pull/72))
+-   adding a new WithSpecDetail to SpecError for better user experience ([#72](https://github.com/openecosystems/ecosystem/pull/72))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot @dimyjeannot
+-   Dimy Jeannot @dimyjeannot
 
 ## 0.19.2 (2025-08-03)
 

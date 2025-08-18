@@ -52,9 +52,9 @@ func UpdateSpecFromContext[C any](spec *specproto.Spec, specContext C) {
 	if err == nil {
 		spec.Context.OrganizationSlug = organizationSlug.String()
 	}
-	workspaceSlug, err := GetField(specContext, "WorkspaceSlug")
+	ecosystemSlug, err := GetField(specContext, "EcosystemSlug")
 	if err == nil {
-		spec.Context.WorkspaceSlug = workspaceSlug.String()
+		spec.Context.EcosystemSlug = ecosystemSlug.String()
 	}
 }
 
@@ -69,12 +69,12 @@ func GetField(item interface{}, fieldName string) (*reflect.Value, error) {
 	return &value, nil
 }
 
-// GetContextBinValue generates a concatenated string of OrganizationSlug and WorkspaceSlug from SpecContext if both are non-empty.
+// GetContextBinValue generates a concatenated string of OrganizationSlug and EcosystemSlug from SpecContext if both are non-empty.
 // If WorkspaceSlug is empty, returns only OrganizationSlug. Returns an error if both fields are empty.
 func GetContextBinValue(specContext *specproto.SpecContext) (string, error) {
-	if specContext.OrganizationSlug != "" && specContext.WorkspaceSlug != "" {
-		return specContext.OrganizationSlug + ":" + specContext.WorkspaceSlug, nil
-	} else if specContext.WorkspaceSlug == "" {
+	if specContext.OrganizationSlug != "" && specContext.EcosystemSlug != "" {
+		return specContext.OrganizationSlug + ":" + specContext.EcosystemSlug, nil
+	} else if specContext.EcosystemSlug == "" {
 		return specContext.OrganizationSlug, nil
 	}
 	return "", errors.New("empty spec context bin value")
