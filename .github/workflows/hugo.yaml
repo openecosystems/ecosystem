@@ -63,7 +63,7 @@ jobs:
               run: |
                   npx nx@20.3.1 run docs:build
             - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
+              uses: actions/upload-pages-artifact@v4
               with:
                   path: dist/apps/web/public/docs/v2alpha
     # Deployment job
