@@ -69,7 +69,8 @@ func NewConnector(ctx context.Context, opts ...ConnectorOption) *Connector {
 
 	configurer, cerr := t.ResolveConfiguration()
 	if cerr != nil {
-		return nil
+		fmt.Println(cerr)
+		panic(cerr)
 	}
 	cerr = t.ValidateConfiguration()
 	if cerr != nil {

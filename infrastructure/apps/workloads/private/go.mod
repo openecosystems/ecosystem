@@ -1,6 +1,6 @@
 module infrastructure/apps/workloads/private
 
-go 1.23.4
+go 1.23.11
 
 require (
 	github.com/dirien/pulumi-vultr/sdk/v2 v2.21.1

@@ -18,7 +18,7 @@ import (
 type CreateEcosystemListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateEcosystemListener, including entity, subject, and queue details.
-func (l *CreateEcosystemListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
+func (l *CreateEcosystemListener) Configure() *natsnodev1.ListenerConfiguration {
 	handler := ecosystemv2alphapb.EcosystemServiceHandler{}
 	return handler.GetCreateEcosystemConfiguration()
 }

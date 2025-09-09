@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/apps/web/poc/i18n/v1alpha
 
-go 1.23.4
+go 1.23.11
 
 require (
 	github.com/BurntSushi/toml v1.5.0

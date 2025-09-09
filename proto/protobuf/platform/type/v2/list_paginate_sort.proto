@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pb";
+
+enum SortDirection {
+  SORT_DIRECTION_UNSPECIFIED = 0;
+  SORT_DIRECTION_ASC = 1;
+  SORT_DIRECTION_DESC = 2;
+}

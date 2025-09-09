@@ -20,7 +20,7 @@ import (
 type CreateAccountListener struct{}
 
 // GetConfiguration returns the listener configuration for the CreateAccountListener, including entity, subject, and queue details.
-func (l *CreateAccountListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
+func (l *CreateAccountListener) Configure() *natsnodev1.ListenerConfiguration {
 	handler := iamv2alphapb.AccountAuthorityServiceHandler{}
 	return handler.GetCreateAccountAuthorityConfiguration()
 }

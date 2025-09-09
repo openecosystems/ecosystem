@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/apps/workloads/public/cryptography/v2alpha/encryption
 
-go 1.23.4
+go 1.23.11
 
 require (
 	connectrpc.com/connect v1.18.1

@@ -15,7 +15,7 @@ import (
 type SignCertificateListener struct{}
 
 // GetConfiguration provides the listener configuration for SignCertificateListener, including subject, queue, and jetstream settings.
-func (l *SignCertificateListener) GetConfiguration() *natsnodev1.ListenerConfiguration {
+func (l *SignCertificateListener) Configure() *natsnodev1.ListenerConfiguration {
 	handler := cryptographyv2alphapb.CertificateServiceHandler{}
 	return handler.GetSignCertificateConfiguration()
 }

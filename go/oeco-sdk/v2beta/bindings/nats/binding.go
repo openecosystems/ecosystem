@@ -203,7 +203,7 @@ func (b *Binding) Close() error {
 // RegisterSpecListeners registers specification event listeners by configuring them and associating them with bindings.
 func (b *Binding) RegisterSpecListeners(bindings *sdkv2betalib.Bindings) *sdkv2betalib.Bindings {
 	for _, listener := range b.SpecEventListeners {
-		configuration := listener.GetConfiguration()
+		configuration := listener.Configure()
 		if configuration == nil {
 			fmt.Println("Please configure the Listener")
 			panic("Misconfigured")

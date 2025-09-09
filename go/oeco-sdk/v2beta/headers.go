@@ -271,39 +271,16 @@ const (
 // XSpecOsName represents a header specifying the operating system name of the device.
 // XSpecOsVersion represents a header specifying the operating system version of the device.
 const (
-	XCorrelationId          = "X-Correlation-Id"
-	XClientTraceId          = "X-Client-Trace-Id"
-	XB3Traceid              = "X-B3-Traceid"
-	XB3Spanid               = "X-B3-Spanid"
-	XB3Parentspanid         = "X-B3-Parentspanid"
-	XB3Sampled              = "X-B3-Sampled"
-	XB3Flags                = "X-B3-Flags"
-	XSpecRouterKey          = "X-Spec-Router-Key"
-	XSpecEnvironment        = "X-Spec-Environment"
-	XSpecPlatformHost       = "X-Spec-Platform-Host"
-	XSpecSentAt             = "X-Spec-Sent-At"
-	XSpecLocale             = "X-Spec-Locale"
-	XSpecTimezone           = "X-Spec-Timezone"
-	XSpecApiKey             = "X-Spec-Apikey" //nolint:gosec
-	XSpecEcosystem          = "X-Spec-Ecosystem-Slug"
-	XSpecOrganization       = "X-Spec-Organization-Slug"
-	XSpecWorkspace          = "X-Spec-Workspace-Slug"
-	XSpecWorkspaceJan       = "X-Spec-Workspace-Jan"
-	XSpecValidateOnly       = "X-Spec-Validate-Only"
-	XSpecFieldmask          = "X-Spec-Fieldmask"
-	XSpecDeviceId           = "X-Spec-Device-Id"
-	XSpecDeviceAdvId        = "X-Spec-Device-Adv-Id"
-	XSpecDeviceManufacturer = "X-Spec-Device-Manufacturer"
-	XSpecDeviceModel        = "X-Spec-Device-Model"
-	XSpecDeviceName         = "X-Spec-Device-Name"
-	XSpecDeviceType         = "X-Spec-Device-Type"
-	XSpecDeviceToken        = "X-Spec-Device-Token" //nolint:gosec
-	XSpecDeviceBluetooth    = "X-Spec-Bluetooth"
-	XSpecDeviceCellular     = "X-Spec-Cellular"
-	XSpecDeviceWifi         = "X-Spec-Wifi"
-	XSpecDeviceCarrier      = "X-Spec-Carrier"
-	XSpecOsName             = "X-Spec-Os-Name"
-	XSpecOsVersion          = "X-Spec-Os-Version"
+	XCorrelationId    = "X-Correlation-Id"
+	XClientTraceId    = "X-Client-Trace-Id"
+	XB3Traceid        = "X-B3-Traceid"
+	XB3Spanid         = "X-B3-Spanid"
+	XB3Parentspanid   = "X-B3-Parentspanid"
+	XB3Sampled        = "X-B3-Sampled"
+	XB3Flags          = "X-B3-Flags"
+	XSpecRouterKey    = "X-Spec-Router-Key"
+	XSpecEnvironment  = "X-Spec-Environment"
+	XSpecPlatformHost = "X-Spec-Platform-Host"
 )
 
 // ConnectProtocolVersion is a constant representing the protocol version key for a connection.
@@ -335,25 +312,142 @@ const (
 // SecWebsocketProtocol represents the WebSocket protocol header.
 // SecWebsocketVersion represents the WebSocket version header.
 const (
-	SecChPrefersColorScheme         = "Sec-Ch-Prefers-Color-Scheme"
-	SecChPrefersReducedMotion       = "Sec-Ch-Prefers-Reduced-Motion"
-	SecChPrefersReducedTransparency = "Sec-Ch-Prefers-Reduced-Transparency"
-	SecChUa                         = "Sec-Ch-Ua"
-	SecChUaArch                     = "Sec-Ch-Ua-Arch"
-	SecChUaBitness                  = "Sec-Ch-Ua-Bitness"
-	SecChUaFullVersionList          = "Sec-Ch-Ua-Full-Version-List"
-	SecChUaMobile                   = "Sec-Ch-Ua-Mobile"
-	SecChUaModel                    = "Sec-Ch-Ua-Model"
-	SecChUaPlatform                 = "Sec-Ch-Ua-Platform"
-	SecChUaPlatformVersion          = "Sec-Ch-Ua-Platform-Version"
+	SecChPrefersColorScheme         = "Sec-CH-Prefers-Color-Scheme"
+	SecChPrefersReducedMotion       = "Sec-CH-Prefers-Reduced-Motion"
+	SecChPrefersReducedTransparency = "Sec-CH-Prefers-Reduced-Transparency"
+	SecChUa                         = "Sec-CH-UA"
+	SecChUaArch                     = "Sec-CH-UA-Arch"
+	SecChUaBitness                  = "Sec-CH-UA-Bitness"
+	SecChUaFullVersionList          = "Sec-CH-UA-Full-Version-List"
+	SecChUaMobile                   = "Sec-CH-UA-Mobile"
+	SecChUaModel                    = "Sec-CH-UA-Model"
+	SecChUaPlatform                 = "Sec-CH-UA-Platform"
+	SecChUaPlatformVersion          = "Sec-CH-UA-Platform-Version"
 	SecFetchDest                    = "Sec-Fetch-Dest"
 	SecFetchMode                    = "Sec-Fetch-Mode"
 	SecFetchSite                    = "Sec-Fetch-Site"
-	SecGpc                          = "Sec-Gpc"
+	SecGpc                          = "Sec-GPC"
 	SecPurpose                      = "Sec-Purpose"
-	SecWebsocketAccept              = "sec-websocket-accept"
-	SecWebsocketExtensions          = "sec-websocket-extensions"
-	SecWebsocketKey                 = "sec-websocket-key"
-	SecWebsocketProtocol            = "sec-websocket-protocol"
-	SecWebsocketVersion             = "sec-websocket-version"
+	SecWebsocketAccept              = "Sec-WebSocket-Accept"
+	SecWebsocketExtensions          = "Sec-WebSocket-Extensions"
+	SecWebsocketKey                 = "Sec-WebSocket-Key"
+	SecWebsocketProtocol            = "Sec-WebSocket-Protocol"
+	SecWebsocketVersion             = "Sec-WebSocket-Version"
+)
+
+// NatsMsgId is used for message deduplication in NATS.
+// ApiKey represents the API key required to access the platform.
+// SentAtKey specifies the timestamp sent by the client (not sanitized).
+// AnonymousIdKey refers to the anonymous identifier in the context principal.
+// PrincipalIdKey is the sanitized principal ID obtained from the authorization workload proxy.
+// PrincipalEmailKey is the sanitized email of the principal.
+// PrincipalTypeKey denotes the type of the principal (sanitized).
+// ConnectionIdKey represents the connection identifier in the context.
+// RequestIdKey is the request identifier sent by the client (not sanitized).
+// EcosystemSlug refers to the sanitized ecosystem slug from the edge cache.
+// OrganizationSlug refers to the sanitized organization slug from the edge cache.
+// WorkspaceJurisdictionAreaNetworkKey indicates the workspace jurisdiction area network.
+// IpKey specifies the IP information in the context.
+// LocaleKey contains the locale information in the context.
+// TimezoneKey specifies the timezone in the context.
+// UserAgentKey denotes the user agent string.
+// ValidateOnlyKey indicates if the request is for validation only.
+// ChannelNameKey represents the name of the channel in the context.
+// ChannelVersionKey represents the version of the channel in the context.
+// DeviceIdKey contains the device identifier sent by the client (not sanitized).
+// DeviceAdvertisingIdKey refers to the advertising identifier of the device.
+// DeviceManufacturerKey specifies the manufacturer of the device.
+// DeviceModelKey denotes the model of the device.
+// DeviceNameKey represents the name of the device.
+// DeviceTypeKey specifies the type of the device.
+// DeviceTokenKey holds the device token.
+// CityKey specifies the city information (sanitized, from edge cache).
+// CountryKey contains the country information (sanitized, from edge cache).
+// LatitudeKey provides the latitude information (sanitized, from edge cache).
+// LongitudeKey provides the longitude information (sanitized, from edge cache).
+// SpeedKey indicates the speed information (sanitized, from edge cache).
+// BluetoothKey indicates Bluetooth usage information (not sanitized).
+// CellularKey indicates cellular network information (not sanitized).
+// WifiKey indicates Wi-Fi network usage information (not sanitized).
+// CarrierKey specifies the carrier information in the network context.
+// OsNameKey provides the name of the operating system (not sanitized).
+// OsVersionKey specifies the version of the operating system (not sanitized).
+// FieldMask contains the field mask data sent in the spec (not sanitized).
+const (
+
+	// NatsMsgId Message Deduplication
+	NatsMsgId = "Nats-Msg-Id"
+
+	// ApiKey API Key to access the platform
+	ApiKey = "X-Spec-Apikey" //nolint:gosec
+	// SentAtKey Spec
+	// Not sanitized and allowed from the client
+	SentAtKey = "X-Spec-Sent-At"
+
+	// AnonymousIdKey Spec.Context.Principal
+	AnonymousIdKey = "X-Spec-Anonymous-Id"
+	// PrincipalIdKey Sanitized comes from authorization workload proxy
+	PrincipalIdKey    = "X-Spec-Principal-Id"
+	PrincipalEmailKey = "X-Spec-Principal-Email"
+	PrincipalTypeKey  = "X-Spec-Principal-Type"
+	ConnectionIdKey   = "X-Spec-Connection-Id"
+	RolesKey          = "X-Spec-Roles"
+
+	// RequestIdKey Spec.SpanContext
+	// Not sanitized and allowed from the client
+	RequestIdKey = "X-Request-Id"
+
+	// EcosystemID Spec.Context
+	// OrganizationSlug Spec.Context
+	// Sanitized comes from edge cache
+	EcosystemID                         = "X-Spec-Ecosystem-Id"
+	EcosystemSlug                       = "X-Spec-Ecosystem-Slug"
+	OrganizationID                      = "X-Spec-Organization-Id"
+	OrganizationSlug                    = "X-Spec-Organization-Slug"
+	WorkspaceJurisdictionAreaNetworkKey = "X-Spec-Workspace-Jan"
+	IpKey                               = "X-Spec-Ip"
+	LocaleKey                           = "X-Spec-Locale"
+	TimezoneKey                         = "X-Spec-Timezone"
+	UserAgentKey                        = "User-Agent"
+
+	// ValidateOnlyKey Spec.Context.Validation
+	ValidateOnlyKey = "X-Spec-Validate-Only"
+
+	// ChannelNameKey Spec.Context.Channel
+	ChannelNameKey    = "Channel-Name"
+	ChannelVersionKey = "Channel-Version"
+
+	// DeviceIdKey Spec.Context.Device
+	// Not sanitized and allowed from the client
+	DeviceIdKey            = "X-Spec-Device-Id"
+	DeviceAdvertisingIdKey = "X-Spec-Device-Adv-Id"
+	DeviceManufacturerKey  = "X-Spec-Device-Manufacturer"
+	DeviceModelKey         = "X-Spec-Device-Model"
+	DeviceNameKey          = "X-Spec-Device-Name"
+	DeviceTypeKey          = "X-Spec-Device-Type"
+	DeviceTokenKey         = "X-Spec-Device-Token" //nolint:gosec
+
+	// CityKey Spec.Context.Location
+	// Sanitized and comes from edge cache
+	CityKey      = "X-Spec-City"
+	CountryKey   = "X-Spec-Country"
+	LatitudeKey  = "X-Spec-Lat"
+	LongitudeKey = "X-Spec-Long"
+	SpeedKey     = "X-Spec-Speed"
+
+	// BluetoothKey Spec.Context.Network
+	// Not sanitized and allowed from the client
+	BluetoothKey = "X-Spec-Bluetooth"
+	CellularKey  = "X-Spec-Cellular"
+	WifiKey      = "X-Spec-Wifi"
+	CarrierKey   = "X-Spec-Carrier"
+
+	// OsNameKey Spec.Context.OS
+	// Not sanitized and allowed from the client
+	OsNameKey    = "X-Spec-Os-Name"
+	OsVersionKey = "X-Spec-Os-Version"
+
+	// FieldMask Spec.SpecData.fields
+	// Not sanitized and allowed from the client
+	FieldMask = "X-Spec-Fieldmask"
 )

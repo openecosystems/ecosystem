@@ -2,7 +2,7 @@
 
 ## Configure Goland GO Settings
 
--   File -> Settings -> Go -> GOROOT: go version 1.23.4
+-   File -> Settings -> Go -> GOROOT: go version 1.23.11
 -   File -> Settings -> Go -> GOPATH; Ensure GOPATH is correct
 -   File -> Settings -> Go -> Go Modules: Enable Go Modules Support
 

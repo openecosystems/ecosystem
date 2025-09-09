@@ -36,19 +36,19 @@ type HasReason interface {
 type (
 	// SpecErrorable is an error result that happens when using an API.
 	SpecErrorable interface {
-		WithRequestInfo(info *errdetails.RequestInfo) SpecError
-		WithResourceInfo(info *errdetails.ResourceInfo) SpecError
-		WithErrorInfo(info *errdetails.ErrorInfo) SpecError
-		WithRetryInfo(info *errdetails.RetryInfo) SpecError
-		WithDebugInfo(info *errdetails.DebugInfo) SpecError
-		WithQuotaFailure(failure *errdetails.QuotaFailure) SpecError
-		WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecError
-		WithBadRequest(request *errdetails.BadRequest) SpecError
-		WithHelp(help *errdetails.Help) SpecError
-		WithSpecDetail(spec *specv2pb.Spec) SpecError
-		WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecError
-		WithInternalErrorDetail(errs ...error) SpecError
-		// WithDebugDetail(ctx context.Context, spec *specv2pb.Spec, errs ...error) SpecError
+		WithRequestInfo(info *errdetails.RequestInfo) SpecErrorable
+		WithResourceInfo(info *errdetails.ResourceInfo) SpecErrorable
+		WithErrorInfo(info *errdetails.ErrorInfo) SpecErrorable
+		WithRetryInfo(info *errdetails.RetryInfo) SpecErrorable
+		WithDebugInfo(info *errdetails.DebugInfo) SpecErrorable
+		WithQuotaFailure(failure *errdetails.QuotaFailure) SpecErrorable
+		WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecErrorable
+		WithBadRequest(request *errdetails.BadRequest) SpecErrorable
+		WithHelp(help *errdetails.Help) SpecErrorable
+		WithSpecDetail(spec *specv2pb.Spec) SpecErrorable
+		WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecErrorable
+		WithInternalErrorDetail(errs ...error) SpecErrorable
+		// WithDebugDetail(ctx context.Context, spec *specv2pb.Spec, errs ...error) SpecErrorable
 		ToStatus() *status.Status
 		ToConnectError() *connect.Error
 		error
@@ -62,15 +62,15 @@ type (
 )
 
 // NewSpecError creates a new connect.Error with a specified code, detail, and message, adding the detail to the error.
-func NewSpecError(code connect.Code, message string) SpecError {
+func NewSpecError(code connect.Code, message string) *SpecError {
 	ee := SpecError{
 		ConnectErr: *connect.NewError(code, errors.New(message)),
 	}
 
-	return ee
+	return &ee
 }
 
-func NewSpecErrorFromStatus(status *status.Status) SpecError {
+func NewSpecErrorFromStatus(status *status.Status) SpecErrorable {
 	if status == nil {
 		return ErrServerInternal.WithInternalErrorDetail(errors.New("status is nil when attempting to create a new spec error"))
 	}
@@ -89,11 +89,11 @@ func NewSpecErrorFromStatus(status *status.Status) SpecError {
 		}
 	}
 
-	return ee
+	return &ee
 }
 
 // WithRequestInfo with request information
-func (se SpecError) WithRequestInfo(info *errdetails.RequestInfo) SpecError {
+func (se *SpecError) WithRequestInfo(info *errdetails.RequestInfo) SpecErrorable {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new SpecError detail")
@@ -105,7 +105,7 @@ func (se SpecError) WithRequestInfo(info *errdetails.RequestInfo) SpecError {
 }
 
 // WithResourceInfo resource information
-func (se SpecError) WithResourceInfo(info *errdetails.ResourceInfo) SpecError {
+func (se *SpecError) WithResourceInfo(info *errdetails.ResourceInfo) SpecErrorable {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new ResourceInfo")
@@ -116,7 +116,7 @@ func (se SpecError) WithResourceInfo(info *errdetails.ResourceInfo) SpecError {
 	return se
 }
 
-func (se SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecError {
+func (se *SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecErrorable {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new ErrorInfo")
@@ -127,7 +127,7 @@ func (se SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecError {
 	return se
 }
 
-func (se SpecError) WithRetryInfo(info *errdetails.RetryInfo) SpecError {
+func (se *SpecError) WithRetryInfo(info *errdetails.RetryInfo) SpecErrorable {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new RetryInfo")
@@ -138,7 +138,7 @@ func (se SpecError) WithRetryInfo(info *errdetails.RetryInfo) SpecError {
 	return se
 }
 
-func (se SpecError) WithDebugInfo(info *errdetails.DebugInfo) SpecError {
+func (se *SpecError) WithDebugInfo(info *errdetails.DebugInfo) SpecErrorable {
 	d, err := connect.NewErrorDetail(info)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new DebugInfo")
@@ -149,7 +149,7 @@ func (se SpecError) WithDebugInfo(info *errdetails.DebugInfo) SpecError {
 	return se
 }
 
-func (se SpecError) WithQuotaFailure(failure *errdetails.QuotaFailure) SpecError {
+func (se *SpecError) WithQuotaFailure(failure *errdetails.QuotaFailure) SpecErrorable {
 	d, err := connect.NewErrorDetail(failure)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new QuotaFailure")
@@ -160,7 +160,7 @@ func (se SpecError) WithQuotaFailure(failure *errdetails.QuotaFailure) SpecError
 	return se
 }
 
-func (se SpecError) WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecError {
+func (se *SpecError) WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecErrorable {
 	d, err := connect.NewErrorDetail(failure)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new PreconditionFailure")
@@ -171,18 +171,30 @@ func (se SpecError) WithPreconditionFailure(failure *errdetails.PreconditionFail
 	return se
 }
 
-func (se SpecError) WithBadRequest(request *errdetails.BadRequest) SpecError {
+func (se *SpecError) WithBadRequest(request *errdetails.BadRequest) SpecErrorable {
 	d, err := connect.NewErrorDetail(request)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new BadRequest")
 		return se
 	}
 
+	if request != nil && len(request.FieldViolations) > 0 {
+		msgs := make([]string, 0, len(request.FieldViolations))
+		for _, v := range request.FieldViolations {
+			if v != nil {
+				msgs = append(msgs, v.String())
+			}
+		}
+		if len(msgs) > 0 {
+			apexlog.WithField("bad_request_errors", strings.Join(msgs, "; ")).Error("captured bad request error details")
+		}
+	}
+
 	se.ConnectErr.AddDetail(d)
 	return se
 }
 
-func (se SpecError) WithHelp(help *errdetails.Help) SpecError {
+func (se *SpecError) WithHelp(help *errdetails.Help) SpecErrorable {
 	d, err := connect.NewErrorDetail(help)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new Help")
@@ -193,7 +205,7 @@ func (se SpecError) WithHelp(help *errdetails.Help) SpecError {
 	return se
 }
 
-func (se SpecError) WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecError {
+func (se *SpecError) WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecErrorable {
 	d, err := connect.NewErrorDetail(message)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new LocalizedMessage")
@@ -204,7 +216,7 @@ func (se SpecError) WithLocalizedMessage(message *errdetails.LocalizedMessage) S
 	return se
 }
 
-func (se SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecError {
+func (se *SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecErrorable {
 	if spec == nil {
 		return se
 	}
@@ -246,7 +258,7 @@ func (se SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecError {
 }
 
 // WithInternalErrorDetail sets internal error details for the SpecError instance and returns the updated SpecError object.
-func (se SpecError) WithInternalErrorDetail(errs ...error) SpecError {
+func (se *SpecError) WithInternalErrorDetail(errs ...error) SpecErrorable {
 	msgs := make([]string, 0, len(errs))
 	for _, e := range errs {
 		if e != nil {
@@ -254,15 +266,23 @@ func (se SpecError) WithInternalErrorDetail(errs ...error) SpecError {
 		}
 	}
 	if len(msgs) > 0 {
-		apexlog.WithField("internal_errors", strings.Join(msgs, "; ")).
-			Error("captured internal errors")
+		e := apexlog.WithField("internal_errors", strings.Join(msgs, "; "))
+
+		if se.ToConnectError() != nil && len(se.ToConnectError().Details()) > 0 {
+			for _, detail := range se.ToConnectError().Details() {
+				_, d := detail.Value()
+				e.WithError(d)
+			}
+		}
+		e.Error("captured internal error details")
 	}
+
 	return se
 }
 
 // SpecError implements the error interface for the SpecError type, constructing and returning a formatted error message string.
 // It includes details from both internalApiErr and ConnectErr if they are present.
-func (se SpecError) Error() string {
+func (se *SpecError) Error() string {
 	var buffer bytes.Buffer
 
 	if se.ConnectErr.Message() != "" {
@@ -275,35 +295,34 @@ func (se SpecError) Error() string {
 }
 
 // Is Check if this is a specific error
-func (se SpecError) Is(target error) bool {
+func (se *SpecError) Is(target error) bool {
 	if target == nil {
 		return false
 	}
 
-	var hr HasReason
-	if errors.As(target, &hr) {
+	// Direct type assertion for SpecError
+	if t, ok := target.(*SpecError); ok {
+		return se.reason != "" && se.reason == t.reason
+	}
+
+	// Avoid calling errors.As to prevent recursion
+	if hr, ok := target.(HasReason); ok {
 		return se.reason != "" && se.reason == hr.SpecReason()
 	}
 
-	var _se SpecError
-	if errors.As(target, &_se) {
-		return se.reason != "" && se.reason == _se.reason
-	}
-
-	// Check if target is a connect.Error
-	var ce *connect.Error
-	if errors.As(target, &ce) {
+	// Direct type assertion for connect.Error
+	if ce, ok := target.(*connect.Error); ok {
 		return se.ConnectErr.Code() == ce.Code()
 	}
 
 	return false
 }
 
-func (se SpecError) Code() connect.Code {
+func (se *SpecError) Code() connect.Code {
 	return se.ConnectErr.Code()
 }
 
-func (se SpecError) ToStatus() *status.Status {
+func (se *SpecError) ToStatus() *status.Status {
 	s := status.Status{
 		Code:    int32(se.Code()), //nolint:gosec
 		Message: se.ConnectErr.Message(),
@@ -328,11 +347,13 @@ func (se SpecError) ToStatus() *status.Status {
 	return &s
 }
 
-func (se SpecError) Unwrap() error { return &se.ConnectErr } // lets errors.Is/As traverse
+func (se *SpecError) Unwrap() error {
+	return &se.ConnectErr
+}
 
-func (se SpecError) SpecReason() Reason { return se.reason }
+func (se *SpecError) SpecReason() Reason { return se.reason }
 
-func (se SpecError) ToConnectError() *connect.Error {
+func (se *SpecError) ToConnectError() *connect.Error {
 	return &se.ConnectErr
 }
 

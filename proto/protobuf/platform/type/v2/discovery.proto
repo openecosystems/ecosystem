@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package platform.type.v2;
+
+option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pb";
+
+// Discovery Type
+enum DiscoveryType {
+  DISCOVERY_TYPE_UNSPECIFIED = 0;
+  DISCOVERY_TYPE_REST = 1;
+  DISCOVERY_TYPE_CONNECT_RPC = 2;
+}
+
+enum DiscoveryFormat {
+  DISCOVERY_FORMAT_UNSPECIFIED = 0;
+  DISCOVERY_FORMAT_JSON = 1;
+  DISCOVERY_FORMAT_YAML = 2;
+}
+
+
+//
+message DiscoverRequest {
+
+    DiscoveryType type = 1;
+
+    DiscoveryFormat format = 2;
+
+}

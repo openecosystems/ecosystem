@@ -218,6 +218,16 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 		publicMux = server.PublicHTTPServerHandler
 	}
 
+	if len(server.options.StaticAssets) > 0 {
+		for _, asset := range server.options.StaticAssets {
+			if asset.MountPath != "" && asset.Directory != "" {
+				mountPath := asset.MountPath
+				fs := http.FileServer(http.Dir(asset.Directory))
+				publicMux.Handle(mountPath, http.StripPrefix(mountPath, fs))
+			}
+		}
+	}
+
 	server.PublicHTTPServerHandler = publicMux
 	if server.RawServiceHandler != nil {
 		publicMux.Handle(server.ServicePath, server.RawServiceHandler)
@@ -326,6 +336,11 @@ type RawServerOptions struct {
 	Handler *http.ServeMux
 }
 
+type StaticAsset struct {
+	MountPath string
+	Directory string
+}
+
 type serverOptions struct {
 	URL                   *url.URL
 	MeshVPN               bool
@@ -338,6 +353,7 @@ type serverOptions struct {
 	ConfigPath            string
 	ConfigurationProvider BaseSpecConfigurationProvider
 	NetListener           *net.Listener
+	StaticAssets          []StaticAsset
 }
 
 type serverOptionFunc func(*serverOptions)
@@ -431,5 +447,12 @@ func WithRawServer(options *RawServerOptions) ServerOption {
 func WithNetListener(ln *net.Listener) ServerOption {
 	return serverOptionFunc(func(cfg *serverOptions) {
 		cfg.NetListener = ln
+	})
+}
+
+// WithStaticAssets mount static assets
+func WithStaticAssets(assets []StaticAsset) ServerOption {
+	return serverOptionFunc(func(cfg *serverOptions) {
+		cfg.StaticAssets = assets
 	})
 }

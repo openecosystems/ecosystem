@@ -23,9 +23,8 @@ import (
 // SpecEventListener is an interface for handling event streaming, listening, and processing for specific configurations.
 // It defines methods for retrieving listener configuration, listening to events, and processing event messages.
 type SpecEventListener interface {
-	GetConfiguration() *ListenerConfiguration
+	Configure() *ListenerConfiguration
 	Listen(ctx context.Context, listenerErr chan sdkv2betalib.SpecListenableErr)
-	Validate(ctx context.Context, message *ListenerMessage)
 	Process(ctx context.Context, message *ListenerMessage)
 }
 
@@ -62,7 +61,7 @@ type ListenerErr struct {
 
 // ListenForMultiplexedRequests subscribes to a NATS subject to process multiplexed spec events synchronously.
 func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener) {
-	configuration := listener.GetConfiguration()
+	configuration := listener.Configure()
 
 	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil || configuration.Entity == nil {
 		fmt.Println("Configuration is missing. Entity, Procedure, StreamType are required when configuring a SpecListener")
@@ -114,18 +113,6 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 
 	_, err := n.QueueSubscribe(subject, queue, func(msg *nats.Msg) {
 		messageCtx, message, _ := convertNatsToListenerMessage(configuration, msg)
-
-		listener.Validate(messageCtx, message)
-
-		if message.Spec.Context.Validation.GetValidateOnly() {
-			RespondToListenerProcess(messageCtx, message)
-			return
-		}
-
-		if message.SpecError != nil || message.Response != nil {
-			RespondToListenerProcess(messageCtx, message)
-			return
-		}
 
 		// The Processor is responsible for replying to the Reply subject and responding with any errors
 		listener.Process(messageCtx, message)
@@ -243,7 +230,7 @@ func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 
 // ListenForJetStreamEvents subscribes to a Jetstream subject.
 func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEventListener) {
-	configuration := listener.GetConfiguration()
+	configuration := listener.Configure()
 
 	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil {
 		apexlog.Error("Configuration is missing. Procedure, StreamType are required when configuring a SpecListener")
@@ -269,12 +256,6 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 	// TODO: This must be closed
 	_, err = c.Consume(func(msg jetstream.Msg) {
 		messageCtx, message, _ := convertJetstreamToListenerMessage(configuration, &msg)
-
-		listener.Validate(messageCtx, message)
-		if message.Response != nil {
-			RespondToJetstreamEvent(messageCtx, message)
-			return
-		}
 
 		// The Processor is responsible for replying to the Reply subject and responding with any errors
 		listener.Process(messageCtx, message)

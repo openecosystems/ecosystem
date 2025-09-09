@@ -70,7 +70,7 @@ func DecorateContext(ctx context.Context, h http.Header, procedure string) conte
 
 // HumanizeResponse humanize the response
 func (i *SpecInterceptor) HumanizeResponse(ctx context.Context, err error) connect.Error {
-	var specErr SpecError
+	var specErr SpecErrorable
 	var requestInfo *errdetails.RequestInfo
 
 	val := ctx.Value(SpecContextKey)
@@ -87,11 +87,11 @@ func (i *SpecInterceptor) HumanizeResponse(ctx context.Context, err error) conne
 	if errors.As(err, &specErr) {
 		specErr = specErr.WithRequestInfo(requestInfo)
 
-		return specErr.ConnectErr
+		return *specErr.ToConnectError()
 	}
 
 	specErr = ErrServerInternal.WithRequestInfo(requestInfo)
-	return specErr.ConnectErr
+	return *specErr.ToConnectError()
 
 	//if merr := multierr.Errors(err); len(merr) > 1 {
 	//	if specErr != nil && specErr.ConnectErr != nil {

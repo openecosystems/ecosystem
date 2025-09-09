@@ -530,6 +530,28 @@ func IsLower(s string) bool {
 	return true
 }
 
+func FindSpecYamlFrom(startDir string, filename string) (string, error) {
+	absDir, err := filepath.Abs(startDir)
+	if err != nil {
+		return "", fmt.Errorf("could not resolve absolute path: %w", err)
+	}
+
+	dir := absDir
+	for {
+		fullPath := filepath.Join(dir, filename)
+		if _, err := os.Stat(fullPath); err == nil {
+			return dir, nil
+		}
+
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			break
+		}
+		dir = parent
+	}
+	return "", fmt.Errorf("%s not found in path hierarchy", filename)
+}
+
 // RuntimeConfigurationOverrides holds runtime configuration flags and settings that override default behavior.
 type RuntimeConfigurationOverrides struct {
 	Context      string

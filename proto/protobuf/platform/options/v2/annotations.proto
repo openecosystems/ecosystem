@@ -431,6 +431,9 @@ message SpecConfiguration {
 
   // Allow for safe deprecation of configurations
   bool enabled = 5;
+
+  // If configuration is a secret
+  bool secret = 6;
 }
 
 message ConfigurationOptions {
@@ -515,10 +518,11 @@ message BillingOptions {
 
 enum SpecRequestScope {
   SPEC_REQUEST_SCOPE_UNSPECIFIED = 0;
-  SPEC_REQUEST_SCOPE_USER = 1;
-  SPEC_REQUEST_SCOPE_ECOSYSTEM = 2;
-  SPEC_REQUEST_SCOPE_ORGANIZATION = 3;
-  SPEC_REQUEST_SCOPE_PLATFORM = 4;
+  SPEC_REQUEST_SCOPE_ANONYMOUS = 1;
+  SPEC_REQUEST_SCOPE_USER = 2;
+  SPEC_REQUEST_SCOPE_ECOSYSTEM = 3;
+  SPEC_REQUEST_SCOPE_ORGANIZATION = 4;
+  SPEC_REQUEST_SCOPE_PLATFORM = 5;
 }
 
 message EventOptions {

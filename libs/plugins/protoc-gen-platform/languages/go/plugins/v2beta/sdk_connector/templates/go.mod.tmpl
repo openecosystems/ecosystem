@@ -2,7 +2,7 @@
 // source: {{ .PgsFile.InputPath }}{{ $s := service .PgsFile }}{{ $version := getPackageVersion .PgsFile.File }}{{ $apiType := getApiOptionsTypeName .PgsFile.File }}{{ $system := domainSystemName2 .PgsFile.File }}
 // sourcePath: {{ .RelativePath }}
 module {{ goPackage .PgsFile }}
-go 1.23.4
+go 1.23.11
 
 require connectrpc.com/connect v1.17.0
 

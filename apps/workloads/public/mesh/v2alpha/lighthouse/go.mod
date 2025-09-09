@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/apps/workloads/public/mesh/v2alpha/lighthouse
 
-go 1.23.4
+go 1.23.11
 
 require github.com/slackhq/nebula v1.9.6
 

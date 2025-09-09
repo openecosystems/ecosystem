@@ -39,7 +39,7 @@ service EcosystemService {
   //
   rpc CreateEcosystem(CreateEcosystemRequest) returns (CreateEcosystemResponse) {
     option (platform.options.v2.api_method) = {type: API_TYPE_PUBLIC; cycle: API_LIFECYCLE_ALPHA; shortname: "create"};
-    option (platform.options.v2.permission) = { permission: "create", roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
+    option (platform.options.v2.permission) = { permission: "create", scope: SPEC_REQUEST_SCOPE_ORGANIZATION, roles: [AUTH_ROLE_ORGANIZATION_ADMIN, AUTH_ROLE_ORGANIZATION_MANAGER] };
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_CREATE
     };
@@ -52,7 +52,7 @@ service EcosystemService {
   //
   rpc ListEcosystems(ListEcosystemsRequest) returns (ListEcosystemsResponse) {
     option (platform.options.v2.api_method) = {type: API_TYPE_PUBLIC; cycle: API_LIFECYCLE_ALPHA; shortname: "list"};
-    option (platform.options.v2.permission) = { permission: "list", roles: [AUTH_ROLE_ORGANIZATION_USER] };
+    option (platform.options.v2.permission) = { permission: "list", scope: SPEC_REQUEST_SCOPE_ORGANIZATION, roles: [AUTH_ROLE_ORGANIZATION_USER] };
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_LIST
     };
@@ -64,7 +64,7 @@ service EcosystemService {
   //
   rpc GetEcosystem(GetEcosystemRequest) returns (GetEcosystemResponse) {
     option (platform.options.v2.api_method) = {type: API_TYPE_PUBLIC; cycle: API_LIFECYCLE_ALPHA; shortname: "get"};
-    option (platform.options.v2.permission) = { permission: "get", roles: [AUTH_ROLE_ORGANIZATION_USER] };
+    option (platform.options.v2.permission) = { permission: "get", scope: SPEC_REQUEST_SCOPE_ORGANIZATION, roles: [AUTH_ROLE_ORGANIZATION_USER] };
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_QUERY_GET
     };
@@ -76,7 +76,7 @@ service EcosystemService {
   //
   rpc UpdateEcosystem(UpdateEcosystemRequest) returns (UpdateEcosystemResponse) {
     option (platform.options.v2.api_method) = {type: API_TYPE_PUBLIC; cycle: API_LIFECYCLE_ALPHA; shortname: "update"};
-    option (platform.options.v2.permission) = { permission: "update", roles: [AUTH_ROLE_ORGANIZATION_USER] };
+    option (platform.options.v2.permission) = { permission: "update", scope: SPEC_REQUEST_SCOPE_ORGANIZATION, roles: [AUTH_ROLE_ORGANIZATION_USER] };
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_UPDATE
     };
@@ -89,7 +89,7 @@ service EcosystemService {
   //
   rpc DeleteEcosystem(DeleteEcosystemRequest) returns (DeleteEcosystemResponse) {
     option (platform.options.v2.api_method) = {type: API_TYPE_PUBLIC; cycle: API_LIFECYCLE_ALPHA; shortname: "delete"};
-    option (platform.options.v2.permission) = { permission: "delete", roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
+    option (platform.options.v2.permission) = { permission: "delete", scope: SPEC_REQUEST_SCOPE_ORGANIZATION, roles: [AUTH_ROLE_ORGANIZATION_ADMIN] };
     option (platform.options.v2.cqrs) = {
       type: CQRS_TYPE_MUTATION_DELETE
     };
@@ -446,5 +446,7 @@ message Ecosystem {
 
   //
   //repeated platform.type.v2.LabelDescriptor labels = 13;
+
+
 
 }

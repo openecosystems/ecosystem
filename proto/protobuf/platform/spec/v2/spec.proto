@@ -35,17 +35,19 @@ enum SpecPrincipalType {
   // A principal can be:
   SPEC_PRINCIPAL_TYPE_UNSPECIFIED = 0;
 
+  SPEC_PRINCIPAL_TYPE_ANONYMOUS = 1;
+
   // A Platform Account (for end users)
-  SPEC_PRINCIPAL_TYPE_USER = 1;
+  SPEC_PRINCIPAL_TYPE_USER = 2;
 
   // A service account (for applications and compute workloads)
-  SPEC_PRINCIPAL_TYPE_SERVICE_ACCOUNT = 2;
+  SPEC_PRINCIPAL_TYPE_SERVICE_ACCOUNT = 3;
 
   // Group
-  SPEC_PRINCIPAL_TYPE_GROUP = 3;
+  SPEC_PRINCIPAL_TYPE_GROUP = 4;
 
   // Domain that can access a resource
-  SPEC_PRINCIPAL_TYPE_DOMAIN = 4;
+  SPEC_PRINCIPAL_TYPE_DOMAIN = 5;
 }
 
 //
@@ -166,50 +168,54 @@ message SpecContext {
     type: GRAPH_TYPE_INPUT
   };
 
-  // The ecosystem associated with this context.
-  string ecosystem_id = 1;
+  // The organization associated with this context.
+  string organization_id = 1;
+
+  // The organization associated with this context.
+  string organization_slug = 2;
 
   // The ecosystem associated with this context.
-  string ecosystem_slug = 2;
+  string ecosystem_id = 3;
+
+  // The ecosystem associated with this context.
+  string ecosystem_slug = 4;
 
   // The ecosystem jan associated with this context.
   // Right now this is an enumeration with a finite number of items.
-  platform.type.v2.Jurisdiction ecosystem_jan = 3;
+  platform.type.v2.Jurisdiction ecosystem_jan = 5;
 
-  // The organization associated with this context.
-  string organization_id = 49;
 
-  // The organization associated with this context.
-  string organization_slug = 50;
+  platform.options.v2.SpecRequestScope procedure_scope = 6;
+
 
   // The ip address of the requester. MUST meet RFC 791 or
-  string ip = 5;
+  string ip = 100;
 
   // The locality that applies to values in the Spec Message. MUST meet [ISO 3166](https://www.iso.org/iso-3166-country-codes.html).
-  string locale = 6;
+  string locale = 101;
 
   // The timezone where the transaction originated. MUST meet [ISO 8601 Time zone designator](https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators)
-  string timezone = 7;
+  string timezone = 102;
 
   // Similar to the `User-Agent` header of a HTTP request. See [User-Agent - HTTP](developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for guidance.
-  string user_agent = 8;
+  string user_agent = 103;
 
-  SpecValidation validation = 9;
-
-  //
-  SpecProducer producer = 10;
+  SpecValidation validation = 104;
 
   //
-  SpecDevice device = 11;
+  SpecProducer producer = 105;
 
   //
-  SpecLocation location = 12;
+  SpecDevice device = 106;
 
   //
-  SpecNetwork network = 13;
+  SpecLocation location = 107;
+
+  //
+  SpecNetwork network = 108;
 
   // The Operating System that was used to send the transaction.
-  SpecOS os = 14;
+  SpecOS os = 109;
 
   // SpecConfiguration
 
