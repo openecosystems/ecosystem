@@ -1,3 +1,13 @@
+## 0.20.1 (2025-09-09)
+
+### 🩹 Fixes
+
+- hardening ([460a75a](https://github.com/openecosystems/ecosystem/commit/460a75a))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.20.0 (2025-08-18)
 
 ### 🚀 Features
