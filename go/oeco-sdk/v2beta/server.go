@@ -89,6 +89,7 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 		publicTranscoder, err := vanguard.NewTranscoder(options.PublicServices)
 		if err != nil {
 			fmt.Println(err)
+			panic("cannot create vanguard transcoder from public services. Failing early")
 		}
 
 		server.PublicConnectHTTPServer = publicHTTPServer
@@ -231,8 +232,11 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 	server.PublicHTTPServerHandler = publicMux
 	if server.RawServiceHandler != nil {
 		publicMux.Handle(server.ServicePath, server.RawServiceHandler)
-	} else {
+	} else if server.PublicServiceHandler != nil {
 		publicMux.Handle("/", server.PublicServiceHandler)
+	} else {
+		// No handler registered → fail fast
+		panic("no public service handler configured (RawServiceHandler or PublicServiceHandler)")
 	}
 
 	meshMux := http.NewServeMux()

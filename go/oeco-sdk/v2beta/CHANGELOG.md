@@ -2,11 +2,11 @@
 
 ### 🩹 Fixes
 
-- hardening ([460a75a](https://github.com/openecosystems/ecosystem/commit/460a75a))
+-   hardening ([460a75a](https://github.com/openecosystems/ecosystem/commit/460a75a))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot
+-   Dimy Jeannot
 
 ## 0.20.0 (2025-08-18)
 
