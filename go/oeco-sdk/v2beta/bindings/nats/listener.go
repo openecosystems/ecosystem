@@ -18,6 +18,7 @@ import (
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/protobuf/types/known/anypb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // SpecEventListener is an interface for handling event streaming, listening, and processing for specific configurations.
@@ -126,6 +127,7 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 
 // RespondToMultiplexedRequest processes an inbound message, modifies the provided message, and sends a response through NATS.
 func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
+	log := *zaploggerv1.Bound.Logger
 	js := *Bound.JetStream
 	nm := *message.NatsMessage
 
@@ -134,6 +136,9 @@ func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
 		respond(&nm, &spec)
 		return
 	}
+
+	fields := receivedFields(message.Spec, nm.Subject)
+	log.Info("Received multiplexed request", fields...)
 
 	if message.Spec.SpecData != nil && message.Spec.SpecData.Data != nil {
 		fmutils.Filter(message.Spec.SpecData.Data, message.Spec.SpecData.FieldMask.GetPaths())
@@ -201,6 +206,7 @@ func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
 
 // respond reply to a NATS message
 func respond(msg *nats.Msg, spec *specv2pb.Spec) {
+	log := *zaploggerv1.Bound.Logger
 	if msg == nil {
 		apexlog.Warn("Received nil message, ignoring")
 		return
@@ -212,6 +218,15 @@ func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 			SpecError: e,
 		}
 	}
+
+	spec.CompletedAt = timestamppb.Now()
+
+	fields := completedFields(spec, msg.Subject)
+	var milliseconds int64
+	if spec.CompletedAt != nil && spec.ReceivedAt != nil {
+		milliseconds = spec.CompletedAt.AsTime().Sub(spec.ReceivedAt.AsTime()).Milliseconds()
+	}
+	log.Info(fmt.Sprintf("Completed multiplexed request in %d ms\n", milliseconds), fields...)
 
 	marshal, err := protopb.Marshal(spec)
 	if err != nil {

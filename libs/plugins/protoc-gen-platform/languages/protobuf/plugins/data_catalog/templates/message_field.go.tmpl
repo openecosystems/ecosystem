@@ -1,2 +1,2 @@
-{{- $e := entity . -}}{{- $s := service . -}}{{ $entityName := entityName $e }}{{ $entityKeyName := entityKeyName $e }}{{ $versionName := getPackageVersionName . }}
+{{- $e := entity . -}}{{- $s := service . -}}{{ $entityName := entityName $e }}{{ $versionName := getPackageVersionName . }}
     {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }} {{ $e.Name.LowerSnakeCase }}_{{ getPackageVersion . }} = {{ fieldPosition }};

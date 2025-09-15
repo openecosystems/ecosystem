@@ -1,0 +1,17 @@
+
+            /**
+            for await (const msg of adino.{{ .Entity.LowerCamelCase }}.{{ .Method.Name.LowerCamelCase }}({ ... })) {
+              console.log("got msg", msg);
+            }
+            **/
+            {{ .Method.Name.LowerCamelCase }}: (request: {{ .Combined.UpperCamelCase }}.{{ .Method.Input.Name.UpperCamelCase }}Json, callOptions?: AdinoCallOptions): AsyncIterable<{{ .Combined.UpperCamelCase }}.{{ .Method.Output.Name.UpperCamelCase }}Json> => {
+                const options: CallOptions = createConnectOptions(callOptions)
+                const _request: {{ .Combined.UpperCamelCase }}.{{ .Method.Input.Name.UpperCamelCase }} = fromJson({{ .Combined.UpperCamelCase }}.{{ .Method.Input.Name.UpperCamelCase }}Schema, request);
+                const stream = this.{{ .Combined.LowerCamelCase }}Client.{{ .Method.Name.LowerCamelCase }}(_request, options);
+                async function* wrapped() {
+                    for await (const response of stream) {
+                        yield toJson({{ .Combined.UpperCamelCase }}.{{ .Method.Output.Name.UpperCamelCase }}Schema, response);
+                    }
+                }
+                return wrapped();
+            },

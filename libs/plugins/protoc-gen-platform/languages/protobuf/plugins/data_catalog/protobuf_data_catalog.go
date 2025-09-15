@@ -61,6 +61,14 @@ func (m *ProtobufDataCatalogModule) Execute(targets map[string]pgs.File, _ map[s
 	// Idempotent looping, use keys for range NOT targets
 	versionedKeys := make(map[string][]string, 0)
 	for k := range targets {
+
+		p := targets[k].Descriptor().GetPackage()
+		s := strings.Split(p, ".")
+
+		if len(s) != 3 {
+			continue
+		}
+
 		version := fns.GetPackageVersion(targets[k])
 		versionedKeys[version] = append(versionedKeys[version], k)
 	}

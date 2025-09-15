@@ -23,6 +23,7 @@ import (
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
 
 	// Typescript Plugins
+	clienttypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/client"
 	protobufindextypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/protobuf_index"
 	spectypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
 	specindextypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec_index"
@@ -51,6 +52,7 @@ func main() {
 		spectypescript.TypeScriptSpecPlugin(),
 		specindextypescript.TypeScriptSpecIndexPlugin(),
 		protobufindextypescript.TypeScriptProtobufIndexPlugin(),
+		clienttypescript.TypeScriptClientPlugin(),
 
 		// Protobuf
 		configuration.ProtobufConfigurationPlugin(),

@@ -1,0 +1,2 @@
+{{ $e := entity . -}}{{- $entityName := entityName $e }}{{- $versionName := getPackageVersionName . }}
+import * as {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }} from './gen/{{ protoPathWithoutProtoExtension .File }}_pb.js'

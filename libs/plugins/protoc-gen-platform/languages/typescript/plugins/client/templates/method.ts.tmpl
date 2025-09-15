@@ -1,0 +1,7 @@
+
+            {{ .Method.Name.LowerCamelCase }}: async (request: {{ .Entity.UpperCamelCase }}.{{ .Method.Input.Name.UpperCamelCase }}Json, callOptions?: AdinoCallOptions): Promise<{{ .Entity.UpperCamelCase }}.{{ .Method.Output.Name.UpperCamelCase }}Json> => {
+                const options: CallOptions = createConnectOptions(callOptions)
+                const _request: {{ .Entity.UpperCamelCase }}.{{ .Method.Input.Name.UpperCamelCase }} = fromJson({{ .Entity.UpperCamelCase }}.{{ .Method.Input.Name.UpperCamelCase }}Schema, request);
+                const response: {{ .Entity.UpperCamelCase }}.{{ .Method.Output.Name.UpperCamelCase }} = await this.{{ .Entity.LowerCamelCase }}Client.{{ .Method.Name.LowerCamelCase }}(_request, options);
+                return toJson({{ .Entity.UpperCamelCase }}.{{ .Method.Output.Name.UpperCamelCase }}Schema, response);
+            },
