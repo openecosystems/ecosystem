@@ -20,7 +20,7 @@ func baseFields(spec *specv2pb.Spec, subject string) []zapcore.Field {
 		}
 
 		if spec.Context.Validation != nil && spec.Context.Validation.ValidateOnly {
-			fields = append(fields, zapcore.Field{Key: "validate_only", Type: zapcore.BoolType, String: "true"})
+			fields = append(fields, zapcore.Field{Key: "validate_only", Type: zapcore.StringType, String: "true"})
 		}
 
 		if spec.Context.OrganizationId != "" {
