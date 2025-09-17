@@ -1,3 +1,13 @@
+## 0.20.3 (2025-09-17)
+
+### 🩹 Fixes
+
+- Hardening 2 ([#79](https://github.com/openecosystems/ecosystem/pull/79))
+
+### ❤️ Thank You
+
+- Dimy Jeannot @dimyjeannot
+
 ## 0.20.2 (2025-09-11)
 
 ### 🩹 Fixes
