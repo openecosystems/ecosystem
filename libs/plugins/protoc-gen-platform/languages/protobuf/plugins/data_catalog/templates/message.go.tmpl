@@ -1,4 +1,4 @@
-{{- $e := entity . -}}{{- $s := service . -}}{{ $entityName := entityName $e }}{{ $entityKeyName := entityKeyName $e }}{{ $apiOptionsType := getApiOptionsTypeName . }}{{ $versionName := getPackageVersionName . }}
+{{- $e := entity . -}}{{- $s := service . -}}{{ $entityName := entityName $e }}{{ $apiOptionsType := getApiOptionsTypeName . }}{{ $versionName := getPackageVersionName . }}
 
 message {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }} {
   {{ range $e.Fields }}{{ template "entity_field.go.tmpl" . }}{{ end }}

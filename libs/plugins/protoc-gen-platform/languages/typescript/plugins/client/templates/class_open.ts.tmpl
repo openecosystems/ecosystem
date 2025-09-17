@@ -1,0 +1,14 @@
+
+
+export class AdinoSDK {
+    private readonly transport: Transport;
+
+    constructor(private readonly options: AdinoSDKOptions) {
+        const interceptor = new SpecInterceptor(options);
+        const baseUrl = this.options.baseUrl ?? BaseUrl;
+        this.transport = createConnectTransport({
+            baseUrl: baseUrl,
+            defaultTimeoutMs: this.options.timeoutMs,
+            interceptors: [interceptor.spec],
+        });
+    }

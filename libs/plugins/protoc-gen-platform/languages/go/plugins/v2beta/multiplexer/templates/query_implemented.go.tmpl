@@ -29,10 +29,14 @@ func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Req
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "{{ $methodDashCaseName }}-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "{{ $methodDashCaseName }}-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -45,7 +49,7 @@ func (s *{{ $s.Name }}Handler) {{ .Name }}(ctx context.Context, req *connect.Req
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "{{ $methodDashCaseName }}-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "{{ $methodDashCaseName }}-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.Get{{ .Name }}Configuration()
 	reply, serr := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{

@@ -1,0 +1,9 @@
+{{ $e := entity . -}}{{- $entityName := entityName $e }}{{- $versionName := getPackageVersionName . }}
+
+    private _{{ $entityName.LowerCamelCase }}{{ $versionName.UpperCamelCase }}Client?: Client<typeof {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }}.{{ $entityName.UpperCamelCase }}Service>;
+    private get {{ $entityName.LowerCamelCase }}{{ $versionName.UpperCamelCase }}Client(): Client<typeof {{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }}.{{ $entityName.UpperCamelCase }}Service> {
+        if (!this._{{ $entityName.LowerCamelCase }}{{ $versionName.UpperCamelCase }}Client) {
+            this._{{ $entityName.LowerCamelCase }}{{ $versionName.UpperCamelCase }}Client = createClient({{ $entityName.UpperCamelCase }}{{ $versionName.UpperCamelCase }}.{{ $entityName.UpperCamelCase }}Service,  this.transport);
+        }
+        return this._{{ $entityName.LowerCamelCase }}{{ $versionName.UpperCamelCase }}Client;
+    }

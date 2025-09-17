@@ -7,6 +7,7 @@ import (
   "errors"
   "connectrpc.com/connect"
   "google.golang.org/protobuf/types/known/anypb"
+  "google.golang.org/genproto/googleapis/rpc/errdetails"
   {{ if $sm }}"github.com/nats-io/nats.go"{{end}}
   "github.com/nats-io/nats.go/jetstream"
   "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nats"
