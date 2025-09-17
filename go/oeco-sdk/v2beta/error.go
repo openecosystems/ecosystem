@@ -186,12 +186,21 @@ func (se *SpecError) WithBadRequest(request *errdetails.BadRequest) SpecErrorabl
 			}
 		}
 		if len(msgs) > 0 {
-			apexlog.WithField("bad_request_errors", strings.Join(msgs, "; ")).Error("captured bad request error details")
+			apexlog.WithField("bad_request_errors", strings.Join(msgs, "; ")).Info("captured bad request error details")
 		}
 	}
 
-	se.ConnectErr.AddDetail(d)
-	return se
+	newErr := *se
+	t := connect.NewError(se.ConnectErr.Code(), fmt.Errorf(se.ConnectErr.Message()))
+	newErr.ConnectErr = *t
+
+	for _, detail := range se.ConnectErr.Details() {
+		newErr.ConnectErr.AddDetail(detail)
+	}
+
+	newErr.ConnectErr.AddDetail(d)
+
+	return &newErr
 }
 
 func (se *SpecError) WithHelp(help *errdetails.Help) SpecErrorable {

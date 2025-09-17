@@ -2,11 +2,11 @@
 
 ### 🩹 Fixes
 
-- added fail early if proto transcoding fails ([#78](https://github.com/openecosystems/ecosystem/pull/78))
+-   added fail early if proto transcoding fails ([#78](https://github.com/openecosystems/ecosystem/pull/78))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot @dimyjeannot
+-   Dimy Jeannot @dimyjeannot
 
 ## 0.20.2 (2025-09-11)
 
