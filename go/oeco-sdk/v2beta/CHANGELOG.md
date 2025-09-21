@@ -1,3 +1,13 @@
+## 0.20.4 (2025-09-21)
+
+### 🩹 Fixes
+
+- added global panic recovery and correlation id to requests ([88c5a59](https://github.com/openecosystems/ecosystem/commit/88c5a59))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.20.3 (2025-09-17)
 
 ### 🩹 Fixes
