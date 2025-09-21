@@ -6,6 +6,7 @@ package cryptographyv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/types/known/anypb"
 
 	"github.com/nats-io/nats.go/jetstream"
@@ -59,10 +60,14 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "verify-certificate-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "verify-certificate-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -75,7 +80,7 @@ func (s *CertificateServiceHandler) VerifyCertificate(ctx context.Context, req *
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "verify-certificate-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "verify-certificate-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetVerifyCertificateConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
@@ -144,10 +149,14 @@ func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *co
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "sign-certificate-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "sign-certificate-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -160,7 +169,7 @@ func (s *CertificateServiceHandler) SignCertificate(ctx context.Context, req *co
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "sign-certificate-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "sign-certificate-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetSignCertificateConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{

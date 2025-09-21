@@ -6,6 +6,7 @@ package ecosystemv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/types/known/anypb"
 
 	"github.com/nats-io/nats.go/jetstream"
@@ -57,10 +58,14 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "create-ecosystem-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "create-ecosystem-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -73,7 +78,7 @@ func (s *EcosystemServiceHandler) CreateEcosystem(ctx context.Context, req *conn
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "create-ecosystem-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "create-ecosystem-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetCreateEcosystemConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
@@ -142,10 +147,14 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "update-ecosystem-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "update-ecosystem-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -158,7 +167,7 @@ func (s *EcosystemServiceHandler) UpdateEcosystem(ctx context.Context, req *conn
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "update-ecosystem-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "update-ecosystem-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetUpdateEcosystemConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
@@ -227,10 +236,14 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "delete-ecosystem-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "delete-ecosystem-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -243,7 +256,7 @@ func (s *EcosystemServiceHandler) DeleteEcosystem(ctx context.Context, req *conn
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "delete-ecosystem-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "delete-ecosystem-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetDeleteEcosystemConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
@@ -312,10 +325,14 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "list-ecosystems-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "list-ecosystems-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -328,7 +345,7 @@ func (s *EcosystemServiceHandler) ListEcosystems(ctx context.Context, req *conne
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "list-ecosystems-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "list-ecosystems-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetListEcosystemsConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{
@@ -397,10 +414,14 @@ func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "get-ecosystem-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "get-ecosystem-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -413,7 +434,7 @@ func (s *EcosystemServiceHandler) GetEcosystem(ctx context.Context, req *connect
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "get-ecosystem-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "get-ecosystem-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetGetEcosystemConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexEventSync(handlerCtx, spec, &natsnodev1.SpecEvent{

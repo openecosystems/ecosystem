@@ -423,6 +423,8 @@ message SpecResponseContext {
   platform.type.v2.Jurisdiction ecosystem_jan = 52;
 
   string routine_id = 53;
+
+  string correlation_id = 54;
 }
 
 message SpecWrapper {

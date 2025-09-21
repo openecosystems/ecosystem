@@ -6,6 +6,7 @@ package iamv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/types/known/anypb"
 
 	"github.com/nats-io/nats.go/jetstream"
@@ -58,10 +59,14 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "create-account-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "create-account-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -74,7 +79,7 @@ func (s *AccountServiceHandler) CreateAccount(ctx context.Context, req *connect.
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "create-account-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "create-account-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetCreateAccountConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
@@ -143,10 +148,14 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "verify-account-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "verify-account-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -159,7 +168,7 @@ func (s *AccountServiceHandler) VerifyAccount(ctx context.Context, req *connect.
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "verify-account-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "verify-account-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetVerifyAccountConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{
@@ -228,10 +237,14 @@ func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Re
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "sign-account-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "sign-account-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -244,7 +257,7 @@ func (s *AccountServiceHandler) SignAccount(ctx context.Context, req *connect.Re
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "sign-account-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "sign-account-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetSignAccountConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{

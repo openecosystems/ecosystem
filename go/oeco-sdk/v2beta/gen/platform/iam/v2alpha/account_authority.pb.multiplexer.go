@@ -6,6 +6,7 @@ package iamv2alphapb
 import (
 	"connectrpc.com/connect"
 	"errors"
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/protobuf/types/known/anypb"
 
 	"github.com/nats-io/nats.go/jetstream"
@@ -58,10 +59,14 @@ func (s *AccountAuthorityServiceHandler) CreateAccountAuthority(ctx context.Cont
 	}
 
 	// Executes top level validation, no business domain validation
-	validationCtx, validationSpan := tracer.Start(ctx, "create-account-authority-request-validation", trace.WithSpanKind(trace.SpanKindInternal))
+	_, validationSpan := tracer.Start(ctx, "create-account-authority-request-wire-validation", trace.WithSpanKind(trace.SpanKindInternal))
 	v := *protovalidatev0.Bound.Validator
 	if err := v.Validate(req.Msg); err != nil {
-		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithInternalErrorDetail(err)
+		fv, serr := sdkv2betalib.ConvertValidationErrorToFieldValidations(err)
+		if serr != nil {
+			return nil, serr
+		}
+		return nil, sdkv2betalib.ErrServerPreconditionFailed.WithBadRequest(&errdetails.BadRequest{FieldViolations: fv})
 	}
 	validationSpan.End()
 
@@ -74,7 +79,7 @@ func (s *AccountAuthorityServiceHandler) CreateAccountAuthority(ctx context.Cont
 	}
 
 	// Distributed Domain Handler
-	handlerCtx, handlerSpan := tracer.Start(validationCtx, "create-account-authority-event-generation", trace.WithSpanKind(trace.SpanKindInternal))
+	handlerCtx, handlerSpan := tracer.Start(ctx, "create-account-authority-event-multiplex", trace.WithSpanKind(trace.SpanKindInternal))
 
 	config := s.GetCreateAccountAuthorityConfiguration()
 	reply, serr := natsnodev1.Bound.MultiplexCommandSync(handlerCtx, spec, &natsnodev1.SpecCommand{

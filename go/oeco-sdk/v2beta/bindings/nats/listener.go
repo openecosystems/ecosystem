@@ -113,6 +113,12 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 	fmt.Println("Listening for multiplexed spec events on subject: " + subject)
 
 	_, err := n.QueueSubscribe(subject, queue, func(msg *nats.Msg) {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Printf("Recovered panic in listener.Process for %s: %v\n", subject, r)
+			}
+		}()
+
 		messageCtx, message, _ := convertNatsToListenerMessage(configuration, msg)
 
 		// The Processor is responsible for replying to the Reply subject and responding with any errors
@@ -195,7 +201,7 @@ func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
 	go func() {
 		_, err = js.Publish(context.Background(), subject, specBytes)
 		if err != nil {
-			message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(errors.New("found error when publishing"), err).ToStatus()
+			message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(errors.New("found error when publishing to jetstream subject: "+subject), err).ToStatus()
 			respond(&nm, message.Spec)
 			return
 		}

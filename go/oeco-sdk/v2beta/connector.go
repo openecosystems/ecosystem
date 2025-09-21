@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"runtime/debug"
 	"syscall"
 
 	"connectrpc.com/connect"
@@ -97,6 +98,13 @@ func (connector *Connector) ListenAndProcess() {
 
 // ListenAndProcessWithCtx listens on registered channels and processes events while managing graceful shutdowns using context.
 func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
+	defer func() {
+		if rec := recover(); rec != nil {
+			fmt.Printf("Recovered from panic in connector %s: %v\n", connector.Name, rec)
+			debug.PrintStack() // optional stack trace
+		}
+	}()
+
 	var specListenableErr chan SpecListenableErr
 	if connector.Bindings.RegisteredListenableChannels != nil {
 		go func() {
@@ -121,7 +129,9 @@ func (connector *Connector) ListenAndProcessWithCtx(_ context.Context) {
 	}
 }
 
-// ListenAndProcessSpecListenable starts listening on all registered listenable channels and returns a channel for errors.
+// ListenAndProcessSpecListenable starts listening on all registered listenable channels
+// and returns a channel for errors. Each listener goroutine is wrapped in a supervision
+// loop so that if it panics, it will log, recover, and restart after a short backoff.
 func (connector *Connector) ListenAndProcessSpecListenable() chan SpecListenableErr {
 	listeners := connector.Bindings.RegisteredListenableChannels
 	listenerErr := make(chan SpecListenableErr, len(listeners))

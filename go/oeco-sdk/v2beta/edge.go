@@ -3,10 +3,28 @@ package sdkv2betalib
 import (
 	"fmt"
 	"net/http"
+	"runtime/debug"
+
+	"connectrpc.com/connect"
 )
 
 func edgeRouter(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Panic recovery
+		defer func() {
+			if rec := recover(); rec != nil {
+				fmt.Printf("Recovered from panic in request %s %s: %v\n", r.Method, r.URL.Path, rec)
+				debug.PrintStack()
+
+				// Write it out in Connect-compatible format
+				err := connect.NewErrorWriter().Write(w, r, ErrServerInternal)
+				if err != nil {
+					w.WriteHeader(http.StatusInternalServerError)
+					return
+				}
+			}
+		}()
+
 		w.Header().Set(AccessControlAllowOrigin, r.Header.Get(Origin))
 		w.Header().Set(AccessControlAllowMethods, "HEAD,OPTIONS,GET,PUT,PATCH,POST,DELETE")
 		w.Header().Set(AccessControlAllowHeaders, "*")
