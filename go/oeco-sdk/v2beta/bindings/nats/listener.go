@@ -7,10 +7,8 @@ import (
 
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
-	"go.uber.org/zap"
 	protopb "google.golang.org/protobuf/proto"
 
-	apexlog "github.com/apex/log"
 	"github.com/mennanov/fmutils"
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
@@ -214,7 +212,7 @@ func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
 func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 	log := *zaploggerv1.Bound.Logger
 	if msg == nil {
-		apexlog.Warn("Received nil message, ignoring")
+		log.Warn("Received nil message, ignoring")
 		return
 	}
 
@@ -236,72 +234,16 @@ func respond(msg *nats.Msg, spec *specv2pb.Spec) {
 
 	marshal, err := protopb.Marshal(spec)
 	if err != nil {
-		apexlog.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("cannot marshal spec: "), err).Error())
+		log.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("cannot marshal spec: "), err).Error())
 		err = msg.Respond(nil)
 		if err != nil {
-			apexlog.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
+			log.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
 		}
 	}
 
 	err = msg.Respond(marshal)
 	if err != nil {
-		apexlog.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
-	}
-}
-
-// ListenForJetStreamEvents subscribes to a Jetstream subject.
-func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEventListener) {
-	configuration := listener.Configure()
-
-	if configuration == nil || configuration.Procedure == "" || configuration.StreamType == nil {
-		apexlog.Error("Configuration is missing. Procedure, StreamType are required when configuring a SpecListener")
-		panic("Configuration is missing")
-	}
-
-	log := *zaploggerv1.Bound.Logger
-	js := *Bound.JetStream
-	streamName := GetStreamName(env, configuration.StreamType.StreamPrefix(), configuration.TypeName)
-
-	stream, err := js.Stream(ctx, streamName)
-	if err != nil {
-		apexlog.Error("Could not find stream: " + streamName + err.Error())
-		return
-	}
-
-	c, err := stream.CreateOrUpdateConsumer(ctx, *configuration.JetstreamConfiguration)
-	if err != nil {
-		log.Error("SpecError creating consumer", zap.Error(err))
-		panic("Cannot start consumer")
-	}
-
-	// TODO: This must be closed
-	_, err = c.Consume(func(msg jetstream.Msg) {
-		messageCtx, message, _ := convertJetstreamToListenerMessage(configuration, &msg)
-
-		// The Processor is responsible for replying to the Reply subject and responding with any errors
-		listener.Process(messageCtx, message)
-		RespondToJetstreamEvent(messageCtx, message)
-	}, jetstream.ConsumeErrHandler(func(_ jetstream.ConsumeContext, err error) {
-		fmt.Println(err)
-	}))
-	if err != nil {
-		log.Fatal("consume error", zap.Error(err))
-	}
-
-	apexlog.Info("Listening for stream spec events on subject: " + streamName)
-
-	//
-}
-
-// RespondToJetstreamEvent processes an inbound message, modifies the provided message, and sends a response through NATS.
-func RespondToJetstreamEvent(_ context.Context, message *ListenerMessage) {
-	log := *zaploggerv1.Bound.Logger
-	jm := *message.Message
-
-	err4 := jm.Ack()
-	if err4 != nil {
-		log.Error("SpecError acknowledging message", zap.Error(err4))
-		return
+		log.Error(sdkv2betalib.ErrServerInternal.WithSpecDetail(spec).WithInternalErrorDetail(errors.New("error responding to NATS: "), err).Error())
 	}
 }
 
@@ -365,27 +307,6 @@ func convertNatsToListenerMessage(config *ListenerConfiguration, msg *nats.Msg) 
 		NatsMessage:           &m,
 		ListenerConfiguration: config,
 		EventResponseChannel:  responseSubject,
-	}, nil
-}
-
-func convertJetstreamToListenerMessage(config *ListenerConfiguration, msg *jetstream.Msg) (context.Context, *ListenerMessage, sdkv2betalib.SpecErrorable) {
-	// Start with a new ctx here because it must remain transaction safe
-	ctx := context.Background()
-	s := &specv2pb.Spec{}
-	m := *msg
-	err := protopb.Unmarshal(m.Data(), s)
-	if err != nil {
-		return ctx, nil, sdkv2betalib.ErrServerInternal.WithInternalErrorDetail(errors.New("could not unmarshall spec"), err)
-	}
-
-	parentSpanCtx := convertSpecSpanContextToContext(s)
-	ctx = trace.ContextWithRemoteSpanContext(ctx, parentSpanCtx)
-
-	return ctx, &ListenerMessage{
-		Spec:                  s,
-		Subscription:          nil,
-		Message:               &m,
-		ListenerConfiguration: config,
 	}, nil
 }
 

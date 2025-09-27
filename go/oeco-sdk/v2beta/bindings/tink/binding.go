@@ -53,6 +53,8 @@ func (b *Binding) Bind(ctx context.Context, bindings *sdkv2betalib.Bindings) *sd
 					fmt.Println(err)
 					panic(err)
 				}
+				registry.RegisterKMSClient(client)
+
 				kekAEAD, err := client.GetAEAD(keyURI)
 				if err != nil {
 					fmt.Println(err)

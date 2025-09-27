@@ -19,11 +19,12 @@ import (
 
 // Binding represents a structure managing NATS connections, JetStream instances, and event stream configurations.
 type Binding struct {
-	Registry           map[string]nats.StreamConfig
-	SpecEventListeners []SpecEventListener
-	Listeners          map[string]*nats.Subscription
-	Nats               *nats.Conn
-	JetStream          *jetstream.JetStream
+	Registry                map[string]nats.StreamConfig
+	SpecEventListeners      []SpecEventListener
+	SpecEventBatchListeners []SpecEventBatchListener
+	Listeners               map[string]*nats.Subscription
+	Nats                    *nats.Conn
+	JetStream               *jetstream.JetStream
 
 	server        *natsd.Server
 	configuration *Configuration
@@ -166,6 +167,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 					bindings.Registered[b.Name()] = Bound
 
 					bindings = b.RegisterSpecListeners(bindings)
+					bindings = b.RegisterSpecBatchListeners(bindings)
 				}
 			})
 	} else {
@@ -203,6 +205,36 @@ func (b *Binding) Close() error {
 // RegisterSpecListeners registers specification event listeners by configuring them and associating them with bindings.
 func (b *Binding) RegisterSpecListeners(bindings *sdkv2betalib.Bindings) *sdkv2betalib.Bindings {
 	for _, listener := range b.SpecEventListeners {
+		configuration := listener.Configure()
+		if configuration == nil {
+			fmt.Println("Please configure the Listener")
+			panic("Misconfigured")
+		}
+
+		name := ""
+		if configuration.JetstreamConfiguration.Name == "" && configuration.JetstreamConfiguration.Durable == "" {
+			fmt.Println("Either the Name or the Durable name is required")
+			panic("Misconfigured")
+		}
+
+		if configuration.JetstreamConfiguration.Name != "" {
+			name = configuration.JetstreamConfiguration.Durable
+		}
+
+		// Use the durable name if set
+		if configuration.JetstreamConfiguration.Durable != "" {
+			name = configuration.JetstreamConfiguration.Durable
+		}
+
+		bindings.RegisteredListenableChannels[name] = listener
+	}
+
+	return bindings
+}
+
+// RegisterSpecBatchListeners registers specification event listeners by configuring them and associating them with bindings.
+func (b *Binding) RegisterSpecBatchListeners(bindings *sdkv2betalib.Bindings) *sdkv2betalib.Bindings {
+	for _, listener := range b.SpecEventBatchListeners {
 		configuration := listener.Configure()
 		if configuration == nil {
 			fmt.Println("Please configure the Listener")

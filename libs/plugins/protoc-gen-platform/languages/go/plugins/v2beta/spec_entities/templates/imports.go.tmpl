@@ -1,0 +1,2 @@
+{{ $e := entity . }}{{ $s := service . }}{{ $goPackage := goPackage .File }}{{ $getGoPath := getGoPath .File }}
+  {{ if $s -}}{{- if $e }}{{ $getGoPath }} "{{ $goPackage }}"{{ end }}{{- end }}

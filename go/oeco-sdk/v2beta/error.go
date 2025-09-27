@@ -24,7 +24,7 @@ import (
 // Reason is the stable logical identity for a SpecError.
 type Reason string
 
-// HasReason check if the Error has a reson
+// HasReason check if the Error has a reason
 type HasReason interface {
 	error
 	SpecReason() Reason
@@ -49,6 +49,7 @@ type (
 		WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecErrorable
 		WithInternalErrorDetail(errs ...error) SpecErrorable
 		// WithDebugDetail(ctx context.Context, spec *specv2pb.Spec, errs ...error) SpecErrorable
+		SpecReason() Reason
 		ToStatus() *status.Status
 		ToConnectError() *connect.Error
 		error
@@ -121,6 +122,10 @@ func (se *SpecError) WithErrorInfo(info *errdetails.ErrorInfo) SpecErrorable {
 	if err != nil {
 		apexlog.Error("server: SpecError creating new ErrorInfo")
 		return se
+	}
+
+	if info.Reason != "" {
+		se.reason = Reason(info.Reason)
 	}
 
 	se.ConnectErr.AddDetail(d)

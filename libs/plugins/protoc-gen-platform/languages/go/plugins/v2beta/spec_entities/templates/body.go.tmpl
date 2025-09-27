@@ -1,0 +1,2 @@
+{{- $e := entity . -}}{{- $s := service . -}}{{ $entityName := entityName $e }}{{ $getGoPath := getGoPath .File }}
+	"{{ $getGoPath }}.{{ $entityName.UpperCamelCase }}SpecEntity": &{{ $getGoPath }}.{{ $entityName.UpperCamelCase }}SpecEntity{},

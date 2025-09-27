@@ -17,12 +17,12 @@ import (
 	sdkconnectorv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/sdk_connector"
 	serverv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/server"
 	specv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/spec"
-
 	// Protobuf Plugins
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
 
 	// Typescript Plugins
+	specentities "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/spec_entities"
 	clienttypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/client"
 	protobufindextypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/protobuf_index"
 	spectypescript "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/typescript/plugins/spec"
@@ -45,6 +45,7 @@ func main() {
 		serverv2beta.GoServerPlugin(),
 		multiplexerv2beta.GoMultiplexerPlugin(),
 		specv2beta.GoSpecPlugin(),
+		specentities.GoSpecEntitiesPlugin(),
 		sdkv2beta.GoSdkPlugin(),
 		sdkconnectorv2beta.GoSdkConnectorPlugin(),
 

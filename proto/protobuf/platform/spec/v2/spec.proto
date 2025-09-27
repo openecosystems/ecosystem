@@ -100,10 +100,10 @@ message Spec {
   //
   google.protobuf.Timestamp completed_at = 5;
 
-  //
+  // The Spec Entity Type for the message
   string spec_type = 6;
 
-  //
+  // Is this a command, event, routine, profile update, ML run or other type of event
   SpecEventType spec_event_type = 7;
 
   //
