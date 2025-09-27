@@ -1,3 +1,13 @@
+## 0.20.5 (2025-09-27)
+
+### 🩹 Fixes
+
+- added additional error handling; preparing for batch handling ([0fa903f](https://github.com/openecosystems/ecosystem/commit/0fa903f))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.20.4 (2025-09-21)
 
 ### 🩹 Fixes

@@ -1,6 +1,6 @@
 {
     "name": "go/oeco-sdk/v2beta",
-    "version": "0.20.4",
+    "version": "0.20.5",
     "description": "SDK version v2beta",
     "private": true,
     "license": "Apache-2.0"
