@@ -267,8 +267,11 @@ func (se *SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecErrorable {
 		return se
 	}
 
-	se.ConnectErr.AddDetail(d)
-	return se
+	newErr := *se // shallow copy
+	newErr.ConnectErr = *connect.NewError(se.ConnectErr.Code(), se.ConnectErr.Unwrap())
+	newErr.ConnectErr.AddDetail(d)
+	// se.ConnectErr.AddDetail(d)
+	return &newErr
 }
 
 // WithInternalErrorDetail sets internal error details for the SpecError instance and returns the updated SpecError object.

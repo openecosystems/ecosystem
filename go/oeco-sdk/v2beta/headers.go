@@ -254,7 +254,7 @@ const (
 // XSpecEcosystem represents a header specifying the ecosystem slug for the request.
 // XSpecOrganization represents a header specifying the organization slug for the request.
 // XSpecWorkspace represents a header specifying the workspace slug for the request.
-// XSpecWorkspaceJan represents a header linked to the workspace Jan for specific routing.
+// XSpecEcosystemJan represents a header linked to the workspace Jan for specific routing.
 // XSpecValidateOnly represents a header indicating if the request is for validation only.
 // XSpecFieldmask represents a header specifying the field mask used for partial updates.
 // XSpecDeviceId represents a header specifying the device ID for client identification.
@@ -346,7 +346,7 @@ const (
 // RequestIdKey is the request identifier sent by the client (not sanitized).
 // EcosystemSlug refers to the sanitized ecosystem slug from the edge cache.
 // OrganizationSlug refers to the sanitized organization slug from the edge cache.
-// WorkspaceJurisdictionAreaNetworkKey indicates the workspace jurisdiction area network.
+// JurisdictionAreaNetworkKey indicates the workspace jurisdiction area network.
 // IpKey specifies the IP information in the context.
 // LocaleKey contains the locale information in the context.
 // TimezoneKey specifies the timezone in the context.
@@ -395,20 +395,20 @@ const (
 
 	// RequestIdKey Spec.SpanContext
 	// Not sanitized and allowed from the client
-	RequestIdKey = "X-Request-Id"
+	RequestIdKey = "X-Spec-Request-Id"
 
 	// EcosystemID Spec.Context
 	// OrganizationSlug Spec.Context
 	// Sanitized comes from edge cache
-	EcosystemID                         = "X-Spec-Ecosystem-Id"
-	EcosystemSlug                       = "X-Spec-Ecosystem-Slug"
-	OrganizationID                      = "X-Spec-Organization-Id"
-	OrganizationSlug                    = "X-Spec-Organization-Slug"
-	WorkspaceJurisdictionAreaNetworkKey = "X-Spec-Workspace-Jan"
-	IpKey                               = "X-Spec-Ip"
-	LocaleKey                           = "X-Spec-Locale"
-	TimezoneKey                         = "X-Spec-Timezone"
-	UserAgentKey                        = "User-Agent"
+	EcosystemID                = "X-Spec-Ecosystem-Id"
+	EcosystemSlug              = "X-Spec-Ecosystem-Slug"
+	OrganizationID             = "X-Spec-Organization-Id"
+	OrganizationSlug           = "X-Spec-Organization-Slug"
+	JurisdictionAreaNetworkKey = "X-Spec-Jan"
+	IpKey                      = "X-Spec-Ip"
+	LocaleKey                  = "X-Spec-Locale"
+	TimezoneKey                = "X-Spec-Timezone"
+	UserAgentKey               = "User-Agent"
 
 	// ValidateOnlyKey Spec.Context.Validation
 	ValidateOnlyKey = "X-Spec-Validate-Only"
@@ -428,19 +428,28 @@ const (
 	DeviceTokenKey         = "X-Spec-Device-Token" //nolint:gosec
 
 	// CityKey Spec.Context.Location
-	// Sanitized and comes from edge cache
-	CityKey      = "X-Spec-City"
-	CountryKey   = "X-Spec-Country"
-	LatitudeKey  = "X-Spec-Lat"
-	LongitudeKey = "X-Spec-Long"
-	SpeedKey     = "X-Spec-Speed"
+	// Sanitized and comes from edge router
+
+	ContinentKey   = "X-Spec-Continent"
+	CountryKey     = "X-Spec-Country"
+	IsEUCountryKey = "X-Spec-Is-EU-Country"
+	CityKey        = "X-Spec-City"
+	RegionKey      = "X-Spec-Region"
+	RegionCodeKey  = "X-Spec-Region-Code"
+	LatitudeKey    = "X-Spec-Lat"
+	LongitudeKey   = "X-Spec-Long"
+	PostalCodeKey  = "X-Spec-Postal-Code"
+	MetroCodeKey   = "X-Spec-Metro-Code"
+	SpeedKey       = "X-Spec-Speed"
 
 	// BluetoothKey Spec.Context.Network
 	// Not sanitized and allowed from the client
-	BluetoothKey = "X-Spec-Bluetooth"
-	CellularKey  = "X-Spec-Cellular"
-	WifiKey      = "X-Spec-Wifi"
-	CarrierKey   = "X-Spec-Carrier"
+	BluetoothKey       = "X-Spec-Bluetooth"
+	CellularKey        = "X-Spec-Cellular"
+	WifiKey            = "X-Spec-Wifi"
+	CarrierKey         = "X-Spec-Carrier"
+	AsnKey             = "X-Spec-Asn"
+	AsnOrganizationKey = "X-Spec-Asn-Org"
 
 	// OsNameKey Spec.Context.OS
 	// Not sanitized and allowed from the client

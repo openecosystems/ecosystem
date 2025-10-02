@@ -57,6 +57,11 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 
 	messageId := ksuid.New().String()
 
+	requestId := h.Get(RequestIdKey)
+	if requestId == "" {
+		requestId = ksuid.New().String()
+	}
+
 	sentAt := timestamppb.Now()
 	if _sentAt, ok := headers[SentAtKey]; ok {
 		t, err := time.Parse(time.RFC3339, _sentAt)
@@ -149,27 +154,31 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 	organizationID := h.Get(OrganizationID)
 	organizationSlug := h.Get(OrganizationSlug)
 
-	var ecosystemJAN typev2pb.Jurisdiction
-	_ecosystemJAN := h.Get(WorkspaceJurisdictionAreaNetworkKey)
-	switch _ecosystemJAN {
+	var jan typev2pb.Jurisdiction
+	_jan := h.Get(JurisdictionAreaNetworkKey)
+	switch _jan {
 	case "JURISDICTION_NA_US_1":
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_NA_US_1
+		jan = typev2pb.Jurisdiction_JURISDICTION_NA_US_1
 	case "JURISDICTION_GOV_US_1":
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_GOV_US_1
+		jan = typev2pb.Jurisdiction_JURISDICTION_GOV_US_1
 	case "JURISDICTION_EU_DE_1":
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_EU_DE_1
+		jan = typev2pb.Jurisdiction_JURISDICTION_EU_DE_1
 	case "JURISDICTION_GOV_EU_1  ":
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_GOV_EU_1
+		jan = typev2pb.Jurisdiction_JURISDICTION_GOV_EU_1
 	case "JURISDICTION_AS_CN_1":
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_AS_CN_1
+		jan = typev2pb.Jurisdiction_JURISDICTION_AS_CN_1
 	case "JURISDICTION_SA_BR_1":
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_SA_BR_1
+		jan = typev2pb.Jurisdiction_JURISDICTION_SA_BR_1
 	default:
-		ecosystemJAN = typev2pb.Jurisdiction_JURISDICTION_UNSPECIFIED
+		jan = typev2pb.Jurisdiction_JURISDICTION_UNSPECIFIED
 	}
 
 	ip := h.Get(IpKey)
-	locale := h.Get(LocaleKey)
+	if h.Get(XForwardedFor) != "" {
+		ip = h.Get(XForwardedFor)
+	}
+
+	locale := h.Get(AcceptLanguage)
 	timezone := h.Get(TimezoneKey)
 	userAgent := h.Get(UserAgentKey)
 
@@ -194,8 +203,20 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 
 	// Spec.Context.Location
 	// ===============================
-	city := h.Get(CityKey)
+	continent := h.Get(ContinentKey)
 	country := h.Get(CountryKey)
+
+	isEUCountry := false
+	_isEUCountry := h.Get(IsEUCountryKey)
+	eu, err := strconv.ParseBool(_isEUCountry)
+	if err == nil {
+		isEUCountry = eu
+	}
+
+	city := h.Get(CityKey)
+	region := h.Get(RegionKey)
+	regionCode := h.Get(RegionCodeKey)
+
 	latitude := 0.0
 	_latitude := h.Get(LatitudeKey)
 	l, err := strconv.ParseFloat(_latitude, 64)
@@ -210,6 +231,8 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 		longitude = la
 	}
 
+	postalCode := h.Get(PostalCodeKey)
+	metroCode := h.Get(MetroCodeKey)
 	speed := h.Get(SpeedKey)
 
 	// Spec.Context.Network
@@ -236,6 +259,8 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 	}
 
 	carrier := h.Get(CarrierKey)
+	asn := h.Get(AsnKey)
+	asnOrganization := h.Get(AsnOrganizationKey)
 
 	// Spec.Context.OS
 	// ===============================
@@ -258,6 +283,7 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 	s := specv2pb.Spec{
 		SpecVersion: specVersion,
 		MessageId:   messageId,
+		RequestId:   requestId,
 		SentAt:      sentAt,
 		ReceivedAt:  receivedAt,
 		CompletedAt: completedAt,
@@ -281,7 +307,7 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 			OrganizationSlug: organizationSlug,
 			EcosystemId:      ecosystemID,
 			EcosystemSlug:    ecosystemSlug,
-			EcosystemJan:     ecosystemJAN,
+			Jan:              jan,
 			Ip:               ip,
 			Locale:           locale,
 			Timezone:         timezone,
@@ -299,17 +325,25 @@ func NewFactory(ctx context.Context, h http.Header, procedure string) Factory {
 				Token:         deviceToken,
 			},
 			Location: &specv2pb.SpecLocation{
-				City:      city,
-				Country:   country,
-				Latitude:  latitude,
-				Longitude: longitude,
-				Speed:     speed,
+				Continent:   continent,
+				Country:     country,
+				IsEuCountry: isEUCountry,
+				City:        city,
+				Region:      region,
+				RegionCode:  regionCode,
+				Latitude:    latitude,
+				Longitude:   longitude,
+				PostalCode:  postalCode,
+				MetroCode:   metroCode,
+				Speed:       speed,
 			},
 			Network: &specv2pb.SpecNetwork{
-				Bluetooth: bluetooth,
-				Cellular:  cellular,
-				Wifi:      wifi,
-				Carrier:   carrier,
+				Bluetooth:       bluetooth,
+				Cellular:        cellular,
+				Wifi:            wifi,
+				Carrier:         carrier,
+				Asn:             asn,
+				AsnOrganization: asnOrganization,
 			},
 			Os: &specv2pb.SpecOS{
 				Name:    osName,

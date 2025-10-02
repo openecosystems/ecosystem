@@ -26,33 +26,36 @@ type Jurisdiction int32
 
 const (
 	Jurisdiction_JURISDICTION_UNSPECIFIED Jurisdiction = 0
-	Jurisdiction_JURISDICTION_NA_US_1     Jurisdiction = 1
-	Jurisdiction_JURISDICTION_GOV_US_1    Jurisdiction = 2
-	Jurisdiction_JURISDICTION_EU_DE_1     Jurisdiction = 3
-	Jurisdiction_JURISDICTION_GOV_EU_1    Jurisdiction = 4
-	Jurisdiction_JURISDICTION_AS_CN_1     Jurisdiction = 5
-	Jurisdiction_JURISDICTION_SA_BR_1     Jurisdiction = 6
+	Jurisdiction_JURISDICTION_GLOBAL      Jurisdiction = 1
+	Jurisdiction_JURISDICTION_NA_US_1     Jurisdiction = 2
+	Jurisdiction_JURISDICTION_GOV_US_1    Jurisdiction = 3
+	Jurisdiction_JURISDICTION_EU_DE_1     Jurisdiction = 4
+	Jurisdiction_JURISDICTION_GOV_EU_1    Jurisdiction = 5
+	Jurisdiction_JURISDICTION_AS_CN_1     Jurisdiction = 6
+	Jurisdiction_JURISDICTION_SA_BR_1     Jurisdiction = 7
 )
 
 // Enum value maps for Jurisdiction.
 var (
 	Jurisdiction_name = map[int32]string{
 		0: "JURISDICTION_UNSPECIFIED",
-		1: "JURISDICTION_NA_US_1",
-		2: "JURISDICTION_GOV_US_1",
-		3: "JURISDICTION_EU_DE_1",
-		4: "JURISDICTION_GOV_EU_1",
-		5: "JURISDICTION_AS_CN_1",
-		6: "JURISDICTION_SA_BR_1",
+		1: "JURISDICTION_GLOBAL",
+		2: "JURISDICTION_NA_US_1",
+		3: "JURISDICTION_GOV_US_1",
+		4: "JURISDICTION_EU_DE_1",
+		5: "JURISDICTION_GOV_EU_1",
+		6: "JURISDICTION_AS_CN_1",
+		7: "JURISDICTION_SA_BR_1",
 	}
 	Jurisdiction_value = map[string]int32{
 		"JURISDICTION_UNSPECIFIED": 0,
-		"JURISDICTION_NA_US_1":     1,
-		"JURISDICTION_GOV_US_1":    2,
-		"JURISDICTION_EU_DE_1":     3,
-		"JURISDICTION_GOV_EU_1":    4,
-		"JURISDICTION_AS_CN_1":     5,
-		"JURISDICTION_SA_BR_1":     6,
+		"JURISDICTION_GLOBAL":      1,
+		"JURISDICTION_NA_US_1":     2,
+		"JURISDICTION_GOV_US_1":    3,
+		"JURISDICTION_EU_DE_1":     4,
+		"JURISDICTION_GOV_EU_1":    5,
+		"JURISDICTION_AS_CN_1":     6,
+		"JURISDICTION_SA_BR_1":     7,
 	}
 )
 
@@ -87,15 +90,16 @@ var File_platform_type_v2_jurisdiction_proto protoreflect.FileDescriptor
 
 const file_platform_type_v2_jurisdiction_proto_rawDesc = "" +
 	"\n" +
-	"#platform/type/v2/jurisdiction.proto\x12\x10platform.type.v2*\xca\x01\n" +
+	"#platform/type/v2/jurisdiction.proto\x12\x10platform.type.v2*\xe3\x01\n" +
 	"\fJurisdiction\x12\x1c\n" +
-	"\x18JURISDICTION_UNSPECIFIED\x10\x00\x12\x18\n" +
-	"\x14JURISDICTION_NA_US_1\x10\x01\x12\x19\n" +
-	"\x15JURISDICTION_GOV_US_1\x10\x02\x12\x18\n" +
-	"\x14JURISDICTION_EU_DE_1\x10\x03\x12\x19\n" +
-	"\x15JURISDICTION_GOV_EU_1\x10\x04\x12\x18\n" +
-	"\x14JURISDICTION_AS_CN_1\x10\x05\x12\x18\n" +
-	"\x14JURISDICTION_SA_BR_1\x10\x06BVZTgithub.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pbb\x06proto3"
+	"\x18JURISDICTION_UNSPECIFIED\x10\x00\x12\x17\n" +
+	"\x13JURISDICTION_GLOBAL\x10\x01\x12\x18\n" +
+	"\x14JURISDICTION_NA_US_1\x10\x02\x12\x19\n" +
+	"\x15JURISDICTION_GOV_US_1\x10\x03\x12\x18\n" +
+	"\x14JURISDICTION_EU_DE_1\x10\x04\x12\x19\n" +
+	"\x15JURISDICTION_GOV_EU_1\x10\x05\x12\x18\n" +
+	"\x14JURISDICTION_AS_CN_1\x10\x06\x12\x18\n" +
+	"\x14JURISDICTION_SA_BR_1\x10\aBVZTgithub.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pbb\x06proto3"
 
 var (
 	file_platform_type_v2_jurisdiction_proto_rawDescOnce sync.Once

@@ -140,19 +140,27 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						apexlog.Info("Connection closed.")
 					}))
 
-					_nats, err := nats.Connect(servers, natsOptions...)
+					maxRetries := 180              // -1 for infinite retries
+					retryDelay := 10 * time.Second // wait 3 seconds between attempts
+
+					_nats, js, err := connectWithRetry(servers, maxRetries, retryDelay, natsOptions...)
 					if err != nil {
-						fmt.Println(err.Error())
-						panic("Cannot connect to NATS")
+						panic(err)
 					}
+
+					//_nats, err := nats.Connect(servers, natsOptions...)
+					//if err != nil {
+					//	fmt.Println(err.Error())
+					//	panic("Cannot connect to NATS")
+					//}
 					b.Nats = _nats
 
 					// Create a JetStream management interface
-					js, err := jetstream.New(_nats)
-					if err != nil {
-						fmt.Println(err.Error())
-						panic("Cannot configure Jetstream")
-					}
+					//js, err := jetstream.New(_nats)
+					//if err != nil {
+					//	fmt.Println(err.Error())
+					//	panic("Cannot configure Jetstream")
+					//}
 					b.JetStream = &js
 
 					Bound = &Binding{
@@ -260,4 +268,34 @@ func (b *Binding) RegisterSpecBatchListeners(bindings *sdkv2betalib.Bindings) *s
 	}
 
 	return bindings
+}
+
+func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, options ...nats.Option) (*nats.Conn, jetstream.JetStream, error) {
+	var nc *nats.Conn
+	var js jetstream.JetStream
+	var err error
+
+	for attempt := 1; maxRetries == -1 || attempt <= maxRetries; attempt++ {
+		fmt.Printf("Connecting to NATS (attempt %d)...\n", attempt)
+
+		nc, err = nats.Connect(url)
+		if err != nil {
+			fmt.Printf("NATS connection failed: %v\n", err)
+			time.Sleep(retryDelay)
+			continue
+		}
+
+		js, err = jetstream.New(nc)
+		if err != nil {
+			fmt.Printf("JetStream setup failed: %v\n", err)
+			nc.Close()
+			time.Sleep(retryDelay)
+			continue
+		}
+
+		fmt.Println("Connected to NATS and JetStream is ready.")
+		return nc, js, nil
+	}
+
+	return nil, nil, fmt.Errorf("failed to connect to NATS after %d attempts", maxRetries)
 }

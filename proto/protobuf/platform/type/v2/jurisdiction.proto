@@ -7,12 +7,13 @@ option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/
 // Jurisdiction
 enum Jurisdiction {
   JURISDICTION_UNSPECIFIED = 0;
-  JURISDICTION_NA_US_1 = 1;
-  JURISDICTION_GOV_US_1 = 2;
-  JURISDICTION_EU_DE_1 = 3;
-  JURISDICTION_GOV_EU_1 = 4;
-  JURISDICTION_AS_CN_1 = 5;
-  JURISDICTION_SA_BR_1 = 6;
+  JURISDICTION_GLOBAL = 1;
+  JURISDICTION_NA_US_1 = 2;
+  JURISDICTION_GOV_US_1 = 3;
+  JURISDICTION_EU_DE_1 = 4;
+  JURISDICTION_GOV_EU_1 = 5;
+  JURISDICTION_AS_CN_1 = 6;
+  JURISDICTION_SA_BR_1 = 7;
 
   //  AF	Africa
   //  NA	North America
