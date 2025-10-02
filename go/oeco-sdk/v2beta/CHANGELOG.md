@@ -1,3 +1,13 @@
+## 0.21.0 (2025-10-02)
+
+### 🚀 Features
+
+- updated spec with more network context; updated edge routing logic; added additional supported headers; retry for nats ([bb16cb3](https://github.com/openecosystems/ecosystem/commit/bb16cb3))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.20.5 (2025-09-27)
 
 ### 🩹 Fixes
