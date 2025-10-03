@@ -99,7 +99,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						Trace:  true,
 					}
 
-					sdkv2betalib.PrettyPrint(options)
+					// sdkv2betalib.PrettyPrint(options)
 
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
 					if b.configuration.Platform.Mesh.Enabled {
