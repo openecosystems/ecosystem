@@ -43,12 +43,13 @@ message Platform {
     type: GRAPH_TYPE_INPUT
   };
 
-  string endpoint = 1;
-  bool insecure = 2;
-  repeated string dns_endpoints = 3;
-  bool dynamic_config_reload = 4;
-  string api_key = 5;
-  Mesh mesh = 6;
+  string api_endpoint = 10;
+  string api_key = 20;
+  string endpoint = 30;
+  bool insecure = 40;
+  repeated string dns_endpoints = 50;
+  bool dynamic_config_reload = 60;
+  Mesh mesh = 70;
 }
 
 message Mesh {

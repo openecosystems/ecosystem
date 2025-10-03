@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/gob"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"reflect"
@@ -191,4 +192,13 @@ func CalculateSpecHash(spec *specproto.Spec) (string, error) {
 	hash := sha256.Sum256(jsonBytes)
 
 	return string(hash[:]), nil
+}
+
+func PrettyPrint(v interface{}) {
+	b, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		fmt.Println("error:", err)
+		return
+	}
+	fmt.Println(string(b))
 }

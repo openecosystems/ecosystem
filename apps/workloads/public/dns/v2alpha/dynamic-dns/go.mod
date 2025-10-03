@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/apps/workloads/public/dns/v2alpha/dynamic-dns
 
-go 1.23.11
+go 1.24.6
 
 require github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta v0.19.3
 

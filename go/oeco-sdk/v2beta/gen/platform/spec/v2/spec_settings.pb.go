@@ -225,12 +225,13 @@ func (x *App) GetLogToFile() bool {
 
 type Platform struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	Endpoint            string                 `protobuf:"bytes,1,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
-	Insecure            bool                   `protobuf:"varint,2,opt,name=insecure,proto3" json:"insecure,omitempty"`
-	DnsEndpoints        []string               `protobuf:"bytes,3,rep,name=dns_endpoints,json=dnsEndpoints,proto3" json:"dns_endpoints,omitempty"`
-	DynamicConfigReload bool                   `protobuf:"varint,4,opt,name=dynamic_config_reload,json=dynamicConfigReload,proto3" json:"dynamic_config_reload,omitempty"`
-	ApiKey              string                 `protobuf:"bytes,5,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
-	Mesh                *Mesh                  `protobuf:"bytes,6,opt,name=mesh,proto3" json:"mesh,omitempty"`
+	ApiEndpoint         string                 `protobuf:"bytes,10,opt,name=api_endpoint,json=apiEndpoint,proto3" json:"api_endpoint,omitempty"`
+	ApiKey              string                 `protobuf:"bytes,20,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
+	Endpoint            string                 `protobuf:"bytes,30,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	Insecure            bool                   `protobuf:"varint,40,opt,name=insecure,proto3" json:"insecure,omitempty"`
+	DnsEndpoints        []string               `protobuf:"bytes,50,rep,name=dns_endpoints,json=dnsEndpoints,proto3" json:"dns_endpoints,omitempty"`
+	DynamicConfigReload bool                   `protobuf:"varint,60,opt,name=dynamic_config_reload,json=dynamicConfigReload,proto3" json:"dynamic_config_reload,omitempty"`
+	Mesh                *Mesh                  `protobuf:"bytes,70,opt,name=mesh,proto3" json:"mesh,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -265,6 +266,20 @@ func (*Platform) Descriptor() ([]byte, []int) {
 	return file_platform_spec_v2_spec_settings_proto_rawDescGZIP(), []int{2}
 }
 
+func (x *Platform) GetApiEndpoint() string {
+	if x != nil {
+		return x.ApiEndpoint
+	}
+	return ""
+}
+
+func (x *Platform) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
 func (x *Platform) GetEndpoint() string {
 	if x != nil {
 		return x.Endpoint
@@ -291,13 +306,6 @@ func (x *Platform) GetDynamicConfigReload() bool {
 		return x.DynamicConfigReload
 	}
 	return false
-}
-
-func (x *Platform) GetApiKey() string {
-	if x != nil {
-		return x.ApiKey
-	}
-	return ""
 }
 
 func (x *Platform) GetMesh() *Mesh {
@@ -602,14 +610,16 @@ const file_platform_spec_v2_spec_settings_proto_rawDesc = "" +
 	"\x05debug\x18\x06 \x01(\bR\x05debug\x12\x18\n" +
 	"\averbose\x18\a \x01(\bR\averbose\x12\x14\n" +
 	"\x05quiet\x18\b \x01(\bR\x05quiet\x12\x1e\n" +
-	"\vlog_to_file\x18\t \x01(\bR\tlogToFile\"\xe8\x01\n" +
-	"\bPlatform\x12\x1a\n" +
-	"\bendpoint\x18\x01 \x01(\tR\bendpoint\x12\x1a\n" +
-	"\binsecure\x18\x02 \x01(\bR\binsecure\x12#\n" +
-	"\rdns_endpoints\x18\x03 \x03(\tR\fdnsEndpoints\x122\n" +
-	"\x15dynamic_config_reload\x18\x04 \x01(\bR\x13dynamicConfigReload\x12\x17\n" +
-	"\aapi_key\x18\x05 \x01(\tR\x06apiKey\x12*\n" +
-	"\x04mesh\x18\x06 \x01(\v2\x16.platform.spec.v2.MeshR\x04mesh:\x06\xfa\xb6\x18\x02\b\x01\"\x86\x02\n" +
+	"\vlog_to_file\x18\t \x01(\bR\tlogToFile\"\x8b\x02\n" +
+	"\bPlatform\x12!\n" +
+	"\fapi_endpoint\x18\n" +
+	" \x01(\tR\vapiEndpoint\x12\x17\n" +
+	"\aapi_key\x18\x14 \x01(\tR\x06apiKey\x12\x1a\n" +
+	"\bendpoint\x18\x1e \x01(\tR\bendpoint\x12\x1a\n" +
+	"\binsecure\x18( \x01(\bR\binsecure\x12#\n" +
+	"\rdns_endpoints\x182 \x03(\tR\fdnsEndpoints\x122\n" +
+	"\x15dynamic_config_reload\x18< \x01(\bR\x13dynamicConfigReload\x12*\n" +
+	"\x04mesh\x18F \x01(\v2\x16.platform.spec.v2.MeshR\x04mesh:\x06\xfa\xb6\x18\x02\b\x01\"\x86\x02\n" +
 	"\x04Mesh\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12\x1a\n" +
 	"\bendpoint\x18\x02 \x01(\tR\bendpoint\x12\x1a\n" +

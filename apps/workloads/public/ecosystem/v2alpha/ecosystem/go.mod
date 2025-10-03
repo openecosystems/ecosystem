@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alpha/ecosystem
 
-go 1.23.11
+go 1.24.6
 
 require (
 	connectrpc.com/connect v1.18.1

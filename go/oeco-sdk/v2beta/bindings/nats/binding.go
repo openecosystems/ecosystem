@@ -3,6 +3,7 @@ package natsnodev1
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"strconv"
 	"strings"
 	"sync"
@@ -58,9 +59,47 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 		var once sync.Once
 		once.Do(
 			func() {
+				//routes := RoutesFromStr(b.configuration.Natsd.Options.RoutesStr)
+				//b.configuration.Natsd.Options.Routes = routes
+				//
+				//fmt.Println(b.configuration.Natsd.Options.RoutesStr)
+				//fmt.Println(b.configuration.Natsd.Options.Routes)
+
+				// b.configuration.Natsd.Options.Cluster.Host = "0.0.0.1"
+				// b.configuration.Natsd.Options.Cluster.Port = 4244
+				// b.configuration.Natsd.Options.Cluster.Name = "multiplexer-test"
+
+				// fmt.Println(b.configuration.Natsd.Options.Cluster.ListenStr)
+
+				servers := strings.Replace(strings.Trim(fmt.Sprint(b.configuration.Nats.Options.Servers), "[]"), " ", ",", -1)
 				switch b.configuration.Natsd.Enabled {
 				case true:
-					options := b.configuration.Natsd.Options
+
+					fmt.Println("ROUTES STR: " + b.configuration.Natsd.Options.RoutesStr)
+					var routes []*url.URL
+					if b.configuration.Natsd.Options.RoutesStr != "" {
+						routes = RoutesFromStr(b.configuration.Natsd.Options.RoutesStr)
+					}
+
+					options := &natsd.Options{
+						// Standard client options
+						ServerName: b.configuration.Natsd.Options.ServerName,
+						Host:       b.configuration.Natsd.Options.Host,
+						Port:       b.configuration.Natsd.Options.Port,
+						HTTPPort:   b.configuration.Natsd.Options.HTTPPort,
+
+						// Clustering options
+						Cluster: natsd.ClusterOpts{
+							Name: b.configuration.Natsd.Options.Cluster.Name,
+							Host: b.configuration.Natsd.Options.Cluster.Host,
+							Port: b.configuration.Natsd.Options.Cluster.Port,
+						},
+						Routes: routes,
+						Debug:  true,
+						Trace:  true,
+					}
+
+					sdkv2betalib.PrettyPrint(options)
 
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
 					if b.configuration.Platform.Mesh.Enabled {
@@ -70,7 +109,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						}
 					}
 
-					server, err := natsd.NewServer(&options)
+					server, err := natsd.NewServer(options)
 					if err != nil {
 						fmt.Println("natsd error: ", err)
 						panic(err)
@@ -89,7 +128,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						panic("Server not ready within 60 seconds")
 					}
 
-					_nats, err := nats.Connect(fmt.Sprintf("nats://%s:%d", options.Host, options.Port))
+					_nats, err := nats.Connect(servers)
 					if err != nil {
 						fmt.Println("error connecting to NATS server at localhost port: " + strconv.Itoa(options.Port) + " " + err.Error())
 					}
@@ -118,8 +157,6 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 
 					RegisterEventStreams()
 				case false:
-					servers := strings.Replace(strings.Trim(fmt.Sprint(b.configuration.Nats.Options.Servers), "[]"), " ", ",", -1)
-
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
 					if b.configuration.Platform.Mesh.Enabled {
 						if !nebulav1.IsBound {
@@ -129,7 +166,15 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 
 						natsOptions = append(natsOptions, nats.SetCustomDialer(nebulav1.Bound.MeshSocket))
 					}
-
+					natsOptions = append(natsOptions, nats.ConnectHandler(func(c *nats.Conn) {
+						apexlog.Info("Node connected to: " + c.Opts.Url)
+					}))
+					natsOptions = append(natsOptions, nats.ClosedHandler(func(c *nats.Conn) {
+						apexlog.Info("Closed handler: " + c.Opts.Url)
+					}))
+					natsOptions = append(natsOptions, nats.DiscoveredServersHandler(func(c *nats.Conn) {
+						apexlog.Info("Discovered Server: " + c.Opts.Url)
+					}))
 					natsOptions = append(natsOptions, nats.DisconnectErrHandler(func(_ *nats.Conn, err error) {
 						apexlog.Info("Disconnected due to: " + err.Error())
 					}))
@@ -276,7 +321,7 @@ func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, opti
 	var err error
 
 	for attempt := 1; maxRetries == -1 || attempt <= maxRetries; attempt++ {
-		fmt.Printf("Connecting to NATS (attempt %d)...\n", attempt)
+		fmt.Printf("Connecting to NATS- %s - (attempt %d)...\n", nc.ConnectedUrl(), attempt)
 
 		nc, err = nats.Connect(url)
 		if err != nil {
@@ -293,9 +338,24 @@ func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, opti
 			continue
 		}
 
-		fmt.Println("Connected to NATS and JetStream is ready.")
+		fmt.Println("Connected to NATS and JetStream. Ready.")
 		return nc, js, nil
 	}
 
 	return nil, nil, fmt.Errorf("failed to connect to NATS after %d attempts", maxRetries)
+}
+
+// RoutesFromStr parses route URLs from a string
+func RoutesFromStr(routesStr string) []*url.URL {
+	routes := strings.Split(routesStr, ",")
+	if len(routes) == 0 {
+		return nil
+	}
+	routeUrls := []*url.URL{}
+	for _, r := range routes {
+		r = strings.TrimSpace(r)
+		u, _ := url.Parse(r)
+		routeUrls = append(routeUrls, u)
+	}
+	return routeUrls
 }

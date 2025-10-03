@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 	"strconv"
 	"time"
 
@@ -31,7 +32,7 @@ const (
 // NatsServers defines the default NATS server addresses.
 var (
 	ResolvedConfiguration *Configuration
-	NatsServers           = []string{"nats://127.0.0.1:4222"}
+	// NatsServers           = []string{"nats://127.0.0.1:4222"}
 )
 
 // Nats represents the configuration for NATS connectivity including mesh and specific connection options.
@@ -120,17 +121,17 @@ func (b *Binding) ValidateConfiguration() error {
 
 	var errs []error
 
-	if len(b.configuration.Natsd.Options.LeafNode.Remotes) == 0 {
-		errs = append(errs, errors.New(`missing leaf node remotes configuration. An example is:
-	natsd:
-	 options:
-	   leafNode:
-	     remotes:
-	       - urls:
-	           scheme: "tls"
-	           host:   "connect.ngs.global"
-	         credentials: "./example.creds"`))
-	}
+	//if len(b.configuration.Natsd.Options.LeafNode.Remotes) == 0 {
+	//	errs = append(errs, errors.New(`missing leaf node remotes configuration. An example is:
+	//natsd:
+	// options:
+	//   leafNode:
+	//     remotes:
+	//       - urls:
+	//           scheme: "tls"
+	//           host:   "connect.ngs.global"
+	//         credentials: "./example.creds"`))
+	//}
 
 	for i, s := range b.configuration.EventStreamRegistry.Streams {
 		if s.Name == "" {
@@ -161,7 +162,7 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 		},
 		Nats: Nats{
 			Options: nats.Options{
-				Servers: NatsServers,
+				//Servers: NatsServers,
 				//TLSConfig: &tls.Config{},
 				//Dialer: &net.Dialer{
 				//	Timeout:   0,
@@ -181,17 +182,19 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 		Natsd: Natsd{
 			Enabled: false,
 			Options: natsd.Options{
-				ServerName: NatsdServerName,
-				Host:       NatsdServerHost,
-				Port:       NatsdServerPort,
-				DontListen: false,
-				// Trace:      true,
+				ServerName:   NatsdServerName,
+				Host:         NatsdServerHost,
+				Port:         NatsdServerPort,
+				DontListen:   false,
+				Trace:        true,
+				Debug:        true,
+				TraceVerbose: true,
 				// Debug:      cfg.App.Debug,
 				MaxConn: -1,
 				MaxSubs: -1,
-				LeafNode: natsd.LeafNodeOpts{
-					Remotes: nil,
-				},
+				//LeafNode: natsd.LeafNodeOpts{
+				//	Remotes: nil,
+				//},
 				JetStream:              true,
 				JetStreamMaxMemory:     -1,
 				JetStreamMaxStore:      -1,
@@ -200,6 +203,15 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 				// TLSConfig:              &tls.Config{},
 				// AllowNonTLS:            true,
 				// TLSHandshakeFirst:      true,
+				Routes: []*url.URL{},
+				//Cluster: natsd.ClusterOpts{
+				// ConnectRetries: 3,
+				//PoolSize: 3,
+				//Compression: natsd.CompressionOpts{
+				//	Mode:          "s2_auto",
+				//	RTTThresholds: []time.Duration{10 * time.Millisecond, 50 * time.Millisecond, 100 * time.Millisecond},
+				//},
+				//},
 			},
 		},
 		EventStreamRegistry: EventStreamRegistry{

@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta
 
-go 1.23.11
+go 1.24.6
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250717165733-d22d418d82d8.1
@@ -21,8 +21,8 @@ require (
 	github.com/mennanov/fmutils v0.3.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/nats-io/nats-server/v2 v2.10.20
-	github.com/nats-io/nats.go v1.43.0
+	github.com/nats-io/nats-server/v2 v2.12.0
+	github.com/nats-io/nats.go v1.46.1
 	github.com/oapi-codegen/oapi-codegen/v2 v2.5.0
 	github.com/oapi-codegen/runtime v1.1.2
 	github.com/pulumi/pulumi/sdk/v3 v3.187.0

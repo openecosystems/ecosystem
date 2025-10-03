@@ -330,6 +330,7 @@ func setEnv(configurer *viper.Viper, envPrefix, yaml string) {
 		envVar = envPrefix + "_" + envVar
 	}
 	// Uncomment to print all variables
+	// Print all environment variables options
 	// fmt.Println(envVar + "=")
 	val, present := os.LookupEnv(envVar)
 	if present {

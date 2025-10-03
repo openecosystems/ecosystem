@@ -1,6 +1,6 @@
 module github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco
 
-go 1.23.11
+go 1.24.6
 
 require (
 	connectrpc.com/connect v1.18.1
