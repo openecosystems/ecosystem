@@ -463,3 +463,5 @@ func WithStaticAssets(assets []StaticAsset) ServerOption {
 		cfg.StaticAssets = assets
 	})
 }
+
+//
