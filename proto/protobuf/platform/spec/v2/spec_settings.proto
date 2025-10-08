@@ -27,15 +27,16 @@ message SpecSettings {
 }
 
 message App {
-  string name = 1;
-  string version = 2;
-  string description = 3;
-  string environment_name = 4;
-  string environment_type = 5;
-  bool debug = 6;
-  bool verbose = 7;
-  bool quiet = 8;
-  bool log_to_file = 9;
+  string name = 10;
+  string version = 20;
+  string description = 30;
+  string environment_name = 40;
+  string environment_type = 50;
+  bool debug = 60;
+  bool verbose = 70;
+  bool quiet = 80;
+  bool log_to_file = 90;
+  string app_endpoint = 100;
 }
 
 message Platform {

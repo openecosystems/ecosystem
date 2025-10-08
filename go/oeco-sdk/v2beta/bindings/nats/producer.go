@@ -14,6 +14,7 @@ import (
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -109,6 +110,7 @@ func publish(n *nats.Conn, subject string, spec *specv2pb.Spec, specBytes []byte
 			return nil, ErrTimeout.WithSpecDetail(spec).WithInternalErrorDetail(err)
 		case errors.Is(err, nats.ErrNoResponders):
 			// no responders
+			log.Error("No nats responders: ", zap.String("subject", subject), zap.String("spec", spec.String()))
 			return nil, ErrNoResponders.WithSpecDetail(spec).WithInternalErrorDetail(err)
 		case errors.Is(err, nats.ErrConnectionClosed):
 			// NATS connection was closed

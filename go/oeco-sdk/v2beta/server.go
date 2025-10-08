@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
-	"runtime/debug"
+	//"runtime/debug"
 	"syscall"
 	"time"
 
@@ -71,6 +71,7 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+
 	err = t.ValidateConfiguration()
 	if err != nil {
 		fmt.Println(err)
@@ -172,7 +173,7 @@ func (server *Server) ListenAndServeWithCtx(_ context.Context) {
 		fmt.Println(ErrServerInternal.WithInternalErrorDetail(err, errors.New("received an httpServerError")).Error())
 	case sig := <-serverQuit:
 		fmt.Println("Received signal:", sig)
-		debug.PrintStack()
+		// debug.PrintStack()
 		server.Shutdown()
 		os.Exit(0)
 	}

@@ -3,19 +3,24 @@ package natsnodev1
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"net/url"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
+	apexlog "github.com/apex/log"
 	natsd "github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/jetstream"
-
-	apexlog "github.com/apex/log"
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	nebulav1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/nebula"
+	zaploggerv1 "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/bindings/zap"
+)
+
+const (
+	DEFAULT_CONNECTOR_ACCOUNT = "CONNECTOR"
 )
 
 // Binding represents a structure managing NATS connections, JetStream instances, and event stream configurations.
@@ -25,6 +30,7 @@ type Binding struct {
 	SpecEventBatchListeners []SpecEventBatchListener
 	Listeners               map[string]*nats.Subscription
 	Nats                    *nats.Conn
+	JetStreamContext        *nats.JetStreamContext
 	JetStream               *jetstream.JetStream
 
 	server        *natsd.Server
@@ -59,47 +65,81 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 		var once sync.Once
 		once.Do(
 			func() {
-				//routes := RoutesFromStr(b.configuration.Natsd.Options.RoutesStr)
-				//b.configuration.Natsd.Options.Routes = routes
-				//
-				//fmt.Println(b.configuration.Natsd.Options.RoutesStr)
-				//fmt.Println(b.configuration.Natsd.Options.Routes)
-
-				// b.configuration.Natsd.Options.Cluster.Host = "0.0.0.1"
-				// b.configuration.Natsd.Options.Cluster.Port = 4244
-				// b.configuration.Natsd.Options.Cluster.Name = "multiplexer-test"
-
-				// fmt.Println(b.configuration.Natsd.Options.Cluster.ListenStr)
-
-				servers := strings.Replace(strings.Trim(fmt.Sprint(b.configuration.Nats.Options.Servers), "[]"), " ", ",", -1)
 				switch b.configuration.Natsd.Enabled {
 				case true:
 
-					fmt.Println("ROUTES STR: " + b.configuration.Natsd.Options.RoutesStr)
-					var routes []*url.URL
-					if b.configuration.Natsd.Options.RoutesStr != "" {
-						routes = RoutesFromStr(b.configuration.Natsd.Options.RoutesStr)
+					if b.configuration.Natsd.Username == "" && b.configuration.Natsd.Password == "" {
+						panic("Please provide Natsd username and password")
 					}
 
-					options := &natsd.Options{
+					if b.configuration.Nats.Username == "" && b.configuration.Nats.Password == "" {
+						panic("Please provide Nats username and password; This allows for connecting to the NATS server from the NATS client")
+					}
+
+					r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+					systemAccount := natsd.NewAccount(natsd.DEFAULT_SYSTEM_ACCOUNT)
+					connectorAccount := natsd.NewAccount(DEFAULT_CONNECTOR_ACCOUNT)
+
+					options := natsd.Options{
 						// Standard client options
-						ServerName: b.configuration.Natsd.Options.ServerName,
-						Host:       b.configuration.Natsd.Options.Host,
-						Port:       b.configuration.Natsd.Options.Port,
-						HTTPPort:   b.configuration.Natsd.Options.HTTPPort,
-
-						// Clustering options
-						Cluster: natsd.ClusterOpts{
-							Name: b.configuration.Natsd.Options.Cluster.Name,
-							Host: b.configuration.Natsd.Options.Cluster.Host,
-							Port: b.configuration.Natsd.Options.Cluster.Port,
+						ServerName:    b.configuration.Natsd.ServerName + "-" + fmt.Sprintf("%03d", r.Intn(900)+100),
+						Host:          b.configuration.Natsd.Host,
+						Port:          b.configuration.Natsd.Port,
+						HTTPPort:      b.configuration.Natsd.HTTPPort,
+						SystemAccount: natsd.DEFAULT_SYSTEM_ACCOUNT,
+						Accounts: []*natsd.Account{
+							systemAccount,
+							connectorAccount,
 						},
-						Routes: routes,
-						Debug:  true,
-						Trace:  true,
+						Users: []*natsd.User{
+							{
+								Account: &natsd.Account{
+									Name: natsd.DEFAULT_SYSTEM_ACCOUNT,
+								},
+								Username: b.configuration.Natsd.Username,
+								Password: b.configuration.Natsd.Password,
+							},
+							{
+								Account: &natsd.Account{
+									Name: DEFAULT_CONNECTOR_ACCOUNT,
+								},
+								Username: b.configuration.Nats.Username,
+								Password: b.configuration.Nats.Password,
+							},
+						},
+
+						Debug: b.configuration.App.Debug,
+						Trace: b.configuration.App.Verbose,
+
+						DontListen:             false,
+						MaxConn:                natsd.DEFAULT_MAX_CONNECTIONS,
+						MaxSubs:                natsd.DEFAULT_MAX_CONNECTIONS,
+						JetStream:              true,
+						JetStreamMaxMemory:     -1,
+						JetStreamMaxStore:      -1,
+						StoreDir:               NatsdServerJetstreamStoreDir,
+						DisableJetStreamBanner: true,
 					}
 
-					// sdkv2betalib.PrettyPrint(options)
+					if b.configuration.Natsd.Clustered {
+						fmt.Println("Clustering enabled")
+						options.Cluster = natsd.ClusterOpts{
+							Host:           b.configuration.Natsd.Cluster.Host,
+							Port:           b.configuration.Natsd.Cluster.Port,
+							Name:           b.configuration.Natsd.Cluster.Name,
+							ConnectRetries: 3,
+							PoolSize:       b.configuration.Natsd.Replicas,
+							Compression: natsd.CompressionOpts{
+								Mode:          "s2_auto",
+								RTTThresholds: []time.Duration{100 * time.Millisecond, 300 * time.Millisecond, 500 * time.Millisecond},
+							},
+						}
+
+						routes := RoutesFromStr(b.configuration.Natsd.RoutesStr)
+
+						options.Routes = routes
+					}
 
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
 					if b.configuration.Platform.Mesh.Enabled {
@@ -109,30 +149,48 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						}
 					}
 
-					server, err := natsd.NewServer(options)
+					server, err := natsd.NewServer(&options)
 					if err != nil {
 						fmt.Println("natsd error: ", err)
 						panic(err)
 					}
 
-					// Start NATS server
-					go func() {
-						if err := natsd.Run(server); err != nil {
-							fmt.Println("SpecError running embedded NATS server: " + err.Error())
-							panic(err)
-						}
-					}()
+					logger := zaploggerv1.Bound.SugaredLoggerWrapper
+					server.SetLoggerV2(logger, b.configuration.App.Debug, b.configuration.App.Verbose, false)
 
-					if !server.ReadyForConnections(time.Minute) {
-						fmt.Println("NATS server not ready within 60 seconds")
-						panic("Server not ready within 60 seconds")
+					// Start the NATS server
+					go server.Start()
+
+					if !server.ReadyForConnections(10 * time.Second) {
+						fmt.Println("NATS server not ready within 10 seconds")
+						panic("Server not ready within 10 seconds")
 					}
 
-					_nats, err := nats.Connect(servers)
+					acc, err := server.LookupAccount(DEFAULT_CONNECTOR_ACCOUNT)
+					if err != nil {
+						fmt.Println("lookup account failed: " + err.Error())
+					}
+
+					// Keep limits empty for now, Nats will create them dynamically
+					limits := map[string]natsd.JetStreamAccountLimits{}
+					err = acc.EnableJetStream(limits)
+					if err != nil {
+						panic("Cannot enable JetStream for connector account: " + err.Error())
+					}
+
+					_nats, err := nats.Connect(fmt.Sprintf("nats://%s:%s@%s:%d", b.configuration.Nats.Username, b.configuration.Nats.Password, options.Host, options.Port))
 					if err != nil {
 						fmt.Println("error connecting to NATS server at localhost port: " + strconv.Itoa(options.Port) + " " + err.Error())
+						panic(err)
 					}
 					b.Nats = _nats
+
+					jsc, err := _nats.JetStream()
+					if err != nil {
+						fmt.Println(err.Error())
+						panic("Cannot get Jetstream from Nats Context")
+					}
+					b.JetStreamContext = &jsc
 
 					// Create a JetStream management interface
 					js, err := jetstream.New(_nats)
@@ -143,10 +201,11 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 					b.JetStream = &js
 
 					Bound = &Binding{
-						server:        server,
-						Nats:          _nats,
-						JetStream:     &js,
-						configuration: b.configuration,
+						server:           server,
+						Nats:             _nats,
+						JetStreamContext: &jsc,
+						JetStream:        &js,
+						configuration:    b.configuration,
 					}
 
 					bindings.Registered[b.Name()] = Bound
@@ -155,8 +214,9 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 
 					fmt.Println("NATS TCP listening on " + strconv.Itoa(options.Port))
 
-					RegisterEventStreams()
 				case false:
+					servers := strings.Replace(strings.Trim(fmt.Sprint(b.configuration.Nats.Options.Servers), "[]"), " ", ",", -1)
+
 					// Check if we are running inside the mesh, if so, use the CustomDialer option
 					if b.configuration.Platform.Mesh.Enabled {
 						if !nebulav1.IsBound {
@@ -166,15 +226,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 
 						natsOptions = append(natsOptions, nats.SetCustomDialer(nebulav1.Bound.MeshSocket))
 					}
-					natsOptions = append(natsOptions, nats.ConnectHandler(func(c *nats.Conn) {
-						apexlog.Info("Node connected to: " + c.Opts.Url)
-					}))
-					natsOptions = append(natsOptions, nats.ClosedHandler(func(c *nats.Conn) {
-						apexlog.Info("Closed handler: " + c.Opts.Url)
-					}))
-					natsOptions = append(natsOptions, nats.DiscoveredServersHandler(func(c *nats.Conn) {
-						apexlog.Info("Discovered Server: " + c.Opts.Url)
-					}))
+
 					natsOptions = append(natsOptions, nats.DisconnectErrHandler(func(_ *nats.Conn, err error) {
 						apexlog.Info("Disconnected due to: " + err.Error())
 					}))
@@ -188,31 +240,20 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 					maxRetries := 180              // -1 for infinite retries
 					retryDelay := 10 * time.Second // wait 3 seconds between attempts
 
-					_nats, js, err := connectWithRetry(servers, maxRetries, retryDelay, natsOptions...)
+					_nats, jsc, js, err := connectWithRetry(servers, maxRetries, retryDelay, natsOptions...)
 					if err != nil {
 						panic(err)
 					}
 
-					//_nats, err := nats.Connect(servers, natsOptions...)
-					//if err != nil {
-					//	fmt.Println(err.Error())
-					//	panic("Cannot connect to NATS")
-					//}
 					b.Nats = _nats
-
-					// Create a JetStream management interface
-					//js, err := jetstream.New(_nats)
-					//if err != nil {
-					//	fmt.Println(err.Error())
-					//	panic("Cannot configure Jetstream")
-					//}
-					b.JetStream = &js
+					b.JetStreamContext = &jsc
 
 					Bound = &Binding{
 						Registry:           b.Registry,
 						SpecEventListeners: b.SpecEventListeners,
 						Listeners:          b.Listeners,
 						Nats:               _nats,
+						JetStreamContext:   &jsc,
 						JetStream:          &js,
 						configuration:      b.configuration,
 					}
@@ -250,6 +291,17 @@ func (b *Binding) Close() error {
 		if err != nil {
 			fmt.Println(err)
 		}
+	}
+
+	if b.Nats != nil {
+		err := b.Nats.Drain()
+		if err != nil {
+			return err
+		}
+	}
+
+	if b.server != nil {
+		b.server.Shutdown()
 	}
 
 	return nil
@@ -315,13 +367,14 @@ func (b *Binding) RegisterSpecBatchListeners(bindings *sdkv2betalib.Bindings) *s
 	return bindings
 }
 
-func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, options ...nats.Option) (*nats.Conn, jetstream.JetStream, error) {
+func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, options ...nats.Option) (*nats.Conn, nats.JetStreamContext, jetstream.JetStream, error) {
 	var nc *nats.Conn
+	var jsc nats.JetStreamContext
 	var js jetstream.JetStream
 	var err error
 
 	for attempt := 1; maxRetries == -1 || attempt <= maxRetries; attempt++ {
-		fmt.Printf("Connecting to NATS- %s - (attempt %d)...\n", nc.ConnectedUrl(), attempt)
+		fmt.Printf("Connecting to NATS (attempt %d)...\n", attempt)
 
 		nc, err = nats.Connect(url)
 		if err != nil {
@@ -330,6 +383,13 @@ func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, opti
 			continue
 		}
 
+		jsc, err = nc.JetStream()
+		if err != nil {
+			fmt.Printf("JetStream setup failed: %v\n", err)
+			nc.Close()
+			time.Sleep(retryDelay)
+			continue
+		}
 		js, err = jetstream.New(nc)
 		if err != nil {
 			fmt.Printf("JetStream setup failed: %v\n", err)
@@ -338,11 +398,11 @@ func connectWithRetry(url string, maxRetries int, retryDelay time.Duration, opti
 			continue
 		}
 
-		fmt.Println("Connected to NATS and JetStream. Ready.")
-		return nc, js, nil
+		fmt.Println("Connected to NATS and JetStream is ready.")
+		return nc, jsc, js, nil
 	}
 
-	return nil, nil, fmt.Errorf("failed to connect to NATS after %d attempts", maxRetries)
+	return nil, nil, nil, fmt.Errorf("failed to connect to NATS after %d attempts", maxRetries)
 }
 
 // RoutesFromStr parses route URLs from a string

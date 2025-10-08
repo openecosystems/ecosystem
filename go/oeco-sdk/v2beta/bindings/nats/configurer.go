@@ -4,15 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/url"
-	"strconv"
-	"time"
 
-	"dario.cat/mergo"
 	"github.com/nats-io/nats.go"
-	"github.com/nats-io/nats.go/jetstream"
-
-	natsd "github.com/nats-io/nats-server/v2/server"
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 )
@@ -32,12 +25,15 @@ const (
 // NatsServers defines the default NATS server addresses.
 var (
 	ResolvedConfiguration *Configuration
-	// NatsServers           = []string{"nats://127.0.0.1:4222"}
+	NatsServers           = []string{"nats://127.0.0.1:4222"}
 )
 
 // Nats represents the configuration for NATS connectivity including mesh and specific connection options.
 type Nats struct {
-	Options nats.Options
+	// TODO: Replace this dynamic accounts when we get to Super Clusters. Keep this simple for now until stable.
+	Username string
+	Password string
+	Options  nats.Options
 }
 
 // Natsd configures an embedded NATS server with customizable options for use in the application.
@@ -45,21 +41,31 @@ type Nats struct {
 // Options defines the configuration settings for the embedded NATS server through natsd.Options.
 type Natsd struct {
 	Enabled bool
-	Options natsd.Options
+	// Options    natsd.Options
+	ServerName string
+	Host       string
+	Port       int
+	HTTPPort   int
+	RoutesStr  string
+	Username   string
+	Password   string
+	Replicas   int
+	Clustered  bool
+	Cluster    Cluster
 }
 
-// EventStreamRegistry is a structure that holds a list of jetstream stream configurations.
-type EventStreamRegistry struct {
-	Streams []jetstream.StreamConfig
+type Cluster struct {
+	Host string
+	Port int
+	Name string
 }
 
 // Configuration represents the overall settings structure comprising NATS, NATS server options, and stream registry configurations.
 type Configuration struct {
-	App                 specv2pb.App `yaml:"app,omitempty"`
-	Platform            specv2pb.Platform
-	Nats                Nats
-	Natsd               Natsd
-	EventStreamRegistry EventStreamRegistry
+	App      specv2pb.App `yaml:"app,omitempty"`
+	Platform specv2pb.Platform
+	Nats     Nats
+	Natsd    Natsd
 
 	err error
 }
@@ -76,40 +82,6 @@ func (b *Binding) ResolveConfiguration(opts ...sdkv2betalib.ConfigurationProvide
 	b.configuration = &c
 	ResolvedConfiguration = &c
 
-	dsc := jetstream.StreamConfig{
-		MaxMsgs:           -1,
-		MaxBytes:          -1,
-		Discard:           0,
-		MaxAge:            9151516080000000000, // 290 years is the max Nats supports,
-		MaxMsgsPerSubject: -1,
-		MaxMsgSize:        -1,
-		Storage:           0,
-		Replicas:          1, // TODO: Review this default
-		NoAck:             false,
-		Duplicates:        60 * time.Second, //"2m0s"
-		DenyDelete:        true,
-		DenyPurge:         true,
-		AllowRollup:       false,
-	}
-
-	var mergedJsc []jetstream.StreamConfig
-	var errs []error
-	for _, r := range b.configuration.EventStreamRegistry.Streams {
-		if err := mergo.Merge(&r, dsc); err != nil {
-			fmt.Println("SpecError merging nats stream configuration:", err)
-			errs = append(errs, err)
-		}
-		mergedJsc = append(mergedJsc, r)
-	}
-	if len(errs) > 0 {
-		fmt.Println("nats configuration error: ", errs)
-		b.configuration.err = errors.Join(errs...)
-	}
-
-	c.EventStreamRegistry = EventStreamRegistry{mergedJsc}
-	b.configuration.EventStreamRegistry = EventStreamRegistry{mergedJsc}
-	ResolvedConfiguration.EventStreamRegistry = EventStreamRegistry{mergedJsc}
-
 	return configurer, nil
 }
 
@@ -121,25 +93,30 @@ func (b *Binding) ValidateConfiguration() error {
 
 	var errs []error
 
-	//if len(b.configuration.Natsd.Options.LeafNode.Remotes) == 0 {
-	//	errs = append(errs, errors.New(`missing leaf node remotes configuration. An example is:
-	//natsd:
-	// options:
-	//   leafNode:
-	//     remotes:
-	//       - urls:
-	//           scheme: "tls"
-	//           host:   "connect.ngs.global"
-	//         credentials: "./example.creds"`))
-	//}
+	if b.configuration.Natsd.Clustered {
 
-	for i, s := range b.configuration.EventStreamRegistry.Streams {
-		if s.Name == "" {
-			errs = append(errs, errors.New("missing stream name for item with index: "+strconv.Itoa(i)))
+		if b.configuration.Natsd.ServerName == "" {
+			errs = append(errs, errors.New("Natsd.ServerName is required"))
 		}
 
-		if len(s.Subjects) == 0 {
-			errs = append(errs, errors.New("missing array of subjects for item with index: "+strconv.Itoa(i)))
+		if b.configuration.Natsd.Cluster.Host == "" {
+			errs = append(errs, errors.New("Natsd.Cluster.Host is required"))
+		}
+
+		if b.configuration.Natsd.Cluster.Port == 0 {
+			errs = append(errs, errors.New("Natsd.Cluster.Port is required"))
+		}
+
+		if b.configuration.Natsd.Cluster.Name == "" {
+			errs = append(errs, errors.New("Natsd.Cluster.Name is required"))
+		}
+
+		if b.configuration.Natsd.Replicas == 0 {
+			errs = append(errs, errors.New("Natsd.Replicas is required and must be greater than 0"))
+		}
+
+		if b.configuration.Natsd.RoutesStr == "" {
+			errs = append(errs, errors.New("Natsd.RoutesStr is required"))
 		}
 	}
 
@@ -162,7 +139,7 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 		},
 		Nats: Nats{
 			Options: nats.Options{
-				//Servers: NatsServers,
+				Servers: NatsServers,
 				//TLSConfig: &tls.Config{},
 				//Dialer: &net.Dialer{
 				//	Timeout:   0,
@@ -180,42 +157,28 @@ func (b *Binding) GetDefaultConfiguration() *Configuration {
 			},
 		},
 		Natsd: Natsd{
-			Enabled: false,
-			Options: natsd.Options{
-				ServerName:   NatsdServerName,
-				Host:         NatsdServerHost,
-				Port:         NatsdServerPort,
-				DontListen:   false,
-				Trace:        true,
-				Debug:        true,
-				TraceVerbose: true,
-				// Debug:      cfg.App.Debug,
-				MaxConn: -1,
-				MaxSubs: -1,
-				//LeafNode: natsd.LeafNodeOpts{
-				//	Remotes: nil,
-				//},
-				JetStream:              true,
-				JetStreamMaxMemory:     -1,
-				JetStreamMaxStore:      -1,
-				StoreDir:               NatsdServerJetstreamStoreDir,
-				DisableJetStreamBanner: true,
-				// TLSConfig:              &tls.Config{},
-				// AllowNonTLS:            true,
-				// TLSHandshakeFirst:      true,
-				Routes: []*url.URL{},
-				//Cluster: natsd.ClusterOpts{
-				// ConnectRetries: 3,
-				//PoolSize: 3,
-				//Compression: natsd.CompressionOpts{
-				//	Mode:          "s2_auto",
-				//	RTTThresholds: []time.Duration{10 * time.Millisecond, 50 * time.Millisecond, 100 * time.Millisecond},
-				//},
-				//},
-			},
-		},
-		EventStreamRegistry: EventStreamRegistry{
-			// Streams: mergedJsc,
+			//Enabled: false,
+			//Options: natsd.Options{
+			//	ServerName: NatsdServerName,
+			//	Host:       NatsdServerHost,
+			//	Port:       NatsdServerPort,
+			//	DontListen: false,
+			//	// Trace:      true,
+			//	// Debug:      cfg.App.Debug,
+			//	MaxConn: -1,
+			//	MaxSubs: -1,
+			//	LeafNode: natsd.LeafNodeOpts{
+			//		Remotes: nil,
+			//	},
+			//	JetStream:              true,
+			//	JetStreamMaxMemory:     -1,
+			//	JetStreamMaxStore:      -1,
+			//	StoreDir:               NatsdServerJetstreamStoreDir,
+			//	DisableJetStreamBanner: true,
+			//	// TLSConfig:              &tls.Config{},
+			//	// AllowNonTLS:            true,
+			//	// TLSHandshakeFirst:      true,
+			//},
 		},
 	}
 }

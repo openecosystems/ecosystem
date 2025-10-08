@@ -2,21 +2,21 @@
 
 ### 🩹 Fixes
 
-- upgrading to go 1.24.6 ([54a04c4](https://github.com/openecosystems/ecosystem/commit/54a04c4))
+-   upgrading to go 1.24.6 ([54a04c4](https://github.com/openecosystems/ecosystem/commit/54a04c4))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot
+-   Dimy Jeannot
 
 ## 0.21.1 (2025-10-03)
 
 ### 🩹 Fixes
 
-- upgrading to go 1.24.6 ([fe46cc7](https://github.com/openecosystems/ecosystem/commit/fe46cc7))
+-   upgrading to go 1.24.6 ([fe46cc7](https://github.com/openecosystems/ecosystem/commit/fe46cc7))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot
+-   Dimy Jeannot
 
 ## 0.21.0 (2025-10-02)
 

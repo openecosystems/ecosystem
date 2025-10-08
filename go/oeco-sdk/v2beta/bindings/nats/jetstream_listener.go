@@ -89,22 +89,6 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 
 		listener.BatchProcess(ctx, batch)
 	}
-
-	//
-	//_, err = c.Fetch(configuration.BatchSize, func(msg jetstream.Msg) {
-	//	messageCtx, message, _ := convertJetstreamToListenerMessage(configuration, &msg)
-	//
-	//	// The Processor is responsible for replying to the Reply subject and responding with any errors
-	//	listener.BatchProcess(messageCtx, message)
-	//	// RespondToJetstreamEvent(messageCtx, message)
-	//}, jetstream.ConsumeErrHandler(func(_ jetstream.ConsumeContext, err error) {
-	//	fmt.Println(err)
-	//}))
-	//if err != nil {
-	//	log.Fatal("consume error", zap.Error(err))
-	//}
-
-	//
 }
 
 // RespondToJetstreamEvent processes an inbound message, modifies the provided message, and sends a response through NATS.
