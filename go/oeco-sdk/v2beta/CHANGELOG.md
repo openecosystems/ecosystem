@@ -1,3 +1,17 @@
+## 0.22.0 (2025-10-08)
+
+### 🚀 Features
+
+- adding conditional support for nats clustering; better logging; ([e179b70](https://github.com/openecosystems/ecosystem/commit/e179b70))
+
+### 🩹 Fixes
+
+- removing the nats server name random digits. Needs to be predictable when in cluster mode ([8556170](https://github.com/openecosystems/ecosystem/commit/8556170))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.21.2 (2025-10-03)
 
 ### 🩹 Fixes
