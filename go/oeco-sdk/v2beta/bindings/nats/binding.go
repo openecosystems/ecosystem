@@ -3,7 +3,6 @@ package natsnodev1
 import (
 	"context"
 	"fmt"
-	"math/rand"
 	"net/url"
 	"strconv"
 	"strings"
@@ -76,14 +75,14 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						panic("Please provide Nats username and password; This allows for connecting to the NATS server from the NATS client")
 					}
 
-					r := rand.New(rand.NewSource(time.Now().UnixNano()))
+					// r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
 					systemAccount := natsd.NewAccount(natsd.DEFAULT_SYSTEM_ACCOUNT)
 					connectorAccount := natsd.NewAccount(DEFAULT_CONNECTOR_ACCOUNT)
 
 					options := natsd.Options{
 						// Standard client options
-						ServerName:    b.configuration.Natsd.ServerName + "-" + fmt.Sprintf("%03d", r.Intn(900)+100),
+						ServerName:    b.configuration.Natsd.ServerName,
 						Host:          b.configuration.Natsd.Host,
 						Port:          b.configuration.Natsd.Port,
 						HTTPPort:      b.configuration.Natsd.HTTPPort,
@@ -129,6 +128,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 							Port:           b.configuration.Natsd.Cluster.Port,
 							Name:           b.configuration.Natsd.Cluster.Name,
 							ConnectRetries: 3,
+							ConnectBackoff: true,
 							PoolSize:       b.configuration.Natsd.Replicas,
 							Compression: natsd.CompressionOpts{
 								Mode:          "s2_auto",
