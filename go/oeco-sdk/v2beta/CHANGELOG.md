@@ -1,3 +1,13 @@
+## 0.22.1 (2025-10-08)
+
+### 🩹 Fixes
+
+- removing the nats server name random digits. Needs to be predictable when in cluster mode ([921bbe6](https://github.com/openecosystems/ecosystem/commit/921bbe6))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.22.0 (2025-10-08)
 
 ### 🚀 Features
