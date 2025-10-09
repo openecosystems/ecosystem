@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/nats-io/nats.go"
 	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
@@ -96,7 +97,11 @@ func (b *Binding) ValidateConfiguration() error {
 	if b.configuration.Natsd.Clustered {
 
 		if b.configuration.Natsd.ServerName == "" {
-			errs = append(errs, errors.New("Natsd.ServerName is required"))
+			if podName, ok := os.LookupEnv("POD_NAME"); ok && podName != "" {
+				b.configuration.Natsd.ServerName = podName
+			} else {
+				errs = append(errs, errors.New("Natsd.ServerName is required (missing and POD_NAME not set)"))
+			}
 		}
 
 		if b.configuration.Natsd.Cluster.Host == "" {

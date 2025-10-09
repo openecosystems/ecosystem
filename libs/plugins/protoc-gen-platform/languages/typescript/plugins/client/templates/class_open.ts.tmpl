@@ -6,9 +6,13 @@ export class AdinoSDK {
     constructor(private readonly options: AdinoSDKOptions) {
         const interceptor = new SpecInterceptor(options);
         const baseUrl = this.options.baseUrl ?? BaseUrl;
+        const interceptors: Interceptor[] = [
+            ...(this.options.interceptors ?? []),
+            interceptor.spec,
+        ];
         this.transport = createConnectTransport({
             baseUrl: baseUrl,
             defaultTimeoutMs: this.options.timeoutMs,
-            interceptors: [interceptor.spec],
+            interceptors: interceptors,
         });
     }

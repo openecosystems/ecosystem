@@ -2,7 +2,7 @@
 import {BaseUrl} from './constants.js';
 import type { AdinoSDKOptions, AdinoCallOptions } from './options.js';
 import { createConnectOptions } from './options.js';
-import {CallOptions, Client, createClient, Transport} from '@connectrpc/connect';
+import {CallOptions, Client, createClient, Transport, Interceptor} from '@connectrpc/connect';
 import {createConnectTransport} from '@connectrpc/connect-web';
 import {SpecInterceptor} from "./interceptors.js";
 import {fromJson, toJson} from '@bufbuild/protobuf';

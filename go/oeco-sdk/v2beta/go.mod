@@ -5,7 +5,7 @@ go 1.24.6
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.6-20250717165733-d22d418d82d8.1
 	buf.build/go/protovalidate v0.14.0
-	connectrpc.com/connect v1.19.0
+	connectrpc.com/connect v1.19.1
 	connectrpc.com/vanguard v0.3.0
 	dario.cat/mergo v1.0.2
 	github.com/apex/log v1.9.0

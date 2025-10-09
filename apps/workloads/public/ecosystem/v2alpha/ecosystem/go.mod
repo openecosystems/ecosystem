@@ -3,7 +3,7 @@ module github.com/openecosystems/ecosystem/apps/workloads/public/ecosystem/v2alp
 go 1.24.6
 
 require (
-	connectrpc.com/connect v1.19.0
+	connectrpc.com/connect v1.19.1
 	connectrpc.com/otelconnect v0.7.2
 	connectrpc.com/vanguard v0.3.0
 	go.uber.org/zap v1.27.0

@@ -41,6 +41,7 @@ type Server struct {
 	NetListener             *net.Listener
 
 	options          *serverOptions
+	publicGRPCServer *http.Server
 	publicHTTPServer *http.Server
 	meshHTTPServer   *http.Server
 	// err     error
@@ -214,6 +215,7 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 		return
 	}
 
+	publicGrpcEndpoint := settings.Platform.GetGrpcEndpoint()
 	publicEndpoint := settings.Platform.GetEndpoint()
 	meshEndpoint := settings.Platform.Mesh.GetEndpoint()
 
@@ -250,6 +252,16 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 	server.MeshHTTPServerHandler = meshMux
 	meshMux.Handle("/", server.MeshServiceHandler)
 
+	publicGRPCServer := &http.Server{
+		Addr: publicGrpcEndpoint,
+		// Use h2c so we can serve HTTP/2 without TLS.
+		Handler:      h2c.NewHandler(edgeRouter(publicMux), server.PublicConnectHTTPServer),
+		ReadTimeout:  5 * time.Second,  // Time allowed to read the request
+		WriteTimeout: 10 * time.Second, // Time allowed to write the response
+		IdleTimeout:  15 * time.Second, // Time for keep-alive connections
+	}
+	server.publicGRPCServer = publicGRPCServer
+
 	publicHTTPServer := &http.Server{
 		Addr: publicEndpoint,
 		// Use h2c so we can serve HTTP/2 without TLS.
@@ -276,7 +288,12 @@ func (server *Server) listenAndServe(ln *net.Listener) (httpServerErr chan error
 		go func() {
 			_httpServerErr <- server.publicHTTPServer.ListenAndServe()
 		}()
-		fmt.Println("Public HTTP1.1/HTTP2.0/gRPC/gRPC-Web/Connect listening on " + settings.Platform.Endpoint)
+		fmt.Println("Public HTTP1.1/HTTP2.0/Connect listening on " + settings.Platform.Endpoint)
+
+		go func() {
+			_httpServerErr <- server.publicGRPCServer.ListenAndServe()
+		}()
+		fmt.Println("Public gRPC listening on " + settings.Platform.GrpcEndpoint)
 	}
 
 	if server.MeshConnectHTTPServer != nil {
@@ -320,6 +337,10 @@ func (server *Server) Shutdown() {
 	if server.PublicConnectHTTPServer != nil {
 		if err := server.publicHTTPServer.Shutdown(ctx); err != nil {
 			fmt.Println("Public server shutdown error:", err)
+		}
+
+		if err := server.publicGRPCServer.Shutdown(ctx); err != nil {
+			fmt.Println("Public gRPC server shutdown error:", err)
 		}
 	}
 

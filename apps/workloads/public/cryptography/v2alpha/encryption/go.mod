@@ -3,7 +3,7 @@ module github.com/openecosystems/ecosystem/apps/workloads/public/cryptography/v2
 go 1.24.6
 
 require (
-	connectrpc.com/connect v1.19.0
+	connectrpc.com/connect v1.19.1
 	github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta v0.19.3
 	go.opentelemetry.io/otel/trace v1.37.0
 )

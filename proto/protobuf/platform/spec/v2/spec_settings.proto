@@ -46,11 +46,12 @@ message Platform {
 
   string api_endpoint = 10;
   string api_key = 20;
-  string endpoint = 30;
-  bool insecure = 40;
-  repeated string dns_endpoints = 50;
-  bool dynamic_config_reload = 60;
-  Mesh mesh = 70;
+  string grpc_endpoint = 30;
+  string endpoint = 40;
+  bool insecure = 50;
+  repeated string dns_endpoints = 60;
+  bool dynamic_config_reload = 70;
+  Mesh mesh = 80;
 }
 
 message Mesh {

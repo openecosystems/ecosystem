@@ -3,7 +3,7 @@ module github.com/openecosystems/ecosystem/apps/clients/public/cli/v2alpha/oeco
 go 1.24.6
 
 require (
-	connectrpc.com/connect v1.19.0
+	connectrpc.com/connect v1.19.1
 	github.com/apex/log v1.9.0
 	github.com/charmbracelet/bubbles v0.21.0
 	github.com/charmbracelet/bubbletea v1.3.5
