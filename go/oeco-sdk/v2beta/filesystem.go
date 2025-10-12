@@ -39,14 +39,14 @@ type FileSystem struct {
 // ConfigurationDirectoryName specifies the directory name for configuration storage.
 // ConnectorDirectoryName specifies the directory name for connector storage.
 const (
-	HomeDirectoryName          = ".config/oeco"
+	HomeDirectoryName          = ".config/adino"
 	ConfigurationName          = "config"
 	ConfigurationExtension     = "yaml"
 	LogDirectoryName           = "logs"
 	LogExtension               = "log"
 	TmpDirectoryName           = "tmp"
 	ContextDirectoryName       = "context"
-	OecoContextFileName        = "oeco"
+	AdinoContextFileName       = "adino"
 	DefaultContextFileName     = "default"
 	CredentialDirectoryName    = "credentials"
 	RegistryDirectoryName      = "registry"
@@ -80,9 +80,9 @@ var (
 	ConfigurationDirectory = filepath.Join(HomeDirectory, ConfigurationDirectoryName)
 	ConnectorDirectory     = filepath.Join(HomeDirectory, ConnectorDirectoryName)
 	RegistryCacheDirectory = filepath.Join(RegistryDirectory, RegistryCacheDirectoryName)
-	OecoContextFile        = filepath.Join(ContextDirectory, OecoContextFileName)
+	AdinoContextFile       = filepath.Join(ContextDirectory, AdinoContextFileName)
 	DefaultContextFile     = filepath.Join(ContextDirectory, DefaultContextFileName)
-	OecoLogFile            = filepath.Join(LogDirectory, OecoContextFileName+"."+LogExtension)
+	OecoLogFile            = filepath.Join(LogDirectory, AdinoContextFileName+"."+LogExtension)
 	Filesystem             *FileSystem
 )
 

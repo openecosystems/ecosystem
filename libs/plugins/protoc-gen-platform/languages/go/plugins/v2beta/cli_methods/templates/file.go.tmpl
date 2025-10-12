@@ -6,23 +6,18 @@
 package {{ goPath .File }}cli
 
 import (
-    "connectrpc.com/connect"
-    "context"
     "encoding/json"
-    "fmt"
-    "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
     "os"
-    "github.com/apex/log"
+    "connectrpc.com/connect"
     "google.golang.org/protobuf/encoding/protojson"
     "github.com/spf13/cobra"
-{{ if ne (getApiOptionsNetwork . ) "overlay" -}}
-    "net/http"
-{{ else -}}
-{{ end }}
+    clog "github.com/charmbracelet/log"
+    sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
+
+    adinosdkv2beta "github.com/adino/platform/go/adino-sdk/v2beta"
 
 {{ range getImportPackages .File }}
     "{{ . }}"
-    "{{ . }}/{{ $systemlower }}{{ $versionLower }}pbconnect"
 {{ end }}
 )
 
@@ -37,54 +32,54 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
     Short: `{{- $leadingComment -}}`,
     Long:  `{{- $leadingDetachedComments -}}`,
     Run: func(cmd *cobra.Command, args []string) {
-
+        log := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*clog.Logger)
         log.Debug("Calling {{ .Name.LowerCamelCase }} {{ $entityName.LowerCamelCase }}")
-        settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
+        //settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
 
-        _request, err := cmd.Flags().GetString("request")
-        if err != nil {
-          fmt.Println(err)
-          os.Exit(1)
-        }
-        if _request == "" {
-          _request = "{}"
-        }
+		_, err := cmd.Flags().GetString("field-mask")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		_, err = cmd.Flags().GetBool("validate-only")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		_request, err := cmd.Flags().GetString("request")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		if _request == "" {
+			_request = "{}"
+		}
 
         _r := {{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}{}
         err = protojson.Unmarshal([]byte(_request), &_r)
         if err != nil {
-          fmt.Println(err)
+          log.Error(err)
           os.Exit(1)
         }
 
-        sdkv2betalib.Overrides.FieldMask = {{ .Name.LowerCamelCase }}FieldMask
-        sdkv2betalib.Overrides.ValidateOnly = {{ .Name.LowerCamelCase }}ValidateOnly
-
         request := connect.NewRequest[{{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}](&_r)
-        // Add GZIP Support: connect.WithSendGzip(),
-        {{ if ne (getApiOptionsNetwork . ) "overlay" -}}
-        httpClient := http.DefaultClient
-        url := "https://" + settings.Platform.Endpoint
-		if settings.Platform.Insecure {
-			url = "http://" + settings.Platform.Endpoint
+        adino, err := adinosdkv2beta.NewAdinoClient()
+		if err != nil {
+          log.Error(err)
+          os.Exit(1)
 		}
-        client := {{ getImportName .Input }}connect.NewAccountServiceClient(httpClient, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
-        {{ else -}}
-        url := "https://" + settings.Platform.Mesh.Endpoint
-		if settings.Platform.Insecure {
-			url = "http://" + settings.Platform.Mesh.Endpoint
-		}
-        client := *{{ getImportName .Input }}connect.New{{ $entityName.UpperCamelCase }}ServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
-        {{ end }}
 
-        response, err := client.{{ .Name }}(context.Background(), request)
+        response, err := adino.{{ $system }}.{{ $s.Name.UpperCamelCase }}.{{ .Name.UpperCamelCase }}(cmd.Context(), request)
         if err != nil {
-          fmt.Println(err)
+          log.Error(err)
           os.Exit(1)
         }
 
         val, _ := json.MarshalIndent(&response, "", "    ")
-        fmt.Println(string(val))
+        log.Info(string(val))
     },
 }
 

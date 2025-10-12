@@ -130,9 +130,9 @@ func ListenForMultiplexedRequests(_ context.Context, listener SpecEventListener)
 }
 
 // RespondToMultiplexedRequest processes an inbound message, modifies the provided message, and sends a response through NATS.
-func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
+func RespondToMultiplexedRequest(ctx context.Context, message *ListenerMessage) {
 	log := *zaploggerv1.Bound.Logger
-	jsc := *Bound.JetStreamContext
+	js := *Bound.JetStream
 	nm := *message.NatsMessage
 
 	if message.Spec == nil {
@@ -197,12 +197,13 @@ func RespondToMultiplexedRequest(_ context.Context, message *ListenerMessage) {
 	}
 
 	go func() {
-		_, err = jsc.Publish(subject, specBytes)
+		_, err = js.Publish(ctx, subject, specBytes)
 		if err != nil {
 			message.Spec.SpecError = sdkv2betalib.ErrServerInternal.WithSpecDetail(message.Spec).WithInternalErrorDetail(errors.New("found error when publishing to jetstream subject: "+subject), err).ToStatus()
 			respond(&nm, message.Spec)
 			return
 		}
+		log.Info("Published to jetstream subject: " + subject)
 	}()
 
 	respond(&nm, message.Spec)

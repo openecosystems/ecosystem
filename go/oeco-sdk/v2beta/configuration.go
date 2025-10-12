@@ -20,11 +20,9 @@ import (
 	"github.com/iancoleman/strcase"
 	"github.com/joho/godotenv"
 	"github.com/mitchellh/mapstructure"
-	"github.com/spf13/viper"
-	"google.golang.org/protobuf/proto"
-
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -211,13 +209,13 @@ func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, err
 		ctx = strings.TrimSpace(string(file))
 
 		if ctx == "" {
-			// Set the oeco workspace in the "default" file
-			err = filesystem.WriteFile(DefaultContextFile, []byte(OecoContextFileName), os.ModePerm)
+			// Set the adino workspace in the "default" file
+			err = filesystem.WriteFile(DefaultContextFile, []byte(AdinoContextFileName), os.ModePerm)
 			if err != nil {
 				return nil, errors.New("internal error: Cannot create default context")
 			}
 
-			_, err = createDefaultContextSettings(OecoContextFileName, DefaultCIDR)
+			_, err = createDefaultContextSettings(AdinoContextFileName, DefaultCIDR)
 			if err != nil {
 				return nil, err
 			}
@@ -237,14 +235,11 @@ func initializeConfigurer(opts ...ConfigurationProviderOption) (*Configurer, err
 func createDefaultContextSettings(ecosystemName string, cidr string) (*specv2pb.SpecSettings, error) {
 	// TODO: Sanitize ecosystemName
 
-	ip, ipnet, err := net.ParseCIDR(cidr)
+	_, _, err := net.ParseCIDR(cidr)
 	if err != nil {
 		fmt.Println("SpecError:", err)
 		return nil, err
 	}
-
-	fmt.Println("IP:", ip.String())
-	fmt.Println("Subnet Mask:", ipnet.Mask)
 
 	fs := NewFileSystem()
 	contextFile := filepath.Join(ContextDirectory, ecosystemName)
@@ -302,12 +297,12 @@ func createDefaultContextSettings(ecosystemName string, cidr string) (*specv2pb.
 		Systems: []*specv2pb.SpecSystem{&configurationSystem, &iamSystem},
 	}
 
-	settingBytes, err := proto.Marshal(&settings)
+	yaml, err := ProtoToYAML(&settings)
 	if err != nil {
 		return nil, err
 	}
 
-	err = fs.WriteFile(OecoContextFile+"."+ConfigurationExtension, settingBytes, os.ModePerm)
+	err = fs.WriteFile(AdinoContextFile+"."+ConfigurationExtension, []byte(yaml), os.ModePerm)
 	if err != nil {
 		return nil, errors.New("internal error: Cannot write ecosystem settings file")
 	}

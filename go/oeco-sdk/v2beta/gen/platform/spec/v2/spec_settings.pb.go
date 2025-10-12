@@ -235,7 +235,6 @@ type Platform struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	ApiEndpoint         string                 `protobuf:"bytes,10,opt,name=api_endpoint,json=apiEndpoint,proto3" json:"api_endpoint,omitempty"`
 	ApiKey              string                 `protobuf:"bytes,20,opt,name=api_key,json=apiKey,proto3" json:"api_key,omitempty"`
-	GrpcEndpoint        string                 `protobuf:"bytes,30,opt,name=grpc_endpoint,json=grpcEndpoint,proto3" json:"grpc_endpoint,omitempty"`
 	Endpoint            string                 `protobuf:"bytes,40,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
 	Insecure            bool                   `protobuf:"varint,50,opt,name=insecure,proto3" json:"insecure,omitempty"`
 	DnsEndpoints        []string               `protobuf:"bytes,60,rep,name=dns_endpoints,json=dnsEndpoints,proto3" json:"dns_endpoints,omitempty"`
@@ -285,13 +284,6 @@ func (x *Platform) GetApiEndpoint() string {
 func (x *Platform) GetApiKey() string {
 	if x != nil {
 		return x.ApiKey
-	}
-	return ""
-}
-
-func (x *Platform) GetGrpcEndpoint() string {
-	if x != nil {
-		return x.GrpcEndpoint
 	}
 	return ""
 }
@@ -628,12 +620,11 @@ const file_platform_spec_v2_spec_settings_proto_rawDesc = "" +
 	"\averbose\x18F \x01(\bR\averbose\x12\x14\n" +
 	"\x05quiet\x18P \x01(\bR\x05quiet\x12\x1e\n" +
 	"\vlog_to_file\x18Z \x01(\bR\tlogToFile\x12!\n" +
-	"\fapp_endpoint\x18d \x01(\tR\vappEndpoint\"\xb0\x02\n" +
+	"\fapp_endpoint\x18d \x01(\tR\vappEndpoint\"\x8b\x02\n" +
 	"\bPlatform\x12!\n" +
 	"\fapi_endpoint\x18\n" +
 	" \x01(\tR\vapiEndpoint\x12\x17\n" +
-	"\aapi_key\x18\x14 \x01(\tR\x06apiKey\x12#\n" +
-	"\rgrpc_endpoint\x18\x1e \x01(\tR\fgrpcEndpoint\x12\x1a\n" +
+	"\aapi_key\x18\x14 \x01(\tR\x06apiKey\x12\x1a\n" +
 	"\bendpoint\x18( \x01(\tR\bendpoint\x12\x1a\n" +
 	"\binsecure\x182 \x01(\bR\binsecure\x12#\n" +
 	"\rdns_endpoints\x18< \x03(\tR\fdnsEndpoints\x122\n" +

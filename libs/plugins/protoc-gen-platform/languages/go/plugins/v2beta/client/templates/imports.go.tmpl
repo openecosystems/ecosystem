@@ -1,0 +1,2 @@
+{{ $e := entity . -}}{{- $alias := getGoPackageAlias . }}{{- $goimport := getImportPackageEntity $e }}
+import {{ $alias }}connect "{{ $goimport }}/{{ $alias }}connect"

@@ -10,6 +10,7 @@ import (
 	cliservicev2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_service"
 	clisystemv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_system"
 	clisystemsv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/cli_systems"
+	clientv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/client"
 	entityunspecifiedv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/entity_unspecified"
 	listenerv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/listener"
 	multiplexerv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/multiplexer"
@@ -17,6 +18,7 @@ import (
 	sdkconnectorv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/sdk_connector"
 	serverv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/server"
 	specv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/spec"
+
 	// Protobuf Plugins
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/data_catalog"
@@ -48,6 +50,7 @@ func main() {
 		specentities.GoSpecEntitiesPlugin(),
 		sdkv2beta.GoSdkPlugin(),
 		sdkconnectorv2beta.GoSdkConnectorPlugin(),
+		clientv2beta.GoClientPlugin(),
 
 		// Typescript
 		spectypescript.TypeScriptSpecPlugin(),

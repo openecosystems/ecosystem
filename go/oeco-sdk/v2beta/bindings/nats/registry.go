@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"reflect"
 	"time"
 
 	"github.com/nats-io/nats.go"
@@ -47,6 +48,57 @@ func RegisterEventStreams(environmentName string, streams []jetstream.StreamConf
 			}
 		}
 	}
+}
+
+func createOrUpdateStream2(cfg jetstream.StreamConfig) error {
+	js := *Bound.JetStream
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	info, err := js.Stream(ctx, cfg.Name)
+	if err != nil {
+		// Stream not found — create new
+		if errors.Is(err, jetstream.ErrStreamNotFound) {
+			fmt.Println("Creating stream:", cfg.Name)
+			if _, err := js.CreateOrUpdateStream(ctx, cfg); err != nil {
+				return fmt.Errorf("failed to create stream %s: %w", cfg.Name, err)
+			}
+			return nil
+		}
+		// Any other error
+		return fmt.Errorf("error fetching stream info for %s: %w", cfg.Name, err)
+	}
+
+	// Compare existing config with desired config
+	_cfg := info.CachedInfo().Config
+	if !streamConfigsEqual(&_cfg, &cfg) {
+		fmt.Printf("Updating stream %s (config has changed)\n", cfg.Name)
+		if _, err := js.CreateOrUpdateStream(ctx, cfg); err != nil {
+			return fmt.Errorf("failed to update stream %s: %w", cfg.Name, err)
+		}
+	} else {
+		fmt.Printf("Stream %s is up to date, no changes needed\n", cfg.Name)
+	}
+
+	return nil
+}
+
+func streamConfigsEqual(a, b *jetstream.StreamConfig) bool {
+	// ignore zero values (JetStream may fill defaults)
+	cleanA := normalizeStreamConfig(a)
+	cleanB := normalizeStreamConfig(b)
+	return reflect.DeepEqual(cleanA, cleanB)
+}
+
+func normalizeStreamConfig(cfg *jetstream.StreamConfig) *jetstream.StreamConfig {
+	c := *cfg
+	if c.MaxAge == 0 {
+		c.MaxAge = 0
+	}
+	if c.MaxMsgs == 0 {
+		c.MaxMsgs = -1
+	}
+	return &c
 }
 
 // createOrUpdateStream creates a new stream or updates an existing one using the provided StreamConfig.

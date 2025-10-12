@@ -46,7 +46,6 @@ message Platform {
 
   string api_endpoint = 10;
   string api_key = 20;
-  string grpc_endpoint = 30;
   string endpoint = 40;
   bool insecure = 50;
   repeated string dns_endpoints = 60;
