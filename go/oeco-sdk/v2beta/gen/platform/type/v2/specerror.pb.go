@@ -8,6 +8,7 @@ package typev2pb
 
 import (
 	_ "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/options/v2"
+	errdetails "google.golang.org/genproto/googleapis/rpc/errdetails"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -99,18 +100,195 @@ func (x *SpecErrorDetail) GetSpecType() string {
 	return ""
 }
 
+type SpecErrorDetails struct {
+	state            protoimpl.MessageState       `protogen:"open.v1"`
+	Code             uint32                       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Reason           string                       `protobuf:"bytes,10,opt,name=reason,proto3" json:"reason,omitempty"`
+	Error            string                       `protobuf:"bytes,20,opt,name=error,proto3" json:"error,omitempty"`
+	LocalizedMessage *errdetails.LocalizedMessage `protobuf:"bytes,30,opt,name=localized_message,json=localizedMessage,proto3" json:"localized_message,omitempty"`
+	CorrelationId       string                          `protobuf:"bytes,40,opt,name=correlation_id,json=correlationId,proto3" json:"correlation_id,omitempty"`
+	RequestInto         *errdetails.RequestInfo         `protobuf:"bytes,50,opt,name=request_into,json=requestInto,proto3" json:"request_into,omitempty"`
+	ResourceInto        *errdetails.ResourceInfo        `protobuf:"bytes,60,opt,name=resource_into,json=resourceInto,proto3" json:"resource_into,omitempty"`
+	ErrorInfo           *errdetails.ErrorInfo           `protobuf:"bytes,70,opt,name=error_info,json=errorInfo,proto3" json:"error_info,omitempty"`
+	RetryInfo           *errdetails.RetryInfo           `protobuf:"bytes,80,opt,name=retry_info,json=retryInfo,proto3" json:"retry_info,omitempty"`
+	DebugInfo           *errdetails.DebugInfo           `protobuf:"bytes,90,opt,name=debug_info,json=debugInfo,proto3" json:"debug_info,omitempty"`
+	QuotaFailure        *errdetails.QuotaFailure        `protobuf:"bytes,100,opt,name=quota_failure,json=quotaFailure,proto3" json:"quota_failure,omitempty"`
+	PreconditionFailure *errdetails.PreconditionFailure `protobuf:"bytes,110,opt,name=precondition_failure,json=preconditionFailure,proto3" json:"precondition_failure,omitempty"`
+	BadRequest          *errdetails.BadRequest          `protobuf:"bytes,120,opt,name=bad_request,json=badRequest,proto3" json:"bad_request,omitempty"`
+	Help                *errdetails.Help                `protobuf:"bytes,130,opt,name=help,proto3" json:"help,omitempty"`
+	DeveloperHelp       *errdetails.Help                `protobuf:"bytes,140,opt,name=developer_help,json=developerHelp,proto3" json:"developer_help,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *SpecErrorDetails) Reset() {
+	*x = SpecErrorDetails{}
+	mi := &file_platform_type_v2_specerror_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SpecErrorDetails) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SpecErrorDetails) ProtoMessage() {}
+
+func (x *SpecErrorDetails) ProtoReflect() protoreflect.Message {
+	mi := &file_platform_type_v2_specerror_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SpecErrorDetails.ProtoReflect.Descriptor instead.
+func (*SpecErrorDetails) Descriptor() ([]byte, []int) {
+	return file_platform_type_v2_specerror_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *SpecErrorDetails) GetCode() uint32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SpecErrorDetails) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *SpecErrorDetails) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+func (x *SpecErrorDetails) GetLocalizedMessage() *errdetails.LocalizedMessage {
+	if x != nil {
+		return x.LocalizedMessage
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetCorrelationId() string {
+	if x != nil {
+		return x.CorrelationId
+	}
+	return ""
+}
+
+func (x *SpecErrorDetails) GetRequestInto() *errdetails.RequestInfo {
+	if x != nil {
+		return x.RequestInto
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetResourceInto() *errdetails.ResourceInfo {
+	if x != nil {
+		return x.ResourceInto
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetErrorInfo() *errdetails.ErrorInfo {
+	if x != nil {
+		return x.ErrorInfo
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetRetryInfo() *errdetails.RetryInfo {
+	if x != nil {
+		return x.RetryInfo
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetDebugInfo() *errdetails.DebugInfo {
+	if x != nil {
+		return x.DebugInfo
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetQuotaFailure() *errdetails.QuotaFailure {
+	if x != nil {
+		return x.QuotaFailure
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetPreconditionFailure() *errdetails.PreconditionFailure {
+	if x != nil {
+		return x.PreconditionFailure
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetBadRequest() *errdetails.BadRequest {
+	if x != nil {
+		return x.BadRequest
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetHelp() *errdetails.Help {
+	if x != nil {
+		return x.Help
+	}
+	return nil
+}
+
+func (x *SpecErrorDetails) GetDeveloperHelp() *errdetails.Help {
+	if x != nil {
+		return x.DeveloperHelp
+	}
+	return nil
+}
+
 var File_platform_type_v2_specerror_proto protoreflect.FileDescriptor
 
 const file_platform_type_v2_specerror_proto_rawDesc = "" +
 	"\n" +
-	" platform/type/v2/specerror.proto\x12\x10platform.type.v2\x1a%platform/options/v2/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8e\x02\n" +
+	" platform/type/v2/specerror.proto\x12\x10platform.type.v2\x1a%platform/options/v2/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/rpc/error_details.proto\"\x8e\x02\n" +
 	"\x0fSpecErrorDetail\x12%\n" +
 	"\x0ecorrelation_id\x18\x01 \x01(\tR\rcorrelationId\x123\n" +
 	"\asent_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x06sentAt\x12;\n" +
 	"\vreceived_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"receivedAt\x12=\n" +
 	"\fcompleted_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\vcompletedAt\x12\x1b\n" +
-	"\tspec_type\x18\x05 \x01(\tR\bspecType:\x06\xfa\xb6\x18\x02\b\x02BVZTgithub.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pbb\x06proto3"
+	"\tspec_type\x18\x05 \x01(\tR\bspecType:\x06\xfa\xb6\x18\x02\b\x02\"\x98\x06\n" +
+	"\x10SpecErrorDetails\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\rR\x04code\x12\x16\n" +
+	"\x06reason\x18\n" +
+	" \x01(\tR\x06reason\x12\x14\n" +
+	"\x05error\x18\x14 \x01(\tR\x05error\x12I\n" +
+	"\x11localized_message\x18\x1e \x01(\v2\x1c.google.rpc.LocalizedMessageR\x10localizedMessage\x12%\n" +
+	"\x0ecorrelation_id\x18( \x01(\tR\rcorrelationId\x12:\n" +
+	"\frequest_into\x182 \x01(\v2\x17.google.rpc.RequestInfoR\vrequestInto\x12=\n" +
+	"\rresource_into\x18< \x01(\v2\x18.google.rpc.ResourceInfoR\fresourceInto\x124\n" +
+	"\n" +
+	"error_info\x18F \x01(\v2\x15.google.rpc.ErrorInfoR\terrorInfo\x124\n" +
+	"\n" +
+	"retry_info\x18P \x01(\v2\x15.google.rpc.RetryInfoR\tretryInfo\x124\n" +
+	"\n" +
+	"debug_info\x18Z \x01(\v2\x15.google.rpc.DebugInfoR\tdebugInfo\x12=\n" +
+	"\rquota_failure\x18d \x01(\v2\x18.google.rpc.QuotaFailureR\fquotaFailure\x12R\n" +
+	"\x14precondition_failure\x18n \x01(\v2\x1f.google.rpc.PreconditionFailureR\x13preconditionFailure\x127\n" +
+	"\vbad_request\x18x \x01(\v2\x16.google.rpc.BadRequestR\n" +
+	"badRequest\x12%\n" +
+	"\x04help\x18\x82\x01 \x01(\v2\x10.google.rpc.HelpR\x04help\x128\n" +
+	"\x0edeveloper_help\x18\x8c\x01 \x01(\v2\x10.google.rpc.HelpR\rdeveloperHelp:\x06\xfa\xb6\x18\x02\b\x02BVZTgithub.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pbb\x06proto3"
 
 var (
 	file_platform_type_v2_specerror_proto_rawDescOnce sync.Once
@@ -124,20 +302,42 @@ func file_platform_type_v2_specerror_proto_rawDescGZIP() []byte {
 	return file_platform_type_v2_specerror_proto_rawDescData
 }
 
-var file_platform_type_v2_specerror_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_platform_type_v2_specerror_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_platform_type_v2_specerror_proto_goTypes = []any{
-	(*SpecErrorDetail)(nil),       // 0: platform.type.v2.SpecErrorDetail
-	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
+	(*SpecErrorDetail)(nil),                // 0: platform.type.v2.SpecErrorDetail
+	(*SpecErrorDetails)(nil),               // 1: platform.type.v2.SpecErrorDetails
+	(*timestamppb.Timestamp)(nil),          // 2: google.protobuf.Timestamp
+	(*errdetails.LocalizedMessage)(nil),    // 3: google.rpc.LocalizedMessage
+	(*errdetails.RequestInfo)(nil),         // 4: google.rpc.RequestInfo
+	(*errdetails.ResourceInfo)(nil),        // 5: google.rpc.ResourceInfo
+	(*errdetails.ErrorInfo)(nil),           // 6: google.rpc.ErrorInfo
+	(*errdetails.RetryInfo)(nil),           // 7: google.rpc.RetryInfo
+	(*errdetails.DebugInfo)(nil),           // 8: google.rpc.DebugInfo
+	(*errdetails.QuotaFailure)(nil),        // 9: google.rpc.QuotaFailure
+	(*errdetails.PreconditionFailure)(nil), // 10: google.rpc.PreconditionFailure
+	(*errdetails.BadRequest)(nil),          // 11: google.rpc.BadRequest
+	(*errdetails.Help)(nil),                // 12: google.rpc.Help
 }
 var file_platform_type_v2_specerror_proto_depIdxs = []int32{
-	1, // 0: platform.type.v2.SpecErrorDetail.sent_at:type_name -> google.protobuf.Timestamp
-	1, // 1: platform.type.v2.SpecErrorDetail.received_at:type_name -> google.protobuf.Timestamp
-	1, // 2: platform.type.v2.SpecErrorDetail.completed_at:type_name -> google.protobuf.Timestamp
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	2,  // 0: platform.type.v2.SpecErrorDetail.sent_at:type_name -> google.protobuf.Timestamp
+	2,  // 1: platform.type.v2.SpecErrorDetail.received_at:type_name -> google.protobuf.Timestamp
+	2,  // 2: platform.type.v2.SpecErrorDetail.completed_at:type_name -> google.protobuf.Timestamp
+	3,  // 3: platform.type.v2.SpecErrorDetails.localized_message:type_name -> google.rpc.LocalizedMessage
+	4,  // 4: platform.type.v2.SpecErrorDetails.request_into:type_name -> google.rpc.RequestInfo
+	5,  // 5: platform.type.v2.SpecErrorDetails.resource_into:type_name -> google.rpc.ResourceInfo
+	6,  // 6: platform.type.v2.SpecErrorDetails.error_info:type_name -> google.rpc.ErrorInfo
+	7,  // 7: platform.type.v2.SpecErrorDetails.retry_info:type_name -> google.rpc.RetryInfo
+	8,  // 8: platform.type.v2.SpecErrorDetails.debug_info:type_name -> google.rpc.DebugInfo
+	9,  // 9: platform.type.v2.SpecErrorDetails.quota_failure:type_name -> google.rpc.QuotaFailure
+	10, // 10: platform.type.v2.SpecErrorDetails.precondition_failure:type_name -> google.rpc.PreconditionFailure
+	11, // 11: platform.type.v2.SpecErrorDetails.bad_request:type_name -> google.rpc.BadRequest
+	12, // 12: platform.type.v2.SpecErrorDetails.help:type_name -> google.rpc.Help
+	12, // 13: platform.type.v2.SpecErrorDetails.developer_help:type_name -> google.rpc.Help
+	14, // [14:14] is the sub-list for method output_type
+	14, // [14:14] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_platform_type_v2_specerror_proto_init() }
@@ -151,7 +351,7 @@ func file_platform_type_v2_specerror_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_platform_type_v2_specerror_proto_rawDesc), len(file_platform_type_v2_specerror_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

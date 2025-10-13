@@ -5,17 +5,16 @@ package iamv2alphapbcli
 
 import (
 	"connectrpc.com/connect"
-	"context"
 	"encoding/json"
-	"fmt"
-	"github.com/apex/log"
-	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
+	clog "github.com/charmbracelet/log"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 	"os"
 
+	adinosdkv2beta "github.com/adino/platform/go/adino-sdk/v2beta"
+
 	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/iam/v2alpha"
-	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/iam/v2alpha/iamv2alphapbconnect"
 )
 
 var (
@@ -29,15 +28,28 @@ var SignAccountV2AlphaCmd = &cobra.Command{
 	Short: `Sign a public key granting it access to the Ecosystem`,
 	Long:  `[ Sign a public key ]`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		log := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*clog.Logger)
 		log.Debug("Calling signAccount account")
-		settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
+		//settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
+
+		_, err := cmd.Flags().GetString("field-mask")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		_, err = cmd.Flags().GetBool("validate-only")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
 			os.Exit(1)
 		}
+
 		if _request == "" {
 			_request = "{}"
 		}
@@ -45,29 +57,25 @@ var SignAccountV2AlphaCmd = &cobra.Command{
 		_r := iamv2alphapb.SignAccountRequest{}
 		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
 			os.Exit(1)
 		}
 
-		sdkv2betalib.Overrides.FieldMask = signAccountFieldMask
-		sdkv2betalib.Overrides.ValidateOnly = signAccountValidateOnly
-
 		request := connect.NewRequest[iamv2alphapb.SignAccountRequest](&_r)
-		// Add GZIP Support: connect.WithSendGzip(),
-		url := "https://" + settings.Platform.Mesh.Endpoint
-		if settings.Platform.Insecure {
-			url = "http://" + settings.Platform.Mesh.Endpoint
-		}
-		client := *iamv2alphapbconnect.NewAccountServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
-
-		response, err := client.SignAccount(context.Background(), request)
+		adino, err := adinosdkv2beta.NewAdinoClient()
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		response, err := adino.Iam.AccountService.SignAccount(cmd.Context(), request)
+		if err != nil {
+			log.Error(err)
 			os.Exit(1)
 		}
 
 		val, _ := json.MarshalIndent(&response, "", "    ")
-		fmt.Println(string(val))
+		log.Info(string(val))
 	},
 }
 

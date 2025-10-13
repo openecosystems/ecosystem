@@ -5,17 +5,16 @@ package cryptographyv2alphapbcli
 
 import (
 	"connectrpc.com/connect"
-	"context"
 	"encoding/json"
-	"fmt"
-	"github.com/apex/log"
-	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
+	clog "github.com/charmbracelet/log"
+	sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
 	"os"
 
+	adinosdkv2beta "github.com/adino/platform/go/adino-sdk/v2beta"
+
 	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/cryptography/v2alpha"
-	"github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/cryptography/v2alpha/cryptographyv2alphapbconnect"
 )
 
 var (
@@ -29,15 +28,28 @@ var SignCertificateV2AlphaCmd = &cobra.Command{
 	Short: `Method to SignCertificate to events based on scopes`,
 	Long:  `[]`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		log := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*clog.Logger)
 		log.Debug("Calling signCertificate certificate")
-		settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
+		//settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
+
+		_, err := cmd.Flags().GetString("field-mask")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		_, err = cmd.Flags().GetBool("validate-only")
+		if err != nil {
+			log.Error(err)
+			os.Exit(1)
+		}
 
 		_request, err := cmd.Flags().GetString("request")
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
 			os.Exit(1)
 		}
+
 		if _request == "" {
 			_request = "{}"
 		}
@@ -45,29 +57,25 @@ var SignCertificateV2AlphaCmd = &cobra.Command{
 		_r := cryptographyv2alphapb.SignCertificateRequest{}
 		err = protojson.Unmarshal([]byte(_request), &_r)
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
 			os.Exit(1)
 		}
 
-		sdkv2betalib.Overrides.FieldMask = signCertificateFieldMask
-		sdkv2betalib.Overrides.ValidateOnly = signCertificateValidateOnly
-
 		request := connect.NewRequest[cryptographyv2alphapb.SignCertificateRequest](&_r)
-		// Add GZIP Support: connect.WithSendGzip(),
-		url := "https://" + settings.Platform.Mesh.Endpoint
-		if settings.Platform.Insecure {
-			url = "http://" + settings.Platform.Mesh.Endpoint
-		}
-		client := *cryptographyv2alphapbconnect.NewCertificateServiceSpecClient(&settings.Platform, url, connect.WithInterceptors(sdkv2betalib.NewCLIInterceptor(settings, sdkv2betalib.Overrides)))
-
-		response, err := client.SignCertificate(context.Background(), request)
+		adino, err := adinosdkv2beta.NewAdinoClient()
 		if err != nil {
-			fmt.Println(err)
+			log.Error(err)
+			os.Exit(1)
+		}
+
+		response, err := adino.Cryptography.CertificateService.SignCertificate(cmd.Context(), request)
+		if err != nil {
+			log.Error(err)
 			os.Exit(1)
 		}
 
 		val, _ := json.MarshalIndent(&response, "", "    ")
-		fmt.Println(string(val))
+		log.Info(string(val))
 	},
 }
 

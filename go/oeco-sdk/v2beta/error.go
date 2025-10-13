@@ -45,6 +45,7 @@ type (
 		WithPreconditionFailure(failure *errdetails.PreconditionFailure) SpecErrorable
 		WithBadRequest(request *errdetails.BadRequest) SpecErrorable
 		WithHelp(help *errdetails.Help) SpecErrorable
+		WithDeveloperHelp(help *errdetails.Help) SpecErrorable
 		WithSpecDetail(spec *specv2pb.Spec) SpecErrorable
 		WithLocalizedMessage(message *errdetails.LocalizedMessage) SpecErrorable
 		WithInternalErrorDetail(errs ...error) SpecErrorable
@@ -52,6 +53,8 @@ type (
 		SpecReason() Reason
 		ToStatus() *status.Status
 		ToConnectError() *connect.Error
+		Code() connect.Code
+		Details() *typev2pb.SpecErrorDetails
 		error
 	}
 
@@ -59,13 +62,28 @@ type (
 	SpecError struct {
 		reason     Reason
 		ConnectErr connect.Error
+		details    *typev2pb.SpecErrorDetails
 	}
 )
 
 // NewSpecError creates a new connect.Error with a specified code, detail, and message, adding the detail to the error.
 func NewSpecError(code connect.Code, message string) *SpecError {
+	err := connect.NewError(code, errors.New(message))
+	details := extractSpecErrorDetails(err)
 	ee := SpecError{
-		ConnectErr: *connect.NewError(code, errors.New(message)),
+		ConnectErr: *err,
+		details:    details,
+	}
+
+	return &ee
+}
+
+// NewSpecErrorFromConnectError converts a *connect.Error to *SpecError.
+func NewSpecErrorFromConnectError(err *connect.Error) *SpecError {
+	details := extractSpecErrorDetails(err)
+	ee := SpecError{
+		ConnectErr: *err,
+		details:    details,
 	}
 
 	return &ee
@@ -75,8 +93,10 @@ func NewSpecErrorFromStatus(status *status.Status) SpecErrorable {
 	if status == nil {
 		return ErrServerInternal.WithInternalErrorDetail(errors.New("status is nil when attempting to create a new spec error"))
 	}
+
+	cerr := connect.NewError(connect.Code(status.Code), errors.New(status.Message)) // nolint:gosec
 	ee := SpecError{
-		ConnectErr: *connect.NewError(connect.Code(status.Code), errors.New(status.Message)), // nolint:gosec
+		ConnectErr: *cerr,
 	}
 
 	if status.Details != nil {
@@ -89,6 +109,9 @@ func NewSpecErrorFromStatus(status *status.Status) SpecErrorable {
 			ee.ConnectErr.AddDetail(d)
 		}
 	}
+
+	details := extractSpecErrorDetails(cerr)
+	ee.details = details
 
 	return &ee
 }
@@ -212,6 +235,20 @@ func (se *SpecError) WithHelp(help *errdetails.Help) SpecErrorable {
 	d, err := connect.NewErrorDetail(help)
 	if err != nil {
 		apexlog.Error("server: SpecError creating new Help")
+		return se
+	}
+
+	se.ConnectErr.AddDetail(d)
+	return se
+}
+
+func (se *SpecError) WithDeveloperHelp(help *errdetails.Help) SpecErrorable {
+	for _, detail := range help.GetLinks() {
+		detail.Description = "dev: " + detail.Description
+	}
+	d, err := connect.NewErrorDetail(help)
+	if err != nil {
+		apexlog.Error("server: SpecError creating new Developer Help")
 		return se
 	}
 
@@ -374,6 +411,8 @@ func (se *SpecError) ToConnectError() *connect.Error {
 	return &se.ConnectErr
 }
 
+func (e *SpecError) Details() *typev2pb.SpecErrorDetails { return e.details }
+
 // IsSpecErrorable checks if the given error implements SpecErrorable.
 // Returns the casted SpecErrorable and a bool indicating success.
 func IsSpecErrorable(err error) (SpecErrorable, bool) {
@@ -385,8 +424,59 @@ func IsSpecErrorable(err error) (SpecErrorable, bool) {
 	return se, ok
 }
 
+func ToSpecErrorable(err error) SpecErrorable {
+	var cerr *connect.Error
+	if errors.As(err, &cerr) {
+		return NewSpecErrorFromConnectError(cerr)
+	}
+
+	return NewSpecError(connect.CodeInternal, err.Error())
+}
+
 // IsReason Quick check by reason, anywhere in the error chain
 func IsReason(err error, reason Reason) bool {
 	var hr HasReason
 	return errors.As(err, &hr) && hr.SpecReason() == reason
+}
+
+// extractSpecErrorDetails parses well-known google.rpc.* details into SpecErrorDetails.
+func extractSpecErrorDetails(err *connect.Error) *typev2pb.SpecErrorDetails {
+	d := &typev2pb.SpecErrorDetails{
+		Code:   uint32(err.Code()),
+		Reason: err.Message(),
+		Error:  err.Message(),
+	}
+
+	for _, det := range err.Details() {
+		msg, _ := det.Value()
+		switch v := msg.(type) {
+		case *errdetails.LocalizedMessage:
+			d.LocalizedMessage = v
+		case *errdetails.RequestInfo:
+			d.RequestInto = v
+		case *errdetails.ResourceInfo:
+			d.ResourceInto = v
+		case *errdetails.ErrorInfo:
+			d.ErrorInfo = v
+		case *errdetails.RetryInfo:
+			d.RetryInfo = v
+		case *errdetails.DebugInfo:
+			d.DebugInfo = v
+		case *errdetails.QuotaFailure:
+			d.QuotaFailure = v
+		case *errdetails.PreconditionFailure:
+			d.PreconditionFailure = v
+		case *errdetails.BadRequest:
+			d.BadRequest = v
+		case *errdetails.Help:
+			// Decide whether it’s developer_help or user_help based on link descriptions
+			if len(v.Links) > 0 && strings.HasPrefix(v.Links[0].Description, "dev:") {
+				d.DeveloperHelp = v
+			} else {
+				d.Help = v
+			}
+		}
+	}
+
+	return d
 }

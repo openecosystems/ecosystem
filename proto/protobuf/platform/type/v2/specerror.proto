@@ -4,6 +4,7 @@ package platform.type.v2;
 
 import "platform/options/v2/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "google/rpc/error_details.proto";
 
 option go_package = "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2;typev2pb";
 
@@ -24,4 +25,40 @@ message SpecErrorDetail {
 
   //
   string spec_type = 5;
+}
+
+message SpecErrorDetails {
+  option (platform.options.v2.graph) = {type: GRAPH_TYPE_OUTPUT};
+
+  uint32 code = 1;
+
+  string reason = 10;
+
+  string error = 20;
+
+  google.rpc.LocalizedMessage localized_message = 30;
+
+  //
+  string correlation_id = 40;
+
+  google.rpc.RequestInfo request_into = 50;
+
+  google.rpc.ResourceInfo resource_into = 60;
+
+  google.rpc.ErrorInfo error_info = 70;
+
+  google.rpc.RetryInfo retry_info = 80;
+
+  google.rpc.DebugInfo debug_info = 90;
+
+  google.rpc.QuotaFailure quota_failure = 100;
+
+  google.rpc.PreconditionFailure precondition_failure = 110;
+
+  google.rpc.BadRequest bad_request = 120;
+
+  google.rpc.Help help = 130;
+
+  google.rpc.Help developer_help = 140;
+
 }

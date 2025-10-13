@@ -18,6 +18,7 @@ import (
 	sdkconnectorv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/sdk_connector"
 	serverv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/server"
 	specv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/spec"
+	specclientv2beta "github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/go/plugins/v2beta/spec_client"
 
 	// Protobuf Plugins
 	"github.com/openecosystems/ecosystem/libs/plugins/protoc-gen-platform/languages/protobuf/plugins/configuration"
@@ -51,6 +52,7 @@ func main() {
 		sdkv2beta.GoSdkPlugin(),
 		sdkconnectorv2beta.GoSdkConnectorPlugin(),
 		clientv2beta.GoClientPlugin(),
+		specclientv2beta.GoSpecClientPlugin(),
 
 		// Typescript
 		spectypescript.TypeScriptSpecPlugin(),
