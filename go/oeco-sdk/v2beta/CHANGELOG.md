@@ -2,17 +2,17 @@
 
 ### 🚀 Features
 
-- preparing for sdks and clients ([7609821](https://github.com/openecosystems/ecosystem/commit/7609821))
-- adding support to generate unified go sdk clients ([4fd6fa1](https://github.com/openecosystems/ecosystem/commit/4fd6fa1))
+-   preparing for sdks and clients ([7609821](https://github.com/openecosystems/ecosystem/commit/7609821))
+-   adding support to generate unified go sdk clients ([4fd6fa1](https://github.com/openecosystems/ecosystem/commit/4fd6fa1))
 
 ### 🩹 Fixes
 
-- updating generators for spec clients and clis; adjusting nats and nebula bindings ([ba7b687](https://github.com/openecosystems/ecosystem/commit/ba7b687))
-- adding explicit grpc port ([b3526b0](https://github.com/openecosystems/ecosystem/commit/b3526b0))
+-   updating generators for spec clients and clis; adjusting nats and nebula bindings ([ba7b687](https://github.com/openecosystems/ecosystem/commit/ba7b687))
+-   adding explicit grpc port ([b3526b0](https://github.com/openecosystems/ecosystem/commit/b3526b0))
 
 ### ❤️ Thank You
 
-- Dimy Jeannot
+-   Dimy Jeannot
 
 ## 0.22.1 (2025-10-08)
 
