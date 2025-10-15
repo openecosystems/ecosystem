@@ -8,12 +8,14 @@ package {{ goPath .File }}cli
 import (
     "encoding/json"
     "os"
-    "connectrpc.com/connect"
+
     "google.golang.org/protobuf/encoding/protojson"
     "github.com/spf13/cobra"
     clog "github.com/charmbracelet/log"
-    sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
 
+    cli "github.com/adino/platform/apps/clients/public/cli/v2alpha/adino/cli"
+    sdkv2betalib "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta"
+    "github.com/adino/platform/apps/clients/public/cli/v2alpha/adino/utils"
     adinosdkv2beta "github.com/adino/platform/go/adino-sdk/v2beta"
 
 {{ range getImportPackages .File }}
@@ -33,53 +35,45 @@ var {{ .Name }}{{ $version.UpperCamelCase }}Cmd = &cobra.Command{
     Long:  `{{- $leadingDetachedComments -}}`,
     Run: func(cmd *cobra.Command, args []string) {
         log := cmd.Context().Value(sdkv2betalib.LoggerContextKey).(*clog.Logger)
+        adino := cmd.Context().Value(cli.AdinoSDKContextKey).(*adinosdkv2beta.AdinoClient)
         log.Debug("Calling {{ .Name.LowerCamelCase }} {{ $entityName.LowerCamelCase }}")
-        //settings := cmd.Root().Context().Value(sdkv2betalib.SettingsContextKey).(*sdkv2betalib.CLIConfiguration)
 
-		_, err := cmd.Flags().GetString("field-mask")
+		params, err := cliutils.ExtractParameters(cmd, args)
 		if err != nil {
 			log.Error(err)
 			os.Exit(1)
 		}
 
-		_, err = cmd.Flags().GetBool("validate-only")
-		if err != nil {
-			log.Error(err)
-			os.Exit(1)
-		}
-
-		_request, err := cmd.Flags().GetString("request")
-		if err != nil {
-			log.Error(err)
-			os.Exit(1)
-		}
-
-		if _request == "" {
-			_request = "{}"
-		}
-
-        _r := {{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}{}
-        err = protojson.Unmarshal([]byte(_request), &_r)
+        request := {{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}{}
+        err = protojson.Unmarshal([]byte(params.Request), &request)
         if err != nil {
-          log.Error(err)
-          os.Exit(1)
+            log.Error(err)
+            os.Exit(1)
         }
 
-        request := connect.NewRequest[{{ goPath .File }}.{{ .Input.Name.UpperCamelCase }}](&_r)
-        adino, err := adinosdkv2beta.NewAdinoClient()
-		if err != nil {
-          log.Error(err)
-          os.Exit(1)
-		}
-
-        response, err := adino.{{ $system }}.{{ $s.Name.UpperCamelCase }}.{{ .Name.UpperCamelCase }}(cmd.Context(), request)
+        {{- if eq (getCqrsType . ) "stream-server" }} // server streaming
+        err = adino.{{ $system }}.{{ $s.Name.UpperCamelCase }}.{{ .Name.UpperCamelCase }}(cmd.Context(), &request, func(msg *{{ goPath .File }}.{{ .Output.Name.UpperCamelCase }}) {
+            log.Info("Received {{ .Output.Name.UpperCamelCase }}:", msg)
+            val, _ := json.MarshalIndent(&msg, "", "    ")
+            log.Info(string(val))
+        })
         if err != nil {
-          log.Error(err)
-          os.Exit(1)
+            log.Fatal(err)
+        }
+        {{- else if eq (getCqrsType . ) "stream-bidi" }} // bidi streaming
+
+        {{- else }} // unary
+        response, err := adino.{{ $system }}.{{ $s.Name.UpperCamelCase }}.{{ .Name.UpperCamelCase }}(cmd.Context(), &request, params.CallOptions...)
+        if err != nil {
+            log.Error(err)
+            os.Exit(1)
         }
 
         val, _ := json.MarshalIndent(&response, "", "    ")
         log.Info(string(val))
+        {{ end -}}
+
+
     },
 }
 

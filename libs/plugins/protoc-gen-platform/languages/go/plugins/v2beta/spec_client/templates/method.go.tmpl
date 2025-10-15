@@ -1,0 +1,2 @@
+{{ $e := entity .File -}}{{- $alias := getGoPackageAlias .File }}
+    {{ if eq (getCqrsType . ) "stream-server" }}{{ template "method_server_stream.go.tmpl" . }}{{ else if eq (getCqrsType . ) "stream-bidi" }}{{ template "method_bidi_stream.go.tmpl" . }}{{ else }}{{ template "method_unary.go.tmpl" . }}{{ end }}

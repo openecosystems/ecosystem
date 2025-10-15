@@ -1,0 +1,2 @@
+{{ $e := entity .File -}}{{- $alias := getGoPackageAlias .File }}
+	{{ .Name.UpperCamelCase }}(context.Context, *{{ $alias }}.{{ .Input.Name.UpperCamelCase }}, func(*{{ $alias }}.{{ .Output.Name.UpperCamelCase }}), ...adinoclient.CallOption) sdkv2betalib.SpecErrorable

@@ -52,6 +52,7 @@ type Natsd struct {
 	Password   string
 	Replicas   int
 	Clustered  bool
+	StoreDir   string
 	Cluster    Cluster
 }
 
@@ -73,6 +74,14 @@ type Configuration struct {
 
 // ResolveConfiguration resolves the binding's configuration using the default configuration as a base and assigns it.
 func (b *Binding) ResolveConfiguration(opts ...sdkv2betalib.ConfigurationProviderOption) (*sdkv2betalib.Configurer, error) {
+	if b.configuration != nil {
+		configurer, err := sdkv2betalib.NewConfigurer(opts...)
+		if err != nil {
+			return nil, err
+		}
+		return configurer, nil
+	}
+
 	var c Configuration
 	configurer, err := sdkv2betalib.NewConfigurer(opts...)
 	if err != nil {

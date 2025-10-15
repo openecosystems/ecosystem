@@ -1,2 +1,2 @@
 {{ $e := entity .File -}}{{- $alias := getGoPackageAlias .File }}
-			{{ .Name.UpperCamelCase }}: {{ $alias }}connect.New{{ .Name.UpperCamelCase }}Client(o.HttpClient, o.BaseURL, o.Opts...),
+			{{ .Name.UpperCamelCase }}: {{ $alias }}connect.New{{ .Name.UpperCamelCase }}SpecClient(opts...),

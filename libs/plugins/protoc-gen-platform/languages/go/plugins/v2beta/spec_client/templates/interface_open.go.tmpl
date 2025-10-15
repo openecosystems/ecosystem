@@ -1,0 +1,18 @@
+
+
+func New{{ .UpperCamelCase }}SpecClient(opts ...adinoclient.SDKOption) {{ .UpperCamelCase }}SpecClient {
+	sopts, _ := adinoclient.NewSDKOptions(opts)
+	o := sopts.ToConnectParameters()
+	client := New{{ .UpperCamelCase }}Client(o.HttpClient, o.BaseURL, o.Opts...)
+	return &{{ .LowerCamelCase }}SpecClient{
+		client: client,
+	}
+}
+
+type {{ .LowerCamelCase }}SpecClient struct {
+	client {{ .UpperCamelCase }}Client
+}
+
+// {{ .UpperCamelCase }}SpecClient is a client for the {{ .UpperCamelCase }} service.
+type {{ .UpperCamelCase }}SpecClient interface {
+

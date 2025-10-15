@@ -47,6 +47,12 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2betalib.Bindings) error {
 	return nil
 }
 
+func NewNebulaBinding(configuration *Configuration) *Binding {
+	return &Binding{
+		configuration: configuration,
+	}
+}
+
 // Bind creates a binding by configuring a mesh socket, registers it, and ensures the binding is only initialized once.
 func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv2betalib.Bindings {
 	if Bound == nil {

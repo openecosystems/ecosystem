@@ -102,128 +102,26 @@ func (m *GoSpecClientModule) Execute(targets map[string]pgs.File, _ map[string]p
 	}
 	sort.Strings(keys)
 
-	complete := false
-	for _, keys := range versionedKeys {
-		for _, k := range keys {
-			t := targets[k]
-			msg := fns.Entity(t)
-			if msg == nil {
-				continue
-			}
-
-			m.GeneratePartialFileOpen(t)
-			complete = true
-			break
+	for _, k := range keys {
+		t := targets[k]
+		msg := fns.Entity(t)
+		if msg == nil {
+			continue
 		}
-		if complete {
-			break
+
+		m.GeneratePartialFileOpen(t)
+		m.GeneratePartialImports(t)
+		m.GeneratePartialInterfaceOpen(t.Services()[0], t)
+
+		for _, method := range t.Services()[0].Methods() {
+			m.GeneratePartialMethod(method, t)
 		}
-	}
 
-	sv := make(map[string]bool)
-	for _, keys := range versionedKeys {
-		for _, k := range keys {
-			t := targets[k]
-			_sv := fns.DomainSystemName2(t).LowerCamelCase().String() + fns.GetPackageVersion(t)
-			msg := fns.Entity(t)
-			if msg == nil {
-				continue
-			}
-			if _, ok := sv[_sv]; ok {
-				continue
-			}
-			sv[_sv] = true
+		m.GeneratePartialInterfaceClose(t.Services()[0], t)
 
-			m.GeneratePartialImports(t)
+		for _, method := range t.Services()[0].Methods() {
+			m.GeneratePartialMethodImplementation(method, t)
 		}
-	}
-
-	m.GeneratePartialStructOpen()
-	for _, s := range systemNames {
-		m.GeneratePartialStructBody(s)
-	}
-	m.GeneratePartialStructClose()
-
-	complete = false
-	for _, keys = range versionedKeys {
-		for _, k := range keys {
-			t := targets[k]
-			msg := fns.Entity(t)
-			if msg == nil {
-				continue
-			}
-
-			m.GeneratePartialClientOpen(t)
-			complete = true
-			break
-		}
-		if complete {
-			break
-		}
-	}
-
-	for _, s := range systemNames {
-		m.GeneratePartialSystemOpen(s)
-		for _, keys = range versionedKeys {
-			for _, k := range keys {
-				t := targets[k]
-				// m.Log(s, k, fns.DomainSystemName2(t).LowerCamelCase().String())
-				if fns.DomainSystemName2(t).LowerCamelCase().String() != s {
-					continue
-				}
-
-				msg := fns.Entity(t)
-				if msg == nil {
-					continue
-				}
-
-				for _, service := range t.Services() {
-					m.GeneratePartialService(service)
-				}
-			}
-		}
-		m.GeneratePartialSystemClose(s)
-	}
-
-	complete = false
-	for _, keys = range versionedKeys {
-		for _, k := range keys {
-			t := targets[k]
-			msg := fns.Entity(t)
-			if msg == nil {
-				continue
-			}
-
-			m.GeneratePartialClientClose(t)
-			complete = true
-			break
-		}
-		if complete {
-			break
-		}
-	}
-
-	for _, s := range systemNames {
-		m.GeneratePartialSystemStructOpen(s)
-		for _, keys = range versionedKeys {
-			for _, k := range keys {
-				t := targets[k]
-				// m.Log(s, k, fns.DomainSystemName2(t).LowerCamelCase().String())
-				if fns.DomainSystemName2(t).LowerCamelCase().String() != s {
-					continue
-				}
-
-				msg := fns.Entity(t)
-				if msg == nil {
-					continue
-				}
-
-				for _, service := range t.Services() {
-					m.GeneratePartialSystemStructService(service)
-				}
-			}
-		}
-		m.GeneratePartialSystemStructClose(s)
 	}
 
 	return m.Artifacts()
@@ -242,11 +140,13 @@ func (m *GoSpecClientModule) GeneratePartialFileOpen(file pgs.File) {
 		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
 		"getGoPackageAlias":              fns.GetGoPackageAlias,
 		"getImportPackageEntity":         fns.GetImportPackageEntity,
+		"getCqrsType":                    fns.GetCQRSType,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
 	name := getSpecClientFileName(file, fns)
+
 	m.OverwriteGeneratorTemplateFile(name, m.Tpl, file)
 }
 
@@ -263,6 +163,7 @@ func (m *GoSpecClientModule) GeneratePartialImports(file pgs.File) {
 		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
 		"getGoPackageAlias":              fns.GetGoPackageAlias,
 		"getImportPackageEntity":         fns.GetImportPackageEntity,
+		"getCqrsType":                    fns.GetCQRSType,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
@@ -276,29 +177,8 @@ func (m *GoSpecClientModule) GeneratePartialImports(file pgs.File) {
 	m.AddGeneratorTemplateAppend(name, m.Tpl, file)
 }
 
-func (m *GoSpecClientModule) GeneratePartialStructOpen() {
-	templateName := "struct_open.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, "")
-}
-
-func (m *GoSpecClientModule) GeneratePartialStructBody(system string) {
-	templateName := "struct_body.go.tmpl"
+func (m *GoSpecClientModule) GeneratePartialInterfaceOpen(service pgs.Service, file pgs.File) {
+	templateName := "interface_open.go.tmpl"
 	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
 	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
 
@@ -311,16 +191,18 @@ func (m *GoSpecClientModule) GeneratePartialStructBody(system string) {
 		"domainSystemName2":              fns.DomainSystemName2,
 		"getGoPackageAlias":              fns.GetGoPackageAlias,
 		"getImportPackageEntity":         fns.GetImportPackageEntity,
+		"getCqrsType":                    fns.GetCQRSType,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
 	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, pgs.Name(system))
+
+	m.AddGeneratorTemplateAppend(name, m.Tpl, service.Name())
 }
 
-func (m *GoSpecClientModule) GeneratePartialStructClose() {
-	templateName := "struct_close.go.tmpl"
+func (m *GoSpecClientModule) GeneratePartialMethod(method pgs.Method, file pgs.File) {
+	templateName := "method.go.tmpl"
 	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
 	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
 
@@ -332,42 +214,18 @@ func (m *GoSpecClientModule) GeneratePartialStructClose() {
 		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
 		"getGoPackageAlias":              fns.GetGoPackageAlias,
 		"getImportPackageEntity":         fns.GetImportPackageEntity,
+		"getCqrsType":                    fns.GetCQRSType,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
 	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, "")
+
+	m.AddGeneratorTemplateAppend(name, m.Tpl, method)
 }
 
-func (m *GoSpecClientModule) GeneratePartialClientOpen(file pgs.File) {
-	templateName := "client_open.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, file)
-}
-
-func (m *GoSpecClientModule) GeneratePartialSystemOpen(system string) {
-	templateName := "system_open.go.tmpl"
+func (m *GoSpecClientModule) GeneratePartialInterfaceClose(service pgs.Service, file pgs.File) {
+	templateName := "interface_close.go.tmpl"
 	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
 	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
 
@@ -380,16 +238,17 @@ func (m *GoSpecClientModule) GeneratePartialSystemOpen(system string) {
 		"domainSystemName2":              fns.DomainSystemName2,
 		"getGoPackageAlias":              fns.GetGoPackageAlias,
 		"getImportPackageEntity":         fns.GetImportPackageEntity,
+		"getCqrsType":                    fns.GetCQRSType,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
 	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, pgs.Name(system))
+	m.AddGeneratorTemplateAppend(name, m.Tpl, service.Name())
 }
 
-func (m *GoSpecClientModule) GeneratePartialService(service pgs.Service) {
-	templateName := "service.go.tmpl"
+func (m *GoSpecClientModule) GeneratePartialMethodImplementation(method pgs.Method, file pgs.File) {
+	templateName := "method_implementation.go.tmpl"
 	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
 	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
 
@@ -401,148 +260,14 @@ func (m *GoSpecClientModule) GeneratePartialService(service pgs.Service) {
 		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
 		"getGoPackageAlias":              fns.GetGoPackageAlias,
 		"getImportPackageEntity":         fns.GetImportPackageEntity,
+		"getCqrsType":                    fns.GetCQRSType,
 	})
 	template.Must(tpl.ParseFS(templates, "templates/*"))
 	m.Tpl = tpl
 
 	name := getSpecClientFileName(file, fns)
 
-	m.AddGeneratorTemplateAppend(name, m.Tpl, service)
-}
-
-func (m *GoSpecClientModule) GeneratePartialSystemClose(system string) {
-	templateName := "system_close.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"domainSystemName2":              fns.DomainSystemName2,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, pgs.Name(system))
-}
-
-func (m *GoSpecClientModule) GeneratePartialClientClose(file pgs.File) {
-	templateName := "client_close.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	msg := fns.Entity(file)
-	if msg == nil {
-		return
-	}
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, file)
-}
-
-func (m *GoSpecClientModule) GeneratePartialSystemStructOpen(system string) {
-	templateName := "system_struct_open.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"domainSystemName2":              fns.DomainSystemName2,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, pgs.Name(system))
-}
-
-func (m *GoSpecClientModule) GeneratePartialSystemStructService(service pgs.Service) {
-	templateName := "system_struct_service.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	name := getSpecClientFileName(file, fns)
-
-	m.AddGeneratorTemplateAppend(name, m.Tpl, service)
-}
-
-func (m *GoSpecClientModule) GeneratePartialSystemStructClose(system string) {
-	templateName := "system_struct_close.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"domainSystemName2":              fns.DomainSystemName2,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, pgs.Name(system))
-}
-
-func (m *GoSpecClientModule) GeneratePartialFileClose() {
-	templateName := "close.go.tmpl"
-	fns := shared.Functions{Pctx: pgsgo.InitContext(m.Parameters())}
-	l := _go.GetLanguage(templateName, m.ctx, m.Parameters())
-
-	tpl := l.Template()
-	tpl.Funcs(map[string]interface{}{
-		"entity":                         fns.Entity,
-		"entityName":                     fns.EntityName,
-		"getPackageVersionName":          fns.GetPackageVersionName,
-		"protoPathWithoutProtoExtension": fns.ProtoPathWithoutProtoExtension,
-		"getGoPackageAlias":              fns.GetGoPackageAlias,
-		"getImportPackageEntity":         fns.GetImportPackageEntity,
-	})
-	template.Must(tpl.ParseFS(templates, "templates/*"))
-	m.Tpl = tpl
-
-	name := getSpecClientFileName(file, fns)
-	m.AddGeneratorTemplateAppend(name, m.Tpl, "")
+	m.AddGeneratorTemplateAppend(name, m.Tpl, method)
 }
 
 func getSpecClientFileName(file pgs.File, fns shared.Functions) string {

@@ -58,6 +58,12 @@ func (b *Binding) Validate(_ context.Context, _ *sdkv2betalib.Bindings) error {
 	return nil
 }
 
+func NewNatsBinding(configuration *Configuration) *Binding {
+	return &Binding{
+		configuration: configuration,
+	}
+}
+
 // Bind initializes the Binding instance, configures NATS or JetStream connections, and registers the binding in Bindings.
 func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv2betalib.Bindings {
 	if Bound == nil {
@@ -79,6 +85,10 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 
 					systemAccount := natsd.NewAccount(natsd.DEFAULT_SYSTEM_ACCOUNT)
 					connectorAccount := natsd.NewAccount(DEFAULT_CONNECTOR_ACCOUNT)
+					storeDir := NatsdServerJetstreamStoreDir
+					if b.configuration.Natsd.StoreDir != "" {
+						storeDir = b.configuration.Natsd.StoreDir
+					}
 
 					options := natsd.Options{
 						// Standard client options
@@ -117,7 +127,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						JetStream:              true,
 						JetStreamMaxMemory:     -1,
 						JetStreamMaxStore:      -1,
-						StoreDir:               NatsdServerJetstreamStoreDir,
+						StoreDir:               storeDir,
 						DisableJetStreamBanner: true,
 					}
 

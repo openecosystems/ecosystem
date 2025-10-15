@@ -102,7 +102,7 @@ func (m *GoSdkConnectorModule) Execute(targets map[string]pgs.File, _ map[string
 			CDToRootFolder:   m.Parameters().Str(cdToRoot),
 			RelativePath:     strings.TrimPrefix(fns.GoPackage(t), m.Parameters().Str(gitHubRepository)+"/"),
 		}
-		m.GenerateClientFile(t)
+		// m.GenerateClientFile(t)
 		// m.GenerateProjectJsonFile(t)
 		// m.GeneratePackageJsonFile(t)
 		m.GenerateGoModFile(t)

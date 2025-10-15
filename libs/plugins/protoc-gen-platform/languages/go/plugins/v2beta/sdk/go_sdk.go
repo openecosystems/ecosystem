@@ -66,7 +66,7 @@ func (m *GoSdkModule) Execute(targets map[string]pgs.File, _ map[string]pgs.Pack
 
 	for _, k := range keys {
 		t := targets[k]
-		m.GenerateClientFile(t)
+		// m.GenerateClientFile(t)
 		// m.GenerateProjectJsonFile(t)
 		// m.GeneratePackageJsonFile(t)
 		// m.GenerateGoModFile(t)

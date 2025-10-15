@@ -1,12 +1,5 @@
 
 // NewAdinoClient creates and initializes a new AdinoClient with the specified configuration, base URL, and client options.
-func NewAdinoClient(opts ...SDKOption) (*AdinoClient, sdkv2betalib.SpecErrorable) {
-	options, serr := NewSDKOptions(opts)
-	if serr != nil {
-		return nil, serr
-	}
-
-	o := options.ToConnectParameters()
+func NewAdinoClient(opts ...adinoclient.SDKOption) (*AdinoClient, sdkv2betalib.SpecErrorable) {
 
 	return &AdinoClient{
-		options: options,

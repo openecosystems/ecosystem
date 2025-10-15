@@ -1,0 +1,13 @@
+{{ $e := entity .File -}}{{- $alias := getGoPackageAlias .File }}
+
+func (m {{ .Service.Name.LowerCamelCase }}SpecClient) {{ .Name.UpperCamelCase }}(ctx context.Context, request *{{ $alias }}.{{ .Input.Name.UpperCamelCase }}, opts ...adinoclient.CallOption) (*{{ $alias }}.{{ .Output.Name.UpperCamelCase }}, sdkv2betalib.SpecErrorable) {
+	req := connect.NewRequest(request)
+	copts := adinoclient.NewCallOptions(opts)
+	adinoclient.ApplyCallOptions(req, copts)
+	response, err := m.client.{{ .Name.UpperCamelCase }}(ctx, req)
+	if err != nil {
+		return nil, sdkv2betalib.ToSpecErrorable(err)
+	}
+
+	return response.Any().(*{{ $alias }}.{{ .Output.Name.UpperCamelCase }}), nil
+}
