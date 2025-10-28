@@ -1,3 +1,13 @@
+## 0.23.2 (2025-10-28)
+
+### 🩹 Fixes
+
+- improving nats stability ([498bddd](https://github.com/openecosystems/ecosystem/commit/498bddd))
+
+### ❤️ Thank You
+
+- Dimy Jeannot
+
 ## 0.23.1 (2025-10-28)
 
 ### 🩹 Fixes
