@@ -310,6 +310,7 @@ func (se *SpecError) WithSpecDetail(spec *specv2pb.Spec) SpecErrorable {
 	newErr.ConnectErr = *connect.NewError(se.ConnectErr.Code(), se.ConnectErr.Unwrap())
 	newErr.ConnectErr.AddDetail(d)
 	// se.ConnectErr.AddDetail(d)
+	//
 	return &newErr
 }
 
