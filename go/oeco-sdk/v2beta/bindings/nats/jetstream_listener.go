@@ -57,7 +57,7 @@ func ListenForJetStreamEvents(ctx context.Context, env string, listener SpecEven
 		panic("Configuration is missing")
 	}
 
-	js := *Bound.JetStream
+	js := Bound.JetStream
 	streamName := GetStreamName(env, configuration.StreamType.StreamPrefix(), configuration.Entity.TypeName())
 
 	stream, err := js.Stream(ctx, streamName)

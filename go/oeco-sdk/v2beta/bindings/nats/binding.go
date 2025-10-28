@@ -29,8 +29,8 @@ type Binding struct {
 	SpecEventBatchListeners []SpecEventBatchListener
 	Listeners               map[string]*nats.Subscription
 	Nats                    *nats.Conn
-	JetStreamContext        *nats.JetStreamContext
-	JetStream               *jetstream.JetStream
+	JetStreamContext        nats.JetStreamContext
+	JetStream               jetstream.JetStream
 
 	server        *natsd.Server
 	configuration *Configuration
@@ -200,7 +200,7 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						fmt.Println(err.Error())
 						panic("Cannot get Jetstream from Nats Context")
 					}
-					b.JetStreamContext = &jsc
+					b.JetStreamContext = jsc
 
 					// Create a JetStream management interface
 					js, err := jetstream.New(_nats)
@@ -208,13 +208,13 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 						fmt.Println(err.Error())
 						panic("Cannot configure Jetstream")
 					}
-					b.JetStream = &js
+					b.JetStream = js
 
 					Bound = &Binding{
 						server:           server,
 						Nats:             _nats,
-						JetStreamContext: &jsc,
-						JetStream:        &js,
+						JetStreamContext: jsc,
+						JetStream:        js,
 						configuration:    b.configuration,
 					}
 
@@ -256,15 +256,15 @@ func (b *Binding) Bind(_ context.Context, bindings *sdkv2betalib.Bindings) *sdkv
 					}
 
 					b.Nats = _nats
-					b.JetStreamContext = &jsc
+					b.JetStreamContext = jsc
 
 					Bound = &Binding{
 						Registry:           b.Registry,
 						SpecEventListeners: b.SpecEventListeners,
 						Listeners:          b.Listeners,
 						Nats:               _nats,
-						JetStreamContext:   &jsc,
-						JetStream:          &js,
+						JetStreamContext:   jsc,
+						JetStream:          js,
 						configuration:      b.configuration,
 					}
 

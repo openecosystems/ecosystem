@@ -17,6 +17,7 @@ import (
 
 	specv2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/spec/v2"
 	typev2pb "github.com/openecosystems/ecosystem/go/oeco-sdk/v2beta/gen/platform/type/v2"
+	"go.temporal.io/sdk/temporal"
 )
 
 // Using guidance from: https://google.aip.dev/193
@@ -63,6 +64,7 @@ type (
 		reason     Reason
 		ConnectErr connect.Error
 		details    *typev2pb.SpecErrorDetails
+		retryable  bool
 	}
 )
 
@@ -331,6 +333,26 @@ func (se *SpecError) WithInternalErrorDetail(errs ...error) SpecErrorable {
 		e.Error("captured internal error details")
 	}
 
+	return se
+}
+
+func (se *SpecError) WithNonRetryableError() SpecErrorable {
+	// wrap the underlying cause with Temporal’s non-retryable type
+	se.retryable = false
+	ce := se.ToConnectError()
+	if ce != nil {
+		newErr := *se // shallow copy
+		nonRetryableError := temporal.NewNonRetryableApplicationError(ce.Error(), "NonRetryable", se)
+		newErr.ConnectErr = *connect.NewError(se.ConnectErr.Code(), nonRetryableError)
+
+		for _, detail := range ce.Details() {
+			newErr.ConnectErr.AddDetail(detail)
+		}
+
+	} else {
+		nonRetryableError := temporal.NewNonRetryableApplicationError(ce.Error(), "NonRetryable", se)
+		se.ConnectErr = *connect.NewError(connect.CodeOf(se), nonRetryableError)
+	}
 	return se
 }
 

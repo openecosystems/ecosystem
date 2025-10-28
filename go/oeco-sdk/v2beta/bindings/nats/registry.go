@@ -51,7 +51,7 @@ func RegisterEventStreams(environmentName string, streams []jetstream.StreamConf
 }
 
 func createOrUpdateStream2(cfg jetstream.StreamConfig) error {
-	js := *Bound.JetStream
+	js := Bound.JetStream
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -87,7 +87,29 @@ func streamConfigsEqual(a, b *jetstream.StreamConfig) bool {
 	// ignore zero values (JetStream may fill defaults)
 	cleanA := normalizeStreamConfig(a)
 	cleanB := normalizeStreamConfig(b)
-	return reflect.DeepEqual(cleanA, cleanB)
+
+	if cleanA.Replicas != cleanB.Replicas {
+		return false
+	}
+
+	if cleanA.MaxMsgs != cleanB.MaxMsgs {
+		return false
+	}
+
+	if cleanA.Name != cleanB.Name {
+		return false
+	}
+
+	if cleanA.Name != cleanB.Name {
+		return false
+	}
+
+	if !reflect.DeepEqual(cleanA.Subjects, cleanB.Subjects) {
+		return false
+	}
+
+	return true
+	// return reflect.DeepEqual(cleanA, cleanB)
 }
 
 func normalizeStreamConfig(cfg *jetstream.StreamConfig) *jetstream.StreamConfig {
@@ -104,11 +126,11 @@ func normalizeStreamConfig(cfg *jetstream.StreamConfig) *jetstream.StreamConfig 
 // createOrUpdateStream creates a new stream or updates an existing one using the provided StreamConfig.
 func createOrUpdateStream(cfg jetstream.StreamConfig) error {
 	// Check if stream exists
-	js := *Bound.JetStream
+	js := Bound.JetStream
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	_, err := js.Stream(ctx, cfg.Name)
+	info, err := js.Stream(ctx, cfg.Name)
 	if err != nil {
 		if errors.Is(err, jetstream.ErrStreamNotFound) {
 			// if stream does not exist, create it
@@ -151,13 +173,20 @@ func createOrUpdateStream(cfg jetstream.StreamConfig) error {
 			}
 
 		}
-	} else {
-		_, err3 := js.CreateOrUpdateStream(ctx, cfg)
-		if err3 != nil {
-			return err3
-		}
-
+		// Any other error
+		fmt.Printf("error fetching stream info for %s", cfg.Name)
 		return nil
+	}
+
+	// Compare existing config with desired config
+	_cfg := info.CachedInfo().Config
+	if !streamConfigsEqual(&_cfg, &cfg) {
+		fmt.Printf("Updating stream %s (config has changed)\n", cfg.Name)
+		if _, err := js.CreateOrUpdateStream(ctx, cfg); err != nil {
+			return fmt.Errorf("failed to update stream %s: %w", cfg.Name, err)
+		}
+	} else {
+		// fmt.Printf("Stream %s is up to date, no changes needed\n", cfg.Name)
 	}
 
 	return nil
